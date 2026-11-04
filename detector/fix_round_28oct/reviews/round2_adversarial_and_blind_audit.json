@@ -1,0 +1,648 @@
+[
+ {
+  "kind": "blind",
+  "who": "A",
+  "r": {
+   "decisions": [
+    {
+     "cid": "P-01",
+     "verdict": "mouth",
+     "confidence": "medium",
+     "evidence": "Sukhumvit upper, east block. a=(121.045,18.159) is the top face of a 0.25 m square COL pier (x120.92-121.17, y17.91-18.16) standing on the south window/grill line (WIN y17.93, A_Grill y17.83-17.88). b=(121.045,20.109) is the south face of the corridor's north wall (y20.109-20.209, x120.1-122.1, door openings at x119.25-120.05 and x122.15-122.95). Between them is the open 1.95 m E-W corridor; the N-S partition (x120.99-121.10) only starts on the far side of that wall (it abuts it), so no wall line is interrupted: a pier faces the side of a perpendicular wall across a corridor."
+    },
+    {
+     "cid": "P-02",
+     "verdict": "not-opening",
+     "confidence": "low",
+     "evidence": "Presidential bedroom. a=(195.19,-3501.798) is the NW corner of the C-shaped wardrobe wall (x195.15-195.23, top wall y-3501.72/-3501.80). b=(195.19,-3499.855) is the west extreme of a round 16-gon column (centre ~195.6,-3499.85, r0.4) in the rounded corner where the E-W wall (y-3499.44/-3499.52) turns south to the door wall. The 1.94 m between is open floor (bed zone west, lobby east); no wall end faces a wall end or a flat wall side on a common line, and the wall does not carry on north of b in this line. Wall corner and a round column in open floor. Alternative reading: corner facing the E-W wall (mouth)."
+    },
+    {
+     "cid": "P-03",
+     "verdict": "real-passage",
+     "confidence": "low",
+     "evidence": "Presidential kitchen wing, west side. a=(201.48,-3493.49) is the upper end cap of the wing's lower-left wall (corner 201.354,-3493.567); b=(199.91,-3490.77) is the end cap of the wedge-shaped corner wall at the wing's NW (x199.817, y-3490.63..-3490.87). Both ends lie on the same 60-degree line (the wing's west edge) and the wall carries on beyond both (face line 199.40,-3489.91 to 199.82,-3490.63 above; 201.35,-3493.57 to 201.66,-3494.11 below). The 3.15 m between has no cut wall and no door: only a thin visible line (A-1.Netthay - manh) and the Defpoints room polygon edge run along it, with a long bench outline alongside. Reads as an open-kitchen opening in a wall line. Low confidence because the thin line / room polygon could be read as a room-boundary closure."
+    },
+    {
+     "cid": "P-04",
+     "verdict": "mouth",
+     "confidence": "medium",
+     "evidence": "Bank L2 restroom block. a=(-1.178,10.545) is the east end (door-jamb box x-1.28..-1.10) of the vestibule's north wall (y10.5-10.6, x-2.62..-1.10). b=(0.32,10.545) is the west face of the N-S stall wall (x0.32-0.42, y9.7-10.7). The segment crosses the east WC's 1.4 m wide lobby (the east vestibule door swings just below it); the wall at b is solid and no wall continues the y10.55 line east of it. A wall end faces the side of a perpendicular wall; no wall line interrupted."
+    },
+    {
+     "cid": "P-05",
+     "verdict": "mouth",
+     "confidence": "high",
+     "evidence": "Sukhumvit upper, bedroom block. a=(107.547,14.507) is the SW outer corner of the L-shaped dressing-room wall (leg x107.55-107.65 going north, foot y14.455-14.555 going east to x108.30). b=(106.42,14.507) is the east face of the N-S west wall (x106.32-106.42, pier box x106.17-106.42). The 1.13 m between is the N-S aisle along the west wall (the door at y15.0-16.1 swings into it); the window wall at y14.5 lies on the far (west) side of the west wall. A corner faces the side of a perpendicular wall across an aisle; no line interrupted."
+    },
+    {
+     "cid": "P-06",
+     "verdict": "real-passage",
+     "confidence": "medium",
+     "evidence": "Sukhumvit upper, bedroom / entry corridor. N-S wall line x86.77-86.87: the upper wall (y17.91-21.06) ends with a free flat cap at a=(86.819,17.909); below the gap the line is carried by the closet block whose east face is flush at x86.87 and whose NE corner (E-W wall y16.61-16.71) is b=(86.819,16.708), with the lower wall x86.77-86.87 continuing south to y12.5. Nothing is drawn in the 1.2 m gap (no door, no furniture); it joins the bedroom pocket (between closet and cabinet) to the 1.3 m N-S corridor x86.87-88.17, entered from the east-wall door at y19.65-20.9. Two ends of the same wall line face each other and the wall carries on both ways: a doorless doorway. Medium because the south end is a built-in block corner."
+    },
+    {
+     "cid": "P-07",
+     "verdict": "not-opening",
+     "confidence": "medium",
+     "evidence": "Sukhumvit upper, bedroom block south wall (y15.76-15.86). The wall pieces end at x85.27 (a) and resume at x86.27 (b); the 1.0 m gap between them is filled by a closed rectangular cell (x85.27-86.27, y15.76-16.71) with side panels x85.17-85.27 and x86.27-86.37; its bottom edge is the single line y15.759 and there is no jamb, door leaf or swing. A gap closed by a drawn box (built-in cupboard/shaft), not a passage."
+    },
+    {
+     "cid": "P-08",
+     "verdict": "not-opening",
+     "confidence": "low",
+     "evidence": "Presidential west-terrace pavilion: two thick U-shaped wall elements. a=(179.896,-3489.829) and b=(180.326,-3489.084) are the end caps of their two collinear 60-degree legs (gap 0.86 m, legs continue to their base walls). The gap is the end slot of a 0.7 x 2.0 m daybed (A-2.Noi That outline, its end edge flush 0.09 m inside the gap line), so the opening leads onto furniture inside an outdoor pavilion rather than through a wall into a space. Low confidence: geometrically two wall ends of one line facing each other, which would be real-passage if the daybed is ignored."
+    },
+    {
+     "cid": "P-09",
+     "verdict": "mouth",
+     "confidence": "medium",
+     "evidence": "Sukhumvit upper, WC lobby. a=(117.072,21.734) is the west face of the lobby wall (x117.07-117.17) where the cubicle partition (y21.68-21.78) joins it from the other side; b=(115.52,21.734) is the east face of the long N-S wall x115.42-115.52. The 1.55 m between is a lobby with a washbasin between two parallel walls (cubicle doors at y20.88-21.58 and y21.88-22.58 open off it); both ends are wall sides, no wall end, nothing interrupted: a lobby seen in section."
+    },
+    {
+     "cid": "P-10",
+     "verdict": "mouth",
+     "confidence": "high",
+     "evidence": "Bank L1. a=(0.623,5.858) is the NW corner of the meeting room's north wall (y5.76-5.86; its west wall x0.57-0.67 runs south from here). b=(0.623,6.934) is the south face of the upper E-W wall (y6.93-7.24), solid at this x (the door jamb box is at x1.02-1.12). The 1.08 m between is the E-W corridor outside the room; the room's west wall end faces the side of a perpendicular wall across a corridor and the N-S line does not continue north of b."
+    },
+    {
+     "cid": "P-11",
+     "verdict": "mouth",
+     "confidence": "low",
+     "evidence": "Presidential kitchen wing. a=(203.961,-3491.369) is the free top end of a thin 60-degree wall (it turns at its lower end to form a U); b=(202.19,-3488.301) is on the south-east face of the long 30-degree NW wall, solid and perpendicular to the segment. The 3.5 m between is open kitchen floor (counters drawn in grey only); no wall line interrupted: a wall end facing the side of a perpendicular wall. Low confidence on mouth vs not-opening because the space is a room rather than a corridor."
+    },
+    {
+     "cid": "P-12",
+     "verdict": "not-opening",
+     "confidence": "medium",
+     "evidence": "Sukhumvit upper, bedroom block east side (x~113.5). a=(113.495,17.909) is the end of the north wall piece (x113.445-113.545 going north) and b=(113.495,15.409) the top end of the bathroom's east wall (x113.395-113.545 going south): two ends of one line, 2.5 m apart. But the gap is an exterior notch: the D-JAMB exterior outline steps in along y15.44-15.46 and y17.86-17.88 to x112.07, it holds a planter (TREE lines x112.995/113.345/113.595 and WALL-layer X diagonals) and its back (west) end is closed by the glazed wall x112.0-112.1 (WIN with D-JAMB, y15.5-17.85). A recess with a wall face (window) drawn across it, not a doorway."
+    },
+    {
+     "cid": "P-13",
+     "verdict": "real-passage",
+     "confidence": "high",
+     "evidence": "Bank L2 restroom entrance. The block's south wall (y9.61-9.71) is cut by a gap: the west piece ends with a flat cap at a=(-2.508,9.655) and the east piece starts with a flat cap at b=(-1.278,9.655) (short N-S stub going south at x-1.28..-1.18). Both pieces run on in the same line (west to x-4.5 and beyond, east to x+1.2). The 1.23 m gap is empty (the two door leaves are drawn open along the wall's north face and swing into the vestibule behind it; doors to the two WCs sit at x-2.55 and x-1.2). Two wall ends of the same line facing each other, wall continuing: doorless entrance to the restroom vestibule."
+    },
+    {
+     "cid": "P-14",
+     "verdict": "not-opening",
+     "confidence": "medium",
+     "evidence": "Presidential. a=(200.677,-3503.798) sits on the south face of the E-W wall (y-3503.72/-3503.80) at the top of the east stub (x200.64-200.72) of a niche box hanging south of that wall; the segment runs north through that wall's thickness and across open lobby floor to b=(200.677,-3501.285) on the lower face of the diagonal 30-degree wall of the rotated bathroom, near its end cap. It is the extension of a stub's line through a wall to a non-perpendicular wall face: no gap in any wall line, the ends are not facing wall ends."
+    },
+    {
+     "cid": "P-15",
+     "verdict": "not-opening",
+     "confidence": "medium",
+     "evidence": "Bank L2 reception zone. a=(-0.779,4.962) is the free east end of the L-foot (y4.91-5.00, x-1.33..-0.78; L leg x-1.32..-1.18 going north); b=(2.204,4.962) is the bottom tip (y4.92) of a very thin N-S wall (x2.20, y4.92-6.92). The 2.98 m between is just the open south side of the zone (furniture outlines only); the thin wall is perpendicular so b is its end, not a collinear wall end, and no wall carries on east of a in this line. Two free ends in open floor, no doorway."
+    },
+    {
+     "cid": "P-16",
+     "verdict": "real-passage",
+     "confidence": "high",
+     "evidence": "Sukhumvit ground, foyer / lobby. The E-W wall line y19.36-19.46: the gym's north wall ends at x12.95 (small return box x12.85-12.95, y19.16-19.46) = b=(12.948,19.409); the stub wall from the east starts with a free end at x14.15 (cap lines x14.15/14.25) = a=(14.148,19.409). Both run on in the same line (west to x7.75; east to the N-S wall x14.85-14.95 and on as the window band y19.33 of the entrance gallery). The 1.2 m gap is empty; it joins the N-S lobby (x12.95-14.85) to the foyer. Two wall ends of one line face each other, wall carrying on: doorless doorway."
+    },
+    {
+     "cid": "P-17",
+     "verdict": "mouth",
+     "confidence": "low",
+     "evidence": "Presidential. a=(202.599,-3498.321) is the outer L-corner of a wall (long 30-degree wall from the upper left turning down-left into a 1.1 m leg); b=(203.668,-3496.469) is on the south-west face of the 30-degree wall at the top, perpendicular to the segment (60-degree line). The 2.14 m between is open floor with a grey bed/tub outline; the segment continues the short leg's line past the corner. A corner faces the side of a perpendicular wall; no wall line interrupted. Low confidence because the space is a room rather than an aisle."
+    },
+    {
+     "cid": "P-18",
+     "verdict": "mouth",
+     "confidence": "medium",
+     "evidence": "Bank L2 west WC area. a=(-3.99,10.742) is the east end (jamb box x-4.08..-3.99) of the thin wall (y10.69-10.79) separating the two stalls; b=(-1.778,10.742) is on the N-S sink divider wall (x-1.9..-1.65, y10.6-11.6). The 2.2 m between is the west WC's open circulation area (vestibule door arc and sink basins nearby; the segment passes above the vestibule wall y10.5-10.6). A partition end faces the side of a perpendicular wall; no line interrupted."
+    },
+    {
+     "cid": "P-19",
+     "verdict": "mouth",
+     "confidence": "high",
+     "evidence": "Sukhumvit upper, bedroom block. a=(107.547,17.959) is the NW outer corner of the dressing-room walls (top wall y17.91-18.01 starts at x107.547, leg x107.55-107.65 goes south); b=(106.42,17.959) is the east face of the N-S west wall (x106.32-106.42, thicker here with lines at x106.17/106.27). The 1.13 m between is the N-S aisle; west of the west wall nothing continues this line. A corner faces the side of a perpendicular wall across an aisle."
+    },
+    {
+     "cid": "P-20",
+     "verdict": "not-opening",
+     "confidence": "low",
+     "evidence": "Sukhumvit ground, gym east side. a=(12.898,19.159) is the bottom of a 0.1x0.3 return box at the end of the gym's north wall; b=(12.898,15.858) is the top of the south wall's east piece (x12.85-12.95, y14.955-15.858). Between them a single WALL-layer line x12.948 runs the full 3.3 m, flush with the two ends' east faces, so the gap is closed by a drawn boundary / thin wall (rendered black). The gym has no other door drawn, so it could be an open or glazed side, hence low confidence. Not an interrupted wall line: closed by something drawn (room-boundary line)."
+    },
+    {
+     "cid": "P-21",
+     "verdict": "mouth",
+     "confidence": "low",
+     "evidence": "Sukhumvit upper, bedroom. a=(85.22,16.708) is the free north end of the N-S panel (x85.17-85.27, y15.76-16.71) of the closet block; b=(85.22,18.558) is the south face of the E-W partition (y18.56-18.66, x82.02-85.27) at its east end. The built-in cabinet (x85.27-86.57, y17.91-19.28, double doors drawn on its south face) hugs the segment 0.05 m to the east from y17.91 up. The segment starts at a free panel end and ends on the side of a perpendicular wall across open room; the 1.2 m between closet and cabinet is the west mouth of the aisle that leads to the doorway P-06. No wall line interrupted by this segment."
+    },
+    {
+     "cid": "P-22",
+     "verdict": "mouth",
+     "confidence": "medium",
+     "evidence": "Sukhumvit upper, bedroom. a=(83.845,21.009) is the west end of a free-standing 1.4 m thin wall (x83.85-85.27, y20.96-21.06, both ends free); b=(82.02,21.009) is the east face of the solid west wall (x81.77-82.02, glass window below y20.9). 1.8 m of open room between; the thin wall does not continue any wall line and the west wall is solid at b and carries on. A wall end faces the side of a perpendicular wall."
+    },
+    {
+     "cid": "P-23",
+     "verdict": "real-passage",
+     "confidence": "medium",
+     "evidence": "Sukhumvit upper, glazed gallery to the hall. a=(93.395,19.409) is the north face of the lower COL box (x93.27-93.52, y19.16-19.41) on the end of a wall pier (y18.66-19.41); b=(93.395,21.159) is the south face of the upper COL box (y21.16-21.41) on the end of the upper pier/wall (y21.41-23.0). The N-S facade line x93.4 carries on beyond both piers (WIN bands x93.42-93.52 south of y18.6, glass north of y23.0). The 1.75 m gap is empty and equals the width of the gallery formed by the two window bands (y19.38 and y21.2, x88.5-93.2) leading from the east-wall door of the left block. Piers (wall ends) of one line facing each other with the wall carrying on: doorless opening."
+    },
+    {
+     "cid": "P-24",
+     "verdict": "mouth",
+     "confidence": "medium",
+     "evidence": "Sukhumvit upper, central hall. a=(99.115,21.259) is the east end of the stair/void enclosure's south wall (y21.16-21.31; the wall turns north at x99.12); b=(100.67,21.259) is the west face of the pier box (y21.16-21.41) at the south end of the N-S wall pair x100.67-100.77. The 1.55 m between is a N-S aisle between enclosure and wall; no E-W wall line continues east of the pier (only a grey floor line). Corner faces the side of a perpendicular wall across an aisle."
+    },
+    {
+     "cid": "P-25",
+     "verdict": "not-opening",
+     "confidence": "medium",
+     "evidence": "Sukhumvit upper, between bedroom block and east block. a=(114.316,18.058) is the west end of the centre line of the east block's south wall (y17.958-18.158; its west wall x114.216 is a single line); b=(113.545,18.058) is the east face of the main block's east wall (x113.445-113.545). The 0.6-0.77 m strip between the blocks is a void/planter strip with WALL-layer X diagonals ((113.595,15.459)-(114.22,22.509) crosses the segment at x~113.83) and TREE lines (x113.595, x114.215) drawn across it. A gap closed by drawn X/planter lines between two separate blocks, not a passage."
+    },
+    {
+     "cid": "P-26",
+     "verdict": "mouth",
+     "confidence": "medium",
+     "evidence": "Presidential rotated wing. a=(201.675,-3500.001) is the face of the T-shaped end cap of a 30-degree wall (the rotated bathroom's lower wall); the segment continues that wall's line 1.21 m across a passage to b=(202.723,-3500.606) on the west face of a long 60-degree wall, solid and perpendicular. The wall on the far side starts 0.4 m off the line (y-3500.95) instead of continuing it, so no wall line is interrupted: a wall end facing the side of a wall across a corridor."
+    },
+    {
+     "cid": "P-27",
+     "verdict": "mouth",
+     "confidence": "high",
+     "evidence": "Sukhumvit upper, bedroom block. a=(108.297,14.507) is the east end cap of the L foot (y14.455-14.555); b=(109.447,14.507) is the west face of the bathroom's N-S wall (x109.447-109.547, y14.46-15.46, continuing; its door opening is lower at y13.46-14.41). The 1.15 m between is open floor between the dressing area and the sitting lobby; the bathroom wall is solid at b and carries on both ways. A wall end faces the side of a perpendicular wall."
+    },
+    {
+     "cid": "P-28",
+     "verdict": "mouth",
+     "confidence": "high",
+     "evidence": "Bank L1. a=(3.22,6.934) is the free south end (cap) of the toilet room's east wall (x3.17-3.27, running north), next to the toilet-room door opening (x2.47-3.17 in the wall y6.93-7.04, leaf and swing drawn); b=(3.22,5.858) is the top face of the meeting room's north wall (y5.76-5.86, x0.57-4.80). The 1.08 m between is the E-W corridor. A wall end faces the side of a perpendicular wall across a corridor."
+    },
+    {
+     "cid": "P-29",
+     "verdict": "not-opening",
+     "confidence": "medium",
+     "evidence": "Sukhumvit upper, WC lobby / cubicles. a=(116.272,21.159) is the free east end of a 0.75 m stub (y21.109-21.209) off the long west wall; b=(118.047,21.159) is the west face of the cubicle east wall (x118.05-118.15). The line runs across the lobby, then through the lobby wall x117.07-117.17 at the lower WC door (opening y20.88-21.58, leaf and swing arc drawn), then across the cubicle with the WC. A wall with a drawn door lies in the middle; it is not a gap between wall ends."
+    },
+    {
+     "cid": "P-30",
+     "verdict": "real-passage",
+     "confidence": "high",
+     "evidence": "Sukhumvit ground, entrance gallery. The N-S wall x14.85-14.95: the southern piece (y16.61-19.46) ends at the corner with the E-W stub wall (a=(14.898,19.459)); the northern piece (y21.10-24.8) starts at the corner with the E-W wall y21.10-21.20 (b=(14.898,21.104)). Nothing is drawn in the 1.645 m gap; east of it two window bands (WIN y19.33 and y21.23, jambs at x14.95-15.05 and 15.95-16.05) form a 1.8 m wide glazed gallery. The two wall ends of one line face each other and the wall carries on both ways: doorless opening between foyer and gallery."
+    },
+    {
+     "cid": "P-31",
+     "verdict": "not-opening",
+     "confidence": "high",
+     "evidence": "Sukhumvit ground. a=(14.898,15.808) and b=(14.898,16.608) are the north face of the lower E-W wall (y15.71-15.81) and the south face of the upper E-W wall (y16.61-16.71), both turning off the east wall x14.85-14.95. Between them is a 0.8 m deep exterior recess (the D-JAMB facade outline steps in with it) whose inner west end is closed by a window (WIN x14.15-14.25, y15.91-16.56 with D-JAMB blocks). A niche with a wall face (window) drawn across it, not a doorway."
+    },
+    {
+     "cid": "P-32",
+     "verdict": "mouth",
+     "confidence": "high",
+     "evidence": "Sukhumvit upper, bedroom block. a=(107.547,11.909) is the SW corner of an L of walls (stub x107.55-107.65 going north to y12.76, wall y11.86-11.96 going east); b=(106.42,11.909) is the east face of the long N-S west wall (x106.32-106.42), beyond which is the plant terrace (no wall on this line). The 1.13 m between is the N-S aisle. A corner faces the side of a perpendicular wall across an aisle."
+    },
+    {
+     "cid": "P-33",
+     "verdict": "real-passage",
+     "confidence": "low",
+     "evidence": "Presidential walk-in wardrobe: two C-shaped cabinet walls (0.08 m thick, x195.15-195.91 and x197.01-197.87, open toward the aisle) whose bottom panels (y-3505.32/-3505.24) are collinear; a=(195.91,-3505.278) and b=(197.01,-3505.278) are the facing ends of those panels, each continuing to a cross wall (x195.15 / x197.87). The 1.1 m between is empty (only the Defpoints room polygon edge runs across) and leads into the 1.1 m aisle between the cabinets. By the letter of the definition: a door-width gap between two walls that meet a cross wall. Low confidence because the walls are cabinet panels and it can equally be read as the open end of an aisle (corridor seen in section = mouth)."
+    },
+    {
+     "cid": "P-34",
+     "verdict": "not-opening",
+     "confidence": "medium",
+     "evidence": "Sukhumvit ground, east of the main block. a=(40.293,17.108) is the south end (end box y17.108-17.308) of the stair wall pair x40.19-40.39; b=(40.293,15.559) is the top edge of the column box (x40.093-40.493, y14.158-15.558). A single-line WALL polyline outline of the rectangle x40.2-43.03, y6.96-17.11 runs along x40.2 through the whole gap (the segment lies 0.09 m inside it), i.e. the gap is bridged by a drawn boundary line of a separate structure; the ends are a stair-wall end and a column, no wall opening."
+    },
+    {
+     "cid": "P-35",
+     "verdict": "mouth",
+     "confidence": "high",
+     "evidence": "Bank L1. a=(4.798,3.208) is the east end (box x4.70-4.80) of the meeting room's south wall (y3.16-3.26); b=(6.027,3.208) is the west face of the facade column box (x6.01-6.33, y2.90-3.70) in the glass curtain wall x6.05-6.15, which runs on above and below with no gap. The 1.23 m between is the aisle along the facade (the room's glass door at y3.37-4.25 is in its east wall, not here). A wall end faces the side of a perpendicular facade across an aisle."
+    },
+    {
+     "cid": "P-36",
+     "verdict": "mouth",
+     "confidence": "medium",
+     "evidence": "Sukhumvit ground. a=(34.423,16.959) is the top end (caps y16.858/16.958) of a 0.1 m thick N-S wall (x34.373-34.473, y15.555-16.958) forming the bathroom's west wall; b=(34.423,19.159) is the south face of the E-W wall y19.158-19.258 (x32.30-36.65). 2.2 m of open living/lobby floor between (grey folding-door symbols only); the N-S line does not continue north of that wall. A wall end faces the side of a perpendicular wall."
+    }
+   ],
+   "method": "For every candidate: zoomed render.py windows (3x3 to 5x5 m, 0.25 m grid, a/b marks, inserts) plus 5-10 m context renders per cluster and whole-floor overviews; listed the flattened wall-layer geometry around both ends (prims.load items: LINE / LWPOLYLINE on WALL, COL, D-JAMB, WIN, A-1.Netcat, A-WALL*) to read wall ends, caps, thickness, what is drawn inside the gap and what the wall does beyond; checked the layer of anything drawn in gaps (single WALL-layer lines, TREE / X lines, Netthay-manh thin lines, Defpoints room polygons, furniture). Rule used: real-passage = two free ends / corners / piers of the same wall line face each other, the wall carries on beyond both, nothing wall-like is drawn across; mouth = a wall end / corner / pier faces the side of a perpendicular wall (or two wall sides of an aisle or lobby) with no wall line interrupted; not-opening = gap closed by something drawn (single wall-layer line, box, window across a recess, planter X), ends in open space, or the line passes through a wall/door. Result: 7 real-passage (P-03, P-06, P-13, P-16, P-23, P-30, P-33), 18 mouth, 11 not-opening. Low-confidence calls: P-02, P-03, P-08, P-11, P-17, P-20, P-21, P-33. Full result also written to C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/fix4/review/blind-removed-A/audit.json"
+  }
+ },
+ {
+  "kind": "blind",
+  "who": "B",
+  "r": {
+   "decisions": [
+    {
+     "cid": "P-01",
+     "verdict": "mouth",
+     "confidence": "medium",
+     "evidence": "Sukhumvit upper, vertical x=121.045 from y=18.16 to 20.11 (1.95 m). a = north face of a 0.25 m COL column standing in the south facade window line (blue WIN line with frame posts); b = south face of the E-W wall y 20.11-20.21 (two door swings into the rooms north of it), where a thin 0.1 m N-S partition (x 121.0-121.1) T-joins from the north and stops. The gap holds only the structural grid axis (WALL layer, CENTER2 linetype); no wall line exists along x=121.045 here. It is the width of the gallery between the facade column and the inner wall: a pier facing the side of a perpendicular wall. Alternative reading: not-opening (column in open space)."
+    },
+    {
+     "cid": "P-02",
+     "verdict": "mouth",
+     "confidence": "low",
+     "evidence": "Presidential, vertical x=195.19 from y=-3501.80 to -3499.86 (1.94 m). a = NW outer corner of the wardrobe block (U-shaped wall-layer outline whose west wall runs 3.4 m south); b = west edge of a round column (A.Cot 1 circle with wall hatch) that bulges into the room from the north wall (the wall wraps around it). Between them: open bedroom floor with furniture outlines only, no wall line. It is the E-W aisle between the wardrobe corner and the north wall seen in section (the real door of this zone is further east at x 196.45-197.3). Corner facing a pier/wall side across an aisle; could also be read not-opening (corner facing a free column)."
+    },
+    {
+     "cid": "P-03",
+     "verdict": "real-passage",
+     "confidence": "low",
+     "evidence": "Presidential, diagonal (-60 deg), 3.15 m: the open SW side of the kitchen ('Kitchen 14m2'). b = end of the kitchen's NW wall mass (its diagonal face runs on 0.8 m NW to the north wall); a = NW end of the big south/east wall mass (the same line continues 0.6 m SE, then down to the double-door vestibule). Both ends are collinear end faces of wall-layer masses and nothing solid lies between them: only a dashed HIDDEN2 line (xref layer A-1.Netthay - manh) and the Defpoints room outline run across. A wide open gap in one wall line with the wall carrying on both sides (open-plan kitchen frontage); borderline mouth because 3.15 m is far wider than a door."
+    },
+    {
+     "cid": "P-04",
+     "verdict": "mouth",
+     "confidence": "medium",
+     "evidence": "Bank L2 restroom, horizontal y=10.545 from x=-1.18 to 0.32 (1.5 m). a = east end of the T-bar wall y 10.5-10.6 (the bar runs 1.4 m west; door jamb and hinge of the right-hand restroom door at its end); b = west face of the N-S WC-cubicle wall x 0.32-0.42 (y 9.7-10.7), 0.15 m below its top end beside the cubicle door. Between: open restroom floor (a WC outline only); no wall line interrupted. Wall end facing the side of a perpendicular wall across a 1.5 m aisle."
+    },
+    {
+     "cid": "P-05",
+     "verdict": "mouth",
+     "confidence": "high",
+     "evidence": "Sukhumvit upper, horizontal y=14.507 from x=106.42 to 107.55 (1.13 m): cross-section of the 1.13 m N-S entry strip of the master suite. b = east face of the continuous outer wall x 106.3-106.43 (a column at its junction with the window line y 14.5); a = L-corner where the inner wall x 107.55-107.65 (3.5 m, running north) turns east as a 0.75 m stub. Only the grid axis is drawn in the gap; the suite's double door is in the outer wall at y 14.9-16.1, not here. A wall corner facing the side of a perpendicular wall across a corridor."
+    },
+    {
+     "cid": "P-06",
+     "verdict": "real-passage",
+     "confidence": "high",
+     "evidence": "Sukhumvit upper, vertical x=86.82 from y=16.71 to 17.91 (1.2 m). Gap in a N-S wall line: the north piece (WALL polyline x 86.77-86.87, y 17.91 up to 21.06) ends at a; the south side is a 0.95 m pier block (y 15.76-16.71) that joins the same wall continuing south (to y 12.5). Collinear wall ends, wall carries on both sides; nothing is drawn in the gap (no jamb, leaf, glass or hatch). West is the bedroom, east the entrance strip x 86.87-88.2 that leads to the entrance door (x 88.2, y 19.7-20.95). Doorless doorway."
+    },
+    {
+     "cid": "P-07",
+     "verdict": "real-passage",
+     "confidence": "medium",
+     "evidence": "Sukhumvit upper, horizontal y=15.809 from x=85.27 to 86.27 (1.0 m, door width). Gap in the bathroom's north wall line y 15.76-15.86: the west piece (3.3 m) and the east piece (x 86.27-86.87, joins the N-S wall) are collinear. Both ends turn north as thin 0.95 m reveals (x 85.17-85.27 and 86.27-86.37), forming a short slot; a dashed HIDDEN2 rectangle (1.0 x 0.95, WALL layer) outlines the slot - dashed, so not a solid wall or a door leaf. Leads from the bath (south) into the bedroom (north). Doorless doorway; the hidden rectangle is the only doubt."
+    },
+    {
+     "cid": "P-08",
+     "verdict": "real-passage",
+     "confidence": "medium",
+     "evidence": "Presidential terrace (outside the glass facade), segment 0.86 m. Two identical thick U-shaped wall pieces (A-1.Netcat - tuong, hatched, same block) interlock into a small rectangle (long walls about 2.4 m); a and b are the collinear end faces of the two arms on its short east side, each wall carrying on about 1 m to the corners. Nothing in the gap (a thin daybed-like rectangle sits inside); a similar 0.9 m gap exists at the west end. Door-width gap between two wall ends of one line = doorless entrance of the small enclosure. Doubt: the pieces may be planters or screens."
+    },
+    {
+     "cid": "P-09",
+     "verdict": "not-opening",
+     "confidence": "medium",
+     "evidence": "Sukhumvit upper, horizontal y=21.734 from x=115.52 to 117.07 (1.55 m), across the WC vestibule. b = east face of the continuous west wall x 115.43-115.57; a = west face of the east wall x 117.07-117.17, here only the 0.4 m piece between two WC-cubicle doors where the cubicle partition y 21.75 T-joins from the east. Both ends are wall faces (no wall end), the doors (swings at y 22.0-22.5 and 20.95-21.5) are not on this line, and nothing is interrupted. Width of a room between two walls."
+    },
+    {
+     "cid": "P-10",
+     "verdict": "mouth",
+     "confidence": "high",
+     "evidence": "Bank L1, vertical x=0.623 from y=5.86 to 6.93 (1.08 m): cross-section of the E-W service corridor. a = NW corner of the meeting-room wall (N-S wall x 0.57-0.68 turning east at y 5.76-5.86); b = south face of the thick WC/stair block wall y 6.93-7.23. The corridor's own door (jambs at x 1.02-1.12, red swing) is 0.4 m east and its swing sweeps over this line; otherwise open floor. Wall corner facing the side of a perpendicular wall across a corridor."
+    },
+    {
+     "cid": "P-11",
+     "verdict": "mouth",
+     "confidence": "medium",
+     "evidence": "Presidential, diagonal, 3.54 m: the NE side of the kitchen. a = top end of the east wall mass (the wall continues SE in the same -60 deg line); b = south face of the long 30 deg north wall at (202.19,-3488.30), perpendicular to the segment and unbroken. Between: open floor (counters outlined in grey; a free-standing slab at x 204.05-204.6 stands beside it). Wall end facing the side of a perpendicular wall = open end of the kitchen space."
+    },
+    {
+     "cid": "P-12",
+     "verdict": "not-opening",
+     "confidence": "medium",
+     "evidence": "Sukhumvit upper, vertical x=113.495 from y=15.41 to 17.91 (2.5 m). The master suite's east wall x 113.45-113.55 is collinear above (5.4 m) and below (4.8 m), but the 1.55 m deep bay between them (x 112.07-113.6) has a window line (blue, x 112.05) across its back, a planter strip (TREE layer lines x 113.345 / 113.595), dashed hidden X lines (void/planter) and walls on its north and south sides. An exterior recess with glazing drawn across it; nothing to walk through."
+    },
+    {
+     "cid": "P-13",
+     "verdict": "real-passage",
+     "confidence": "high",
+     "evidence": "Bank L2 restroom lobby, horizontal y=9.655 from x=-2.51 to -1.28 (1.23 m). Gap in the main E-W wall y 9.6-9.7: the left piece (3.1 m) ends at x -2.5, the right piece (2.5 m, with a N-S stub x -1.28..-1.18 going south) starts at x -1.28: collinear wall ends, wall carries on both sides. Nothing is drawn in the gap; the two restroom doors hinged at its jambs (red frames) swing outside the gap line, in the vestibule and side rooms. Doorless entrance to the restroom vestibule (T-bar wall y 10.5-10.6 above)."
+    },
+    {
+     "cid": "P-14",
+     "verdict": "not-opening",
+     "confidence": "medium",
+     "evidence": "Presidential, vertical x=200.68 from y=-3503.80 to -3501.29 (2.5 m). a = top of a 0.07 m jamb at the east end of a 2.05 m niche (x 198.65-200.7, 0.4 m deep) cut into the south face of the E-W wall y -3503.72/-3503.82; the wall's north face line runs unbroken across x=200.68, so the segment starts inside a continuous wall. b = south face of the oblique (30 deg) closet/bath wall near its corner. Between: open bathroom floor with the vanity. A recess with a wall face drawn across it plus a span across a room; no wall line interrupted."
+    },
+    {
+     "cid": "P-15",
+     "verdict": "mouth",
+     "confidence": "medium",
+     "evidence": "Bank L2, horizontal y=4.962 from x=-0.78 to 2.20 (3.0 m): the open front of a small desk room. a = east end of a 0.55 m E-W stub that turns the room's west wall (x -1.3..-1.2, y 5.0-7.5) at its SW corner; b = bottom end of a thin N-S line x 2.2 coming down from the north wall (y 7.0). Between: open floor with desk/chair outlines; nothing continues the line y=5 east of b. Two perpendicular wall ends bounding the open end of a space (the real door of the zone is the one at x -2.3..-1.35 on the same line to the west)."
+    },
+    {
+     "cid": "P-16",
+     "verdict": "real-passage",
+     "confidence": "high",
+     "evidence": "Sukhumvit ground, horizontal y=19.409 from x=12.95 to 14.15 (1.2 m). Doorless doorway at the north end of the N-S corridor x 12.95-14.85: the E-W wall y 19.36-19.46 comes from the west (5.2 m) and stops at x 12.95 (L-return); the east piece starts at x 14.15 and runs 0.8 m to the corridor's east wall, from where the window line of the link corridor continues east. Collinear wall ends 1.2 m apart, nothing in the gap. Leads from the vestibule (y 19.46-21.1) into the corridor to the south rooms."
+    },
+    {
+     "cid": "P-17",
+     "verdict": "mouth",
+     "confidence": "high",
+     "evidence": "Presidential, diagonal, 2.14 m. a = outer NE corner of the closet wall block (a wall return runs 0.9 m on from a in the same direction, away from b); b = south face of the E-W wall at (203.67,-3496.47), perpendicular to the segment (wall and A-4. Dim glass line continue both ways, unbroken). The gap holds only a curtain/bed outline (A-1.Netthay, grey): open floor. A corner facing the side of a perpendicular wall across an aisle."
+    },
+    {
+     "cid": "P-18",
+     "verdict": "mouth",
+     "confidence": "high",
+     "evidence": "Bank L2 restroom, horizontal y=10.742 from x=-3.99 to -1.78 (2.2 m). a = east end of the E-W partition y 10.68-10.79 between the two WC cubicles (the partition runs 1.4 m west; door jambs and red swings at its end); b = west face of the T-stem wall x -1.78..-1.66 (y 10.6-11.6) between the two washbasins. Between: open restroom floor (a washbasin outline only). Partition end facing the side of a perpendicular wall across an aisle."
+    },
+    {
+     "cid": "P-19",
+     "verdict": "mouth",
+     "confidence": "high",
+     "evidence": "Sukhumvit upper, horizontal y=17.959 from x=106.42 to 107.55 (1.13 m): the same N-S strip as P-05, 3.5 m north. b = east face of the continuous outer wall (x 106.3-106.43); a = NW corner of the wardrobe block (E-W wall y 17.9-18.06 running 4.4 m east from x 107.55, its N-S wall going south). Nothing is drawn across and no wall line is interrupted (nothing exists on this line west of the outer wall except the grid axis); north of the corner the strip opens into the living area."
+    },
+    {
+     "cid": "P-20",
+     "verdict": "not-opening",
+     "confidence": "medium",
+     "evidence": "Sukhumvit ground, vertical x=12.90 from y=15.86 to 19.16 (3.3 m), the gym's east wall. The double-line wall stubs at the north (y 19.16-19.46) and south (y 15.0-15.86) ends are joined by a single WALL-layer line at x=12.948 that runs along the whole 3.3 m (it is the east face line of both stubs); only the west face line is missing. The 'gap' is closed by a drawn wall line (no jambs, no door, no break) - not an opening."
+    },
+    {
+     "cid": "P-21",
+     "verdict": "mouth",
+     "confidence": "medium",
+     "evidence": "Sukhumvit upper, vertical x=85.22 from y=16.71 to 18.56 (1.85 m). a = north end of the thin left reveal (x 85.17-85.27, y 15.76-16.71) of the bathroom slot; b = south face of the wardrobe E-W wall y 18.56-18.66 right at its east end (x 85.27). 1.85 m of open bedroom floor (armchair outline) between; north of b the line x=85.27 continues only as a dashed hidden rectangle. Wall end facing the side of a perpendicular wall across an aisle."
+    },
+    {
+     "cid": "P-22",
+     "verdict": "mouth",
+     "confidence": "medium",
+     "evidence": "Sukhumvit upper, horizontal y=21.009 from x=82.02 to 83.85 (1.83 m). a = west end of a free-standing 1.4 m partition (E-W, y 20.96-21.06, x 83.85-85.27); b = west facade line x 82.02, where the solid wall (running north) ends at y 20.96 and the glass window (cyan WALL-GL, y 19.4-20.9) begins. Between: open floor; no wall line is interrupted. Partition end facing the side of a perpendicular wall/facade across an aisle."
+    },
+    {
+     "cid": "P-23",
+     "verdict": "real-passage",
+     "confidence": "high",
+     "evidence": "Sukhumvit upper, vertical x=93.395 from y=19.41 to 21.16 (1.75 m). Opening in the N-S wall line x 93.28-93.53 where the glazed link corridor (window lines y 19.38 and y 21.2 coming from the west wing) meets the central block: the wall pieces end in 0.25 m COL piers at y 19.41 (south piece) and y 21.16 (north piece) with D-JAMB frame blocks around both ends; nothing between them (no door, glass or wall); the wall carries on beyond (north 2+ m, south wall then window). The dashed void X lines start at the piers but leave the corridor band y 19.3-21.2 clear. Doorless opening."
+    },
+    {
+     "cid": "P-24",
+     "verdict": "mouth",
+     "confidence": "high",
+     "evidence": "Sukhumvit upper, horizontal y=21.259 from x=99.12 to 100.67 (1.55 m): the south mouth of a 1.5 m N-S passage east of the stair enclosure. a = SE corner of the stair-enclosure box (E-W wall y 21.16-21.36 running 5.6 m west, N-S wall x 98.95-99.12 going north); b = 0.25 m column at the south end of the east N-S wall x 100.65-100.9 (runs north to the north wall). The walls on both sides are parallel to the passage and simply end at this line; only floor between. A corridor seen in section, no wall line interrupted."
+    },
+    {
+     "cid": "P-25",
+     "verdict": "not-opening",
+     "confidence": "medium",
+     "evidence": "Sukhumvit upper, horizontal y=18.058 from x=113.55 to 114.32 (0.77 m): a 0.6-0.8 m N-S slot between two blocks. b = east side/NE corner of the master suite (E-W wall y 17.9-18.0 ends at x 113.55, D-JAMB lines along its outside); a = SW corner of the stair block (E-W wall y 17.96-18.16 from x 114.22, column at the corner). The slot (x 113.6-114.22, y 14.5-22.5) is crossed by long dashed hidden X lines (void / open-to-below symbol): collinear wall ends, but the gap is a drawn void between buildings and too narrow for a passage. Alternative: mouth."
+    },
+    {
+     "cid": "P-26",
+     "verdict": "mouth",
+     "confidence": "medium",
+     "evidence": "Presidential, diagonal (-30 deg), 1.21 m. a = T-shaped stub end (0.43 m jamb-like piece with A-4. Dim jamb lines) at the end of the closet's diagonal south wall, which runs 1.4-1.7 m back in the same line; b = west face of the long 60 deg wall of the bathroom block (it ends in a cap about 1 m up-wall from b and turns at a corner 0.5 m down-wall), perpendicular to the segment and unbroken. The gap holds only grey door-swing sectors on A-1.Netthay (no leaf closes it). Wall end facing the side of a perpendicular wall: mouth (functionally a door-width throat between two zones)."
+    },
+    {
+     "cid": "P-27",
+     "verdict": "mouth",
+     "confidence": "low",
+     "evidence": "Sukhumvit upper, horizontal y=14.507 from x=108.30 to 109.45 (1.15 m): the entry of the walk-in wardrobe. a = east end of the 0.75 m E-W stub (L-corner of the inner wall x 107.55-107.65); b = west face of the short N-S wall x 109.45-109.55 (y 14.5-15.5) at its jamb end (the bath door, red swing, is just below b in the x=109.5 line). Open floor between; nothing continues the y=14.5 line east of b (the vanity alcove is open to the south). A wall end facing the side of a perpendicular wall = mouth, although it works as a cased doorway."
+    },
+    {
+     "cid": "P-28",
+     "verdict": "mouth",
+     "confidence": "high",
+     "evidence": "Bank L1, vertical x=3.22 from y=5.86 to 6.93 (1.08 m): the same E-W corridor as P-10, 2.6 m further east. a = south end of the N-S wall x 3.15-3.25 (east wall of the WC, y 6.93-8.5) beside the WC door jamb; b = north face of the long continuous meeting-room wall y 5.76-5.86. Open corridor floor between. Wall corner facing the side of a perpendicular wall across a corridor."
+    },
+    {
+     "cid": "P-29",
+     "verdict": "not-opening",
+     "confidence": "medium",
+     "evidence": "Sukhumvit upper, horizontal y=21.159 from x=116.27 to 118.05 (1.78 m). The line runs from a 0.85 m stub (y 21.1-21.2, east end at a) across the vestibule, through the swing arc of the right-hand WC cubicle's door (blue WIN arc; door opening in the N-S wall x 117.1 at y 20.95-21.5) and the cubicle to the cubicle's east wall x 118.0-118.15 (b). The only opening on this line is that existing door; the segment is a line of sight across a room, not a gap in a wall line."
+    },
+    {
+     "cid": "P-30",
+     "verdict": "real-passage",
+     "confidence": "high",
+     "evidence": "Sukhumvit ground, vertical x=14.90 from y=19.46 to 21.10 (1.65 m). Doorless opening in the N-S wall x 14.85-14.95: the south piece (2.85 m, turning west as the E-W wall y 19.36-19.46) and the north piece (3.7 m, turning west as the wall y 21.1-21.2) are collinear; D-JAMB blocks mark both jambs and the glazed link corridor (blue window lines at y 19.33 and y 21.2) starts right outside. Nothing in the gap; the wall carries on both sides."
+    },
+    {
+     "cid": "P-31",
+     "verdict": "not-opening",
+     "confidence": "high",
+     "evidence": "Sukhumvit ground, vertical x=14.90 from y=15.81 to 16.61 (0.8 m). The N-S wall x 14.85-14.95 is open for 0.8 m between two E-W stubs, but the cell behind it has a window (blue WIN lines + D-JAMB, x 14.15-14.25, y 15.9-16.55) at its west back and a planter box (TREE layer lines x 14.398 and x 14.948, spanning exactly y 15.86-16.61) standing in the opening. Closed by drawn elements (window + planter): a planter niche, not a walk-through."
+    },
+    {
+     "cid": "P-32",
+     "verdict": "mouth",
+     "confidence": "high",
+     "evidence": "Sukhumvit upper, horizontal y=11.909 from x=106.42 to 107.55 (1.13 m): the same N-S strip as P-05, 2.6 m south. b = east face of the continuous outer wall x 106.3-106.43; a = SW corner of the wardrobe/bath block (E-W wall y 11.85-11.95 running 4-6 m east from x 107.55, with a short N-S stub going up). Nothing drawn across; the strip opens south into the bedroom. Corner facing the side of a perpendicular wall across a corridor."
+    },
+    {
+     "cid": "P-33",
+     "verdict": "real-passage",
+     "confidence": "low",
+     "evidence": "Presidential, horizontal y=-3505.278 from x=195.91 to 197.01 (1.1 m): the south end of the aisle between two wardrobe blocks (U-shaped wall-layer outlines 0.76 m deep with clothes rails drawn inside, open to the aisle). The bottom walls y -3505.23/-3505.32 of the left (x 195.17-195.91) and right (x 197.0-197.85) block are collinear end faces 1.1 m apart; each turns north at its far end. Nothing in the gap; the closet's Defpoints room outline passes across it. A door-width gap between two collinear wall ends (doorless opening of the walk-in closet). Doubt: may be read as the end of an aisle between joinery (mouth / not-opening)."
+    },
+    {
+     "cid": "P-34",
+     "verdict": "real-passage",
+     "confidence": "low",
+     "evidence": "Sukhumvit ground, vertical x=40.293 from y=15.56 to 17.11 (1.55 m), on the grid axis x=40.29. a = SW corner of the stair-enclosure box (N-S wall x 40.19-40.39 running 5 m north, E-W wall y 17.11-17.21 going east); b = north end face of a 0.4 m wide long wall box (x 40.09-40.49, H column symbols) running south. Only the grid axis and a dashed HIDDEN outline (x 40.09) lie in the gap. Two collinear wall ends facing across open air, each carrying on; but they are exterior stair/box elements rather than a wall of the house."
+    },
+    {
+     "cid": "P-35",
+     "verdict": "mouth",
+     "confidence": "medium",
+     "evidence": "Bank L1, horizontal y=3.208 from x=4.80 to 6.03 (1.23 m). a = east face of the N-S meeting-room wall x 4.72-4.8 at its T-junction with the E-W wall y 3.16-3.26 (the wall continues both ways; the room's glass door is just north); b = west face of a 0.35 x 0.8 m column (S-COLS) in the storefront curtain-wall line (glass x 6.0-6.2). 1.23 m of open lobby floor between. A pier facing the side of a perpendicular wall across a lobby."
+    },
+    {
+     "cid": "P-36",
+     "verdict": "mouth",
+     "confidence": "high",
+     "evidence": "Sukhumvit ground, vertical x=34.423 from y=16.96 to 19.16 (2.2 m). a = north end of the 0.1 m N-S wall x 34.37-34.47 (west wall of the WC; it projects 0.65 m north of its T with the E-W wall y 16.3); b = south face of the continuous E-W wall y 19.16-19.26 (4 m wide). Open floor between (only hidden-line FUR door symbols). Partition end facing the side of a perpendicular wall across an aisle."
+    }
+   ],
+   "method": "Judged from the drawing alone with the shared prims cache (no detector output, keys or plan files read). For each of the 36 places: rendered it at 3 m and 7 m with my own renderer (solid wall lines black, columns brown, axis/hidden/dashed wall-layer lines orange dashed so grid axes are not mistaken for walls, door/window/glass/jamb layers coloured, candidate segment drawn with ends a/b); listed the layers, linetypes and block paths of everything around both ends and along the segment; and ran a script that, per end, measures whether a collinear wall continues outward or the end lies on the side/end of a perpendicular wall, and whether any solid wall/door/glass/window line crosses or runs along the segment (only P-20 has a solid wall line along it; all other lines along segments are dashed grid axes or hidden outlines). Rule used: real-passage = both ends are end faces of collinear wall(s) that carry on beyond them, with nothing solid drawn across (doorless doorway/opening); mouth = one end meets the side (or end/pier/corner) of a wall perpendicular to the segment, i.e. a corridor, aisle or room open side seen in section; not-opening = closed or explained by a drawn element (single wall line, window+planter niche, void X symbol), a niche/recess, or a span across a room/door. Lower confidence where the wall pieces may be joinery or exterior structures (P-03, P-08, P-33, P-34) or where a mouth works functionally as a cased doorway (P-26, P-27). Result: 10 real-passage (P-03, P-06, P-07, P-08, P-13, P-16, P-23, P-30, P-33, P-34; high confidence for P-06, P-13, P-16, P-23, P-30), 19 mouth, 7 not-opening. Written to C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/fix4/review/blind-removed-B/audit.json"
+  }
+ },
+ {
+  "kind": "review",
+  "key": "mouths",
+  "r": {
+   "findings": [
+    {
+     "id": "M-01",
+     "severity": "high",
+     "area": "interrupts_wall_line: faces-run-on / collinear-strip clauses (far wall of another thickness)",
+     "summary": "A doorway between two collinear wall ends of different thickness, centred on the same axis, is deleted as soon as the thicknesses differ by more than 0.06 m. The original detector and the unpatched merge both report it. In the real data the only doorway of this kind (l29 AUD-01, a 0.3 m wall against a 0.1 m wall, added to the tower key by the audit) survives only because one face happens to be flush; the same pair centred would be dropped.",
+     "repro": "cd <folder>; python -B t2.py A  (scene: 16x12 m shell, partition A t=0.2 to x=0, empty gap 1.2 m, wall F of thickness tF centred on the same axis from x=1.2; orig / B / C side by side with the clause trace). C: LOST for tF=0.10, 0.12, 0.27, 0.28, 0.30, 0.35 (tA=0.2) and for (tA,tF)=(0.1,0.2) (0.1,0.3) (0.12,0.3) (0.3,0.2) (0.3,0.12) (0.15,0.25); also at widths 0.9, 1.6, 2.4, 3.2 m. Trace: 'MOUTH lo=+0.05 hi=+0.05 => DROP'. Kept: tF 0.16-0.26 (|dt| <= 0.05) and every one-face-flush pair (rows T2 of t1.py). Real case: l29 AUD-01 (far wall thicker, flush on one face; instr log: faces run on 0.88 m past the far end on that face only).",
+     "suggestedFix": "Judge continuation on the axis, not on the two faces: a far-end block that is centred (|lo-hi| <= FACE_TOL) and stands out <= 0.35 m past each face (wall of another thickness, pier, column) and whose material goes on >= WALL_RUN along the centre line carries the wall line. Prototype (axisfix.py): six drawings unchanged (139/143, 54/54), +1 extra (sukhumvit ground-034, a 0.5 m pier); all A/B/J synthetic cases come back, all cross-wall mouths (plain T, 45-90 deg diagonals) stay dropped (axisfix_syn.py).",
+     "expected": "passage reported (orig and B report it, width 1.2 m)",
+     "actual": "no opening: interrupts_wall_line returns False (MOUTH, lo=hi=+0.05)"
+    },
+    {
+     "id": "M-02",
+     "severity": "medium",
+     "area": "interrupts_wall_line: far end = column / pier / thick cross wall / jamb returns",
+     "summary": "A doorway whose far end is a column or pier (square or round) standing out more than 0.03 m past each face, a cross wall of >= 0.25 m followed by the continuing partition, or a far wall with door-frame returns >= 0.25 m long, is deleted. CROSS_PIECE = 0.20 deliberately drops the L30-026-type corridor crossing (0.30 m cross wall), but geometrically a doorway next to a 0.25-0.5 m cross wall is the same picture, so the price is these real cases.",
+     "repro": "cd <folder>; python -B t2.py B C ; python -B t4.py (groups B, C, J). Column on layer COL, centred in the 0.2 partition line, partition continuing beyond: side 0.25 kept; 0.3, 0.4, 0.5, 0.6, 0.8 LOST (orig/B: passage 1.2); round 0.3, 0.4, 0.6 LOST. Cross wall (3 m each way, thick ones drawn as fills) at the far end followed by the partition: t=0.10, 0.15 kept, t=0.25, 0.3, 0.4, 0.5 LOST. Far wall with 0.05 m deep jamb pieces on both faces: up to 0.2 m long kept, 0.25, 0.3, 0.4 LOST.",
+     "suggestedFix": "Columns, piers, jamb returns: see M-01 (axis continuation of a centred block <= 0.35 m past each face). Cross walls: no geometric test separates a doorway beside a 0.25-0.5 m cross wall from a corridor crossing; keep them but emit low confidence with evidence 'beside a cross wall' instead of deleting, so the gate does not depend on the guess.",
+     "expected": "passage reported (orig and B)",
+     "actual": "no opening (MOUTH lo=hi=+0.05..+0.30, or +2.9/+2.9 for the cross wall)"
+    },
+    {
+     "id": "M-03",
+     "severity": "medium",
+     "area": "interrupts_wall_line: door-sized flush-corner clause (DOORWAY 1.4, FACE_TOL 0.03)",
+     "summary": "At an L-corner the only keep condition is a corner face flush within 3 cm and a width <= 1.4 m. A real opening 1.5-3.0 m wide, or one whose corner face is 4 cm or more off the wall face, is deleted; the same numbers keep a 1.4 m mouth. The clause exists for one key (UW-06, 1.30 m: DOORWAY below 1.32 loses it); the upper bound rests on two or three false 1.55-1.60 m corridor mouths (upper-039, L29-027, ...). 11 of the 32 scored key passages are 1.5-3.3 m wide (GE-02 1.50 ... GW-10 3.30), so wide passages are normal in this data.",
+     "repro": "cd <folder>; python -B t2.py D E. Partition end -> flush L-corner of a cross wall (t 0.1-0.3): w=1.2 kept, w=1.5 LOST ('MOUTH(flush, wide)'); corner face offset 0.04, 0.05, 0.08, 0.10 LOST (0.03: coin flip, see M-04); doorway between two L-corners: w <= 1.3 kept, 1.5, 1.6, 2.0, 2.5 LOST. python -B sweep.py DOORWAY: 1.32-1.55 identical, 1.6 adds 3 extras, below 1.32 loses UW-06. orig / B keep every one of these.",
+     "suggestedFix": "Either keep flush corners up to the wall-end limit (3.6 m, 2.75 m from an L-corner) when a wall carries on past the far corner, or emit them with low confidence and evidence 'flush corners, wider than a door' instead of deleting. Do the flush test on the corner face line with the same epsilon as elsewhere (M-04).",
+     "expected": "passage reported (orig and B)",
+     "actual": "dropped as MOUTH (flush but wide, or corner face > 0.03 m off)"
+    },
+    {
+     "id": "M-04",
+     "severity": "medium",
+     "area": "constants CROSS_PIECE / WALL_RUN / DOORWAY / FACE_TOL: nominal values, no epsilon",
+     "summary": "Four constants sit exactly on common nominal dimensions and are compared with <= / >= without a tolerance: CROSS_PIECE 0.20 (a 200 mm cross wall), WALL_RUN 0.45 (a 450 mm wall), DOORWAY 1.40 (a 1400 mm opening; the tower has 1400 lift openings), FACE_TOL 0.03 (half of a 60 mm thickness difference). Whether such a scene is kept or dropped then depends only on where it is drawn (translation, rotation, mirror, item order). On the real drawings the twin facade details upper-026 (y=23.31, kept by the ragged-end clause) and its mirror at y=18.06 (dropped: corner 0.05 off the face) get opposite verdicts.",
+     "repro": "cd <folder>; python -B t3.py (118 s; output t3_out.txt; 24 variants per scene: rotations 0/90/180/270/37/-123.5/11.25 x mirror, shifts up to (-1234.5, 5678.9), 3 item shuffles, reversed polylines; scenes from t2.py all_scenes()). 5 of 61 scenes are inconsistent, everything else is identical in all 24 variants: A tA=0.2 tF=0.14 kept 17/24, tF=0.26 kept 19/24, cross wall 0.20 + continuing partition kept 6/24, thick-corner t=0.45 w=1.5 kept 20/24, two corners w=1.4 kept 19/24.",
+     "suggestedFix": "Inclusive comparisons with a 0.5 mm epsilon (CROSS_PIECE+0.0005, WALL_RUN-0.0005, DOORWAY+0.0005, FACE_TOL+0.0005): the five scenes become 24/24 and the six drawings are unchanged (eps_test.py). Better, also move the constants off nominal values inside their measured plateaus: WALL_RUN 0.6 (0.25-0.9), CROSS_PIECE 0.17 or 0.23 (0.15-0.25), DOORWAY 1.45 (1.32-1.55), FACE_TOL 0.035 (0.03-0.04).",
+     "expected": "same verdict for the same geometry wherever it is drawn",
+     "actual": "verdict flips with a translation/rotation of the drawing"
+    },
+    {
+     "id": "M-05",
+     "severity": "medium",
+     "area": "mouths that survive the rule",
+     "summary": "The rule drops 'a wall end facing the side of a wall' but keeps: (a) the flush corner of any cross wall >= 0.45 m thick (the end face alone passes WALL_RUN), at any width up to 3.6 m; (b) a far wall at about 30 deg, or any end the centre line misses by more than 0.1 m (ragged end, fail-open: keeps suite-021 against a round column and upper-026); (c) a doorway beside a thin (<= 0.15 m) cross wall with the partition continuing (bank1 L1-023); (d) two collinear wall ends facing each other across a corridor or open space, which looks exactly like a doorway (suite-004, suite-017, L30-029 and others of the 14 remaining extras); (e) any T mouth with door-layer lines at both ends. The doc claim 'the corner of a wall that turns away: its end face is as long as the wall is thick' is false for walls >= WALL_RUN, and the data contain 0.4-0.5 m walls (GE-20 t=0.50, L30-024 t=0.50).",
+     "repro": "cd <folder>; python -B t4.py (groups K, O); python -B t2.py F; python -B t6.py (Fr). K: partition end -> flush corner of a cross wall t=0.45, 0.5, 0.6, 0.8, w=1.2/2.0/2.7: C still reports a passage in all 12 (t=0.4 is dropped for w >= 2.0). F: diagonal wall at 30 deg kept via 'ragged end', 45-90 deg dropped. O: two collinear 0.2 partition ends 1.2-3.5 m apart kept. Fr: T mouth with DOOR lines at both ends kept. Real data: extras_clause.py lists the clause that keeps each of the 13 passage extras (8 faces-run-on, 3 collinear-strip, 2 ragged).",
+     "suggestedFix": "(a) WALL_RUN 0.6 (plateau 0.25-0.9) or require the run-on face to belong to a strip along the gap axis, not to the end face of a perpendicular wall (section across the far end <= 0.55 m). (b) keep a ragged end only when the far material is a wall end within 1 m (O1) and flag it. (c)-(e) cannot be told apart geometrically: emit low confidence, do not claim they are removed.",
+     "expected": "mouth removed",
+     "actual": "reported as a passage"
+    },
+    {
+     "id": "M-06",
+     "severity": "medium",
+     "area": "evidence behind the keep-clauses (how safe is the closed list)",
+     "summary": "Ablation on the six drawings: faces-run-on protects 7 scored keys; ragged end, door-sized flush corners and drawn frame protect exactly one each (O1, UW-06, L29W-06); the collinear-strip clause protects no key (everything it keeps also passes faces-run-on) and keeps one extra (suite-008, a 0.10 m stub); the unbroken-face clause removes one extra (L29-016). The default for any configuration not enumerated is DROP, and the list was enumerated from the same 32 keys it is scored on. Plateaus: WALL_RUN identical from 0.25 to 0.9 (no evidence inside), FACE_REACH identical 0.02-0.33, CROSS_PIECE 0.15-0.25, DOORWAY 1.32-1.55, each edge set by one or two items. Smallest margins: UW-07 and L30W-24 pass faces-run-on by 0.05 m (run 0.50 vs 0.45). Safe in direction (a keep-clause can only add recall) but not in coverage. A T-only variant (delete only when material stands out >= 0.15 m past BOTH faces, keep everything else) gives the same 139/143 and 54/54 with 27 instead of 14 extras: the other 13 deletions come from the offset-corner / wide-corner / other-thickness classes, each supported by 1-2 items; 32 of the 43 removed passages end on a true T side.",
+     "repro": "cd <folder>; python -B abl.py (about 3 min): no frame clause -> tower 53/54 (L29W-06); no ragged -> old 138/143 (O1) and extras -2; no flush -> old 138/143 (UW-06); no faces-run-on -> old 133/143, tower 53/54 (GE-20, GW-05, GW-10, UE-23, UE-30, UW-10, L30W-10), extras 7; no collinear -> no key lost, extras 13; no unbroken -> extras 15. python -B sweep.py (sweep_out.txt); python -B margins.py; python -B tonly.py; python -B removed3.py (end classification of all 43 removed passages).",
+     "suggestedFix": "Do not treat 139/143 and 54/54 as held-out after this patch (every constant was swept on exactly these floors). Validate on a 5th drawing before freezing; until then prefer deleting on positive evidence only (T side: 32 of 43) and flag the other classes (confidence 0.2, evidence 'mouth?') rather than deleting."
+    },
+    {
+     "id": "M-07",
+     "severity": "medium",
+     "area": "claim '0 of 32 scored key passages end on the flat side of a wall': verified, but it is the key's own definition",
+     "summary": "Verified from the wall solid at both ends of all 50 key passages (tcheck.py): none of the 32 scored key passages has an end on the side of a wall (64 ends: 21 corners, 40 same-thickness wall ends, 2 other-thickness wall ends, 1 free). 7 of the 18 optional keys do (UW-20, UE-19, UE-21, UE-25, UE-29, UE-31, B1-99). But the keys define a passage as interrupting a wall line (old key: T-ended ones are the optional 'passage mouths'; tower key, rejected list: 'No wall line is interrupted'), so 0/32 follows from the key's convention and is not independent evidence; the key is not consistent either (the three identical hotel bays upper-036/037/040: two optional, one plain extra; three T-ended optional keys are never detected). The patch changes no gate number (139/143 and 54/54 before and after): its whole benefit is precision (extras 53 -> 14) and its whole exposure is recall on the next drawing. L29 and L30 are two floors of one tower: 6 of the 21 removed tower passages are the same detail twice (about 15 distinct), and these floors, which scored 72 % in the hold-out, are now in-sample.",
+     "repro": "cd <folder>; python -B tcheck.py (prints both end classes of every key passage and the counts); python -B removed2.py (B vs C: 52 -> 30 passages old, 41 -> 20 tower; 22 old = 18 extras + 4 optional keys, 21 tower all extras); fix4/audit_verdicts_on_the_extras.json for the tower verdicts.",
+     "suggestedFix": "Ask the owner whether mouths are wanted in 3D at all (a passage object adds a lintel/frame; a mouth has no wall to cut). Report the gate on a 5th drawing and report extras separately from the gate."
+    },
+    {
+     "id": "M-08",
+     "severity": "low",
+     "area": "face_runs / collinear strip: angle tolerance 2 deg",
+     "summary": "A far wall that is collinear but turned by 2.5 deg or more (a kink, an angled facade; edges and strips are matched within 2 deg) is deleted; the original and the unpatched merge keep it. L29 has a facade 5 deg off the axis.",
+     "repro": "cd <folder>; python -B t5.py (group H): far wall turned about the gap end by 0.5, 1, 1.5, 2 deg kept; 2.5, 3, 5, 8, 12 deg LOST (trace 'MOUTH lo=-0.01..-0.08'). (Lateral jogs >= 0.04 m are already lost in orig / B: not new.)",
+     "suggestedFix": "Match the far wall by angle <= 8 deg when the centre line continues, or use the axis test of M-01.",
+     "expected": "passage reported",
+     "actual": "no opening"
+    },
+    {
+     "id": "M-09",
+     "severity": "low",
+     "area": "documentation / code mismatches",
+     "summary": "(i) Rule 7 and the docstring say 'door-sized between two corners whose faces are flush' but the code inspects only the far end: a free wall end facing a flush corner <= 1.4 m is kept. (ii) far_face docstring: lo = left, hi = right; the code returns lo = extent on the right of a->b, hi = left (harmless). (iii) 'found from both ends' is an artefact: every strip exists in two oriented copies, so of the 109 gaps that reach the rule 105 have far = 'end' (86 only through the duplicate copy, 19 by a collinear strip) and 4 'face'. The 'end' branch of passage_ok (3.6 m limit, and the early return True that skips the 'building on both sides' test) therefore applies to every cap gap including mouths: this is the root cause of the mouths; the patch adds a separate test and leaves g.far meaningless. (iv) 'its end face is as long as the wall is thick' is false for walls >= WALL_RUN (M-05).",
+     "repro": "cd <folder>; python -B instr.py (writes instr_log.pkl, one record per gap that reaches interrupts_wall_line) and count near/far and how_end: near/far of the 109 gaps = {(cap,end): 68, (L,end): 37, (L,face): 4}; how_end = {found from both ends: 86, collinear strip: 19, none: 4}. D-group scenes in t2.py show (i).",
+     "suggestedFix": "Type far from what is actually there (collinear strip or not) and drop the duplicate-copy promotion; delete or rename the dead 'face' branch; correct the doc text."
+    },
+    {
+     "id": "M-10",
+     "severity": "low",
+     "area": "order / rigid-motion sensitivity of the detector (pre-existing, same in B and C)",
+     "summary": "The mouth rule itself adds no order dependence (every M decision on the six real drawings is the same under item shuffles, reversed polylines, rotation 37 / 90 deg, mirror, shifts of 1000 m), but the detector as a whole is not invariant: shuffling the cache items changes 6-12 detections per run (window ends, door/passage assignment: l30 passage (18.04,-45.16)-(18.04,-43.88) becomes a door in 3 of 5 shuffles; l29 door ends), rotation 37 deg changes 5 openings, shift / mirror 2-4, identically in B and C.",
+     "repro": "cd <folder>; python -B shuf_real.py ; python -B rot_real.py (both run B and C on all six drawings and list the differences).",
+     "suggestedFix": "Not part of M: sort items canonically at load and make the swing-to-gap tie-break deterministic."
+    },
+    {
+     "id": "M-11",
+     "severity": "low",
+     "area": "speed on a large drawing",
+     "summary": "The patch itself is cheap: 0.9 ms per gap (face_runs is O(edges) per gap; 1104 gaps x 6700 edges = about 1 s of a 121 s run). The detector as a whole is slow on large floors in B and C alike: a 24 x 24 grid of rooms (2212 wall items, 1104 doorways) takes 121-143 s (walls 70 s, gaps and swings 50 s) and trips the 60 s warning; 12 x 12 takes 12 s. A big tower floor with a dense wall layer will hit this.",
+     "repro": "cd <folder>; python -B big.py 24 (B and C timings); python -B big2.py 24 (time inside interrupts_wall_line / face_runs / far_face / wall_edges).",
+     "suggestedFix": "Not part of M: the quadratic parts are find_strips and the gaps x strips loop in strip_gaps; face_runs could use the existing STRtree if a floor has more than about 50k wall edges."
+    }
+   ],
+   "checkedWhat": "Folder (<folder>) = C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/fix4/review/mouths ; full text in findings.json there. Read the merged openings.py, the two diffs and the keys; reran the regression harness on my copy (139/143, 8 extras; 54/54, 6 extras; identical to the baseline). Built a synthetic-scene harness (syn.py: prims-format items, original / B / C side by side, clause trace of interrupts_wall_line; t2.py, t4.py, t5.py, t6.py, t8.py) with more than 140 scenes: collinear walls of other thickness, centred square and round columns, cross walls 0.1-0.5 with and without a continuing partition, L-corners (flush offset 0-0.1, widths 0.9-3.0), two corners, jamb returns, piers, lateral jogs 0-0.3, skew 0.5-12 deg, diagonals 30-90 deg, arcs R 0.3-4, thick-corner mouths 0.4-0.8, collinear ends across a corridor, sills, framed mouth; the 61 scenes of all_scenes() in 24 variants each (rotations, mirror, shifts to 1e6 m, item shuffles, reversed polylines: t3.py, 118 s, t3_out.txt). On the six real drawings: ablation of each clause (abl.py), sweep of each constant (sweep.py, sweep_out.txt), margins of all 109 decisions (margins.py), T-only variant (tonly.py), prototype fixes (axisfix.py, axisfix_syn.py, eps_test.py), item-shuffle and rotate/mirror/shift runs (shuf_real.py, rot_real.py). Verified the 0-of-32 claim by classifying both ends of all 50 key passages from the wall solid (tcheck.py): true, see M-07 (it is also the key's own convention). Listed the 22 older passages removed (+21 tower: removed2.py, removed3.py) and the 14 remaining extras, viewed the renders of all 22 older removed and 13 of the 14 extras (png/, sheets/) and used the audit verdicts for the tower. MY VIEW OF THE 22 OLDER REMOVED: all are mouths, none is clearly a real doorway: ground-023 (2.2 m, partition end across an open room to the side of a long wall), ground-034 (pier to wall), upper-019 (wall stub to closet corner, flush but 1.85 m), upper-020 (optional key UW-20, short wall end to wall side), upper-025 (partition end to the terrace line), upper-026 y=18.06 (0.77 m gap with D-JAMB at one end: the only ambiguous one, twin of the extra at y=23.31), upper-028 and upper-029 (partition end vs wall side across the stair lobby), upper-036 / -037 / -040 (the same 1.13 m hotel corridor bay three times; 036 and 040 are the optional keys UE-29 / UE-31), upper-039 (two corners, 1.55 m), suite-020 / -021 / -024 / -026 (free-form rotated walls and furniture: wall end against wall side or against a corner across open floor), L1-018 (optional key B1-99) and L1-026 (corridor between toilet block and room; a door arc drawn in it belongs to another door), L1-025 (partition corner to storefront pier in front of the entrance doors), L2-019 and L2-020 (WC lobby, in front of door swings), L2-021 (2.98 m between an L-foot and a free wall end in an open office). Of the 43 removed (22 old + 21 tower) 32 end on a true T side, 11 do not (ground-034, upper-019, upper-026, upper-039, suite-024, L2-020, L2-021, L29-016 unbroken face, L29-020, L29-027, L30-026): those 11 are the offset / wide / other-thickness classes. MY VIEW OF THE 8 OLDER EXTRAS THAT REMAIN: L1-023 (aisle between a partition end and a thin wall that continues behind it: A | gap | thin C | A-prime, kept by faces-run-on), suite-004 and suite-017 (gap between the ends of two U-shaped wall boxes, collinear same thickness: doorway pattern, probably fitted furniture; kept by collinear-strip / run-on), suite-006 (niche in a thin wall: two 0.4 m jamb returns with a back line; collinear-strip), suite-008 (free wall end to a 0.2 m stub on the envelope line; collinear-strip, 0.10 m stub), suite-021 (wall end against a round column A.Cot 1: kept only by the ragged-end clause), ground-030 (0.8 m gap in a wall line, wall on both sides, leading into a 0.75 m bay with a window and D-JAMB pieces: looks like a real opening the key does not list), upper-026 y=23.31 (0.67 m gap in the facade between collinear walls with D-JAMB lines: plausibly a real narrow opening; ragged-end; its twin at y=18.06 is deleted). The 6 tower extras: L29-020 / L30-028 (2.45 m open lobby bay in front of the real door NO_03), L29-022 / L30-031 (1.65 m corridor between a pier and the core wall, flush corner continuing), L30-029 (1.6 m N-S corridor crossing the E-W wall line between two collinear wall ends: audit 'split', identical to a doorway), L30-025 (a window, not touched by M). Code review: empty floor, no walls, zero-area / degenerate / NaN / inf / duplicate items, 1e6 m translation: no crash, same as B (t7.py); speed (big.py, big2.py): 0.9 ms per gap; order and rigid-motion dependence on the six real drawings (shuf_real.py, rot_real.py): the rule adds none. The patch changes only passages (no door or window anywhere; the 4 tower doors are patch G).",
+   "fragileRules": "CROSS_PIECE 0.20 (nominal partition thickness, coin flip; plateau 0.15-0.25 set by UE-23 and two false items); FACE_TOL 0.03 (half of a 0.06 wall-type difference; |dt| >= 0.07 deletes real doorways); DOORWAY 1.4 (nominal 1400 opening, rests on UW-06 1.30 m and false 1.55-1.60 m mouths; 11 of 32 key passages are wider than 1.5 m); the door-sized flush-corner clause (1 key); the ragged-end clause (fail-open, 1 key, keeps 2 extras and a 30 deg mouth; FACE_REACH plateau 0.02-0.33); the drawn-frame clause (1 key, overrides any mouth); WALL_RUN 0.45 (no evidence anywhere in 0.25-0.9, below the 0.5 m walls in the data, so thick corners pass); the collinear-strip clause (redundant for every key, keeps a 0.10 m stub); the 2 deg angle and 0.04 thickness tolerances; the closed default-DROP list built from the same 32 keys.",
+   "robustRules": "Deleting a plain T mouth (cross wall 0.1-0.5 m, any orientation, with or without a continuing partition >= 0.25 m; arcs R 0.3-4 m; diagonals 45-90 deg): 32 of the 43 removed passages end on a true T side and I found no clearly real doorway among the 43 (all 22 older viewed; tower via audit verdicts); keeping same-thickness or one-face-flush collinear walls, identical in all 24 rotation / mirror / shift (to 1e6 m) / item-order / polyline-direction variants; the rule changes only passages; no crash on empty, degenerate, NaN, inf or duplicate input; cost about 1 ms per gap; the unbroken-face clause (one extra, no key); every M decision on the six real drawings is unchanged by item order, mirror, rotation or shift."
+  }
+ },
+ {
+  "kind": "review",
+  "key": "glass",
+  "r": {
+   "findings": [
+    {
+     "id": "G1",
+     "severity": "medium",
+     "area": "trim_to_leaf: SIDELIGHT_MIN = 0.15 (stretch threshold)",
+     "summary": "The 0.15 m threshold sits exactly on a common nominal size (a 150 mm pane or reveal) and is a float '>=' test, so a 150 mm sidelight is trimmed or kept by floating-point noise: a symmetric door comes out off-centre in about half of the placements. The rule is also a step: sidelights of 0.14 m leave the door 1.28 m wide, 0.16 m make it 1.00 m wide (a 0.28 m jump). The data only support a threshold anywhere in (0.139, 0.20): the largest non-sidelit stretch is 0.139 m (1.1 cm below the threshold) and the smallest sidelit one is 0.200 m (5 cm above); the comment's 'any value 0.02-0.19 gives the same result' confirms that the six drawings do not pin 0.15 down (it is a policy choice), and it is not in the middle of the supported range (0.17).",
+     "repro": "cd C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/fix4/review/glass/scripts && PYTHONIOENCODING=utf-8 python -B t10_threshold_150.py  -> '150 mm sidelights both sides, leaf 1.0, G on: both trimmed 18, one side only 64, none 38' (door widths 1.00 / 1.15 / 1.30 over 120 random sheet positions with 3-decimal coordinates, rotation 0 or 90). Step: python -B matrix.py -> 'sidelight 0.14 each side, leaf 1.0': door[0.00..1.28] untouched; 'sidelight 0.16 each side': door[0.16..1.16] w 1.00. Margins on the real doors: python -B sweep_limits.py min 0.02 0.19 0.20 -> the same 4 changes for 0.02..0.19; at 0.20 some of the 0.200 m panes are already lost to float noise (L29-016 1.4 -> 1.2, L29-023 1.381 -> 1.1).",
+     "expected": "A symmetric door with equal 150 mm panes is treated the same on both sides (leaf-only 1.00 or full 1.30), whatever the sheet coordinates.",
+     "actual": "Both sides trimmed in 15 % of placements (1.00), one side only in 53 % (1.15, off-centre), none in 32 % (1.30).",
+     "suggestedFix": "Compare with a tolerance (lo >= SIDELIGHT_MIN - 0.005) or move SIDELIGHT_MIN into the empty part of the data range (0.17-0.18 m: above the 0.139 m reveal, below the 0.20 m panes), and decide the two sides together (if one side is a sidelight and the other stretch is within 2 cm of the threshold, trim both)."
+    },
+    {
+     "id": "G2",
+     "severity": "medium",
+     "area": "what becomes of the glass that is cut off (and the docstring's reason)",
+     "summary": "The glass beyond the leaf is dropped without a trace: a real window, glazed bay or casement standing beside the door in the same gap is neither part of the door any more nor reported as a window. The old code also lost it (inside the door), so the opening count does not regress, but G turns 'one wrong door' into 'one right door + one missed window' with no evidence of what was dropped (the evidence has no width or layer of the glass). The rule-4 sentence 'no window (a pane that short is no glazing band, rule 5)' is wrong for 2 of the 4 real doors: beside L29-023 and L29-024 there ARE glazing bands (0.281 m and 0.260 m; rule 5 asks 0.25 m), marked used=False; they stay no windows only because the bay stage skips bands shorter than 0.5 m. Nothing in G itself stops a wider pane from becoming a window; in 1,000+ synthetic scenes no extra window or passage appeared (see checkedWhat).",
+     "repro": "cd C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/fix4/review/glass/scripts && PYTHONIOENCODING=utf-8 python -B matrix.py: 'door 1.0 + window (3 lines, window layer) 0.6, gap 1.6': G off door[0.00..1.60], G on door[0.00..1.00]*, no window in either; the same for 'glass bay 0.6' and 'CASEMENT 0.6' (scene: wall_pair(0,1.6)+door(0.0,1.0)+window_lines(1.0,1.6)). Real data: python -B bands_near.py -> L29-023 band len 0.281 used=False, L29-024 band len 0.260 used=False.",
+     "expected": "The dropped glass is reported (a fixed window / glass element, or at least named in the evidence with length and layer), and the rule text does not claim the panes are too short to be bands.",
+     "actual": "Silent loss; evidence only says 'fixed glass beside the leaf (sidelight): the door ends at the leaf'; docstring wrong for 2 of 4 doors.",
+     "suggestedFix": "Add the dropped lengths and layers to the evidence ('0.20 m + 0.20 m of A-GLAZ-CURT dropped'); when the dropped glass is a window-role band of 0.4 m or more (or a 3-line window symbol) emit it as a fixed window; fix the rule-4 sentence (bands of 0.25-0.5 m exist and are dropped by the 0.5 m bay minimum)."
+    },
+    {
+     "id": "G3",
+     "severity": "medium",
+     "area": "validation: over-fit to one key convention, no negative evidence for the glass condition",
+     "summary": "All evidence for G is 4 doors of ONE drawing and ONE Revit family (Curtain Wall Door_Swing; L29-023 and L29-024 are mirror images), and the answer key itself says the extent is a convention call: tower_audited.json L29E-03 reads 'extent is a convention call ... I labelled the door unit (leaf 0.90 = where people pass) and listed the whole glazed unit under glassWalls. If the key measures wall end to wall end instead: ... w=1.359', and L29E-04 / L29E-06 give the same wall-end alternative (w=1.382 / 1.40). So the tower gain (50 -> 54 of 54) is entirely the key author's choice: scored against the same key with the three wall-end alternatives it lists (E-03/04/06; E-07 stays leaf-only), the old code gets 53 of 54 and G 51 of 54 (tower_key_wallend.json, scored with detector/tools/score.py). L29 was the held-out failure G was written against, so 54/54 is tuning now, not a generalisation figure. The glass condition has never met a negative: on the six drawings every door end with a stretch of 0.15 m or more is one of the 7 sidelit ends, so SIDELIGHT_SHARE can be anything from 0 to 0.84 with identical output (even 0.0 = 'every stretch of 0.15 m or more is trimmed, glass or not'); the 0.08 m line floor, the 3-degree angle and the lateral window are likewise unconstrained by data. G is inert on the presidential suite (its mapping has no glass or window role).",
+     "repro": "cd C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/fix4/review/glass/scripts && PYTHONIOENCODING=utf-8 python -B sweep_limits.py share 0.0 0.3 0.5 0.84 0.851 1.0 -> the same 4 changes for 0.0 ... 0.84; 0.851 loses the hinge-side 0.17/0.2 panes; 1.0 keeps only L29-023. Convention check: python -B detector/tools/score.py <key> <detections> --quiet with tower_key_wallend.json in the folder above (G off out_noG2_tower.json 53/54, G on out_1_tower.json 51/54; audited key: 50/54 and 54/54). Key text: python -c \"import json;K=json.load(open('C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/keys4/final/tower_audited.json'));print([o['notes'] for o in K['openings'] if o['id'] in ('L29E-03','L29E-04','L29E-06')])\"",
+     "expected": "A rule that goes into the frozen detector is checked on at least one drawing it was not written for, and the reported tower figure says which convention it assumes.",
+     "actual": "Rule, threshold and convention all come from L29; 54/54 cannot be read as held-out; negatives for the glass test do not exist in the data.",
+     "suggestedFix": "Report the tower result under both conventions (leaf-only and wall-end) and mark L29/L30 as tuned; keep G only if the owner confirms 'door = leaf, sidelights are glass' as the product convention (it is the right one for the 3D model, see G5); treat the fifth drawing as the first real test of G and add negatives (doors with 0.15-0.30 m reveals and no glass; mullion boxes; a window beside a door)."
+    },
+    {
+     "id": "G4",
+     "severity": "medium",
+     "area": "glass_share: what counts as glass (mapping- and layer-dependent) -> over-trims",
+     "summary": "Any glass- or window-role line of 0.08 m or more within t/2+0.05 of the axis counts, pane or not, and it need not stand inside the stretch (a long line running through the whole gap counts at 100 %). Three realistic non-sidelight cases are trimmed and get host 'glass': (a) mullion / frame boxes on a glass-role mullion layer: a 0.10 x 0.15 m box plus 0.06 m reveal each side (stretch 0.16 m) takes a 1.22 m door to 0.90 m; the same drawing with the mullions on an unmapped layer is untouched, so the result depends on the staff's layer mapping, and the bank mapping puts A-GLAZ-CWMG (the curtain-wall MULLION layer) under 'glass'; openings.py's own MULLION constant is 0.20 m ('widest mullion, frame member or reveal') while SIDELIGHT_MIN calls anything of 0.15 m or more a pane, so 0.15-0.20 m mullions are trimmed as sidelights; (b) a window-layer sill / threshold line drawn through a door opening in a 0.30 m masonry wall with 0.20 m reveals: 1.30 -> 0.90 m and host 'glass' for a masonry door; (c) a long glass line (partition or balustrade) drawn across the doorway on the axis: frames of 0.2 / 0.3 m are cut off, 1.40 -> 0.90. A glass line 0.12 m off the axis (wall 0.10 m) is ignored, and glass of the next room beyond the wall ends is not counted (no leak).",
+     "repro": "cd C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/fix4/review/glass/scripts && PYTHONIOENCODING=utf-8 python -B t09_mullion_reveal.py (CWMG mullions: G off 1.220, G on 0.900 host glass; WIND line in the 0.3 m wall: 1.300 -> 0.900; controls without glass unchanged) and python -B matrix.py (A4: 'glass line through the whole gap on the axis' door[0.00..1.40] -> door[0.20..1.10]*/glass; A6: mullion boxes 0.16 trimmed, 0.05-0.14 not).",
+     "expected": "Frames, reveals and mullions stay part of the door (rule-4 text); a masonry door stays host 'wall'.",
+     "actual": "Trimmed to the leaf and labelled host 'glass' as soon as glass-role lines cover half of a stretch of 0.15 m or more.",
+     "suggestedFix": "Count only pane-like glass: paired lines or closed thin outlines that start inside the stretch at the gap end and stop at the leaf (not lines running through the leaf); leave out mullion-type layers or require more than MULLION (0.20 m); require one piece of glass of at least SIDELIGHT_MIN instead of a union of overlapping edges."
+    },
+    {
+     "id": "G5",
+     "severity": "medium",
+     "area": "downstream: detector glass vs builder glass (bank builder lintel / transom rule)",
+     "summary": "Nothing downstream reads 'host' or the evidence text (find_openings.py copies every field; openings3d.py and the bank build_model.py never look at host or evidence; score.py only prints evidence for extras), so host 'glass' vs 'wall' has no effect today. What matters is the trimmed width. I ran the bank builder (copy under bank/src) on L29 with the detector output: the four trimmed doors become 1.0 / 0.9 m doors, the sidelights stay full-height glass (+7 glass pieces) and a GLASS TRANSOM goes from the head to the top (jambs ['glass','glass'], lintelDepth 0.01 instead of the solid 0.10 lintel): coherent. But the detector counts ANY glass-role line (a single line too) while the builder builds glass only from fills, closed thin outlines and lines PAIRED 5 mm-30 cm apart. With L29-016's sidelights redrawn as a single glass line (edited copy of the real cache) G still trims the door to 1.0 m, and the builder then builds no sidelight glass and no lintel at all (jambs [None, None]: 'nothing bounds it'): a 1.4 m opening open to the full wall height (and the floor slab of the floor splits into two pieces there), where the untrimmed door had a lintel over the whole 1.4 m. Hatch-only panes are the opposite and coherent (G does not trim, the builder cuts the hatch glass with the 1.4 m door as before).",
+     "repro": "cd C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/fix4/review/glass/scripts && PYTHONIOENCODING=utf-8 python -B l29_variants.py asis single two hatchonly short -> 'single': G on door 1.0 host glass, builder lintel None jambs [None, None]; 'asis': lintel transom jambs ['glass','glass']; python -B l29_variants_detail.py lists the parts around the door. The builder is a copy of bank_test/src/build_model.py under C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/fix4/review/glass/bank/src with l29_G.json (its last step, a matplotlib figure, fails for a one-floor project after bank_model.json is written).",
+     "expected": "A door is only shortened to the leaf when the glass beside it will be built (or the detector hands the sidelights to the builder).",
+     "actual": "Single-line sidelights: door trimmed, no glass built, no lintel (hole).",
+     "suggestedFix": "Make glass_share count what the builders build (paired lines 5 mm-30 cm apart, closed thin outlines, hatch fills), or emit the sidelights as explicit glass elements in the opening record (e.g. 'sidelights': [{a, b}]) so the builder can fill them; keep the host change cosmetic."
+    },
+    {
+     "id": "G6",
+     "severity": "low",
+     "area": "fails to trim / half-trims (pane drawing styles)",
+     "summary": "G trims line-drawn panes of every style I tried (four lines, closed rectangle, two long lines, one line, 3-line window symbol; glass or window layer; 0.17-0.40 m; either side; any rotation or mirror): 489 of 489 random scenes as expected. It does NOT trim: hatch-only panes (fills are not in the segment index), panes drawn as pieces shorter than 0.08 m (dashes, split polylines), glass more than t/2+0.05 off the axis, hinge-side glass that stops 0.10 m or more before the hinge (hardware on the glass layer: cover under 50 %), sidelights narrower than 0.15 m, and a 'leaf drawn closed' door (not recognised at all, G on or off). When the two sides are drawn differently the door is trimmed on one side only (1.20 m, host 'wall'), which is neither convention. For leaf 1.0 and sidelights of 0.45-1.0 m G is not needed (the 55 % rule hands the swing to the symbol path, which already ends the door at the glass band).",
+     "repro": "cd C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/fix4/review/glass/scripts && PYTHONIOENCODING=utf-8 python -B matrix.py (B lines; hardware 0.03 / 0.08 / 0.09 trimmed, 0.11 not); python -B fuzz2.py 3 500 -> '489 scenes ... G-on == expected 489'; mixed styles: wall_pair(0,1.4)+door(0.2,1.0)+pane(0,0.2,how='lines')+pane(1.2,1.4,how='hatch') -> door[0.20..1.40] w 1.20 host wall.",
+     "suggestedFix": "Include hatch fills on glass layers and merge collinear pieces before the 0.08 m test; apply the same decision to both sides when one side is recognised and the other stretch is non-wall material of similar width."
+    },
+    {
+     "id": "G7",
+     "severity": "low",
+     "area": "trim_to_leaf edge case: leaf (almost) outside its gap",
+     "summary": "No guard that the trimmed extent is still a door. When the whole leaf lies at or beyond the far end of the gap (a swing is accepted up to 0.3 m outside the gap, so the trimmed width is at least r - 0.3: leaf radii of 0.28-0.30 m give lo >= w, a zero-width door (a == b) or an end moved outside the gap; up to 0.45 m the door is under 0.15 m wide). A zero-width door crashes the house builder (openings3d.Frame divides by the length: ZeroDivisionError; the bank builder's Frame is guarded). Contrived geometry (a 0.3 m 'door' at the end of a 0.4 m slot) but the old code gave a normal 0.4 m door there.",
+     "repro": "cd C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/fix4/review/glass/scripts && PYTHONIOENCODING=utf-8 python -B -c \"from synth import *; res, fl = run_scene(wall_pair(0, 0.4) + door(0.4, 0.3, closed_dir=+1) + pane(0, 0.4, how='two'), g_on=True); print(res[0]['a'], res[0]['b'], res[0]['width'])\"  -> [0.4, 0.0] [0.4, 0.0] 0.0 (G off: a door 0.0..0.4, width 0.4). Then openings3d.Frame(a, b) raises ZeroDivisionError.",
+     "suggestedFix": "Return without trimming unless lo < w and hi > 0 and the new width is at least max(0.3, 0.8 * (hi - lo)) (the leaf chord)."
+    },
+    {
+     "id": "G8",
+     "severity": "low",
+     "area": "finish(): host = 'glass'",
+     "summary": "The host line matches the key (host glass for L29E-03/04/06/07) but is not a clean semantic: a door trimmed on both sides becomes 'glass'; trimmed on one side only it stays 'wall' (the untrimmed end still touches wall) unless the other end touches a glazing band; any door trimmed by G (masonry doors too, see G4) whose ends then touch no wall gets 'glass'. No consumer reads host, so there is no harm today, but a viewer that later does ('glass' door = frameless, glass transom) would get masonry doors wrong.",
+     "repro": "cd C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/fix4/review/glass/scripts && PYTHONIOENCODING=utf-8 python -B matrix.py ('door[0.20..1.20]*/glass' for two sidelights; 'door[0.20..1.30]*/wall' for sidelight + door-layer frame); python -B t09_mullion_reveal.py (masonry door with a WIND line -> host glass).",
+     "suggestedFix": "Set host 'glass' only when the glass that caused the trim is also what bounds the opening (both ends trimmed), or drop the line until a consumer needs it."
+    }
+   ],
+   "checkedWhat": "Read trim_to_leaf, glass_share, the two lines in detect_floor and the finish line, plus symbol_door, narrow_to_symbol, fuse, host_of, strip_gaps and the bay stage (my copy of integrated_c: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/fix4/review/glass/detector). VERIFIED CLAIMS: the harness on my copy is identical to baseline_integrated_c (old 139/143, 8 extras; tower 54/54, 6 extras). G alone (my copy with only the trim call disabled: .../review/glass/detector_noG) changes exactly 4 openings on the 6 drawings, all L29: L29-016 (1.400 -> 1.000), L29-023 (1.381 -> 0.900), L29-024 (1.360 -> 0.900), L29-028 (1.200 -> 1.000); fields changed: a/b, width, host wall -> glass, one evidence string; ids, hinge, swing, confidence, the opening set and every other drawing are identical; under rotation 37 deg + mirror the same 4 doors change and no others (rot_invariance.py). Limits: SIDELIGHT_MIN 0.02-0.19 no change, 0.20 already loses some 0.200 m panes (L29-016, L29-023: float noise); SIDELIGHT_SHARE 0-0.84 no change, 0.851 loses the hinge side (0.85), 1.0 keeps 1 of 4 (sweep_limits.py). DOOR AUDIT (door_audit2.json, audit_doors.py): I count 111 swing doors / 222 ends (the fixer says 110), 107 with both ends 0.14 m or less; stretch beyond the leaf: 37 ends under 0.02, 102 in 0.02-0.05, 73 in 0.05-0.10, 3 in 0.10-0.15, 7 at 0.15 or more (all sidelit). Closest to arming G: sukhumvit:ground door a=(36.648,20.858) w 1.2 t 0.12 (swing on the WALL layer, r 1.012) stretch 0.139 (needs +0.011 m and has no glass line in it: both far); bank1 double door a=(5.812,-7.179) w 1.603 stretch 0.100 on both ends and bank1 door a=(5.931,4.940) stretch 0.099, each with A-GLAZ-CWMG mullion stubs of 0.04-0.05 m (under the 0.08 m line floor and 0.05 m short of the 0.15 m stretch). Everything else is 0.078 or less. The L30 double glass door has glass panels that end at its jambs (stretch 0.038). Sidelit doors: stretches 0.200-0.281, glass share 0.85 on the hinge side (lines stop 0.03 m before the hinge) and 1.0 on the tip side; what un-trims them: SIDELIGHT_MIN above 0.2, hinge hardware of 0.10 m or more on the glass layer, panes as hatch or in pieces under 0.08 m. SYNTHETIC SUITE (scripts/synth.py builds items by hand and runs detect_floor + finish with G on / off; matrix.py, t01-t10, fuzz_sidelights.py, fuzz2.py, t08_wide.py): door beside a real window / bay / casement in the same gap, a long glass line through the gap and at 0.03-0.20 m lateral offsets, mullion boxes 0.05-0.25 m, partition glass beyond the wall ends (no leak), pivot door (two quarter arcs: read as 'hinged double', trimmed correctly), double door with a fixed glass leaf (trimmed to the active leaf when the leaf is 55 % of the gap or more, else the old symbol path gives the same), sidelights on one side, pane styles, widths 0.08-1.0 m, hardware 0.03-0.12 m, door-layer frames 0.02-0.10 m, leaf open 45-125 deg, mirrored and rotated. In about 1,300 random scenes G NEVER changed the opening set (no extra window or passage, no kind change); it only moves the door ends, and the cut-off glass becomes nothing. DOWNSTREAM: no reader of 'host' or of the evidence text in cad_test/src, bank_test/src, the .mjs tests or the viewers; the bank builder was rebuilt on L29 with and without G (bank/src copy), see G5. Speed: trim_to_leaf takes 2.5 ms in total for the 111 doors (glass_share is called 7 times, 1.5 ms). Aside (not G): the base detector is not pose-invariant on two old drawings (presidential loses 1 opening at rotation 37, bank1 at 37 + mirror, G on and off alike). Nothing in the project folder was modified; findings.json is in C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/fix4/review/glass/findings.json.",
+   "fragileRules": "SIDELIGHT_MIN = 0.15 (float noise on a round dimension, 1.1 cm above the largest reveal, a 0.28 m step in the door width); the definition of 'glass' (any glass/window-role line of 0.08 m or more: mapping-dependent, mullion layers and through lines count, hatch and short pieces do not); SIDELIGHT_SHARE (no negative evidence at all); per-side decisions (half-trimmed doors); the silent loss of the dropped glass; the hidden coupling to the 0.5 m bay minimum; host = 'glass'; the evidence base (4 doors, one drawing, one key convention).",
+   "robustRules": "Line-drawn panes of every style on glass or window layers, 0.17-0.40 m, one or both sides, any rotation or mirror (489 of 489); no change of the opening set anywhere (six drawings + about 1,300 synthetic scenes); no leak from partition glass beyond the wall ends or from glass more than t/2+0.05 off the axis; the fixer's claims 'nothing else changes' and the quoted limit ranges hold exactly; pivot and true double doors with a sidelight are handled; speed is negligible; the output record keeps its shape and ids; no downstream reader depends on host == 'wall' or on the evidence text."
+  }
+ }
+]

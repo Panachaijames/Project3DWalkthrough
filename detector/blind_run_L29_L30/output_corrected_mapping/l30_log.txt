@@ -1,0 +1,2 @@
+tower:L30: 57 openings (door 17, window 16, passage 24)  1.1 s
+total 1.3 s -> C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/hold_blind_L29_L30/v2/l30_openings.json

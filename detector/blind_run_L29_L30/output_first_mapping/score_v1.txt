@@ -1,0 +1,71 @@
+tower:L29                key  27  detected  40  matched  22  right  15  recall 0.815  precision 0.55  RIGHT 0.556  door: 13/23  passage: 2/4  (optional 1/10 found)
+    missed L29W-16 door at [2.471, -45.19] w 1.0 single swing 1000x2000 shaft door (Door NO_17), leaf drawn open about 45 deg
+    missed L29W-17 door at [4.612, -47.346] w 2.0 sliding glass door, 2 leaves 1000 (DOOR_CP_SLIDE_2_GLASS_FULL)
+    missed L29W-18 door at [12.822, -47.346] w 2.0 sliding glass door, 2 leaves 1000 (DOOR_CP_SLIDE_2_GLASS_FULL)
+    missed L29W-20 passage at [2.367, -49.04] w 1.2 stair hall entrance between two wall nibs, no door drawn
+    missed L29W-22 passage at [2.449, -51.07] w 0.9 Door-Opening 900x2000
+    extra  L29-016 passage at [15.464, -41.94] w 0.627
+    extra  L29-018 window at [-2.92, -57.026] w 1.16
+    extra  L29-019 passage at [1.7, -34.715] w 0.9
+    extra  L29-020 passage at [0.596, -34.195] w 1.077
+    extra  L29-021 passage at [4.317, -36.615] w 1.65
+    extra  L29-022 passage at [6.518, -32.465] w 0.8
+    extra  L29-023 passage at [6.168, -32.191] w 0.65
+    extra  L29-024 passage at [2.966, -37.49] w 0.896
+    extra  L29-025 window at [20.071, -50.095] w 0.986
+    extra  L29-026 passage at [1.419, -49.04] w 1.55
+    extra  L29-027 passage at [3.317, -41.214] w 1.592
+    extra  L29-028 passage at [2.451, -39.837] w 2.45
+    extra  L29-030 passage at [13.196, -36.615] w 1.65
+    extra  L29-031 passage at [4.917, -40.338] w 1.696
+    extra  L29-038 window at [29.774, -52.538] w 1.159
+    extra  L29-039 window at [19.177, -59.429] w 0.553
+    extra  L29-040 window at [-2.323, -59.429] w 0.553
+    extra  L29-041 window at [19.882, -52.59] w 4.75
+    wrong  L29E-06~L29-017 kind door/door width 1.0/1.4 ends 0.2
+    wrong  L29E-03~L29-033 kind door/door width 0.9/1.36 ends 0.259
+    wrong  L29E-04~L29-032 kind door/door width 0.9/1.381 ends 0.282
+    wrong  L29W-14~L29-005 kind door/door width 1.4/0.98 ends 0.223
+    wrong  L29W-13~L29-004 kind door/door width 1.4/0.98 ends 0.223
+    wrong  L29W-15~L29-006 kind door/door width 1.4/0.98 ends 0.223
+    wrong  L29E-07~L29-036 kind door/door width 1.0/1.2 ends 0.2
+tower:L30                key  26  detected  52  matched  21  right  21  recall 0.808  precision 0.404  RIGHT 0.808  door: 18/21  passage: 3/5  (optional 4/12 found)
+    missed L30W-05 passage at [2.231, -35.74] w 0.899 Door-Opening 900x2000 (Revit door-opening family)
+    missed L30W-10 passage at [7.643, -37.59] w 1.749 open doorway to stair hall (no door drawn)
+    missed L30W-19 door at [2.471, -45.191] w 0.999 single swing 1000x2000 (shaft door)
+    missed L30W-20 door at [4.268, -46.465] w 2.15 double cavity slider 920x920x2340 (bi-parting pocket door)
+    missed L30E-03 door at [18.042, -37.473] w 4.8 sliding face-mounted, 2 panels 2400x2400x2400 (opening 4800)
+    extra  L30-020 window at [26.402, -31.281] w 1.16
+    extra  L30-021 window at [-2.667, -54.142] w 0.95
+    extra  L30-022 passage at [0.997, -51.303] w 1.264
+    extra  L30-023 passage at [0.276, -52.2] w 2.37
+    extra  L30-025 passage at [3.317, -48.19] w 1.6
+    extra  L30-026 passage at [1.651, -34.65] w 1.01
+    extra  L30-027 passage at [4.317, -36.615] w 1.65
+    extra  L30-028 passage at [6.518, -32.465] w 0.8
+    extra  L30-029 passage at [6.168, -32.19] w 0.65
+    extra  L30-032 window at [29.216, -51.643] w 0.608
+    extra  L30-033 window at [29.413, -50.563] w 0.895
+    extra  L30-034 window at [28.949, -46.54] w 1.155
+    extra  L30-036 passage at [1.419, -49.04] w 1.55
+    extra  L30-037 passage at [2.37, -39.838] w 2.453
+    extra  L30-038 passage at [3.318, -37.59] w 1.6
+    extra  L30-039 passage at [13.196, -36.615] w 1.65
+    extra  L30-040 passage at [6.618, -36.615] w 1.65
+    extra  L30-041 passage at [4.917, -40.338] w 1.696
+    extra  L30-042 passage at [3.319, -41.388] w 1.596
+    extra  L30-043 passage at [14.068, -39.923] w 1.5
+    extra  L30-045 passage at [17.957, -48.68] w 2.521
+    extra  L30-047 window at [29.481, -51.416] w 0.752
+    extra  L30-048 window at [29.269, -47.788] w 1.158
+    extra  L30-049 window at [29.234, -49.541] w 1.16
+    extra  L30-050 window at [29.392, -54.916] w 1.08
+    extra  L30-051 window at [17.431, -56.676] w 2.391
+    extra  L30-052 window at [-2.323, -56.499] w 0.662
+    extra  L30-053 window at [29.474, -45.917] w 0.495
+    extra  L30-054 window at [29.629, -48.916] w 0.332
+    extra  L30-055 window at [29.617, -48.416] w 0.332
+    extra  L30-056 window at [19.365, -54.98] w 1.303
+    wrong  L30E-04~L30-030 kind door/passage width 1.88/1.88 ends 0.0
+    wrong  L30E-07~L30-019 kind door/passage width 1.28/1.28 ends 0.001
+TOTAL key 53 detected 92 matched 43 right 36  recall 0.811  precision 0.467  RIGHT 0.679  (gate: >= 0.80)

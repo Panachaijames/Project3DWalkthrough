@@ -1,0 +1,406 @@
+{
+ "layerMapping": [
+  {
+   "layer": "A-WALL",
+   "role": "wall",
+   "evidence": "L1 343 / L2 355 items (LINE 296/309, HATCH 36/26, INSERT 11/6, plus ARC 12 and SPLINE 2 on L2). Holds wall outlines and solid cut fills, both in the Revit link block (base building) and in the host interior model. Exceptions handled by block name: the 'Basic Wall _ GLASS WALL 2600H 20X100' inserts (11 on L1, 5 on L2) are 2.6 m glass partitions and are read as glass, and 'IA_PT01_FINISH LAMINATE 10mm' (L2) is a 10 mm screen. The L2 arcs and splines are the wealth-room corners and the terrace parapet."
+  },
+  {
+   "layer": "A-WALL-PATT",
+   "role": "wall",
+   "evidence": "35 / 42 solid HATCH loops, all inside the link block: the cut fill of the base-building walls, with the same outlines as A-WALL. Together with the A-WALL hatches this is a complete wall-mass map (checked by plotting the fills)."
+  },
+  {
+   "layer": "A-GLAZ-CURT",
+   "role": "glass",
+   "evidence": "L1 only: 8 'System Panel - GLAZED' curtain-wall panels (10 mm glass line plus hatch) in the south and east facades. L2 has none, and the DWG has none either."
+  },
+  {
+   "layer": "A-GLAZ-CWMG",
+   "role": "glass",
+   "evidence": "L1 only: 38 'Rectangular Mullion' inserts (100X50, 100X160, 100X25) with fills. These are the curtain-wall frames. The 25 mm ones are also the jambs of the glass-partition doors, and the 50 mm ones flank the curtain-wall doors B1-08 and B1-09."
+  },
+  {
+   "layer": "A-DOOR",
+   "role": "door",
+   "evidence": "16 / 24 door blocks with their leaves and swing arcs (123 / 216 items). Every door primitive sits inside a door block, except the cabinet-door lines inside the L2 'IA_J12_CABINET' block, which is casework: ignore it by its parent block."
+  },
+  {
+   "layer": "A-DOOR-FRAM",
+   "role": "door",
+   "evidence": "54 / 235 items: frame and jamb lines and fills inside the swing-door blocks. Glass and pivot doors have no frame."
+  },
+  {
+   "layer": "A-DOOR-GLAZ",
+   "role": "door",
+   "evidence": "24 / 4 lines: the glass panes of the glass and pivot door leaves."
+  },
+  {
+   "layer": "A-DOOR-HDLN",
+   "role": "door",
+   "evidence": "6 / 1 ARC: swing arcs drawn as hidden lines inside the glass and pivot door blocks."
+  },
+  {
+   "layer": "S-STRS",
+   "role": "stair",
+   "evidence": "31 / 105 lines: stair nosings and outlines below the cut plane (link block). This covers the east stair and the straight stair outside the north wall."
+  },
+  {
+   "layer": "S-STRS-MBND",
+   "role": "stair",
+   "evidence": "77 / 110 lines: stair parts above the cut plane ('beyond', drawn dashed). On L1 this is the upper flights and landings over the toilet; on L2 it is the flights of the stair to the floor above."
+  },
+  {
+   "layer": "A-FLOR-HRAL",
+   "role": "railing",
+   "evidence": "28 / 67 items: 'Railing - ...' blocks along the stairs and the L2 terrace edges."
+  },
+  {
+   "layer": "A-FLOR-HRAL-MBND",
+   "role": "railing",
+   "evidence": "24 / 44 lines: railing parts above the cut plane (stairs)."
+  },
+  {
+   "layer": "S-COLS",
+   "role": "column",
+   "evidence": "17 / 20 'M_Concrete-Rectangular-Column' blocks (300x300 to 700x390) with solid fills. They fill the breaks in the facade walls."
+  },
+  {
+   "layer": "A-AREA-IDEN",
+   "role": "room-name",
+   "evidence": "12 / 14 MTEXT Revit room tags, name plus area (TOILET, LIFT HALL, MEEETING 4 PAX, MANAGER, F/C, PANTRY, RACK, FEMALE/MALE TOILET, BOH 'Not Enclosed')."
+  },
+  {
+   "layer": "G-ANNO-TEXT",
+   "role": "room-name",
+   "evidence": "6 / 6 MTEXT free labels. The space names that are not Revit rooms live here (WAITING AREA, CSO 5PAX, MINI BAR / WEALTH ROOM, FOR 1 PAX, MO 4 PAX), mixed with the non-room labels UP, DOWN, ATM, BA and BE, which must be filtered out. The L2 'UP' and 'DOWN' are the two MTEXT with LibreDWG read errors."
+  },
+  {
+   "layer": "A-FLOR",
+   "role": "other",
+   "evidence": "57 / 21 lines: slab and floor edges and thresholds, for example the threshold line across passage B1-03 and the terrace outline. Never a wall."
+  },
+  {
+   "layer": "A-DETL",
+   "role": "other",
+   "evidence": "12 / 15 detail lines: dashed overhead outlines, grid-line extensions, the L1 north-room outline and the L2 stair-path arrows (circle plus arrowhead) of UP and DOWN."
+  },
+  {
+   "layer": "A-DETL-GENF",
+   "role": "other",
+   "evidence": "L1 only: 1 solid masking fill over the north room (x -5.49..1.11, y 7.23..11.46), which is entered by door B1-15 and is probably a strongroom. Not a slab or a wall."
+  },
+  {
+   "layer": "A-GENM",
+   "role": "other",
+   "evidence": "370 / 74 items: generic models, namely ATM machines (one fills the 0.58 m through-wall slot in the L1 east wall), wall-hung basins and covers. Furniture-like."
+  },
+  {
+   "layer": "I-FURN",
+   "role": "ignore",
+   "evidence": "3257 / 2555 items of furniture (chairs, desks, computers)."
+  },
+  {
+   "layer": "Q-CASE",
+   "role": "ignore",
+   "evidence": "363 / 18251 items of casework, including 'PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR' blocks with swing arcs (20 on L1, 8 on L2). These are not doors."
+  },
+  {
+   "layer": "Q-CASE-HDLN",
+   "role": "ignore",
+   "evidence": "78 / 32 hidden lines of casework."
+  },
+  {
+   "layer": "Q-SPCQ",
+   "role": "ignore",
+   "evidence": "54 / 169 items of special equipment (printers, TV, data racks with door swings)."
+  },
+  {
+   "layer": "P-SANR-FIXT",
+   "role": "ignore",
+   "evidence": "454 / 325 sanitary fixtures (WCs, basins, urinals)."
+  },
+  {
+   "layer": "L-PLNT",
+   "role": "ignore",
+   "evidence": "185 / 530 plants."
+  },
+  {
+   "layer": "E-COMM",
+   "role": "ignore",
+   "evidence": "88 / 110 items: telephone blocks."
+  },
+  {
+   "layer": "E-ELEC-FIXT",
+   "role": "ignore",
+   "evidence": "14 / 35 items: power and TV outlets."
+  },
+  {
+   "layer": "S-GRID",
+   "role": "ignore",
+   "evidence": "30 / 30 grid lines, identical on both levels. Use them only to align the levels."
+  },
+  {
+   "layer": "S-GRID-IDEN",
+   "role": "ignore",
+   "evidence": "30 / 30 grid bubbles (circle, text and insert) for A, B, C and 1 to 7. Used for alignment."
+  },
+  {
+   "layer": "A-ANNO-DIMS",
+   "role": "ignore",
+   "evidence": "14 / 10 DIMENSION entities (grid spacings only, no heights)."
+  },
+  {
+   "layer": "A-ANNO-DIMS-100",
+   "role": "ignore",
+   "evidence": "140 / 100 items: the lines and text inside the DIMBLOCK dimension blocks."
+  },
+  {
+   "layer": "0",
+   "role": "ignore",
+   "evidence": "The only model-space entity on layer 0 is the INSERT of the Revit link block '26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL n ...' at (0,0). Its contents keep their own layers."
+  },
+  {
+   "layer": "G-ANNO-TTLB / G-ANNO-NPLT / A-ANNO-NOTE",
+   "role": "ignore",
+   "evidence": "Paper space only: the title block (dwp, 'SCHEMATIC DESIGN', scale 1:100), the viewport and two note lines. No model-space geometry."
+  }
+ ],
+ "doorFamilies": "Block names follow '<Revit family> - <type>-<element id or V#>-LEVEL n GENERAL ARRANGEMENT'. The id is the first instance and is reused by identical instances: for example 2330559 serves 4 doors across the two levels. V# marks a geometry variant (flipped hand). There are 40 door inserts, 16 on L1 and 24 on L2, and none is mirrored. Apart from the two pivot panels, every block is inserted at the centre of its wall gap on the wall centre line: all 38 sit within 1 mm of the key centre, along the wall and across it. The block x axis runs along the wall, and the rotation is the wall direction, plus or minus 180 degrees for the swing side.\n\n(1) DOOR_GEN_SWING_1 PANEL_FLUSH - <W>x2400 _black_ (base-building link): L1 3 (1200 B1-15, 900 B1-16, 700 B1-01), L2 1 (700 B2-23). W is the leaf width. The frames are 50 mm, so gap = W + 0.100 (1.300 / 1.000 / 0.800).\n(2) _GEN_LIFT_DOOR - DOOR1100x2400 (link): L1 1, L2 1 (B1-05, B2-22). W is the structural opening, 1.100. It slides (no arc), the frame pieces sit inside the opening, and the insert is at the centre of the 150 mm shaft wall.\n(3) DOOR-CW_PIVOT_1 PANEL_FLUSH4 - D3 - PL03 (link, curtain-wall door panels): L1 has 2 blocks that make one double opening, B1-08. The name carries no size or height. Each block is one pivot leaf (0.725 / 0.678 swing) inserted at its own panel centre, 0.36 / 0.39 m either side of the slot centre. The slot is 1.503 between the curtain-wall mullions, 1.603 with them.\n(4) SINGLE SWING DOOR-GENERIC - <W>X2400 (interior host model): 1000X2400 on L1 x3 (B1-02, B1-04, B1-13) and L2 x3 (B2-07, B2-09, B2-24); 700X2400 on L1 x1 (B1-14). Here W is the wall gap itself: the frame spans +-W/2 with 50 mm frames inside, and the leaf is W - 0.100.\n(5) SINGLE GLASS SWING DOOR-GENERIC - TYPE 1 (host): L1 4 (B1-09 to B1-12), L2 1 (B2-25). No size or height, and the block is a leaf only, with no frame. In the facade curtain wall (B1-09) the leaf is 0.875, the slot 0.925 between 50 mm mullions and 1.025 with them. In the glass partitions the leaf is 0.825, 0.875 between the 25 mm jamb mullions and 0.925 between the glass-wall ends. On L2 the leaf is 0.850 and the gap 0.900.\n(6) DOUBLE GLASS SWING DOOR-GENERIC - TYPE 1 (host): L1 2. B1-06 has 2 x 0.800 leaves, a 1.600 gap in a frameless 10 mm screen. B1-07 has 2 x 0.787 leaves: 1.575 between the jamb mullions, 1.625 between the glass walls.\n(7) DOOR_SWING_1_SOLID - D00-<W>X2400_SW_HD-F_HM-1 (link): L2 6. The 720 type x5 (B2-01, 02, 03, 05, 06) has its leaf drawn at 0.700 and a 0.780 gap; the 900 type x1 (B2-10) has a 0.900 leaf and a 0.980 gap. Gap = leaf + 0.080 (40 mm frames), so the name width is the leaf except for the 720 type.\n(8) DOOR_SWING_1_louver - D00-600X2400_SW_HD-F_HM-1 (link): L2 2 (B2-16, B2-18). Leaf 0.600, gap 0.680.\n(9) DOOR_SWING_2_SOLID - 800x2000_INT (link): L2 2 (B2-08, B2-21). W is each of the two leaves, so gap = 2W + 0.080 = 1.680.\n(10) DOOR_SWING_louver - <W>x2000_INT (link): L2 8. The 650 type x6 (B2-12 to 15, B2-17, B2-20) gives 1.380, the 800 type x1 (B2-11) gives 1.680 and the 900 type x1 (B2-19) gives 1.880. W is each leaf, so gap = 2W + 0.080.\n\nRule for a detector: the name width equals the wall gap only for the host generic family (4) and the lift door (2). For the base-building families it is the leaf: single doors are leaf + 0.06 to 0.10, double doors are 2 x leaf + 0.08. Glass and pivot doors carry no size, so take the gap from the block geometry; their insert is still the gap centre. Heights come from the name: 2400 for single doors, 2000 for the doubles and louvred doors, none for glass and pivot doors. Not doors: the Q-CASE 'PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR' blocks (20 on L1, 8 on L2) and the A-DOOR lines inside IA_J12_CABINET.",
+ "stairsAndFloorHeight": "The east stair hall (x 1.37-4.55, y 7.0-10.0) holds the only stair inside the bank that links L1 and L2. Every going is 0.25 m.\n\nL1 (solid lines on S-STRS are below the cut, dashed lines on S-STRS-MBND are above it):\n- Flight 1 runs north at x 3.27-4.21. Its risers are at y 7.88 / 8.13 / 8.38 / 8.63, so 4 risers, ending at a 0.94 m square landing.\n- Flight 2 runs west on y 8.62-9.62. Its risers are at x 3.27 / 3.02 / 2.77 / 2.52 / 2.27, so 5 risers. The cut zigzag sits on the 6th riser from the floor. It ends at the NW landing.\n- Flight 3 runs south, with risers at y 8.62 / 8.37 / 8.12, so 3 risers, ending at the SW landing (x 1.39-2.53, y 7.03-8.12).\n- Flight 3 and both landings pass over the L1 toilet, which is why they are dashed. L1 has no UP or DOWN text.\n\nL2: the flight that leaves that landing is drawn solid with the DOWN arrow. It runs from x 2.53 to 4.53 on y 7.01-8.16, with risers at x 2.53, 2.78, ... 4.53, so 9 risers (8 goings), and lands on L2 at x 4.53. Its first riser is exactly L1's landing edge at x 2.529.\n\nL1 to L2 is therefore 4 + 5 + 3 + 9 = 21 risers (17 goings and 3 landings). The UP arrow on L2 starts the next stair: a north flight of 9 risers, a west landing, then 9 risers back east above flight 4, 18 risers in all to the floor above.\n\nThe straight stair drawn outside the north wall (18 risers on 0.20 m goings, cut on L1, all below the cut on L2) has no door into the bank on either floor. I used it only as a cross-check: at the same height its risers would be about 0.20 m, which is normal for an old shophouse stair.\n\nRiser used: 0.175 m, the top of the normal commercial range.\n- The drawn going is 0.25 m, so 2R + G = 0.60 m, the comfortable minimum. With 0.17 it would be 0.59.\n- Revit takes the fewest risers that keep each riser under the stair type's maximum. Under the usual 0.18 m maximum for non-residential stairs (with a going of at least 0.25 m, the Thai rule as I recall it), 21 risers means 3.60 < floor-to-floor <= 3.78 m. 0.175 fits that; 0.17 would give 3.57 m, where 20 risers would have been enough.\n\nFloor-to-floor = 21 x 0.175 = 3.675, rounded to 3.70 m. Caveat: if the architect kept Revit's default metric stair type (190 mm maximum riser, 250 mm going, and the going does match), the real height could be 3.80-3.99 m. Expose 3.70 m as an editable default.",
+ "floorToFloor": 3.7,
+ "alignment": "Yes. Both levels share one origin, and the offset is (0, 0).\n- Grid: the 30 S-GRID lines are identical on both levels to 0.1 mm. The bubbles sit at exactly the same points (dx = dy = 0.0000): A / B / C at x -5.0804 / 0.8546 / 6.7346, and 1 to 7 at y -9.030 / -6.520 / -3.410 / 0.000 / 3.300 / 6.865 / 11.605. The dimension strings match.\n- Lift: door block 2145865 is at (-1.5554, -7.6300) on both levels, and the shaft walls sit on the same x faces (-3.58, -3.48, -3.43, -1.63, -1.48). Only the shaft's north wall differs, by 23 mm, because it was modelled per level.\n- Columns: the five columns on grid A match to 0.000 (one is off by 6 mm). The grid-B columns differ by 10-34 mm, being separate instances per level. The east columns differ because each level uses a different column size behind a different facade.\n- Stairs: the outside north stair's 18 riser lines are at the same x on both levels. The east stair's dashed L1 landing edge (x 2.529) is exactly the first riser of the flight drawn on L2, and the west landing is at x 1.373 on L1 and 1.375 on L2.\n- Shared door: the base-building door block 2146164 is at (-3.9804, -6.730) on L1 and (-3.9804, -6.7395) on L2, because its wall is 9.5 mm apart between the levels.\nBoth files are views of one Revit model in shared coordinates, with the origin on grid line 4 (y = 0). No shift or rotation is needed.",
+ "conversionCheck": "The project DWGs are byte-identical (sha256) to the copies that were converted. I dumped both DWGs afresh with dwgread -O JSON into my folder and compared them with the DXFs, read by ezdxf (ezdxf audit errors: 0).\n\nCounts:\n- Entities: L1 4473 / 4473, L2 21581 / 21581. Every type is equal: LINE, ARC, SPLINE, INSERT, LWPOLYLINE, HATCH, MTEXT, ELLIPSE, CIRCLE, DIMENSION, IMAGE, VIEWPORT.\n- Layers: all 35 / 33 layers are equal.\n- Model space flattened the way the tool reads it (blocks unpacked): L1 6120 / 6120, L2 23507 / 23507, with 0 differing (layer, type) cells.\n- L1: A-WALL 343 (LINE 296, HATCH 36, INSERT 11), A-WALL-PATT 35, A-DOOR 123 (16 INSERT, 90 LINE, 17 ARC), A-DOOR-FRAM 54, A-DOOR-GLAZ 24, A-DOOR-HDLN 6, A-GLAZ-CURT 48, A-GLAZ-CWMG 199.\n- L2: A-WALL 355 (LINE 309, HATCH 26, ARC 12, INSERT 6, SPLINE 2), A-WALL-PATT 42, A-DOOR 216 (24 INSERT), A-DOOR-FRAM 235, A-DOOR-GLAZ 4, A-DOOR-HDLN 1. L2 has no A-GLAZ layers in the DWG either.\n- No UNKNOWN objects. All 5244 / 22461 object-map handles were decoded.\n\nLevel 2's 8 errors are 4 + 4 inside two MTEXT on G-ANNO-TEXT, 'UP' (handle 67A3) and 'DOWN' (67A4). They come from the background-mask fields (bg_fill_flag 3: 'bit_read_BL code 11', 'invalid CMC flag 0x43 / method 0'). The text, insertion point, layer and style were read before the error, the CRC checks pass, and both labels are in the DXF at (4.679, 9.521) and (4.679, 7.651). Only the mask colour of two labels is lost. Nothing that matters is lost.\n\nThe warnings are harmless on both levels:\n- 'Object handle not found' (L1 28, L2 20): back-references from the '_Oblique' arrowhead block to dimension-tick inserts that Revit never wrote. That is 2 per dimension; the DIMBLOCKs hold their ticks as lines.\n- 'Skip HATCH common handles' (L1 148, L2 143): one per hatch. Boundaries, fills and layers are all read.\n- MATERIAL / TABLESTYLE / MLEADERSTYLE class warnings: not geometry.\n\nDecision F's count check passes for both files, and the LibreDWG DXFs are safe to use.",
+ "sweep": "I rendered both levels with a marker at every key opening (L1_marked.png, L2_marked.png and eight final_*.png tiles with the final keys) and checked by geometry:\n\n(1) Door blocks: all 40 A-DOOR inserts match a key opening within 1 mm of its centre; the two pivot panels share B1-08. Every A-DOOR line and arc belongs to a door block except the cabinet doors of the L2 IA_J12_CABINET (casework). No swing, leaf or block is missing from the keys.\n\n(2) Wall gaps: I searched the hatch-filled wall mass (A-WALL plus A-WALL-PATT fills, columns, glass), casting a ray up to 4 m from every free wall end. It finds every key gap. Everything else it finds is not an opening:\n- the closed void under the lift shaft (both levels);\n- the 0.58 m slot in the L1 east wall, filled by the through-wall ATM (equipment);\n- the cavities and linings of the double-leaf facades;\n- the toilet-lobby back-wall ends inside the L2 toilets;\n- the 2.98 m open front of the FOR 1 PAX nook;\n- the stub left by the B2-07 clash.\n\n(3) Ends: all 41 key openings meet solid within 2 mm of a and b. The glass-partition doors (B1-07, B1-10 to B1-12) include their 25 mm jamb mullions and the curtain-wall doors (B1-08, B1-09) their 50 mm mullions, as the key's frame-included rule says.\n\nNo key entry is wrong; corrections: none. B2-07 stays at the 1.000 m frame both labellers chose. The female toilet's south wall crosses its top 0.125 m, which is a drawing clash; the clear wall gap would be 0.875, and the entry already notes this.\n\nAdditions, all on L1 and all optional, so the scored counts stay at 16 and 25:\n- B1-91 to B1-98: the 8 curtain-wall glazed panels that sit in gaps of the facade wall line between wall ends and columns (verified: solid at both ends, fully glazed between). Both labellers listed them as glass walls. Under the 26 Oct definition they read as windows, the plan cannot settle it, and a detector reading A-WALL gaps will report them.\n- B1-99: the passage mouth where the corridor north of the meeting room opens into the stair / ATM hall. The free end of the toilet's east wall faces the meeting-room wall 1.08 m away.\n\nThe interior GLASS WALL partitions stay glass walls: on L1 the manager room, meeting room and lobby screens, on L2 the wealth room. They are partitions made of glass, and a reader of wall layers sees no gap there because they sit on A-WALL. Level 2 has no additions.\n\nFinal keys: L1 has 25 entries (16 scored, 9 optional); L2 has 25, unchanged.",
+ "additions": [
+  {
+   "id": "B1-91",
+   "kind": "window",
+   "subtype": "fixed curtain-wall glazing, full height in plan (1.200 m incl. its mullions)",
+   "a": [
+    -0.6266,
+    -9.13
+   ],
+   "b": [
+    0.5734,
+    -9.13
+   ],
+   "width": 1.2,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-GLAZ-CURT System Panel - GLAZED 2570895 (x -0.5766..0.5234) between A-GLAZ-CWMG 100X50 mullions to x -0.6266 / 0.5734; the south facade wall (y -9.18..-9.08) ends at x -0.6266; column 300x550 west face at x 0.5733; nothing solid between (checked on the hatch fills)",
+   "confidence": "medium",
+   "agreement": "new",
+   "optional": true,
+   "notes": "LIFT HALL, south facade",
+   "decision": "optional: curtain-wall glazing set in a gap of the facade wall line, between wall ends and/or columns. The plan cannot tell a shopfront window in a wall gap from a curtain-wall glass wall. By the 26 Oct definition it reads as a window; by its Revit element (a curtain wall; this drawing has no window family at all) it is a glass wall, which is how both labellers listed it. A detector reading the A-WALL gaps will likely report a window here, so it is listed but not scored either way."
+  },
+  {
+   "id": "B1-92",
+   "kind": "window",
+   "subtype": "fixed curtain-wall glazing, full height in plan (1.520 m incl. its mullions)",
+   "a": [
+    1.4655,
+    -9.13
+   ],
+   "b": [
+    2.9855,
+    -9.13
+   ],
+   "width": 1.52,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-GLAZ-CURT System Panel - GLAZED 2572731 (x 1.6255..2.8255) between 100X160 mullions to x 1.4655 / 2.9855; facade wall pieces x 1.12..1.4655 and 2.9855..3.33 (y -9.18..-9.08) on both sides",
+   "confidence": "medium",
+   "agreement": "new",
+   "optional": true,
+   "notes": "entrance / ATM lobby, south facade",
+   "decision": "optional: curtain-wall glazing set in a gap of the facade wall line; window or glass wall cannot be settled from the plan (same reasoning as B1-91)"
+  },
+  {
+   "id": "B1-93",
+   "kind": "window",
+   "subtype": "fixed curtain-wall glazing, full height in plan (0.600 m incl. its mullions)",
+   "a": [
+    3.7176,
+    -8.5267
+   ],
+   "b": [
+    4.3176,
+    -8.5267
+   ],
+   "width": 0.6,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-GLAZ-CURT System Panel - GLAZED 2567163 (0.50 m) between 100X50 mullions; column 700x390 east face at x 3.7176 to the west, facade wall x 4.3176..4.95 (y -8.58..-8.48) to the east",
+   "confidence": "medium",
+   "agreement": "new",
+   "optional": true,
+   "notes": "entrance lobby, stepped part of the south facade",
+   "decision": "optional: curtain-wall glazing set in a gap of the facade wall line; window or glass wall cannot be settled from the plan (same reasoning as B1-91)"
+  },
+  {
+   "id": "B1-94",
+   "kind": "window",
+   "subtype": "fixed curtain-wall glazing, full height in plan (0.600 m incl. its mullions)",
+   "a": [
+    5.862,
+    -6.6794
+   ],
+   "b": [
+    5.862,
+    -6.0794
+   ],
+   "width": 0.6,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-GLAZ-CURT System Panel - GLAZED 2567163 (0.50 m) between 100X50 mullions V2 / V1; the wall at x 5.812..5.912 ends at y -6.6794 (south); column 400x900 south face at y -6.0794 (north)",
+   "confidence": "medium",
+   "agreement": "new",
+   "optional": true,
+   "notes": "entrance lobby, east side of the SE corner",
+   "decision": "optional: curtain-wall glazing set in a gap of the facade wall line; window or glass wall cannot be settled from the plan (same reasoning as B1-91)"
+  },
+  {
+   "id": "B1-95",
+   "kind": "window",
+   "subtype": "fixed curtain-wall glazing, full height in plan (1.667 m incl. its mullions)",
+   "a": [
+    6.2527,
+    -5.6145
+   ],
+   "b": [
+    6.2196,
+    -3.9477
+   ],
+   "width": 1.6671,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-GLAZ-CURT System Panel - GLAZED 2578883 (1.347 m) between 100X160 mullions 2572104 / 2572103; the facade wall ends at y -5.6145 (south, by column 400x900) and at y -3.9477 (north wall stub)",
+   "confidence": "medium",
+   "agreement": "new",
+   "optional": true,
+   "notes": "ATM lobby, east facade",
+   "decision": "optional: curtain-wall glazing set in a gap of the facade wall line; window or glass wall cannot be settled from the plan (same reasoning as B1-91)"
+  },
+  {
+   "id": "B1-96",
+   "kind": "window",
+   "subtype": "fixed curtain-wall glazing, full height in plan (2.563 m incl. its mullions)",
+   "a": [
+    6.1993,
+    -3.0151
+   ],
+   "b": [
+    6.1486,
+    -0.4525
+   ],
+   "width": 2.5631,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-GLAZ-CURT System Panel - GLAZED 2575508 (2.243 m) between 100X160 mullions V4 / V3; columns 300x800 at both ends (faces at y -3.0151 and -0.4525)",
+   "confidence": "medium",
+   "agreement": "new",
+   "optional": true,
+   "notes": "banking hall, east facade",
+   "decision": "optional: curtain-wall glazing set in a gap of the facade wall line; window or glass wall cannot be settled from the plan (same reasoning as B1-91)"
+  },
+  {
+   "id": "B1-97",
+   "kind": "window",
+   "subtype": "fixed curtain-wall glazing, full height in plan (2.550 m incl. its mullions)",
+   "a": [
+    6.1346,
+    0.3474
+   ],
+   "b": [
+    6.0841,
+    2.8969
+   ],
+   "width": 2.55,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-GLAZ-CURT System Panel - GLAZED 2575552 (2.23 m) between 100X160 mullions V6 / V5; columns 300x800 at both ends (faces at y 0.3474 and 2.8969)",
+   "confidence": "medium",
+   "agreement": "new",
+   "optional": true,
+   "notes": "banking hall (BA / BE desks), east facade",
+   "decision": "optional: curtain-wall glazing set in a gap of the facade wall line; window or glass wall cannot be settled from the plan (same reasoning as B1-91)"
+  },
+  {
+   "id": "B1-98",
+   "kind": "window",
+   "subtype": "fixed curtain-wall glazing, full height in plan (0.975 m incl. its mullions)",
+   "a": [
+    6.064,
+    3.9166
+   ],
+   "b": [
+    6.0447,
+    4.8914
+   ],
+   "width": 0.975,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-GLAZ-CURT System Panel - GLAZED 2369548 (0.925 m) with 100X50 mullion 2369215 at its south end; the facade wall stub ends at y 3.9166 (south); the north end is B1-09's frame mullion at y 4.8914",
+   "confidence": "medium",
+   "agreement": "new",
+   "optional": true,
+   "notes": "strip east of the meeting room, east facade; sidelight of door B1-09",
+   "decision": "optional: curtain-wall glazing set in a gap of the facade wall line; window or glass wall cannot be settled from the plan (same reasoning as B1-91)"
+  },
+  {
+   "id": "B1-99",
+   "kind": "passage",
+   "subtype": "passage mouth (the corridor north of the meeting room opening into the stair / ATM hall; no door, nothing to cut)",
+   "a": [
+    3.2196,
+    6.9339
+   ],
+   "b": [
+    3.2196,
+    5.8582
+   ],
+   "width": 1.0757,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-WALL / A-WALL-PATT fills: the north toilet's east wall (x 3.1696..3.2696) has a free south end at y 6.9339 (door B1-14's east jamb); straight south of it the meeting room's north wall (y 5.7582..5.8582) runs past; nothing solid between along x 3.2196",
+   "confidence": "medium",
+   "agreement": "new",
+   "optional": true,
+   "notes": "east end of the corridor that serves B1-13 / B1-14; the corridor continues east into the stair foot and the ATM / facade-door hall",
+   "decision": "optional: a passage mouth (one wall end facing the side of a perpendicular wall, 1.08 m), the case the shared definition leaves unscored. No wall line is interrupted, and both labellers rejected it as the corridor simply widening, but a detector that pairs free wall ends with the walls in front of them will find it."
+  }
+ ],
+ "corrections": [],
+ "files": [
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/keys/final/parts/bank-L1.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/keys/final/parts/bank-L2.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/convcheck.txt",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/convcheck.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/level1_dwg.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/level2_dwg.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/level2_v3.txt",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/L1_marked.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/L2_marked.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/final_L1_se.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/final_L1_east.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/final_L1_sw.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/final_L1_nw.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/final_L2_sw.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/final_L2_se.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/final_L2_east.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/final_L2_nw.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/l1_stair.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/l2_stair.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/l1_nstair.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/l2_nstair.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/gaps_L1.txt",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/gaps_L2.txt",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/gapfind2.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/endcheck.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/cwcheck.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/door_inserts.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/bank-finish/make_final.py"
+ ]
+}

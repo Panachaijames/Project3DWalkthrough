@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- an icon in the page itself: the browser asks for no /favicon.ico (a 404 and a console error on every load) -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2 7 8 2l6 5v7H2z' fill='%232f6f8f'/%3E%3C/svg%3E" />
+    <title>Walkthrough</title>
+    <script id="benign-errors">
+      // One harmless browser notification kept out of the error reports (fix step, review finding "adversarial" 14). When
+      // ResizeObserver callbacks change a size within the same frame (Radix's popper repositioning the version list during
+      // a version switch), Edge fires a window `error` event, "ResizeObserver loop completed with undelivered
+      // notifications.", with no error object: the rest simply arrives next frame. Vite 8's dev client forwards window
+      // errors to the terminal, where `npm run dev` printed it in red as "[vite] (client) [Unhandled error]". A classic
+      // inline script runs while the page is parsed, before every module script (Vite's client among them), so this
+      // listener comes first and stops that one message; every other error goes on as before.
+      window.addEventListener('error', function (e) {
+        if ((e.error === null || e.error === undefined) && /^ResizeObserver loop (completed with undelivered notifications|limit exceeded)/.test(e.message || '')) {
+          e.stopImmediatePropagation();
+          e.preventDefault();
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

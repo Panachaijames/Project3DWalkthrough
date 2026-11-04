@@ -1,0 +1,160 @@
+﻿id,level,kind,kind_label,family,block,layer,dxf_handle,x_m,y_m,width_mm,depth_mm,height_mm,base_mm,rotation_deg,on_top_of,merged,note
+F1-seat-001,F1,seat,Chair / stool,built-in bench,,picture,,-14.836,-1.765,4847,590,300,0,90.0,,9,west leg of the L: 9 cushions; take-off F1-P002
+F1-seat-002,F1,seat,Chair / stool,built-in bench,,picture,,-12.829,0.984,4673,615,300,0,0.0,,8,north leg of the L: 7 cushions and a black corner square; take-off F1-P001
+F1-seat-003,F1,seat,Chair / stool,check-in sofa,,picture,,-5.836,-0.333,1417,1036,300,0,0.0,,1,"check-in: the seat, its back is the seat back on it (the owner, 2 Nov: seating, first read as a desk); drawn partly under the round sofa; family 'check-in sofa' (2 Nov, J2's question): floor 2's 'sofa' boxes are kind sofa with their backs in the box, this one is a seat whose back is a box of its own; take-off F1-P006"
+F1-seat-004,F1,seat,Chair / stool,round sofa,,picture,,-4.554,-1.009,2494,2396,300,0,90.0,,1,"check-in: the seat, its backs are the 4 seat backs on it (the owner, 2 Nov: seating, first read as a self check-in table); take-off F1-P005"
+F1-seat-005,F1,seat,Chair / stool,round stool,,picture,,-3.845,-5.453,457,439,300,0,90.0,,1,"at the desk, drawn partly behind it; take-off F1-P022"
+F1-sofa-001,F1,sofa,Sofa / armchair,armchair,,picture,,-13.475,-3.783,777,748,800,0,27.5,,1,take-off F1-P019
+F1-sofa-002,F1,sofa,Sofa / armchair,armchair,,picture,,-13.418,-2.211,777,738,800,0,61.2,,1,take-off F1-P016
+F1-sofa-003,F1,sofa,Sofa / armchair,3-seat sofa,,picture,,-13.149,-0.079,1839,808,800,0,0.0,,1,take-off F1-P004
+F1-sofa-004,F1,sofa,Sofa / armchair,armchair,,picture,,-11.007,-1.484,703,692,800,0,90.0,,1,take-off F1-P013
+F1-sofa-005,F1,sofa,Sofa / armchair,armchair,,picture,,-11.007,0.036,692,685,800,0,0.0,,1,take-off F1-P003
+F1-seat-back-001,F1,seat-back,Seat back,seat back,,picture,,-5.895,-0.043,793,176,800,0,0.0,,1,"check-in: the back of the check-in sofa, on the floor at its rim (the owner, 2 Nov: first read as a monitor); take-off F1-P007"
+F1-seat-back-002,F1,seat-back,Seat back,seat back,,picture,,-5.292,-1.556,834,226,800,0,119.3,,1,"check-in: a back of the round sofa, on the floor at its rim (the owner, 2 Nov: first read as a self check-in screen); take-off F1-P014"
+F1-seat-back-003,F1,seat-back,Seat back,seat back,,picture,,-4.485,-0.193,827,239,800,0,164.6,,1,"check-in: a back of the round sofa, on the floor at its rim (the owner, 2 Nov: first read as a self check-in screen); take-off F1-P008"
+F1-seat-back-004,F1,seat-back,Seat back,seat back,,picture,,-4.308,-1.797,835,237,800,0,16.9,,1,"check-in: a back of the round sofa, on the floor at its rim (the owner, 2 Nov: first read as a self check-in screen); take-off F1-P015"
+F1-seat-back-005,F1,seat-back,Seat back,seat back,,picture,,-3.768,-0.908,867,231,800,0,104.3,,1,"check-in: a back of the round sofa, on the floor at its rim (the owner, 2 Nov: first read as a self check-in screen); take-off F1-P010"
+F1-table-001,F1,table,Table / desk,desk,,picture,,-3.786,-5.909,1738,632,600,0,0.0,,1,take-off F1-P023
+F1-coffee-table-001,F1,coffee-table,Coffee / side table,coffee table,,picture,,-13.217,-1.246,827,509,450,0,0.0,,1,take-off F1-P011
+F1-coffee-table-002,F1,coffee-table,Coffee / side table,round side table,,picture,,-12.677,-3.442,544,523,450,0,90.0,,1,take-off F1-P018
+F1-coffee-table-003,F1,coffee-table,Coffee / side table,round side table,,picture,,-12.466,-2.098,457,439,450,0,90.0,,1,take-off F1-P017
+F1-coffee-table-004,F1,coffee-table,Coffee / side table,round side table,,picture,,-12.306,-1.176,369,354,450,0,90.0,,1,take-off F1-P012
+F1-coffee-table-005,F1,coffee-table,Coffee / side table,round side table,,picture,,-12.019,-3.670,404,388,450,0,90.0,,1,take-off F1-P020
+F1-coffee-table-006,F1,coffee-table,Coffee / side table,round side table,,picture,,-11.032,-0.720,615,607,450,0,90.0,,1,take-off F1-P009
+F1-counter-001,F1,counter,Counter top,coffee counter,,picture,,-12.398,-5.505,1991,843,850,0,0.0,,1,take-off F1-P021
+F2-plant-001,F2,plant,Plant,shrub,,picture,,-15.288,-10.620,618,618,600,0,0.0,,1,take-off F2-P127
+F2-plant-002,F2,plant,Plant,shrub,,picture,,-15.288,-9.954,618,618,600,0,0.0,,1,take-off F2-P126
+F2-plant-003,F2,plant,Plant,plant,,picture,,-13.493,-8.266,499,476,600,0,0.0,,1,drawn as a circle with spokes; take-off F2-P119
+F2-seat-001,F2,seat,Chair / stool,dining chair,,picture,,-13.755,-0.538,428,357,300,0,90.0,,1,take-off F2-P071
+F2-seat-002,F2,seat,Chair / stool,dining chair,,picture,,-13.755,0.615,404,357,300,0,90.0,,1,take-off F2-P059
+F2-seat-003,F2,seat,Chair / stool,dining chair,,picture,,-13.755,1.198,428,357,300,0,90.0,,1,take-off F2-P053
+F2-seat-004,F2,seat,Chair / stool,dining chair,,picture,,-13.743,0.045,404,333,300,0,90.0,,1,take-off F2-P064
+F2-seat-005,F2,seat,Chair / stool,dining chair,,picture,,-13.029,1.733,428,357,300,0,0.0,,1,take-off F2-P045
+F2-seat-006,F2,seat,Chair / stool,dining chair,,picture,,-13.017,-1.073,404,357,300,0,0.0,,1,take-off F2-P074
+F2-seat-007,F2,seat,Chair / stool,dining chair,,picture,,-12.328,-0.538,428,357,300,0,90.0,,1,take-off F2-P072
+F2-seat-008,F2,seat,Chair / stool,dining chair,,picture,,-12.328,0.045,404,357,300,0,90.0,,1,take-off F2-P065
+F2-seat-009,F2,seat,Chair / stool,dining chair,,picture,,-12.328,0.615,404,357,300,0,90.0,,1,take-off F2-P060
+F2-seat-010,F2,seat,Chair / stool,dining chair,,picture,,-12.328,1.198,428,357,300,0,90.0,,1,take-off F2-P054
+F2-seat-011,F2,seat,Chair / stool,round stool,,picture,,-11.436,1.876,404,380,300,0,90.0,,1,take-off F2-P043
+F2-seat-012,F2,seat,Chair / stool,bar stool,,picture,,-10.901,-4.271,380,357,300,0,90.0,,1,take-off F2-P094
+F2-seat-013,F2,seat,Chair / stool,bar stool,,picture,,-10.866,-7.826,380,357,300,0,0.0,,1,take-off F2-P115
+F2-seat-014,F2,seat,Chair / stool,chair,,picture,,-10.842,1.388,285,285,300,0,0.0,,1,take-off F2-P051
+F2-seat-015,F2,seat,Chair / stool,chair,,picture,,-10.842,2.411,333,333,300,0,0.0,,1,take-off F2-P035
+F2-seat-016,F2,seat,Chair / stool,chair,,picture,,-10.830,-0.395,428,309,300,0,90.0,,1,take-off F2-P069
+F2-seat-017,F2,seat,Chair / stool,chair,,picture,,-10.818,0.045,309,285,300,0,90.0,,1,take-off F2-P066
+F2-seat-018,F2,seat,Chair / stool,bar stool,,picture,,-10.259,-4.283,357,357,300,0,0.0,,1,take-off F2-P095
+F2-seat-019,F2,seat,Chair / stool,bar stool,,picture,,-10.188,-7.814,357,333,300,0,0.0,,1,take-off F2-P116
+F2-seat-020,F2,seat,Chair / stool,bar stool,,picture,,-9.498,-4.283,357,357,300,0,0.0,,1,take-off F2-P096
+F2-seat-021,F2,seat,Chair / stool,bar stool,,picture,,-9.475,-7.826,357,357,300,0,0.0,,1,take-off F2-P117
+F2-seat-022,F2,seat,Chair / stool,chair,,picture,,-9.451,-2.357,309,262,300,0,90.0,,1,take-off F2-P083
+F2-seat-023,F2,seat,Chair / stool,bench,,picture,,-8.940,-1.739,1760,404,300,0,0.0,,1,at the open stair; take-off F2-P077
+F2-seat-024,F2,seat,Chair / stool,bar stool,,picture,,-8.797,-7.814,380,380,300,0,0.0,,1,take-off F2-P113
+F2-seat-025,F2,seat,Chair / stool,bar stool,,picture,,-8.761,-4.283,357,357,300,0,0.0,,1,take-off F2-P097
+F2-seat-026,F2,seat,Chair / stool,chair,,picture,,-8.428,-2.357,309,309,300,0,0.0,,1,take-off F2-P084
+F2-seat-027,F2,seat,Chair / stool,bar stool,,picture,,-8.107,-7.814,380,380,300,0,0.0,,1,take-off F2-P114
+F2-seat-028,F2,seat,Chair / stool,bar stool,,picture,,-8.024,-4.283,357,357,300,0,0.0,,1,take-off F2-P098
+F2-seat-029,F2,seat,Chair / stool,bar stool,,picture,,-6.883,-6.363,380,357,300,0,90.0,,1,take-off F2-P108
+F2-seat-030,F2,seat,Chair / stool,bar stool,,picture,,-6.871,-7.005,380,380,300,0,0.0,,1,take-off F2-P111
+F2-seat-031,F2,seat,Chair / stool,bar stool,,picture,,-6.871,-5.721,380,380,300,0,0.0,,1,take-off F2-P105
+F2-seat-032,F2,seat,Chair / stool,bar stool,,picture,,-6.871,-5.091,380,357,300,0,0.0,,1,take-off F2-P102
+F2-seat-033,F2,seat,Chair / stool,round stool,,picture,,-6.467,-1.025,428,404,300,0,0.0,,1,take-off F2-P073
+F2-seat-034,F2,seat,Chair / stool,round stool,,picture,,-4.980,-3.035,357,333,300,0,0.0,,1,take-off F2-P090
+F2-seat-035,F2,seat,Chair / stool,sculptural seating,,picture,,-4.822,0.053,2700,2677,300,0,98.0,,1,"the faceted white form (the owner, 2 Nov: a seating): its north slab, one of 3 boxes that follow the form; take-off F2-P048"
+F2-seat-036,F2,seat,Chair / stool,round stool,,picture,,-4.600,2.280,404,404,300,0,0.0,,1,take-off F2-P036
+F2-seat-037,F2,seat,Chair / stool,round stool,,picture,,-4.493,-2.832,404,380,300,0,90.0,,1,take-off F2-P087
+F2-seat-038,F2,seat,Chair / stool,sculptural seating,,picture,,-4.363,1.727,1205,488,300,0,7.9,,1,"the faceted white form: its north tip, one of 3 boxes; take-off F2-P044"
+F2-seat-039,F2,seat,Chair / stool,sculptural seating,,picture,,-4.022,-1.828,1855,1391,300,0,0.0,,1,"the faceted white form: its south slab, one of 3 boxes; take-off F2-P076"
+F2-seat-040,F2,seat,Chair / stool,round stool,,picture,,-3.328,2.054,428,428,300,0,0.0,,1,take-off F2-P038
+F2-seat-041,F2,seat,Chair / stool,round stool,,picture,,-3.209,1.507,428,428,300,0,0.0,,1,take-off F2-P046
+F2-seat-042,F2,seat,Chair / stool,round stool,,picture,,-3.150,-0.098,452,404,300,0,0.0,,1,take-off F2-P067
+F2-seat-043,F2,seat,Chair / stool,round stool,,picture,,-2.555,-0.157,452,428,300,0,0.0,,1,take-off F2-P068
+F2-seat-044,F2,seat,Chair / stool,round stool,,picture,,-0.082,1.899,404,404,300,0,0.0,,1,take-off F2-P042
+F2-seat-045,F2,seat,Chair / stool,round stool,,picture,,0.572,2.720,380,380,300,0,0.0,,1,take-off F2-P031
+F2-sofa-001,F2,sofa,Sofa / armchair,armchair,,picture,,-14.955,3.921,523,452,800,0,0.0,,1,take-off F2-P023
+F2-sofa-002,F2,sofa,Sofa / armchair,armchair,,picture,,-14.295,4.549,550,543,800,0,81.9,,1,take-off F2-P019
+F2-sofa-003,F2,sofa,Sofa / armchair,outdoor armchair,,picture,,-14.171,-10.632,642,523,800,0,90.0,,1,take-off F2-P128
+F2-sofa-004,F2,sofa,Sofa / armchair,armchair,,picture,,-14.025,3.618,477,463,800,0,123.6,,1,take-off F2-P025
+F2-sofa-005,F2,sofa,Sofa / armchair,armchair,,picture,,-14.012,-2.414,880,819,800,0,144.0,,1,take-off F2-P079
+F2-sofa-006,F2,sofa,Sofa / armchair,armchair,,picture,,-13.978,5.973,532,500,800,0,26.6,,1,take-off F2-P014
+F2-sofa-007,F2,sofa,Sofa / armchair,sofa,,picture,,-13.517,6.762,1403,571,800,0,0.0,,1,against the toilet wall; take-off F2-P007
+F2-sofa-008,F2,sofa,Sofa / armchair,outdoor 3-seat sofa,,picture,,-13.457,-9.122,2235,713,800,0,0.0,,1,take-off F2-P121
+F2-sofa-009,F2,sofa,Sofa / armchair,armchair,,picture,,-13.402,-2.992,544,534,800,0,143.2,,1,take-off F2-P086
+F2-sofa-010,F2,sofa,Sofa / armchair,armchair,,picture,,-13.003,5.906,541,523,800,0,141.3,,1,take-off F2-P017
+F2-sofa-011,F2,sofa,Sofa / armchair,outdoor armchair,,picture,,-12.720,-10.632,642,523,800,0,90.0,,1,take-off F2-P129
+F2-sofa-012,F2,sofa,Sofa / armchair,armchair,,picture,,-11.840,4.111,555,521,800,0,135.0,,1,take-off F2-P020
+F2-sofa-013,F2,sofa,Sofa / armchair,armchair,,picture,,-11.827,6.011,470,451,800,0,113.0,,1,take-off F2-P015
+F2-sofa-014,F2,sofa,Sofa / armchair,armchair,,picture,,-11.725,-3.206,469,396,800,0,131.3,,1,take-off F2-P091
+F2-sofa-015,F2,sofa,Sofa / armchair,outdoor armchair,,picture,,-11.626,-10.632,642,523,800,0,90.0,,1,take-off F2-P130
+F2-sofa-016,F2,sofa,Sofa / armchair,outdoor armchair,,picture,,-11.615,-9.145,618,499,800,0,90.0,,1,take-off F2-P123
+F2-sofa-017,F2,sofa,Sofa / armchair,armchair,,picture,,-11.579,3.229,547,465,800,0,70.1,,1,take-off F2-P027
+F2-sofa-018,F2,sofa,Sofa / armchair,sofa,,picture,,-11.401,6.762,1403,571,800,0,0.0,,1,against the toilet wall; take-off F2-P008
+F2-sofa-019,F2,sofa,Sofa / armchair,armchair,,picture,,-10.908,-3.035,461,419,800,0,158.1,,1,take-off F2-P089
+F2-sofa-020,F2,sofa,Sofa / armchair,armchair,,picture,,-10.906,5.963,475,462,800,0,48.8,,1,take-off F2-P016
+F2-sofa-021,F2,sofa,Sofa / armchair,armchair,,picture,,-10.842,3.921,523,499,800,0,0.0,,1,take-off F2-P022
+F2-sofa-022,F2,sofa,Sofa / armchair,outdoor armchair,,picture,,-10.176,-10.632,642,523,800,0,90.0,,1,take-off F2-P131
+F2-sofa-023,F2,sofa,Sofa / armchair,outdoor armchair,,picture,,-10.164,-9.157,594,499,800,0,90.0,,1,take-off F2-P124
+F2-sofa-024,F2,sofa,Sofa / armchair,outdoor armchair,,picture,,-9.058,-10.632,642,523,800,0,90.0,,1,take-off F2-P132
+F2-sofa-025,F2,sofa,Sofa / armchair,outdoor 3-seat sofa,,picture,,-8.393,-9.122,2235,713,800,0,0.0,,1,take-off F2-P122
+F2-sofa-026,F2,sofa,Sofa / armchair,outdoor armchair,,picture,,-7.608,-10.632,642,523,800,0,90.0,,1,take-off F2-P133
+F2-sofa-027,F2,sofa,Sofa / armchair,armchair,,picture,,-6.370,-2.289,587,534,800,0,108.4,,1,take-off F2-P080
+F2-sofa-028,F2,sofa,Sofa / armchair,armchair,,picture,,-4.316,2.918,624,587,800,0,71.6,,1,take-off F2-P028
+F2-sofa-029,F2,sofa,Sofa / armchair,armchair,,picture,,-2.536,2.408,627,606,800,0,26.6,,1,take-off F2-P033
+F2-sofa-030,F2,sofa,Sofa / armchair,armchair,,picture,,-2.162,0.873,624,602,800,0,18.4,,1,take-off F2-P055
+F2-sofa-031,F2,sofa,Sofa / armchair,armchair,,picture,,0.584,1.162,690,642,800,0,0.0,,1,on the feature carpet; take-off F2-P052
+F2-sofa-032,F2,sofa,Sofa / armchair,sofa,,picture,,1.511,1.852,1974,690,800,0,90.0,,1,on the feature carpet; take-off F2-P032
+F2-table-001,F2,table,Table / desk,dining table,,picture,,-13.041,0.330,2402,1022,600,0,90.0,,1,take-off F2-P050
+F2-table-002,F2,table,Table / desk,small round table,,picture,,-10.842,1.876,571,547,600,0,0.0,,1,take-off F2-P041
+F2-table-003,F2,table,Table / desk,small round table,,picture,,-8.940,-2.333,571,547,600,0,0.0,,1,take-off F2-P081
+F2-coffee-table-001,F2,coffee-table,Coffee / side table,side table,,picture,,-14.420,6.940,309,309,450,0,0.0,,1,take-off F2-P003; in the approach of F2-003
+F2-coffee-table-002,F2,coffee-table,Coffee / side table,round side table,,picture,,-14.397,4.016,499,499,450,0,0.0,,1,take-off F2-P021
+F2-coffee-table-003,F2,coffee-table,Coffee / side table,round side table,,picture,,-14.325,-3.165,404,404,450,0,0.0,,1,take-off F2-P092
+F2-coffee-table-004,F2,coffee-table,Coffee / side table,round side table,,picture,,-14.230,-8.182,690,690,450,0,0.0,,1,drawn with a cross; take-off F2-P118
+F2-coffee-table-005,F2,coffee-table,Coffee / side table,round side table,,picture,,-13.481,6.227,523,499,450,0,0.0,,1,take-off F2-P010
+F2-coffee-table-006,F2,coffee-table,Coffee / side table,outdoor round side table,,picture,,-13.434,-10.632,523,499,450,0,0.0,,1,take-off F2-P136
+F2-coffee-table-007,F2,coffee-table,Coffee / side table,side table,,picture,,-12.601,6.940,309,285,450,0,90.0,,1,take-off F2-P004
+F2-coffee-table-008,F2,coffee-table,Coffee / side table,side table,,picture,,-12.280,6.940,309,309,450,0,0.0,,1,take-off F2-P005
+F2-coffee-table-009,F2,coffee-table,Coffee / side table,round side table,,picture,,-11.401,-2.868,523,499,450,0,90.0,,1,take-off F2-P085
+F2-coffee-table-010,F2,coffee-table,Coffee / side table,round side table,,picture,,-11.401,3.778,499,499,450,0,0.0,,1,take-off F2-P024
+F2-coffee-table-011,F2,coffee-table,Coffee / side table,round side table,,picture,,-11.353,6.239,499,476,450,0,0.0,,1,take-off F2-P011
+F2-coffee-table-012,F2,coffee-table,Coffee / side table,outdoor round side table,,picture,,-10.913,-10.620,523,523,450,0,0.0,,1,take-off F2-P134
+F2-coffee-table-013,F2,coffee-table,Coffee / side table,outdoor round side table,,picture,,-10.889,-9.145,523,476,450,0,90.0,,1,take-off F2-P125
+F2-coffee-table-014,F2,coffee-table,Coffee / side table,side table,,picture,,-10.497,6.952,357,285,450,0,0.0,,1,take-off F2-P006
+F2-coffee-table-015,F2,coffee-table,Coffee / side table,outdoor round side table,,picture,,-8.345,-10.620,523,523,450,0,0.0,,1,take-off F2-P135
+F2-coffee-table-016,F2,coffee-table,Coffee / side table,round side table,,picture,,-5.492,-2.012,666,666,450,0,0.0,,1,drawn with a rim; take-off F2-P078
+F2-coffee-table-017,F2,coffee-table,Coffee / side table,round side table,,picture,,-3.066,0.675,713,713,450,0,0.0,,1,drawn with a rim; take-off F2-P057
+F2-coffee-table-018,F2,coffee-table,Coffee / side table,round side table,,picture,,0.572,2.042,618,594,450,0,0.0,,1,take-off F2-P037
+F2-counter-001,F2,counter,Counter top,back bar counter,,picture,,-12.685,-6.066,2877,880,850,0,90.0,,1,take-off F2-P100
+F2-counter-002,F2,counter,Counter top,bar counter,,picture,,-9.225,-7.112,4042,737,850,0,0.0,,1,south leg of the U; take-off F2-P110
+F2-counter-003,F2,counter,Counter top,bar counter,,picture,,-9.225,-4.984,4042,713,850,0,0.0,,1,north leg of the U; take-off F2-P101
+F2-counter-004,F2,counter,Counter top,bar counter,,picture,,-7.560,-6.042,1403,713,850,0,90.0,,1,east leg of the U; take-off F2-P104
+F2-counter-005,F2,counter,Counter top,canteen counter,,picture,,-5.028,5.561,1593,785,850,0,90.0,,1,west leg of the U; take-off F2-P012
+F2-counter-006,F2,counter,Counter top,pantry counter,,picture,,-3.625,7.214,1831,333,850,0,0.0,,1,at the serving hatch F2-014; take-off F2-P002
+F2-counter-007,F2,counter,Counter top,canteen counter,,picture,,-1.806,6.691,7229,666,850,0,0.0,,1,north leg of the U; take-off F2-P009
+F2-counter-008,F2,counter,Counter top,canteen counter,,picture,,-1.782,5.228,2473,880,850,0,0.0,,1,island; take-off F2-P018
+F2-counter-009,F2,counter,Counter top,worktop,,picture,,0.726,7.380,1831,285,850,0,0.0,,1,"in the back room east of the food lift, against its south wall, which the picture draws solid behind it (no serving hatch there: R2 issue 2); take-off F2-P001"
+F2-counter-010,F2,counter,Counter top,canteen counter,,picture,,1.416,5.561,1593,785,850,0,90.0,,1,east leg of the U; take-off F2-P013
+F2-cabinet-001,F2,cabinet,Cabinet / casework,signature display cabinet,,picture,,-15.288,-1.489,761,571,1000,0,90.0,,1,one module of a run; take-off F2-P075
+F2-cabinet-002,F2,cabinet,Cabinet / casework,signature display cabinet,,picture,,-15.288,-0.573,594,571,1000,0,90.0,,1,one module of a run; take-off F2-P070
+F2-cabinet-003,F2,cabinet,Cabinet / casework,signature display cabinet,,picture,,-15.288,0.021,594,571,1000,0,90.0,,1,one module of a run; take-off F2-P063
+F2-cabinet-004,F2,cabinet,Cabinet / casework,signature display cabinet,,picture,,-15.288,0.639,594,571,1000,0,90.0,,1,one module of a run; take-off F2-P058
+F2-cabinet-005,F2,cabinet,Cabinet / casework,signature display cabinet,,picture,,-15.288,1.257,594,571,1000,0,90.0,,1,one module of a run; take-off F2-P049
+F2-cabinet-006,F2,cabinet,Cabinet / casework,signature display cabinet,,picture,,-15.288,1.864,571,571,1000,0,0.0,,1,one module of a run; take-off F2-P040
+F2-cabinet-007,F2,cabinet,Cabinet / casework,signature display cabinet,,picture,,-15.288,2.744,713,571,1000,0,90.0,,1,one module of a run; take-off F2-P030
+F2-cabinet-008,F2,cabinet,Cabinet / casework,signature display cabinet,,picture,,-15.264,-7.410,666,618,1000,0,90.0,,1,one module of a run; take-off F2-P112
+F2-cabinet-009,F2,cabinet,Cabinet / casework,signature display cabinet,,picture,,-15.264,-6.720,666,618,1000,0,90.0,,1,one module of a run; take-off F2-P109
+F2-cabinet-010,F2,cabinet,Cabinet / casework,signature display cabinet,,picture,,-15.264,-6.042,642,618,1000,0,90.0,,1,one module of a run; take-off F2-P107
+F2-cabinet-011,F2,cabinet,Cabinet / casework,signature display cabinet,,picture,,-15.264,-5.412,618,618,1000,0,0.0,,1,one module of a run; take-off F2-P103
+F2-cabinet-012,F2,cabinet,Cabinet / casework,signature display cabinet,,picture,,-15.264,-4.806,618,547,1000,0,0.0,,1,one module of a run; take-off F2-P099
+F2-cabinet-013,F2,cabinet,Cabinet / casework,signature display cabinet,,picture,,-15.264,-3.534,618,571,1000,0,0.0,,1,one module of a run; take-off F2-P093
+F2-cabinet-014,F2,cabinet,Cabinet / casework,signature display cabinet,,picture,,-15.264,-2.951,618,594,1000,0,0.0,,1,one module of a run; take-off F2-P088
+F2-cabinet-015,F2,cabinet,Cabinet / casework,signature display cabinet,,picture,,-15.264,-2.381,618,547,1000,0,0.0,,1,one module of a run; take-off F2-P082
+F2-cabinet-016,F2,cabinet,Cabinet / casework,signature display cabinet,,picture,,-15.229,-8.991,1070,690,1000,0,90.0,,1,one module of a run; take-off F2-P120
+F2-cabinet-017,F2,cabinet,Cabinet / casework,cabinet,,picture,,-0.986,-5.864,880,380,1000,0,0.0,,1,in the core's south wall (unsure); take-off F2-P106
+F2-cabinet-018,F2,cabinet,Cabinet / casework,console,,picture,,1.059,0.271,1165,380,1000,0,0.0,,1,low cabinet; take-off F2-P062
+F2-cabinet-019,F2,cabinet,Cabinet / casework,display cabinet,,picture,,2.545,0.318,523,476,1000,0,0.0,,1,one module of a run; take-off F2-P061
+F2-cabinet-020,F2,cabinet,Cabinet / casework,display cabinet,,picture,,2.545,0.841,523,523,1000,0,0.0,,1,one module of a run; take-off F2-P056
+F2-cabinet-021,F2,cabinet,Cabinet / casework,display cabinet,,picture,,2.545,1.364,523,476,1000,0,0.0,,1,one module of a run; take-off F2-P047
+F2-cabinet-022,F2,cabinet,Cabinet / casework,display cabinet,,picture,,2.545,1.911,523,523,1000,0,0.0,,1,one module of a run; take-off F2-P039
+F2-cabinet-023,F2,cabinet,Cabinet / casework,display cabinet,,picture,,2.545,2.446,523,499,1000,0,0.0,,1,one module of a run; take-off F2-P034
+F2-cabinet-024,F2,cabinet,Cabinet / casework,display cabinet,,picture,,2.545,2.969,523,499,1000,0,0.0,,1,one module of a run; take-off F2-P029
+F2-cabinet-025,F2,cabinet,Cabinet / casework,display cabinet,,picture,,2.545,3.493,523,499,1000,0,0.0,,1,one module of a run; take-off F2-P026

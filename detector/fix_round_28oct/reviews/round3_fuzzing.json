@@ -1,0 +1,167 @@
+{
+ "findings": [
+  {
+   "id": "FZ-01",
+   "severity": "high",
+   "area": "run() / dedupe / units (inherited, not touched by the patch)",
+   "summary": "dedupe() rounds every coordinate to 3 decimals BEFORE the mapping's units are applied (Floor.__init__ scales afterwards). Prims coordinates are DXF units / 1000, so for a drawing whose mapping says units 'm' or 'ft' the signature grid is 1 m or 1 ft, for 'cm' 1 cm, for 'in' 1 inch. Items that merely share a rounded start and end point (door leaf lines, frame pieces, hatch edges, short wall faces) are silently dropped as duplicates. The 'units' option is documented and accepted, but nothing in the six-drawing gate exercises it.",
+   "repro": "cd <fuzz>/repro; python -B fz_01_units.py   (prints, for a DXF in metres / feet / cm: 69 / 78 / 86 openings against 86 and 85 / 54 / 0 differences; items 18486 -> 1724 / 3107 / 11021 after dedupe against 13800 for mm). Whole drawings: python -B exp_units.py",
+   "suggestedFix": "Apply the unit scale first and dedupe afterwards (items = [scaled(d, k) for d in ...]; dedupe(items); Floor(..., scale 1.0)), or round the signature in metres. Verified in a copy: with scaling before dedupe the 'm' and 'ft' runs give 139/143 with 8 extras and 54/54 with 6 extras again. area_tagger's bbox (documented as drawing metres) is compared against the same unscaled coordinates and needs the same fix.",
+   "actual": "DXF in metres: 85 differences on sukhumvit, 9 on bank1, 8 on l29, 5 on l30, 3 on bank2, 1 on presidential; older key 97/143 right with 14 extras (baseline 139, 8); tower 52/54 (54). DXF in feet: older 118/143, 11 extras; 54 differences on sukhumvit, 4 on l29, 5 on l30. cm: only l30 1; inch: presidential 2, l30 1.",
+   "expected": "Same detections whatever unit the drawing is in (the rule text says all lengths are physical sizes in metres)."
+  },
+  {
+   "id": "FZ-02",
+   "severity": "high",
+   "area": "Prim.poly / small_shapes / jamb_at (inherited; unguarded in the merged detector)",
+   "summary": "An unhandled exception aborts the whole run: Prim.poly = Polygon(pts).buffer(0) is a MultiPolygon for a self-crossing closed outline, small_shapes() keeps it (0.025 m <= bbox <= 0.30 m), and jamb_at() reads g.exterior -> AttributeError: 'MultiPolygon' object has no attribute 'exterior' (openings.py line 588, reached from narrow_to_symbol line 1401). No try/except anywhere, so one odd shape on any mapped layer gives no result for the whole floor. Presidential triggers it with only 1.5 mm of vertex noise: closed 400-1350-vertex polylines on the unmapped furniture layer 'Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES' (vertices 1-4 mm apart) become self-intersecting (60 of them at +-3 mm). None of the six clean drawings contains such a shape (0 MultiPolygon prims), so the gate never saw it.",
+   "repro": "cd <fuzz>/repro; python -B fz_02_crash.py   (+-1 mm: OK, 25 openings; +-1.5 mm: AttributeError: 'MultiPolygon' object has no attribute 'exterior'). All magnitudes: python -B exp_crash.py",
+   "suggestedFix": "In Prim.__init__ keep only a Polygon (take the largest part of a MultiPolygon, or fall back to the convex hull); make small_shapes/jamb_at use .convex_hull.exterior; wrap per-floor detection in try/except that names the floor and the offending item.",
+   "actual": "uncaught AttributeError, no output for the floor",
+   "expected": "the odd shape is ignored or repaired"
+  },
+  {
+   "id": "FZ-03",
+   "severity": "medium",
+   "area": "patch 1 (stub-to-stub passages, framed) + patch 6 (mouths): gap direction taken from one short wall-end face",
+   "summary": "A gap's direction u is the direction of ONE face edge of the strip it was found from (strip_gaps: u = S.u). For a door opening between 3.5-17 cm wall ends that edge is only 0.035-0.17 m long, and the gap runs 0.9-2.5 m along it, so coordinate noise is amplified by (gap width / end length): 1 mm of noise gives 16 mm (L29-018/L30-014, ends 0.08 m), 36 mm (L29-017, ends 0.035 m), 21 mm (presidential suite-019) of lateral error at the far end. The new tests then use ABSOLUTE tolerances in that skewed frame: framed() needs the frame lines square within 3 degrees (a 12 cm line is 6 mm of slack), face_runs()/far_face() use FACE_TOL 3 cm. In L29 with +-3 mm noise (indep seed 6) the gap a=(2.6783,-35.7283) b=(1.7819,-35.6992) is tilted 1.9 deg, framed() fails (cs 0.0716 > sin 3 deg 0.0523), the stub-to-stub test rejects the passage and key L29W-06 (Door-Opening 900x2000, L29-018) is lost. Keys lost first as noise grows (10 seeds each, tower only, python -B exp_tower_noise.py): +-1 mm none (54/54 in 10/10); +-1.5 mm L29W-06 2/10 and L30W-20 1/10; +-2 mm L29W-06 4/10; +-3 mm L29W-06, L30W-05, L29W-20 (stair-hall nibs), L30E-03, L30W-21; +-5 mm 48-53/54 (L29W-22 6/10). Among the tower passages the amplification ranks L29-017 (key L29W-22) 25x, L29-018/L30-014 (L29W-06/L30W-05) 11x, L29-008/L30-010 (L29W-20/L30W-24) 7x first, which is the order in which they fall out. The same mechanism acts in the older drawings (sukhumvit ground-021, 3.3 m gap on a 0.2 m end, 16x: GW-10 is lost in 1 of 12 +-1 mm runs), so it is not new, but patch 1 and 6 add absolute 3 cm / 3 degree tests on top of it.",
+   "repro": "cd <fuzz>/repro; python -B fz_03_direction.py   (exact: passage L29-018 0.9 m, wall-end gap tilt 0 deg, framed() True; +-3 mm seed 6: no passage, the 0.077 m wall-end gap is tilted 1.859 deg, framed() False). Noise scan: python -B exp_tower_noise.py",
+   "suggestedFix": "Take the gap direction from the whole wall line (the longer strip, or a least-squares line through both strip ends), or measure the new squareness / flush / FACE_TOL tests in the strip's own frame and scale their tolerance with the gap width (angle = noise / end length). A cheap check: reject the framed() 3 degree test in favour of 'frame line within 6 mm of perpendicular at its own length'.",
+   "actual": "L29W-06, L30W-05, L29W-20, L30W-24, L29W-22 start to fall out between +-1.5 and +-5 mm",
+   "expected": "stay found while noise is below the 3 cm tolerances"
+  },
+  {
+   "id": "FZ-04",
+   "severity": "medium",
+   "area": "patch 1: strip floor 3 cm and the reveals it was made for",
+   "summary": "strip_floor 0.03 m sits 5 mm below the features it exists for: the wall ends of L29-017 (key L29W-22, 900 mm doorway between two cross walls) are 0.0352 m long, presidential suite-008 0.0347 m. Raising the floor to 0.0348 m loses suite-008, to 0.0353 m also L29-017 (key lost: tower 53/54). Those short strips are what make how_end == 'collinear strip' true; the stub-to-stub exception, the mouth test (interrupts_wall_line returns True for a collinear strip) and the 1.6 m doorway limit all rest on them. With 1 mm of noise the 0.0347 m and 0.1 m strips are no longer found next to the gap (fl.strips there: 0.0347 and 0.1 m gone, a 1.4387 m strip appears), how_end falls back to 'found from both ends' and suite-008 is rejected as a mouth in 5 of 12 +-1 mm runs. Both 3.5 cm reveals come from two drawings (L29 and presidential), so the floor has two samples, 4.7 mm and 5.2 mm above it.",
+   "repro": "cd <fuzz>/repro; python -B fz_04_strip_floor.py   (floor 0.0346: suite-008 present, 0.0348: gone; 0.0351: L29-017 present, 0.0353: gone; suite-008 absent in 5 of 12 +-1 mm runs)",
+   "suggestedFix": "Do not make an existence test depend on a 3 cm vs 3.5 cm length. Match the far wall end by geometry (collinear wall material on the same centre line within a tolerance) instead of 'a strip of at least N cm was found', or put the floor at 2 cm and handle the extra gaps with the mouth test.",
+   "actual": "floor 3.0 cm, cliff at 3.47 / 3.52 cm (+16 % / +17 %)",
+   "expected": "a margin of at least a factor two for a value read from one family"
+  },
+  {
+   "id": "FZ-05",
+   "severity": "medium",
+   "area": "patch 2: leaf lines (line_leaves) and the original gap_contents: exact tie at 0.1 m",
+   "summary": "Both gap_contents (original, 'pocket line' / 'pocket panel') and the new line_leaves require np.minimum(s1, g.w) - np.maximum(s0, 0) >= 0.1. The Revit pocket-slider family of L30 draws its leaf lines poking EXACTLY 0.1 m into the opening (s in (-1.1, 0.1) and (2.38, 3.58) for a 2.48 m gap), so the comparison is decided by the last bit of the float: the SAME family gets different classes in the same drawing. L30-020 (1.28 m) is a passage while the identical L30-002 (2.48 m) is a pocket door in the baseline; a 100 km translation, a 45 degree rotation, a mirror or +-1 nm of jitter turn L30-020 into a door (16 of 20 seeds at 1 nm, 14 of 16 at +-3 mm) and L30-002 into a passage (translation by 500 km / -1000 km). Sweeps: ll_overlap 0.095 and gc_overlap 0.095 / 0.105 already change the tower. The 54/54 does not depend on it (both are walkable) but the door/passage label and the evidence ('pocket panel') are noise.",
+   "repro": "cd <fuzz>/repro; python -B fz_05_tie_overlap.py   (baseline: L30-020 passage, L30-002 pocket door; after a 100 km shift, a 45 degree rotation or 1 nm of jitter both are pocket doors; after a -1000 km shift both are passages)",
+   "suggestedFix": "Compare with a tolerance that is off the 5 mm design grid (>= 0.095 or an explicit epsilon of 1e-6, decide ties one way) in gap_contents and line_leaves; same for every other threshold that equals a multiple of 5 mm (see FZ-07).",
+   "actual": "classification decided by rounding",
+   "expected": "same class for the same family"
+  },
+  {
+   "id": "FZ-06",
+   "severity": "medium",
+   "area": "patch 2 (line_leaves tolerances) vs coordinate noise",
+   "summary": "line_leaves requires the two ends of each leaf line to be 5 mm level (abs(la - lb) <= 0.005) and W.simplify(0.003) is another 3 mm tolerance in the same chain. With 3 mm of noise per coordinate a straight line is up to 6 mm out of level, so the 4.8 m face-mounted slider of L30 (key L30E-03, L30-026) is lost in 4 of 16 +-3 mm runs (indep seed 5; snap 1, 2, 7) and in 5 of 10 +-4 mm runs, 6 of 10 at +-5 mm. Relaxing the 5 mm to 7.5 mm brings it back in 3 of the 4 runs, to 10 mm in 4 of 4; halving ll_total (0.7 -> 0.35), the pair_strips thickness limits or doubling the simplify tolerance also bring it back (recover_all.py). The screen sliders (patch 3, 1 cm level, 2 cm ends) and the sidelit doors (patch 5) survive +-3 mm in 16/16 runs, so the 5 mm is the tightest tolerance of the patch.",
+   "repro": "cd <fuzz>/repro; python -B fz_06_ll_parallel.py   (+-3 mm seed 5: the 4.8 m slider is found False with 0.005, True with 0.0075 and 0.01)",
+   "suggestedFix": "Make the level test relative to the line length (angle) and at least 10 mm, or fit one line to both lines of the pair.",
+   "actual": "key lost at +-3 mm",
+   "expected": "found with 1 cm of slack"
+  },
+  {
+   "id": "FZ-07",
+   "severity": "medium",
+   "area": "original thresholds that equal design dimensions (found because the baseline keys depend on them)",
+   "summary": "Three more exact ties decide KEY results in the older drawings, i.e. the 139/143 itself is a rounding outcome: (a) find_strips tmax = 0.55 equals a 0.55 m wall piece of bank1: with 1 nm jitter (seed 4) or tmax 0.551 the double door L1-024 (key B1-09) becomes a 2.42 m wide gap door (1.6 m is right); (b) pick_swing: G.dist(h.open) <= 0.05 with the open tip at 0.0500 m for sukhumvit upper-033 (key UE-18): the door disappears at +-1 um (4 of 5 seeds) and turns into a window at +-0.1 mm (4/5) and +-1 mm (12/12 runs); (c) symbol_door: OB.section(..., 0.6) clips a wall band at the window and accepts b - a <= 0.6, so the shaft door L30-034 is output with wallThickness 0.6 m and its centre 0.30 m off the wall line (x 2.2213 instead of 2.5213; key centre 2.471, i.e. 0.25 m away of the 0.30 m match limit) while L29-026, the same door in the same family, gets 0.1 m; 1 nm of jitter (1 of 5 seeds, exp_jitter.py --mags 1e-9) moves L30-034 to x 2.52 with t 0.1. All three flip with noise far below any drawing precision: over 20 seeds of +-1 nm independent jitter exactly five openings move (python -B exp_jitter.py --mags 1e-9 --seeds 20): L1-024 9/20, sukhumvit upper-035 (pocket door 1.258 vs 1.208 m, original pocket_doors) 9/20, L30-034 12/20, L30-020 16/20, L30-002 2/20; the older key figure is 138 instead of 139 in 9 of those 20 runs.",
+   "repro": "cd <fuzz>/repro; python -B fz_07_ties.py   (tmax 0.551: the bank1 double door is 2.422 m instead of 1.6 m; L29-026 wallThickness 0.1 at x 2.5213 vs L30-034 0.6 at x 2.2213; pick_swing open-tip distance 0.050000; the 2.42 m door in 9 of 20 seeds of +-1 nm). Over 20 seeds: python -B exp_jitter.py --mags 1e-9 --modes indep --seeds 20 --seed0 100 --tag nm",
+   "suggestedFix": "Resolve ties explicitly (epsilon) and keep every threshold off the 5 mm grid; in symbol_door reject a section that touches the window edge instead of accepting width <= 0.6.",
+   "actual": "B1-09 / UE-18 / wallThickness depend on float rounding",
+   "expected": "deterministic outcome"
+  },
+  {
+   "id": "FZ-08",
+   "severity": "medium",
+   "area": "item order: symbol_door(hi, hj) is not symmetric (inherited; the patch does not fix it)",
+   "summary": "The free double-door search calls symbol_door(fl, hi, hj) with hi = the earlier arc in fl.P. With the leaves swapped the call returns None for the same drawing: the band chosen at s = -0.08 m from the right leaf merges with a jamb piece (section (-0.1973, 0.0235), 0.22 m wide), the centre line is displaced 0.087 m and only one wall end is found (len(how) < 2 -> 'two arcs alone: furniture'). The two 2 x 0.96 m double doors L29-025 / L30-033 (keys L29E-09, L30E-08) therefore depend on the order of the items in the cache: with 6 random item orders the tower scores 52, 52, 54, 53, 53, 52 of 54 with 10, 10, 6, 8, 8, 10 extras (older drawings stay 139/143, 8 extras); the door becomes two single doors 0.94 and 0.96 m wide. Shuffling the mapping's layer lists changes nothing (36/36 byte-identical). The original detector has the identical flips.",
+   "repro": "cd <fuzz>/repro; python -B fz_08_order.py   (baseline hinged double 1.955; item orders 1, 2, 4, 6 give two singles 0.938 + 0.962; symbol_door(left, right) gives the double door, symbol_door(right, left) gives None)",
+   "suggestedFix": "In the double-door loop try both (hi, hj) and (hj, hi) or sort the two leaves by position before calling symbol_door; compute the band once from the middle of the chord.",
+   "actual": "52/54 with 10 extras for item orders 1, 2, 6",
+   "expected": "the same output for any order of the same items"
+  },
+  {
+   "id": "FZ-09",
+   "severity": "medium",
+   "area": "geomkit.circle3 is not translation invariant (inherited)",
+   "summary": "circle3 evaluates the circumcentre from absolute coordinates, so the arc centre and radius lose precision far from the origin: error 0.5 um at 100 km, 0.4 mm at 1000 km, 13 mm at 5000 km (a 0.9 m arc). Georeferenced drawings (UTM northing 1.5-10 million m) therefore get hinge points and radii off by mm-cm; at 500 km east / 5000 km north the L29-026 door moves 0.3 m (hinge 2.5229 vs 2.5213, r 0.988 vs 1.0) and the bank1 double door L1-024 splits into two singles. The translations up to 100 km in the review brief do not show it.",
+   "repro": "cd <fuzz>/repro; python -B fz_09_circle3.py   (circle3 error 5e-7 / 4e-4 / 1.3e-2 m at 1e5 / 1e6 / 5e6 m; L29-026 after the 500 km / 5000 km shift: 0.984 wide, wallThickness 0.598; with circle3 relative to p0: 1.0, 0.1)",
+   "suggestedFix": "Compute circle3 relative to p0 (subtract p0 from the three points, add it back to the centre), or translate every drawing to its own bounding-box centre when it is loaded.",
+   "actual": "radius error 1.2 cm at 5000 km",
+   "expected": "invariant to translation"
+  },
+  {
+   "id": "FZ-10",
+   "severity": "medium",
+   "area": "constants with narrow windows (development figures, one or two samples each)",
+   "summary": "Nearest value, from the coarse + fine sweeps (all other values unchanged), at which an output / key / extras count changes. DOORWAY 1.4: UW-06 (1.30 m) is lost from 1.2999, the false passages upper-031 (1.555 m), L29-020 / L30-032 (1.59 m) come in from 1.56-1.61 -> window 1.30-1.555 m set by three examples, chosen 0.10 m above the true one. JAMB_RETURN 0.25: the lift-door piers are 0.2100 m (L29W-13/14/15 get 0.98 m instead of 1.40 m from 0.2099 down), upper cliff 0.35 (presidential suite-021) -> window 0.21-0.35, and L29 contains a stub of exactly 0.25 (the test -JAMB_RETURN <= st1 < 0 is a tie there). SIDELIGHT_MIN 0.15: the four sidelit doors have 0.20 m panes (cliff exactly at 0.20, four keys wrong). stub_len 0.3: presidential O1 (key) is lost from 0.36 (0.345 is still fine). ll_reach 0.10: the face-mounted leaf needs 0.06; 0.05 loses a key. FACE_TOL 0.03: a face of the 2.45 m L29-020 passage is 0.02905 m off, so 0.0285 already removes it (and every +-1 mm noise run flips it). Ablation (python -B exp_ablate.py): the patches carry 12 of the 54 tower keys (trim_to_leaf 4, JAMB_RETURN 4 incl. L30W-20, screen_doors 2, framed 1, line_leaves 1) - the tower 100 % is a development figure for those twelve; the mouth rule carries no key (only extras 26 -> 8 and 27 -> 6), closed_by_glass 1 extra, along_wall 2 extras.",
+   "repro": "cd <fuzz>/repro; python -B fz_10_windows.py   (DOORWAY 1.2999 loses upper-028, 1.61 adds three passages; JAMB_RETURN 0.2099 loses L29-004/005/006, 0.3501 changes presidential; SIDELIGHT_MIN 0.21 loses four L29 doors; FACE_TOL 0.029 drops L29-020). Tables: results/cliffs_table.txt, results/sweep_coarse_table.txt; ablation: python -B exp_ablate.py",
+   "suggestedFix": "Record the data points behind each constant next to it (done for some) and gather at least a second sample before treating DOORWAY, JAMB_RETURN, SIDELIGHT_MIN as properties of the geometry.",
+   "actual": "windows of 0.25 m (DOORWAY), 0.14 m (JAMB_RETURN), cliff at the narrowest pane (SIDELIGHT_MIN)",
+   "expected": "values with a factor-two margin"
+  },
+  {
+   "id": "FZ-11",
+   "severity": "medium",
+   "area": "patch 6 (mouths): far_face probes a single ray that grazes half-thickness steps",
+   "summary": "far_face() decides 'the centre line meets no face at the far end -> not a mouth' from ONE ray (end_profile centre line, [1][1]). When the far wall end is a step whose edge lies exactly on the centre line (a half-thickness step: lateral probes -0.35t, 0, +0.35t give d1 = 1.1211, 1.1211, 0.6711 for sukhumvit upper-026) the ray grazes a polygon edge and 1 mm of noise moves it inside or outside: upper-026 (0.671 m, an extra) is lost in 7 of 12 +-1 mm runs and 12 of 16 +-3 mm runs ('no face' -> far_face True -> mouth -> rejected). The same family of effect: bank2 L2-019 (0.1 m end, 2.2 m gap) comes back in 1 of 12 +-1 mm runs because the 2.8 cm skew of the gap (FZ-03) turns the mouth test off. On the gate drawings these are extras, so the score is unaffected, but the new rule's 'no face' branch is decided by noise exactly where drawings use half-thickness returns.",
+   "repro": "cd <fuzz>/repro; python -B fz_11_far_face.py   (exact: d1 = 1.1211 / 1.1211 / 0.6711, no face, passage kept; +-1 mm seed 1: 1.122 / 0.6719 / 0.6719, face found, passage rejected; absent in 7 of 12 +-1 mm runs)",
+   "suggestedFix": "Probe all three lateral rays (or a band of rays) and take the nearest face, as strip_gaps does for the gap end, instead of the centre ray alone.",
+   "actual": "mouth verdict flips with 1 mm noise",
+   "expected": "stable verdict"
+  },
+  {
+   "id": "FZ-12",
+   "severity": "medium",
+   "area": "patches 2, 3, 4: leaf and glass tests look at single DXF segments",
+   "summary": "line_leaves, screen_leaves, glass_share and glazing_bands use one SegIndex row per straight segment (leaf >= 0.4 m, ends level within 0.03 / 0.02 m, glass lines >= 0.08 m). A line that an exporter cuts at an intersection is two segments. Splitting every 2-point LINE of the cache at a random point (python -B exp_repr.py: 'split' / 'splitall') drops the tower to 50/54 with 9 extras (older 135/143): both screen sliders L29-030/031 (patch 3) and the 4.8 m slider L30-026 (patch 2) vanish, L29-018 (framed passage) is lost, and false windows appear at (-2.92,-57.03), (20.07,-50.01), (26.4,-31.28) (the curtain-wall suppression of patch 4 leaks). Duplicates (exact copies), reversed point order and a different start vertex of closed polylines are handled (0-1 changes).",
+   "repro": "cd <fuzz>/repro; python -B fz_12_split.py   (old 135/143 extras 8; tower 50/54 extras 9; missed L29W-06, L29W-17, L29W-18, L30E-03)",
+   "suggestedFix": "Merge collinear, touching segments of the same layer/linetype before the leaf, glass and strip tests (SegIndex.__init__).",
+   "actual": "tower 50/54, 9 extras",
+   "expected": "53-54/54 as for an unsplit drawing"
+  },
+  {
+   "id": "FZ-13",
+   "severity": "medium",
+   "area": "patch 4: curtain-wall suppression needs the glass to stay one long band",
+   "summary": "The 'runs on past the wall ends by more than MULLION' test (g.through) only fires when glazing_bands() has grouped the facade glass into ONE long band. The grouping (original code) chains segments that are parallel within 2.5 degrees and within 0.12 m of each other; short glass segments (0.08-0.3 m) leave that angle with +-3 mm noise, the long band breaks, and the suppression leaks. L29 near (-2.93,-57.02): baseline gap 1.16 m with one THROUGH band of 26 m (overrun 24.96 m) -> dropped; with +-3 mm noise (indep seed 1) the band is 1.248 m long (overrun 0.09 m < MULLION) -> window L29-015 'fixed' 1.154 m (a false window of the kind patch 4 removes). Over 16 runs at +-3 mm the tower gets 1-2 extra false windows in 7 runs (extras 6 -> 7-8; windows at (-2.93,-57.02), (28.86,-50.16), (19.76,-52.56), (20.07,-50.09), (26.4,-31.38), (28.61,-45.91), (29.21,-49.54)). None at +-1 mm. No single new constant brings the window back out (recover_all.py: x0.5 and x2 on every patch literal), the cause is the unchanged grouping. Cut lines (FZ-12) leak the same way.",
+   "repro": "cd <fuzz>/repro; python -B fz_13_leak.py   (exact: through band s -24.96..1.16, no window; +-3 mm seed 1: band -0.09..1.16, window L29-015 1.154 m)",
+   "suggestedFix": "Group glass segments by a lateral and angular tolerance that scales with segment length (or fit the facade line first), and base the curtain-wall test on the line the glass lies on rather than on the band that happened to form.",
+   "actual": "extras 6 -> 7-8 in 7 of 16 runs at +-3 mm",
+   "expected": "the same suppression as on exact data"
+  },
+  {
+   "id": "FZ-14",
+   "severity": "low",
+   "area": "find_strips: overlapping strip pairs of different thickness (inherited)",
+   "summary": "L29-020 (2.45 m passage, key-neutral extra) is found on the 0.148 m strip pair at x = 2.45 in the baseline, but on the 0.304 m pair at x = 2.37 with 0.3-3 mm of noise (15 of 16 runs at +-3 mm, 4 of 12 at +-1 mm: ends move 0.08 m, wallThickness 0.148 -> 0.308): two overlapping strip pairs describe the same wall and which one comes out as an accepted 'L-end' gap flips with noise (the 0.304 m pair is rejected in the baseline for far_run 0.205 < 0.3).",
+   "repro": "cd <fuzz>/repro; python -B fz_14_strip_pair.py   (exact: L29-020 a (2.447,-38.612) wallThickness 0.148; +-3 mm seed 4: a (2.37,-41.063) wallThickness 0.308)",
+   "suggestedFix": "Keep both candidates and let the passage test choose, or prefer the pair whose centre line carries on past the gap.",
+   "actual": "thickness 0.148 vs 0.308",
+   "expected": "same strip pair"
+  },
+  {
+   "id": "FZ-15",
+   "severity": "low",
+   "area": "older drawings: the 139/143 moves by 1-3 keys with noise (inherited, identical in the original detector)",
+   "summary": "Independent vertex noise of +-1 nm already gives 138 instead of 139 in 9 of 20 runs (B1-09 = L1-024, FZ-07a); +-1 mm gives 136-138 of 143 (extras 6-9) over 12 runs; at +-3 mm presidential cannot be run (FZ-02) and the other three drawings lose 1-4 of their 119 right (115-118). The keys that move are UE-18 (FZ-07b), B1-06 (L1-022/023: the cap-corner gap near a 0.1 m stub is not found and the door falls back to the symbol, 0.975 -> 0.875 m), B1-09 (FZ-07a), GW-10, B2-07, GW-19. The merged detector has the same set as the original, so the patches neither add nor remove sensitivity there.",
+   "repro": "cd <fuzz>/repro; python -B fz_15_older.py   (older key right per seed of +-1 nm jitter: 9 of 20 are 138). +-1 mm / +-3 mm: python -B exp_jitter.py ... then python -B survival.py <tag>",
+   "suggestedFix": "none for the patch; see FZ-07 for the tie causes.",
+   "actual": "136-138/143 at +-1 mm",
+   "expected": "139/143"
+  },
+  {
+   "id": "FZ-16",
+   "severity": "low",
+   "area": "translation / rotation / mirror: only inherited float-rounding flips",
+   "summary": "Rotations 17, 45, 90, 135, 200, 301 degrees, mirror, mirror+rotate and translations of 100 km, (500 km, 5000 km), -1000 km: every difference to the baseline (width/ends >1 cm, kind, appear/disappear) is at a place where the ORIGINAL detector shows the same flip (suite-008 mouth, suite-023 door 1.6 vs 1.516, L1-024, L1-003 ends 0.014, upper-029 ends 0.025, L29-022/L30-031 ends 0.029, upper-035 pocket door 1.258 vs 1.208 at any shift, L30-020 / L30-002 kind). On the tower floors the merged detector has 0-2 (L29) and 0-3 (L30) flipped openings per transform against 0-3 and 0-7 in the original. Hinge point and swing side of every matched door are consistent under rotation and mirror (checked in the absolute frame). Nothing new from patches 1-6 under rigid motions.",
+   "repro": "cd <fuzz>/repro; python -B fz_16_rigid.py   (merged and original detector show the same flips: suite-008 / suite-023 under rot45, L30-020 under mirror, upper-035 under a 100 km shift). All transforms: python -B exp_transform.py and python -B attribute.py xform",
+   "suggestedFix": "none for the patch",
+   "actual": "0-4 flipped openings per drawing",
+   "expected": "0"
+  }
+ ],
+ "checkedWhat": "Folder <fuzz> = C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/fix4/review_c/fuzz; one verified repro script per finding in <fuzz>/repro; the same JSON is in <fuzz>/findings.json. Harness: fuzzlib.py runs the unmodified merged detector (fuzz/detector, byte-identical to integrated_c) in process on in-memory transforms of the six caches; the unperturbed run reproduces the baseline exactly (139/143, 8 extras; tower 54/54, 6 extras; all six openings lists identical). Everything was run on the ORIGINAL detector too, to tell inherited instabilities from patch-new ones. (a) JITTER: seeded displacement of every pts / loops / ins coordinate (closed rings kept closed), independent per vertex and a coincidence-preserving mode (same vertex, same shift), at +-1 nm, 1 um, 0.1 mm, 1 mm, 3 mm (5-20 seeds each; 1.5, 2, 2.5, 4, 5, 10 mm for the crash and the tower-only scan): ~1100 drawing runs; matched by centre 0.3 m + wall direction; every appearing/disappearing/kind/width/ends(>3 cm) event clustered and labelled inherited (the original shows an event within 0.6 m) or new-only; traced with replays of passage_ok / symbol_door / pick_swing and a 'which literal brings it back' search (every float literal x0.5 / x2). (b) TRANSFORMS: rotations 0/17/45/90/135/200/301, mirror, mirror+33, translations 100 km, (500 km, 5000 km), -1000 km, a combined one: 78 runs per detector, outputs mapped back; widths/ends within 1 cm; hinge point and swing side compared in the absolute frame. Extra: unit conversion (m, cm, in, ft), exact duplicates, reversed point lists, rotated start vertex, every LINE cut in two, uniform resize. (c) SWEEPS: 54 literal + 9 named knobs of the patch (variants.py), x0.5/0.8/1.2/1.5 on all six drawings (1512 runs), 12 more factors for the 22 that move (1584 runs), exact-boundary probes at the data values (strips 0.0347/0.0352, doorway 1.30/1.555, piers 0.21), +-5 % on all 91 float literals of the added/changed lines (1092 runs), and rule ablations (mouth, glass-wall, framed, screens, sidelights, jamb returns, line leaves). (d) ORDER: 6 random item orders and 6 layer-list/role-order shuffles per drawing on both detectors. Full tables: results/sweep_coarse_table.txt, results/cliffs_table.txt (nearest change below/above per constant), results/jitter_events.txt, results/transform_order_events.txt; scripts exp_*.py, fuzzlib.py, variants.py, dbg.py.",
+ "fragileRules": "PATCH-NEW, by evidence: (1) passages between short wall ends (patch 1 + framed + collinear-strip + 1.6 m doorway + patch 6 mouths): the gap direction comes from one 3.5-17 cm face edge (noise x7-25), framed() needs 3 deg on 12 cm lines, FACE_TOL is 3 cm; strip floor 3.0 cm sits 5 mm under the 3.47/3.52 cm reveals of suite-008 / L29-017; the keys L29W-06 (+-1.5 mm), L29W-22, L29W-20, L30W-05, L30W-24 are the first to fall out (+-1.5 to +-5 mm). (2) line_leaves: 5 mm level tolerance (L30E-03 lost at +-3 mm in 4/16), the 0.1 m overlap that equals the design value (exact tie, L30-020 vs L30-002), single-segment leaves (split lines: tower 50/54). (3) value windows set by 1-3 samples: DOORWAY 1.4 in [1.30, 1.555]; JAMB_RETURN 0.25 in [0.21, 0.35); SIDELIGHT_MIN cliff exactly at the 0.20 panes; stub_len 0.3 (cliff 0.36); ll_reach 0.10 (cliff 0.05-0.08); FACE_TOL 0.03 (cliff 0.0291). (4) far_face's single centre-line ray on half-thickness steps (upper-026 7/12 at +-1 mm). (5) curtain-wall suppression needs the glass to stay one long band (leaks at +-3 mm: 7/16 runs add false windows). INHERITED: ties at design dimensions (>= 0.1 overlap, find_strips tmax 0.55, pick_swing 0.05, symbol_door 0.6 window), symbol_door(hi,hj) asymmetry (item order), circle3 at large coordinates, MultiPolygon crash, dedupe before the units scale. The headline 139/143 itself moves with 1 nm of noise (138 in 9/20 runs, B1-09).",
+ "robustRules": "Identical outputs from x0.5 to x1.5 on all six drawings: FACE_REACH 0.05-0.15, SIDELIGHT_SHARE 0.25-0.75, one_face_tol, jamb0_d0, stair_margin 0.015-0.045, ll_stub, ll_minlen, ll_thick_lo, ll_level, ll_into_wall, gc_box, sd_tmax/tmin/minlen/gapmin/gapmax, sl_reach/parallel/minlen/overlap/level/thick, along_angle, cbg_slack, cbg_angle, gs_minlen, gs_lat, fr_box, fr_lat, fr_angle, flush_min, ff_probe, ff_own, fruns_angle, fruns_merge, wall_edge_min; MULLION 0.12-0.30, CROSS_PIECE 0.12-0.25, WALL_RUN 0.27-0.675, SIDELIGHT_MIN 0.09-0.195, ll_total 0.35-1.0, JAMB_RETURN 0.2101-0.33 (note: a flat sweep also means the decisive measurement is far away or never evaluated - no drawing constrains those). +-5 % on the 91 float literals of the patch lines changes an output for only 7: tmax 0.55 (original, bank1 L1-024), ll_overlap 0.1 (L30-020), FACE_TOL 0.03 (L29-020, an extra), and four without an opening-level effect (two confidence values, the 0.4 band overlap, the 0.03 frame-end tolerance). Sidelit doors (patch 5) survive +-5 mm in all runs, screen sliders (patch 3) +-3 mm in 16/16, tower 54/54 in every +-1 mm run (22 runs; extras 5-6). Mapping order: 36/36 byte-identical. Exact duplicates, reversed vertex order: no change. Uniform resize of the drawing (every constant against the data at once, exp_scale.py): x0.9 to x1.1 keeps the tower at 54/54 (extras 6-8) and the older drawings at 138 (139 only at exactly x1: the B1-09 tie); x0.8 gives 52/54 and 134, x1.2 gives 51/54 and 128. Rigid motions: nothing new from patches 1-6; hinge/swing consistent under rotation and mirror. The mouth rule carries no key (extras 26 -> 8 and 27 -> 6), so its flips only touch extras."
+}

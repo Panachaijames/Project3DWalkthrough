@@ -1,0 +1,14 @@
+{
+  "format": "walkthrough-project/1",
+  "id": "hotel-lobby",
+  "name": "Hotel ground floor and floor 2 (from two pictures)",
+  "shortName": "Hotel",
+  "projectNo": null,
+  "sourceKind": "pictures",
+  "createdAt": "2026-11-02T11:56:02Z",
+  "updatedAt": "2026-11-02T11:56:02Z",
+  "latestVersion": 1,
+  "versions": [
+    1
+  ]
+}

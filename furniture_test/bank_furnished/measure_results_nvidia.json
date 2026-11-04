@@ -1,0 +1,3435 @@
+{
+ "at": "2026-11-03T11:53:58.091Z",
+ "tag": "nvidia",
+ "gpu": "ANGLE (NVIDIA, NVIDIA GeForce MX570 A (0x000025AA) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "edgeSwitches": [
+  "--use-adapter-luid=0,61888"
+ ],
+ "window": [
+  1920,
+  1080,
+  1
+ ],
+ "repeats": 3,
+ "loadRepeats": 3,
+ "views": {
+  "orbit": {
+   "url": "bank_furnished.html?build=0",
+   "spot": null
+  },
+  "walkL1": {
+   "url": "bank_furnished.html?build=0&mode=walk&floor=L1&x=0.60&z=0.40&yaw=-78&pitch=-8",
+   "spot": {
+    "x": 0.6,
+    "y": -0.4,
+    "yawDeg": -78,
+    "facing": "east",
+    "nearestRooms": [
+     "MO 4 PAX",
+     "MANAGER · 11.4 m²"
+    ]
+   }
+  },
+  "walkL2": {
+   "url": "bank_furnished.html?build=0&mode=walk&floor=L2&x=-1.40&z=-1.40&yaw=178&pitch=-8",
+   "spot": {
+    "x": -1.4,
+    "y": 1.4,
+    "yawDeg": 178,
+    "facing": "south",
+    "nearestRooms": [
+     "CSO 5PAX",
+     "MINI BAR / WEALTH ROOM"
+    ]
+   }
+  },
+  "widestL1": {
+   "url": "bank_furnished.html?build=0&mode=walk&floor=L1&x=3.00&z=5.60&yaw=36&pitch=-8",
+   "spot": {
+    "x": 3,
+    "y": -5.6,
+    "yawDeg": 36,
+    "facing": "north-west",
+    "nearestRooms": [
+     "LIFT HALL · 6.1 m²",
+     "MO 4 PAX"
+    ]
+   }
+  },
+  "widestL2": {
+   "url": "bank_furnished.html?build=0&mode=walk&floor=L2&x=-1.80&z=6.20&yaw=32&pitch=-8",
+   "spot": {
+    "x": -1.8,
+    "y": -6.2,
+    "yawDeg": 32,
+    "facing": "north-west",
+    "nearestRooms": [
+     "LIFT HALL · 6.0 m²",
+     "PANTRY · 3.9 m²"
+    ]
+   }
+  }
+ },
+ "pageErrors": [],
+ "cpu": {
+  "cores": 12,
+  "model": "12th Gen Intel(R) Core(TM) i7-1255U",
+  "beforeEdge": 76,
+  "meanDuringRun": 63,
+  "max": 100,
+  "min": 24
+ },
+ "loads": [
+  {
+   "config": "bank page as it is",
+   "runs": [
+    {
+     "firstDraw": 1349.7,
+     "domContentLoaded": 1291
+    },
+    {
+     "firstDraw": 173.6,
+     "domContentLoaded": 148.3
+    },
+    {
+     "firstDraw": 200.8,
+     "domContentLoaded": 178.8
+    }
+   ],
+   "firstFrame": 200.8,
+   "domContentLoaded": 178.8
+  },
+  {
+   "config": "A",
+   "runs": [
+    {
+     "domContentLoaded": 308.3,
+     "bankFirstFrame": 322.5,
+     "firstFrameWithModels": 348.2,
+     "decodeMs": 0,
+     "base64Ms": 0,
+     "parseMs": 0,
+     "buildMs": 0,
+     "uploadMs": 0,
+     "firstFrameMs": 4.4,
+     "assets": 0
+    },
+    {
+     "domContentLoaded": 308.7,
+     "bankFirstFrame": 320.8,
+     "firstFrameWithModels": 329.9,
+     "decodeMs": 0,
+     "base64Ms": 0,
+     "parseMs": 0,
+     "buildMs": 0,
+     "uploadMs": 0,
+     "firstFrameMs": 4.5,
+     "assets": 0
+    },
+    {
+     "domContentLoaded": 414.5,
+     "bankFirstFrame": 428.3,
+     "firstFrameWithModels": 439.2,
+     "decodeMs": 0,
+     "base64Ms": 0,
+     "parseMs": 0,
+     "buildMs": 0,
+     "uploadMs": 0,
+     "firstFrameMs": 5.8,
+     "assets": 0
+    }
+   ],
+   "domContentLoaded": 308.7,
+   "bankFirstFrame": 322.5,
+   "firstFrameWithModels": 348.2,
+   "decodeMs": 0,
+   "base64Ms": 0,
+   "parseMs": 0,
+   "buildMs": 0,
+   "uploadMs": 0,
+   "firstFrameMs": 4.5,
+   "cpuLoad": 48,
+   "cpuMax": 71
+  },
+  {
+   "config": "B",
+   "runs": [
+    {
+     "domContentLoaded": 509.3,
+     "bankFirstFrame": 525.3,
+     "firstFrameWithModels": 674.8,
+     "decodeMs": 53.7,
+     "base64Ms": 22.2,
+     "parseMs": 29.8,
+     "buildMs": 13.1,
+     "uploadMs": 59.7,
+     "firstFrameMs": 10.6,
+     "assets": 8
+    },
+    {
+     "domContentLoaded": 524.6,
+     "bankFirstFrame": 538.1,
+     "firstFrameWithModels": 652.4,
+     "decodeMs": 37.4,
+     "base64Ms": 16.8,
+     "parseMs": 19.8,
+     "buildMs": 7.3,
+     "uploadMs": 49.7,
+     "firstFrameMs": 12.4,
+     "assets": 8
+    },
+    {
+     "domContentLoaded": 443.2,
+     "bankFirstFrame": 458.4,
+     "firstFrameWithModels": 570.7,
+     "decodeMs": 31,
+     "base64Ms": 14.3,
+     "parseMs": 15.6,
+     "buildMs": 7,
+     "uploadMs": 55,
+     "firstFrameMs": 11.8,
+     "assets": 8
+    }
+   ],
+   "domContentLoaded": 509.3,
+   "bankFirstFrame": 525.3,
+   "firstFrameWithModels": 652.4,
+   "decodeMs": 37.4,
+   "base64Ms": 16.8,
+   "parseMs": 19.8,
+   "buildMs": 7.3,
+   "uploadMs": 55,
+   "firstFrameMs": 11.8,
+   "cpuLoad": 80,
+   "cpuMax": 87
+  },
+  {
+   "config": "C20000",
+   "runs": [
+    {
+     "domContentLoaded": 505.3,
+     "bankFirstFrame": 520.6,
+     "firstFrameWithModels": 594.8,
+     "decodeMs": 19.9,
+     "base64Ms": 4.2,
+     "parseMs": 13.5,
+     "buildMs": 8.9,
+     "uploadMs": 26.8,
+     "firstFrameMs": 8.8,
+     "assets": 8
+    },
+    {
+     "domContentLoaded": 409.3,
+     "bankFirstFrame": 426.4,
+     "firstFrameWithModels": 485.1,
+     "decodeMs": 13.1,
+     "base64Ms": 2.6,
+     "parseMs": 9.8,
+     "buildMs": 10,
+     "uploadMs": 19.7,
+     "firstFrameMs": 6.8,
+     "assets": 8
+    },
+    {
+     "domContentLoaded": 393.8,
+     "bankFirstFrame": 408.2,
+     "firstFrameWithModels": 467.2,
+     "decodeMs": 18.3,
+     "base64Ms": 5,
+     "parseMs": 12.2,
+     "buildMs": 5.8,
+     "uploadMs": 20.9,
+     "firstFrameMs": 7.9,
+     "assets": 8
+    }
+   ],
+   "domContentLoaded": 409.3,
+   "bankFirstFrame": 426.4,
+   "firstFrameWithModels": 485.1,
+   "decodeMs": 18.3,
+   "base64Ms": 4.2,
+   "parseMs": 12.2,
+   "buildMs": 8.9,
+   "uploadMs": 20.9,
+   "firstFrameMs": 7.9,
+   "cpuLoad": 55,
+   "cpuMax": 80
+  },
+  {
+   "config": "C10000",
+   "runs": [
+    {
+     "domContentLoaded": 477.3,
+     "bankFirstFrame": 492,
+     "firstFrameWithModels": 567.6,
+     "decodeMs": 11.3,
+     "base64Ms": 1.9,
+     "parseMs": 8.1,
+     "buildMs": 16.4,
+     "uploadMs": 22.5,
+     "firstFrameMs": 9.9,
+     "assets": 8
+    },
+    {
+     "domContentLoaded": 476.3,
+     "bankFirstFrame": 494.8,
+     "firstFrameWithModels": 552.9,
+     "decodeMs": 13.1,
+     "base64Ms": 2.3,
+     "parseMs": 10.3,
+     "buildMs": 11.4,
+     "uploadMs": 20.5,
+     "firstFrameMs": 7.2,
+     "assets": 8
+    },
+    {
+     "domContentLoaded": 483,
+     "bankFirstFrame": 495.4,
+     "firstFrameWithModels": 565.2,
+     "decodeMs": 22.2,
+     "base64Ms": 4.1,
+     "parseMs": 17,
+     "buildMs": 7.5,
+     "uploadMs": 24.8,
+     "firstFrameMs": 9,
+     "assets": 8
+    }
+   ],
+   "domContentLoaded": 477.3,
+   "bankFirstFrame": 494.8,
+   "firstFrameWithModels": 565.2,
+   "decodeMs": 13.1,
+   "base64Ms": 2.3,
+   "parseMs": 10.3,
+   "buildMs": 11.4,
+   "uploadMs": 22.5,
+   "firstFrameMs": 9,
+   "cpuLoad": 58,
+   "cpuMax": 70
+  },
+  {
+   "config": "C5000",
+   "runs": [
+    {
+     "domContentLoaded": 540.3,
+     "bankFirstFrame": 554.5,
+     "firstFrameWithModels": 624.9,
+     "decodeMs": 14.9,
+     "base64Ms": 2,
+     "parseMs": 11,
+     "buildMs": 9.1,
+     "uploadMs": 23.8,
+     "firstFrameMs": 12.3,
+     "assets": 8
+    },
+    {
+     "domContentLoaded": 502.9,
+     "bankFirstFrame": 520,
+     "firstFrameWithModels": 578.7,
+     "decodeMs": 13.4,
+     "base64Ms": 2.1,
+     "parseMs": 10.5,
+     "buildMs": 10.1,
+     "uploadMs": 15.8,
+     "firstFrameMs": 9.4,
+     "assets": 8
+    },
+    {
+     "domContentLoaded": 298.7,
+     "bankFirstFrame": 308,
+     "firstFrameWithModels": 342,
+     "decodeMs": 6.4,
+     "base64Ms": 0.9,
+     "parseMs": 5.3,
+     "buildMs": 4.2,
+     "uploadMs": 12.3,
+     "firstFrameMs": 6.4,
+     "assets": 8
+    }
+   ],
+   "domContentLoaded": 502.9,
+   "bankFirstFrame": 520,
+   "firstFrameWithModels": 578.7,
+   "decodeMs": 13.4,
+   "base64Ms": 2,
+   "parseMs": 10.5,
+   "buildMs": 9.1,
+   "uploadMs": 15.8,
+   "firstFrameMs": 9.4,
+   "cpuLoad": 56,
+   "cpuMax": 77
+  },
+  {
+   "config": "C2500",
+   "runs": [
+    {
+     "domContentLoaded": 443.5,
+     "bankFirstFrame": 458.4,
+     "firstFrameWithModels": 525.2,
+     "decodeMs": 12.4,
+     "base64Ms": 1.1,
+     "parseMs": 9.5,
+     "buildMs": 8,
+     "uploadMs": 25.4,
+     "firstFrameMs": 9.6,
+     "assets": 8
+    },
+    {
+     "domContentLoaded": 481.6,
+     "bankFirstFrame": 495.6,
+     "firstFrameWithModels": 550.6,
+     "decodeMs": 13.1,
+     "base64Ms": 1.4,
+     "parseMs": 11,
+     "buildMs": 6.8,
+     "uploadMs": 13.2,
+     "firstFrameMs": 11.2,
+     "assets": 8
+    },
+    {
+     "domContentLoaded": 331.1,
+     "bankFirstFrame": 342.4,
+     "firstFrameWithModels": 405.9,
+     "decodeMs": 10.9,
+     "base64Ms": 1.4,
+     "parseMs": 9,
+     "buildMs": 12.5,
+     "uploadMs": 21.6,
+     "firstFrameMs": 12.3,
+     "assets": 8
+    }
+   ],
+   "domContentLoaded": 443.5,
+   "bankFirstFrame": 458.4,
+   "firstFrameWithModels": 525.2,
+   "decodeMs": 12.4,
+   "base64Ms": 1.4,
+   "parseMs": 9.5,
+   "buildMs": 8,
+   "uploadMs": 21.6,
+   "firstFrameMs": 11.2,
+   "cpuLoad": 56,
+   "cpuMax": 81
+  },
+  {
+   "config": "D",
+   "runs": [
+    {
+     "domContentLoaded": 304.7,
+     "bankFirstFrame": 314.2,
+     "firstFrameWithModels": 401.5,
+     "decodeMs": 26.4,
+     "base64Ms": 11.3,
+     "parseMs": 14.1,
+     "buildMs": 9.2,
+     "uploadMs": 37.5,
+     "firstFrameMs": 7.2,
+     "assets": 11
+    },
+    {
+     "domContentLoaded": 321.6,
+     "bankFirstFrame": 334.1,
+     "firstFrameWithModels": 440.3,
+     "decodeMs": 32.4,
+     "base64Ms": 13.9,
+     "parseMs": 17.7,
+     "buildMs": 10.1,
+     "uploadMs": 48.9,
+     "firstFrameMs": 8.3,
+     "assets": 11
+    },
+    {
+     "domContentLoaded": 493,
+     "bankFirstFrame": 507.4,
+     "firstFrameWithModels": 629.9,
+     "decodeMs": 40.4,
+     "base64Ms": 17.6,
+     "parseMs": 21.6,
+     "buildMs": 21.2,
+     "uploadMs": 43.6,
+     "firstFrameMs": 8.9,
+     "assets": 11
+    }
+   ],
+   "domContentLoaded": 321.6,
+   "bankFirstFrame": 334.1,
+   "firstFrameWithModels": 440.3,
+   "decodeMs": 32.4,
+   "base64Ms": 13.9,
+   "parseMs": 17.7,
+   "buildMs": 10.1,
+   "uploadMs": 43.6,
+   "firstFrameMs": 8.3,
+   "cpuLoad": 46,
+   "cpuMax": 60
+  },
+  {
+   "config": "E",
+   "runs": [
+    {
+     "domContentLoaded": 535.4,
+     "bankFirstFrame": 550.3,
+     "firstFrameWithModels": 621.9,
+     "decodeMs": 16.8,
+     "base64Ms": 3.4,
+     "parseMs": 11.6,
+     "buildMs": 9,
+     "uploadMs": 22.3,
+     "firstFrameMs": 12.6,
+     "assets": 8
+    },
+    {
+     "domContentLoaded": 494.5,
+     "bankFirstFrame": 514.1,
+     "firstFrameWithModels": 602.7,
+     "decodeMs": 19,
+     "base64Ms": 5.8,
+     "parseMs": 12.5,
+     "buildMs": 16.1,
+     "uploadMs": 25,
+     "firstFrameMs": 9.1,
+     "assets": 8
+    },
+    {
+     "domContentLoaded": 421.4,
+     "bankFirstFrame": 434.4,
+     "firstFrameWithModels": 498,
+     "decodeMs": 15.9,
+     "base64Ms": 3.2,
+     "parseMs": 11.8,
+     "buildMs": 8.8,
+     "uploadMs": 23,
+     "firstFrameMs": 8.9,
+     "assets": 8
+    }
+   ],
+   "domContentLoaded": 494.5,
+   "bankFirstFrame": 514.1,
+   "firstFrameWithModels": 602.7,
+   "decodeMs": 16.8,
+   "base64Ms": 3.4,
+   "parseMs": 11.8,
+   "buildMs": 9,
+   "uploadMs": 23,
+   "firstFrameMs": 9.1,
+   "cpuLoad": 66,
+   "cpuMax": 77
+  }
+ ],
+ "results": [
+  {
+   "view": "orbit",
+   "config": "A",
+   "mode": "A",
+   "budget": null,
+   "triangles": 6434,
+   "calls": 401,
+   "modelTriangles": 0,
+   "nearFull": 0,
+   "ms": 4.05,
+   "fps": 246.9,
+   "msRuns": [
+    4.76,
+    3.08,
+    4.05
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 32,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 0,
+     "bytes": 0,
+     "assets": 0
+    },
+    "allDecoded": {
+     "assets": 0,
+     "bytes": 0
+    }
+   },
+   "switchMs": 5,
+   "cpuLoad": 54,
+   "cpuMax": 64,
+   "seconds": 2.4
+  },
+  {
+   "view": "orbit",
+   "config": "B",
+   "mode": "B",
+   "budget": null,
+   "triangles": 4899209,
+   "calls": 553,
+   "modelTriangles": 4893555,
+   "nearFull": 0,
+   "ms": 7.33,
+   "fps": 136.4,
+   "msRuns": [
+    7.33,
+    7.56,
+    7.24
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 60,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 9646196,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 8,
+     "bytes": 9646196
+    }
+   },
+   "switchMs": 103.7,
+   "cpuLoad": 53,
+   "cpuMax": 60,
+   "seconds": 3.7
+  },
+  {
+   "view": "orbit",
+   "config": "C20000",
+   "mode": "C",
+   "budget": 20000,
+   "triangles": 693882,
+   "calls": 553,
+   "modelTriangles": 688228,
+   "nearFull": 0,
+   "ms": 6.25,
+   "fps": 160,
+   "msRuns": [
+    7.25,
+    6.25,
+    6.01
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 64,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 2097922,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 9,
+     "bytes": 10203434
+    }
+   },
+   "switchMs": 32.6,
+   "cpuLoad": 64,
+   "cpuMax": 83,
+   "seconds": 3.4
+  },
+  {
+   "view": "orbit",
+   "config": "C10000",
+   "mode": "C",
+   "budget": 10000,
+   "triangles": 418952,
+   "calls": 553,
+   "modelTriangles": 413298,
+   "nearFull": 0,
+   "ms": 4.9,
+   "fps": 204.1,
+   "msRuns": [
+    4.29,
+    5.06,
+    4.9
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 76,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 1334956,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 11,
+     "bytes": 10935938
+    }
+   },
+   "switchMs": 28.5,
+   "cpuLoad": 44,
+   "cpuMax": 55,
+   "seconds": 2.7
+  },
+  {
+   "view": "orbit",
+   "config": "C5000",
+   "mode": "C",
+   "budget": 5000,
+   "triangles": 239757,
+   "calls": 553,
+   "modelTriangles": 234103,
+   "nearFull": 0,
+   "ms": 6.86,
+   "fps": 145.8,
+   "msRuns": [
+    6.86,
+    7.27,
+    6.36
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 90,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 907744,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 14,
+     "bytes": 11426078
+    }
+   },
+   "switchMs": 22.6,
+   "cpuLoad": 68,
+   "cpuMax": 78,
+   "seconds": 3.5
+  },
+  {
+   "view": "orbit",
+   "config": "C2500",
+   "mode": "C",
+   "budget": 2500,
+   "triangles": 139183,
+   "calls": 553,
+   "modelTriangles": 133529,
+   "nearFull": 0,
+   "ms": 6.68,
+   "fps": 149.7,
+   "msRuns": [
+    6.73,
+    6.68,
+    6.65
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 109,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 544686,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 19,
+     "bytes": 11807912
+    }
+   },
+   "switchMs": 30.2,
+   "cpuLoad": 59,
+   "cpuMax": 62,
+   "seconds": 3.4
+  },
+  {
+   "view": "orbit",
+   "config": "D",
+   "mode": "D",
+   "budget": null,
+   "triangles": 239757,
+   "calls": 553,
+   "modelTriangles": 234103,
+   "nearFull": 0,
+   "ms": 6.53,
+   "fps": 153.1,
+   "msRuns": [
+    6.53,
+    6.25,
+    7
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 109,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 42,
+     "bytes": 10136336,
+     "assets": 11
+    },
+    "allDecoded": {
+     "assets": 19,
+     "bytes": 11807912
+    }
+   },
+   "switchMs": 28.6,
+   "cpuLoad": 47,
+   "cpuMax": 54,
+   "seconds": 3.4
+  },
+  {
+   "view": "orbit",
+   "config": "E",
+   "mode": "E",
+   "budget": null,
+   "triangles": 503768,
+   "calls": 553,
+   "modelTriangles": 498114,
+   "nearFull": 0,
+   "ms": 7.02,
+   "fps": 142.5,
+   "msRuns": [
+    5.88,
+    7.23,
+    7.02
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 109,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 1840822,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 19,
+     "bytes": 11807912
+    }
+   },
+   "switchMs": 31.7,
+   "cpuLoad": 49,
+   "cpuMax": 66,
+   "seconds": 3.4
+  },
+  {
+   "view": "orbit",
+   "config": "Pfull",
+   "mode": "P",
+   "budget": "full",
+   "triangles": 7056077,
+   "calls": 765,
+   "modelTriangles": 7051863,
+   "nearFull": 0,
+   "ms": 15.14,
+   "fps": 66.1,
+   "msRuns": [
+    14.49,
+    15.95,
+    15.14
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 114,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 11480384,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 20,
+     "bytes": 13642100
+    }
+   },
+   "switchMs": 59.4,
+   "cpuLoad": 58,
+   "cpuMax": 69,
+   "seconds": 6.6
+  },
+  {
+   "view": "orbit",
+   "config": "P20000",
+   "mode": "P",
+   "budget": 20000,
+   "triangles": 1885786,
+   "calls": 765,
+   "modelTriangles": 1881572,
+   "nearFull": 0,
+   "ms": 15.35,
+   "fps": 65.1,
+   "msRuns": [
+    14.49,
+    15.51,
+    15.35
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 119,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 2609350,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 21,
+     "bytes": 14153528
+    }
+   },
+   "switchMs": 53.6,
+   "cpuLoad": 77,
+   "cpuMax": 92,
+   "seconds": 6.6
+  },
+  {
+   "view": "orbit",
+   "config": "P10000",
+   "mode": "P",
+   "budget": 10000,
+   "triangles": 1170680,
+   "calls": 765,
+   "modelTriangles": 1166466,
+   "nearFull": 0,
+   "ms": 11.53,
+   "fps": 86.7,
+   "msRuns": [
+    11.21,
+    11.53,
+    13.74
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 124,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 1617496,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 22,
+     "bytes": 14436068
+    }
+   },
+   "switchMs": 73.6,
+   "cpuLoad": 66,
+   "cpuMax": 79,
+   "seconds": 5.5
+  },
+  {
+   "view": "orbit",
+   "config": "P5000",
+   "mode": "P",
+   "budget": 5000,
+   "triangles": 771705,
+   "calls": 765,
+   "modelTriangles": 767491,
+   "nearFull": 0,
+   "ms": 9.36,
+   "fps": 106.8,
+   "msRuns": [
+    11.16,
+    8.39,
+    9.36
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 129,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 1072594,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 23,
+     "bytes": 14600918
+    }
+   },
+   "switchMs": 38.4,
+   "cpuLoad": 54,
+   "cpuMax": 60,
+   "seconds": 4.5
+  },
+  {
+   "view": "orbit",
+   "config": "P2500",
+   "mode": "P",
+   "budget": 2500,
+   "triangles": 416835,
+   "calls": 765,
+   "modelTriangles": 412621,
+   "nearFull": 0,
+   "ms": 9.14,
+   "fps": 109.4,
+   "msRuns": [
+    8.94,
+    9.14,
+    9.87
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 134,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 638892,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 24,
+     "bytes": 14695124
+    }
+   },
+   "switchMs": 36.2,
+   "cpuLoad": 55,
+   "cpuMax": 78,
+   "seconds": 4.4
+  },
+  {
+   "view": "orbit",
+   "check": "boxes drawn again in A",
+   "value": true
+  },
+  {
+   "view": "walkL1",
+   "config": "A",
+   "mode": "A",
+   "budget": null,
+   "triangles": 4388,
+   "calls": 69,
+   "modelTriangles": 0,
+   "nearFull": 0,
+   "ms": 3.45,
+   "fps": 289.9,
+   "msRuns": [
+    3.4,
+    3.47,
+    3.45
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 23,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 0,
+     "bytes": 0,
+     "assets": 0
+    },
+    "allDecoded": {
+     "assets": 0,
+     "bytes": 0
+    }
+   },
+   "switchMs": 3,
+   "cpuLoad": 67,
+   "cpuMax": 69,
+   "seconds": 2.2
+  },
+  {
+   "view": "walkL1",
+   "config": "B",
+   "mode": "B",
+   "budget": null,
+   "triangles": 756251,
+   "calls": 78,
+   "modelTriangles": 4893555,
+   "nearFull": 0,
+   "ms": 4.84,
+   "fps": 206.6,
+   "msRuns": [
+    4.83,
+    4.84,
+    4.92
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 51,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 9646196,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 8,
+     "bytes": 9646196
+    }
+   },
+   "switchMs": 80.4,
+   "cpuLoad": 71,
+   "cpuMax": 81,
+   "seconds": 2.7
+  },
+  {
+   "view": "walkL1",
+   "config": "C20000",
+   "mode": "C",
+   "budget": 20000,
+   "triangles": 92252,
+   "calls": 78,
+   "modelTriangles": 688228,
+   "nearFull": 0,
+   "ms": 4.54,
+   "fps": 220.3,
+   "msRuns": [
+    4.68,
+    4.54,
+    4.4
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 55,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 2097922,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 9,
+     "bytes": 10203434
+    }
+   },
+   "switchMs": 28.2,
+   "cpuLoad": 62,
+   "cpuMax": 78,
+   "seconds": 2.7
+  },
+  {
+   "view": "walkL1",
+   "config": "C10000",
+   "mode": "C",
+   "budget": 10000,
+   "triangles": 56933,
+   "calls": 78,
+   "modelTriangles": 413298,
+   "nearFull": 0,
+   "ms": 4.09,
+   "fps": 244.5,
+   "msRuns": [
+    4.6,
+    4.09,
+    3.47
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 67,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 1334956,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 11,
+     "bytes": 10935938
+    }
+   },
+   "switchMs": 24.3,
+   "cpuLoad": 49,
+   "cpuMax": 72,
+   "seconds": 2.5
+  },
+  {
+   "view": "walkL1",
+   "config": "C5000",
+   "mode": "C",
+   "budget": 5000,
+   "triangles": 36955,
+   "calls": 78,
+   "modelTriangles": 234103,
+   "nearFull": 0,
+   "ms": 4.87,
+   "fps": 205.3,
+   "msRuns": [
+    4.87,
+    4.73,
+    5.24
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 81,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 907744,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 14,
+     "bytes": 11426078
+    }
+   },
+   "switchMs": 33.4,
+   "cpuLoad": 90,
+   "cpuMax": 93,
+   "seconds": 2.8
+  },
+  {
+   "view": "walkL1",
+   "config": "C2500",
+   "mode": "C",
+   "budget": 2500,
+   "triangles": 24560,
+   "calls": 78,
+   "modelTriangles": 133529,
+   "nearFull": 0,
+   "ms": 4.7,
+   "fps": 212.8,
+   "msRuns": [
+    4.7,
+    4.52,
+    5.44
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 100,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 544686,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 19,
+     "bytes": 11807912
+    }
+   },
+   "switchMs": 20.9,
+   "cpuLoad": 47,
+   "cpuMax": 54,
+   "seconds": 2.8
+  },
+  {
+   "view": "walkL1",
+   "config": "D",
+   "mode": "D",
+   "budget": null,
+   "triangles": 509619,
+   "calls": 78,
+   "modelTriangles": 953399,
+   "nearFull": 4,
+   "ms": 6,
+   "fps": 166.7,
+   "msRuns": [
+    6,
+    5.89,
+    6.17
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 100,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 42,
+     "bytes": 10136336,
+     "assets": 11
+    },
+    "allDecoded": {
+     "assets": 19,
+     "bytes": 11807912
+    }
+   },
+   "switchMs": 30.3,
+   "cpuLoad": 67,
+   "cpuMax": 76,
+   "seconds": 3.2
+  },
+  {
+   "view": "walkL1",
+   "config": "E",
+   "mode": "E",
+   "budget": null,
+   "triangles": 62234,
+   "calls": 78,
+   "modelTriangles": 498114,
+   "nearFull": 0,
+   "ms": 3.92,
+   "fps": 255.1,
+   "msRuns": [
+    3.92,
+    3,
+    4.63
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 100,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 1840822,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 19,
+     "bytes": 11807912
+    }
+   },
+   "switchMs": 33.4,
+   "cpuLoad": 39,
+   "cpuMax": 43,
+   "seconds": 2.4
+  },
+  {
+   "view": "walkL1",
+   "config": "Pfull",
+   "mode": "P",
+   "budget": "full",
+   "triangles": 847465,
+   "calls": 90,
+   "modelTriangles": 7051863,
+   "nearFull": 0,
+   "ms": 6.57,
+   "fps": 152.2,
+   "msRuns": [
+    6.41,
+    6.94,
+    6.57
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 105,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 11480384,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 20,
+     "bytes": 13642100
+    }
+   },
+   "switchMs": 57.5,
+   "cpuLoad": 72,
+   "cpuMax": 96,
+   "seconds": 3.4
+  },
+  {
+   "view": "walkL1",
+   "config": "P20000",
+   "mode": "P",
+   "budget": 20000,
+   "triangles": 139604,
+   "calls": 90,
+   "modelTriangles": 1881572,
+   "nearFull": 0,
+   "ms": 5.95,
+   "fps": 168.1,
+   "msRuns": [
+    6.55,
+    5.95,
+    5.68
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 110,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 2609350,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 21,
+     "bytes": 14153528
+    }
+   },
+   "switchMs": 43.6,
+   "cpuLoad": 64,
+   "cpuMax": 70,
+   "seconds": 3.2
+  },
+  {
+   "view": "walkL1",
+   "config": "P10000",
+   "mode": "P",
+   "budget": 10000,
+   "triangles": 84277,
+   "calls": 90,
+   "modelTriangles": 1166466,
+   "nearFull": 0,
+   "ms": 5.03,
+   "fps": 198.8,
+   "msRuns": [
+    5.03,
+    5.55,
+    4.05
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 115,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 1617496,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 22,
+     "bytes": 14436068
+    }
+   },
+   "switchMs": 29.2,
+   "cpuLoad": 56,
+   "cpuMax": 67,
+   "seconds": 2.8
+  },
+  {
+   "view": "walkL1",
+   "config": "P5000",
+   "mode": "P",
+   "budget": 5000,
+   "triangles": 54309,
+   "calls": 90,
+   "modelTriangles": 767491,
+   "nearFull": 0,
+   "ms": 4.63,
+   "fps": 216,
+   "msRuns": [
+    4.63,
+    4.99,
+    4.17
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 120,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 1072594,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 23,
+     "bytes": 14600918
+    }
+   },
+   "switchMs": 28.5,
+   "cpuLoad": 48,
+   "cpuMax": 56,
+   "seconds": 2.6
+  },
+  {
+   "view": "walkL1",
+   "config": "P2500",
+   "mode": "P",
+   "budget": 2500,
+   "triangles": 33512,
+   "calls": 90,
+   "modelTriangles": 412621,
+   "nearFull": 0,
+   "ms": 4.65,
+   "fps": 215.1,
+   "msRuns": [
+    5.13,
+    4.65,
+    3.67
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 125,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 638892,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 24,
+     "bytes": 14695124
+    }
+   },
+   "switchMs": 31.3,
+   "cpuLoad": 54,
+   "cpuMax": 69,
+   "seconds": 2.6
+  },
+  {
+   "view": "walkL2",
+   "config": "A",
+   "mode": "A",
+   "budget": null,
+   "triangles": 4772,
+   "calls": 134,
+   "modelTriangles": 0,
+   "nearFull": 0,
+   "ms": 4.41,
+   "fps": 226.8,
+   "msRuns": [
+    3.86,
+    4.84,
+    4.41
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 24,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 0,
+     "bytes": 0,
+     "assets": 0
+    },
+    "allDecoded": {
+     "assets": 0,
+     "bytes": 0
+    }
+   },
+   "switchMs": 7.9,
+   "cpuLoad": 68,
+   "cpuMax": 82,
+   "seconds": 2.6
+  },
+  {
+   "view": "walkL2",
+   "config": "B",
+   "mode": "B",
+   "budget": null,
+   "triangles": 1511432,
+   "calls": 167,
+   "modelTriangles": 4893555,
+   "nearFull": 0,
+   "ms": 6.57,
+   "fps": 152.2,
+   "msRuns": [
+    6.57,
+    6.89,
+    6.55
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 52,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 9646196,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 8,
+     "bytes": 9646196
+    }
+   },
+   "switchMs": 131.1,
+   "cpuLoad": 62,
+   "cpuMax": 69,
+   "seconds": 3.4
+  },
+  {
+   "view": "walkL2",
+   "config": "C20000",
+   "mode": "C",
+   "budget": 20000,
+   "triangles": 183434,
+   "calls": 167,
+   "modelTriangles": 688228,
+   "nearFull": 0,
+   "ms": 6.41,
+   "fps": 156,
+   "msRuns": [
+    4.55,
+    6.41,
+    6.91
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 56,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 2097922,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 9,
+     "bytes": 10203434
+    }
+   },
+   "switchMs": 40.9,
+   "cpuLoad": 74,
+   "cpuMax": 91,
+   "seconds": 3.2
+  },
+  {
+   "view": "walkL2",
+   "config": "C10000",
+   "mode": "C",
+   "budget": 10000,
+   "triangles": 107495,
+   "calls": 167,
+   "modelTriangles": 413298,
+   "nearFull": 0,
+   "ms": 6.69,
+   "fps": 149.5,
+   "msRuns": [
+    6.69,
+    5.99,
+    7.07
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 68,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 1334956,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 11,
+     "bytes": 10935938
+    }
+   },
+   "switchMs": 39.8,
+   "cpuLoad": 66,
+   "cpuMax": 70,
+   "seconds": 3.4
+  },
+  {
+   "view": "walkL2",
+   "config": "C5000",
+   "mode": "C",
+   "budget": 5000,
+   "triangles": 62540,
+   "calls": 167,
+   "modelTriangles": 234103,
+   "nearFull": 0,
+   "ms": 6.3,
+   "fps": 158.7,
+   "msRuns": [
+    6.3,
+    6.98,
+    6.15
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 82,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 907744,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 14,
+     "bytes": 11426078
+    }
+   },
+   "switchMs": 28.3,
+   "cpuLoad": 69,
+   "cpuMax": 72,
+   "seconds": 3.4
+  },
+  {
+   "view": "walkL2",
+   "config": "C2500",
+   "mode": "C",
+   "budget": 2500,
+   "triangles": 39697,
+   "calls": 167,
+   "modelTriangles": 133529,
+   "nearFull": 0,
+   "ms": 6.47,
+   "fps": 154.6,
+   "msRuns": [
+    6.66,
+    6.47,
+    5.77
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 101,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 544686,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 19,
+     "bytes": 11807912
+    }
+   },
+   "switchMs": 36.8,
+   "cpuLoad": 54,
+   "cpuMax": 60,
+   "seconds": 3.3
+  },
+  {
+   "view": "walkL2",
+   "config": "D",
+   "mode": "D",
+   "budget": null,
+   "triangles": 298872,
+   "calls": 167,
+   "modelTriangles": 727367,
+   "nearFull": 4,
+   "ms": 7.05,
+   "fps": 141.8,
+   "msRuns": [
+    7.05,
+    6.57,
+    7.72
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 101,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 42,
+     "bytes": 10136336,
+     "assets": 11
+    },
+    "allDecoded": {
+     "assets": 19,
+     "bytes": 11807912
+    }
+   },
+   "switchMs": 37.1,
+   "cpuLoad": 73,
+   "cpuMax": 80,
+   "seconds": 3.6
+  },
+  {
+   "view": "walkL2",
+   "config": "E",
+   "mode": "E",
+   "budget": null,
+   "triangles": 123398,
+   "calls": 167,
+   "modelTriangles": 498114,
+   "nearFull": 0,
+   "ms": 5.85,
+   "fps": 170.9,
+   "msRuns": [
+    6.07,
+    5.47,
+    5.85
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 101,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 1840822,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 19,
+     "bytes": 11807912
+    }
+   },
+   "switchMs": 20,
+   "cpuLoad": 57,
+   "cpuMax": 81,
+   "seconds": 3.1
+  },
+  {
+   "view": "walkL2",
+   "config": "Pfull",
+   "mode": "P",
+   "budget": "full",
+   "triangles": 2054310,
+   "calls": 233,
+   "modelTriangles": 7051863,
+   "nearFull": 0,
+   "ms": 9.81,
+   "fps": 101.9,
+   "msRuns": [
+    10.09,
+    9.4,
+    9.81
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 106,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 11480384,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 20,
+     "bytes": 13642100
+    }
+   },
+   "switchMs": 57.5,
+   "cpuLoad": 83,
+   "cpuMax": 91,
+   "seconds": 4.6
+  },
+  {
+   "view": "walkL2",
+   "config": "P20000",
+   "mode": "P",
+   "budget": 20000,
+   "triangles": 507002,
+   "calls": 233,
+   "modelTriangles": 1881572,
+   "nearFull": 0,
+   "ms": 8.48,
+   "fps": 117.9,
+   "msRuns": [
+    8.48,
+    9.1,
+    8
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 111,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 2609350,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 21,
+     "bytes": 14153528
+    }
+   },
+   "switchMs": 73.3,
+   "cpuLoad": 69,
+   "cpuMax": 88,
+   "seconds": 4.1
+  },
+  {
+   "view": "walkL2",
+   "config": "P10000",
+   "mode": "P",
+   "budget": 10000,
+   "triangles": 331023,
+   "calls": 233,
+   "modelTriangles": 1166466,
+   "nearFull": 0,
+   "ms": 8.91,
+   "fps": 112.2,
+   "msRuns": [
+    9.3,
+    8.91,
+    7.09
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 116,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 1617496,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 22,
+     "bytes": 14436068
+    }
+   },
+   "switchMs": 48.5,
+   "cpuLoad": 65,
+   "cpuMax": 73,
+   "seconds": 4.1
+  },
+  {
+   "view": "walkL2",
+   "config": "P5000",
+   "mode": "P",
+   "budget": 5000,
+   "triangles": 236118,
+   "calls": 233,
+   "modelTriangles": 767491,
+   "nearFull": 0,
+   "ms": 7.3,
+   "fps": 137,
+   "msRuns": [
+    8.09,
+    4.74,
+    7.3
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 121,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 1072594,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 23,
+     "bytes": 14600918
+    }
+   },
+   "switchMs": 41.3,
+   "cpuLoad": 58,
+   "cpuMax": 93,
+   "seconds": 3.4
+  },
+  {
+   "view": "walkL2",
+   "config": "P2500",
+   "mode": "P",
+   "budget": 2500,
+   "triangles": 130001,
+   "calls": 233,
+   "modelTriangles": 412621,
+   "nearFull": 0,
+   "ms": 4.78,
+   "fps": 209.2,
+   "msRuns": [
+    5.43,
+    3.95,
+    4.78
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 126,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 638892,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 24,
+     "bytes": 14695124
+    }
+   },
+   "switchMs": 47.6,
+   "cpuLoad": 45,
+   "cpuMax": 72,
+   "seconds": 2.7
+  },
+  {
+   "view": "widestL1",
+   "config": "A",
+   "mode": "A",
+   "budget": null,
+   "triangles": 5822,
+   "calls": 298,
+   "modelTriangles": 0,
+   "nearFull": 0,
+   "ms": 5.22,
+   "fps": 191.6,
+   "msRuns": [
+    4.85,
+    5.22,
+    5.55
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 31,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 0,
+     "bytes": 0,
+     "assets": 0
+    },
+    "allDecoded": {
+     "assets": 0,
+     "bytes": 0
+    }
+   },
+   "switchMs": 6.7,
+   "cpuLoad": 60,
+   "cpuMax": 64,
+   "seconds": 2.9
+  },
+  {
+   "view": "widestL1",
+   "config": "B",
+   "mode": "B",
+   "budget": null,
+   "triangles": 3745955,
+   "calls": 413,
+   "modelTriangles": 4893555,
+   "nearFull": 0,
+   "ms": 8.34,
+   "fps": 119.9,
+   "msRuns": [
+    7.16,
+    8.34,
+    8.95
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 59,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 9646196,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 8,
+     "bytes": 9646196
+    }
+   },
+   "switchMs": 88.7,
+   "cpuLoad": 43,
+   "cpuMax": 59,
+   "seconds": 4
+  },
+  {
+   "view": "widestL1",
+   "config": "C20000",
+   "mode": "C",
+   "budget": 20000,
+   "triangles": 539965,
+   "calls": 413,
+   "modelTriangles": 688228,
+   "nearFull": 0,
+   "ms": 7.02,
+   "fps": 142.5,
+   "msRuns": [
+    7.02,
+    8.15,
+    5.79
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 63,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 2097922,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 9,
+     "bytes": 10203434
+    }
+   },
+   "switchMs": 35.1,
+   "cpuLoad": 55,
+   "cpuMax": 59,
+   "seconds": 3.6
+  },
+  {
+   "view": "widestL1",
+   "config": "C10000",
+   "mode": "C",
+   "budget": 10000,
+   "triangles": 326692,
+   "calls": 413,
+   "modelTriangles": 413298,
+   "nearFull": 0,
+   "ms": 6.76,
+   "fps": 147.9,
+   "msRuns": [
+    6.74,
+    6.76,
+    7.7
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 75,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 1334956,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 11,
+     "bytes": 10935938
+    }
+   },
+   "switchMs": 33.5,
+   "cpuLoad": 58,
+   "cpuMax": 66,
+   "seconds": 3.6
+  },
+  {
+   "view": "widestL1",
+   "config": "C5000",
+   "mode": "C",
+   "budget": 5000,
+   "triangles": 185565,
+   "calls": 413,
+   "modelTriangles": 234103,
+   "nearFull": 0,
+   "ms": 6.91,
+   "fps": 144.7,
+   "msRuns": [
+    6.58,
+    7.31,
+    6.91
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 89,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 907744,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 14,
+     "bytes": 11426078
+    }
+   },
+   "switchMs": 37.7,
+   "cpuLoad": 57,
+   "cpuMax": 65,
+   "seconds": 3.5
+  },
+  {
+   "view": "widestL1",
+   "config": "C2500",
+   "mode": "C",
+   "budget": 2500,
+   "triangles": 104394,
+   "calls": 413,
+   "modelTriangles": 133529,
+   "nearFull": 0,
+   "ms": 7.55,
+   "fps": 132.5,
+   "msRuns": [
+    8.01,
+    7.41,
+    7.55
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 108,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 544686,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 19,
+     "bytes": 11807912
+    }
+   },
+   "switchMs": 40.5,
+   "cpuLoad": 68,
+   "cpuMax": 80,
+   "seconds": 3.8
+  },
+  {
+   "view": "widestL1",
+   "config": "D",
+   "mode": "D",
+   "budget": null,
+   "triangles": 185565,
+   "calls": 413,
+   "modelTriangles": 234103,
+   "nearFull": 0,
+   "ms": 8.7,
+   "fps": 114.9,
+   "msRuns": [
+    8.88,
+    6.7,
+    8.7
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 108,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 42,
+     "bytes": 10136336,
+     "assets": 11
+    },
+    "allDecoded": {
+     "assets": 19,
+     "bytes": 11807912
+    }
+   },
+   "switchMs": 20.2,
+   "cpuLoad": 58,
+   "cpuMax": 66,
+   "seconds": 4
+  },
+  {
+   "view": "widestL1",
+   "config": "E",
+   "mode": "E",
+   "budget": null,
+   "triangles": 395033,
+   "calls": 413,
+   "modelTriangles": 498114,
+   "nearFull": 0,
+   "ms": 8.94,
+   "fps": 111.9,
+   "msRuns": [
+    9.98,
+    8.94,
+    7.29
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 108,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 1840822,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 19,
+     "bytes": 11807912
+    }
+   },
+   "switchMs": 27,
+   "cpuLoad": 56,
+   "cpuMax": 70,
+   "seconds": 4.2
+  },
+  {
+   "view": "widestL1",
+   "config": "Pfull",
+   "mode": "P",
+   "budget": "full",
+   "triangles": 5292468,
+   "calls": 580,
+   "modelTriangles": 7051863,
+   "nearFull": 0,
+   "ms": 16.32,
+   "fps": 61.3,
+   "msRuns": [
+    13.6,
+    16.32,
+    16.59
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 113,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 11480384,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 20,
+     "bytes": 13642100
+    }
+   },
+   "switchMs": 88,
+   "cpuLoad": 80,
+   "cpuMax": 97,
+   "seconds": 6.8
+  },
+  {
+   "view": "widestL1",
+   "config": "P20000",
+   "mode": "P",
+   "budget": 20000,
+   "triangles": 1408133,
+   "calls": 580,
+   "modelTriangles": 1881572,
+   "nearFull": 0,
+   "ms": 14.18,
+   "fps": 70.5,
+   "msRuns": [
+    14.18,
+    14.19,
+    12.67
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 118,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 2609350,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 21,
+     "bytes": 14153528
+    }
+   },
+   "switchMs": 79.5,
+   "cpuLoad": 71,
+   "cpuMax": 89,
+   "seconds": 6.1
+  },
+  {
+   "view": "widestL1",
+   "config": "P10000",
+   "mode": "P",
+   "budget": 10000,
+   "triangles": 885431,
+   "calls": 580,
+   "modelTriangles": 1166466,
+   "nearFull": 0,
+   "ms": 12.87,
+   "fps": 77.7,
+   "msRuns": [
+    14.85,
+    12.66,
+    12.87
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 123,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 1617496,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 22,
+     "bytes": 14436068
+    }
+   },
+   "switchMs": 66.2,
+   "cpuLoad": 68,
+   "cpuMax": 82,
+   "seconds": 6
+  },
+  {
+   "view": "widestL1",
+   "config": "P5000",
+   "mode": "P",
+   "budget": 5000,
+   "triangles": 589798,
+   "calls": 580,
+   "modelTriangles": 767491,
+   "nearFull": 0,
+   "ms": 12.54,
+   "fps": 79.7,
+   "msRuns": [
+    12.54,
+    13.47,
+    12.22
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 128,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 1072594,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 23,
+     "bytes": 14600918
+    }
+   },
+   "switchMs": 69.8,
+   "cpuLoad": 85,
+   "cpuMax": 99,
+   "seconds": 5.8
+  },
+  {
+   "view": "widestL1",
+   "config": "P2500",
+   "mode": "P",
+   "budget": 2500,
+   "triangles": 314822,
+   "calls": 580,
+   "modelTriangles": 412621,
+   "nearFull": 0,
+   "ms": 11.69,
+   "fps": 85.5,
+   "msRuns": [
+    10.81,
+    11.69,
+    13.44
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 133,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 638892,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 24,
+     "bytes": 14695124
+    }
+   },
+   "switchMs": 49.9,
+   "cpuLoad": 62,
+   "cpuMax": 76,
+   "seconds": 5.4
+  },
+  {
+   "view": "widestL2",
+   "config": "A",
+   "mode": "A",
+   "budget": null,
+   "triangles": 5150,
+   "calls": 186,
+   "modelTriangles": 0,
+   "nearFull": 0,
+   "ms": 5.09,
+   "fps": 196.5,
+   "msRuns": [
+    4.71,
+    5.76,
+    5.09
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 31,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 0,
+     "bytes": 0,
+     "assets": 0
+    },
+    "allDecoded": {
+     "assets": 0,
+     "bytes": 0
+    }
+   },
+   "switchMs": 7.6,
+   "cpuLoad": 47,
+   "cpuMax": 58,
+   "seconds": 2.9
+  },
+  {
+   "view": "widestL2",
+   "config": "B",
+   "mode": "B",
+   "budget": null,
+   "triangles": 1804634,
+   "calls": 264,
+   "modelTriangles": 4893555,
+   "nearFull": 0,
+   "ms": 8.16,
+   "fps": 122.5,
+   "msRuns": [
+    8.16,
+    7.25,
+    8.77
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 59,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 9646196,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 8,
+     "bytes": 9646196
+    }
+   },
+   "switchMs": 182.3,
+   "cpuLoad": 58,
+   "cpuMax": 93,
+   "seconds": 3.9
+  },
+  {
+   "view": "widestL2",
+   "config": "C20000",
+   "mode": "C",
+   "budget": 20000,
+   "triangles": 307716,
+   "calls": 264,
+   "modelTriangles": 688228,
+   "nearFull": 0,
+   "ms": 8.31,
+   "fps": 120.3,
+   "msRuns": [
+    8.05,
+    8.31,
+    8.92
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 63,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 2097922,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 9,
+     "bytes": 10203434
+    }
+   },
+   "switchMs": 50.9,
+   "cpuLoad": 83,
+   "cpuMax": 95,
+   "seconds": 4.1
+  },
+  {
+   "view": "widestL2",
+   "config": "C10000",
+   "mode": "C",
+   "budget": 10000,
+   "triangles": 182015,
+   "calls": 264,
+   "modelTriangles": 413298,
+   "nearFull": 0,
+   "ms": 7.68,
+   "fps": 130.2,
+   "msRuns": [
+    6.72,
+    7.68,
+    7.86
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 75,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 1334956,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 11,
+     "bytes": 10935938
+    }
+   },
+   "switchMs": 36.4,
+   "cpuLoad": 85,
+   "cpuMax": 89,
+   "seconds": 3.7
+  },
+  {
+   "view": "widestL2",
+   "config": "C5000",
+   "mode": "C",
+   "budget": 5000,
+   "triangles": 93522,
+   "calls": 264,
+   "modelTriangles": 234103,
+   "nearFull": 0,
+   "ms": 7.08,
+   "fps": 141.2,
+   "msRuns": [
+    7.08,
+    6.83,
+    7.15
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 89,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 907744,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 14,
+     "bytes": 11426078
+    }
+   },
+   "switchMs": 51.9,
+   "cpuLoad": 58,
+   "cpuMax": 63,
+   "seconds": 3.6
+  },
+  {
+   "view": "widestL2",
+   "config": "C2500",
+   "mode": "C",
+   "budget": 2500,
+   "triangles": 49265,
+   "calls": 264,
+   "modelTriangles": 133529,
+   "nearFull": 0,
+   "ms": 8.03,
+   "fps": 124.5,
+   "msRuns": [
+    7.42,
+    8.24,
+    8.03
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 108,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 544686,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 19,
+     "bytes": 11807912
+    }
+   },
+   "switchMs": 38.7,
+   "cpuLoad": 72,
+   "cpuMax": 81,
+   "seconds": 3.9
+  },
+  {
+   "view": "widestL2",
+   "config": "D",
+   "mode": "D",
+   "budget": null,
+   "triangles": 197678,
+   "calls": 264,
+   "modelTriangles": 480735,
+   "nearFull": 2,
+   "ms": 7.97,
+   "fps": 125.5,
+   "msRuns": [
+    8.08,
+    7.77,
+    7.97
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 108,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 42,
+     "bytes": 10136336,
+     "assets": 11
+    },
+    "allDecoded": {
+     "assets": 19,
+     "bytes": 11807912
+    }
+   },
+   "switchMs": 47.4,
+   "cpuLoad": 66,
+   "cpuMax": 86,
+   "seconds": 3.9
+  },
+  {
+   "view": "widestL2",
+   "config": "E",
+   "mode": "E",
+   "budget": null,
+   "triangles": 240040,
+   "calls": 264,
+   "modelTriangles": 498114,
+   "nearFull": 0,
+   "ms": 7.8,
+   "fps": 128.2,
+   "msRuns": [
+    8.18,
+    7.8,
+    7.22
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 108,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 28,
+     "bytes": 1840822,
+     "assets": 8
+    },
+    "allDecoded": {
+     "assets": 19,
+     "bytes": 11807912
+    }
+   },
+   "switchMs": 24.6,
+   "cpuLoad": 79,
+   "cpuMax": 87,
+   "seconds": 3.8
+  },
+  {
+   "view": "widestL2",
+   "config": "Pfull",
+   "mode": "P",
+   "budget": "full",
+   "triangles": 2747536,
+   "calls": 366,
+   "modelTriangles": 7051863,
+   "nearFull": 0,
+   "ms": 11.36,
+   "fps": 88,
+   "msRuns": [
+    11.29,
+    12.96,
+    11.36
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 113,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 11480384,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 20,
+     "bytes": 13642100
+    }
+   },
+   "switchMs": 74.3,
+   "cpuLoad": 69,
+   "cpuMax": 85,
+   "seconds": 5.4
+  },
+  {
+   "view": "widestL2",
+   "config": "P20000",
+   "mode": "P",
+   "budget": 20000,
+   "triangles": 855860,
+   "calls": 366,
+   "modelTriangles": 1881572,
+   "nearFull": 0,
+   "ms": 8.81,
+   "fps": 113.5,
+   "msRuns": [
+    11.57,
+    8.81,
+    8.66
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 118,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 2609350,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 21,
+     "bytes": 14153528
+    }
+   },
+   "switchMs": 58.7,
+   "cpuLoad": 55,
+   "cpuMax": 76,
+   "seconds": 4.6
+  },
+  {
+   "view": "widestL2",
+   "config": "P10000",
+   "mode": "P",
+   "budget": 10000,
+   "triangles": 550087,
+   "calls": 366,
+   "modelTriangles": 1166466,
+   "nearFull": 0,
+   "ms": 10.33,
+   "fps": 96.8,
+   "msRuns": [
+    9.93,
+    10.33,
+    10.62
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 123,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 1617496,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 22,
+     "bytes": 14436068
+    }
+   },
+   "switchMs": 65.8,
+   "cpuLoad": 85,
+   "cpuMax": 100,
+   "seconds": 4.8
+  },
+  {
+   "view": "widestL2",
+   "config": "P5000",
+   "mode": "P",
+   "budget": 5000,
+   "triangles": 371684,
+   "calls": 366,
+   "modelTriangles": 767491,
+   "nearFull": 0,
+   "ms": 10.08,
+   "fps": 99.2,
+   "msRuns": [
+    10.08,
+    9.56,
+    10.33
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 128,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 1072594,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 23,
+     "bytes": 14600918
+    }
+   },
+   "switchMs": 68.1,
+   "cpuLoad": 67,
+   "cpuMax": 75,
+   "seconds": 4.7
+  },
+  {
+   "view": "widestL2",
+   "config": "P2500",
+   "mode": "P",
+   "budget": 2500,
+   "triangles": 193575,
+   "calls": 366,
+   "modelTriangles": 412621,
+   "nearFull": 0,
+   "ms": 10.38,
+   "fps": 96.3,
+   "msRuns": [
+    9.84,
+    10.38,
+    10.55
+   ],
+   "liveFps": 60,
+   "width": 1920,
+   "height": 1080,
+   "memory": {
+    "info": {
+     "geometries": 133,
+     "textures": 0
+    },
+    "models": {
+     "geometries": 33,
+     "bytes": 638892,
+     "assets": 9
+    },
+    "allDecoded": {
+     "assets": 24,
+     "bytes": 14695124
+    }
+   },
+   "switchMs": 49.5,
+   "cpuLoad": 82,
+   "cpuMax": 88,
+   "seconds": 4.8
+  }
+ ],
+ "walks": [
+  {
+   "level": "L1",
+   "config": "B",
+   "path": {
+    "from": [
+     0.79,
+     -0.63
+    ],
+    "to": [
+     -1.3,
+     1.86
+    ],
+    "metres": 3.25,
+    "directionDeg": 130
+   },
+   "runs": [
+    {
+     "mode": "B",
+     "budget": null,
+     "frames": 241,
+     "metres": 3.250876804802052,
+     "medianMs": 5.1,
+     "p95Ms": 11.7,
+     "maxMs": 49.1,
+     "over33": 1,
+     "over16": 2,
+     "levelSwitches": 0
+    },
+    {
+     "mode": "B",
+     "budget": null,
+     "frames": 241,
+     "metres": 3.250876804802052,
+     "medianMs": 6.7,
+     "p95Ms": 10.2,
+     "maxMs": 13.6,
+     "over33": 0,
+     "over16": 0,
+     "levelSwitches": 0
+    },
+    {
+     "mode": "B",
+     "budget": null,
+     "frames": 241,
+     "metres": 3.250876804802052,
+     "medianMs": 6.4,
+     "p95Ms": 9.4,
+     "maxMs": 13.4,
+     "over33": 0,
+     "over16": 0,
+     "levelSwitches": 0
+    }
+   ],
+   "medianMs": 6.4,
+   "p95Ms": 10.2,
+   "maxMs": 49.1,
+   "over33": 1,
+   "over16": 2,
+   "frames": 723,
+   "levelSwitches": 0,
+   "cpuLoad": 74
+  },
+  {
+   "level": "L1",
+   "config": "C5000",
+   "path": {
+    "from": [
+     0.79,
+     -0.63
+    ],
+    "to": [
+     -1.3,
+     1.86
+    ],
+    "metres": 3.25,
+    "directionDeg": 130
+   },
+   "runs": [
+    {
+     "mode": "C",
+     "budget": 5000,
+     "frames": 241,
+     "metres": 3.250876804802052,
+     "medianMs": 5.5,
+     "p95Ms": 7.6,
+     "maxMs": 13.5,
+     "over33": 0,
+     "over16": 0,
+     "levelSwitches": 0
+    },
+    {
+     "mode": "C",
+     "budget": 5000,
+     "frames": 241,
+     "metres": 3.250876804802052,
+     "medianMs": 6.4,
+     "p95Ms": 8.4,
+     "maxMs": 10,
+     "over33": 0,
+     "over16": 0,
+     "levelSwitches": 0
+    },
+    {
+     "mode": "C",
+     "budget": 5000,
+     "frames": 241,
+     "metres": 3.250876804802052,
+     "medianMs": 6,
+     "p95Ms": 7.6,
+     "maxMs": 10.2,
+     "over33": 0,
+     "over16": 0,
+     "levelSwitches": 0
+    }
+   ],
+   "medianMs": 6,
+   "p95Ms": 7.6,
+   "maxMs": 13.5,
+   "over33": 0,
+   "over16": 0,
+   "frames": 723,
+   "levelSwitches": 0,
+   "cpuLoad": 93
+  },
+  {
+   "level": "L1",
+   "config": "D",
+   "path": {
+    "from": [
+     0.79,
+     -0.63
+    ],
+    "to": [
+     -1.3,
+     1.86
+    ],
+    "metres": 3.25,
+    "directionDeg": 130
+   },
+   "runs": [
+    {
+     "mode": "D",
+     "budget": null,
+     "frames": 241,
+     "metres": 3.250876804802052,
+     "medianMs": 5,
+     "p95Ms": 11.2,
+     "maxMs": 17.6,
+     "over33": 0,
+     "over16": 1,
+     "levelSwitches": 8
+    },
+    {
+     "mode": "D",
+     "budget": null,
+     "frames": 241,
+     "metres": 3.250876804802052,
+     "medianMs": 5.4,
+     "p95Ms": 8.7,
+     "maxMs": 13.6,
+     "over33": 0,
+     "over16": 0,
+     "levelSwitches": 7
+    },
+    {
+     "mode": "D",
+     "budget": null,
+     "frames": 241,
+     "metres": 3.250876804802052,
+     "medianMs": 6.3,
+     "p95Ms": 8.9,
+     "maxMs": 12.7,
+     "over33": 0,
+     "over16": 0,
+     "levelSwitches": 7
+    }
+   ],
+   "medianMs": 5.4,
+   "p95Ms": 8.9,
+   "maxMs": 17.6,
+   "over33": 0,
+   "over16": 1,
+   "frames": 723,
+   "levelSwitches": 22,
+   "cpuLoad": 65
+  },
+  {
+   "level": "L2",
+   "config": "B",
+   "path": {
+    "from": [
+     -1.44,
+     1.15
+    ],
+    "to": [
+     -1.01,
+     3.62
+    ],
+    "metres": 2.5,
+    "directionDeg": 80
+   },
+   "runs": [
+    {
+     "mode": "B",
+     "budget": null,
+     "frames": 241,
+     "metres": 2.507149776140229,
+     "medianMs": 6.6,
+     "p95Ms": 10.2,
+     "maxMs": 42.3,
+     "over33": 1,
+     "over16": 1,
+     "levelSwitches": 0
+    },
+    {
+     "mode": "B",
+     "budget": null,
+     "frames": 241,
+     "metres": 2.507149776140229,
+     "medianMs": 8.3,
+     "p95Ms": 11.9,
+     "maxMs": 16.7,
+     "over33": 0,
+     "over16": 1,
+     "levelSwitches": 0
+    },
+    {
+     "mode": "B",
+     "budget": null,
+     "frames": 241,
+     "metres": 2.507149776140229,
+     "medianMs": 6.1,
+     "p95Ms": 9.2,
+     "maxMs": 12.1,
+     "over33": 0,
+     "over16": 0,
+     "levelSwitches": 0
+    }
+   ],
+   "medianMs": 6.6,
+   "p95Ms": 10.2,
+   "maxMs": 42.3,
+   "over33": 1,
+   "over16": 2,
+   "frames": 723,
+   "levelSwitches": 0,
+   "cpuLoad": 83
+  },
+  {
+   "level": "L2",
+   "config": "C5000",
+   "path": {
+    "from": [
+     -1.44,
+     1.15
+    ],
+    "to": [
+     -1.01,
+     3.62
+    ],
+    "metres": 2.5,
+    "directionDeg": 80
+   },
+   "runs": [
+    {
+     "mode": "C",
+     "budget": 5000,
+     "frames": 241,
+     "metres": 2.507149776140229,
+     "medianMs": 5.5,
+     "p95Ms": 10.7,
+     "maxMs": 13.2,
+     "over33": 0,
+     "over16": 0,
+     "levelSwitches": 0
+    },
+    {
+     "mode": "C",
+     "budget": 5000,
+     "frames": 241,
+     "metres": 2.507149776140229,
+     "medianMs": 5.5,
+     "p95Ms": 9.3,
+     "maxMs": 15.3,
+     "over33": 0,
+     "over16": 0,
+     "levelSwitches": 0
+    },
+    {
+     "mode": "C",
+     "budget": 5000,
+     "frames": 241,
+     "metres": 2.507149776140229,
+     "medianMs": 5.9,
+     "p95Ms": 8.1,
+     "maxMs": 11.2,
+     "over33": 0,
+     "over16": 0,
+     "levelSwitches": 0
+    }
+   ],
+   "medianMs": 5.5,
+   "p95Ms": 9.3,
+   "maxMs": 15.3,
+   "over33": 0,
+   "over16": 0,
+   "frames": 723,
+   "levelSwitches": 0,
+   "cpuLoad": 71
+  },
+  {
+   "level": "L2",
+   "config": "D",
+   "path": {
+    "from": [
+     -1.44,
+     1.15
+    ],
+    "to": [
+     -1.01,
+     3.62
+    ],
+    "metres": 2.5,
+    "directionDeg": 80
+   },
+   "runs": [
+    {
+     "mode": "D",
+     "budget": null,
+     "frames": 241,
+     "metres": 2.507149776140229,
+     "medianMs": 6.6,
+     "p95Ms": 10.9,
+     "maxMs": 14,
+     "over33": 0,
+     "over16": 0,
+     "levelSwitches": 4
+    },
+    {
+     "mode": "D",
+     "budget": null,
+     "frames": 241,
+     "metres": 2.507149776140229,
+     "medianMs": 5.5,
+     "p95Ms": 13.7,
+     "maxMs": 19.9,
+     "over33": 0,
+     "over16": 6,
+     "levelSwitches": 4
+    },
+    {
+     "mode": "D",
+     "budget": null,
+     "frames": 241,
+     "metres": 2.507149776140229,
+     "medianMs": 6.2,
+     "p95Ms": 10,
+     "maxMs": 14.6,
+     "over33": 0,
+     "over16": 0,
+     "levelSwitches": 4
+    }
+   ],
+   "medianMs": 6.2,
+   "p95Ms": 10.9,
+   "maxMs": 19.9,
+   "over33": 0,
+   "over16": 6,
+   "frames": 723,
+   "levelSwitches": 12,
+   "cpuLoad": 69
+  }
+ ]
+}

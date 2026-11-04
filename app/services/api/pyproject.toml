@@ -1,0 +1,29 @@
+[project]
+name = "walkthrough-api"
+version = "0.1.0"
+description = "Walkthrough API: projects, versions, downloads and saved furniture heights over a local file store (DESIGN.md 9, 10)."
+requires-python = ">=3.14,<3.15"
+# The package is NOT installed into the venv (DESIGN.md 18.24): tools/run-py.mjs runs the venv's Python with
+# PYTHONPATH=services/api. Every package, direct and indirect, is pinned in requirements.lock.txt; install with
+#   services/api/.venv/Scripts/python -m pip install -r services/api/requirements.lock.txt
+# The direct dependencies, for the record (the lock is what gets installed):
+dependencies = [
+  "fastapi==0.150.0",
+  "starlette==1.9.0",
+  "pydantic==2.14.1",
+  "uvicorn==0.54.0",
+  "jsonschema==4.26.0",
+]
+
+[dependency-groups]
+test = ["pytest==9.1.1", "httpx==0.28.1"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+# Every warning is an error, except Starlette 1.9's StarletteDeprecationWarning (a UserWarning) about TestClient using
+# httpx rather than httpx2 (verified 3 Nov; DESIGN.md 4.5, 18.25).
+filterwarnings = [
+  "error",
+  "ignore:Using .httpx. with .starlette.testclient. is deprecated",
+]

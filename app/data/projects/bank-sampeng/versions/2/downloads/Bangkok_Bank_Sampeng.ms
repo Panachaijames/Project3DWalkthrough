@@ -1,0 +1,867 @@
+-- BANGKOK BANK, SAMPENG BRANCH (TEST) / from "I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg + I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg" / built by the CAD-to-3D test pipeline, 27 Oct 2026
+-- Same model as bank_3d_preview.html (model data c3a9408304a2). Floor levels +0.00 / +3.70 m, wall heights 3.70 / 3.70 m.
+-- Placed at the DWG's own coordinates in metres (to line up with the DWGs imported in metres), or centred on the origin
+-- if you untick that box in the script's window.
+-- Every part stays LIVE (no Editable Poly): an editable spline outline + an Extrude modifier (output: Mesh) + Smooth.
+--   * Change a height: the Extrude amount on that object, or "Update levels and heights" in this script's window.
+--   * Change an outline: select the spline level under the modifiers and move vertices.
+--   * Editable Mesh: tick "Collapse to Editable Mesh" before Build, or press "Collapse all now" later.
+-- Each object's pivot is at the middle of its own outline, on its base. Layers per level and kind (BB_L1_Walls ...).
+-- Glass partitions (Revit glass wall types) are their own objects on BB_<level>_Glass, at the height their type
+-- name gives (2600H = 2.60 m); "Update levels and heights" keeps them, the parapet and the stair steps at their own
+-- heights (only parts marked to follow the wall height change).
+-- Each part is checked as it is built (closed solid, height, position). A part that fails is kept on layer
+-- BB_Check_Failed and listed in the MAXScript Listener; the rest is still built.
+-- Build sets System Units to metres. Nothing in an existing scene is changed: run it in a NEW EMPTY scene.
+global BB_UI
+global BB_nodes = #()
+global BB_failed = #()
+global BB_levels = #(0.00,3.70)
+global BB_heights = #(3.70,3.70)
+global BB_floorNames = #("L1","L2")
+global BB_collapse = false
+global BB_shift = [0.0, 0.0]
+global BB_mats
+-- Furniture boxes: one coloured placeholder box per furniture piece (colour = kind), on layers BB_<level>_Furn_<Kind>. Type
+-- each kind's height in mm in the window, before the build or later with "Apply furniture heights" (boxes on a table, counter or
+-- cabinet follow its height). A box is a live Box, never an Editable Poly, and carries the piece's family, block and DWG layer
+-- as user properties, so the 3D team can swap it for their own model by family name. A property with nothing to say (no support,
+-- no block, no handle) holds the word none, never empty text: 3ds Max does not say what getUserProp returns for empty text.
+-- Each box is checked as it is built: base z, top z and its four corners carried through its transform, and the node's min and
+-- max in the plan only for an unrotated box (Autodesk does not say what they are for a turned node). A box that fails goes on
+-- layer BB_Check_Failed and is listed in the Listener; the rest is still built.
+-- "Furniture boxes only" adds just the boxes to a scene already built from this model. Below: the kinds in the model's order,
+-- heights and bases in metres.
+global BB_furnWant = true
+global BB_furnAddOnly = false
+global BB_furnFloors = #("L1","L2")
+global BB_furnKeys = #("atm","computer","printer","phone","tv","partition","plant","sanitary","seat","sofa","table","coffee-table","cabinet","tall-cabinet")
+global BB_furnLayers = #("Atm","Computer","Printer","Phone","Tv","Partition","Plant","Sanitary","Seat","Sofa","Table","CoffeeTable","Cabinet","TallCabinet")
+global BB_furnBases = #(0.0000,0.0000,0.0000,0.0000,0.9000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000)
+global BB_furnHeights = #(1.5000,0.4500,0.3000,0.1500,0.6000,1.2000,0.6000,0.8500,0.4500,0.8000,0.7500,0.4500,0.9000,2.1000)
+global BB_furnLevels = #()
+global BB_furnMats = #()
+
+fn BB_layer n =
+(
+    local ly = LayerManager.getLayerFromName n
+    if ly == undefined do ly = LayerManager.newLayerFromName n
+    ly
+)
+fn BB_mat key =
+(
+    local m = undefined
+    for x in BB_mats where x.name == ("BB " + key) do m = x
+    m
+)
+fn BB_makeMaterials =
+(
+    BB_mats = #()
+    append BB_mats (standardMaterial name:"BB Wall" diffuse:(color 227 221 211))
+    append BB_mats (standardMaterial name:"BB Glass" diffuse:(color 170 200 214) opacity:30 specularLevel:60 glossiness:60)
+    append BB_mats (standardMaterial name:"BB Rail" diffuse:(color 119 114 124))
+    append BB_mats (standardMaterial name:"BB Single" diffuse:(color 224 164 88))
+    append BB_mats (standardMaterial name:"BB Slab" diffuse:(color 212 216 210))
+    append BB_mats (standardMaterial name:"BB Frame" diffuse:(color 93 107 116))
+    append BB_mats (standardMaterial name:"BB Step" diffuse:(color 185 199 180))
+)
+fn BB_num v = ((v as string) as float)
+-- The outline's knots are relative to c, the middle of the outline; the node is then moved to c, so that is its pivot.
+fn BB_shape nm loops =
+(
+    local o = splineShape name:nm
+    for j = 1 to loops.count do
+    (
+        addNewSpline o
+        for p in loops[j] do addKnot o j #corner #line [p.x, p.y, 0]
+        close o j
+    )
+    updateShape o
+    o
+)
+fn BB_extrudeOf o =
+(
+    local ex = undefined
+    for md in o.modifiers where classOf md == Extrude do ex = md
+    ex
+)
+-- kind: #wall #column #lintel #sill #parapet #glass #mullion #railing #single #step #slab; z0/z1 in metres above the
+-- level of floor fi (a step of a flight going down from a level starts below it);
+-- follow = the top follows that level's wall height. c = pivot, mn/mx = outline extents (DWG coordinates).
+fn BB_part kind nm loops z0 z1 follow fi c mn mx =
+(
+    local info = case kind of
+    (
+        #wall: #("Walls", "Wall")
+        #column: #("Columns", "Wall")
+        #lintel: #("Lintels", "Wall")
+        #sill: #("Sills", "Wall")
+        #parapet: #("Parapets", "Wall")
+        #glass: #("Glass", "Glass")
+        #mullion: #("GlassFrames", "Frame")
+        #railing: #("Railings", "Rail")
+        #single: #("SingleLines", "Single")
+        #step: #("Steps", "Step")
+        #slab: #("Slab", "Slab")
+    )
+    local lvl = BB_levels[fi]
+    local top = if follow then BB_heights[fi] else z1
+    local zb = lvl + z0
+    local ht = top - z0
+    local o = BB_shape nm loops
+    o.pos = [c.x - BB_shift.x, c.y - BB_shift.y, zb]
+    addModifier o (Extrude amount:ht segs:1 capStart:true capEnd:true output:1 smooth:false)
+    addModifier o (Smooth autoSmooth:true threshold:25.0)
+    local mt = BB_mat info[2]
+    o.material = mt
+    o.wirecolor = mt.diffuse
+    setUserProp o "BB_kind" (kind as string)
+    setUserProp o "BB_floor" fi
+    setUserProp o "BB_base" z0
+    setUserProp o "BB_follow" follow
+    -- the checks run on the evaluated mesh (what the modifiers produce)
+    local m = snapshotAsMesh o
+    local why = ""
+    local tol = 0.002
+    if m.numfaces < 3 then why = "no faces"
+    else if (meshop.getOpenEdges m).numberSet != 0 then why = "open edges (not a closed solid)"
+    else if abs(o.min.z - zb) > tol or abs(o.max.z - (zb + ht)) > tol then why = "height"
+    else if abs(o.min.x - (mn.x - BB_shift.x)) > tol or abs(o.min.y - (mn.y - BB_shift.y)) > tol or abs(o.max.x - (mx.x - BB_shift.x)) > tol or abs(o.max.y - (mx.y - BB_shift.y)) > tol then why = "position"
+    m = undefined
+    if why == "" then
+    (
+        (BB_layer ("BB_" + BB_floorNames[fi] + "_" + info[1])).addNode o
+        setUserProp o "BB_check" "ok"
+    )
+    else
+    (
+        (BB_layer "BB_Check_Failed").addNode o
+        setUserProp o "BB_check" why
+        append BB_failed (nm + ": " + why)
+    )
+    if BB_collapse do convertToMesh o
+    append BB_nodes o
+    o
+)
+-- Stair lines: one shape of open two-knot splines per level and kind, knots relative to c (its pivot).
+fn BB_lines nm segs fi c lay =
+(
+    local o = splineShape name:nm
+    for k = 1 to segs.count do
+    (
+        addNewSpline o
+        addKnot o k #corner #line [segs[k][1].x, segs[k][1].y, 0]
+        addKnot o k #corner #line [segs[k][2].x, segs[k][2].y, 0]
+    )
+    updateShape o
+    o.pos = [c.x - BB_shift.x, c.y - BB_shift.y, BB_levels[fi]]
+    o.wirecolor = if lay == "Stairs" then (color 46 139 71) else (color 160 210 170)
+    setUserProp o "BB_floor" fi
+    setUserProp o "BB_base" 0.0
+    (BB_layer ("BB_" + BB_floorNames[fi] + "_" + lay)).addNode o
+    append BB_nodes o
+    o
+)
+fn BB_room nm p fi =
+(
+    local t = text text:nm size:0.3 pos:[p.x - BB_shift.x, p.y - BB_shift.y, BB_levels[fi] + 0.02]
+    t.name = "BB_Room_" + BB_floorNames[fi] + "_" + nm
+    t.wirecolor = color 30 60 110
+    setUserProp t "BB_floor" fi
+    setUserProp t "BB_base" 0.02
+    (BB_layer ("BB_" + BB_floorNames[fi] + "_RoomNames")).addNode t
+    append BB_nodes t
+    t
+)
+-- After the build: move every part to its level and set every live part whose top follows the wall height to its
+-- level's new wall height.
+fn BB_updateLevels newLevels newHeights =
+(
+    local n = 0
+    local skipped = 0
+    for o in objects where (getUserProp o "BB_floor") != undefined do
+    (
+        local fi = (BB_num (getUserProp o "BB_floor")) as integer
+        local base = BB_num (getUserProp o "BB_base")
+        o.pos.z = newLevels[fi] + base
+        if ((getUserProp o "BB_follow") as string) == "true" do
+        (
+            local ex = BB_extrudeOf o
+            if ex == undefined then skipped += 1
+            else ( ex.amount = newHeights[fi] - base; n += 1 )
+        )
+    )
+    BB_levels = newLevels
+    BB_heights = newHeights
+    #(n, skipped)
+)
+fn BB_collapseAll =
+(
+    local n = 0
+    for o in objects where (getUserProp o "BB_kind") != undefined and o.modifiers.count > 0 do ( convertToMesh o; n += 1 )
+    n
+)
+-- Furniture boxes: one coloured Box per piece, a placeholder the 3D team swaps for their own model by family name.
+-- A box is a live Box (width along its own long axis, length across it, height), never an Editable Poly or Mesh and never
+-- collapsed: "Collapse all now" only takes objects that carry BB_kind and a modifier, and a box has neither. Every box
+-- carries BB_floor and BB_base (its bottom, in metres above its level) and BB_follow = false, so "Update levels
+-- and heights" moves it with its level and leaves its height alone.
+fn BB_furnNum v = ((v as string) as float)
+fn BB_furnMakeMaterials =
+(
+    BB_furnMats = #()
+    append BB_furnMats (standardMaterial name:"BB Furn atm" diffuse:(color 192 57 43))
+    append BB_furnMats (standardMaterial name:"BB Furn computer" diffuse:(color 123 63 181))
+    append BB_furnMats (standardMaterial name:"BB Furn printer" diffuse:(color 142 142 142))
+    append BB_furnMats (standardMaterial name:"BB Furn phone" diffuse:(color 209 48 106))
+    append BB_furnMats (standardMaterial name:"BB Furn tv" diffuse:(color 52 64 143))
+    append BB_furnMats (standardMaterial name:"BB Furn partition" diffuse:(color 79 185 159))
+    append BB_furnMats (standardMaterial name:"BB Furn plant" diffuse:(color 46 158 79))
+    append BB_furnMats (standardMaterial name:"BB Furn sanitary" diffuse:(color 23 162 162))
+    append BB_furnMats (standardMaterial name:"BB Furn seat" diffuse:(color 224 123 0))
+    append BB_furnMats (standardMaterial name:"BB Furn sofa" diffuse:(color 255 179 71))
+    append BB_furnMats (standardMaterial name:"BB Furn table" diffuse:(color 138 90 43))
+    append BB_furnMats (standardMaterial name:"BB Furn coffee-table" diffuse:(color 201 163 122))
+    append BB_furnMats (standardMaterial name:"BB Furn cabinet" diffuse:(color 47 127 193))
+    append BB_furnMats (standardMaterial name:"BB Furn tall-cabinet" diffuse:(color 27 79 138))
+)
+-- The floor levels the build was started with (a copy: nothing is shared with the script's own array).
+fn BB_furnSetLevels =
+(
+    BB_furnLevels = #()
+    for z in (BB_levels) do append BB_furnLevels z
+)
+-- Where a box stands, in metres above its level: on its kind's base, or on top of the kind of support it was drawn on
+-- (ki = its kind, oki = the kind of its support, 0 for none). A support never stands on anything.
+fn BB_furnZ0 ki oki =
+(
+    local z0 = BB_furnBases[ki]
+    if oki > 0 do z0 = BB_furnBases[oki] + BB_furnHeights[oki]
+    z0
+)
+-- kind = the kind, nm = the object's name, fi = the floor's index, pid = the piece's id, supId and supKind = its support's id
+-- and kind ("none" for none), c = the box's centre and cs = its four corners (DWG coordinates), w d = its size along its own
+-- long and short axis, ca sa = cos and sin of the angle from +x to the long axis, fam blk lay hnd = family, block, DWG layer,
+-- handle ("none" for nothing). The box gets an explicit matrix: its X, Y and Z axes in the world, then its pivot (the middle of
+-- its base).
+fn BB_furnBox kind nm fi pid supId supKind c w d ca sa cs fam blk lay hnd =
+(
+    local ki = findItem BB_furnKeys kind
+    local z0 = BB_furnZ0 ki (findItem BB_furnKeys supKind)
+    local ht = BB_furnHeights[ki]
+    local zb = BB_furnLevels[fi] + z0
+    local o = box name:nm width:w length:d height:ht
+    o.transform = (matrix3 [ca, sa, 0.0] [(0.0 - sa), ca, 0.0] [0.0, 0.0, 1.0] [c.x - BB_shift.x, c.y - BB_shift.y, zb])
+    local mt = BB_furnMats[ki]
+    o.material = mt
+    o.wirecolor = mt.diffuse
+    setUserProp o "BB_furn" "true"
+    setUserProp o "BB_furnKind" kind
+    setUserProp o "BB_furnId" pid
+    setUserProp o "BB_furnOn" supId
+    setUserProp o "BB_furnOnKind" supKind
+    setUserProp o "BB_family" fam
+    setUserProp o "BB_block" blk
+    setUserProp o "BB_layer" lay
+    setUserProp o "BB_handle" hnd
+    setUserProp o "BB_floor" fi
+    setUserProp o "BB_base" z0
+    setUserProp o "BB_follow" false
+    -- the checks: base and top z; the world bounding box, but only for an unrotated box (sin of its rotation below 0.00001 and cos
+    -- positive: the node's min and max are then certainly the box's own extents; Autodesk does not say what they are for a node that
+    -- is turned, a quarter turn included, and a box built right must not go on the failed layer for that); and the four corners
+    -- (the box's own corner points carried to the world by its transform) against the corners the generator worked out from the
+    -- model, which proves its position, size and rotation for every box
+    local why = ""
+    local tol = 0.002
+    local unrotated = abs(sa) < 0.00001 and ca > 0.0
+    local mnx = cs[1].x
+    local mxx = cs[1].x
+    local mny = cs[1].y
+    local mxy = cs[1].y
+    for p in cs do
+    (
+        if p.x < mnx do mnx = p.x
+        if p.x > mxx do mxx = p.x
+        if p.y < mny do mny = p.y
+        if p.y > mxy do mxy = p.y
+    )
+    if abs(o.min.z - zb) > tol then why = "base z"
+    else if abs(o.max.z - (zb + ht)) > tol then why = "top z"
+    else if unrotated and (abs(o.min.x - (mnx - BB_shift.x)) > tol or abs(o.min.y - (mny - BB_shift.y)) > tol or abs(o.max.x - (mxx - BB_shift.x)) > tol or abs(o.max.y - (mxy - BB_shift.y)) > tol) then why = "bounding box"
+    else
+    (
+        local hw = o.width / 2.0
+        local hd = o.length / 2.0
+        local lc = #([(0.0 - hw), (0.0 - hd), 0.0], [hw, (0.0 - hd), 0.0], [hw, hd, 0.0], [(0.0 - hw), hd, 0.0])
+        for k = 1 to 4 do
+        (
+            local q = lc[k] * o.transform
+            if why == "" and (abs(q.x - (cs[k].x - BB_shift.x)) > tol or abs(q.y - (cs[k].y - BB_shift.y)) > tol) then why = "corner " + (k as string)
+        )
+    )
+    if why == "" then
+    (
+        (BB_layer ("BB_" + BB_furnFloors[fi] + "_Furn_" + BB_furnLayers[ki])).addNode o
+        setUserProp o "BB_check" "ok"
+    )
+    else
+    (
+        (BB_layer "BB_Check_Failed").addNode o
+        setUserProp o "BB_check" why
+        append BB_failed (nm + ": " + why)
+    )
+    append BB_nodes o
+    o
+)
+-- Every piece of the model, in the model's order.
+fn BB_furnAll =
+(
+    BB_furnBox "atm" "BB_L1_Furn_atm_001_ATM Machine - ATM Machine" 1 "L1-atm-001" "none" "none" [5.5840,(-5.1190)] 1.0680 0.7600 1.000000000 0.000000000 #([5.0500,(-5.4990)],[6.1180,(-5.4990)],[6.1180,(-4.7390)],[5.0500,(-4.7390)]) "ATM Machine - ATM Machine" "ATM Machine - ATM Machine-2371857-LEVEL 1 GENERAL ARRANGEMENT" "A-GENM" "F6D"
+    BB_furnBox "atm" "BB_L1_Furn_atm_002_ATM Machine - ATM Machine" 1 "L1-atm-002" "none" "none" [5.5840,(-4.2960)] 1.0680 0.7600 1.000000000 0.000000000 #([5.0500,(-4.6760)],[6.1180,(-4.6760)],[6.1180,(-3.9160)],[5.0500,(-3.9160)]) "ATM Machine - ATM Machine" "ATM Machine - ATM Machine-2371857-LEVEL 1 GENERAL ARRANGEMENT" "A-GENM" "F6E"
+    BB_furnBox "atm" "BB_L1_Furn_atm_003_ATM Machine - ATM Machine" 1 "L1-atm-003" "none" "none" [6.0240,7.9750] 1.0680 0.7600 0.999802066 0.019895441 #([5.4977,7.5845],[6.5655,7.6057],[6.5503,8.3655],[5.4825,8.3443]) "ATM Machine - ATM Machine" "ATM Machine - ATM Machine-V26-LEVEL 1 GENERAL ARRANGEMENT" "A-GENM" "FDC"
+    BB_furnBox "computer" "BB_L1_Furn_computer_001_Enscape AssetDefinition - Computer 003" 1 "L1-computer-001" "L1-table-005" "table" [(-1.5080),4.6920] 0.7370 0.4280 (-0.406577193) 0.913616433 #([(-1.1627),4.4423],[(-1.4623),5.1157],[(-1.8533),4.9417],[(-1.5537),4.2683]) "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003" "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "E28"
+    BB_furnBox "computer" "BB_L1_Furn_computer_002_Enscape AssetDefinition - Computer 003" 1 "L1-computer-002" "L1-table-001" "table" [(-1.4110),(-3.6770)] 0.7370 0.4280 (-0.406577193) 0.913616433 #([(-1.0657),(-3.9267)],[(-1.3653),(-3.2533)],[(-1.7563),(-3.4273)],[(-1.4567),(-4.1007)]) "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003" "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1C2C"
+    BB_furnBox "computer" "BB_L1_Furn_computer_003_Enscape AssetDefinition - Computer 003" 1 "L1-computer-003" "L1-table-002" "table" [(-1.4110),(-1.8710)] 0.7370 0.4280 (-0.406577193) 0.913616433 #([(-1.0657),(-2.1207)],[(-1.3653),(-1.4473)],[(-1.7563),(-1.6213)],[(-1.4567),(-2.2947)]) "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003" "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1BEB"
+    BB_furnBox "computer" "BB_L1_Furn_computer_004_Enscape AssetDefinition - Computer 003" 1 "L1-computer-004" "L1-table-003" "table" [(-1.4110),(-0.0710)] 0.7370 0.4280 (-0.406577193) 0.913616433 #([(-1.0657),(-0.3207)],[(-1.3653),0.3527],[(-1.7563),0.1787],[(-1.4567),(-0.4947)]) "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003" "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-V34-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1812"
+    BB_furnBox "computer" "BB_L1_Furn_computer_005_Enscape AssetDefinition - Computer 003" 1 "L1-computer-005" "L1-table-004" "table" [(-1.4110),1.7740] 0.7370 0.4280 (-0.406577193) 0.913616433 #([(-1.0657),1.5243],[(-1.3653),2.1977],[(-1.7563),2.0237],[(-1.4567),1.3503]) "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003" "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1865"
+    BB_furnBox "computer" "BB_L1_Furn_computer_006_Enscape AssetDefinition - Computer 003" 1 "L1-computer-006" "L1-table-006" "table" [2.2680,1.6690] 0.7370 0.4280 (-0.406577193) 0.913616433 #([2.6133,1.4193],[2.3137,2.0927],[1.9227,1.9187],[2.2223,1.2453]) "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003" "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "FF1"
+    BB_furnBox "computer" "BB_L1_Furn_computer_007_Enscape AssetDefinition - Computer 003" 1 "L1-computer-007" "L1-table-007" "table" [3.6780,1.6690] 0.7370 0.4280 (-0.406577193) 0.913616433 #([4.0233,1.4193],[3.7237,2.0927],[3.3327,1.9187],[3.6323,1.2453]) "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003" "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1B32"
+    BB_furnBox "printer" "BB_L1_Furn_printer_001_PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Typ" 1 "L1-printer-001" "none" "none" [(-2.9950),2.6690] 0.2200 0.1700 0.000000000 1.000000000 #([(-2.9100),2.5590],[(-2.9100),2.7790],[(-3.0800),2.7790],[(-3.0800),2.5590]) "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1" "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1-V24-LEVEL 1 GENERAL ARRANGEMENT" "Q-SPCQ" "E3D"
+    BB_furnBox "printer" "BB_L1_Furn_printer_002_PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Typ" 1 "L1-printer-002" "none" "none" [(-2.9850),(-3.6510)] 0.4350 0.1900 0.000000000 1.000000000 #([(-2.8900),(-3.8685)],[(-2.8900),(-3.4335)],[(-3.0800),(-3.4335)],[(-3.0800),(-3.8685)]) "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1" "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1-2331658-LEVEL 1 GENERAL ARRANGEMENT" "Q-SPCQ" "A3A"
+    BB_furnBox "phone" "BB_L1_Furn_phone_001_TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049" 1 "L1-phone-001" "L1-table-001" "table" [(-1.3840),(-4.7730)] 0.2250 0.2130 0.000000000 1.000000000 #([(-1.2775),(-4.8855)],[(-1.2775),(-4.6605)],[(-1.4905),(-4.6605)],[(-1.4905),(-4.8855)]) "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1" "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1-2278177-LEVEL 1 GENERAL ARRANGEMENT" "E-COMM" "1C2B"
+    BB_furnBox "phone" "BB_L1_Furn_phone_002_TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049" 1 "L1-phone-002" "L1-table-002" "table" [(-1.3840),(-2.9670)] 0.2250 0.2130 0.000000000 1.000000000 #([(-1.2775),(-3.0795)],[(-1.2775),(-2.8545)],[(-1.4905),(-2.8545)],[(-1.4905),(-3.0795)]) "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1" "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1-2278177-LEVEL 1 GENERAL ARRANGEMENT" "E-COMM" "1BEA"
+    BB_furnBox "phone" "BB_L1_Furn_phone_003_TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049" 1 "L1-phone-003" "L1-table-003" "table" [(-1.3840),(-1.1670)] 0.2250 0.2130 0.000000000 1.000000000 #([(-1.2775),(-1.2795)],[(-1.2775),(-1.0545)],[(-1.4905),(-1.0545)],[(-1.4905),(-1.2795)]) "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1" "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1-2278177-LEVEL 1 GENERAL ARRANGEMENT" "E-COMM" "17B8"
+    BB_furnBox "phone" "BB_L1_Furn_phone_004_TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049" 1 "L1-phone-004" "L1-table-004" "table" [(-1.3840),0.6780] 0.2250 0.2130 0.000000000 1.000000000 #([(-1.2775),0.5655],[(-1.2775),0.7905],[(-1.4905),0.7905],[(-1.4905),0.5655]) "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1" "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1-2278177-LEVEL 1 GENERAL ARRANGEMENT" "E-COMM" "1864"
+    BB_furnBox "tv" "BB_L1_Furn_tv_001_IF_J04_WALL TV - WALL TV 3800W" 1 "L1-tv-001" "none" "none" [0.7430,4.6130] 2.0000 0.1400 0.000000000 1.000000000 #([0.8130,3.6130],[0.8130,5.6130],[0.6730,5.6130],[0.6730,3.6130]) "IF_J04_WALL TV - WALL TV 3800W" "IF_J04_WALL TV - WALL TV 3800W-2364417-LEVEL 1 GENERAL ARRANGEMENT" "Q-CASE" "170C"
+    BB_furnBox "tv" "BB_L1_Furn_tv_002_APPLIANCE_TV_WALL MOUNT WITH BRACKET - 7" 1 "L1-tv-002" "none" "none" [0.7780,4.6130] 1.6800 0.0500 0.000000000 1.000000000 #([0.8030,3.7730],[0.8030,5.4530],[0.7530,5.4530],[0.7530,3.7730]) "APPLIANCE_TV_WALL MOUNT WITH BRACKET - 75_" "APPLIANCE_TV_WALL MOUNT WITH BRACKET - 75_-2364407-LEVEL 1 GENERAL ARRANGEMENT" "Q-SPCQ" "16B0"
+    BB_furnBox "partition" "BB_L1_Furn_partition_001_Steelcase - Height-Adjustable Desk - Pri" 1 "L1-partition-001" "none" "none" [(-1.3800),(-3.1510)] 1.0000 0.0790 1.000000000 0.000000000 #([(-1.8800),(-3.1905)],[(-0.8800),(-3.1905)],[(-0.8800),(-3.1115)],[(-1.8800),(-3.1115)]) "Steelcase - Height-Adjustable Desk - Privacy Screen - Sarto - 30W x 19_5H" "Steelcase - Height-Adjustable Desk - Privacy Screen - Sarto - 30W x 19_5H-2316532-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1B9A"
+    BB_furnBox "partition" "BB_L1_Furn_partition_002_Steelcase - Height-Adjustable Desk - Pri" 1 "L1-partition-002" "none" "none" [(-1.3800),(-1.3510)] 1.0000 0.0790 1.000000000 0.000000000 #([(-1.8800),(-1.3905)],[(-0.8800),(-1.3905)],[(-0.8800),(-1.3115)],[(-1.8800),(-1.3115)]) "Steelcase - Height-Adjustable Desk - Privacy Screen - Sarto - 30W x 19_5H" "Steelcase - Height-Adjustable Desk - Privacy Screen - Sarto - 30W x 19_5H-2316532-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "174A"
+    BB_furnBox "partition" "BB_L1_Furn_partition_003_Steelcase - Height-Adjustable Desk - Pri" 1 "L1-partition-003" "none" "none" [(-1.3800),0.4490] 1.0000 0.0790 1.000000000 0.000000000 #([(-1.8800),0.4095],[(-0.8800),0.4095],[(-0.8800),0.4885],[(-1.8800),0.4885]) "Steelcase - Height-Adjustable Desk - Privacy Screen - Sarto - 30W x 19_5H" "Steelcase - Height-Adjustable Desk - Privacy Screen - Sarto - 30W x 19_5H-2316532-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1813"
+    BB_furnBox "partition" "BB_L1_Furn_partition_004_Steelcase - Height-Adjustable Desk - Pri" 1 "L1-partition-004" "none" "none" [3.2600,1.6190] 1.0000 0.0790 0.000000000 1.000000000 #([3.2995,1.1190],[3.2995,2.1190],[3.2205,2.1190],[3.2205,1.1190]) "Steelcase - Height-Adjustable Desk - Privacy Screen - Sarto - 30W x 19_5H" "Steelcase - Height-Adjustable Desk - Privacy Screen - Sarto - 30W x 19_5H-2316532-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1B33"
+    BB_furnBox "plant" "BB_L1_Furn_plant_001_POTTED PLANT - STOOL LOW_VITRA_VISIONA S" 1 "L1-plant-001" "none" "none" [0.7060,(-6.2650)] 0.5570 0.1770 (-0.895401128) 0.445260396 #([0.9948,(-6.3098)],[0.4960,(-6.0618)],[0.4172,(-6.2202)],[0.9160,(-6.4682)]) "POTTED PLANT - STOOL LOW_VITRA_VISIONA STOOL" "POTTED PLANT - STOOL LOW_VITRA_VISIONA STOOL-2422933-LEVEL 1 GENERAL ARRANGEMENT" "Q-CASE" "1262"
+    BB_furnBox "plant" "BB_L1_Furn_plant_002_Enscape AssetDefinition - Potted Plant 0" 1 "L1-plant-002" "none" "none" [0.7930,(-5.6580)] 0.9450 0.7820 0.012566040 0.999921044 #([1.1780,(-6.1354)],[1.1899,(-5.1905)],[0.4080,(-5.1806)],[0.3961,(-6.1255)]) "Enscape AssetDefinition - Potted Plant 028 Peace Lily - Enscape AssetDefinition - Potted Plant 028 Peace Lily 2" "Enscape AssetDefinition - Potted Plant 028 Peace Lily - Enscape AssetDefinition - Potted Plant 028 Peace Lily 2-2422935-LEVEL 1 GENERAL ARRANGEMENT" "L-PLNT" "1321"
+    BB_furnBox "plant" "BB_L1_Furn_plant_003_Enscape AssetDefinition - Bush 020 Fern" 1 "L1-plant-003" "none" "none" [0.8550,(-6.1630)] 0.6720 0.3500 0.976220396 0.216780392 #([0.5649,(-6.4067)],[1.2209,(-6.2610)],[1.1451,(-5.9193)],[0.4891,(-6.0650)]) "Enscape AssetDefinition - Bush 020 Fern - Enscape AssetDefinition - Bush 020 Fern" "Enscape AssetDefinition - Bush 020 Fern - Enscape AssetDefinition - Bush 020 Fern-2422934-LEVEL 1 GENERAL ARRANGEMENT" "L-PLNT" "127C"
+    BB_furnBox "sanitary" "BB_L1_Furn_sanitary_001_Wall-hung vitreous china basin-Meridian" 1 "L1-sanitary-001" "none" "none" [(-4.7360),(-7.5760)] 0.5960 0.4600 (-0.027398240) 0.999624598 #([(-4.4979),(-7.8676)],[(-4.5143),(-7.2718)],[(-4.9741),(-7.2844)],[(-4.9577),(-7.8802)]) "Wall-hung vitreous china basin-Meridian-327242xx0 - 327242000 White" "Wall-hung vitreous china basin-Meridian-327242xx0 - 327242000 White-2274270-LEVEL 1 GENERAL ARRANGEMENT" "P-SANR-FIXT" "none"
+    BB_furnBox "sanitary" "BB_L1_Furn_sanitary_002_- C1403 - C1403" 1 "L1-sanitary-002" "none" "none" [(-4.2690),(-8.7040)] 0.6970 0.4060 0.049721374 0.998763128 #([(-4.0836),(-9.0622)],[(-4.0489),(-8.3660)],[(-4.4544),(-8.3458)],[(-4.4891),(-9.0420)]) "- C1403 - C1403" "- C1403 - C1403-2281794-LEVEL 1 GENERAL ARRANGEMENT" "P-SANR-FIXT" "none"
+    BB_furnBox "sanitary" "BB_L1_Furn_sanitary_003_C12377 - C12377" 1 "L1-sanitary-003" "none" "none" [1.9430,7.4000] 0.7260 0.4110 0.014834754 0.999889959 #([2.1431,7.0340],[2.1539,7.7599],[1.7429,7.7660],[1.7321,7.0401]) "C12377 - C12377" "C12377 - C12377-2316655-LEVEL 1 GENERAL ARRANGEMENT" "P-SANR-FIXT" "7A7"
+    BB_furnBox "sanitary" "BB_L1_Furn_sanitary_004_- C0240 - - C0240" 1 "L1-sanitary-004" "none" "none" [2.9300,8.1000] 0.8460 0.4500 (-0.036120457) 0.999347443 #([3.1701,7.6854],[3.1396,8.5309],[2.6899,8.5146],[2.7204,7.6691]) "- C0240 - - C0240" "- C0240 - - C0240-2329847-LEVEL 1 GENERAL ARRANGEMENT" "P-SANR-FIXT" "7FB"
+    BB_furnBox "seat" "BB_L1_Furn_seat_001_HermanMiller_Seating_AER1A_NewAeron_Work" 1 "L1-seat-001" "none" "none" [(-2.1470),(-4.2390)] 0.6130 0.5350 0.000000000 1.000000000 #([(-1.8795),(-4.5455)],[(-1.8795),(-3.9325)],[(-2.4145),(-3.9325)],[(-2.4145),(-4.5455)]) "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range" "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1BEE"
+    BB_furnBox "seat" "BB_L1_Furn_seat_002_HermanMiller_Seating_AER1A_NewAeron_Work" 1 "L1-seat-002" "none" "none" [(-2.1470),(-2.4320)] 0.6130 0.5350 0.000000000 1.000000000 #([(-1.8795),(-2.7385)],[(-1.8795),(-2.1255)],[(-2.4145),(-2.1255)],[(-2.4145),(-2.7385)]) "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range" "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1B9D"
+    BB_furnBox "seat" "BB_L1_Furn_seat_003_HermanMiller_Seating_AER1A_NewAeron_Work" 1 "L1-seat-003" "none" "none" [(-2.1470),(-0.6320)] 0.6130 0.5350 0.000000000 1.000000000 #([(-1.8795),(-0.9385)],[(-1.8795),(-0.3255)],[(-2.4145),(-0.3255)],[(-2.4145),(-0.9385)]) "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range" "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1752"
+    BB_furnBox "seat" "BB_L1_Furn_seat_004_HermanMiller_Seating_AER1A_NewAeron_Work" 1 "L1-seat-004" "none" "none" [(-2.1470),1.1680] 0.6130 0.5350 0.000000000 1.000000000 #([(-1.8795),0.8615],[(-1.8795),1.4745],[(-2.4145),1.4745],[(-2.4145),0.8615]) "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range" "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1816"
+    BB_furnBox "seat" "BB_L1_Furn_seat_005_HermanMiller_Seating_AER1A_NewAeron_Work" 1 "L1-seat-005" "none" "none" [(-2.1470),4.2120] 0.6130 0.5350 0.000000000 1.000000000 #([(-1.8795),3.9055],[(-1.8795),4.5185],[(-2.4145),4.5185],[(-2.4145),3.9055]) "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range" "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "B3D"
+    BB_furnBox "seat" "BB_L1_Furn_seat_006_CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 50" 1 "L1-seat-006" "none" "none" [(-0.6140),(-4.6120)] 0.5000 0.5000 0.652495273 0.757792794 #([(-0.5877),(-4.9646)],[(-0.2614),(-4.5857)],[(-0.6403),(-4.2594)],[(-0.9666),(-4.6383)]) "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY" "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY-2278169-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1BED"
+    BB_furnBox "seat" "BB_L1_Furn_seat_007_CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 50" 1 "L1-seat-007" "none" "none" [(-0.6140),(-2.8050)] 0.5000 0.5000 0.652495273 0.757792794 #([(-0.5877),(-3.1576)],[(-0.2614),(-2.7787)],[(-0.6403),(-2.4524)],[(-0.9666),(-2.8313)]) "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY" "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY-2278169-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1B9C"
+    BB_furnBox "seat" "BB_L1_Furn_seat_008_CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 50" 1 "L1-seat-008" "none" "none" [(-0.6140),(-1.0050)] 0.5000 0.5000 0.652495273 0.757792794 #([(-0.5877),(-1.3576)],[(-0.2614),(-0.9787)],[(-0.6403),(-0.6524)],[(-0.9666),(-1.0313)]) "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY" "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY-2278169-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1751"
+    BB_furnBox "seat" "BB_L1_Furn_seat_009_CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 50" 1 "L1-seat-009" "none" "none" [(-0.6140),0.7950] 0.5000 0.5000 0.652495273 0.757792794 #([(-0.5877),0.4424],[(-0.2614),0.8213],[(-0.6403),1.1476],[(-0.9666),0.7687]) "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY" "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY-2278169-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1815"
+    BB_furnBox "seat" "BB_L1_Furn_seat_010_CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE" 1 "L1-seat-010" "none" "none" [(-0.6040),3.8190] 0.5000 0.5000 0.652495273 0.757792794 #([(-0.5777),3.4664],[(-0.2514),3.8453],[(-0.6303),4.1716],[(-0.9566),3.7927]) "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE" "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE-2337390-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "AD5"
+    BB_furnBox "seat" "BB_L1_Furn_seat_011_mollie_chair_a685_revit - A685 2" 1 "L1-seat-011" "none" "none" [(-0.5780),(-3.8840)] 0.5990 0.5630 0.998592754 0.053033118 #([(-0.8621),(-4.1810)],[(-0.2640),(-4.1492)],[(-0.2939),(-3.5870)],[(-0.8920),(-3.6188)]) "mollie_chair_a685_revit - A685 2" "mollie_chair_a685_revit - A685 2-2278197-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1BEC"
+    BB_furnBox "seat" "BB_L1_Furn_seat_012_mollie_chair_a685_revit - A685 2" 1 "L1-seat-012" "none" "none" [(-0.5780),(-2.0780)] 0.5990 0.5630 0.998592754 0.053033118 #([(-0.8621),(-2.3750)],[(-0.2640),(-2.3432)],[(-0.2939),(-1.7810)],[(-0.8920),(-1.8128)]) "mollie_chair_a685_revit - A685 2" "mollie_chair_a685_revit - A685 2-2278197-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1B9B"
+    BB_furnBox "seat" "BB_L1_Furn_seat_013_mollie_chair_a685_revit - A685 2" 1 "L1-seat-013" "none" "none" [(-0.5780),(-0.2780)] 0.5990 0.5630 0.998592754 0.053033118 #([(-0.8621),(-0.5750)],[(-0.2640),(-0.5432)],[(-0.2939),0.0190],[(-0.8920),(-0.0128)]) "mollie_chair_a685_revit - A685 2" "mollie_chair_a685_revit - A685 2-2278197-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "174B"
+    BB_furnBox "seat" "BB_L1_Furn_seat_014_mollie_chair_a685_revit - A685 2" 1 "L1-seat-014" "none" "none" [(-0.5780),1.5220] 0.5990 0.5630 0.998592754 0.053033118 #([(-0.8621),1.2250],[(-0.2640),1.2568],[(-0.2939),1.8190],[(-0.8920),1.7872]) "mollie_chair_a685_revit - A685 2" "mollie_chair_a685_revit - A685 2-2278197-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1814"
+    BB_furnBox "seat" "BB_L1_Furn_seat_015_mollie_chair_a685_revit - A685 2" 1 "L1-seat-015" "none" "none" [(-0.5680),4.6260] 0.5990 0.5630 0.998592754 0.053033118 #([(-0.8521),4.3290],[(-0.2540),4.3608],[(-0.2839),4.9230],[(-0.8820),4.8912]) "mollie_chair_a685_revit - A685 2" "mollie_chair_a685_revit - A685 2-2278197-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "ACF"
+    BB_furnBox "seat" "BB_L1_Furn_seat_016_FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4" 1 "L1-seat-016" "none" "none" [0.8550,(-4.0660)] 0.5700 0.5700 0.991671162 0.128795597 #([0.6091,(-4.3853)],[1.1743,(-4.3119)],[1.1009,(-3.7467)],[0.5357,(-3.8201)]) "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4" "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4-2403364-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1063"
+    BB_furnBox "seat" "BB_L1_Furn_seat_017_FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4" 1 "L1-seat-017" "none" "none" [0.8550,(-2.8060)] 0.5700 0.5700 0.991671162 0.128795597 #([0.6091,(-3.1253)],[1.1743,(-3.0519)],[1.1009,(-2.4867)],[0.5357,(-2.5601)]) "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4" "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4-2403364-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1061"
+    BB_furnBox "seat" "BB_L1_Furn_seat_018_FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4" 1 "L1-seat-018" "none" "none" [0.8550,(-2.0860)] 0.5700 0.5700 0.991671162 0.128795597 #([0.6091,(-2.4053)],[1.1743,(-2.3319)],[1.1009,(-1.7667)],[0.5357,(-1.8401)]) "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4" "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4-2403364-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1062"
+    BB_furnBox "seat" "BB_L1_Furn_seat_019_FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4" 1 "L1-seat-019" "none" "none" [0.8550,(-0.5440)] 0.5700 0.5700 0.995003430 0.099840746 #([0.5999,(-0.8560)],[1.1670,(-0.7991)],[1.1101,(-0.2320)],[0.5430,(-0.2889)]) "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4" "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4-2403364-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1060"
+    BB_furnBox "seat" "BB_L1_Furn_seat_020_CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE" 1 "L1-seat-020" "none" "none" [1.8370,(-0.9080)] 0.4000 0.4000 0.532580866 0.846379123 #([1.8998,(-1.1838)],[2.1128,(-0.8452)],[1.7742,(-0.6322)],[1.5612,(-0.9708)]) "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE" "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE-2572387-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1A86"
+    BB_furnBox "seat" "BB_L1_Furn_seat_021_CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE" 1 "L1-seat-021" "none" "none" [2.1830,0.8430] 0.5000 0.5000 0.565974648 0.824422645 #([2.2476,0.4954],[2.5306,0.9076],[2.1184,1.1906],[1.8354,0.7784]) "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE" "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE-2337390-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1001"
+    BB_furnBox "seat" "BB_L1_Furn_seat_022_Meeting chair_Haworth_Chair_Very-Task" 1 "L1-seat-022" "none" "none" [2.2600,5.0090] 0.7460 0.5900 0.707106781 0.707106781 #([2.2048,4.5367],[2.7323,5.0642],[2.3152,5.4813],[1.7877,4.9538]) "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR" "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR-V36-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "19E8"
+    BB_furnBox "seat" "BB_L1_Furn_seat_023_Meeting chair_Haworth_Chair_Very-Task" 1 "L1-seat-023" "none" "none" [2.2670,3.9680] 0.7460 0.5790 (-0.707106781) 0.707106781 #([2.7355,3.9090],[2.2080,4.4365],[1.7985,4.0270],[2.3260,3.4995]) "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR" "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR-2352777-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1473"
+    BB_furnBox "seat" "BB_L1_Furn_seat_024_mollie_chair_a685_revit - A685 2" 1 "L1-seat-024" "none" "none" [2.3060,(-2.9320)] 0.5990 0.5630 (-0.053033118) 0.998592754 #([2.6030,(-3.2161)],[2.5712,(-2.6180)],[2.0090,(-2.6479)],[2.0408,(-3.2460)]) "mollie_chair_a685_revit - A685 2" "mollie_chair_a685_revit - A685 2-2278197-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1AF0"
+    BB_furnBox "seat" "BB_L1_Furn_seat_025_HermanMiller_Seating_AER1A_NewAeron_Work" 1 "L1-seat-025" "none" "none" [2.5840,2.3850] 0.6130 0.5350 1.000000000 0.000000000 #([2.2775,2.1175],[2.8905,2.1175],[2.8905,2.6525],[2.2775,2.6525]) "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range" "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1002"
+    BB_furnBox "seat" "BB_L1_Furn_seat_026_mollie_chair_a685_revit - A685 2" 1 "L1-seat-026" "none" "none" [2.6640,(-0.4250)] 0.5990 0.5630 0.494700456 0.869063553 #([2.7605,(-0.8245)],[3.0568,(-0.3040)],[2.5675,(-0.0255)],[2.2712,(-0.5460)]) "mollie_chair_a685_revit - A685 2" "mollie_chair_a685_revit - A685 2-2437554-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1A8F"
+    BB_furnBox "seat" "BB_L1_Furn_seat_027_mollie_chair_a685_revit - A685 2" 1 "L1-seat-027" "none" "none" [2.9910,0.8070] 0.5990 0.5630 (-0.053033118) 0.998592754 #([3.2880,0.5229],[3.2562,1.1210],[2.6940,1.0911],[2.7258,0.4930]) "mollie_chair_a685_revit - A685 2" "mollie_chair_a685_revit - A685 2-2278197-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1000"
+    BB_furnBox "seat" "BB_L1_Furn_seat_028_CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA" 1 "L1-seat-028" "none" "none" [3.1280,(-1.7320)] 1.9000 1.1820 1.000000000 0.000000000 #([2.1780,(-2.3230)],[4.0780,(-2.3230)],[4.0780,(-1.1410)],[2.1780,(-1.1410)]) "CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA_VISIONA STOOL" "CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA_VISIONA STOOL-2475694-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1A3C"
+    BB_furnBox "seat" "BB_L1_Furn_seat_029_Meeting chair_Haworth_Chair_Very-Task" 1 "L1-seat-029" "none" "none" [3.3010,5.0020] 0.7460 0.5780 (-0.707106781) 0.707106781 #([3.7691,4.9426],[3.2416,5.4701],[2.8329,5.0614],[3.3604,4.5339]) "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR" "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR-2362416-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1587"
+    BB_furnBox "seat" "BB_L1_Furn_seat_030_Meeting chair_Haworth_Chair_Very-Task" 1 "L1-seat-030" "none" "none" [3.3080,3.9610] 0.7460 0.5900 0.707106781 0.707106781 #([3.2528,3.4887],[3.7803,4.0162],[3.3632,4.4333],[2.8357,3.9058]) "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR" "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR-V31-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "16A2"
+    BB_furnBox "seat" "BB_L1_Furn_seat_031_mollie_chair_a685_revit - A685 2" 1 "L1-seat-031" "none" "none" [3.3940,(-2.9680)] 0.5990 0.5630 0.545955743 0.837814017 #([3.4663,(-3.3726)],[3.7934,(-2.8708)],[3.3217,(-2.5634)],[2.9946,(-3.0652)]) "mollie_chair_a685_revit - A685 2" "mollie_chair_a685_revit - A685 2-2437554-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1A7E"
+    BB_furnBox "seat" "BB_L1_Furn_seat_032_CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE" 1 "L1-seat-032" "none" "none" [3.5980,0.8430] 0.5000 0.5000 0.565974648 0.824422645 #([3.6626,0.4954],[3.9456,0.9076],[3.5334,1.1906],[3.2504,0.7784]) "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE" "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE-2337390-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1AF6"
+    BB_furnBox "seat" "BB_L1_Furn_seat_033_mollie_chair_a685_revit - A685 2" 1 "L1-seat-033" "none" "none" [3.7540,(-0.3550)] 0.5990 0.5630 (-0.053033118) 0.998592754 #([4.0510,(-0.6391)],[4.0192,(-0.0410)],[3.4570,(-0.0709)],[3.4888,(-0.6690)]) "mollie_chair_a685_revit - A685 2" "mollie_chair_a685_revit - A685 2-2278197-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1A80"
+    BB_furnBox "seat" "BB_L1_Furn_seat_034_HermanMiller_Seating_AER1A_NewAeron_Work" 1 "L1-seat-034" "none" "none" [3.9990,2.3850] 0.6130 0.5350 1.000000000 0.000000000 #([3.6925,2.1175],[4.3055,2.1175],[4.3055,2.6525],[3.6925,2.6525]) "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range" "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1AF7"
+    BB_furnBox "seat" "BB_L1_Furn_seat_035_CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE" 1 "L1-seat-035" "none" "none" [4.2520,(-2.5660)] 0.4000 0.4000 0.532580866 0.846379123 #([4.3148,(-2.8418)],[4.5278,(-2.5032)],[4.1892,(-2.2902)],[3.9762,(-2.6288)]) "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE" "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE-2471981-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1A4B"
+    BB_furnBox "seat" "BB_L1_Furn_seat_036_CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE" 1 "L1-seat-036" "none" "none" [4.3000,(-0.9480)] 0.4000 0.4000 0.498336430 0.866983738 #([4.3737,(-1.2211)],[4.5731,(-0.8743)],[4.2263,(-0.6749)],[4.0269,(-1.0217)]) "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE" "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE-2471981-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1A4A"
+    BB_furnBox "seat" "BB_L1_Furn_seat_037_mollie_chair_a685_revit - A685 2" 1 "L1-seat-037" "none" "none" [4.4060,0.8070] 0.5990 0.5630 (-0.053033118) 0.998592754 #([4.7030,0.5229],[4.6712,1.1210],[4.1090,1.0911],[4.1408,0.4930]) "mollie_chair_a685_revit - A685 2" "mollie_chair_a685_revit - A685 2-2278197-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1AF5"
+    BB_furnBox "sofa" "BB_L1_Furn_sofa_001_SOFA_BENCH_DIOR - TYPE 2" 1 "L1-sofa-001" "none" "none" [5.6720,(-3.1860)] 1.0000 0.7000 0.000000000 1.000000000 #([6.0220,(-3.6860)],[6.0220,(-2.6860)],[5.3220,(-2.6860)],[5.3220,(-3.6860)]) "SOFA_BENCH_DIOR - TYPE 2" "SOFA_BENCH_DIOR - TYPE 2-2572508-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1AA6"
+    BB_furnBox "sofa" "BB_L1_Furn_sofa_002_SOFA_BENCH_DIOR - TYPE 2" 1 "L1-sofa-002" "none" "none" [5.6720,(-2.1860)] 1.0000 0.7000 0.000000000 1.000000000 #([6.0220,(-2.6860)],[6.0220,(-1.6860)],[5.3220,(-1.6860)],[5.3220,(-2.6860)]) "SOFA_BENCH_DIOR - TYPE 2" "SOFA_BENCH_DIOR - TYPE 2-V37-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1ABE"
+    BB_furnBox "sofa" "BB_L1_Furn_sofa_003_SOFA_BENCH_DIOR - TYPE 2" 1 "L1-sofa-003" "none" "none" [5.6720,(-1.1860)] 1.0000 0.7000 0.000000000 1.000000000 #([6.0220,(-1.6860)],[6.0220,(-0.6860)],[5.3220,(-0.6860)],[5.3220,(-1.6860)]) "SOFA_BENCH_DIOR - TYPE 2" "SOFA_BENCH_DIOR - TYPE 2-V38-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1AD5"
+    BB_furnBox "sofa" "BB_L1_Furn_sofa_004_SOFA_BENCH_DIOR - TYPE 2" 1 "L1-sofa-004" "none" "none" [5.6720,(-0.1860)] 1.0000 0.7000 0.000000000 1.000000000 #([6.0220,(-0.6860)],[6.0220,0.3140],[5.3220,0.3140],[5.3220,(-0.6860)]) "SOFA_BENCH_DIOR - TYPE 2" "SOFA_BENCH_DIOR - TYPE 2-V39-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1AEC"
+    BB_furnBox "table" "BB_L1_Furn_table_001_IA_J15_WORKING TABLE - 1800W 1000D 750H" 1 "L1-table-001" "none" "none" [(-1.3800),(-4.0900)] 1.8000 1.0000 0.000000000 1.000000000 #([(-0.8800),(-4.9900)],[(-0.8800),(-3.1900)],[(-1.8800),(-3.1900)],[(-1.8800),(-4.9900)]) "IA_J15_WORKING TABLE - 1800W 1000D 750H" "IA_J15_WORKING TABLE - 1800W 1000D 750H-V43-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1C2A"
+    BB_furnBox "table" "BB_L1_Furn_table_002_IA_J15_WORKING TABLE - 1800W 1000D 750H" 1 "L1-table-002" "none" "none" [(-1.3800),(-2.2840)] 1.7870 1.0000 0.000000000 1.000000000 #([(-0.8800),(-3.1775)],[(-0.8800),(-1.3905)],[(-1.8800),(-1.3905)],[(-1.8800),(-3.1775)]) "IA_J15_WORKING TABLE - 1800W 1000D 750H" "IA_J15_WORKING TABLE - 1800W 1000D 750H-V42-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1BE9"
+    BB_furnBox "table" "BB_L1_Furn_table_003_IA_J15_WORKING TABLE - 1800W 1000D 750H" 1 "L1-table-003" "none" "none" [(-1.3800),(-0.4840)] 1.7870 1.0000 0.000000000 1.000000000 #([(-0.8800),(-1.3775)],[(-0.8800),0.4095],[(-1.8800),0.4095],[(-1.8800),(-1.3775)]) "IA_J15_WORKING TABLE - 1800W 1000D 750H" "IA_J15_WORKING TABLE - 1800W 1000D 750H-V33-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "179F"
+    BB_furnBox "table" "BB_L1_Furn_table_004_IA_J15_WORKING TABLE - 1800W 1000D 750H" 1 "L1-table-004" "none" "none" [(-1.3800),1.3200] 1.7930 1.0000 0.000000000 1.000000000 #([(-0.8800),0.4235],[(-0.8800),2.2165],[(-1.8800),2.2165],[(-1.8800),0.4235]) "IA_J15_WORKING TABLE - 1800W 1000D 750H" "IA_J15_WORKING TABLE - 1800W 1000D 750H-V35-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1863"
+    BB_furnBox "table" "BB_L1_Furn_table_005_IA_J15_WORKING TABLE - 1800W 1000D 750H" 1 "L1-table-005" "none" "none" [(-1.3800),4.2190] 1.8000 1.0000 0.000000000 1.000000000 #([(-0.8800),3.3190],[(-0.8800),5.1190],[(-1.8800),5.1190],[(-1.8800),3.3190]) "IA_J15_WORKING TABLE - 1800W 1000D 750H" "IA_J15_WORKING TABLE - 1800W 1000D 750H-2337398-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "E72"
+    BB_furnBox "table" "BB_L1_Furn_table_006_IA_J15_WORKING TABLE - 1400W 1000D 750H" 1 "L1-table-006" "none" "none" [2.5830,1.6190] 1.4000 1.0000 1.000000000 0.000000000 #([1.8830,1.1190],[3.2830,1.1190],[3.2830,2.1190],[1.8830,2.1190]) "IA_J15_WORKING TABLE - 1400W 1000D 750H" "IA_J15_WORKING TABLE - 1400W 1000D 750H-2278198-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "104B"
+    BB_furnBox "table" "BB_L1_Furn_table_007_IA_J15_WORKING TABLE - 1400W 1000D 750H" 1 "L1-table-007" "none" "none" [3.9990,1.6190] 1.3980 1.0000 1.000000000 0.000000000 #([3.3000,1.1190],[4.6980,1.1190],[4.6980,2.1190],[3.3000,2.1190]) "IA_J15_WORKING TABLE - 1400W 1000D 750H" "IA_J15_WORKING TABLE - 1400W 1000D 750H-V40-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1B2C"
+    BB_furnBox "coffee-table" "BB_L1_Furn_coffee-table_001_TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 6" 1 "L1-coffee-table-001" "none" "none" [2.2980,(-2.3310)] 0.5000 0.5000 0.738455341 0.674302388 #([2.2820,(-2.6842)],[2.6512,(-2.3470)],[2.3140,(-1.9778)],[1.9448,(-2.3150)]) "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H" "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H-2385305-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1AEF"
+    BB_furnBox "coffee-table" "BB_L1_Furn_coffee-table_002_TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 6" 1 "L1-coffee-table-002" "none" "none" [2.3750,(-0.9860)] 0.5000 0.5000 0.380909007 0.924612529 #([2.5109,(-1.3124)],[2.7014,(-0.8501)],[2.2391,(-0.6596)],[2.0486,(-1.1219)]) "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H" "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H-2385305-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1A8E"
+    BB_furnBox "coffee-table" "BB_L1_Furn_coffee-table_003_TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 1" 1 "L1-coffee-table-003" "none" "none" [2.7840,4.4850] 1.0000 1.0000 0.855725703 0.517429726 #([2.6149,3.7984],[3.4706,4.3159],[2.9531,5.1716],[2.0974,4.6541]) "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 1000W" "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 1000W-2566611-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "135F"
+    BB_furnBox "coffee-table" "BB_L1_Furn_coffee-table_004_TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 6" 1 "L1-coffee-table-004" "none" "none" [3.7610,(-0.9860)] 0.5000 0.5000 0.380909007 0.924612529 #([3.8969,(-1.3124)],[4.0874,(-0.8501)],[3.6251,(-0.6596)],[3.4346,(-1.1219)]) "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H" "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H-2395479-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1A7F"
+    BB_furnBox "coffee-table" "BB_L1_Furn_coffee-table_005_TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 6" 1 "L1-coffee-table-005" "none" "none" [3.7730,(-2.4260)] 0.5000 0.5000 0.380909007 0.924612529 #([3.9089,(-2.7524)],[4.0994,(-2.2901)],[3.6371,(-2.0996)],[3.4466,(-2.5619)]) "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H" "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H-2395479-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1A44"
+    BB_furnBox "coffee-table" "BB_L1_Furn_coffee-table_006_TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 6" 1 "L1-coffee-table-006" "none" "none" [5.1630,(-2.7010)] 0.5000 0.5000 0.380909007 0.924612529 #([5.2989,(-3.0274)],[5.4894,(-2.5651)],[5.0271,(-2.3746)],[4.8366,(-2.8369)]) "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H" "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H-2385305-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1AEE"
+    BB_furnBox "coffee-table" "BB_L1_Furn_coffee-table_007_TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 6" 1 "L1-coffee-table-007" "none" "none" [5.1630,(-0.7210)] 0.5000 0.5000 0.380909007 0.924612529 #([5.2989,(-1.0474)],[5.4894,(-0.5851)],[5.0271,(-0.3946)],[4.8366,(-0.8569)]) "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H" "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H-2385305-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1AED"
+    BB_furnBox "cabinet" "BB_L1_Furn_cabinet_001_CONSOLE_CABINET_BAKER - TA13 1800W 400D" 1 "L1-cabinet-001" "none" "none" [0.9630,4.6130] 1.8000 0.3200 0.000000000 1.000000000 #([1.1230,3.7130],[1.1230,5.5130],[0.8030,5.5130],[0.8030,3.7130]) "CONSOLE_CABINET_BAKER - TA13 1800W 400D" "CONSOLE_CABINET_BAKER - TA13 1800W 400D-2569772-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "1B6E"
+    BB_furnBox "cabinet" "BB_L1_Furn_cabinet_002_CONSOLE_CABINET_BAKER - TA13 1200W 400D" 1 "L1-cabinet-002" "none" "none" [2.2150,(-8.7430)] 1.2000 0.4000 1.000000000 0.000000000 #([1.6150,(-8.9430)],[2.8150,(-8.9430)],[2.8150,(-8.5430)],[1.6150,(-8.5430)]) "CONSOLE_CABINET_BAKER - TA13 1200W 400D" "CONSOLE_CABINET_BAKER - TA13 1200W 400D-2383324-LEVEL 1 GENERAL ARRANGEMENT" "I-FURN" "105A"
+    BB_furnBox "tall-cabinet" "BB_L1_Furn_tall-cabinet_001_TALL CABINET - TALL CABINET 2800W" 1 "L1-tall-cabinet-001" "none" "none" [(-3.2780),3.7190] 2.8000 0.4050 0.000000000 1.000000000 #([(-3.0755),2.3190],[(-3.0755),5.1190],[(-3.4805),5.1190],[(-3.4805),2.3190]) "TALL CABINET - TALL CABINET 2800W" "TALL CABINET - TALL CABINET 2800W-2337389-LEVEL 1 GENERAL ARRANGEMENT" "Q-CASE" "BDA"
+    BB_furnBox "tall-cabinet" "BB_L1_Furn_tall-cabinet_002_TALL CABINET 4200W - TALL CABINET 4200W" 1 "L1-tall-cabinet-002" "none" "none" [(-3.2710),(-1.3940)] 7.2250 0.4190 0.000000000 1.000000000 #([(-3.0615),(-5.0065)],[(-3.0615),2.2185],[(-3.4805),2.2185],[(-3.4805),(-5.0065)]) "TALL CABINET 4200W - TALL CABINET 4200W" "TALL CABINET 4200W - TALL CABINET 4200W-2331846-LEVEL 1 GENERAL ARRANGEMENT" "Q-CASE" "8E6"
+    BB_furnBox "computer" "BB_L2_Furn_computer_001_Enscape AssetDefinition - Computer 003" 2 "L2-computer-001" "L2-cabinet-003" "cabinet" [(-3.8910),0.1980] 0.7370 0.4280 0.098277676 0.995159032 #([(-3.7143),(-0.1897)],[(-3.6418),0.5437],[(-4.0677),0.5857],[(-4.1402),(-0.1477)]) "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003" "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "FAE"
+    BB_furnBox "computer" "BB_L2_Furn_computer_002_Enscape AssetDefinition - Computer 003" 2 "L2-computer-002" "L2-cabinet-004" "cabinet" [(-3.8910),1.7250] 0.7370 0.4280 0.098277676 0.995159032 #([(-3.7143),1.3373],[(-3.6418),2.0707],[(-4.0677),2.1127],[(-4.1402),1.3793]) "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003" "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "10CA"
+    BB_furnBox "computer" "BB_L2_Furn_computer_003_Enscape AssetDefinition - Computer 003" 2 "L2-computer-003" "L2-cabinet-004" "cabinet" [(-3.8910),2.9250] 0.7370 0.4280 0.098277676 0.995159032 #([(-3.7143),2.5373],[(-3.6418),3.2707],[(-4.0677),3.3127],[(-4.1402),2.5793]) "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003" "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-V29-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "10C2"
+    BB_furnBox "computer" "BB_L2_Furn_computer_004_Enscape AssetDefinition - Computer 003" 2 "L2-computer-004" "L2-cabinet-007" "cabinet" [(-1.6590),(-4.1770)] 0.7370 0.4280 (-0.406577193) 0.913616433 #([(-1.3137),(-4.4267)],[(-1.6133),(-3.7533)],[(-2.0043),(-3.9273)],[(-1.7047),(-4.6007)]) "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003" "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "ABE"
+    BB_furnBox "computer" "BB_L2_Furn_computer_005_Enscape AssetDefinition - Computer 003" 2 "L2-computer-005" "L2-cabinet-007" "cabinet" [(-1.6590),(-2.5020)] 0.7370 0.4280 (-0.406577193) 0.913616433 #([(-1.3137),(-2.7517)],[(-1.6133),(-2.0783)],[(-2.0043),(-2.2523)],[(-1.7047),(-2.9257)]) "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003" "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "ABD"
+    BB_furnBox "computer" "BB_L2_Furn_computer_006_Enscape AssetDefinition - Computer 003" 2 "L2-computer-006" "L2-cabinet-007" "cabinet" [(-1.6590),(-0.4270)] 0.7370 0.4280 (-0.406577193) 0.913616433 #([(-1.3137),(-0.6767)],[(-1.6133),(-0.0033)],[(-2.0043),(-0.1773)],[(-1.7047),(-0.8507)]) "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003" "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "ABC"
+    BB_furnBox "computer" "BB_L2_Furn_computer_007_Enscape AssetDefinition - Computer 003" 2 "L2-computer-007" "L2-cabinet-007" "cabinet" [(-1.6590),1.2480] 0.7370 0.4280 (-0.406577193) 0.913616433 #([(-1.3137),0.9983],[(-1.6133),1.6717],[(-2.0043),1.4977],[(-1.7047),0.8243]) "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003" "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "ABB"
+    BB_furnBox "computer" "BB_L2_Furn_computer_008_Enscape AssetDefinition - Computer 003" 2 "L2-computer-008" "L2-table-001" "table" [(-1.6590),3.3350] 0.7370 0.4280 (-0.406577193) 0.913616433 #([(-1.3137),3.0853],[(-1.6133),3.7587],[(-2.0043),3.5847],[(-1.7047),2.9113]) "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003" "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "E47"
+    BB_furnBox "computer" "BB_L2_Furn_computer_009_Enscape AssetDefinition - Computer 003" 2 "L2-computer-009" "L2-table-002" "table" [0.8370,5.6270] 0.7370 0.4280 0.913616433 0.406577193 #([0.5873,5.2817],[1.2607,5.5813],[1.0867,5.9723],[0.4133,5.6727]) "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003" "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-V40-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "1764"
+    BB_furnBox "printer" "BB_L2_Furn_printer_001_PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Typ" 2 "L2-printer-001" "L2-cabinet-004" "cabinet" [(-3.8480),4.1900] 0.5700 0.4350 0.000000000 1.000000000 #([(-3.6305),3.9050],[(-3.6305),4.4750],[(-4.0655),4.4750],[(-4.0655),3.9050]) "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1" "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1-V28-LEVEL 2 GENERAL ARRANGEMENT" "Q-SPCQ" "1068"
+    BB_furnBox "printer" "BB_L2_Furn_printer_002_PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Typ" 2 "L2-printer-002" "L2-cabinet-005" "cabinet" [(-2.9550),(-3.7300)] 0.2200 0.1700 0.000000000 1.000000000 #([(-2.8700),(-3.8400)],[(-2.8700),(-3.6200)],[(-3.0400),(-3.6200)],[(-3.0400),(-3.8400)]) "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1" "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1-2331658-LEVEL 2 GENERAL ARRANGEMENT" "Q-SPCQ" "DCE"
+    BB_furnBox "printer" "BB_L2_Furn_printer_003_PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Typ" 2 "L2-printer-003" "L2-cabinet-005" "cabinet" [(-2.9550),(-1.7800)] 0.2200 0.1700 0.000000000 1.000000000 #([(-2.8700),(-1.8900)],[(-2.8700),(-1.6700)],[(-3.0400),(-1.6700)],[(-3.0400),(-1.8900)]) "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1" "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1-2331658-LEVEL 2 GENERAL ARRANGEMENT" "Q-SPCQ" "DCF"
+    BB_furnBox "printer" "BB_L2_Furn_printer_004_PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Typ" 2 "L2-printer-004" "L2-cabinet-005" "cabinet" [(-2.9550),0.1700] 0.2200 0.1700 0.000000000 1.000000000 #([(-2.8700),0.0600],[(-2.8700),0.2800],[(-3.0400),0.2800],[(-3.0400),0.0600]) "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1" "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1-2331658-LEVEL 2 GENERAL ARRANGEMENT" "Q-SPCQ" "DCD"
+    BB_furnBox "printer" "BB_L2_Furn_printer_005_PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Typ" 2 "L2-printer-005" "none" "none" [(-0.6730),6.6490] 0.4350 0.2100 0.000000000 1.000000000 #([(-0.5680),6.4315],[(-0.5680),6.8665],[(-0.7780),6.8665],[(-0.7780),6.4315]) "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1" "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1-2483475-LEVEL 2 GENERAL ARRANGEMENT" "Q-SPCQ" "168C"
+    BB_furnBox "phone" "BB_L2_Furn_phone_001_TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049" 2 "L2-phone-001" "L2-cabinet-007" "cabinet" [(-1.2930),(-5.1590)] 0.2250 0.2130 0.000000000 1.000000000 #([(-1.1865),(-5.2715)],[(-1.1865),(-5.0465)],[(-1.3995),(-5.0465)],[(-1.3995),(-5.2715)]) "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1" "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1-2278177-LEVEL 2 GENERAL ARRANGEMENT" "E-COMM" "A5D"
+    BB_furnBox "phone" "BB_L2_Furn_phone_002_TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049" 2 "L2-phone-002" "L2-cabinet-007" "cabinet" [(-1.2930),(-3.4840)] 0.2250 0.2130 0.000000000 1.000000000 #([(-1.1865),(-3.5965)],[(-1.1865),(-3.3715)],[(-1.3995),(-3.3715)],[(-1.3995),(-3.5965)]) "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1" "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1-2278177-LEVEL 2 GENERAL ARRANGEMENT" "E-COMM" "A5C"
+    BB_furnBox "phone" "BB_L2_Furn_phone_003_TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049" 2 "L2-phone-003" "L2-cabinet-007" "cabinet" [(-1.2930),(-1.4100)] 0.2250 0.2130 0.000000000 1.000000000 #([(-1.1865),(-1.5225)],[(-1.1865),(-1.2975)],[(-1.3995),(-1.2975)],[(-1.3995),(-1.5225)]) "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1" "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1-2278177-LEVEL 2 GENERAL ARRANGEMENT" "E-COMM" "A5A"
+    BB_furnBox "phone" "BB_L2_Furn_phone_004_TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049" 2 "L2-phone-004" "L2-cabinet-007" "cabinet" [(-1.2930),0.2650] 0.2250 0.2130 0.000000000 1.000000000 #([(-1.1865),0.1525],[(-1.1865),0.3775],[(-1.3995),0.3775],[(-1.3995),0.1525]) "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1" "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1-2278177-LEVEL 2 GENERAL ARRANGEMENT" "E-COMM" "A5B"
+    BB_furnBox "phone" "BB_L2_Furn_phone_005_TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049" 2 "L2-phone-005" "L2-table-001" "table" [(-1.2930),2.3530] 0.2250 0.2130 0.000000000 1.000000000 #([(-1.1865),2.2405],[(-1.1865),2.4655],[(-1.3995),2.4655],[(-1.3995),2.2405]) "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1" "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1-2278177-LEVEL 2 GENERAL ARRANGEMENT" "E-COMM" "E46"
+    BB_furnBox "plant" "BB_L2_Furn_plant_001_Enscape AssetDefinition - Potted Plant 0" 2 "L2-plant-001" "none" "none" [2.5160,6.6270] 0.5570 0.5310 0.028270567 0.999600308 #([2.7735,6.3411],[2.7893,6.8979],[2.2585,6.9129],[2.2427,6.3561]) "Enscape AssetDefinition - Potted Plant 011 Epipremnum - Enscape AssetDefinition - Potted Plant 011 Epipremnum" "Enscape AssetDefinition - Potted Plant 011 Epipremnum - Enscape AssetDefinition - Potted Plant 011 Epipremnum-2609662-LEVEL 2 GENERAL ARRANGEMENT" "L-PLNT" "23F6"
+    BB_furnBox "plant" "BB_L2_Furn_plant_002_Enscape AssetDefinition - Vase 003 Herac" 2 "L2-plant-002" "L2-coffee-table-003" "coffee-table" [4.3270,2.8790] 0.3530 0.1970 0.915030086 0.403385600 #([4.2052,2.7177],[4.5282,2.8601],[4.4488,3.0403],[4.1258,2.8979]) "Enscape AssetDefinition - Vase 003 Heracleum - Enscape AssetDefinition - Vase 003 Heracleum" "Enscape AssetDefinition - Vase 003 Heracleum - Enscape AssetDefinition - Vase 003 Heracleum-V53-LEVEL 2 GENERAL ARRANGEMENT" "L-PLNT" "22D4"
+    BB_furnBox "plant" "BB_L2_Furn_plant_003_Enscape AssetDefinition - Vase 003 Herac" 2 "L2-plant-003" "L2-coffee-table-005" "coffee-table" [4.5670,(-2.6990)] 0.3530 0.1970 (-0.915030086) 0.403385600 #([4.7682,(-2.6801)],[4.4452,(-2.5377)],[4.3658,(-2.7179)],[4.6888,(-2.8603)]) "Enscape AssetDefinition - Vase 003 Heracleum - Enscape AssetDefinition - Vase 003 Heracleum" "Enscape AssetDefinition - Vase 003 Heracleum - Enscape AssetDefinition - Vase 003 Heracleum-2471975-LEVEL 2 GENERAL ARRANGEMENT" "L-PLNT" "13D4"
+    BB_furnBox "plant" "BB_L2_Furn_plant_004_Enscape AssetDefinition - Vase 003 Herac" 2 "L2-plant-004" "L2-coffee-table-006" "coffee-table" [5.4100,0.0540] 0.3530 0.1970 (-0.403385600) 0.915030086 #([5.5713,(-0.0678)],[5.4289,0.2552],[5.2487,0.1758],[5.3911,(-0.1472)]) "Enscape AssetDefinition - Vase 003 Heracleum - Enscape AssetDefinition - Vase 003 Heracleum" "Enscape AssetDefinition - Vase 003 Heracleum - Enscape AssetDefinition - Vase 003 Heracleum-2475695-LEVEL 2 GENERAL ARRANGEMENT" "L-PLNT" "1338"
+    BB_furnBox "sanitary" "BB_L2_Furn_sanitary_001_COTTO Two piece toilet Elzra C13920 _1" 2 "L2-sanitary-001" "none" "none" [(-5.1530),10.2840] 0.6650 0.3660 (-0.998954674) 0.045711692 #([(-4.8125),10.4516],[(-5.4768),10.4820],[(-5.4935),10.1164],[(-4.8292),10.0860]) "COTTO Two piece toilet Elzra C13920 _1_ - COTTO Two piece toilet Elzra C13920" "COTTO Two piece toilet Elzra C13920 _1_ - COTTO Two piece toilet Elzra C13920-2270619-LEVEL 2 GENERAL ARRANGEMENT" "P-SANR-FIXT" "none"
+    BB_furnBox "sanitary" "BB_L2_Furn_sanitary_002_COTTO Two piece toilet Elzra C13920 _1" 2 "L2-sanitary-002" "none" "none" [(-5.1530),11.1140] 0.6650 0.3660 (-0.998954674) 0.045711692 #([(-4.8125),11.2816],[(-5.4768),11.3120],[(-5.4935),10.9464],[(-4.8292),10.9160]) "COTTO Two piece toilet Elzra C13920 _1_ - COTTO Two piece toilet Elzra C13920" "COTTO Two piece toilet Elzra C13920 _1_ - COTTO Two piece toilet Elzra C13920-2270619-LEVEL 2 GENERAL ARRANGEMENT" "P-SANR-FIXT" "none"
+    BB_furnBox "sanitary" "BB_L2_Furn_sanitary_003_Wall-hung vitreous china basin-Meridian" 2 "L2-sanitary-003" "none" "none" [(-2.0080),11.0880] 0.5960 0.4600 0.000000000 1.000000000 #([(-1.7780),10.7900],[(-1.7780),11.3860],[(-2.2380),11.3860],[(-2.2380),10.7900]) "Wall-hung vitreous china basin-Meridian-327242xx0 - 327242000 White" "Wall-hung vitreous china basin-Meridian-327242xx0 - 327242000 White-2576848-LEVEL 2 GENERAL ARRANGEMENT" "P-SANR-FIXT" "none"
+    BB_furnBox "sanitary" "BB_L2_Furn_sanitary_004_Wall-hung vitreous china basin-Meridian" 2 "L2-sanitary-004" "none" "none" [(-1.4480),11.0880] 0.5960 0.4600 0.000000000 1.000000000 #([(-1.2180),10.7900],[(-1.2180),11.3860],[(-1.6780),11.3860],[(-1.6780),10.7900]) "Wall-hung vitreous china basin-Meridian-327242xx0 - 327242000 White" "Wall-hung vitreous china basin-Meridian-327242xx0 - 327242000 White-2274270-LEVEL 2 GENERAL ARRANGEMENT" "P-SANR-FIXT" "none"
+    BB_furnBox "sanitary" "BB_L2_Furn_sanitary_005_COTTO Wall hung urinal Natasha C313BI _1" 2 "L2-sanitary-005" "none" "none" [(-0.1180),9.8620] 0.3300 0.3150 1.000000000 0.000000000 #([(-0.2830),9.7045],[0.0470,9.7045],[0.0470,10.0195],[(-0.2830),10.0195]) "COTTO Wall hung urinal Natasha C313BI _1_ - COTTO Wall hung urinal Natasha C313BI" "COTTO Wall hung urinal Natasha C313BI _1_ - COTTO Wall hung urinal Natasha C313BI-2279716-LEVEL 2 GENERAL ARRANGEMENT" "P-SANR-FIXT" "none"
+    BB_furnBox "sanitary" "BB_L2_Furn_sanitary_006_COTTO Two piece toilet Elzra C13920 _1" 2 "L2-sanitary-006" "none" "none" [0.8400,10.4630] 0.6600 0.3650 0.000000000 1.000000000 #([1.0225,10.1330],[1.0225,10.7930],[0.6575,10.7930],[0.6575,10.1330]) "COTTO Two piece toilet Elzra C13920 _1_ - COTTO Two piece toilet Elzra C13920" "COTTO Two piece toilet Elzra C13920 _1_ - COTTO Two piece toilet Elzra C13920-V6-LEVEL 2 GENERAL ARRANGEMENT" "P-SANR-FIXT" "none"
+    BB_furnBox "seat" "BB_L2_Furn_seat_001_HermanMiller_Seating_AER1A_NewAeron_Work" 2 "L2-seat-001" "none" "none" [(-4.5080),0.2160] 0.6130 0.5460 0.000000000 1.000000000 #([(-4.2350),(-0.0905)],[(-4.2350),0.5225],[(-4.7810),0.5225],[(-4.7810),(-0.0905)]) "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range" "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "FAD"
+    BB_furnBox "seat" "BB_L2_Furn_seat_002_HermanMiller_Seating_AER1A_NewAeron_Work" 2 "L2-seat-002" "none" "none" [(-4.5080),1.7360] 0.6130 0.5460 0.000000000 1.000000000 #([(-4.2350),1.4295],[(-4.2350),2.0425],[(-4.7810),2.0425],[(-4.7810),1.4295]) "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range" "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "10C9"
+    BB_furnBox "seat" "BB_L2_Furn_seat_003_HermanMiller_Seating_AER1A_NewAeron_Work" 2 "L2-seat-003" "none" "none" [(-4.5080),2.9360] 0.6130 0.5460 0.000000000 1.000000000 #([(-4.2350),2.6295],[(-4.2350),3.2425],[(-4.7810),3.2425],[(-4.7810),2.6295]) "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range" "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "101F"
+    BB_furnBox "seat" "BB_L2_Furn_seat_004_HermanMiller_Seating_AER1A_NewAeron_Work" 2 "L2-seat-004" "none" "none" [(-2.3880),(-4.5430)] 0.6130 0.5460 0.000000000 1.000000000 #([(-2.1150),(-4.8495)],[(-2.1150),(-4.2365)],[(-2.6610),(-4.2365)],[(-2.6610),(-4.8495)]) "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range" "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2437551-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "A0C"
+    BB_furnBox "seat" "BB_L2_Furn_seat_005_HermanMiller_Seating_AER1A_NewAeron_Work" 2 "L2-seat-005" "none" "none" [(-2.3880),(-2.8680)] 0.6130 0.5460 0.000000000 1.000000000 #([(-2.1150),(-3.1745)],[(-2.1150),(-2.5615)],[(-2.6610),(-2.5615)],[(-2.6610),(-3.1745)]) "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range" "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2437551-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "A0B"
+    BB_furnBox "seat" "BB_L2_Furn_seat_006_HermanMiller_Seating_AER1A_NewAeron_Work" 2 "L2-seat-006" "none" "none" [(-2.3880),(-0.7930)] 0.6130 0.5460 0.000000000 1.000000000 #([(-2.1150),(-1.0995)],[(-2.1150),(-0.4865)],[(-2.6610),(-0.4865)],[(-2.6610),(-1.0995)]) "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range" "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2437551-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "A0A"
+    BB_furnBox "seat" "BB_L2_Furn_seat_007_HermanMiller_Seating_AER1A_NewAeron_Work" 2 "L2-seat-007" "none" "none" [(-2.3880),0.8820] 0.6130 0.5460 0.000000000 1.000000000 #([(-2.1150),0.5755],[(-2.1150),1.1885],[(-2.6610),1.1885],[(-2.6610),0.5755]) "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range" "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2437551-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "A09"
+    BB_furnBox "seat" "BB_L2_Furn_seat_008_HermanMiller_Seating_AER1A_NewAeron_Work" 2 "L2-seat-008" "none" "none" [(-2.3880),2.9690] 0.6130 0.5460 0.000000000 1.000000000 #([(-2.1150),2.6625],[(-2.1150),3.2755],[(-2.6610),3.2755],[(-2.6610),2.6625]) "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range" "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2437551-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "E44"
+    BB_furnBox "seat" "BB_L2_Furn_seat_009_CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE" 2 "L2-seat-009" "none" "none" [(-0.7640),(-4.1000)] 0.5000 0.5000 0.996025535 0.089068137 #([(-0.9907),(-4.3713)],[(-0.4927),(-4.3267)],[(-0.5373),(-3.8287)],[(-1.0353),(-3.8733)]) "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE" "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE-2437550-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "A60"
+    BB_furnBox "seat" "BB_L2_Furn_seat_010_CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE" 2 "L2-seat-010" "none" "none" [(-0.7640),(-2.6250)] 0.5000 0.5000 0.996025535 0.089068137 #([(-0.9907),(-2.8963)],[(-0.4927),(-2.8517)],[(-0.5373),(-2.3537)],[(-1.0353),(-2.3983)]) "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE" "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE-2437550-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "A40"
+    BB_furnBox "seat" "BB_L2_Furn_seat_011_CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE" 2 "L2-seat-011" "none" "none" [(-0.7640),(-0.2300)] 0.5000 0.5000 0.652495273 0.757792794 #([(-0.7377),(-0.5826)],[(-0.4114),(-0.2037)],[(-0.7903),0.1226],[(-1.1166),(-0.2563)]) "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE" "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE-2437550-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "A5E"
+    BB_furnBox "seat" "BB_L2_Furn_seat_012_CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE" 2 "L2-seat-012" "none" "none" [(-0.7640),1.1700] 0.5000 0.5000 0.652495273 0.757792794 #([(-0.7377),0.8174],[(-0.4114),1.1963],[(-0.7903),1.5226],[(-1.1166),1.1437]) "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE" "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE-2437550-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "9A1"
+    BB_furnBox "seat" "BB_L2_Furn_seat_013_CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE" 2 "L2-seat-013" "none" "none" [(-0.7640),3.2580] 0.5000 0.5000 0.652495273 0.757792794 #([(-0.7377),2.9054],[(-0.4114),3.2843],[(-0.7903),3.6106],[(-1.1166),3.2317]) "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE" "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE-2437550-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "E43"
+    BB_furnBox "seat" "BB_L2_Furn_seat_014_mollie_chair_a685_revit - A685 2" 2 "L2-seat-014" "none" "none" [(-0.7280),(-4.8070)] 0.5990 0.5630 (-0.998592754) 0.053033118 #([(-0.4140),(-4.5418)],[(-1.0121),(-4.5100)],[(-1.0420),(-5.0722)],[(-0.4439),(-5.1040)]) "mollie_chair_a685_revit - A685 2" "mollie_chair_a685_revit - A685 2-2437554-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "A61"
+    BB_furnBox "seat" "BB_L2_Furn_seat_015_mollie_chair_a685_revit - A685 2" 2 "L2-seat-015" "none" "none" [(-0.7280),(-3.3320)] 0.5990 0.5630 (-0.998592754) 0.053033118 #([(-0.4140),(-3.0668)],[(-1.0121),(-3.0350)],[(-1.0420),(-3.5972)],[(-0.4439),(-3.6290)]) "mollie_chair_a685_revit - A685 2" "mollie_chair_a685_revit - A685 2-2437554-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "A41"
+    BB_furnBox "seat" "BB_L2_Furn_seat_016_mollie_chair_a685_revit - A685 2" 2 "L2-seat-016" "none" "none" [(-0.7280),(-0.9370)] 0.5990 0.5630 (-0.998592754) 0.053033118 #([(-0.4140),(-0.6718)],[(-1.0121),(-0.6400)],[(-1.0420),(-1.2022)],[(-0.4439),(-1.2340)]) "mollie_chair_a685_revit - A685 2" "mollie_chair_a685_revit - A685 2-2437554-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "A5F"
+    BB_furnBox "seat" "BB_L2_Furn_seat_017_mollie_chair_a685_revit - A685 2" 2 "L2-seat-017" "none" "none" [(-0.7280),0.4630] 0.5990 0.5630 (-0.998592754) 0.053033118 #([(-0.4140),0.7282],[(-1.0121),0.7600],[(-1.0420),0.1978],[(-0.4439),0.1660]) "mollie_chair_a685_revit - A685 2" "mollie_chair_a685_revit - A685 2-2437554-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "A3F"
+    BB_furnBox "seat" "BB_L2_Furn_seat_018_mollie_chair_a685_revit - A685 2" 2 "L2-seat-018" "none" "none" [(-0.7280),2.5500] 0.5990 0.5630 (-0.998592754) 0.053033118 #([(-0.4140),2.8152],[(-1.0121),2.8470],[(-1.0420),2.2848],[(-0.4439),2.2530]) "mollie_chair_a685_revit - A685 2" "mollie_chair_a685_revit - A685 2-2437554-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "E45"
+    BB_furnBox "seat" "BB_L2_Furn_seat_019_mollie_chair_a685_revit - A685 2" 2 "L2-seat-019" "none" "none" [0.0520,4.6010] 0.5990 0.5630 0.053033118 0.998592754 #([0.3172,4.2870],[0.3490,4.8851],[(-0.2132),4.9150],[(-0.2450),4.3169]) "mollie_chair_a685_revit - A685 2" "mollie_chair_a685_revit - A685 2-2437554-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "1709"
+    BB_furnBox "seat" "BB_L2_Furn_seat_020_HermanMiller_Seating_AER1A_NewAeron_Work" 2 "L2-seat-020" "none" "none" [0.2910,6.2600] 0.6130 0.5460 1.000000000 0.000000000 #([(-0.0155),5.9870],[0.5975,5.9870],[0.5975,6.5330],[(-0.0155),6.5330]) "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range" "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2437551-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "1708"
+    BB_furnBox "seat" "BB_L2_Furn_seat_021_CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE" 2 "L2-seat-021" "none" "none" [0.7590,4.6370] 0.5000 0.5000 0.267574730 0.963537111 #([0.9330,4.3292],[1.0668,4.8110],[0.5850,4.9448],[0.4512,4.4630]) "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE" "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE-2437550-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "1707"
+    BB_furnBox "seat" "BB_L2_Furn_seat_022_Fritz-Hansen_SH200 - Default" 2 "L2-seat-022" "none" "none" [1.7230,(-4.5650)] 0.6150 0.5940 0.674560116 0.738219920 #([1.7348,(-4.9923)],[2.1497,(-4.5383)],[1.7112,(-4.1377)],[1.2963,(-4.5917)]) "Fritz-Hansen_SH200 - Default" "Fritz-Hansen_SH200 - Default-2479048-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "1769"
+    BB_furnBox "seat" "BB_L2_Furn_seat_023_Fritz-Hansen_SH200 - Default" 2 "L2-seat-023" "none" "none" [1.7760,(-5.6790)] 0.6150 0.5940 (-0.795684962) 0.605710691 #([2.2006,(-5.6289)],[1.7112,(-5.2564)],[1.3514,(-5.7291)],[1.8408,(-6.1016)]) "Fritz-Hansen_SH200 - Default" "Fritz-Hansen_SH200 - Default-2476898-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "11AA"
+    BB_furnBox "seat" "BB_L2_Furn_seat_024_CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA" 2 "L2-seat-024" "none" "none" [2.8610,(-5.3900)] 1.9000 1.2000 0.000000000 1.000000000 #([3.4610,(-6.3400)],[3.4610,(-4.4400)],[2.2610,(-4.4400)],[2.2610,(-6.3400)]) "CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA_VISIONA STOOL" "CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA_VISIONA STOOL-2471969-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "1217"
+    BB_furnBox "seat" "BB_L2_Furn_seat_025_FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4" 2 "L2-seat-025" "none" "none" [2.9950,5.5030] 0.5700 0.5700 0.103486945 0.994630812 #([3.2490,5.1900],[3.3080,5.7570],[2.7410,5.8160],[2.6820,5.2490]) "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4" "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4-2403364-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "2346"
+    BB_furnBox "seat" "BB_L2_Furn_seat_026_mollie_chair_a685_revit - A685 2" 2 "L2-seat-026" "none" "none" [3.7240,(-8.6550)] 0.5990 0.5630 (-0.998592754) 0.053033118 #([4.0380,(-8.3898)],[3.4399,(-8.3580)],[3.4100,(-8.9202)],[4.0081,(-8.9520)]) "mollie_chair_a685_revit - A685 2" "mollie_chair_a685_revit - A685 2-2437554-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "127F"
+    BB_furnBox "seat" "BB_L2_Furn_seat_027_Fritz-Hansen_SH200 - Default" 2 "L2-seat-027" "none" "none" [3.8200,2.2700] 0.6150 0.5940 (-0.788869611) 0.614560605 #([4.2451,2.3153],[3.7599,2.6933],[3.3949,2.2247],[3.8801,1.8467]) "Fritz-Hansen_SH200 - Default" "Fritz-Hansen_SH200 - Default-2479048-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "1352"
+    BB_furnBox "seat" "BB_L2_Furn_seat_028_Fritz-Hansen_SH200 - Default" 2 "L2-seat-028" "none" "none" [3.9990,(-7.6960)] 0.6150 0.5940 (-0.733136661) 0.680081346 #([4.4264,(-7.6874)],[3.9755,(-7.2691)],[3.5716,(-7.7046)],[4.0225,(-8.1229)]) "Fritz-Hansen_SH200 - Default" "Fritz-Hansen_SH200 - Default-2479048-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "1860"
+    BB_furnBox "seat" "BB_L2_Furn_seat_029_Fritz-Hansen_SH200 - Default" 2 "L2-seat-029" "none" "none" [4.1270,(-2.0220)] 0.6150 0.5940 0.872325393 0.488925770 #([4.0040,(-2.4314)],[4.5405,(-2.1307)],[4.2500,(-1.6126)],[3.7135,(-1.9133)]) "Fritz-Hansen_SH200 - Default" "Fritz-Hansen_SH200 - Default-2476898-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "663A"
+    BB_furnBox "seat" "BB_L2_Furn_seat_030_CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA" 2 "L2-seat-030" "none" "none" [4.3580,(-6.6120)] 1.9000 1.2000 1.000000000 0.000000000 #([3.4080,(-7.2120)],[5.3080,(-7.2120)],[5.3080,(-6.0120)],[3.4080,(-6.0120)]) "CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA_VISIONA STOOL" "CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA_VISIONA STOOL-2475694-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "126E"
+    BB_furnBox "seat" "BB_L2_Furn_seat_031_CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE" 2 "L2-seat-031" "none" "none" [4.4750,(-5.4460)] 0.4000 0.4000 0.955329958 0.295541318 #([4.3430,(-5.6962)],[4.7252,(-5.5780)],[4.6070,(-5.1958)],[4.2248,(-5.3140)]) "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE" "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE-2471981-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "1275"
+    BB_furnBox "seat" "BB_L2_Furn_seat_032_CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE" 2 "L2-seat-032" "none" "none" [4.8580,(-7.5800)] 0.4000 0.4000 0.532580866 0.846379123 #([4.9208,(-7.8558)],[5.1338,(-7.5172)],[4.7952,(-7.3042)],[4.5822,(-7.6428)]) "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE" "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE-2471981-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "1276"
+    BB_furnBox "seat" "BB_L2_Furn_seat_033_Fritz-Hansen_SH200 - Default" 2 "L2-seat-033" "none" "none" [4.8980,2.2880] 0.6150 0.5940 0.680848711 0.732424079 #([4.9062,1.8606],[5.3249,2.3110],[4.8898,2.7154],[4.4711,2.2650]) "Fritz-Hansen_SH200 - Default" "Fritz-Hansen_SH200 - Default-2476898-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "44E0"
+    BB_furnBox "seat" "BB_L2_Furn_seat_034_mollie_chair_a685_revit - A685 2" 2 "L2-seat-034" "none" "none" [5.0730,(-8.6550)] 0.5990 0.5630 0.998592754 0.053033118 #([4.7889,(-8.9520)],[5.3870,(-8.9202)],[5.3571,(-8.3580)],[4.7590,(-8.3898)]) "mollie_chair_a685_revit - A685 2" "mollie_chair_a685_revit - A685 2-2278197-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "12B2"
+    BB_furnBox "seat" "BB_L2_Furn_seat_035_Fritz-Hansen_SH200 - Default" 2 "L2-seat-035" "none" "none" [5.0940,(-2.1300)] 0.6150 0.5940 (-0.797689196) 0.603068774 #([5.5184,(-2.0785)],[5.0278,(-1.7076)],[4.6696,(-2.1815)],[5.1602,(-2.5524)]) "Fritz-Hansen_SH200 - Default" "Fritz-Hansen_SH200 - Default-2479048-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "13D5"
+    BB_furnBox "seat" "BB_L2_Furn_seat_036_Fritz-Hansen_SH200 - Default" 2 "L2-seat-036" "none" "none" [5.3030,(-5.4050)] 0.6150 0.5940 (-0.634595636) 0.772844343 #([5.7277,(-5.4542)],[5.3374,(-4.9789)],[4.8783,(-5.3558)],[5.2686,(-5.8311)]) "Fritz-Hansen_SH200 - Default" "Fritz-Hansen_SH200 - Default-2476898-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "1806"
+    BB_furnBox "seat" "BB_L2_Furn_seat_037_BENCH-INSTANCE GENERIC - TYPE 1" 2 "L2-seat-037" "none" "none" [5.9850,0.5380] 0.9350 0.5510 (-0.028445030) 0.999595358 #([6.2737,0.0785],[6.2471,1.0131],[5.6963,0.9975],[5.7229,0.0629]) "BENCH-INSTANCE GENERIC - TYPE 1" "BENCH-INSTANCE GENERIC - TYPE 1-2598774-LEVEL 2 GENERAL ARRANGEMENT" "Q-CASE" "1D51"
+    BB_furnBox "seat" "BB_L2_Furn_seat_038_BENCH-INSTANCE GENERIC - TYPE 1" 2 "L2-seat-038" "none" "none" [6.0120,(-0.3980)] 0.9350 0.5510 (-0.028445030) 0.999595358 #([6.3007,(-0.8575)],[6.2741,0.0771],[5.7233,0.0615],[5.7499,(-0.8731)]) "BENCH-INSTANCE GENERIC - TYPE 1" "BENCH-INSTANCE GENERIC - TYPE 1-V47-LEVEL 2 GENERAL ARRANGEMENT" "Q-CASE" "2251"
+    BB_furnBox "sofa" "BB_L2_Furn_sofa_001_SOFA_03_1 - 1500W x 400D SE18" 2 "L2-sofa-001" "none" "none" [0.8550,(-1.6510)] 1.5500 0.4500 0.000000000 1.000000000 #([1.0800,(-2.4260)],[1.0800,(-0.8760)],[0.6300,(-0.8760)],[0.6300,(-2.4260)]) "SOFA_03_1 - 1500W x 400D SE18" "SOFA_03_1 - 1500W x 400D SE18-V41-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "179C"
+    BB_furnBox "sofa" "BB_L2_Furn_sofa_002_SOFA_03_1 - 1500W x 400D SE18" 2 "L2-sofa-002" "none" "none" [0.8550,1.6490] 1.5500 0.4500 0.000000000 1.000000000 #([1.0800,0.8740],[1.0800,2.4240],[0.6300,2.4240],[0.6300,0.8740]) "SOFA_03_1 - 1500W x 400D SE18" "SOFA_03_1 - 1500W x 400D SE18-2492731-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "1783"
+    BB_furnBox "sofa" "BB_L2_Furn_sofa_003_SOFA_BENCH_DIOR - TYPE 1" 2 "L2-sofa-003" "none" "none" [3.6070,6.5490] 1.5000 0.7000 1.000000000 0.000000000 #([2.8570,6.1990],[4.3570,6.1990],[4.3570,6.8990],[2.8570,6.8990]) "SOFA_BENCH_DIOR - TYPE 1" "SOFA_BENCH_DIOR - TYPE 1-2479320-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "233E"
+    BB_furnBox "sofa" "BB_L2_Furn_sofa_004_Etta Armchair1 - TYPE 2" 2 "L2-sofa-004" "none" "none" [4.3190,5.4230] 0.6930 0.6440 (-0.707106781) 0.707106781 #([4.7917,5.4057],[4.3017,5.8957],[3.8463,5.4403],[4.3363,4.9503]) "Etta Armchair1 - TYPE 2" "Etta Armchair1 - TYPE 2-2606587-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "2340"
+    BB_furnBox "sofa" "BB_L2_Furn_sofa_005_Etta Armchair1 - TYPE 2" 2 "L2-sofa-005" "none" "none" [4.6250,(-0.7140)] 0.6930 0.6440 0.735506121 0.677518078 #([4.5883,(-1.1856)],[5.0980,(-0.7161)],[4.6617,(-0.2424)],[4.1520,(-0.7119)]) "Etta Armchair1 - TYPE 2" "Etta Armchair1 - TYPE 2-2607583-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "2323"
+    BB_furnBox "sofa" "BB_L2_Furn_sofa_006_Etta Armchair1 - TYPE 2" 2 "L2-sofa-006" "none" "none" [4.6250,0.7870] 0.6930 0.6440 (-0.735506121) 0.677518078 #([5.0980,0.7891],[4.5883,1.2586],[4.1520,0.7849],[4.6617,0.3154]) "Etta Armchair1 - TYPE 2" "Etta Armchair1 - TYPE 2-2606587-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "2309"
+    BB_furnBox "table" "BB_L2_Furn_table_001_WORKING TABLE - WORKING TABLE" 2 "L2-table-001" "none" "none" [(-1.5400),2.7640] 2.0870 1.0000 0.000000000 1.000000000 #([(-1.0400),1.7205],[(-1.0400),3.8075],[(-2.0400),3.8075],[(-2.0400),1.7205]) "WORKING TABLE - WORKING TABLE" "WORKING TABLE - WORKING TABLE-2446851-LEVEL 2 GENERAL ARRANGEMENT" "Q-CASE" "E42"
+    BB_furnBox "table" "BB_L2_Furn_table_002_WORKING TABLE - WORKING TABLE" 2 "L2-table-002" "none" "none" [0.2650,5.4130] 2.0870 1.0000 1.000000000 0.000000000 #([(-0.7785),4.9130],[1.3085,4.9130],[1.3085,5.9130],[(-0.7785),5.9130]) "WORKING TABLE - WORKING TABLE" "WORKING TABLE - WORKING TABLE-V39-LEVEL 2 GENERAL ARRANGEMENT" "Q-CASE" "1706"
+    BB_furnBox "table" "BB_L2_Furn_table_003_TABLE_DINING_RECTANGLE CHAMPAGNE LEG - T" 2 "L2-table-003" "none" "none" [3.5960,(-5.2720)] 0.3800 0.3800 1.000000000 0.000000000 #([3.4060,(-5.4620)],[3.7860,(-5.4620)],[3.7860,(-5.0820)],[3.4060,(-5.0820)]) "TABLE_DINING_RECTANGLE CHAMPAGNE LEG - TA103 380W x 380D x 750H" "TABLE_DINING_RECTANGLE CHAMPAGNE LEG - TA103 380W x 380D x 750H-2475481-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "11C0"
+    BB_furnBox "table" "BB_L2_Furn_table_004_TABLE_DINING_RECTANGLE CHAMPAGNE LEG - T" 2 "L2-table-004" "none" "none" [4.4590,(-7.2910)] 0.3800 0.3800 1.000000000 0.000000000 #([4.2690,(-7.4810)],[4.6490,(-7.4810)],[4.6490,(-7.1010)],[4.2690,(-7.1010)]) "TABLE_DINING_RECTANGLE CHAMPAGNE LEG - TA103 380W x 380D x 750H" "TABLE_DINING_RECTANGLE CHAMPAGNE LEG - TA103 380W x 380D x 750H-2475481-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "126F"
+    BB_furnBox "table" "BB_L2_Furn_table_005_TABLE_DINING_RECTANGLE CHAMPAGNE LEG - T" 2 "L2-table-005" "none" "none" [4.8190,(-5.8840)] 0.3800 0.3800 1.000000000 0.000000000 #([4.6290,(-6.0740)],[5.0090,(-6.0740)],[5.0090,(-5.6940)],[4.6290,(-5.6940)]) "TABLE_DINING_RECTANGLE CHAMPAGNE LEG - TA103 380W x 380D x 750H" "TABLE_DINING_RECTANGLE CHAMPAGNE LEG - TA103 380W x 380D x 750H-2385270-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "1805"
+    BB_furnBox "coffee-table" "BB_L2_Furn_coffee-table_001_TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 6" 2 "L2-coffee-table-001" "none" "none" [2.1360,(-5.1120)] 0.5000 0.5000 0.998789025 0.049198416 #([1.8986,(-5.3740)],[2.3980,(-5.3494)],[2.3734,(-4.8500)],[1.8740,(-4.8746)]) "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H" "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H-2395479-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "11B2"
+    BB_furnBox "coffee-table" "BB_L2_Furn_coffee-table_002_TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 6" 2 "L2-coffee-table-002" "none" "none" [3.6190,6.0090] 0.5000 0.5000 0.998198181 0.060003262 #([3.3845,5.7444],[3.8836,5.7745],[3.8535,6.2736],[3.3544,6.2435]) "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H" "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H-2385305-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "233F"
+    BB_furnBox "coffee-table" "BB_L2_Furn_coffee-table_003_TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 7" 2 "L2-coffee-table-003" "none" "none" [4.3410,2.7600] 0.7000 0.7000 0.738455341 0.674302388 #([4.3185,2.2655],[4.8355,2.7375],[4.3635,3.2545],[3.8465,2.7825]) "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 700W 400H" "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 700W 400H-2621907-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "225A"
+    BB_furnBox "coffee-table" "BB_L2_Furn_coffee-table_004_TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 6" 2 "L2-coffee-table-004" "none" "none" [4.4050,(-8.6620)] 0.5000 0.5000 0.842358351 0.538917812 #([4.3291,(-9.0073)],[4.7503,(-8.7379)],[4.4809,(-8.3167)],[4.0597,(-8.5861)]) "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H" "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H-2385305-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "127E"
+    BB_furnBox "coffee-table" "BB_L2_Furn_coffee-table_005_TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 7" 2 "L2-coffee-table-005" "none" "none" [4.5810,(-2.6000)] 0.7000 0.7000 0.738455341 0.674302388 #([4.5585,(-3.0945)],[5.0755,(-2.6225)],[4.6035,(-2.1055)],[4.0865,(-2.5775)]) "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 700W 400H" "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 700W 400H-2621897-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "135A"
+    BB_furnBox "coffee-table" "BB_L2_Furn_coffee-table_006_COFFEE TABLE RETANGLE - VENNATIVE - TYPE" 2 "L2-coffee-table-006" "none" "none" [5.3550,0.0460] 1.0000 0.5000 (-0.028445030) 0.999595358 #([5.6191,(-0.4467)],[5.5907,0.5529],[5.0909,0.5387],[5.1193,(-0.4609)]) "COFFEE TABLE RETANGLE - VENNATIVE - TYPE 1" "COFFEE TABLE RETANGLE - VENNATIVE - TYPE 1-2607763-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "12BE"
+    BB_furnBox "cabinet" "BB_L2_Furn_cabinet_001_IA_J10_WORK CABINET - IA_J10_WORK CABINE" 2 "L2-cabinet-001" "none" "none" [(-4.2200),6.4150] 2.4500 0.6000 1.000000000 0.000000000 #([(-5.4450),6.1150],[(-2.9950),6.1150],[(-2.9950),6.7150],[(-5.4450),6.7150]) "IA_J10_WORK CABINET - IA_J10_WORK CABINET" "IA_J10_WORK CABINET - IA_J10_WORK CABINET-2576886-LEVEL 2 GENERAL ARRANGEMENT" "Q-CASE" "17F7"
+    BB_furnBox "cabinet" "BB_L2_Furn_cabinet_002_IA_J12_CABINET - IA_J12_CABINET" 2 "L2-cabinet-002" "none" "none" [(-3.8800),(-3.3550)] 4.0500 0.6000 0.000000000 1.000000000 #([(-3.5800),(-5.3800)],[(-3.5800),(-1.3300)],[(-4.1800),(-1.3300)],[(-4.1800),(-5.3800)]) "IA_J12_CABINET - IA_J12_CABINET" "IA_J12_CABINET - IA_J12_CABINET-2459946-LEVEL 2 GENERAL ARRANGEMENT" "Q-CASE" "1016"
+    BB_furnBox "cabinet" "BB_L2_Furn_cabinet_003_IA_J10_WORK CABINET - IA_J10_WORK CABINE" 2 "L2-cabinet-003" "none" "none" [(-3.8800),(-0.1070)] 2.4500 0.6000 0.000000000 1.000000000 #([(-3.5800),(-1.3320)],[(-3.5800),1.1180],[(-4.1800),1.1180],[(-4.1800),(-1.3320)]) "IA_J10_WORK CABINET - IA_J10_WORK CABINET" "IA_J10_WORK CABINET - IA_J10_WORK CABINET-2579628-LEVEL 2 GENERAL ARRANGEMENT" "Q-CASE" "17E6"
+    BB_furnBox "cabinet" "BB_L2_Furn_cabinet_004_IA_J11_WORK CABINET - IA_J11_WORK CABINE" 2 "L2-cabinet-004" "none" "none" [(-3.8800),3.0630] 3.8900 0.6000 0.000000000 1.000000000 #([(-3.5800),1.1180],[(-3.5800),5.0080],[(-4.1800),5.0080],[(-4.1800),1.1180]) "IA_J11_WORK CABINET - IA_J11_WORK CABINET" "IA_J11_WORK CABINET - IA_J11_WORK CABINET-2459944-LEVEL 2 GENERAL ARRANGEMENT" "Q-CASE" "1155"
+    BB_furnBox "cabinet" "BB_L2_Furn_cabinet_005_IA_J07_WORK CABINET - IA_J07_WORK CABINE" 2 "L2-cabinet-005" "none" "none" [(-3.2580),(-1.7800)] 7.2000 0.4450 0.000000000 1.000000000 #([(-3.0355),(-5.3800)],[(-3.0355),1.8200],[(-3.4805),1.8200],[(-3.4805),(-5.3800)]) "IA_J07_WORK CABINET - IA_J07_WORK CABINET" "IA_J07_WORK CABINET - IA_J07_WORK CABINET-2425803-LEVEL 2 GENERAL ARRANGEMENT" "Q-CASE" "D77"
+    BB_furnBox "cabinet" "BB_L2_Furn_cabinet_006_WORK CABINET-1 - WORK CABINET-1" 2 "L2-cabinet-006" "none" "none" [(-3.2580),3.4080] 3.0000 0.4450 0.000000000 1.000000000 #([(-3.0355),1.9080],[(-3.0355),4.9080],[(-3.4805),4.9080],[(-3.4805),1.9080]) "WORK CABINET-1 - WORK CABINET-1" "WORK CABINET-1 - WORK CABINET-1-2458913-LEVEL 2 GENERAL ARRANGEMENT" "Q-CASE" "F08"
+    BB_furnBox "cabinet" "BB_L2_Furn_cabinet_007_loose shapes on Q-CASE" 2 "L2-cabinet-007" "none" "none" [(-1.5400),(-1.8300)] 7.1000 1.0000 0.000000000 1.000000000 #([(-1.0400),(-5.3800)],[(-1.0400),1.7200],[(-2.0400),1.7200],[(-2.0400),(-5.3800)]) "loose shapes on Q-CASE" "none" "Q-CASE" "none"
+    BB_furnBox "cabinet" "BB_L2_Furn_cabinet_008_CONSOLE_CABINET_BAKER - TA13 1800W 400D" 2 "L2-cabinet-008" "none" "none" [2.9260,0.0600] 1.8000 0.3500 0.000000000 1.000000000 #([3.1010,(-0.8400)],[3.1010,0.9600],[2.7510,0.9600],[2.7510,(-0.8400)]) "CONSOLE_CABINET_BAKER - TA13 1800W 400D" "CONSOLE_CABINET_BAKER - TA13 1800W 400D-2602679-LEVEL 2 GENERAL ARRANGEMENT" "I-FURN" "22EF"
+    BB_furnBox "cabinet" "BB_L2_Furn_cabinet_009_Casework 2 - Casework 2" 2 "L2-cabinet-009" "none" "none" [4.5040,2.9930] 3.5970 1.2270 1.000000000 0.000000000 #([2.7055,2.3795],[6.3025,2.3795],[6.3025,3.6065],[2.7055,3.6065]) "Casework 2 - Casework 2" "Casework 2 - Casework 2-2619104-LEVEL 2 GENERAL ARRANGEMENT" "Q-CASE" "44D8"
+    BB_furnBox "cabinet" "BB_L2_Furn_cabinet_010_Casework 1 - Casework 2" 2 "L2-cabinet-010" "none" "none" [4.5790,(-2.8730)] 3.7530 1.1750 0.999595358 0.028445030 #([2.7200,(-3.5136)],[6.4715,(-3.4069)],[6.4380,(-2.2324)],[2.6865,(-2.3391)]) "Casework 1 - Casework 2" "Casework 1 - Casework 2-2622302-LEVEL 2 GENERAL ARRANGEMENT" "Q-CASE" "6636"
+    BB_furnBox "tall-cabinet" "BB_L2_Furn_tall-cabinet_001_RACKS_DATA - 1100x600" 2 "L2-tall-cabinet-001" "none" "none" [(-5.0800),8.1530] 1.8000 0.6000 0.000000000 1.000000000 #([(-4.7800),7.2530],[(-4.7800),9.0530],[(-5.3800),9.0530],[(-5.3800),7.2530]) "RACKS_DATA - 1100x600" "RACKS_DATA - 1100x600-2280828-LEVEL 2 GENERAL ARRANGEMENT" "Q-SPCQ" "none"
+    BB_furnBox "tall-cabinet" "BB_L2_Furn_tall-cabinet_002_RACKS_DATA - 1100x600" 2 "L2-tall-cabinet-002" "none" "none" [(-4.2510),8.1530] 1.8000 0.6000 0.000000000 1.000000000 #([(-3.9510),7.2530],[(-3.9510),9.0530],[(-4.5510),9.0530],[(-4.5510),7.2530]) "RACKS_DATA - 1100x600" "RACKS_DATA - 1100x600-2280828-LEVEL 2 GENERAL ARRANGEMENT" "Q-SPCQ" "none"
+    BB_furnBox "tall-cabinet" "BB_L2_Furn_tall-cabinet_003_TALL CABINET - TALL CABINET 1875W" 2 "L2-tall-cabinet-003" "none" "none" [(-0.9760),5.9470] 1.8750 0.4050 0.000000000 1.000000000 #([(-0.7735),5.0095],[(-0.7735),6.8845],[(-1.1785),6.8845],[(-1.1785),5.0095]) "TALL CABINET - TALL CABINET 1875W" "TALL CABINET - TALL CABINET 1875W-2561397-LEVEL 2 GENERAL ARRANGEMENT" "Q-CASE" "1472"
+)
+-- The build's furniture step: materials, levels, every box.
+fn BB_furnRun =
+(
+    BB_furnMakeMaterials()
+    BB_furnSetLevels()
+    BB_furnAll()
+)
+-- For every floor, its level as the scene has it: the most common value (to the millimetre) of z minus BB_base over the
+-- objects that carry BB_floor and BB_base. Sets BB_furnLevels for the floors it finds and returns how many.
+fn BB_furnSceneLevels =
+(
+    local fis = #()
+    local mms = #()
+    local cnt = #()
+    for o in objects where (getUserProp o "BB_floor") != undefined and (getUserProp o "BB_base") != undefined do
+    (
+        local fi = (BB_furnNum (getUserProp o "BB_floor")) as integer
+        local mmv = (floor ((o.pos.z - (BB_furnNum (getUserProp o "BB_base"))) * 1000.0 + 0.5)) as integer
+        local k = 0
+        for j = 1 to fis.count where fis[j] == fi and mms[j] == mmv do k = j
+        if k == 0 then ( append fis fi; append mms mmv; append cnt 1 )
+        else cnt[k] += 1
+    )
+    local found = 0
+    for f = 1 to BB_furnFloors.count do
+    (
+        local best = 0
+        for j = 1 to fis.count where fis[j] == f and cnt[j] > best do
+        (
+            best = cnt[j]
+            BB_furnLevels[f] = mms[j] / 1000.0
+        )
+        if best > 0 do found += 1
+    )
+    found
+)
+-- "Furniture boxes only": adds the boxes to a scene already built from this model and changes nothing else. It refuses, and
+-- changes nothing, when boxes are there already or System Units are not metres. The placement shift comes from the hidden
+-- datum BB_ORIGIN_DWG (shift = minus its x, y) and each level from the objects that carry BB_floor and BB_base;
+-- what it cannot find it takes from the window (the tick box and the level spinners), and says so. It reports in message boxes
+-- of its own (the Build button's message is written for parts), so BB_build returns false after it.
+fn BB_furnAdd =
+(
+    if BB_furnWant == false then
+    (
+        messageBox "Tick Build furniture boxes as well. Nothing in this scene has been changed." title:"Bank branch"
+        return false
+    )
+    if abs(units.systemScale - 1.0) > 0.0001 or units.systemType != #meters then
+    (
+        messageBox "This scene's System Units are not metres, so the boxes would come out the wrong size. Nothing in this scene has been changed." title:"Bank branch"
+        return false
+    )
+    local existing = 0
+    for o in objects where (getUserProp o "BB_furn") != undefined or (matchPattern o.layer.name pattern:"BB_*_Furn_*") do existing += 1
+    if existing > 0 then
+    (
+        messageBox ("This scene already has furniture boxes (" + (existing as string) + " objects). Nothing in this scene has been changed.") title:"Bank branch"
+        return false
+    )
+    local t0 = timeStamp()
+    local notes = ""
+    local datum = undefined
+    for o in objects where o.name == "BB_ORIGIN_DWG" do datum = o
+    if datum == undefined then notes += "The origin datum BB_ORIGIN_DWG was not found, so the boxes are placed by the tick box At the drawing's own coordinates. "
+    else BB_shift = [0.0 - datum.pos.x, 0.0 - datum.pos.y]
+    BB_nodes = #()
+    BB_failed = #()
+    BB_furnMakeMaterials()
+    BB_furnSetLevels()
+    local found = BB_furnSceneLevels()
+    if found < BB_furnFloors.count then notes += "The level of " + ((BB_furnFloors.count - found) as string) + " floor(s) was not found in the scene, so the level spinners are used for it. "
+    BB_furnAll()
+    format "BB FURNITURE BOXES ADDED: % boxes in % s, % failed checks\n" BB_nodes.count ((timeStamp() - t0) / 1000.0) BB_failed.count
+    for f in BB_failed do format "  check failed: %\n" f
+    if notes != "" do messageBox notes title:"Bank branch"
+    if BB_failed.count == 0 then messageBox ("Added " + (BB_nodes.count as string) + " furniture boxes. Every box passed its height and position checks. Nothing else in this scene was changed. Save As to keep your .max file.") title:"Bank branch"
+    else messageBox ((BB_failed.count as string) + " of the " + (BB_nodes.count as string) + " furniture boxes failed a check and are on layer BB_Check_Failed (listed in the MAXScript Listener). The others were added and passed. Nothing else in this scene was changed.") title:"Bank branch"
+    true
+)
+-- After the build: every box takes the height of its kind (BB_furnHeights, read from the window) and stands on its kind's
+-- base, or on top of the kind of support it was drawn on (the support's kind is none, or undefined, or empty: no support). A box
+-- keeps the level it is on (its z minus its BB_base), so levels moved by "Update levels and heights" stay. A box that is not
+-- a Box any more, or of an unknown kind, is left alone.
+fn BB_furnApply =
+(
+    local n = 0
+    local skipped = 0
+    for o in objects where (getUserProp o "BB_furn") != undefined do
+    (
+        local ki = findItem BB_furnKeys ((getUserProp o "BB_furnKind") as string)
+        if (classOf o) != Box or ki == 0 then skipped += 1
+        else
+        (
+            local z0 = BB_furnZ0 ki (findItem BB_furnKeys ((getUserProp o "BB_furnOnKind") as string))
+            o.pos.z = o.pos.z - (BB_furnNum (getUserProp o "BB_base")) + z0
+            o.height = BB_furnHeights[ki]
+            setUserProp o "BB_base" z0
+            n += 1
+        )
+    )
+    #(n, skipped)
+)
+fn BB_build =
+(
+    if BB_furnAddOnly then
+    (
+        -- "Furniture boxes only" has said what it did, or why it did nothing, in its own message: false = nothing more to report
+        BB_furnAdd()
+        return false
+    )
+    if objects.count > 0 then
+    (
+        messageBox "Open a NEW EMPTY scene first. Nothing in this scene has been changed." title:"Bank branch"
+        return false
+    )
+    units.systemType = #meters
+    units.systemScale = 1.0
+    units.displayType = #metric
+    units.metricType = #meters
+    BB_nodes = #()
+    BB_failed = #()
+    BB_makeMaterials()
+    local t0 = timeStamp()
+    BB_part #wall "BB_L1_Wall_001" #(#([(-0.4465),0.1400],[(-0.4465),(-0.1400)],[0.1035,(-0.1400)],[0.1035,0.0390],[0.4455,0.0390],[0.4465,0.1390])) 0.0000 3.7000 true 1 [1.0195,(-9.2190)] [0.5730,(-9.3590)] [1.4660,(-9.0790)]
+    BB_part #wall "BB_L1_Wall_002" #(#([(-0.3660),(-0.3515)],[0.3660,(-0.3485)],[0.3660,0.3515],[(-0.0240),0.3515],[(-0.0240),(-0.2515)],[(-0.3660),(-0.2545)])) 0.0000 3.7000 true 1 [3.3520,(-8.8285)] [2.9860,(-9.1800)] [3.7180,(-8.4770)]
+    BB_part #wall "BB_L1_Wall_003" #(#([0.2315,0.0500],[(-0.3205),0.0500],[(-0.3205),(-0.0500)],[0.2945,(-0.0500)],[0.3205,(-0.0090)])) 0.0000 3.7000 true 1 [4.6385,(-8.5270)] [4.3180,(-8.5770)] [4.9590,(-8.4770)]
+    BB_part #wall "BB_L1_Wall_004" #(#([0.5000,(-0.1785)],[0.5000,0.1785],[(-0.5000),0.1785],[(-0.5000),0.0785],[0.4000,0.0785],[0.4000,(-0.1785)])) 0.0000 3.7000 true 1 [(-1.3800),(-5.1685)] [(-1.8800),(-5.3470)] [(-0.8800),(-4.9900)]
+    BB_part #wall "BB_L1_Wall_005" #(#([1.1395,8.0405],[1.4795,8.0405],[1.4795,8.3405],[5.5415,8.3405],[5.5535,7.7345],[5.8975,7.7415],[5.9135,6.9115],[6.0135,6.9135],[5.9795,8.6405],[1.1235,8.6405],[1.0755,10.4675],[(-6.0135),10.4675],[(-5.4455),(-10.1675)],[(-5.4455),(-10.4675)],[(-0.8425),(-10.4675)],[(-0.8425),(-10.3675)],[(-1.6955),(-10.3675)],[(-1.6955),(-9.4675)],[(-1.8455),(-9.4675)],[(-1.8455),(-9.8675)],[(-3.6455),(-9.8675)],[(-3.6455),(-8.0945)],[(-1.8455),(-8.0945)],[(-1.8455),(-8.3675)],[(-1.6955),(-8.3675)],[(-1.6955),(-7.9445)],[1.3015,(-7.9445)],[1.3015,(-7.8445)],[0.9075,(-7.8445)],[0.9075,(-7.6445)],[0.3575,(-7.6445)],[0.3575,(-7.8445)],[(-1.0955),(-7.8445)],[(-1.0955),(-7.6345)],[(-1.1955),(-7.6345)],[(-1.1955),(-7.8445)],[(-3.7955),(-7.8445)],[(-3.7955),(-10.3675)],[(-5.1455),(-10.3675)],[(-5.1455),(-10.1675)],[(-5.2035),(-8.0675)],[(-4.5955),(-8.0675)],[(-4.5955),(-7.9675)],[(-5.2065),(-7.9675)],[(-5.2495),(-6.3945)],[(-5.1445),(-6.3915)],[(-5.1455),(-6.3415)],[(-5.1465),(-6.2915)],[(-5.2525),(-6.2915)],[(-5.5315),3.8315],[(-3.7955),3.8315],[(-3.7955),(-6.2915)],[(-4.1455),(-6.2915)],[(-4.1445),(-6.3915)],[(-3.3005),(-6.3915)],[(-3.3005),(-6.2915)],[(-3.6955),(-6.2935)],[(-3.6955),0.9315],[(-1.0965),0.9315],[(-1.0965),1.0315],[(-3.6955),1.0315],[(-3.6955),3.8315],[0.3575,3.8315],[0.3575,1.8715],[4.5825,1.8715],[4.5825,1.9945],[4.4825,1.9945],[4.4825,1.9705],[0.9075,1.9705],[0.9075,2.1705],[0.4575,2.1705],[0.4575,4.4705],[4.5825,4.4715],[4.5825,4.5705],[0.3575,4.5705],[0.3575,3.9315],[(-5.5335),3.9315],[(-5.5815),5.6465],[(-3.3335),5.6465],[(-3.3335),4.9315],[(-3.2335),4.9315],[(-3.2335),5.9465],[(-5.5895),5.9465],[(-5.7055),10.1675],[0.7835,10.1675],[0.8935,5.9465],[(-1.9335),5.9465],[(-1.9335),5.6465],[0.8075,5.6465],[0.8075,5.5705],[0.9075,5.5705],[0.9075,5.6465],[2.2545,5.6475],[2.2545,5.7475],[1.1995,5.7475],[1.1605,7.2335],[2.9545,7.2335],[2.9545,5.6465],[3.0545,5.6465],[3.0545,7.3335],[1.1575,7.3335])) 0.0000 3.7000 true 1 [0.2155,1.2875] [(-5.7980),(-9.1800)] [6.2290,11.7550]
+    BB_part #wall "BB_L1_Wall_006" #(#([0.1290,0.8530],[0.0290,0.8510],[0.0420,0.1810],[(-0.1580),0.1770],[(-0.1380),(-0.8530)],[(-0.0380),(-0.8510)],[(-0.0420),(-0.6210)],[0.1580,(-0.6170)])) 0.0000 3.7000 true 1 [6.1120,6.7680] [5.9540,5.9150] [6.2700,7.6210]
+    BB_part #wall "BB_L1_Wall_007" #(#([(-0.0290),(-0.1460)],[(-0.0710),(-0.2080)],[0.0120,(-0.2640)],[0.0710,(-0.1770)],[0.0710,0.2640],[(-0.0290),0.2640])) 0.0000 3.7000 true 1 [5.8410,(-6.9430)] [5.7700,(-7.2070)] [5.9120,(-6.6790)]
+    BB_part #wall "BB_L1_Wall_008" #(#([(-0.1700),(-0.2500)],[0.7300,(-0.2500)],[0.7300,0.1500],[0.3220,0.1500],[0.3210,0.2150],[0.0710,0.2120],[0.0700,0.2500],[(-0.7300),0.2500],[(-0.7300),0.1500],[(-0.1700),0.1500])) 0.0000 3.7000 true 1 [5.9820,(-5.8290)] [5.2520,(-6.0790)] [6.7120,(-5.5790)]
+    BB_part #wall "BB_L1_Wall_009" #(#([0.6070,(-0.3305)],[0.5910,0.4695],[0.2910,0.4635],[0.3050,(-0.2365)],[(-0.6070),(-0.2365)],[(-0.6070),(-0.3365)],[0.3070,(-0.3365)],[0.3100,(-0.4695)],[0.4100,(-0.4675)],[0.4070,(-0.3345)])) 0.0000 3.7000 true 1 [5.8600,(-3.4795)] [5.2530,(-3.9490)] [6.4670,(-3.0100)]
+    BB_part #column "BB_L1_Column_001" #(#([(-0.2750),0.1500],[(-0.2750),(-0.1500)],[0.2750,(-0.1500)],[0.2750,0.1500])) 0.0000 3.7000 true 1 [0.8480,(-3.4020)] [0.5730,(-3.5520)] [1.1230,(-3.2520)]
+    BB_part #column "BB_L1_Column_002" #(#([0.2750,0.1500],[(-0.2750),0.1500],[(-0.2750),(-0.1500)],[0.2750,(-0.1500)])) 0.0000 3.7000 true 1 [0.8480,0.0280] [0.5730,(-0.1220)] [1.1230,0.1780]
+    BB_part #column "BB_L1_Column_003" #(#([0.1580,(-0.3975)],[0.1420,0.4025],[(-0.1580),0.3965],[(-0.1420),(-0.4025)])) 0.0000 3.7000 true 1 [6.2410,(-0.0505)] [6.0830,(-0.4530)] [6.3990,0.3520]
+    BB_part #column "BB_L1_Column_004" #(#([(-0.0560),0.2910],[(-0.0600),0.5110],[(-0.1600),0.5090],[(-0.1400),(-0.5110)],[0.1600,(-0.5050)],[0.1440,0.2950])) 0.0000 3.7000 true 1 [6.1740,3.4070] [6.0140,2.8960] [6.3340,3.9180]
+    BB_part #wall "BB_L1_Wall_010_closure (ATM Machine - ATM Machine)" #(#([0.0560,(-0.2890)],[0.0440,0.2910],[(-0.0560),0.2890],[(-0.0440),(-0.2910)])) 0.0000 3.7000 true 1 [6.1850,7.9100] [6.1290,7.6190] [6.2410,8.2010]
+    BB_part #glass "BB_L1_Glass_001" #(#([(-0.0500),0.0125],[(-0.0500),(-0.0125)],[0.0500,(-0.0125)],[0.0500,0.0125])) 0.0000 3.7000 true 1 [4.7480,1.1315] [4.6980,1.1190] [4.7980,1.1440]
+    BB_part #glass "BB_L1_Glass_002" #(#([(-0.0580),0.4120],[(-0.0400),(-0.5120)],[0.0600,(-0.5100)],[0.0400,0.5120],[(-0.0600),0.5120],[(-0.0590),0.4120])) 0.0000 3.7000 true 1 [6.0540,4.4280] [5.9940,3.9160] [6.1140,4.9400]
+    BB_part #glass "BB_L1_Glass_003_GLASS WALL 2600H 20X100" #(#([(-0.0335),(-0.0050)],[0.0335,(-0.0050)],[0.0335,0.0050],[(-0.0335),0.0050])) 0.0000 2.6000 false 1 [0.5395,2.2690] [0.5060,2.2640] [0.5730,2.2740]
+    BB_part #glass "BB_L1_Glass_004_GLASS WALL 2600H 20X100" #(#([(-0.0050),(-0.4195)],[0.0050,(-0.4195)],[0.0050,0.4195],[(-0.0050),0.4195])) 0.0000 2.6000 false 1 [0.6230,2.7385] [0.6180,2.3190] [0.6280,3.1580]
+    BB_part #glass "BB_L1_Glass_005_GLASS WALL 2600H 20X100" #(#([(-0.0050),(-1.0070)],[0.0050,(-1.0070)],[0.0050,1.0070],[(-0.0050),1.0070])) 0.0000 2.6000 false 1 [4.7480,2.1510] [4.7430,1.1440] [4.7530,3.1580]
+    BB_part #glass "BB_L1_Glass_006_GLASS WALL 2600H 20X100" #(#([0.4490,(-0.0050)],[0.4490,0.0050],[(-0.4390),0.0050],[(-0.4490),(-0.0050)])) 0.0000 2.6000 false 1 [4.8030,(-3.7660)] [4.3540,(-3.7710)] [5.2520,(-3.7610)]
+    BB_part #glass "BB_L1_Glass_007_GLASS WALL 2600H 20X100" #(#([(-0.4815),(-0.5090)],[(-0.4745),(-0.5150)],[0.4815,0.5150],[0.4675,0.5150])) 0.0000 2.6000 false 1 [3.8825,(-4.2760)] [3.4010,(-4.7910)] [4.3640,(-3.7610)]
+    BB_part #glass "BB_L1_Glass_008_GLASS WALL 2600H 20X100" #(#([(-0.0125),(-0.0065)],[0.0005,(-0.0065)],[0.0425,0.0385],[(-0.0425),0.0385],[(-0.0425),(-0.0385)])) 0.0000 2.6000 false 1 [1.7285,(-6.5955)] [1.6860,(-6.6340)] [1.7710,(-6.5570)]
+    BB_part #glass "BB_L1_Glass_009_GLASS WALL 2600H 20X100" #(#([(-0.1055),(-0.0050)],[0.0965,(-0.0050)],[0.1055,0.0050],[(-0.1055),0.0050])) 0.0000 2.6000 false 1 [1.6235,(-6.6070)] [1.5180,(-6.6120)] [1.7290,(-6.6020)]
+    BB_part #glass "BB_L1_Glass_010_GLASS WALL 2600H 20X100" #(#([(-0.2730),(-0.2905)],[(-0.2590),(-0.2905)],[0.2730,0.2835],[0.2660,0.2905])) 0.0000 2.6000 false 1 [2.0300,(-6.2665)] [1.7570,(-6.5570)] [2.3030,(-5.9760)]
+    BB_part #glass "BB_L1_Glass_011_GLASS WALL 2600H 20X100" #(#([(-0.2305),(-0.0050)],[0.2305,(-0.0050)],[0.2305,0.0050],[(-0.2305),0.0050])) 0.0000 2.6000 false 1 [(-0.6495),2.2690] [(-0.8800),2.2640] [(-0.4190),2.2740]
+    BB_part #glass "BB_L1_Glass_012_GLASS WALL 2600H 20X100" #(#([(-0.0050),(-0.0315)],[0.0050,(-0.0315)],[0.0050,0.0315],[(-0.0050),0.0315])) 0.0000 2.6000 false 1 [4.7480,3.3145] [4.7430,3.2830] [4.7530,3.3460]
+    BB_part #glass "BB_L1_Glass_013_GLASS WALL 2600H 20X100" #(#([0.0050,(-0.4315)],[0.0050,0.4315],[(-0.0050),0.4315],[(-0.0050),(-0.4315)])) 0.0000 2.6000 false 1 [4.7480,5.3265] [4.7430,4.8950] [4.7530,5.7580]
+    BB_part #glass "BB_L1_Glass_014_GLASS WALL 2600H 20X100" #(#([(-0.0050),(-0.3070)],[0.0050,(-0.3070)],[0.0050,0.3070],[(-0.0050),0.3070])) 0.0000 2.6000 false 1 [4.7480,4.5780] [4.7430,4.2710] [4.7530,4.8850]
+    BB_part #glass "BB_L1_Glass_015_GLASS WALL 2600H 20X100" #(#([0.0995,(-0.0050)],[0.0995,0.0050],[(-0.0995),0.0050],[(-0.0995),(-0.0050)])) 0.0000 2.6000 false 1 [4.8425,4.8900] [4.7430,4.8850] [4.9420,4.8950]
+    BB_part #glass "BB_L1_Glass_016_GLASS WALL 2600H 20X100" #(#([(-0.0640),(-0.0050)],[0.0640,(-0.0050)],[0.0640,0.0050],[(-0.0640),0.0050])) 0.0000 2.6000 false 1 [5.9310,4.8900] [5.8670,4.8850] [5.9950,4.8950]
+    BB_part #glass "BB_L1_Glass_017_glass screen" #(#([(-0.0050),(-0.2055)],[0.0050,(-0.2055)],[0.0050,0.2055],[(-0.0050),0.2055])) 0.0000 3.7000 true 1 [1.0730,(-6.8625)] [1.0680,(-7.0680)] [1.0780,(-6.6570)]
+    BB_part #glass "BB_L1_Glass_018_glass screen" #(#([(-0.0050),(-0.2055)],[0.0050,(-0.2055)],[0.0050,0.2055],[(-0.0050),0.2055])) 0.0000 3.7000 true 1 [1.0730,(-8.8735)] [1.0680,(-9.0790)] [1.0780,(-8.6680)]
+    BB_part #mullion "BB_L1_Mullion_001_frame post" #(#([0.0495,(-0.0495)],[0.0495,0.0495],[(-0.0495),0.0495],[(-0.0495),(-0.0495)])) 0.0000 2.6000 false 1 [0.6235,2.2685] [0.5740,2.2190] [0.6730,2.3180]
+    BB_part #glass "BB_L1_Glass_019_L1-001 pane" #(#([0.7595,(-0.0120)],[0.7595,0.0080],[(-0.7585),0.0120],[(-0.7595),(-0.0080)])) 0.0000 3.7000 true 1 [2.2255,(-9.1280)] [1.4660,(-9.1400)] [2.9850,(-9.1160)]
+    BB_part #lintel "BB_L1_Lintel_001_L1-002" #(#([(-0.0500),(-0.4990)],[0.0500,(-0.4990)],[0.0500,0.4990],[(-0.0500),0.4990])) 2.4000 3.7000 true 1 [(-0.9300),(-5.8470)] [(-0.9800),(-6.3460)] [(-0.8800),(-5.3480)]
+    BB_part #lintel "BB_L1_Lintel_002_L1-004" #(#([0.0750,0.5490],[(-0.0750),0.5490],[(-0.0750),(-0.5490)],[0.0750,(-0.5490)])) 2.4000 3.7000 true 1 [(-1.5550),(-7.6300)] [(-1.6300),(-8.1790)] [(-1.4800),(-7.0810)]
+    BB_part #glass "BB_L1_Glass_020_L1-005 transom" #(#([0.5555,0.5915],[0.5485,0.5985],[(-0.5555),(-0.5915)],[(-0.5475),(-0.5985)])) 2.4000 2.6000 false 1 [2.8515,(-5.3835)] [2.2960,(-5.9820)] [3.4070,(-4.7850)]
+    BB_part #lintel "BB_L1_Lintel_003_L1-006" #(#([0.4970,0.0635],[(-0.5000),0.0365],[(-0.4980),(-0.0635)],[0.5000,(-0.0365)])) 2.4000 3.7000 true 1 [(-4.4290),(-5.0705)] [(-4.9290),(-5.1340)] [(-3.9290),(-5.0070)]
+    BB_part #glass "BB_L1_Glass_021_L1-007 transom" #(#([0.4615,(-0.0050)],[0.4615,0.0050],[(-0.4615),0.0050],[(-0.4615),(-0.0050)])) 2.4000 2.6000 false 1 [0.0435,2.2690] [(-0.4180),2.2640] [0.5050,2.2740]
+    BB_part #glass "BB_L1_Glass_022_L1-008 transom" #(#([0.0050,0.4615],[(-0.0050),0.4615],[(-0.0050),(-0.4615)],[0.0050,(-0.4615)])) 2.4000 2.6000 false 1 [4.7480,3.8085] [4.7430,3.3470] [4.7530,4.2700]
+    BB_part #glass "BB_L1_Glass_023_L1-009 pane" #(#([(-0.0155),1.2805],[(-0.0355),1.2795],[0.0155,(-1.2805)],[0.0355,(-1.2805)])) 0.0000 3.7000 true 1 [6.1735,(-1.7335)] [6.1380,(-3.0140)] [6.2090,(-0.4530)]
+    BB_part #glass "BB_L1_Glass_024_L1-010 pane" #(#([(-0.0155),1.2740],[(-0.0355),1.2740],[0.0155,(-1.2740)],[0.0355,(-1.2730)])) 0.0000 3.7000 true 1 [6.1095,1.6220] [6.0740,0.3480] [6.1450,2.8960]
+    BB_part #glass "BB_L1_Glass_025_L1-011 pane" #(#([(-0.2990),0.0100],[(-0.2990),(-0.0100)],[0.2990,(-0.0100)],[0.2990,0.0100])) 0.0000 3.7000 true 1 [4.0180,(-8.5270)] [3.7190,(-8.5370)] [4.3170,(-8.5170)]
+    BB_part #glass "BB_L1_Glass_026_L1-012 pane" #(#([0.5990,(-0.0100)],[0.5990,0.0100],[(-0.5990),0.0100],[(-0.5990),(-0.0100)])) 0.0000 3.7000 true 1 [(-0.0270),(-9.1300)] [(-0.6260),(-9.1400)] [0.5720,(-9.1200)]
+    BB_part #lintel "BB_L1_Lintel_004_L1-013" #(#([0.3990,(-0.0500)],[0.3990,0.0500],[(-0.3990),0.0500],[(-0.3990),(-0.0500)])) 2.4000 3.7000 true 1 [(-3.9800),(-6.7300)] [(-4.3790),(-6.7800)] [(-3.5810),(-6.6800)]
+    BB_part #lintel "BB_L1_Lintel_005_L1-014" #(#([(-0.0500),(-0.4990)],[0.0500,(-0.4990)],[0.0500,0.4990],[(-0.0500),0.4990])) 2.4000 3.7000 true 1 [(-3.0680),5.7190] [(-3.1180),5.2200] [(-3.0180),6.2180]
+    BB_part #lintel "BB_L1_Lintel_006_L1-015" #(#([(-0.6490),0.1500],[(-0.6490),(-0.1500)],[0.6490,(-0.1500)],[0.6490,0.1500])) 2.4000 3.7000 true 1 [(-2.3680),7.0840] [(-3.0170),6.9340] [(-1.7190),7.2340]
+    BB_part #lintel "BB_L1_Lintel_007_L1-016" #(#([(-0.0500),(-0.4990)],[0.0500,(-0.4990)],[0.0500,0.4990],[(-0.0500),0.4990])) 2.4000 3.7000 true 1 [1.0730,6.3580] [1.0230,5.8590] [1.1230,6.8570]
+    BB_part #lintel "BB_L1_Lintel_008_L1-017" #(#([0.3490,(-0.0495)],[0.3490,0.0505],[(-0.3490),0.0495],[(-0.3490),(-0.0505)])) 2.4000 3.7000 true 1 [2.8200,6.9855] [2.4710,6.9350] [3.1690,7.0360]
+    BB_part #lintel "BB_L1_Lintel_009_L1-018" #(#([(-0.4870),(-0.6370)],[(-0.4060),(-0.6910)],[0.4870,0.6370],[0.4060,0.6910])) 2.4000 3.7000 true 1 [5.3640,(-7.8430)] [4.8770,(-8.5340)] [5.8510,(-7.1520)]
+    BB_part #glass "BB_L1_Glass_027_L1-019 pane" #(#([0.0100,0.2990],[(-0.0100),0.2990],[(-0.0100),(-0.2990)],[0.0100,(-0.2990)])) 0.0000 3.7000 true 1 [5.8620,(-6.3790)] [5.8520,(-6.6780)] [5.8720,(-6.0800)]
+    BB_part #glass "BB_L1_Glass_028_L1-020 pane" #(#([0.0065,(-0.8320)],[0.0265,(-0.8320)],[(-0.0065),0.8320],[(-0.0265),0.8320])) 0.0000 3.7000 true 1 [6.2365,(-4.7810)] [6.2100,(-5.6130)] [6.2630,(-3.9490)]
+    BB_part #glass "BB_L1_Glass_029_L1-021 transom" #(#([(-0.4615),0.0050],[(-0.4615),(-0.0050)],[0.4615,(-0.0050)],[0.4615,0.0050])) 2.4000 2.6000 false 1 [5.4045,4.8900] [4.9430,4.8850] [5.8660,4.8950]
+    BB_part #lintel "BB_L1_Lintel_010_L1-022" #(#([0.0500,0.4865],[(-0.0500),0.4875],[(-0.0500),(-0.4875)],[0.0500,(-0.4865)])) 2.4000 3.7000 true 1 [6.0230,5.4275] [5.9730,4.9400] [6.0730,5.9150]
+    BB_part #glass "BB_L1_Glass_030_L1-024 transom" #(#([0.0050,0.7990],[(-0.0050),0.7990],[(-0.0050),(-0.7990)],[0.0050,(-0.7990)])) 2.4000 3.7000 true 1 [1.0730,(-7.8680)] [1.0680,(-8.6670)] [1.0780,(-7.0690)]
+    BB_part #railing "BB_L1_Railing_001" #(#([(-0.7155),0.7940],[0.6615,0.7940],[0.6615,(-0.8750)],[0.7615,(-0.8750)],[0.7615,0.8690],[0.7365,0.8690],[0.7365,0.8750],[(-0.7395),0.8750],[(-0.7395),0.8690],[(-0.7615),0.8580],[(-0.7385),0.8080],[(-0.7155),0.8190])) 0.0000 1.1000 false 1 [3.5265,8.7520] [2.7650,7.8770] [4.2880,9.6270]
+    BB_part #railing "BB_L1_Railing_002" #(#([(-0.3320),(-0.0250)],[(-0.3040),(-0.0250)],[(-0.3040),(-0.0500)],[0.3090,(-0.0500)],[0.3090,(-0.0250)],[0.3320,(-0.0150)],[0.3090,0.0350],[0.2860,0.0250],[0.2860,0.0500],[(-0.3040),0.0500],[(-0.3040),0.0250],[(-0.3290),0.0250])) 0.0000 1.1000 false 1 [(-3.6860),12.6300] [(-4.0180),12.5800] [(-3.3540),12.6800]
+    BB_part #slab "BB_L1_Slab_001" #(#([0.0865,(-10.5870)],[0.6965,(-10.5870)],[0.6965,(-10.4080)],[2.5375,(-10.4320)],[2.5745,(-10.4080)],[3.2915,(-10.4050)],[3.2915,(-9.8240)],[4.4855,(-9.8050)],[4.5415,(-9.7670)],[5.4855,(-8.3270)],[5.5045,(-7.3070)],[6.2855,(-7.3070)],[6.2855,(-6.8470)],[5.8965,(-6.8470)],[5.8415,(-5.0410)],[6.0405,(-5.0370)],[6.0445,(-4.2070)],[5.8905,2.5340],[5.6915,2.5300],[5.6665,3.7720],[5.6465,3.7720],[5.6435,4.9200],[5.8445,4.9240],[5.7675,8.7600],[0.9115,8.7600],[0.8645,10.5870],[(-6.2855),10.5870],[(-5.7165),(-10.4080)],[0.0865,(-10.4280)])) (-0.2500) 0.0000 false 1 [0.4565,1.1980] [(-5.8290),(-9.3890)] [6.7420,11.7850]
+    BB_part #wall "BB_L2_Wall_001" #(#([(-0.6125),(-0.3505)],[(-0.0625),(-0.3505)],[(-0.0625),(-0.1505)],[0.6125,(-0.1505)],[0.6125,(-0.0505)],[(-0.0715),(-0.0505)],[(-0.0715),0.3505],[(-0.1715),0.3505],[(-0.1725),(-0.0505)],[(-0.6125),(-0.0505)])) 0.0000 3.7000 true 2 [1.1855,(-9.0285)] [0.5730,(-9.3790)] [1.7980,(-8.6780)]
+    BB_part #wall "BB_L2_Wall_002" #(#([0.0465,(-0.1975)],[(-0.0055),(-0.1615)],[(-0.0565),(-0.1105)],[(-0.0955),(-0.0545)],[(-0.1245),0.0075],[(-0.1435),0.0775],[(-0.1495),0.1455],[(-0.1495),0.3545],[(-0.2495),0.3545],[(-0.2495),(-0.3545)],[0.2495,(-0.3545)],[0.2495,(-0.2545)],[0.1805,(-0.2475)],[0.1115,(-0.2285)]),#([(-0.1495),(-0.2545)],[(-0.1495),(-0.0785)],[(-0.0675),(-0.1725)],[0.0265,(-0.2545)])) 0.0000 3.7000 true 2 [2.8555,(-3.1675)] [2.6060,(-3.5220)] [3.1050,(-2.8130)]
+    BB_part #wall "BB_L2_Wall_003" #(#([(-1.1700),(-5.2715)],[(-1.1700),(-5.2215)],[1.2700,(-5.2215)],[1.2700,(-5.1215)],[(-1.1700),(-5.1215)],[(-1.1700),5.1715],[(-0.0180),5.1715],[(-0.0180),5.2715],[(-1.2700),5.2715],[(-1.2700),(-5.2715)])) 0.0000 3.7000 true 2 [(-2.3100),(-0.2585)] [(-3.5800),(-5.5300)] [(-1.0400),5.0130]
+    BB_part #wall "BB_L2_Wall_004" #(#([0.0500,(-0.9990)],[0.0500,0.9990],[(-0.0500),0.9990],[(-0.0500),(-0.9990)])) 0.0000 3.7000 true 2 [2.6560,0.0990] [2.6060,(-0.9000)] [2.7060,1.0980]
+    BB_part #wall "BB_L2_Wall_005" #(#([5.8745,8.3665],[5.8855,7.8335],[6.0355,7.8365],[6.0145,8.8985],[1.0975,8.8985],[1.0535,10.4715],[0.7545,10.4625],[(-5.7355),10.4715],[(-6.0355),10.4635],[(-5.4635),(-10.4635)],[(-5.4595),(-10.4715)],[(-5.1595),(-10.4635)],[(-1.0445),(-10.4635)],[(-1.0445),(-10.3635)],[(-1.7175),(-10.3635)],[(-1.7175),(-9.4635)],[(-1.8675),(-9.4635)],[(-1.8675),(-9.8635)],[(-3.6675),(-9.8635)],[(-3.6675),(-8.1135)],[(-1.8675),(-8.1135)],[(-1.8675),(-8.3635)],[(-1.7175),(-8.3635)],[(-1.7175),(-7.9635)],[0.7795,(-7.9605)],[0.7795,(-8.2815)],[0.8795,(-8.2815)],[0.8805,(-7.6605)],[0.3305,(-7.6605)],[0.3305,(-7.8635)],[(-3.7175),(-7.8635)],[(-3.7175),(-7.8135)],[(-3.8175),(-7.8135)],[(-3.8175),(-10.3635)],[(-5.1625),(-10.3635)],[(-5.1675),(-10.1635)],[(-5.2285),(-10.1655)],[(-5.2285),(-8.0735)],[(-4.6175),(-8.0735)],[(-4.6175),(-7.9735)],[(-5.2285),(-7.9735)],[(-5.2375),(-7.6455)],[(-5.3875),(-7.6495)],[(-5.4645),(-4.8395)],[(-5.3145),(-4.8355)],[(-5.3225),(-4.5355)],[(-5.4725),(-4.5395)],[(-5.5585),(-1.4295)],[(-5.4085),(-1.4235)],[(-5.4165),(-1.1255)],[(-5.5665),(-1.1295)],[(-5.6495),1.8705],[(-5.4995),1.8745],[(-5.5075),2.1745],[(-5.6575),2.1705],[(-5.7475),5.4275],[(-3.2325),5.4315],[(-3.2325),7.4465],[(-3.3325),7.4465],[(-3.3325),5.5315],[(-5.5995),5.5315],[(-5.6055),5.7315],[(-5.7555),5.7275],[(-5.8265),8.3215],[(-2.7455),8.3215],[(-2.7455),8.4215],[(-3.2325),8.4215],[(-3.2325),8.4965],[(-3.3325),8.4965],[(-3.3325),8.4215],[(-4.2275),8.4215],[(-4.2275),8.5985],[(-4.3275),8.5985],[(-4.3275),8.4215],[(-5.7275),8.4215],[(-5.7275),9.4025],[(-4.3275),9.4025],[(-4.3275),9.3785],[(-4.2275),9.3785],[(-4.2275),9.5395],[(-4.3275),9.5395],[(-4.3275),9.5025],[(-5.7185),9.5025],[(-5.7315),10.3215],[(-2.0155),10.3165],[(-2.0155),9.3215],[(-2.8455),9.3215],[(-2.8455),9.2015],[(-2.7455),9.2015],[(-2.7455),9.2215],[(-1.5155),9.2215],[(-1.5155),9.2015],[(-1.4155),9.2015],[(-1.4155),9.3215],[(-1.9155),9.3215],[(-1.9155),10.3165],[0.0825,10.3135],[0.0825,10.1955],[0.1825,10.1955],[0.1825,10.3135],[0.7585,10.3125],[0.7625,10.1625],[0.9125,10.1675],[0.9485,8.8495],[0.1825,8.8495],[0.1825,9.4155],[0.0825,9.4155],[0.0825,8.4215],[(-1.5155),8.4215],[(-1.5155),7.9425],[(-1.4155),7.9425],[(-1.4155),8.3215],[0.9635,8.3215],[1.0345,5.7265],[0.8845,5.7225],[0.8815,5.7135],[0.4515,5.7015],[(-1.4155),5.7015],[(-1.4155),6.2625],[(-1.5155),6.2625],[(-1.5155),3.7295],[(-1.5655),3.7295],[(-1.5655),3.6295],[(-1.0155),3.6295],[(-1.0165),3.7295],[(-1.4155),3.7265],[(-1.4155),5.6015],[0.8875,5.6015],[0.8925,5.4225],[1.1925,5.4315],[1.1875,5.6305],[1.9665,5.6305],[1.9665,3.6295],[1.9765,3.6295],[1.9765,5.6305],[4.5765,5.6315],[4.5765,5.7315],[1.1845,5.7305],[1.1155,8.2485],[1.6015,8.2485],[1.6015,8.7485],[5.5175,8.7485],[5.5245,8.3595])) 0.0000 3.7000 true 2 [0.2375,1.2835] [(-5.7980),(-9.1880)] [6.2730,11.7550]
+    BB_part #wall "BB_L2_Wall_006" #(#([(-0.0955),0.0545],[(-0.0545),0.1125],[(-0.0055),0.1615],[0.0505,0.2015],[0.1125,0.2305],[0.1795,0.2485],[0.2495,0.2545],[0.2495,0.3545],[(-0.2495),0.3545],[(-0.2495),(-0.3545)],[(-0.1495),(-0.3545)],[(-0.1495),(-0.1455)],[(-0.1435),(-0.0745)],[(-0.1245),(-0.0075)]),#([0.0265,0.2545],[(-0.0675),0.1725],[(-0.1495),0.0795],[(-0.1495),0.2545])) 0.0000 3.7000 true 2 [2.8555,3.3515] [2.6060,2.9970] [3.1050,3.7060]
+    BB_part #wall "BB_L2_Wall_007" #(#([(-0.3400),0.0500],[(-0.3400),(-0.0500)],[0.3400,(-0.0500)],[0.3400,0.0500])) 0.0000 3.7000 true 2 [4.0180,(-9.1290)] [3.6780,(-9.1790)] [4.3580,(-9.0790)]
+    BB_part #wall "BB_L2_Wall_008" #(#([(-0.3375),(-0.0265)],[(-0.3375),(-0.1265)],[0.2205,(-0.1265)],[0.3375,0.0415],[0.2135,0.1265],[0.1075,(-0.0265)])) 0.0000 3.7000 true 2 [5.3755,(-9.0525)] [5.0380,(-9.1790)] [5.7130,(-8.9260)]
+    BB_part #wall "BB_L2_Wall_009" #(#([0.1560,(-0.0680)],[0.1450,0.3390],[(-0.0050),0.3350],[0.0050,(-0.0230)],[(-0.1560),(-0.2540)],[(-0.0330),(-0.3390)])) 0.0000 3.7000 true 2 [6.5330,(-7.5390)] [6.3770,(-7.8780)] [6.6890,(-7.2000)]
+    BB_part #wall "BB_L2_Wall_010" #(#([0.1500,(-0.1255)],[0.1500,0.3145],[0.0520,0.3145],[0.0400,0.7295],[(-0.0600),0.7275],[(-0.0600),0.3145],[(-0.1500),0.3145],[(-0.1500),(-0.1255)],[(-0.0890),(-0.1255)],[(-0.0720),(-0.7295)],[0.0780,(-0.7255)],[0.0610,(-0.1255)])) 0.0000 3.7000 true 2 [6.5800,(-5.7945)] [6.4300,(-6.5240)] [6.7300,(-5.0650)]
+    BB_part #wall "BB_L2_Wall_011" #(#([(-0.0690),(-0.3370)],[(-0.1160),(-0.3790)],[(-0.1720),(-0.4140)],[(-0.2320),(-0.4400)],[(-0.2980),(-0.4560)],[(-0.3620),(-0.4610)],[(-0.3620),(-0.5620)],[0.0590,(-0.5620)],[0.0590,(-0.5520)],[0.1620,(-0.5490)],[0.1670,(-0.7290)],[0.2670,(-0.7260)],[0.2620,(-0.5460)],[0.3620,(-0.5430)],[0.3480,(-0.0430)],[0.2460,(-0.0460)],[0.2240,0.7290],[0.1240,0.7260],[0.1460,(-0.0490)],[0.0480,(-0.0520)],[0.0310,(-0.1670)],[0.0070,(-0.2280)],[(-0.0290),(-0.2890)]),#([0.0590,(-0.4500)],[(-0.1290),(-0.4550)],[(-0.0260),(-0.3650)],[0.0540,(-0.2660)])) 0.0000 3.7000 true 2 [6.3140,(-2.9600)] [5.9520,(-3.6890)] [6.6760,(-2.2310)]
+    BB_part #wall "BB_L2_Wall_012" #(#([0.0350,0.9400],[(-0.1660),0.9340],[(-0.1120),(-0.9400)],[0.0870,(-0.9340)],[0.0650,(-0.1590)],[0.1660,(-0.1560)],[0.1520,0.3440],[0.0540,0.3410])) 0.0000 3.7000 true 2 [6.4120,0.0830] [6.2460,(-0.8570)] [6.5780,1.0230]
+    BB_part #wall "BB_L2_Wall_013" #(#([0.2855,(-1.0390)],[0.2605,(-0.2380)],[0.3695,(-0.2350)],[0.3545,0.2650],[0.2505,0.2620],[0.2285,1.0420],[0.1285,1.0390],[0.1505,0.2590],[(-0.3695),0.2600],[(-0.3695),0.1640],[(-0.2995),0.1640],[(-0.2355),0.1540],[(-0.1735),0.1330],[(-0.1135),0.1010],[(-0.0625),0.0600],[(-0.0155),0.0090],[0.0205,(-0.0470)],[0.0475,(-0.1090)],[0.0625,(-0.1750)],[0.0665,(-0.2420)],[0.1605,(-0.2440)],[0.1865,(-1.0420)]),#([0.0625,(-0.0020)],[(-0.0185),0.0880],[(-0.1075),0.1640],[0.0575,0.1640])) 0.0000 3.7000 true 2 [6.1165,3.4420] [5.7470,2.4000] [6.4860,4.4840]
+    BB_part #wall "BB_L2_Wall_014" #(#([0.1235,0.1240],[0.1495,(-0.7900)],[0.2495,(-0.7870)],[0.2235,0.1260],[0.2625,0.1270],[0.2495,0.7900],[0.0995,0.7870],[0.1025,0.6240],[(-0.2475),0.6170],[(-0.2425),0.3660],[(-0.2625),0.3660],[(-0.2625),0.2660],[(-0.2405),0.2660],[(-0.2375),0.1170])) 0.0000 3.7000 true 2 [6.0565,6.6500] [5.7940,5.8600] [6.3190,7.4400]
+    BB_part #column "BB_L2_Column_001" #(#([0.2750,(-0.1500)],[0.2750,0.1500],[(-0.2750),0.1500],[(-0.2750),(-0.1500)])) 0.0000 3.7000 true 2 [0.8480,(-3.4220)] [0.5730,(-3.5720)] [1.1230,(-3.2720)]
+    BB_part #column "BB_L2_Column_002" #(#([0.2750,0.1500],[(-0.2750),0.1500],[(-0.2750),(-0.1500)],[0.2750,(-0.1500)])) 0.0000 3.7000 true 2 [0.8300,(-0.0000)] [0.5550,(-0.1500)] [1.1050,0.1500]
+    BB_part #column "BB_L2_Column_003" #(#([(-0.2750),(-0.1500)],[0.2750,(-0.1500)],[0.2750,0.1500],[(-0.2750),0.1500])) 0.0000 3.7000 true 2 [0.8310,3.3000] [0.5560,3.1500] [1.1060,3.4500]
+    BB_part #parapet "BB_L2_Parapet_001_parapet" #(#([0.9235,(-0.1270)],[0.8715,(-0.2430)],[0.8125,(-0.3560)],[0.6785,(-0.5710)],[0.5225,(-0.7710)],[0.4365,(-0.8650)],[0.2515,(-1.0380)],[0.0485,(-1.1910)],[(-0.0575),(-1.2590)],[(-0.2815),(-1.3790)],[(-0.5175),(-1.4740)],[(-0.7605),(-1.5450)],[(-1.0105),(-1.5890)],[(-1.2635),(-1.6070)],[(-1.2605),(-1.7570)],[(-0.9925),(-1.7380)],[(-0.8585),(-1.7180)],[(-0.5965),(-1.6570)],[(-0.3415),(-1.5690)],[(-0.0975),(-1.4540)],[0.1335,(-1.3150)],[0.3485,(-1.1530)],[0.4485,(-1.0630)],[0.6355,(-0.8690)],[0.8015,(-0.6570)],[0.9435,(-0.4280)],[1.0615,(-0.1860)],[1.1535,0.0680],[1.2185,0.3290],[1.2555,0.5960],[1.2635,0.7300],[1.2395,1.7570],[1.0895,1.7530],[1.1145,0.8620],[1.1065,0.6090],[1.0715,0.3570],[1.0105,0.1110])) 0.0000 1.1000 false 2 [6.9605,(-9.0920)] [5.6970,(-10.8490)] [8.2240,(-7.3350)]
+    BB_part #glass "BB_L2_Glass_001_GLASS WALL 2600H 20X100" #(#([1.2800,(-0.0050)],[1.3200,0.0000],[1.3190,0.0050],[(-1.3200),0.0050],[(-1.3200),(-0.0050)])) 0.0000 2.6000 false 2 [4.4260,3.6560] [3.1060,3.6510] [5.7460,3.6610]
+    BB_part #glass "BB_L2_Glass_002_GLASS WALL 2600H 20X100" #(#([1.4225,(-0.0050)],[1.4225,0.0050],[(-1.4225),0.0050],[(-1.4225),(-0.0050)])) 0.0000 2.6000 false 2 [4.5285,(-3.4720)] [3.1060,(-3.4770)] [5.9510,(-3.4670)]
+    BB_part #glass "BB_L2_Glass_003_GLASS WALL 2600H 20X100" #(#([(-0.0050),(-0.9485)],[0.0050,(-0.9485)],[0.0050,0.9485],[(-0.0050),0.9485])) 0.0000 2.6000 false 2 [2.6560,2.0475] [2.6510,1.0990] [2.6610,2.9960]
+    BB_part #glass "BB_L2_Glass_004_GLASS WALL 2600H 20X100" #(#([(-0.0050),(-0.3340)],[0.0050,(-0.3340)],[0.0050,0.3340],[(-0.0050),0.3340])) 0.0000 2.6000 false 2 [2.6560,(-1.2350)] [2.6510,(-1.5690)] [2.6610,(-0.9010)]
+    BB_part #glass "BB_L2_Glass_005_GLASS WALL 2600H 20X100" #(#([(-0.0050),(-0.1715)],[0.0050,(-0.1715)],[0.0050,0.1715],[(-0.0050),0.1715])) 0.0000 2.6000 false 2 [2.6560,(-2.6405)] [2.6510,(-2.8120)] [2.6610,(-2.4690)]
+    BB_part #lintel "BB_L2_Lintel_001_L2-001" #(#([(-0.9390),0.0500],[(-0.9390),(-0.0500)],[0.9390,(-0.0500)],[0.9390,0.0500])) 2.0000 3.7000 true 2 [2.7380,(-9.1290)] [1.7990,(-9.1790)] [3.6770,(-9.0790)]
+    BB_part #lintel "BB_L2_Lintel_002_L2-002" #(#([0.3390,(-0.0500)],[0.3390,0.0500],[(-0.3390),0.0500],[(-0.3390),(-0.0500)])) 2.4000 3.7000 true 2 [4.6980,(-9.1290)] [4.3590,(-9.1790)] [5.0370,(-9.0790)]
+    BB_part #lintel "BB_L2_Lintel_003_L2-003" #(#([0.0500,0.8395],[(-0.0500),0.8395],[(-0.0500),(-0.8385)],[0.0500,(-0.8395)])) 2.0000 3.7000 true 2 [1.0670,(-7.8385)] [1.0170,(-8.6780)] [1.1170,(-6.9990)]
+    BB_part #lintel "BB_L2_Lintel_004_L2-004" #(#([0.4990,(-0.0500)],[0.4990,0.0500],[(-0.4990),0.0500],[(-0.4990),(-0.0500)])) 2.4000 3.7000 true 2 [(-1.8280),4.9630] [(-2.3270),4.9130] [(-1.3290),5.0130]
+    BB_part #lintel "BB_L2_Lintel_005_L2-005" #(#([(-0.0500),(-0.4990)],[0.0500,(-0.4990)],[0.0500,0.4990],[(-0.0500),0.4990])) 2.4000 3.7000 true 2 [(-3.5300),(-6.0300)] [(-3.5800),(-6.5290)] [(-3.4800),(-5.5310)]
+    BB_part #lintel "BB_L2_Lintel_006_L2-006" #(#([0.0750,0.5490],[(-0.0750),0.5490],[(-0.0750),(-0.5490)],[0.0750,(-0.5490)])) 2.4000 3.7000 true 2 [(-1.5550),(-7.6300)] [(-1.6300),(-8.1790)] [(-1.4800),(-7.0810)]
+    BB_part #lintel "BB_L2_Lintel_007_L2-007" #(#([(-0.0500),(-0.3890)],[0.0500,(-0.3890)],[0.0500,0.3890],[(-0.0500),0.3890])) 2.4000 3.7000 true 2 [0.3700,11.0890] [0.3200,10.7000] [0.4200,11.4780]
+    BB_part #lintel "BB_L2_Lintel_008_L2-008" #(#([(-0.0500),(-0.8390)],[0.0500,(-0.8390)],[0.0500,0.8390],[(-0.0500),0.8390])) 2.0000 3.7000 true 2 [(-1.2280),8.3860] [(-1.2780),7.5470] [(-1.1780),9.2250]
+    BB_part #lintel "BB_L2_Lintel_009_L2-009" #(#([(-0.0585),(-0.8405)],[0.0915,(-0.8375)],[0.0585,0.8405],[(-0.0915),0.8375])) 2.0000 3.7000 true 2 [6.2145,8.2785] [6.1230,7.4380] [6.3060,9.1190]
+    BB_part #glass "BB_L2_Glass_006_L2-010 transom" #(#([(-0.0050),(-0.4490)],[0.0050,(-0.4490)],[0.0050,0.4490],[(-0.0050),0.4490])) 2.4000 2.6000 false 2 [2.6560,(-2.0190)] [2.6510,(-2.4680)] [2.6610,(-1.5700)]
+    BB_part #lintel "BB_L2_Lintel_010_L2-011" #(#([0.0305,0.6900],[(-0.0695),0.6870],[(-0.0305),(-0.6900)],[0.0695,(-0.6870)])) 2.0000 3.7000 true 2 [6.2755,5.1720] [6.2060,4.4820] [6.3450,5.8620]
+    BB_part #lintel "BB_L2_Lintel_011_L2-012" #(#([0.4550,0.5235],[0.3320,0.6085],[(-0.4550),(-0.5225)],[(-0.3320),(-0.6085)])) 2.0000 3.7000 true 2 [6.0450,(-8.4025)] [5.5900,(-9.0110)] [6.5000,(-7.7940)]
+    BB_part #lintel "BB_L2_Lintel_012_L2-013" #(#([0.0655,0.3410],[(-0.0845),0.3370],[(-0.0655),(-0.3410)],[0.0845,(-0.3370)])) 2.4000 3.7000 true 2 [6.5925,(-6.8620)] [6.5080,(-7.2030)] [6.6770,(-6.5210)]
+    BB_part #lintel "BB_L2_Lintel_013_L2-014" #(#([0.6890,(-0.0500)],[0.6890,0.0500],[(-0.6890),0.0500],[(-0.6890),(-0.0500)])) 2.0000 3.7000 true 2 [(-0.1170),(-9.1300)] [(-0.8060),(-9.1800)] [0.5720,(-9.0800)]
+    BB_part #lintel "BB_L2_Lintel_014_L2-015" #(#([0.3990,(-0.0500)],[0.3990,0.0500],[(-0.3990),0.0500],[(-0.3990),(-0.0500)])) 2.4000 3.7000 true 2 [(-3.9800),(-6.7400)] [(-4.3790),(-6.7900)] [(-3.5810),(-6.6900)]
+    BB_part #lintel "BB_L2_Lintel_015_L2-016" #(#([0.0500,0.4365],[(-0.0500),0.4365],[(-0.0500),(-0.4365)],[0.0500,(-0.4365)])) 2.4000 3.7000 true 2 [(-3.0450),9.1675] [(-3.0950),8.7310] [(-2.9950),9.6040]
+    BB_part #lintel "BB_L2_Lintel_016_L2-018" #(#([0.0500,0.3890],[(-0.0500),0.3890],[(-0.0500),(-0.3890)],[0.0500,(-0.3890)])) 2.4000 3.7000 true 2 [(-4.0400),10.2720] [(-4.0900),9.8830] [(-3.9900),10.6610]
+    BB_part #lintel "BB_L2_Lintel_017_L2-019" #(#([0.4890,(-0.0495)],[0.4890,0.0505],[(-0.4890),0.0495],[(-0.4890),(-0.0505)])) 2.4000 3.7000 true 2 [5.3040,6.9655] [4.8150,6.9150] [5.7930,7.0160]
+    BB_part #lintel "BB_L2_Lintel_018_L2-020" #(#([(-0.0285),(-0.6905)],[0.0715,(-0.6875)],[0.0285,0.6905],[(-0.0715),0.6875])) 2.0000 3.7000 true 2 [6.3745,1.7115] [6.3030,1.0210] [6.4460,2.4020]
+    BB_part #lintel "BB_L2_Lintel_019_L2-021" #(#([0.0710,(-0.6870)],[0.0320,0.6900],[(-0.0710),0.6880],[(-0.0310),(-0.6900)])) 2.0000 3.7000 true 2 [6.5490,(-4.3770)] [6.4780,(-5.0670)] [6.6200,(-3.6870)]
+    BB_part #lintel "BB_L2_Lintel_020_L2-022" #(#([0.0305,0.6905],[(-0.0695),0.6875],[(-0.0305),(-0.6905)],[0.0695,(-0.6875)])) 2.0000 3.7000 true 2 [6.4685,(-1.5425)] [6.3990,(-2.2330)] [6.5380,(-0.8520)]
+    BB_part #lintel "BB_L2_Lintel_021_L2-023" #(#([0.0500,0.3890],[(-0.0500),0.3890],[(-0.0500),(-0.3890)],[0.0500,(-0.3890)])) 2.4000 3.7000 true 2 [(-4.0400),11.2130] [(-4.0900),10.8240] [(-3.9900),11.6020]
+    BB_part #lintel "BB_L2_Lintel_022_L2-024" #(#([0.0500,0.3890],[(-0.0500),0.3890],[(-0.0500),(-0.3890)],[0.0500,(-0.3890)])) 2.4000 3.7000 true 2 [(-1.2280),10.0950] [(-1.2780),9.7060] [(-1.1780),10.4840]
+    BB_part #lintel "BB_L2_Lintel_023_L2-025" #(#([0.0500,0.3885],[(-0.0500),0.3895],[(-0.0500),(-0.3895)],[0.0500,(-0.3895)])) 2.4000 3.7000 true 2 [(-2.6050),10.0955] [(-2.6550),9.7060] [(-2.5550),10.4850]
+    BB_part #railing "BB_L2_Railing_001" #(#([0.8285,(-8.7990)],[0.9785,(-8.7960)],[0.6485,8.6500],[0.6735,8.6500],[0.6715,8.7500],[0.6215,8.7490],[0.6205,8.7990],[0.5205,8.7970],[0.5205,8.7720],[(-0.9785),8.7420],[(-0.9745),8.5920],[0.4985,8.6220])) 0.0000 1.1000 false 2 [7.2295,1.4610] [6.2510,(-7.3380)] [8.2080,10.2600]
+    BB_part #railing "BB_L2_Railing_002" #(#([(-5.4510),(-0.1560)],[(-5.4510),(-0.1810)],[5.4780,0.0310],[5.4750,0.1810],[(-5.4540),(-0.0310)],[(-5.4530),(-0.0560)],[(-5.4780),(-0.0560)],[(-5.4760),(-0.1560)])) 0.0000 1.1000 false 2 [0.2210,(-10.8800)] [(-5.2570),(-11.0610)] [5.6990,(-10.6990)]
+    BB_part #step "BB_L2_Step_001_stair 2 flight 1 step 1 down" #(#([0.1210,0.5750],[(-0.1210),0.5750],[(-0.1210),(-0.5750)],[0.1210,(-0.5750)])) (-0.5290) (-0.1760) false 2 [4.4130,7.5890] [4.2920,7.0140] [4.5340,8.1640]
+    BB_part #step "BB_L2_Step_002_stair 2 flight 1 step 2 down" #(#([0.1250,0.5750],[(-0.1250),0.5750],[(-0.1250),(-0.5750)],[0.1250,(-0.5750)])) (-0.7050) (-0.3520) false 2 [4.1670,7.5890] [4.0420,7.0140] [4.2920,8.1640]
+    BB_part #step "BB_L2_Step_003_stair 2 flight 1 step 3 down" #(#([0.1250,0.5750],[(-0.1250),0.5750],[(-0.1250),(-0.5750)],[0.1250,(-0.5750)])) (-0.8810) (-0.5290) false 2 [3.9170,7.5890] [3.7920,7.0140] [4.0420,8.1640]
+    BB_part #step "BB_L2_Step_004_stair 2 flight 1 step 4 down" #(#([0.1250,0.5750],[(-0.1250),0.5750],[(-0.1250),(-0.5750)],[0.1250,(-0.5750)])) (-1.0570) (-0.7050) false 2 [3.6670,7.5890] [3.5420,7.0140] [3.7920,8.1640]
+    BB_part #step "BB_L2_Step_005_stair 2 flight 1 step 5 down" #(#([0.1250,0.5750],[(-0.1250),0.5750],[(-0.1250),(-0.5750)],[0.1250,(-0.5750)])) (-1.2330) (-0.8810) false 2 [3.4170,7.5890] [3.2920,7.0140] [3.5420,8.1640]
+    BB_part #step "BB_L2_Step_006_stair 2 flight 1 step 6 down" #(#([0.1250,0.5750],[(-0.1250),0.5750],[(-0.1250),(-0.5750)],[0.1250,(-0.5750)])) (-1.4100) (-1.0570) false 2 [3.1670,7.5890] [3.0420,7.0140] [3.2920,8.1640]
+    BB_part #step "BB_L2_Step_007_stair 2 flight 1 step 7 down" #(#([0.1250,0.5750],[(-0.1250),0.5750],[(-0.1250),(-0.5750)],[0.1250,(-0.5750)])) (-1.5860) (-1.2330) false 2 [2.9170,7.5890] [2.7920,7.0140] [3.0420,8.1640]
+    BB_part #step "BB_L2_Step_008_stair 2 flight 1 step 8 down" #(#([0.1250,0.5750],[(-0.1250),0.5750],[(-0.1250),(-0.5750)],[0.1250,(-0.5750)])) (-1.7620) (-1.4100) false 2 [2.6670,7.5890] [2.5420,7.0140] [2.7920,8.1640]
+    BB_part #step "BB_L2_Step_009_stair 2 flight 2 step 1 up" #(#([0.1250,0.5520],[(-0.1250),0.5520],[(-0.1250),(-0.5520)],[0.1250,(-0.5520)])) (-0.1760) 0.1760 false 2 [4.4060,9.4760] [4.2810,8.9240] [4.5310,10.0280]
+    BB_part #step "BB_L2_Step_010_stair 2 flight 2 step 2 up" #(#([0.1250,0.5520],[(-0.1250),0.5520],[(-0.1250),(-0.5520)],[0.1250,(-0.5520)])) 0.0000 0.3520 false 2 [4.1560,9.4760] [4.0310,8.9240] [4.2810,10.0280]
+    BB_part #step "BB_L2_Step_011_stair 2 flight 2 step 3 up" #(#([0.1250,0.5520],[(-0.1250),0.5520],[(-0.1250),(-0.5520)],[0.1250,(-0.5520)])) 0.1760 0.5290 false 2 [3.9060,9.4760] [3.7810,8.9240] [4.0310,10.0280]
+    BB_part #step "BB_L2_Step_012_stair 2 flight 2 step 4 up" #(#([0.1250,0.5520],[(-0.1250),0.5520],[(-0.1250),(-0.5520)],[0.1250,(-0.5520)])) 0.3520 0.7050 false 2 [3.6560,9.4760] [3.5310,8.9240] [3.7810,10.0280]
+    BB_part #step "BB_L2_Step_013_stair 2 flight 2 step 5 up" #(#([0.1250,0.5520],[(-0.1250),0.5520],[(-0.1250),(-0.5520)],[0.1250,(-0.5520)])) 0.5290 0.8810 false 2 [3.4060,9.4760] [3.2810,8.9240] [3.5310,10.0280]
+    BB_part #step "BB_L2_Step_014_stair 2 flight 2 step 6 up" #(#([0.1250,0.5520],[(-0.1250),0.5520],[(-0.1250),(-0.5520)],[0.1250,(-0.5520)])) 0.7050 1.0570 false 2 [3.1560,9.4760] [3.0310,8.9240] [3.2810,10.0280]
+    BB_part #step "BB_L2_Step_015_stair 2 flight 2 step 7 up" #(#([0.1250,0.5520],[(-0.1250),0.5520],[(-0.1250),(-0.5520)],[0.1250,(-0.5520)])) 0.8810 1.2330 false 2 [2.9060,9.4760] [2.7810,8.9240] [3.0310,10.0280]
+    BB_part #step "BB_L2_Step_016_stair 2 flight 2 step 8 up" #(#([0.1250,0.5520],[(-0.1250),0.5520],[(-0.1250),(-0.5520)],[0.1250,(-0.5520)])) 1.0570 1.4100 false 2 [2.6560,9.4760] [2.5310,8.9240] [2.7810,10.0280]
+    BB_part #slab "BB_L2_Slab_001" #(#([(-6.3915),(-11.1130)],[(-6.4995),(-11.2800)],[(-6.4635),(-11.4370)],[4.7295,(-11.2100)],[5.1205,(-11.1350)],[5.3805,(-11.0490)],[5.8635,(-10.8010)],[6.1375,(-10.5960)],[6.3795,(-10.3570)],[6.6975,(-9.9160)],[6.9395,(-9.3440)],[7.0015,(-9.0770)],[7.0415,(-8.6800)],[6.7005,9.4940],[6.7195,9.8000],[6.7145,9.8760],[6.6495,9.9400],[5.0445,9.8640],[0.1515,9.8640],[0.1085,11.4370],[(-7.0415),11.4290],[(-6.4685),(-9.5350)],[(-6.2645),(-9.9520)],[(-6.1995),(-10.3960)],[(-6.2315),(-10.6920)]),#([3.3275,6.6660],[0.2085,6.6650],[0.1395,9.1840],[0.6255,9.1850],[0.6255,9.6850],[3.3275,9.6840]),#([(-2.8415),(-8.5280)],[(-2.8425),(-8.9290)],[(-4.6435),(-8.9290)],[(-4.6435),(-7.1770)],[(-2.8425),(-7.1770)],[(-2.8415),(-7.4280)],[(-2.8615),(-7.4290)],[(-2.8615),(-8.5270)])) (-0.2500) 0.0000 false 2 [1.2125,0.3480] [(-5.8290),(-11.0890)] [8.2540,11.7850]
+    BB_lines "BB_L1_Stairs" #(#([3.1595,(-1.6200)],[3.1595,(-0.6700)]),#([3.1595,(-1.6140)],[4.1015,(-1.6140)]),#([3.1595,(-2.3640)],[4.1015,(-2.3640)]),#([3.1595,(-1.8640)],[3.1595,(-1.6200)]),#([3.1595,(-2.1140)],[3.1595,(-1.8640)]),#([3.1595,(-2.3640)],[3.1595,(-2.1140)]),#([2.8945,(-1.0160)],[2.8945,(-0.6700)]),#([2.8945,(-1.2170)],[2.8945,(-1.1270)]),#([3.1445,(-1.6200)],[3.1445,(-0.6700)]),#([3.1595,(-1.5990)],[4.1015,(-1.5990)]),#([3.1595,(-1.8490)],[4.1015,(-1.8490)]),#([3.1595,(-2.0990)],[4.1015,(-2.0990)]),#([3.1595,(-2.3490)],[4.1015,(-2.3490)]),#([2.9095,(-1.0200)],[2.9095,(-0.6700)]),#([2.9095,(-1.2210)],[2.9095,(-1.1200)]),#([3.1595,(-1.8640)],[4.1015,(-1.8640)]),#([3.1595,(-2.1140)],[4.1015,(-2.1140)]),#([(-4.1015),2.3640],[(-4.1015),1.5140]),#([(-3.2865),1.8590],[(-3.2865),1.5140]),#([(-3.2865),2.0600],[(-3.2865),1.9710]),#([(-3.4865),2.3600],[(-3.4865),1.5140]),#([(-3.6865),2.3640],[(-3.6865),1.5140]),#([(-3.8865),2.3640],[(-3.8865),1.5140]),#([(-4.0865),2.3640],[(-4.0865),1.5140]),#([(-3.1015),1.5350],[(-3.1015),1.5140]),#([(-3.3015),1.8630],[(-3.3015),1.5140]),#([(-3.3015),2.0640],[(-3.3015),1.9640]),#([(-3.5015),2.3640],[(-3.5015),1.5140]),#([(-3.7015),2.3640],[(-3.7015),1.5140]),#([(-3.9015),2.3640],[(-3.9015),1.5140])) 1 [0.1115,10.2410] "Stairs"
+    BB_lines "BB_L1_StairsAbove" #(#([1.4590,(-1.7225)],[1.4880,(-2.8115)]),#([2.6020,(-1.7225)],[2.3440,(-1.7225)]),#([2.6020,(-2.8115)],[2.6020,(-1.7225)]),#([1.4880,(-2.8115)],[2.6020,(-2.8115)]),#([1.7680,(-0.2225)],[1.7680,(-0.5155)]),#([2.3440,(-0.2225)],[1.7680,(-0.2225)]),#([1.4460,(-1.2225)],[2.3440,(-1.2225)]),#([1.4280,(-0.5155)],[1.4460,(-1.2225)]),#([1.7680,(-0.5155)],[1.4280,(-0.5155)]),#([2.3440,(-1.7225)],[1.4460,(-1.7225)]),#([2.3440,(-1.2225)],[1.4460,(-1.2225)]),#([2.3440,(-1.2225)],[2.3440,(-0.2225)]),#([1.4460,(-1.2225)],[1.4460,(-1.7225)]),#([2.3440,(-1.2225)],[2.3440,(-1.7225)]),#([2.8600,(-0.2225)],[2.3440,(-0.2225)]),#([2.8630,(-1.2225)],[2.3440,(-1.2225)]),#([3.1460,(-0.8365)],[3.3270,(-1.2225)]),#([2.9520,(-0.7885)],[3.1460,(-0.8365)]),#([3.2350,(-0.6565)],[2.9520,(-0.7885)]),#([3.0410,(-0.6095)],[3.2350,(-0.6565)]),#([2.8840,(-0.2725)],[3.0410,(-0.6095)]),#([2.3440,(-1.7375)],[1.4460,(-1.7375)]),#([2.3440,(-1.4875)],[1.4460,(-1.4875)]),#([2.3440,(-1.2375)],[1.4460,(-1.2375)]),#([2.3290,(-1.2225)],[2.3290,(-0.2225)]),#([2.5790,(-1.2225)],[2.5790,(-0.2225)]),#([2.8290,(-1.2225)],[2.8290,(-0.2225)]),#([3.0790,(-0.7295)],[3.0790,(-0.6185)]),#([3.0790,(-1.2225)],[3.0790,(-0.8195)]),#([2.3440,(-1.4725)],[1.4460,(-1.4725)]),#([2.5940,(-1.2225)],[2.5940,(-0.2225)]),#([2.8440,(-1.2225)],[2.8440,(-0.2225)]),#([3.0940,(-0.7225)],[3.0940,(-0.6225)]),#([3.0940,(-1.2225)],[3.0940,(-0.8235)]),#([0.4430,1.9045],[0.4430,2.8115]),#([(-0.5170),1.9045],[0.4430,1.9045]),#([0.4430,2.8115],[(-0.5170),2.8115]),#([(-0.5170),2.8115],[(-0.5170),1.9115]),#([(-2.9070),1.9115],[(-0.5170),1.9115]),#([(-3.3270),2.8115],[(-0.5170),2.8115]),#([(-3.1700),2.4745],[(-3.3270),2.8115]),#([(-2.9760),2.4275],[(-3.1700),2.4745]),#([(-3.2590),2.2955],[(-2.9760),2.4275]),#([(-3.0640),2.2475],[(-3.2590),2.2955]),#([(-2.9070),1.9115],[(-3.0640),2.2475]),#([(-0.5020),2.8115],[(-0.5020),1.9115]),#([(-0.7020),2.8115],[(-0.7020),1.9115]),#([(-0.9020),2.8115],[(-0.9020),1.9115]),#([(-1.1020),2.8115],[(-1.1020),1.9115]),#([(-1.3020),2.8115],[(-1.3020),1.9115]),#([(-1.5020),2.8115],[(-1.5020),1.9115]),#([(-1.7020),2.8115],[(-1.7020),1.9115]),#([(-1.9020),2.8115],[(-1.9020),1.9115]),#([(-2.1020),2.8115],[(-2.1020),1.9115]),#([(-2.3020),2.8115],[(-2.3020),1.9115]),#([(-2.5020),2.8115],[(-2.5020),1.9115]),#([(-2.7020),2.8115],[(-2.7020),1.9115]),#([(-2.9020),2.8115],[(-2.9020),1.9115]),#([(-3.1020),2.3685],[(-3.1020),2.2565]),#([(-3.1020),2.8115],[(-3.1020),2.4575]),#([(-3.3020),2.8115],[(-3.3020),2.7575]),#([(-0.7170),2.8115],[(-0.7170),1.9115]),#([(-0.9170),2.8115],[(-0.9170),1.9115]),#([(-1.1170),2.8115],[(-1.1170),1.9115]),#([(-1.3170),2.8115],[(-1.3170),1.9115]),#([(-1.5170),2.8115],[(-1.5170),1.9115]),#([(-1.7170),2.8115],[(-1.7170),1.9115]),#([(-1.9170),2.8115],[(-1.9170),1.9115]),#([(-2.1170),2.8115],[(-2.1170),1.9115]),#([(-2.3170),2.8115],[(-2.3170),1.9115]),#([(-2.5170),2.8115],[(-2.5170),1.9115]),#([(-2.7170),2.8115],[(-2.7170),1.9115]),#([(-2.9170),2.8115],[(-2.9170),1.9325]),#([(-3.1170),2.3615],[(-3.1170),2.2605]),#([(-3.1170),2.8115],[(-3.1170),2.4615]),#([(-3.3170),2.8115],[(-3.3170),2.7895])) 1 [(-0.0730),9.8435] "StairsAbove"
+    BB_lines "BB_L2_Stairs" #(#([0.3300,2.3635],[0.7200,2.3635]),#([(-0.3900),2.3705],[(-0.1900),2.3705]),#([(-0.5900),2.3705],[(-0.3900),2.3705]),#([(-0.7900),2.3705],[(-0.5900),2.3705]),#([(-0.9900),2.3705],[(-0.7900),2.3705]),#([(-1.1900),2.3705],[(-0.9900),2.3705]),#([(-1.3900),2.3705],[(-1.1900),2.3705]),#([(-1.5900),2.3705],[(-1.3900),2.3705]),#([(-1.7900),2.3705],[(-1.5900),2.3705]),#([(-1.9900),2.3705],[(-1.7900),2.3705]),#([(-2.1900),2.3705],[(-1.9900),2.3705]),#([(-2.3900),2.3705],[(-2.1900),2.3705]),#([(-2.5900),2.3705],[(-2.3900),2.3705]),#([(-2.7900),2.3705],[(-2.5900),2.3705]),#([(-2.9900),2.3705],[(-2.7900),2.3705]),#([(-3.1900),2.3705],[(-2.9900),2.3705]),#([(-3.3900),2.3705],[(-3.1900),2.3705]),#([(-3.5900),2.3705],[(-3.3900),2.3705]),#([3.4290,(-2.3705)],[3.5900,(-2.3705)]),#([3.1790,(-2.3705)],[3.4290,(-2.3705)]),#([2.9290,(-2.3705)],[3.1790,(-2.3705)])) 2 [(-0.4000),9.3845] "Stairs"
+    BB_lines "BB_L2_StairsAbove" #(#([(-1.5235),(-1.5090)],[(-0.4065),(-1.5090)]),#([(-1.5625),(-0.0890)],[(-1.5235),(-1.5090)]),#([(-1.1065),1.5090],[(-1.1065),1.0090]),#([(-0.4065),1.5090],[(-1.1065),1.5090]),#([(-1.5935),1.0090],[(-1.5695),0.1590]),#([(-1.1065),1.0090],[(-1.5935),1.0090]),#([(-0.4065),(-1.5090)],[1.5935,(-1.5090)]),#([(-1.5705),0.1590],[(-1.5705),(-0.0910)]),#([0.3265,1.5090],[(-0.4065),1.5090])) 2 [2.9455,8.5230] "StairsAbove"
+    BB_room "TOILET - 3.2 m2" [(-4.5230),(-7.8950)] 1
+    BB_room "LIFT HALL - 6.1 m2" [(-0.8860),(-7.7710)] 1
+    BB_room "TOILET - 2.6 m2" [1.7870,8.2640] 1
+    BB_room "MO 4 PAX" [(-0.4990),(-1.4620)] 1
+    BB_room "MEEETING 4 PAX - 8.2 m2" [1.9000,5.6690] 1
+    BB_room "MANAGER - 11.4 m2" [(-1.8350),3.0020] 1
+    BB_room "F/C - 3.9 m2" [(-4.4020),6.2750] 1
+    BB_room "LIFT HALL - 6.0 m2" [(-0.6490),(-7.7680)] 2
+    BB_room "PANTRY - 3.9 m2" [(-4.6300),(-7.7680)] 2
+    BB_room "F/C - 5.5 m2" [(-0.0260),8.3390] 2
+    BB_room "MALE TOILET - 4.7 m2" [(-1.1590),10.7810] 2
+    BB_room "FEMALE TOILET - 6.4 m2" [(-3.7950),10.7810] 2
+    BB_room "RACK - 7.3 m2" [(-4.5400),8.1250] 2
+    BB_room "CSO 5PAX" [(-0.2630),(-0.5650)] 2
+    BB_room "WAITING AREA" [3.8480,(-4.5660)] 2
+    BB_room "MINI BAR / WEALTH ROOM" [3.1960,1.4790] 2
+    BB_room "FOR 1 PAX" [(-0.1360),5.2050] 2
+    BB_room "BOH" [(-4.9590),1.3600] 2
+    if BB_furnWant do BB_furnRun()
+    local origin = point name:"BB_ORIGIN_DWG" size:1.0 pos:[0.0 - BB_shift.x, 0.0 - BB_shift.y, 0.0]
+    origin.isHidden = true
+    origin.ignoreExtents = true
+    (BB_layer "BB_Datums").addNode origin
+    setUserProp origin "Source" "I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg + I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg, converted with LibreDWG; drawing units mm, model in metres"
+    setUserProp origin "Levels" ("floor levels " + (BB_levels as string) + " m, wall heights " + (BB_heights as string) + " m")
+    viewport.setType #view_iso_user
+    select BB_nodes
+    max zoomext sel all
+    clearSelection()
+    redrawViews()
+    format "BB BUILD COMPLETE: % objects in % s, % failed checks\n" BB_nodes.count ((timeStamp() - t0) / 1000.0) BB_failed.count
+    for f in BB_failed do format "  check failed: %\n" f
+    true
+)
+try (destroyDialog BB_UI) catch ()
+rollout BB_UI "Bank branch (test)" width:340
+(
+    label info "Open a new empty scene before Build." align:#left
+    label units1 "Build sets System Units to metres." align:#left
+    checkbox dwg "At the drawing's own coordinates" checked:true tooltip:"Untick to centre the model on the origin"
+    spinner lv1 "Level 1 floor level (m):" range:[-50, 500, 0.00] type:#float fieldwidth:60
+    spinner ht1 "Level 1 wall height (m):" range:[2.2, 15, 3.70] type:#float fieldwidth:60
+    spinner lv2 "Level 2 floor level (m):" range:[-50, 500, 3.70] type:#float fieldwidth:60
+    spinner ht2 "Level 2 wall height (m):" range:[2.2, 15, 3.70] type:#float fieldwidth:60
+    group "Furniture boxes (heights in mm)"
+    (
+        checkbox fb "Build furniture boxes" checked:true
+        checkbox fo "Furniture boxes only" checked:false tooltip:"Add only the boxes to the scene already built from this model: no structure, and the empty-scene check is skipped"
+        label fol "(add to the scene already built from this model)" align:#left
+        spinner fh1 "ATM / kiosk:" across:2 range:[10, 5000, 1500] type:#integer fieldwidth:40
+        spinner fh2 "Computer:" range:[10, 5000, 450] type:#integer fieldwidth:40
+        spinner fh3 "Printer / copier:" across:2 range:[10, 5000, 300] type:#integer fieldwidth:40
+        spinner fh4 "Telephone:" range:[10, 5000, 150] type:#integer fieldwidth:40
+        spinner fh5 "TV / wall screen:" across:2 range:[10, 5000, 600] type:#integer fieldwidth:40
+        spinner fh6 "Partition:" range:[10, 5000, 1200] type:#integer fieldwidth:40
+        spinner fh7 "Plant:" across:2 range:[10, 5000, 600] type:#integer fieldwidth:40
+        spinner fh8 "Sanitary fitting:" range:[10, 5000, 850] type:#integer fieldwidth:40
+        spinner fh9 "Chair / stool:" across:2 range:[10, 5000, 450] type:#integer fieldwidth:40
+        spinner fh10 "Sofa / armchair:" range:[10, 5000, 800] type:#integer fieldwidth:40
+        spinner fh11 "Table / desk:" across:2 range:[10, 5000, 750] type:#integer fieldwidth:40
+        spinner fh12 "Coffee table:" range:[10, 5000, 450] type:#integer fieldwidth:40
+        spinner fh13 "Cabinet:" across:2 range:[10, 5000, 900] type:#integer fieldwidth:40
+        spinner fh14 "Tall cabinet:" range:[10, 5000, 2100] type:#integer fieldwidth:40
+    )
+    checkbox cm "Collapse to Editable Mesh (no live modifiers)" checked:false
+    button build "BUILD THE MODEL" width:310 height:32
+    label note1 "Parts stay live: spline + Extrude (mesh) + Smooth." align:#left
+    group "After the build"
+    (
+        button upd "Update levels and heights" width:300
+        button col "Collapse all now (Editable Mesh)" width:300
+        button fap "Apply furniture heights" width:300
+    )
+    on build pressed do
+    (
+        BB_levels = #(lv1.value,lv2.value)
+        BB_heights = #(ht1.value,ht2.value)
+        BB_collapse = cm.checked
+        BB_shift = if dwg.checked then [0.0, 0.0] else [1.2120, 0.3480]
+        BB_furnHeights = #((fh1.value / 1000.0),(fh2.value / 1000.0),(fh3.value / 1000.0),(fh4.value / 1000.0),(fh5.value / 1000.0),(fh6.value / 1000.0),(fh7.value / 1000.0),(fh8.value / 1000.0),(fh9.value / 1000.0),(fh10.value / 1000.0),(fh11.value / 1000.0),(fh12.value / 1000.0),(fh13.value / 1000.0),(fh14.value / 1000.0))
+        BB_furnWant = fb.checked
+        BB_furnAddOnly = fo.checked
+        try
+        (
+            if BB_build() do
+            (
+                if BB_failed.count == 0 then messageBox ("Built " + (BB_nodes.count as string) + " objects. Every part passed the closed-solid, height and position checks. Save As to keep your .max file.") title:"Bank branch"
+                else messageBox ((BB_failed.count as string) + " part(s) failed a check and are on layer BB_Check_Failed (listed in the MAXScript Listener). Everything else was built.") title:"Bank branch"
+            )
+        )
+        catch (messageBox (getCurrentException()) title:"Build stopped")
+    )
+    on upd pressed do
+    (
+        local r = BB_updateLevels #(lv1.value,lv2.value) #(ht1.value,ht2.value)
+        messageBox ("Every part moved to its level; " + (r[1] as string) + " parts set to their level's wall height." + (if r[2] > 0 then ("\n" + (r[2] as string) + " were collapsed already and kept their height.") else "")) title:"Bank branch"
+    )
+    on col pressed do
+    (
+        local n = BB_collapseAll()
+        messageBox ((n as string) + " parts collapsed to Editable Mesh.") title:"Bank branch"
+    )
+    on fap pressed do
+    (
+        BB_furnHeights = #((fh1.value / 1000.0),(fh2.value / 1000.0),(fh3.value / 1000.0),(fh4.value / 1000.0),(fh5.value / 1000.0),(fh6.value / 1000.0),(fh7.value / 1000.0),(fh8.value / 1000.0),(fh9.value / 1000.0),(fh10.value / 1000.0),(fh11.value / 1000.0),(fh12.value / 1000.0),(fh13.value / 1000.0),(fh14.value / 1000.0))
+        local r = BB_furnApply()
+        messageBox ((r[1] as string) + " furniture boxes set to the heights in the window and stood on their floor or support." + (if r[2] > 0 then ("\n" + (r[2] as string) + " were left alone (not a Box any more, or a kind this script does not know).") else "")) title:"Bank branch"
+    )
+)
+createDialog BB_UI

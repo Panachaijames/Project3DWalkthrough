@@ -1,0 +1,847 @@
+{
+ "part": "u-west",
+ "accepted": [
+  {
+   "id": "UW-04",
+   "kind": "window",
+   "subtype": "small fixed window, single pane",
+   "a": [
+    88.2949,
+    15.8585
+   ],
+   "b": [
+    88.2949,
+    16.608
+   ],
+   "width": 0.749,
+   "wallThickness": 0.25,
+   "host": "east wall of the bedroom wing x 88.17-88.42, in the corridor",
+   "evidence": "WIN lines at x 88.17, 88.22 and 88.27, y 15.909-16.557/16.608. D-JAMB jambs x 88.17-88.27 at y 15.859-15.909 and 16.557-16.607. Wall end caps at y 15.858 and 16.608. The outer leaf is replaced by a FLOOR line at x 88.42",
+   "confidence": "medium",
+   "notes": "Frame in the inner 100 mm. Faces the open courtyard.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "UW-05",
+   "kind": "window",
+   "subtype": "sliding window, 2 panels",
+   "a": [
+    88.2949,
+    8.0085
+   ],
+   "b": [
+    88.2949,
+    10.9062
+   ],
+   "width": 2.898,
+   "wallThickness": 0.25,
+   "host": "east wall of the bedroom x 88.17-88.42, between column 88.17-88.42 x 7.76-8.01 and the wall end at y 10.906",
+   "evidence": "WIN lines x 88.195-88.27: two sashes at y 8.058-9.431 and 9.481-10.806. D-JAMB jambs at y 8.008-8.058 and 10.856-10.906; mullion at 9.431-9.481. Outside: a TREE-layer planter box x 88.47-89.32, y 8.0-10.9",
+   "confidence": "medium",
+   "notes": "The planter outside means a window, not a door. Frame in the inner 100 mm (centre x 88.22).",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "UW-06",
+   "kind": "passage",
+   "subtype": "doorless opening from a wall end to a column",
+   "a": [
+    86.8697,
+    12.6323
+   ],
+   "b": [
+    88.1699,
+    12.6323
+   ],
+   "width": 1.3,
+   "wallThickness": 0.25,
+   "host": "bathroom south / bedroom north wall line y 12.507-12.757: gap between its east end at x 86.870 and column 88.17-88.42 x 12.507-12.757",
+   "evidence": "WALL lines at y 12.507, 12.607, 12.657 and 12.757; the bathroom east-wall LWPOL ends at x 86.870. Next on the same line is COL 88.170-88.420 x 12.507-12.757. Nothing is drawn in the 1.30 m gap",
+   "confidence": "medium",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees",
+   "notes": "Opens the bedroom into the 1.3 m corridor (x 86.87-88.17) that leads to the dressing room and the suite entrance.",
+   "agreement": "both"
+  },
+  {
+   "id": "UW-07",
+   "kind": "passage",
+   "subtype": "doorless bathroom entrance through a 0.95 m deep vestibule",
+   "a": [
+    85.2698,
+    15.809
+   ],
+   "b": [
+    86.2696,
+    15.809
+   ],
+   "width": 1,
+   "wallThickness": 0.1,
+   "host": "bathroom north wall y 15.759-15.859, between the bathroom and the dressing room",
+   "evidence": "The bathroom north-wall LWPOL x 81.92-85.27 ends at 85.270 and the block outline x 86.27-86.87 resumes at 86.270. Thin side walls at x 85.17-85.27 and 86.27-86.37 run y 15.759-16.708. A HIDDEN2 rectangle 85.27-86.27 x 15.759-16.708 (soffit) covers the vestibule. No leaf, arc or track",
+   "confidence": "medium",
+   "notes": "No bathroom door is drawn. The other end of the vestibule, open to the dressing room, is at y 16.708, 0.95 m north of this line.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "UW-08",
+   "kind": "passage",
+   "subtype": "doorless opening",
+   "a": [
+    86.8194,
+    16.7084
+   ],
+   "b": [
+    86.8194,
+    17.9085
+   ],
+   "width": 1.2,
+   "wallThickness": 0.1,
+   "host": "partition line x 86.77-86.87 between the corridor and the dressing room",
+   "evidence": "Below the gap: block 86.37-86.87 x 15.86-16.61 (outline to y 16.708). Above it: partition LWPOL 86.769-86.870 x 17.909-21.059 on the same line. The 1.20 m gap is empty",
+   "confidence": "high",
+   "notes": "Corridor to dressing room.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); not in the inventory"
+  },
+  {
+   "id": "UW-09",
+   "kind": "door",
+   "subtype": "double hinged door, 2 x 0.65 m leaves",
+   "a": [
+    85.2698,
+    18.6085
+   ],
+   "b": [
+    86.5698,
+    18.6085
+   ],
+   "width": 1.3,
+   "wallThickness": 0.1,
+   "host": "partition y 18.558-18.658 between the dressing room and the walk-in closet",
+   "evidence": "Partition pieces x 82.02-85.27 and 86.57-86.87 leave a 1.30 m gap. Two leaves (WALL layer, HIDDEN2) are hinged at (85.27, 17.909) and (86.57, 17.909), with swing arcs, opening south. A HIDDEN2 box 85.27-86.57 x 17.909-19.283 spans the partition",
+   "confidence": "medium",
+   "decision": "A and B agree (kind, ends within 5 cm); not in the inventory",
+   "notes": "The leaves are drawn at the front of the box, y 17.909, which is 0.70 m south of the partition centre line where a and b are placed.",
+   "agreement": "both"
+  },
+  {
+   "id": "UW-10",
+   "kind": "passage",
+   "subtype": "open end of the glass bridge (doorless)",
+   "a": [
+    93.3946,
+    19.4085
+   ],
+   "b": [
+    93.3946,
+    21.1591
+   ],
+   "width": 1.751,
+   "wallThickness": 0.25,
+   "host": "main block west wall line x 93.27-93.52, between pier 93.27-93.52 x 18.66-19.41 and pier 93.27-93.52 x 21.16-23.01",
+   "evidence": "COL 93.27-93.52 x 19.158-19.408 and COL 93.27-93.52 x 21.159-21.409 face each other across the bridge. D-JAMB cladding narrows the gap to y 19.458-21.108 (1.65 m). The bridge floor continues onto the landing; nothing is drawn in the gap",
+   "confidence": "medium",
+   "notes": "The section (x 14-18, y 51-59, at twice plan scale) shows the bridge running open into the main block.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "UW-11",
+   "kind": "door",
+   "subtype": "sliding pocket door",
+   "a": [
+    100.8641,
+    19.4582
+   ],
+   "b": [
+    100.8641,
+    21.1582
+   ],
+   "width": 1.7,
+   "wallThickness": 0.389,
+   "host": "west wall of the upper lounge x 100.67-101.06, between the landing and the lounge",
+   "evidence": "A DOOR-layer panel 100.920-100.959 x 20.367-23.449 runs into the pocket between the leaves x 100.67-100.77 and x 101.009-101.059 (y 21.158-24.559). The opening runs from the north face of block 100.67-101.06 x 18.034-19.458 to the end of the pocket wall and the column face at y 21.158",
+   "confidence": "medium",
+   "notes": "The panel is drawn 3.08 m long for a 1.70 m opening. A TREE-layer HIDDEN2 line at x 100.92 marks the door line.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "UW-12",
+   "kind": "door",
+   "subtype": "sliding pocket door; corner pair with UW-13, no corner post",
+   "a": [
+    100.8641,
+    16.6088
+   ],
+   "b": [
+    100.8641,
+    18.0335
+   ],
+   "width": 1.425,
+   "wallThickness": 0.389,
+   "host": "west wall line of the lounge x 100.67-101.06, south of block 100.67-101.06 x 18.034-19.458",
+   "evidence": "A DOOR-layer panel 100.920-100.959 x 17.215-18.797 sits partly inside the block, which serves as the pocket. The opening runs from the block's south face (y 18.034) to the corner with UW-13. Hidden TREE-layer lines along x 100.92 and y 16.584 mark the door lines",
+   "confidence": "medium",
+   "notes": "The south end is set on the UW-13 wall centre line (y 16.609) because there is no post at the corner.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "UW-13",
+   "kind": "door",
+   "subtype": "sliding pocket door; corner pair with UW-12",
+   "a": [
+    100.8641,
+    16.6088
+   ],
+   "b": [
+    102.1468,
+    16.6088
+   ],
+   "width": 1.283,
+   "wallThickness": 0.3,
+   "host": "south wall of the lounge y 16.459-16.759: a pocket wall with leaves at y 16.459-16.559 and 16.659/16.709-16.759",
+   "evidence": "A DOOR-layer panel 101.551-103.133 x 16.584-16.623 sits between the pocket-wall leaves. The wall ends at x 102.147; from there the opening runs open to the corner",
+   "confidence": "medium",
+   "notes": "The west end is set on the UW-12 wall centre line (x 100.864).",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "UW-14",
+   "kind": "window",
+   "subtype": "sliding window, 4 panels (fixed-sliding-sliding-fixed)",
+   "a": [
+    100.9196,
+    14.4338
+   ],
+   "b": [
+    106.1696,
+    14.4338
+   ],
+   "width": 5.25,
+   "wallThickness": 0.25,
+   "host": "south facade y 14.309-14.559 of the upper corridor, between columns 100.67-100.92 and 106.17-106.42",
+   "evidence": "WIN lines y 14.459-14.559, x 100.97-106.12, in two tracks. D-JAMB jambs at x 100.92-100.97 and 106.12-106.17; mullions at 102.234-102.284, 103.497-103.597 and 104.809-104.859. Outside: a TREE-layer edge at y 14.309 and a pebble/planted roof",
+   "confidence": "low",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees",
+   "notes": "Could be full-height sliding doors onto the roof garden. The centre (x 103.545) is inside the box; the east end lies at x 106.17.",
+   "agreement": "both"
+  }
+ ],
+ "disputes": [
+  {
+   "why": "ends differ by 0.075 m",
+   "at": [
+    81.895,
+    14.058
+   ],
+   "versions": {
+    "A": {
+     "id": "UW-02",
+     "kind": "window",
+     "subtype": "sliding window, 2 panels",
+     "a": [
+      81.8947,
+      12.7573
+     ],
+     "b": [
+      81.8947,
+      15.3591
+     ],
+     "width": 2.602,
+     "wallThickness": 0.25,
+     "host": "west facade line x 81.77-82.02 at the shower, between the bathroom south wall (y 12.51-12.76) and the shaft wall (y 15.36-15.46)",
+     "evidence": "WIN lines x 81.77-81.87, y 12.807-15.309: two sashes in tracks 81.77-81.82 and 81.82-81.87. D-JAMB jambs at y 12.757-12.807 and 15.309-15.359; mullion at 14.033-14.083",
+     "confidence": "medium",
+     "notes": "Bathroom/shower window. The frame sits in the outer 100 mm (frame centre x 81.82); a and b are on the centre line of the 250 mm west wall."
+    },
+    "B": {
+     "id": "UW-02",
+     "kind": "window",
+     "subtype": "2-panel sliding window (two tracks)",
+     "a": [
+      81.8196,
+      15.3591
+     ],
+     "b": [
+      81.8196,
+      12.7573
+     ],
+     "width": 2.6018,
+     "wallThickness": 0.1,
+     "host": "west wing, west facade at the shower: window plane x 81.77-81.87 between walls y 15.36-15.46 and y 12.51-12.76",
+     "evidence": "WIN lines at x 81.77-81.87. D-JAMB ends at 12.757-12.807 and 15.309-15.359, mullion at 14.033-14.083. Bounded by the wall cap y 15.3591 (piece 81.77-82.92 x 15.36-15.46) and the bedroom north wall y 12.5073-12.7573, which reaches x 81.77. FLOOR lines run across at x 81.77/81.87.",
+     "confidence": "medium",
+     "notes": "The window forms the whole west side of the shower, with no wall beside it, so the thickness is the 0.10 window plane. The west wall further north is 0.25 thick (centre x 81.895)."
+    },
+    "E": {
+     "id": "U-W01",
+     "floor": "upper",
+     "kind": "window",
+     "d": "v",
+     "c": 81.82,
+     "lo": 12.757,
+     "hi": 15.359,
+     "o1": 81.77,
+     "o2": 81.87,
+     "a": [
+      81.82,
+      12.757
+     ],
+     "b": [
+      81.82,
+      15.359
+     ],
+     "width": 2.602,
+     "encodings": [
+      "WIN band 5 lines",
+      "D-JAMB rects"
+     ],
+     "note": "",
+     "sure": true
+    }
+   }
+  },
+  {
+   "why": "listed by B+E only",
+   "at": [
+    81.895,
+    20.163
+   ],
+   "versions": {
+    "B": {
+     "id": "UW-01",
+     "kind": "window",
+     "subtype": "glazed panel drawn on the glass layer (fixed or unknown), frame at the inner face",
+     "a": [
+      81.8947,
+      20.959
+     ],
+     "b": [
+      81.8947,
+      19.3672
+     ],
+     "width": 1.5918,
+     "wallThickness": 0.25,
+     "host": "west wing, west facade wall x 81.77-82.02 (dressing room)",
+     "evidence": "The 4-line west wall (x 81.77/81.87/81.92/82.02) stops at y 19.3672 (closing line + cap 19.267-19.367) and restarts at 20.9590. WALL-GL glass line at x 81.9697, frame lines on WALL at x 81.92/82.02, D-JAMB end pieces 19.367-19.417 and 20.909-20.959. TREE line across the outer face at x 81.77.",
+     "confidence": "low",
+     "decision": "listed as window",
+     "notes": "Drawn on the glass layer, not WIN. No leaf, track or threshold cue. It could be fixed full-height glazing, which would make it a glass wall. I found no elevation of this face."
+    },
+    "E": {
+     "id": "U-W02",
+     "floor": "upper",
+     "kind": "window",
+     "d": "v",
+     "c": 81.8946,
+     "lo": 19.3672,
+     "hi": 20.959,
+     "o1": 81.7697,
+     "o2": 82.0195,
+     "a": [
+      81.8946,
+      19.3672
+     ],
+     "b": [
+      81.8946,
+      20.959
+     ],
+     "width": 1.592,
+     "encodings": [
+      "WALL-GL single line",
+      "D-JAMB rects",
+      "wall gap (outer 0.15 m only)"
+     ],
+     "note": "inner 0.10 m of the wall drawn through as frame lines on WALL",
+     "sure": true
+    }
+   }
+  },
+  {
+   "why": "kind A door / B window; inventory kind window",
+   "at": [
+    82.795,
+    10.258
+   ],
+   "versions": {
+    "A": {
+     "id": "UW-01",
+     "kind": "door",
+     "subtype": "sliding glass door, 4 panels (fixed-sliding-sliding-fixed)",
+     "a": [
+      82.7946,
+      8.0085
+     ],
+     "b": [
+      82.7946,
+      12.5073
+     ],
+     "width": 4.499,
+     "wallThickness": 0.25,
+     "host": "bedroom west side: glazed bay between column 82.67-82.92 x 7.76-8.01 and column 82.67-82.92 x 12.51-12.76; no wall infill between them",
+     "evidence": "WIN lines x 82.819-82.919, y 8.058-12.457 in two tracks. D-JAMB jambs at y 8.008-8.058 and 12.457-12.507; mullions at 9.11-9.16, 10.21-10.31 and 11.36-11.41. Outside: a FLOOR-layer balcony strip x 81.77-82.67 with a segmented glass balustrade at x 81.87-81.90",
+     "confidence": "low",
+     "decision": "door (sliding): it opens onto a balcony with a balustrade",
+     "notes": "Could be a sliding window if it has a sill; no elevation of this facade exists. The glazing is flush with the inner face (frame centre x 82.869); a and b are on the column centre line."
+    },
+    "B": {
+     "id": "UW-03",
+     "kind": "window",
+     "subtype": "4-panel sliding glazing between columns (two tracks)",
+     "a": [
+      82.7945,
+      12.5073
+     ],
+     "b": [
+      82.7945,
+      8.0085
+     ],
+     "width": 4.4988,
+     "wallThickness": 0.25,
+     "host": "west wing, bedroom west side: column line x 82.67-82.92 (COL at y 12.51-12.76 and 7.76-8.01)",
+     "evidence": "WIN lines at x 82.82-82.92 in four ~1.05 m panels on two tracks. D-JAMB mullions at y 9.11-9.16, 10.21-10.31 and 11.36-11.41; end frames at 8.009-8.109 and 12.407-12.507. FLOOR line runs across at x 82.67. Outside is a 0.77-0.9 m ledge (FLOOR outline x 81.77-82.67), and a double line at x 81.87/81.90 is broken at the mullion positions (likely a glass balustrade).",
+     "confidence": "low",
+     "decision": "listed as window",
+     "notes": "It may be full-height sliding glazing onto the narrow ledge or balcony, which would make it a sliding door or a glass wall. The sill height cannot be read from the plan."
+    },
+    "E": {
+     "id": "U-W03",
+     "floor": "upper",
+     "kind": "window",
+     "d": "v",
+     "c": 82.869,
+     "lo": 8.008,
+     "hi": 12.507,
+     "o1": 82.819,
+     "o2": 82.919,
+     "a": [
+      82.869,
+      8.008
+     ],
+     "b": [
+      82.869,
+      12.507
+     ],
+     "width": 4.499,
+     "encodings": [
+      "WIN band 5 lines",
+      "D-JAMB rects"
+     ],
+     "note": "bay",
+     "sure": true
+    }
+   }
+  },
+  {
+   "why": "listed by B+E only",
+   "at": [
+    83.071,
+    14.317
+   ],
+   "versions": {
+    "B": {
+     "id": "UW-08",
+     "kind": "door",
+     "subtype": "glass shower door, single hinged 0.70 m leaf",
+     "a": [
+      83.0713,
+      13.9529
+     ],
+     "b": [
+      83.0713,
+      14.6813
+     ],
+     "width": 0.7284,
+     "wallThickness": 0.02,
+     "host": "shower screen: single top-level WALL line x 83.0713 (y 12.76-15.36) between shower and bathroom",
+     "evidence": "Block XR_L44 Plan$0$A$C83adbef5 (layer 0, top-level) inserted at (83.0816, 14.6813), rot -90, mirrored. It holds a double-line glass leaf drawn ~37 deg open on XR_L44 Plan$0$A-DOOR and an arc of radius 0.70 from hinge (83.0787, 14.6529) to (83.0787, 13.9529).",
+     "confidence": "low",
+     "decision": "listed because a leaf and arc are drawn, but the host is a single-line glass screen",
+     "notes": "Drop it if shower screens are not treated as walls. The screen line is not broken at the door."
+    },
+    "E": {
+     "id": "U-D01",
+     "floor": "upper",
+     "kind": "door",
+     "d": "v",
+     "c": 83.079,
+     "lo": 13.9529,
+     "hi": 14.6529,
+     "o1": 83.059,
+     "o2": 83.099,
+     "a": [
+      83.079,
+      13.9529
+     ],
+     "b": [
+      83.079,
+      14.6529
+     ],
+     "width": 0.7,
+     "encodings": [
+      "xref door block A$C83adbef5 (leaf lines + hidden arc on A-DOOR)"
+     ],
+     "note": "in a single-line partition; leaf drawn 52 deg open",
+     "sure": true
+    }
+   }
+  },
+  {
+   "why": "listed by E only",
+   "at": [
+    86.019,
+    21.009
+   ],
+   "versions": {
+    "E": {
+     "id": "U-P01",
+     "floor": "upper",
+     "kind": "passage",
+     "d": "h",
+     "c": 21.0085,
+     "lo": 85.27,
+     "hi": 86.769,
+     "o1": 20.959,
+     "o2": 21.059,
+     "a": [
+      85.27,
+      21.0085
+     ],
+     "b": [
+      86.769,
+      21.0085
+     ],
+     "width": 1.499,
+     "encodings": [
+      "wall gap"
+     ],
+     "note": "one end is a perpendicular wall face",
+     "sure": true
+    }
+   }
+  },
+  {
+   "why": "listed by E only",
+   "at": [
+    87.521,
+    15.808
+   ],
+   "versions": {
+    "E": {
+     "id": "U-P03",
+     "floor": "upper",
+     "kind": "passage",
+     "d": "h",
+     "c": 15.8079,
+     "lo": 86.871,
+     "hi": 88.171,
+     "o1": 15.7579,
+     "o2": 15.8579,
+     "a": [
+      86.871,
+      15.8079
+     ],
+     "b": [
+      88.171,
+      15.8079
+     ],
+     "width": 1.3,
+     "encodings": [
+      "wall gap"
+     ],
+     "note": "",
+     "sure": true
+    }
+   }
+  },
+  {
+   "why": "listed by E only",
+   "at": [
+    87.521,
+    16.658
+   ],
+   "versions": {
+    "E": {
+     "id": "U-P04",
+     "floor": "upper",
+     "kind": "passage",
+     "d": "h",
+     "c": 16.6578,
+     "lo": 86.871,
+     "hi": 88.171,
+     "o1": 16.6078,
+     "o2": 16.7078,
+     "a": [
+      86.871,
+      16.6578
+     ],
+     "b": [
+      88.171,
+      16.6578
+     ],
+     "width": 1.3,
+     "encodings": [
+      "wall gap"
+     ],
+     "note": "",
+     "sure": true
+    }
+   }
+  },
+  {
+   "why": "ends differ by 0.050 m",
+   "at": [
+    88.295,
+    20.281
+   ],
+   "versions": {
+    "A": {
+     "id": "UW-03",
+     "kind": "door",
+     "subtype": "double hinged door, unequal leaves 0.80 + 0.40 m",
+     "a": [
+      88.2949,
+      19.653
+     ],
+     "b": [
+      88.2949,
+      20.909
+     ],
+     "width": 1.256,
+     "wallThickness": 0.25,
+     "host": "east wall of the bedroom wing x 88.17-88.42; entrance to the master suite from the glass bridge",
+     "evidence": "Block *U31 (XR_L44$0$I-DOOR, scale 0.8, mirrored) inserted at (88.420, 20.909). Leaves: 0.8 m hinged at (88.32, 20.881) and 0.4 m hinged at (88.32, 19.681), both with arcs, both swinging west into the corridor. Frame pieces x 88.32-88.42 at y 19.653-19.691 and 20.871-20.909. WALL rebate stubs x 88.32-88.42 at y 19.608-19.653 and 20.909-20.959",
+     "confidence": "high",
+     "notes": "Width is measured between the frame outer edges, which are also the outer-leaf rebates. The inner-leaf reveal is wider: y 19.608-20.959 = 1.351 m."
+    },
+    "B": {
+     "id": "UW-06",
+     "kind": "door",
+     "subtype": "double hinged, unequal leaves 0.80 + 0.40, swinging west into the wing",
+     "a": [
+      88.2948,
+      19.6085
+     ],
+     "b": [
+      88.2948,
+      20.959
+     ],
+     "width": 1.3505,
+     "wallThickness": 0.25,
+     "host": "west wing, east facade wall x 88.17-88.42 where the glass bridge joins (corridor landing)",
+     "evidence": "*U31 insert (XR_L44$0$I-DOOR) at (88.4196, 20.9090), rot -90, scale 0.8, mirrored. Leaf 0.80 hinged at y 20.881 and leaf 0.40 hinged at y 19.681, both with arcs. WALL frame pieces at 88.32-88.42 x 19.6085-19.6530 and 20.9090-20.9590. The wall ends at 19.6085 (cap lines 19.5085/19.6085) and at 20.9590.",
+     "confidence": "high"
+    },
+    "E": {
+     "id": "U-D02",
+     "floor": "upper",
+     "kind": "door",
+     "d": "v",
+     "c": 88.296,
+     "lo": 19.608,
+     "hi": 20.959,
+     "o1": 88.171,
+     "o2": 88.421,
+     "a": [
+      88.296,
+      19.608
+     ],
+     "b": [
+      88.296,
+      20.959
+     ],
+     "width": 1.351,
+     "encodings": [
+      "*U31 unequal double door on I-DOOR",
+      "wall gap"
+     ],
+     "note": "door frame 19.653-20.909 sits ~45 mm inside the wall ends",
+     "sure": true
+    }
+   }
+  },
+  {
+   "why": "listed by E only",
+   "at": [
+    90.82,
+    19.359
+   ],
+   "versions": {
+    "E": {
+     "id": "U-W07",
+     "floor": "upper",
+     "kind": "window",
+     "d": "h",
+     "c": 19.359,
+     "lo": 88.42,
+     "hi": 93.22,
+     "o1": 19.309,
+     "o2": 19.409,
+     "a": [
+      88.42,
+      19.359
+     ],
+     "b": [
+      93.22,
+      19.359
+     ],
+     "width": 4.8,
+     "encodings": [
+      "WIN lines",
+      "frame lines on HATCH",
+      "D-JAMB rects"
+     ],
+     "note": "link corridor south",
+     "sure": true
+    }
+   }
+  },
+  {
+   "why": "listed by E only",
+   "at": [
+    90.82,
+    21.209
+   ],
+   "versions": {
+    "E": {
+     "id": "U-W06",
+     "floor": "upper",
+     "kind": "window",
+     "d": "h",
+     "c": 21.209,
+     "lo": 88.42,
+     "hi": 93.22,
+     "o1": 21.159,
+     "o2": 21.259,
+     "a": [
+      88.42,
+      21.209
+     ],
+     "b": [
+      93.22,
+      21.209
+     ],
+     "width": 4.8,
+     "encodings": [
+      "WIN band 5 lines",
+      "frame lines on HATCH",
+      "D-JAMB rects"
+     ],
+     "note": "link corridor north",
+     "sure": true
+    }
+   }
+  },
+  {
+   "why": "listed by E only",
+   "at": [
+    93.47,
+    16.559
+   ],
+   "versions": {
+    "E": {
+     "id": "U-W09",
+     "floor": "upper",
+     "kind": "window",
+     "d": "v",
+     "c": 93.47,
+     "lo": 14.459,
+     "hi": 18.658,
+     "o1": 93.42,
+     "o2": 93.52,
+     "a": [
+      93.47,
+      14.459
+     ],
+     "b": [
+      93.47,
+      18.658
+     ],
+     "width": 4.199,
+     "encodings": [
+      "WIN band 5 lines",
+      "D-JAMB rects"
+     ],
+     "note": "bay",
+     "sure": true
+    }
+   }
+  },
+  {
+   "why": "listed by E only",
+   "at": [
+    93.47,
+    23.784
+   ],
+   "versions": {
+    "E": {
+     "id": "U-W10",
+     "floor": "upper",
+     "kind": "window",
+     "d": "v",
+     "c": 93.47,
+     "lo": 23.109,
+     "hi": 24.459,
+     "o1": 93.42,
+     "o2": 93.52,
+     "a": [
+      93.47,
+      23.109
+     ],
+     "b": [
+      93.47,
+      24.459
+     ],
+     "width": 1.35,
+     "encodings": [
+      "WALL-GL single line",
+      "D-JAMB rects"
+     ],
+     "note": "glass line between wall lines drawn through",
+     "sure": true
+    }
+   }
+  },
+  {
+   "why": "listed by E only",
+   "at": [
+    94.295,
+    14.509
+   ],
+   "versions": {
+    "E": {
+     "id": "U-W08",
+     "floor": "upper",
+     "kind": "window",
+     "d": "h",
+     "c": 14.509,
+     "lo": 93.42,
+     "hi": 95.17,
+     "o1": 14.459,
+     "o2": 14.559,
+     "a": [
+      93.42,
+      14.509
+     ],
+     "b": [
+      95.17,
+      14.509
+     ],
+     "width": 1.75,
+     "encodings": [
+      "WIN + WALL-GL band",
+      "D-JAMB rects"
+     ],
+     "note": "",
+     "sure": true
+    }
+   }
+  }
+ ]
+}

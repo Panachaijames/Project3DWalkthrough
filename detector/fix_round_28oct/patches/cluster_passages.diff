@@ -1,0 +1,105 @@
+--- a/openings.py
++++ b/openings.py
+@@ -20,7 +20,8 @@
+     small pieces (< 0.15 m) are not walls.
+  2. Gaps: wall strips are pairs of opposite faces of the wall solid. From each strip end, look along its centre line
+     for the next wall material; the stretch between is a gap, typed by its near end (cap / L-corner / T) and far end
+-    (the end of a collinear strip of the same thickness, or the face of another wall).
++    (the end of a collinear strip of the same thickness, or the face of another wall). A strip is 3 cm long at least:
++    a door set against a cross wall leaves wall ends of 3-8 cm.
+  3. Door swings: arcs on any layer (r 0.28-2 m, sweep 20-125 deg). Which end is the closed leaf: a leaf (line or thin
+     rectangle) drawn toward the other end, and the closed tip lying on the wall. Leaves of swings are never read as
+     sliding panels.
+@@ -50,7 +51,11 @@
+     another = frame-only sliding unit.
+  7. A gap with nothing in it is a passage only when it looks like one: both ends wall ends of one wall line (<= 3.6 m;
+     <= 2.75 m from an L-corner), or a short gap (<= 1.6 m) from a wall end to a wall face that carries on; not stub
+-    to stub, not at a free-standing post, not across a stair, not on walls thinner than 7 cm, building on both sides.
++    to stub (wall ends under 0.3 m: pilasters, kerbs) unless the opening's frame is drawn (door-layer lines across
++    the wall at both ends) or both free ends are found as wall ends of their own and the gap is <= 1.6 m (a doorway
++    set against cross walls); not at a free-standing post; not across a stair (stair lines coming more than 3 cm
++    into the wall band: an outline along a face, or treads stopping at it, mean a stair hall beside the gap, whose
++    door it is); not on walls thinner than 7 cm; building on both sides.
+  8. Duplicates (both faces, two leaves of a double wall, gap + symbol) are fused: door > window > passage.
+ """
+ import argparse, json, math, sys, time
+@@ -255,10 +260,11 @@
+ 
+ def strip_gaps(fl, G, strips, dmin=0.3, dmax=7.0):
+     """From every wall end (a strip that stops, with or without a perpendicular wall right after it) look along the
+-    wall's centre line for the next wall material: the stretch between is a candidate opening on that wall line."""
++    wall's centre line for the next wall material: the stretch between is a candidate opening on that wall line.
++    Every strip counts, down to the 3 cm of find_strips: a door set against a cross wall leaves a wall end of 3-4 cm
++    (the reveal between the frame and the cross wall)."""
+     gaps = []
+-    for S in strips:
+-        if S.s1 - S.s0 < 0.04: continue
++    for S in sorted(strips, key=lambda S: S.s1 - S.s0 < 0.04):               # ends under 4 cm last: gaps are added, not reordered
+         for sgn in (1, -1):
+             u = S.u if sgn > 0 else (-S.u[0], -S.u[1])
+             n = perp(u)
+@@ -663,6 +669,7 @@
+         else:
+             if not passage_ok(fl, g): continue
+             g.kind, g.sub, g.ev, g.conf = 'passage', 'open', [base + ', nothing drawn in it'], 0.5 if g.far == 'end' else 0.4
++            if framed(fl, g): g.ev.append('opening frame drawn (door-layer jamb lines at both ends)'); g.conf = 0.6
+         for h in g.swings: h.used = True
+         for b in g.bands: b.used = True
+         if g.kind == 'door': fl.used_panels |= {int(x[6:]) for x in g.notes if x.startswith('panel#')}
+@@ -1237,9 +1244,13 @@
+ 
+ 
+ def crosses_stair(fl, g):
+-    """Stair treads or flights (stair-role line work) inside the gap: a stair end, not an opening in a wall."""
++    """Stair treads or flights (stair-role line work) inside the gap: a stair end, not an opening in a wall. Only line
++    work that comes into the wall band counts (more than 3 cm inside both faces): the outline of a stair hall drawn
++    along a wall face, or treads that stop at it, say that the room beside the gap is a stair hall, and the gap is its
++    door. (A hall outline lies 0 cm inside the face; the stair lines that cross a gap in the older plans cross the
++    whole band or come 8 cm into it.)"""
+     SI = fl.SI
+-    box = rect(g.a, g.u, 0.05, g.w - 0.05, -g.t / 2, g.t / 2)
++    box = rect(g.a, g.u, 0.05, g.w - 0.05, -g.t / 2 + 0.03, g.t / 2 - 0.03)
+     idx = SI.near_box(*box.bounds)
+     for k in idx:
+         p = fl.P[SI.pid[k]]
+@@ -1249,6 +1260,25 @@
+     return False
+ 
+ 
++def framed(fl, g):
++    """A doorless opening drawn with its frame: a line on a door layer across the wall band at each end of the gap
++    (the jambs of an opening symbol, within 3 cm of the wall ends, spanning the wall thickness)."""
++    SI = fl.SI
++    box = rect(g.a, g.u, -0.05, g.w + 0.05, -g.t / 2 - 0.05, g.t / 2 + 0.05)
++    idx = SI.near_box(*box.bounds)
++    if not len(idx): return False
++    s0, s1, la, lb, cs = SI.in_frame(idx, g.a, g.u)
++    ends = set()
++    for k in np.nonzero(cs < math.sin(math.radians(3)))[0]:                 # square to the wall line
++        p = fl.P[SI.pid[idx[k]]]
++        if 'door' not in p.roles or p.roles & {'wall', 'column', 'window', 'glass'}: continue
++        lo, hi = sorted((float(la[k]), float(lb[k])))
++        if hi - lo < 0.8 * g.t or lo < -g.t / 2 - 0.05 or hi > g.t / 2 + 0.05: continue
++        for e, s in enumerate((0.0, g.w)):
++            if abs((s0[k] + s1[k]) / 2 - s) <= 0.03: ends.add(e)
++    return len(ends) == 2
++
++
+ def passage_ok(fl, g):
+     """A gap with nothing drawn in it is a passage only when it looks like one: both ends are wall ends on one wall
+     line (up to 3.6 m), or a short gap (up to 1.6 m) from a wall end to the side of a wall or pier that carries on;
+@@ -1259,7 +1289,13 @@
+     # (UE-23 is 2.50 m wide; 2.75 m keeps a margin above it and adds nothing on the five floors). A gap beside an
+     # L-corner is more often the space between two separate walls than a doorway, hence the shorter limit.
+     if g.near == 'T' or g.t < 0.07: return False
+-    if max(g.nlen, g.flen) < 0.3: return False                     # stub to stub (pilasters, posts, kerbs): no wall line
++    # Stub to stub (pilasters, posts, kerbs): no wall line. A doorway set against cross walls also stands between two
++    # short wall ends (reveals of 3-8 cm, nibs of 17 cm), so a stub-to-stub gap is kept when its frame is drawn, or
++    # when both ends are free wall ends found on their own (a collinear strip of the same thickness at the far end:
++    # "found from both ends" only sees the near end twice) and the gap is door-wide (1.6 m, the short-gap limit
++    # below; the plans fix it only from 1.2 m up).
++    if max(g.nlen, g.flen) < 0.3 and not (framed(fl, g) or (g.near == 'cap' and g.how_end == 'collinear strip' and g.w <= 1.6)):
++        return False
+     run = fl.G.cover(sub(g.b, mul(g.u, 0.005)), g.u, 0.5)
+     far_run = run[0][1] if run and run[0][0] <= 0.01 else 0.0      # does the wall line carry on past the far end?
+     if g.far == 'end':

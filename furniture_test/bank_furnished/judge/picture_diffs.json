@@ -1,0 +1,1801 @@
+{
+ "what": "each level's picture against the full model's, same camera, light and crop (compose_sheets.py); ids 'a:<id>' = normals weighted by corner angle, plain ids = normals as the chair test (toCreasedNormals); <key>_n = the exported normals carried through the slimming",
+ "measures": {
+  "pixels": "pixels where either picture shows the model (against the empty stage), 1 px to spare",
+  "changedShare10": "share of those pixels whose brightness differs by more than 10 of 255",
+  "changedShare25": "the same, more than 25 of 255",
+  "meanDiff": "mean brightness difference over those pixels, of 255",
+  "ssim": "structural similarity of the brightness (Gaussian window, sigma 1.5), mean over those pixels; 1 = the same",
+  "outlinePx": "pixels covered by the model in one picture but not the other, as a share of the full model's"
+ },
+ "models": {
+  "visitor_chair01": {
+   "walk": {
+    "50%": {
+     "pixels": 37618,
+     "changedShare10": 0.003,
+     "changedShare25": 0.0001,
+     "meanDiff": 0.35,
+     "ssim": 0.9953,
+     "outlinePx": 0.0003
+    },
+    "25%": {
+     "pixels": 37622,
+     "changedShare10": 0.0044,
+     "changedShare25": 0.0001,
+     "meanDiff": 0.45,
+     "ssim": 0.9939,
+     "outlinePx": 0.0006
+    },
+    "12%": {
+     "pixels": 37625,
+     "changedShare10": 0.0076,
+     "changedShare25": 0.0002,
+     "meanDiff": 0.58,
+     "ssim": 0.9926,
+     "outlinePx": 0.001
+    },
+    "20000": {
+     "pixels": 37627,
+     "changedShare10": 0.011,
+     "changedShare25": 0.0003,
+     "meanDiff": 0.7,
+     "ssim": 0.9906,
+     "outlinePx": 0.0014
+    },
+    "6%": {
+     "pixels": 37628,
+     "changedShare10": 0.0115,
+     "changedShare25": 0.0003,
+     "meanDiff": 0.8,
+     "ssim": 0.9898,
+     "outlinePx": 0.0017
+    },
+    "10000": {
+     "pixels": 37636,
+     "changedShare10": 0.0134,
+     "changedShare25": 0.0004,
+     "meanDiff": 0.97,
+     "ssim": 0.9881,
+     "outlinePx": 0.0028
+    },
+    "5000": {
+     "pixels": 37644,
+     "changedShare10": 0.018,
+     "changedShare25": 0.0013,
+     "meanDiff": 1.33,
+     "ssim": 0.9821,
+     "outlinePx": 0.004
+    },
+    "2500": {
+     "pixels": 37735,
+     "changedShare10": 0.0441,
+     "changedShare25": 0.0073,
+     "meanDiff": 2.26,
+     "ssim": 0.9637,
+     "outlinePx": 0.0112
+    },
+    "a:50%": {
+     "pixels": 37618,
+     "changedShare10": 0.0036,
+     "changedShare25": 0.0001,
+     "meanDiff": 0.31,
+     "ssim": 0.9949,
+     "outlinePx": 0.0003
+    },
+    "a:25%": {
+     "pixels": 37622,
+     "changedShare10": 0.0046,
+     "changedShare25": 0.0001,
+     "meanDiff": 0.4,
+     "ssim": 0.9939,
+     "outlinePx": 0.0006
+    },
+    "a:12%": {
+     "pixels": 37625,
+     "changedShare10": 0.0061,
+     "changedShare25": 0.0003,
+     "meanDiff": 0.55,
+     "ssim": 0.9927,
+     "outlinePx": 0.001
+    },
+    "a:20000": {
+     "pixels": 37627,
+     "changedShare10": 0.0114,
+     "changedShare25": 0.0003,
+     "meanDiff": 0.66,
+     "ssim": 0.9908,
+     "outlinePx": 0.0014
+    },
+    "a:6%": {
+     "pixels": 37628,
+     "changedShare10": 0.0116,
+     "changedShare25": 0.0005,
+     "meanDiff": 0.77,
+     "ssim": 0.9895,
+     "outlinePx": 0.0017
+    },
+    "a:10000": {
+     "pixels": 37636,
+     "changedShare10": 0.0126,
+     "changedShare25": 0.0005,
+     "meanDiff": 0.91,
+     "ssim": 0.988,
+     "outlinePx": 0.0028
+    },
+    "a:5000": {
+     "pixels": 37644,
+     "changedShare10": 0.0192,
+     "changedShare25": 0.0013,
+     "meanDiff": 1.31,
+     "ssim": 0.9821,
+     "outlinePx": 0.004
+    },
+    "a:2500": {
+     "pixels": 37735,
+     "changedShare10": 0.0456,
+     "changedShare25": 0.0078,
+     "meanDiff": 2.29,
+     "ssim": 0.9615,
+     "outlinePx": 0.0112
+    }
+   },
+   "close": {
+    "50%": {
+     "pixels": 192044,
+     "changedShare10": 0.0013,
+     "changedShare25": 0.0,
+     "meanDiff": 0.26,
+     "ssim": 0.9967,
+     "outlinePx": 0.0001
+    },
+    "25%": {
+     "pixels": 192054,
+     "changedShare10": 0.0023,
+     "changedShare25": 0.0001,
+     "meanDiff": 0.36,
+     "ssim": 0.9954,
+     "outlinePx": 0.0004
+    },
+    "12%": {
+     "pixels": 192056,
+     "changedShare10": 0.0035,
+     "changedShare25": 0.0002,
+     "meanDiff": 0.45,
+     "ssim": 0.9944,
+     "outlinePx": 0.0006
+    },
+    "20000": {
+     "pixels": 192070,
+     "changedShare10": 0.0047,
+     "changedShare25": 0.0002,
+     "meanDiff": 0.55,
+     "ssim": 0.9935,
+     "outlinePx": 0.0009
+    },
+    "6%": {
+     "pixels": 192079,
+     "changedShare10": 0.0056,
+     "changedShare25": 0.0003,
+     "meanDiff": 0.65,
+     "ssim": 0.9928,
+     "outlinePx": 0.0012
+    },
+    "10000": {
+     "pixels": 192129,
+     "changedShare10": 0.0067,
+     "changedShare25": 0.0008,
+     "meanDiff": 0.84,
+     "ssim": 0.9915,
+     "outlinePx": 0.0019
+    },
+    "5000": {
+     "pixels": 192176,
+     "changedShare10": 0.0131,
+     "changedShare25": 0.0026,
+     "meanDiff": 1.29,
+     "ssim": 0.9834,
+     "outlinePx": 0.0032
+    },
+    "2500": {
+     "pixels": 192434,
+     "changedShare10": 0.0329,
+     "changedShare25": 0.0082,
+     "meanDiff": 2.16,
+     "ssim": 0.962,
+     "outlinePx": 0.008
+    },
+    "a:50%": {
+     "pixels": 192044,
+     "changedShare10": 0.0014,
+     "changedShare25": 0.0001,
+     "meanDiff": 0.21,
+     "ssim": 0.9965,
+     "outlinePx": 0.0001
+    },
+    "a:25%": {
+     "pixels": 192054,
+     "changedShare10": 0.0024,
+     "changedShare25": 0.0001,
+     "meanDiff": 0.32,
+     "ssim": 0.9953,
+     "outlinePx": 0.0004
+    },
+    "a:12%": {
+     "pixels": 192056,
+     "changedShare10": 0.0036,
+     "changedShare25": 0.0002,
+     "meanDiff": 0.42,
+     "ssim": 0.9943,
+     "outlinePx": 0.0006
+    },
+    "a:20000": {
+     "pixels": 192070,
+     "changedShare10": 0.005,
+     "changedShare25": 0.0003,
+     "meanDiff": 0.51,
+     "ssim": 0.9934,
+     "outlinePx": 0.0009
+    },
+    "a:6%": {
+     "pixels": 192079,
+     "changedShare10": 0.0054,
+     "changedShare25": 0.0003,
+     "meanDiff": 0.62,
+     "ssim": 0.9927,
+     "outlinePx": 0.0012
+    },
+    "a:10000": {
+     "pixels": 192129,
+     "changedShare10": 0.0072,
+     "changedShare25": 0.0008,
+     "meanDiff": 0.79,
+     "ssim": 0.9914,
+     "outlinePx": 0.0019
+    },
+    "a:5000": {
+     "pixels": 192176,
+     "changedShare10": 0.0133,
+     "changedShare25": 0.0026,
+     "meanDiff": 1.28,
+     "ssim": 0.9837,
+     "outlinePx": 0.0032
+    },
+    "a:2500": {
+     "pixels": 192434,
+     "changedShare10": 0.0328,
+     "changedShare25": 0.0082,
+     "meanDiff": 2.2,
+     "ssim": 0.9614,
+     "outlinePx": 0.008
+    }
+   }
+  },
+  "visitor_chair02": {
+   "walk": {
+    "5000": {
+     "pixels": 22426,
+     "changedShare10": 0.0011,
+     "changedShare25": 0.0,
+     "meanDiff": 0.17,
+     "ssim": 0.9979,
+     "outlinePx": 0.0
+    },
+    "50%": {
+     "pixels": 22426,
+     "changedShare10": 0.0061,
+     "changedShare25": 0.0,
+     "meanDiff": 0.45,
+     "ssim": 0.9939,
+     "outlinePx": 0.0
+    },
+    "2500": {
+     "pixels": 22426,
+     "changedShare10": 0.0407,
+     "changedShare25": 0.0002,
+     "meanDiff": 2.4,
+     "ssim": 0.9872,
+     "outlinePx": 0.0007
+    },
+    "25%": {
+     "pixels": 22426,
+     "changedShare10": 0.0934,
+     "changedShare25": 0.0024,
+     "meanDiff": 3.16,
+     "ssim": 0.978,
+     "outlinePx": 0.0025
+    },
+    "12%": {
+     "pixels": 22426,
+     "changedShare10": 0.03,
+     "changedShare25": 0.0076,
+     "meanDiff": 2.14,
+     "ssim": 0.957,
+     "outlinePx": 0.0074
+    },
+    "6%": {
+     "pixels": 22426,
+     "changedShare10": 0.0528,
+     "changedShare25": 0.0187,
+     "meanDiff": 2.83,
+     "ssim": 0.9253,
+     "outlinePx": 0.0143
+    },
+    "a:5000": {
+     "pixels": 22426,
+     "changedShare10": 0.0011,
+     "changedShare25": 0.0,
+     "meanDiff": 0.08,
+     "ssim": 0.9984,
+     "outlinePx": 0.0
+    },
+    "a:50%": {
+     "pixels": 22426,
+     "changedShare10": 0.0065,
+     "changedShare25": 0.0,
+     "meanDiff": 0.36,
+     "ssim": 0.9945,
+     "outlinePx": 0.0
+    },
+    "a:2500": {
+     "pixels": 22426,
+     "changedShare10": 0.0507,
+     "changedShare25": 0.0002,
+     "meanDiff": 2.46,
+     "ssim": 0.987,
+     "outlinePx": 0.0007
+    },
+    "a:25%": {
+     "pixels": 22426,
+     "changedShare10": 0.0699,
+     "changedShare25": 0.0024,
+     "meanDiff": 3.0,
+     "ssim": 0.9776,
+     "outlinePx": 0.0025
+    },
+    "a:12%": {
+     "pixels": 22426,
+     "changedShare10": 0.0318,
+     "changedShare25": 0.0076,
+     "meanDiff": 1.72,
+     "ssim": 0.9591,
+     "outlinePx": 0.0074
+    },
+    "a:6%": {
+     "pixels": 22426,
+     "changedShare10": 0.055,
+     "changedShare25": 0.0186,
+     "meanDiff": 3.02,
+     "ssim": 0.9196,
+     "outlinePx": 0.0143
+    }
+   },
+   "close": {
+    "5000": {
+     "pixels": 100306,
+     "changedShare10": 0.0005,
+     "changedShare25": 0.0,
+     "meanDiff": 0.1,
+     "ssim": 0.9989,
+     "outlinePx": 0.0
+    },
+    "50%": {
+     "pixels": 100306,
+     "changedShare10": 0.0037,
+     "changedShare25": 0.0,
+     "meanDiff": 0.3,
+     "ssim": 0.9968,
+     "outlinePx": 0.0
+    },
+    "2500": {
+     "pixels": 100306,
+     "changedShare10": 0.0274,
+     "changedShare25": 0.0,
+     "meanDiff": 1.37,
+     "ssim": 0.9944,
+     "outlinePx": 0.0001
+    },
+    "25%": {
+     "pixels": 100306,
+     "changedShare10": 0.056,
+     "changedShare25": 0.0002,
+     "meanDiff": 2.01,
+     "ssim": 0.9894,
+     "outlinePx": 0.0006
+    },
+    "12%": {
+     "pixels": 100306,
+     "changedShare10": 0.0216,
+     "changedShare25": 0.0029,
+     "meanDiff": 1.68,
+     "ssim": 0.9732,
+     "outlinePx": 0.0043
+    },
+    "6%": {
+     "pixels": 100306,
+     "changedShare10": 0.0437,
+     "changedShare25": 0.0146,
+     "meanDiff": 2.53,
+     "ssim": 0.9442,
+     "outlinePx": 0.0128
+    },
+    "a:5000": {
+     "pixels": 100306,
+     "changedShare10": 0.0005,
+     "changedShare25": 0.0,
+     "meanDiff": 0.05,
+     "ssim": 0.9991,
+     "outlinePx": 0.0
+    },
+    "a:50%": {
+     "pixels": 100306,
+     "changedShare10": 0.0038,
+     "changedShare25": 0.0,
+     "meanDiff": 0.31,
+     "ssim": 0.9969,
+     "outlinePx": 0.0
+    },
+    "a:2500": {
+     "pixels": 100306,
+     "changedShare10": 0.0326,
+     "changedShare25": 0.0,
+     "meanDiff": 1.44,
+     "ssim": 0.9943,
+     "outlinePx": 0.0001
+    },
+    "a:25%": {
+     "pixels": 100306,
+     "changedShare10": 0.0435,
+     "changedShare25": 0.0002,
+     "meanDiff": 1.94,
+     "ssim": 0.9887,
+     "outlinePx": 0.0006
+    },
+    "a:12%": {
+     "pixels": 100306,
+     "changedShare10": 0.0248,
+     "changedShare25": 0.0031,
+     "meanDiff": 1.55,
+     "ssim": 0.9725,
+     "outlinePx": 0.0043
+    },
+    "a:6%": {
+     "pixels": 100306,
+     "changedShare10": 0.0458,
+     "changedShare25": 0.0155,
+     "meanDiff": 2.76,
+     "ssim": 0.9404,
+     "outlinePx": 0.0128
+    }
+   }
+  },
+  "stool": {
+   "walk": {
+    "2500": {
+     "pixels": 23904,
+     "changedShare10": 0.0,
+     "changedShare25": 0.0,
+     "meanDiff": 0.16,
+     "ssim": 0.9993,
+     "outlinePx": 0.0
+    },
+    "50%": {
+     "pixels": 23904,
+     "changedShare10": 0.0005,
+     "changedShare25": 0.0,
+     "meanDiff": 0.37,
+     "ssim": 0.9984,
+     "outlinePx": 0.0002
+    },
+    "25%": {
+     "pixels": 23904,
+     "changedShare10": 0.0052,
+     "changedShare25": 0.0,
+     "meanDiff": 0.96,
+     "ssim": 0.9953,
+     "outlinePx": 0.0015
+    },
+    "12%": {
+     "pixels": 23904,
+     "changedShare10": 0.0318,
+     "changedShare25": 0.0011,
+     "meanDiff": 3.26,
+     "ssim": 0.9841,
+     "outlinePx": 0.004
+    },
+    "6%": {
+     "pixels": 23904,
+     "changedShare10": 0.0583,
+     "changedShare25": 0.0056,
+     "meanDiff": 3.58,
+     "ssim": 0.9704,
+     "outlinePx": 0.0095
+    },
+    "a:2500": {
+     "pixels": 23904,
+     "changedShare10": 0.0,
+     "changedShare25": 0.0,
+     "meanDiff": 0.06,
+     "ssim": 0.9996,
+     "outlinePx": 0.0
+    },
+    "a:50%": {
+     "pixels": 23904,
+     "changedShare10": 0.0005,
+     "changedShare25": 0.0,
+     "meanDiff": 0.41,
+     "ssim": 0.9984,
+     "outlinePx": 0.0002
+    },
+    "a:25%": {
+     "pixels": 23904,
+     "changedShare10": 0.0054,
+     "changedShare25": 0.0,
+     "meanDiff": 1.02,
+     "ssim": 0.995,
+     "outlinePx": 0.0015
+    },
+    "a:12%": {
+     "pixels": 23904,
+     "changedShare10": 0.041,
+     "changedShare25": 0.0011,
+     "meanDiff": 3.73,
+     "ssim": 0.9833,
+     "outlinePx": 0.004
+    },
+    "a:6%": {
+     "pixels": 23904,
+     "changedShare10": 0.073,
+     "changedShare25": 0.0056,
+     "meanDiff": 3.29,
+     "ssim": 0.9694,
+     "outlinePx": 0.0095
+    }
+   },
+   "close": {
+    "2500": {
+     "pixels": 86579,
+     "changedShare10": 0.0001,
+     "changedShare25": 0.0,
+     "meanDiff": 0.19,
+     "ssim": 0.9995,
+     "outlinePx": 0.0
+    },
+    "50%": {
+     "pixels": 86579,
+     "changedShare10": 0.001,
+     "changedShare25": 0.0001,
+     "meanDiff": 0.32,
+     "ssim": 0.9984,
+     "outlinePx": 0.0005
+    },
+    "25%": {
+     "pixels": 86579,
+     "changedShare10": 0.0032,
+     "changedShare25": 0.0002,
+     "meanDiff": 0.76,
+     "ssim": 0.9967,
+     "outlinePx": 0.0014
+    },
+    "12%": {
+     "pixels": 86579,
+     "changedShare10": 0.0257,
+     "changedShare25": 0.002,
+     "meanDiff": 2.68,
+     "ssim": 0.9871,
+     "outlinePx": 0.0046
+    },
+    "6%": {
+     "pixels": 86579,
+     "changedShare10": 0.0403,
+     "changedShare25": 0.006,
+     "meanDiff": 2.95,
+     "ssim": 0.971,
+     "outlinePx": 0.0086
+    },
+    "a:2500": {
+     "pixels": 86579,
+     "changedShare10": 0.0001,
+     "changedShare25": 0.0,
+     "meanDiff": 0.04,
+     "ssim": 0.9997,
+     "outlinePx": 0.0
+    },
+    "a:50%": {
+     "pixels": 86579,
+     "changedShare10": 0.001,
+     "changedShare25": 0.0001,
+     "meanDiff": 0.32,
+     "ssim": 0.9985,
+     "outlinePx": 0.0005
+    },
+    "a:25%": {
+     "pixels": 86579,
+     "changedShare10": 0.0032,
+     "changedShare25": 0.0002,
+     "meanDiff": 0.8,
+     "ssim": 0.9967,
+     "outlinePx": 0.0014
+    },
+    "a:12%": {
+     "pixels": 86579,
+     "changedShare10": 0.0325,
+     "changedShare25": 0.002,
+     "meanDiff": 3.32,
+     "ssim": 0.9858,
+     "outlinePx": 0.0046
+    },
+    "a:6%": {
+     "pixels": 86579,
+     "changedShare10": 0.0481,
+     "changedShare25": 0.006,
+     "meanDiff": 2.87,
+     "ssim": 0.9685,
+     "outlinePx": 0.0086
+    }
+   }
+  },
+  "sofa": {
+   "walk": {
+    "50%": {
+     "pixels": 187762,
+     "changedShare10": 0.0054,
+     "changedShare25": 0.0022,
+     "meanDiff": 1.83,
+     "ssim": 0.9907,
+     "outlinePx": 0.0032
+    },
+    "25%": {
+     "pixels": 187762,
+     "changedShare10": 0.0308,
+     "changedShare25": 0.0063,
+     "meanDiff": 3.16,
+     "ssim": 0.9729,
+     "outlinePx": 0.0081
+    },
+    "12%": {
+     "pixels": 187762,
+     "changedShare10": 0.1232,
+     "changedShare25": 0.0152,
+     "meanDiff": 4.84,
+     "ssim": 0.936,
+     "outlinePx": 0.0196
+    },
+    "6%": {
+     "pixels": 187762,
+     "changedShare10": 0.1719,
+     "changedShare25": 0.0647,
+     "meanDiff": 7.05,
+     "ssim": 0.8959,
+     "outlinePx": 0.0559
+    },
+    "a:50%": {
+     "pixels": 187762,
+     "changedShare10": 0.0061,
+     "changedShare25": 0.0022,
+     "meanDiff": 2.03,
+     "ssim": 0.9905,
+     "outlinePx": 0.0032
+    },
+    "a:25%": {
+     "pixels": 187762,
+     "changedShare10": 0.0375,
+     "changedShare25": 0.0064,
+     "meanDiff": 3.5,
+     "ssim": 0.9726,
+     "outlinePx": 0.0081
+    },
+    "a:12%": {
+     "pixels": 187762,
+     "changedShare10": 0.1183,
+     "changedShare25": 0.0155,
+     "meanDiff": 4.87,
+     "ssim": 0.9331,
+     "outlinePx": 0.0196
+    },
+    "a:6%": {
+     "pixels": 187762,
+     "changedShare10": 0.178,
+     "changedShare25": 0.0647,
+     "meanDiff": 7.23,
+     "ssim": 0.8926,
+     "outlinePx": 0.0559
+    }
+   },
+   "close": {
+    "50%": {
+     "pixels": 568625,
+     "changedShare10": 0.0037,
+     "changedShare25": 0.001,
+     "meanDiff": 1.57,
+     "ssim": 0.9952,
+     "outlinePx": 0.0008
+    },
+    "25%": {
+     "pixels": 568507,
+     "changedShare10": 0.0255,
+     "changedShare25": 0.0055,
+     "meanDiff": 2.87,
+     "ssim": 0.9792,
+     "outlinePx": 0.0057
+    },
+    "12%": {
+     "pixels": 568500,
+     "changedShare10": 0.0805,
+     "changedShare25": 0.013,
+     "meanDiff": 4.16,
+     "ssim": 0.9587,
+     "outlinePx": 0.0142
+    },
+    "6%": {
+     "pixels": 568500,
+     "changedShare10": 0.1349,
+     "changedShare25": 0.04,
+     "meanDiff": 5.57,
+     "ssim": 0.9383,
+     "outlinePx": 0.0344
+    },
+    "a:50%": {
+     "pixels": 568625,
+     "changedShare10": 0.0047,
+     "changedShare25": 0.001,
+     "meanDiff": 1.84,
+     "ssim": 0.9951,
+     "outlinePx": 0.0008
+    },
+    "a:25%": {
+     "pixels": 568507,
+     "changedShare10": 0.0281,
+     "changedShare25": 0.0055,
+     "meanDiff": 3.24,
+     "ssim": 0.979,
+     "outlinePx": 0.0057
+    },
+    "a:12%": {
+     "pixels": 568500,
+     "changedShare10": 0.0806,
+     "changedShare25": 0.0134,
+     "meanDiff": 4.27,
+     "ssim": 0.9577,
+     "outlinePx": 0.0142
+    },
+    "a:6%": {
+     "pixels": 568500,
+     "changedShare10": 0.1393,
+     "changedShare25": 0.0417,
+     "meanDiff": 5.51,
+     "ssim": 0.9359,
+     "outlinePx": 0.0344
+    }
+   }
+  },
+  "banquet": {
+   "walk": {
+    "2500": {
+     "pixels": 216235,
+     "changedShare10": 0.0041,
+     "changedShare25": 0.0001,
+     "meanDiff": 0.29,
+     "ssim": 0.9954,
+     "outlinePx": 0.0
+    },
+    "50%": {
+     "pixels": 216235,
+     "changedShare10": 0.004,
+     "changedShare25": 0.0001,
+     "meanDiff": 0.32,
+     "ssim": 0.9955,
+     "outlinePx": 0.0001
+    },
+    "25%": {
+     "pixels": 216235,
+     "changedShare10": 0.0438,
+     "changedShare25": 0.0009,
+     "meanDiff": 1.31,
+     "ssim": 0.9884,
+     "outlinePx": 0.0003
+    },
+    "12%": {
+     "pixels": 216235,
+     "changedShare10": 0.0321,
+     "changedShare25": 0.0043,
+     "meanDiff": 1.47,
+     "ssim": 0.9668,
+     "outlinePx": 0.0011
+    },
+    "6%": {
+     "pixels": 216236,
+     "changedShare10": 0.0413,
+     "changedShare25": 0.0099,
+     "meanDiff": 2.57,
+     "ssim": 0.9375,
+     "outlinePx": 0.0024
+    },
+    "a:2500": {
+     "pixels": 216235,
+     "changedShare10": 0.0046,
+     "changedShare25": 0.0,
+     "meanDiff": 0.28,
+     "ssim": 0.9951,
+     "outlinePx": 0.0
+    },
+    "a:50%": {
+     "pixels": 216235,
+     "changedShare10": 0.0043,
+     "changedShare25": 0.0,
+     "meanDiff": 0.3,
+     "ssim": 0.9952,
+     "outlinePx": 0.0001
+    },
+    "a:25%": {
+     "pixels": 216235,
+     "changedShare10": 0.0463,
+     "changedShare25": 0.0009,
+     "meanDiff": 1.34,
+     "ssim": 0.9882,
+     "outlinePx": 0.0003
+    },
+    "a:12%": {
+     "pixels": 216235,
+     "changedShare10": 0.0383,
+     "changedShare25": 0.004,
+     "meanDiff": 1.55,
+     "ssim": 0.964,
+     "outlinePx": 0.0011
+    },
+    "a:6%": {
+     "pixels": 216236,
+     "changedShare10": 0.0698,
+     "changedShare25": 0.0112,
+     "meanDiff": 3.39,
+     "ssim": 0.9349,
+     "outlinePx": 0.0024
+    }
+   },
+   "close": {
+    "2500": {
+     "pixels": 646610,
+     "changedShare10": 0.003,
+     "changedShare25": 0.0,
+     "meanDiff": 0.24,
+     "ssim": 0.9968,
+     "outlinePx": 0.0
+    },
+    "50%": {
+     "pixels": 646610,
+     "changedShare10": 0.0029,
+     "changedShare25": 0.0,
+     "meanDiff": 0.27,
+     "ssim": 0.9968,
+     "outlinePx": 0.0
+    },
+    "25%": {
+     "pixels": 646610,
+     "changedShare10": 0.0371,
+     "changedShare25": 0.001,
+     "meanDiff": 1.03,
+     "ssim": 0.9908,
+     "outlinePx": 0.0002
+    },
+    "12%": {
+     "pixels": 646610,
+     "changedShare10": 0.0263,
+     "changedShare25": 0.0055,
+     "meanDiff": 1.16,
+     "ssim": 0.9728,
+     "outlinePx": 0.0013
+    },
+    "6%": {
+     "pixels": 646611,
+     "changedShare10": 0.0389,
+     "changedShare25": 0.0132,
+     "meanDiff": 2.17,
+     "ssim": 0.9426,
+     "outlinePx": 0.0041
+    },
+    "a:2500": {
+     "pixels": 646610,
+     "changedShare10": 0.0036,
+     "changedShare25": 0.0,
+     "meanDiff": 0.23,
+     "ssim": 0.9963,
+     "outlinePx": 0.0
+    },
+    "a:50%": {
+     "pixels": 646610,
+     "changedShare10": 0.0033,
+     "changedShare25": 0.0,
+     "meanDiff": 0.26,
+     "ssim": 0.9965,
+     "outlinePx": 0.0
+    },
+    "a:25%": {
+     "pixels": 646610,
+     "changedShare10": 0.0392,
+     "changedShare25": 0.001,
+     "meanDiff": 1.05,
+     "ssim": 0.9905,
+     "outlinePx": 0.0002
+    },
+    "a:12%": {
+     "pixels": 646610,
+     "changedShare10": 0.0295,
+     "changedShare25": 0.0053,
+     "meanDiff": 1.25,
+     "ssim": 0.9714,
+     "outlinePx": 0.0013
+    },
+    "a:6%": {
+     "pixels": 646611,
+     "changedShare10": 0.072,
+     "changedShare25": 0.0135,
+     "meanDiff": 2.85,
+     "ssim": 0.9409,
+     "outlinePx": 0.0041
+    }
+   }
+  },
+  "working_table": {
+   "walk": {
+    "50%": {
+     "pixels": 213418,
+     "changedShare10": 0.0115,
+     "changedShare25": 0.0029,
+     "meanDiff": 0.38,
+     "ssim": 0.9791,
+     "outlinePx": 0.0008
+    },
+    "25%": {
+     "pixels": 213418,
+     "changedShare10": 0.0483,
+     "changedShare25": 0.0207,
+     "meanDiff": 2.27,
+     "ssim": 0.9406,
+     "outlinePx": 0.0318
+    },
+    "12%": {
+     "pixels": 213418,
+     "changedShare10": 0.1908,
+     "changedShare25": 0.154,
+     "meanDiff": 11.39,
+     "ssim": 0.8977,
+     "outlinePx": 0.1643
+    },
+    "6%": {
+     "pixels": 213418,
+     "changedShare10": 0.6601,
+     "changedShare25": 0.63,
+     "meanDiff": 34.77,
+     "ssim": 0.884,
+     "outlinePx": 0.646
+    },
+    "a:50%": {
+     "pixels": 213418,
+     "changedShare10": 0.0115,
+     "changedShare25": 0.0029,
+     "meanDiff": 0.37,
+     "ssim": 0.9791,
+     "outlinePx": 0.0008
+    },
+    "a:25%": {
+     "pixels": 213418,
+     "changedShare10": 0.0485,
+     "changedShare25": 0.0208,
+     "meanDiff": 2.39,
+     "ssim": 0.9407,
+     "outlinePx": 0.0318
+    },
+    "a:12%": {
+     "pixels": 213418,
+     "changedShare10": 0.191,
+     "changedShare25": 0.1539,
+     "meanDiff": 11.51,
+     "ssim": 0.8978,
+     "outlinePx": 0.1643
+    },
+    "a:6%": {
+     "pixels": 213418,
+     "changedShare10": 0.6601,
+     "changedShare25": 0.63,
+     "meanDiff": 34.77,
+     "ssim": 0.8841,
+     "outlinePx": 0.646
+    }
+   },
+   "close": {
+    "50%": {
+     "pixels": 682128,
+     "changedShare10": 0.0095,
+     "changedShare25": 0.0051,
+     "meanDiff": 0.32,
+     "ssim": 0.9852,
+     "outlinePx": 0.0005
+    },
+    "25%": {
+     "pixels": 682128,
+     "changedShare10": 0.0495,
+     "changedShare25": 0.0189,
+     "meanDiff": 2.12,
+     "ssim": 0.964,
+     "outlinePx": 0.039
+    },
+    "12%": {
+     "pixels": 682128,
+     "changedShare10": 0.1179,
+     "changedShare25": 0.0808,
+     "meanDiff": 5.92,
+     "ssim": 0.9509,
+     "outlinePx": 0.1069
+    },
+    "6%": {
+     "pixels": 682128,
+     "changedShare10": 0.349,
+     "changedShare25": 0.3124,
+     "meanDiff": 17.68,
+     "ssim": 0.9473,
+     "outlinePx": 0.3407
+    },
+    "a:50%": {
+     "pixels": 682128,
+     "changedShare10": 0.0094,
+     "changedShare25": 0.0051,
+     "meanDiff": 0.33,
+     "ssim": 0.9852,
+     "outlinePx": 0.0005
+    },
+    "a:25%": {
+     "pixels": 682128,
+     "changedShare10": 0.0494,
+     "changedShare25": 0.019,
+     "meanDiff": 2.2,
+     "ssim": 0.964,
+     "outlinePx": 0.039
+    },
+    "a:12%": {
+     "pixels": 682128,
+     "changedShare10": 0.1179,
+     "changedShare25": 0.0809,
+     "meanDiff": 6.0,
+     "ssim": 0.9509,
+     "outlinePx": 0.1069
+    },
+    "a:6%": {
+     "pixels": 682128,
+     "changedShare10": 0.349,
+     "changedShare25": 0.3124,
+     "meanDiff": 17.68,
+     "ssim": 0.9473,
+     "outlinePx": 0.3407
+    }
+   }
+  },
+  "side_table": {
+   "walk": {
+    "50%": {
+     "pixels": 21932,
+     "changedShare10": 0.0035,
+     "changedShare25": 0.0001,
+     "meanDiff": 0.47,
+     "ssim": 0.9972,
+     "outlinePx": 0.0009
+    },
+    "25%": {
+     "pixels": 21941,
+     "changedShare10": 0.0174,
+     "changedShare25": 0.0014,
+     "meanDiff": 1.31,
+     "ssim": 0.9878,
+     "outlinePx": 0.0042
+    },
+    "12%": {
+     "pixels": 22088,
+     "changedShare10": 0.0708,
+     "changedShare25": 0.0286,
+     "meanDiff": 2.39,
+     "ssim": 0.9325,
+     "outlinePx": 0.0195
+    },
+    "6%": {
+     "pixels": 21943,
+     "changedShare10": 0.1634,
+     "changedShare25": 0.077,
+     "meanDiff": 4.92,
+     "ssim": 0.8259,
+     "outlinePx": 0.052
+    },
+    "a:50%": {
+     "pixels": 21932,
+     "changedShare10": 0.0035,
+     "changedShare25": 0.0001,
+     "meanDiff": 0.57,
+     "ssim": 0.9973,
+     "outlinePx": 0.0009
+    },
+    "a:25%": {
+     "pixels": 21941,
+     "changedShare10": 0.0179,
+     "changedShare25": 0.0018,
+     "meanDiff": 1.41,
+     "ssim": 0.9879,
+     "outlinePx": 0.0042
+    },
+    "a:12%": {
+     "pixels": 22088,
+     "changedShare10": 0.075,
+     "changedShare25": 0.0292,
+     "meanDiff": 2.45,
+     "ssim": 0.9308,
+     "outlinePx": 0.0195
+    },
+    "a:6%": {
+     "pixels": 21943,
+     "changedShare10": 0.1668,
+     "changedShare25": 0.0778,
+     "meanDiff": 5.03,
+     "ssim": 0.823,
+     "outlinePx": 0.052
+    }
+   },
+   "close": {
+    "50%": {
+     "pixels": 120120,
+     "changedShare10": 0.0018,
+     "changedShare25": 0.0002,
+     "meanDiff": 0.26,
+     "ssim": 0.9981,
+     "outlinePx": 0.001
+    },
+    "25%": {
+     "pixels": 120122,
+     "changedShare10": 0.0184,
+     "changedShare25": 0.0055,
+     "meanDiff": 1.01,
+     "ssim": 0.9799,
+     "outlinePx": 0.0031
+    },
+    "12%": {
+     "pixels": 120174,
+     "changedShare10": 0.0543,
+     "changedShare25": 0.0253,
+     "meanDiff": 1.84,
+     "ssim": 0.9281,
+     "outlinePx": 0.0162
+    },
+    "6%": {
+     "pixels": 120118,
+     "changedShare10": 0.124,
+     "changedShare25": 0.0622,
+     "meanDiff": 3.84,
+     "ssim": 0.8676,
+     "outlinePx": 0.0556
+    },
+    "a:50%": {
+     "pixels": 120120,
+     "changedShare10": 0.0017,
+     "changedShare25": 0.0002,
+     "meanDiff": 0.38,
+     "ssim": 0.9981,
+     "outlinePx": 0.001
+    },
+    "a:25%": {
+     "pixels": 120122,
+     "changedShare10": 0.0184,
+     "changedShare25": 0.0057,
+     "meanDiff": 1.15,
+     "ssim": 0.9798,
+     "outlinePx": 0.0031
+    },
+    "a:12%": {
+     "pixels": 120174,
+     "changedShare10": 0.0554,
+     "changedShare25": 0.0257,
+     "meanDiff": 1.87,
+     "ssim": 0.9276,
+     "outlinePx": 0.0162
+    },
+    "a:6%": {
+     "pixels": 120118,
+     "changedShare10": 0.124,
+     "changedShare25": 0.0621,
+     "meanDiff": 3.84,
+     "ssim": 0.8679,
+     "outlinePx": 0.0556
+    }
+   }
+  },
+  "monitor": {
+   "walk": {
+    "10000": {
+     "pixels": 27657,
+     "changedShare10": 0.0118,
+     "changedShare25": 0.0,
+     "meanDiff": 0.63,
+     "ssim": 0.991,
+     "outlinePx": 0.0002
+    },
+    "50%": {
+     "pixels": 27656,
+     "changedShare10": 0.0148,
+     "changedShare25": 0.0002,
+     "meanDiff": 3.51,
+     "ssim": 0.9879,
+     "outlinePx": 0.0003
+    },
+    "5000": {
+     "pixels": 27657,
+     "changedShare10": 0.0202,
+     "changedShare25": 0.0008,
+     "meanDiff": 3.65,
+     "ssim": 0.9841,
+     "outlinePx": 0.0006
+    },
+    "25%": {
+     "pixels": 27656,
+     "changedShare10": 0.172,
+     "changedShare25": 0.0013,
+     "meanDiff": 5.24,
+     "ssim": 0.9792,
+     "outlinePx": 0.0014
+    },
+    "2500": {
+     "pixels": 27656,
+     "changedShare10": 0.0286,
+     "changedShare25": 0.0022,
+     "meanDiff": 2.53,
+     "ssim": 0.9818,
+     "outlinePx": 0.0031
+    },
+    "12%": {
+     "pixels": 27659,
+     "changedShare10": 0.0312,
+     "changedShare25": 0.0031,
+     "meanDiff": 2.54,
+     "ssim": 0.9795,
+     "outlinePx": 0.0045
+    },
+    "6%": {
+     "pixels": 27655,
+     "changedShare10": 0.0955,
+     "changedShare25": 0.036,
+     "meanDiff": 4.11,
+     "ssim": 0.8939,
+     "outlinePx": 0.0149
+    },
+    "a:10000": {
+     "pixels": 27657,
+     "changedShare10": 0.0115,
+     "changedShare25": 0.0,
+     "meanDiff": 0.61,
+     "ssim": 0.9914,
+     "outlinePx": 0.0002
+    },
+    "a:50%": {
+     "pixels": 27656,
+     "changedShare10": 0.0143,
+     "changedShare25": 0.0001,
+     "meanDiff": 2.66,
+     "ssim": 0.9893,
+     "outlinePx": 0.0003
+    },
+    "a:5000": {
+     "pixels": 27657,
+     "changedShare10": 0.0187,
+     "changedShare25": 0.0008,
+     "meanDiff": 2.82,
+     "ssim": 0.9854,
+     "outlinePx": 0.0006
+    },
+    "a:25%": {
+     "pixels": 27656,
+     "changedShare10": 0.1485,
+     "changedShare25": 0.0011,
+     "meanDiff": 4.94,
+     "ssim": 0.981,
+     "outlinePx": 0.0013
+    },
+    "a:2500": {
+     "pixels": 27656,
+     "changedShare10": 0.0287,
+     "changedShare25": 0.0022,
+     "meanDiff": 2.25,
+     "ssim": 0.9824,
+     "outlinePx": 0.003
+    },
+    "a:12%": {
+     "pixels": 27657,
+     "changedShare10": 0.0325,
+     "changedShare25": 0.0031,
+     "meanDiff": 2.27,
+     "ssim": 0.9799,
+     "outlinePx": 0.0044
+    },
+    "a:6%": {
+     "pixels": 27655,
+     "changedShare10": 0.0963,
+     "changedShare25": 0.0368,
+     "meanDiff": 3.76,
+     "ssim": 0.8927,
+     "outlinePx": 0.0149
+    }
+   },
+   "close": {
+    "10000": {
+     "pixels": 155764,
+     "changedShare10": 0.0105,
+     "changedShare25": 0.0002,
+     "meanDiff": 0.69,
+     "ssim": 0.9924,
+     "outlinePx": 0.0002
+    },
+    "50%": {
+     "pixels": 155762,
+     "changedShare10": 0.0159,
+     "changedShare25": 0.001,
+     "meanDiff": 3.29,
+     "ssim": 0.9866,
+     "outlinePx": 0.0004
+    },
+    "5000": {
+     "pixels": 155775,
+     "changedShare10": 0.0267,
+     "changedShare25": 0.0023,
+     "meanDiff": 3.51,
+     "ssim": 0.9784,
+     "outlinePx": 0.0014
+    },
+    "25%": {
+     "pixels": 155773,
+     "changedShare10": 0.1532,
+     "changedShare25": 0.0036,
+     "meanDiff": 4.76,
+     "ssim": 0.9751,
+     "outlinePx": 0.0021
+    },
+    "2500": {
+     "pixels": 155776,
+     "changedShare10": 0.0336,
+     "changedShare25": 0.0046,
+     "meanDiff": 2.32,
+     "ssim": 0.9752,
+     "outlinePx": 0.0038
+    },
+    "12%": {
+     "pixels": 155798,
+     "changedShare10": 0.0378,
+     "changedShare25": 0.0088,
+     "meanDiff": 2.44,
+     "ssim": 0.9643,
+     "outlinePx": 0.0051
+    },
+    "6%": {
+     "pixels": 155751,
+     "changedShare10": 0.1046,
+     "changedShare25": 0.043,
+     "meanDiff": 4.51,
+     "ssim": 0.8612,
+     "outlinePx": 0.0141
+    },
+    "a:10000": {
+     "pixels": 155764,
+     "changedShare10": 0.0095,
+     "changedShare25": 0.0002,
+     "meanDiff": 0.65,
+     "ssim": 0.9928,
+     "outlinePx": 0.0002
+    },
+    "a:50%": {
+     "pixels": 155762,
+     "changedShare10": 0.0145,
+     "changedShare25": 0.001,
+     "meanDiff": 2.58,
+     "ssim": 0.9881,
+     "outlinePx": 0.0004
+    },
+    "a:5000": {
+     "pixels": 155774,
+     "changedShare10": 0.0254,
+     "changedShare25": 0.0024,
+     "meanDiff": 2.81,
+     "ssim": 0.9797,
+     "outlinePx": 0.0014
+    },
+    "a:25%": {
+     "pixels": 155770,
+     "changedShare10": 0.1344,
+     "changedShare25": 0.0034,
+     "meanDiff": 4.5,
+     "ssim": 0.9763,
+     "outlinePx": 0.0021
+    },
+    "a:2500": {
+     "pixels": 155773,
+     "changedShare10": 0.0334,
+     "changedShare25": 0.0046,
+     "meanDiff": 2.12,
+     "ssim": 0.975,
+     "outlinePx": 0.0038
+    },
+    "a:12%": {
+     "pixels": 155798,
+     "changedShare10": 0.0383,
+     "changedShare25": 0.0088,
+     "meanDiff": 2.23,
+     "ssim": 0.965,
+     "outlinePx": 0.0051
+    },
+    "a:6%": {
+     "pixels": 155751,
+     "changedShare10": 0.1056,
+     "changedShare25": 0.0435,
+     "meanDiff": 4.21,
+     "ssim": 0.8606,
+     "outlinePx": 0.0142
+    }
+   }
+  },
+  "chair_test": {
+   "walk": {
+    "50%": {
+     "pixels": 38986,
+     "changedShare10": 0.0332,
+     "changedShare25": 0.0007,
+     "meanDiff": 1.12,
+     "ssim": 0.9779,
+     "outlinePx": 0.0004
+    },
+    "20000": {
+     "pixels": 38989,
+     "changedShare10": 0.0331,
+     "changedShare25": 0.0007,
+     "meanDiff": 1.13,
+     "ssim": 0.9781,
+     "outlinePx": 0.0005
+    },
+    "25%": {
+     "pixels": 39002,
+     "changedShare10": 0.0176,
+     "changedShare25": 0.0003,
+     "meanDiff": 1.05,
+     "ssim": 0.9822,
+     "outlinePx": 0.0019
+    },
+    "10000": {
+     "pixels": 39011,
+     "changedShare10": 0.0182,
+     "changedShare25": 0.0003,
+     "meanDiff": 1.07,
+     "ssim": 0.982,
+     "outlinePx": 0.0019
+    },
+    "12%": {
+     "pixels": 39038,
+     "changedShare10": 0.0444,
+     "changedShare25": 0.0027,
+     "meanDiff": 1.7,
+     "ssim": 0.9678,
+     "outlinePx": 0.0043
+    },
+    "5000": {
+     "pixels": 39035,
+     "changedShare10": 0.0444,
+     "changedShare25": 0.0027,
+     "meanDiff": 1.69,
+     "ssim": 0.9678,
+     "outlinePx": 0.0042
+    },
+    "6%": {
+     "pixels": 39038,
+     "changedShare10": 0.0569,
+     "changedShare25": 0.0057,
+     "meanDiff": 2.19,
+     "ssim": 0.9583,
+     "outlinePx": 0.0076
+    },
+    "2500": {
+     "pixels": 39033,
+     "changedShare10": 0.057,
+     "changedShare25": 0.0064,
+     "meanDiff": 2.24,
+     "ssim": 0.958,
+     "outlinePx": 0.008
+    },
+    "a:50%": {
+     "pixels": 38986,
+     "changedShare10": 0.0344,
+     "changedShare25": 0.0007,
+     "meanDiff": 1.07,
+     "ssim": 0.9776,
+     "outlinePx": 0.0004
+    },
+    "a:20000": {
+     "pixels": 38989,
+     "changedShare10": 0.0338,
+     "changedShare25": 0.0008,
+     "meanDiff": 1.07,
+     "ssim": 0.9779,
+     "outlinePx": 0.0005
+    },
+    "a:25%": {
+     "pixels": 39002,
+     "changedShare10": 0.0167,
+     "changedShare25": 0.0004,
+     "meanDiff": 0.98,
+     "ssim": 0.9822,
+     "outlinePx": 0.0019
+    },
+    "a:10000": {
+     "pixels": 39011,
+     "changedShare10": 0.0175,
+     "changedShare25": 0.0004,
+     "meanDiff": 1.01,
+     "ssim": 0.9819,
+     "outlinePx": 0.0019
+    },
+    "a:12%": {
+     "pixels": 39038,
+     "changedShare10": 0.0461,
+     "changedShare25": 0.0028,
+     "meanDiff": 1.71,
+     "ssim": 0.9663,
+     "outlinePx": 0.0043
+    },
+    "a:5000": {
+     "pixels": 39035,
+     "changedShare10": 0.0461,
+     "changedShare25": 0.0028,
+     "meanDiff": 1.7,
+     "ssim": 0.9664,
+     "outlinePx": 0.0042
+    },
+    "a:6%": {
+     "pixels": 39038,
+     "changedShare10": 0.0593,
+     "changedShare25": 0.0058,
+     "meanDiff": 2.24,
+     "ssim": 0.9568,
+     "outlinePx": 0.0076
+    },
+    "a:2500": {
+     "pixels": 39033,
+     "changedShare10": 0.0595,
+     "changedShare25": 0.0066,
+     "meanDiff": 2.28,
+     "ssim": 0.9567,
+     "outlinePx": 0.008
+    }
+   },
+   "close": {
+    "50%": {
+     "pixels": 203474,
+     "changedShare10": 0.0205,
+     "changedShare25": 0.0002,
+     "meanDiff": 0.72,
+     "ssim": 0.9845,
+     "outlinePx": 0.0003
+    },
+    "20000": {
+     "pixels": 203474,
+     "changedShare10": 0.0204,
+     "changedShare25": 0.0002,
+     "meanDiff": 0.73,
+     "ssim": 0.9846,
+     "outlinePx": 0.0003
+    },
+    "25%": {
+     "pixels": 203485,
+     "changedShare10": 0.0144,
+     "changedShare25": 0.0006,
+     "meanDiff": 0.78,
+     "ssim": 0.9841,
+     "outlinePx": 0.0008
+    },
+    "10000": {
+     "pixels": 203497,
+     "changedShare10": 0.0147,
+     "changedShare25": 0.0006,
+     "meanDiff": 0.81,
+     "ssim": 0.9838,
+     "outlinePx": 0.001
+    },
+    "12%": {
+     "pixels": 203541,
+     "changedShare10": 0.0295,
+     "changedShare25": 0.0034,
+     "meanDiff": 1.31,
+     "ssim": 0.9737,
+     "outlinePx": 0.0029
+    },
+    "5000": {
+     "pixels": 203541,
+     "changedShare10": 0.0296,
+     "changedShare25": 0.0033,
+     "meanDiff": 1.31,
+     "ssim": 0.9737,
+     "outlinePx": 0.0029
+    },
+    "6%": {
+     "pixels": 203569,
+     "changedShare10": 0.0389,
+     "changedShare25": 0.0068,
+     "meanDiff": 1.78,
+     "ssim": 0.9609,
+     "outlinePx": 0.0047
+    },
+    "2500": {
+     "pixels": 203563,
+     "changedShare10": 0.0388,
+     "changedShare25": 0.0071,
+     "meanDiff": 1.83,
+     "ssim": 0.9604,
+     "outlinePx": 0.0048
+    },
+    "a:50%": {
+     "pixels": 203474,
+     "changedShare10": 0.021,
+     "changedShare25": 0.0002,
+     "meanDiff": 0.66,
+     "ssim": 0.9846,
+     "outlinePx": 0.0003
+    },
+    "a:20000": {
+     "pixels": 203474,
+     "changedShare10": 0.0207,
+     "changedShare25": 0.0002,
+     "meanDiff": 0.66,
+     "ssim": 0.9847,
+     "outlinePx": 0.0003
+    },
+    "a:25%": {
+     "pixels": 203485,
+     "changedShare10": 0.0151,
+     "changedShare25": 0.0007,
+     "meanDiff": 0.73,
+     "ssim": 0.9837,
+     "outlinePx": 0.0008
+    },
+    "a:10000": {
+     "pixels": 203497,
+     "changedShare10": 0.0154,
+     "changedShare25": 0.0007,
+     "meanDiff": 0.75,
+     "ssim": 0.9834,
+     "outlinePx": 0.001
+    },
+    "a:12%": {
+     "pixels": 203541,
+     "changedShare10": 0.0311,
+     "changedShare25": 0.0036,
+     "meanDiff": 1.3,
+     "ssim": 0.972,
+     "outlinePx": 0.0029
+    },
+    "a:5000": {
+     "pixels": 203541,
+     "changedShare10": 0.0311,
+     "changedShare25": 0.0036,
+     "meanDiff": 1.3,
+     "ssim": 0.9721,
+     "outlinePx": 0.0029
+    },
+    "a:6%": {
+     "pixels": 203569,
+     "changedShare10": 0.0399,
+     "changedShare25": 0.007,
+     "meanDiff": 1.81,
+     "ssim": 0.96,
+     "outlinePx": 0.0047
+    },
+    "a:2500": {
+     "pixels": 203563,
+     "changedShare10": 0.0405,
+     "changedShare25": 0.0074,
+     "meanDiff": 1.85,
+     "ssim": 0.9594,
+     "outlinePx": 0.0048
+    }
+   }
+  },
+  "visitor_chair02_n": {
+   "walk": {
+    "5000": {
+     "pixels": 22426,
+     "changedShare10": 0.0,
+     "changedShare25": 0.0,
+     "meanDiff": 0.0,
+     "ssim": 1.0,
+     "outlinePx": 0.0
+    },
+    "50%": {
+     "pixels": 22426,
+     "changedShare10": 0.0001,
+     "changedShare25": 0.0,
+     "meanDiff": 0.12,
+     "ssim": 0.9992,
+     "outlinePx": 0.0002
+    },
+    "2500": {
+     "pixels": 22426,
+     "changedShare10": 0.0008,
+     "changedShare25": 0.0001,
+     "meanDiff": 0.19,
+     "ssim": 0.9981,
+     "outlinePx": 0.0006
+    },
+    "25%": {
+     "pixels": 22426,
+     "changedShare10": 0.0081,
+     "changedShare25": 0.0009,
+     "meanDiff": 0.5,
+     "ssim": 0.9912,
+     "outlinePx": 0.0019
+    },
+    "12%": {
+     "pixels": 22426,
+     "changedShare10": 0.0277,
+     "changedShare25": 0.0079,
+     "meanDiff": 1.25,
+     "ssim": 0.9694,
+     "outlinePx": 0.009
+    },
+    "6%": {
+     "pixels": 22426,
+     "changedShare10": 0.077,
+     "changedShare25": 0.0231,
+     "meanDiff": 2.84,
+     "ssim": 0.9177,
+     "outlinePx": 0.0214
+    }
+   },
+   "close": {
+    "5000": {
+     "pixels": 100306,
+     "changedShare10": 0.0,
+     "changedShare25": 0.0,
+     "meanDiff": 0.01,
+     "ssim": 1.0,
+     "outlinePx": 0.0
+    },
+    "50%": {
+     "pixels": 100306,
+     "changedShare10": 0.0001,
+     "changedShare25": 0.0,
+     "meanDiff": 0.15,
+     "ssim": 0.9994,
+     "outlinePx": 0.0
+    },
+    "2500": {
+     "pixels": 100306,
+     "changedShare10": 0.0015,
+     "changedShare25": 0.0003,
+     "meanDiff": 0.27,
+     "ssim": 0.9977,
+     "outlinePx": 0.0008
+    },
+    "25%": {
+     "pixels": 100306,
+     "changedShare10": 0.0068,
+     "changedShare25": 0.0009,
+     "meanDiff": 0.62,
+     "ssim": 0.9918,
+     "outlinePx": 0.002
+    },
+    "12%": {
+     "pixels": 100306,
+     "changedShare10": 0.0287,
+     "changedShare25": 0.0069,
+     "meanDiff": 1.39,
+     "ssim": 0.9664,
+     "outlinePx": 0.0073
+    },
+    "6%": {
+     "pixels": 100306,
+     "changedShare10": 0.0903,
+     "changedShare25": 0.0249,
+     "meanDiff": 3.19,
+     "ssim": 0.9216,
+     "outlinePx": 0.0221
+    }
+   }
+  }
+ }
+}

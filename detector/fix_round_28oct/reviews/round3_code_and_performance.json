@@ -1,0 +1,137 @@
+{
+ "findings": [
+  {
+   "id": "F13",
+   "severity": "high",
+   "area": "detect_floor double-door pairing + symbol_door(h, h2) (pre-existing, same in the original): the tower figures depend on the ORDER of the items in the cache",
+   "summary": "symbol_door(fl, hi, hj) is not symmetric in its two leaves: for the same pair of arcs it returns the double door for (A, B) and None for (B, A). Which leaf comes first is the order of the arcs in the cache, so re-exporting the SAME drawing with another entity order changes the result. On L29 and L30 the 1.95 m double door (a key opening on each floor) falls apart into two 0.96 m single doors: key opening missed, 2 extras more.",
+   "repro": "ME = C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/fix4/review_c/code ; scripts in ME/lab (cd ME/lab && python -B <script>). score_shuffle.py merged: shuffles the item order of each tower floor (seeds 0 = none, 1, 2, 3, 7, 8, 9, 10) and scores with the audited key: L29 28/28 (extras 2) for seeds 0, 1, 2, 7 but 27/28 (extras 4, 1 missed) for seeds 3, 8, 9, 10; L30 26/26 (extras 4) for seeds 0, 2 but 25/26 (extras 6, 1 missed) for seeds 1, 3, 7, 8, 9, 10. So the headline 54 of 54 is 52-53 of 54 for most other orders. order_dbg.py: the two L29 arcs at (22.647,-50.197) and (24.571,-50.197): 'A->B symbol_door: hinged double (22.6087,-50.195)-(24.5637,-50.195)', 'B->A symbol_door: None'. order_test.py merged l29 l30 (SEEDS=1..11): result changes in 6 of 11 orders on L29 (seeds 3,4,8,9,10,11) and 8 of 11 on L30 (1,2,3,5,7,8,9,10); the original differs in exactly the same seeds.",
+   "actual": "score and openings depend on the entity order of the cache",
+   "expected": "same openings for the same drawing in any entity order",
+   "suggestedFix": "One line in the double-door loop of detect_floor: o = symbol_door(fl, hi, hj) or symbol_door(fl, hj, hi). Tested on ME/detector_fixed: L29 and L30 give 28/28 and 26/26 with 2 and 4 extras for all 11 shuffled orders each (order_test.py fixed l29 l30; score_shuffle.py fixed); the six drawings in their delivered order are unchanged. Cleaner: make symbol_door symmetric."
+  },
+  {
+   "id": "F1",
+   "severity": "medium",
+   "area": "run() + geomkit.dedupe (pre-existing; reached through the mapping 'units' input)",
+   "summary": "dedupe() rounds the RAW cache coordinates to 3 decimals before the unit scale is applied, so its resolution is 1 mm only for units 'mm': 1 cm for 'cm', 2.5 cm for 'in', 0.3 m for 'ft', 1 m for 'm'. Distinct face lines and pieces collapse into 'duplicates', walls vanish, openings are lost or invented, silently. In cm / in it also merges the 5-30 mm faces the new thin-screen rule (3) needs.",
+   "repro": "units_repro.py: two 4 m walls drawn as face LINEs 0.2 m apart, 1.2 m gap, back wall: units mm / cm / in give the passage, units m and ft give [] (orig and merged); with dedupe off every unit gives the passage. End to end with the real CLI: ME/cli_units holds bank1 with every coordinate x0.001 and a mapping with units 'm': cd ME/detector && OPENINGS_DATA=ME/cli_units/data python -B openings.py ME/cli_units/maps/bank1_m.json out.json gives 24 openings that are not the mm run's openings (4-5 differ). units_real.py bank1 l29 presidential: m: bank L1 5 differ, L29 6 differ (Sukhumvit ground 31 openings instead of 43); ft: L29 2 differ; in: presidential 1 differ.",
+   "actual": "walls lost / different openings for units m, ft (and in)",
+   "expected": "identical result whatever the unit",
+   "suggestedFix": "In run(): items = [d for d in D['items'] if tag(d) == area]; if scale != 1.0: items = [scaled(d, scale) for d in items]; items = dedupe(items); fl = Floor(floor_name, items, D['layers'], roles, 1.0). Tested: six drawings identical in mm; bank1 / L29 / presidential identical for cm, in, m, ft, also through the real CLI."
+  },
+  {
+   "id": "F2",
+   "severity": "medium",
+   "area": "geomkit.Prim.poly / small_shapes / jamb_at (pre-existing, not touched by the 25 hunks)",
+   "summary": "A small self-intersecting closed outline (2.5-30 cm, any layer) becomes a MultiPolygon after Polygon(p).buffer(0); small_shapes() keeps it in fl.jambs and jamb_at() (also wall_direction(), frame_rows()) call .exterior on it: AttributeError, the whole drawing fails.",
+   "repro": "bow_repro.py: two walls with a 1.6 m gap, a 0.9 m door (arc + leaf on A-DOOR) and ONE closed 7-point 8 cm polyline [(0.059,0.064),(0.075,0.059),(0.074,0.002),(0.037,0.075),(0.052,0.072),(0.009,0.038),(0.02,0.044)] shifted onto the hinge jamb, on a non-wall layer: AttributeError: 'MultiPolygon' object has no attribute 'exterior' @ jamb_at <- narrow_to_symbol <- detect_floor (orig and merged). Fuzz: +-2/8 mm jitter of every coordinate of the presidential floor raises it in 7 of 8 variants (fuzz.py merged presidential).",
+   "actual": "uncaught AttributeError",
+   "expected": "no crash",
+   "suggestedFix": "geomkit.Prim.__init__ after g = Polygon(p).buffer(0): if g.geom_type != 'Polygon': ps = polys(g); g = max(ps, key=lambda q: q.area) if ps else None; then if g is not None and not g.is_empty and g.area > 1e-6: self.poly = g. Tested: repro runs, 0 exceptions in 114 fuzz variants, six drawings identical."
+  },
+  {
+   "id": "F3",
+   "severity": "low",
+   "area": "build_walls (pre-existing)",
+   "summary": "unary_union of the wall pieces can raise a GEOS error on near-degenerate input; nothing catches it.",
+   "repro": "geos_repro.py: Sukhumvit upper floor with 30 % of its straight lines split into two collinear halves (random gap or overlap 0-5 cm; items pickled in geos_fail_items.pkl): GEOSException 'found two shells in EdgeRing list' at openings.py line 154, merged and original.",
+   "actual": "exception",
+   "expected": "a result",
+   "suggestedFix": "try: W = unary_union([...]) except Exception: import shapely; W = shapely.union_all([g.buffer(0) for g in pieces], grid_size=1e-6). Tested: repro gives 43 openings; normal path unchanged."
+  },
+  {
+   "id": "F4",
+   "severity": "medium",
+   "area": "interrupts_wall_line / CROSS_PIECE (patch 6)",
+   "summary": "The verdict for an opening that ends at the side of a cross wall (the wall carries on beyond it) depends on that cross wall's thickness against CROSS_PIECE = 0.20 m: a cliff, and a float coin flip at exactly 0.20 m, the commonest wall thickness. The sweep note 'range 0.11-0.25' only says that none of the six drawings has a cross wall of 0.20-0.25 m in that role.",
+   "repro": "mini5.py: wall A with a 1.2 m opening, a cross wall of thickness tc, wall A carrying on in line, room around. tc 0.10 / 0.15 / 0.18 / 0.19 / 0.20: passage; tc 0.21 / 0.22 / 0.25 / 0.30 / 0.35: no opening (orig: passage for every tc). At tc = 0.20 with +-1e-10 m noise the passage appears in 6 of 12 runs ('-P-P-PP-P-P-', mini5c.py). Cause: s0 = w + tc is compared with g.w + CROSS_PIECE.",
+   "actual": "same topology, opposite verdict for 0.20 / 0.21 m; random at 0.20 m",
+   "expected": "no dependence on the thickness of the wall it ends against, none on rounding",
+   "suggestedFix": "CROSS_PIECE = 0.205 (moves the coin flip off the 200 mm wall). With only this change the six drawings are identical to the baseline and scores unchanged; mini5c.py: 0.20 then passes 12 of 12 noisy runs. The cliff stays; removing it needs another discriminator for the L30-026 corridor crossings (e.g. cross wall thicker than 1.5 x the gap's wall; not tested)."
+  },
+  {
+   "id": "F5",
+   "severity": "medium",
+   "area": "detect_floor 'through' bands / MULLION (patch 4)",
+   "summary": "A window on a glass-ROLE layer (no window-role line) is dropped when its glazing lines run 0.2 m or more past the wall ends into the wall, and a casement window becomes a hinged DOOR. The same lines on a window-role layer are kept, so the result depends on how the layer was mapped. At exactly 0.20 m it is a float coin flip.",
+   "repro": "mini7.py: walls with a 1.2 m gap, two glass lines 5 cm apart through it, drawn into the wall ends by ext m. A-GLAZ (glass role): ext 0 / 0.05 / 0.10 / 0.15 window; ext 0.20 / 0.21 / 0.25 / 0.30 / 0.50 nothing (orig: window every time); A-WIND (window role): window every time. mini9.py: casement (glass-layer sash arc + glazing across the gap): ext 0.25 and 0.40 give door:hinged single instead of window:casement (class wrong in the scorer). The mappings of L29, L30, bank1, bank2 have only a glass role (Sukhumvit both, presidential neither), so every window of those four drawings goes through this rule.",
+   "actual": "window lost or turned into a door",
+   "expected": "a window with glass drawn a little into a deep jamb stays a window",
+   "suggestedFix": "Treat a band as 'through' only when its overrun past the gap ends is NOT wall material: test fl.G.cover along the band line over b.s0..0 and g.w..b.s1; if >= 50 % of the overrun is wall solid it is glass drawn into a reveal (keep it in g.bands); if it is free space or another glass bay it is a curtain wall. Not implemented; at minimum add a guard against the coin flip (> MULLION + 1e-6)."
+  },
+  {
+   "id": "F6",
+   "severity": "low",
+   "area": "screen_doors -> strip_gaps (patch 3): new quadratic call site",
+   "summary": "screen_doors runs strip_gaps on every thin glass strip. strip_gaps has two pure-Python double loops (gaps x strips with ang_diff at ~10 us per pair, and the gap de-duplication); all thin strips pass the abs(S.t - g.t) > 0.04 pre-test, so cost is ~(4N)(2N) pairs. Real drawings have at most 10 thin strips so today it costs 0.01-0.03 s, but a floor with hundreds of glass partitions hits it.",
+   "repro": "stress.py merged screens N (N thin 2.0 x 0.012 m closed rectangles on the wall layer, 50 per row): CPU s for N = 100 / 200 / 400 / 800: 0.8 / 2.5 / 5.8 / 23.5 in screen_doors; the original takes 1.5 s in total at N = 800. cProfile: strip_gaps 19.7 of 20.1 s, 935k ang_diff calls at N = 400.",
+   "actual": "23.5 s at 800 screens",
+   "expected": "roughly linear",
+   "suggestedFix": "In the collinear-strip loop of strip_gaps pre-filter with numpy per gap (|t - g.t| <= 0.04, |u.g.u| >= cos 2 deg, |lateral offset of g.b| <= 0.03) and run the exact tests on the survivors only (identical gap lists on L30 x10); in the de-dup loop test the distances before ang_diff. Tested: N = 800 falls from 25.4 s to 6.0 s; strip_gaps on L30 x10 from 14.6 s to 9.3 s with identical gaps (bench_gaps.py 2 5)."
+  },
+  {
+   "id": "F7",
+   "severity": "low",
+   "area": "gap_contents / line_leaves / screen_leaves: the '>= 0.1 m inside the gap' test (patch 2 reuses it)",
+   "summary": "min(s1, g.w) - max(s0, 0) >= 0.1 is evaluated on door lines that CAD drew exactly 0.100 m into the gap, so rounding at 1e-15 decides. L30-020 (key L30E-07, the 1.28 m sliding cavity door) is a 'passage' in the baseline only because of that: it becomes 'door pocket sliding' with dedupe off, in 8 of 11 shuffled item orders (the original too), with +-1e-9 m noise (5 of 5 seeds), after a x0.1/x10 unit round trip, mirroring, shifting by (5e4,-3e4) or rotating by 45 degrees. The scorer counts door and passage as one class, so 54/54 does not change, but the kind is a coin flip and the key says door.",
+   "repro": "knife7.py merged prints cover = 0.100000000 for the two A-DOOR lines (s -1.1..0.1): panels=[] with dedupe, [('pocket line','A-DOOR')] without. transform_test.py merged l30 and noise_test.py merged l30 (SEEDS=1..5) show the flip.",
+   "actual": "kind decided by rounding noise",
+   "expected": "stable",
+   "suggestedFix": "Add a tolerance '>= 0.1 - 1e-6' at the three places (gap_contents ok mask, line_leaves ok mask, screen_leaves ok mask). Tested: L30 identical under rot 17/45/90, mirror, shift; six drawings identical except L30-020 = 'door pocket sliding' (the key's kind; scores unchanged). General rule: every threshold equal to a drawing-grid value (0.10, 0.15, 0.20, 0.25, 0.30, 0.6, 1.6 m) needs a tolerance."
+  },
+  {
+   "id": "F8",
+   "severity": "medium",
+   "area": "is_free_post (pre-existing; passage_ok of patch 6 runs after it)",
+   "summary": "is_free_post decides 'a free-standing post' from the AXIS-ALIGNED bounding box. A free wall piece 0.7 x 0.2 m has a squarish box when the plan is rotated (17, 45 degrees) and is then taken for a post, so the passage beside it is dropped: the output depends on the orientation of the plan on the sheet. (small_shapes, build_walls, glazing_bands also use bounds.)",
+   "repro": "mini8.py: 1.2 m opening between a wall end and a free 0.7 x 0.2 m piece in line: rot 0 / 90 passage; rot 17 / 45 none (orig and merged). Real: rot_dbg.py 45 (presidential): is_free_post False at 0 degrees, True at 45 for the probe at g.at(w+0.02); suite-008 (an extra in the key, so score-neutral) vanishes.",
+   "actual": "rotation changes the output",
+   "expected": "rotation invariance",
+   "suggestedFix": "In is_free_post: xs = list(q.minimum_rotated_rectangle.exterior.coords); e1, e2 = math.dist(xs[0], xs[1]), math.dist(xs[1], xs[2]); big, small = max(e1, e2), min(e1, e2). Tested: mini8 passage at all angles; six drawings identical."
+  },
+  {
+   "id": "F9",
+   "severity": "low",
+   "area": "knife-edges that remain (pre-existing)",
+   "summary": "Nanometre noise (+-1e-9 m on every coordinate) or a shift by (5e4,-3e4) m flips bank L1's hinged double door L1-024 between 1.60 and 2.42 m wide, a presidential double door between 1.60 and 1.52 m (rotation 17/45), and the L30 shaft door L30-034 (key L30W-19) between x = 2.2213 and 2.5213 (seeds 2,3,4). Same in the original. L30-034: symbol_door's band test 'b - a <= 0.6' on a wall exactly 0.6 m thick (widths 0.5999999999998 vs 0.6000000027): the door lands on the band mid line (t 0.6, 0.25 m from the key, inside the 0.30 m scorer tolerance) or on the chord (t 0.1, 0.05 m from the key).",
+   "repro": "noise_test.py merged bank1 l30 (SEEDS=1..5), knife11.py and knife12.py (L30-034 base vs noise seed 2), transform_test.py merged bank1 presidential.",
+   "actual": "width/position jumps (0.8 m, 0.3 m) under 1e-9 noise",
+   "expected": "stable",
+   "suggestedFix": "Give the symbol_door thresholds the F7 tolerance (b - a <= 0.6 + 1e-6; -0.35 / 0.1 / L-0.1 / L+0.35 are all exact grid values). Not tested for L1-024."
+  },
+  {
+   "id": "F10",
+   "severity": "low",
+   "area": "line_leaves (patch 2)",
+   "summary": "Two door-layer lines 15-70 mm apart running along the whole gap are a sliding door, whatever they are: a threshold / sill / track drawn as a thin rectangle in a doorway is indistinguishable from the face-mounted L30 slider (which also covers 100 % of its gap 0.06 m off the face).",
+   "repro": "mini3.py M: 1.2 m passage with two A-DOOR lines 4 cm apart along the gap, 0.06 m outside the wall face: orig passage, merged 'door sliding'.",
+   "actual": "false door",
+   "expected": "inherent to the evidence",
+   "suggestedFix": "No code fix; document, or additionally require the pair to run past a gap end (into_wall) or a track line."
+  },
+  {
+   "id": "F11",
+   "severity": "low",
+   "area": "interrupts_wall_line design limits (patch 6)",
+   "summary": "The mouth rule drops (a) every opening from a wall end to the side of a cross wall at any width and (b) an opening whose wall carries on in line at another thickness with BOTH faces off line (0.2 m wall continuing as a centred 0.1 m partition). Both are in the docstring, but doorways of both kinds exist; the keys only fix them as 'optional mouths'.",
+   "repro": "mini_tests.py E: 0.9 m between a wall end and a cross wall: orig passage, merged none. mini10.py: wall end then a centred 0.1 m wall in line, 1.2 m apart: orig passage, merged none (one face flush: kept; wall end to column: neither version finds it).",
+   "actual": "dropped",
+   "expected": "design decision",
+   "suggestedFix": "No code fix; list as a known false-negative class in the report."
+  },
+  {
+   "id": "F12",
+   "severity": "low",
+   "area": "docstring rule 6 vs code (patch 3)",
+   "summary": "The docstring says a thin glass screen is 'a hatch or a double line, 5-30 mm'. A double line drawn as two separate LINE entities is never paired into a strip (pair_strips needs 4 cm or more), so only closed thin outlines and hatches are read.",
+   "repro": "mini2.py N1: closed 12 mm rectangles with two sliding leaves: door 2.5 m found. units_screen2.py: the same screen drawn as two 12 mm-apart LINEs per pane: no opening in any unit, mm included.",
+   "actual": "no door",
+   "expected": "as documented",
+   "suggestedFix": "Change the docstring to 'thin closed outline or hatch', or pair lines 5-30 mm apart on wall layers (not tested)."
+  }
+ ],
+ "checkedWhat": "Read all 617 diff lines (25+ hunks) and the surrounding code of all of openings.py (1938 lines) and geomkit.py. Work copy: ME = C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/fix4/review_c/code (detector = merged copy, detector_fixed = copy with the minimal fixes, minimal_fixes.diff = 132-line diff, lab = all repro scripts, findings.json = full write-up, cli_units = real-CLI units repro). (a) Harness reproduced exactly: five drawings identical to the baseline, 139/143 with 8 extras, tower 54/54 with 6 extras; nothing raises. Verified the claims against the unpatched outputs: only 22 passages removed on the older four (12/4/3/3), no door or window changed in kind or width, one bank2 door (L2-027 -> L2-023) now read from its wall gap (ends move 0.05 m, hinge label a -> b). (b) Unusual inputs, merged and original side by side, no exception in the new code: no door / glass+window / wall+column / stair / screen layer, all of them removed, every layer = wall, every layer = all roles, empty floor, duplicated items (with and without dedupe), one 1 m wall (outline and 4 lines), degenerate geometry (zero-length, collinear closed shapes, 2-point arcs, 1000 m lines), units cm/m/in/ft (scaled caches, also through the real CLI), 114 fuzz variants (drop, jitter 2/8 mm, split lines, thin out layers) of 4 drawings; the only exceptions are pre-existing (F2, F3). No state leak between floors in one process (6 orders). Invariance: item shuffles (11 seeds x 6 drawings x 2 detectors), +-1e-9 m noise (5 seeds), rotation 17/45/90, mirror, shift. About 30 mini plans probed the new rules (jamb returns on all side/rotation combinations, mouths, cross-wall thickness sweep, through glass, thin screens, sidelights, thresholds). Static check: no new unused names; docstrings agree with the code except F12. (c) Performance: L30 replicated 1/2/4/6/10/20 times (CPU s original/merged 3.2/3.3, 8.4/8.8, 23.9/23.4, 39.4/40.1, 128.9/128.8, 914.6/908.0 with cProfile on): both are about quadratic from pre-existing steps (build_walls fl.singles difference 418 s, strip_gaps/corner_end ang_diff 35M calls, glazing_bands 78 s, is_free_post 17 s at 20x); the new functions cost under 2.5 % (along_wall 5.1 s at 20x, the rest 0.03-0.5 s at 6x; about 0.1 s per real floor). Six adversarial generators (facade, nibs, rooms, passages, isolated bands, thin screens, N up to 800): only the thin-screen call site is new super-linear (F6). Fixes F1 F2 F3 F4 F6 F7 F8 F13 verified on detector_fixed with the harness (five drawings identical, L30 differs only at L30-020 = the key's door kind, scores unchanged), the shuffle, noise, rotation and fuzz tests.",
+ "robustRules": "Patch 1 jamb-return logic (one_face_step, JAMB_RETURN, near and far end): symmetric, 9 side combinations x 5 rotation angles all give the same 1.2 m passage; stubs over 0.25 m correctly give nothing; the 3 cm strips add gaps (5-20 % more) but no crash or wrong output. The new face-run / far_face / framed / closed_by_glass / along_wall / glass_share / line_leaves code works in the gap frame and is rotation invariant (the only rotation-dependent test is the old is_free_post, F8). trim_to_leaf, screen_doors and the crosses_stair shrink raised nothing on any input and behave as documented on the mini plans (screen door 2.5 m found; sidelight trim; stair hall outline). The new code adds no state to Floor beyond fl.edges, leaks nothing between floors, adds no order dependence of its own (shuffle differences are identical to the original's), and costs about 0.1 s per real floor.",
+ "fragileRules": "CROSS_PIECE 0.20 (cliff at the cross-wall thickness, coin flip at the commonest 200 mm wall, F4); MULLION 0.20 with glass-role-only mappings (windows dropped or turned into doors when glazing runs 0.2 m into the wall ends, F5); WALL_RUN 0.45 (a wall carrying on exactly 0.45 m flips with 1e-10 m noise); every exact grid-value threshold: the 0.1 m overlap test (F7), symbol_door's 0.6 band width (F9), SIDELIGHT_MIN 0.15, DOORWAY 1.4, the 1.6 m short-gap limit; the mouth rule (every wall-end-to-cross-wall opening and every centred thickness change is dropped, F11); line_leaves (a threshold pair looks like a sliding leaf, F10); the thin-screen rule (only closed thin outlines/hatches, and quadratic in the number of thin strips, F6, F12); and, pre-existing but decisive for the gate figures, the double-door pairing (item-order dependent, F13) and run()/dedupe for non-mm units (F1).</fragileRules>\n</invoke>\n"
+}

@@ -1,0 +1,163 @@
+{
+ "key": "monitor",
+ "name": "monitor",
+ "file": "banquet/monitor.glb",
+ "kind": "computer",
+ "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+ "piece": "L1-computer-003",
+ "furnishes": 16,
+ "turnUndone_deg": 300,
+ "turnFrom": "its real turn in the scene (analysis.json)",
+ "standsAt_m": 0.75,
+ "size_m": [
+  0.8652,
+  0.482,
+  0.7858
+ ],
+ "gltfSceneToModelFrame_columnMajor": [
+  0.5,
+  0,
+  -0.8660254,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0.8660254,
+  0,
+  0.5,
+  0,
+  -1.0923998,
+  -0.7500262,
+  -2.4343313,
+  1
+ ],
+ "full": {
+  "triangles": 15290,
+  "vertices": 22893,
+  "weldedVertices": 7940,
+  "parts": [
+   {
+    "name": "office_workplace_100_27_inch_screen002_1",
+    "triangles": 2486,
+    "vertices": 2508,
+    "mirrored": false
+   },
+   {
+    "name": "office_workplace_100_27_inch_screen002_2",
+    "triangles": 144,
+    "vertices": 242,
+    "mirrored": false
+   },
+   {
+    "name": "office_workplace_100_27_inch_screen002_3",
+    "triangles": 8,
+    "vertices": 22,
+    "mirrored": false
+   },
+   {
+    "name": "office_workplace_100_keyboard002_1",
+    "triangles": 216,
+    "vertices": 232,
+    "mirrored": false
+   },
+   {
+    "name": "office_workplace_100_keyboard002_2",
+    "triangles": 180,
+    "vertices": 368,
+    "mirrored": false
+   },
+   {
+    "name": "office_workplace_100_keyboard002_3",
+    "triangles": 11440,
+    "vertices": 18801,
+    "mirrored": false
+   },
+   {
+    "name": "office_workplace_100_pc_mouse002_1",
+    "triangles": 448,
+    "vertices": 352,
+    "mirrored": false
+   },
+   {
+    "name": "office_workplace_100_pc_mouse002_2",
+    "triangles": 368,
+    "vertices": 368,
+    "mirrored": false
+   }
+  ],
+  "area_m2": 1.0406
+ },
+ "levels": [
+  {
+   "id": "10000",
+   "label": "10,000 budget",
+   "triangles": 10000,
+   "vertices": 5295,
+   "posOffset": 0,
+   "posCount": 15885,
+   "idxOffset": 63540,
+   "idxCount": 30000
+  },
+  {
+   "id": "50%",
+   "label": "50 %",
+   "triangles": 7644,
+   "vertices": 4117,
+   "posOffset": 183540,
+   "posCount": 12351,
+   "idxOffset": 232944,
+   "idxCount": 22932
+  },
+  {
+   "id": "5000",
+   "label": "5,000 budget",
+   "triangles": 4999,
+   "vertices": 2793,
+   "posOffset": 324672,
+   "posCount": 8379,
+   "idxOffset": 358188,
+   "idxCount": 14997
+  },
+  {
+   "id": "25%",
+   "label": "25 %",
+   "triangles": 3814,
+   "vertices": 2203,
+   "posOffset": 418176,
+   "posCount": 6609,
+   "idxOffset": 444612,
+   "idxCount": 11442
+  },
+  {
+   "id": "2500",
+   "label": "2,500 budget",
+   "triangles": 2496,
+   "vertices": 1544,
+   "posOffset": 490380,
+   "posCount": 4632,
+   "idxOffset": 508908,
+   "idxCount": 7488
+  },
+  {
+   "id": "12%",
+   "label": "12 %",
+   "triangles": 1834,
+   "vertices": 1181,
+   "posOffset": 538860,
+   "posCount": 3543,
+   "idxOffset": 553032,
+   "idxCount": 5502
+  },
+  {
+   "id": "6%",
+   "label": "6 %",
+   "triangles": 914,
+   "vertices": 682,
+   "posOffset": 575040,
+   "posCount": 2046,
+   "idxOffset": 583224,
+   "idxCount": 2742
+  }
+ ]
+}

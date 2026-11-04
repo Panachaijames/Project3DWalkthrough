@@ -1,0 +1,2 @@
+presidential:suite: 25 openings (door 15, window 0, passage 10)  0.3 s
+total 1.2 s -> output\presidential_openings.json

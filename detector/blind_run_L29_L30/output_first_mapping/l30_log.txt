@@ -1,0 +1,2 @@
+tower:L30: 56 openings (door 16, window 16, passage 24)  2.3 s
+total 4.9 s -> blind_run_L29_L30/output/l30_openings.json

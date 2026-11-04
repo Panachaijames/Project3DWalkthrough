@@ -1,0 +1,121 @@
+﻿id,level,kind,kind_label,family,block,layer,dxf_handle,x_m,y_m,width_mm,depth_mm,height_mm,base_mm,rotation_deg,on_top_of,merged,note
+suite-tv-001,suite,tv,TV / wall screen,TV_55 inches_Recessed,Xr_SDC_DD_ID-PRS-Fur$0$TV_55 inches_Recessed,A-2.Noi That,1B22FD,190.282,-3505.619,1875,225,600,900,150.0,,1,
+suite-curtain-001,suite,curtain,Curtain,Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B2399,185.903,-3499.271,792,123,2700,0,90.0,,1,
+suite-curtain-002,suite,curtain,Curtain,Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B238D,185.903,-3491.012,792,123,2700,0,90.0,,1,
+suite-curtain-003,suite,curtain,Curtain,Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B239B,186.110,-3500.043,792,123,2700,0,120.0,,1,
+suite-curtain-004,suite,curtain,Curtain,Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B238F,186.110,-3490.240,792,123,2700,0,60.0,,1,
+suite-curtain-005,suite,curtain,Curtain,Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B23C6,187.270,-3502.023,792,123,2700,0,120.4,,1,
+suite-curtain-006,suite,curtain,Curtain,Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B23C8,187.769,-3502.876,792,123,2700,0,120.2,,1,
+suite-curtain-007,suite,curtain,Curtain,Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B23CA,189.015,-3505.053,792,123,2700,0,120.4,,1,
+suite-curtain-008,suite,curtain,Curtain,Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B2391,189.033,-3485.176,792,123,2700,0,60.0,,1,
+suite-curtain-009,suite,curtain,Curtain,Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B2393,189.535,-3484.674,792,123,2700,0,30.0,,1,
+suite-curtain-010,suite,curtain,Curtain,Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B23CC,189.587,-3505.622,792,123,2700,0,149.9,,1,
+suite-curtain-011,suite,curtain,Curtain,Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B23CE,190.537,-3506.170,792,123,2700,0,150.1,,1,
+suite-curtain-012,suite,curtain,Curtain,Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B2395,191.132,-3483.753,792,123,2700,0,30.0,,1,
+suite-curtain-013,suite,curtain,Curtain,Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B23D0,191.276,-3506.379,792,123,2700,0,179.9,,1,
+suite-curtain-014,suite,curtain,Curtain,Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B2397,192.621,-3483.905,792,123,2700,0,0.0,,1,
+suite-curtain-015,suite,curtain,Curtain,Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B23D6,194.865,-3506.379,792,123,2700,0,0.1,,1,
+suite-curtain-016,suite,curtain,Curtain,Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B23D4,195.775,-3506.379,792,123,2700,0,179.9,,1,
+suite-curtain-017,suite,curtain,Curtain,Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B2522,196.878,-3483.905,792,123,2700,0,0.0,,1,
+suite-curtain-018,suite,curtain,Curtain,Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B23D2,197.305,-3506.379,792,123,2700,0,0.1,,1,
+suite-curtain-019,suite,curtain,Curtain,Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B23C0,197.847,-3483.905,792,123,2700,0,0.0,,1,
+suite-curtain-020,suite,curtain,Curtain,Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B23C2,202.013,-3483.905,792,123,2700,0,0.0,,1,
+suite-curtain-021,suite,curtain,Curtain,A$C86fb51a5,A$C86fb51a5,Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES,1B24CA,203.122,-3498.539,1277,87,2700,0,150.0,,1,"in the approach of D11, O2"
+suite-lamp-001,suite,lamp,Lamp,1X-LAMP1,Xr_SDC_DD_ID-PRS-Fur$0$XR_TP FL 8-27 INTERIOR$0$1X-LAMP1,Xr_SDC_DD_ID-PRS-Fur$0$DA-LEVEL-LIGHT,1B244E,186.409,-3496.393,327,309,500,0,146.1,,1,
+suite-lamp-002,suite,lamp,Lamp,1X-LAMP1,Xr_SDC_DD_ID-PRS-Fur$0$XR_TP FL 8-27 INTERIOR$0$1X-LAMP1,Xr_SDC_DD_ID-PRS-Fur$0$DA-LEVEL-LIGHT,1B2373,186.409,-3493.898,327,309,500,0,33.9,,1,
+suite-lamp-003,suite,lamp,Lamp,L_02,Xr_SDC_DD_ID-PRS-Fur$0$L_02,A-2.Noi That,1B2338,190.282,-3501.405,442,442,500,0,10.9,,1,
+suite-lamp-004,suite,lamp,Lamp,table lamp 01,Xr_SDC_DD_ID-PRS-Fur$0$table lamp 01,A-2.Noi That,1B2461,194.696,-3504.869,198,198,500,450,89.7,suite-coffee-table-002,1,
+suite-lamp-005,suite,lamp,Lamp,table lamp 01,Xr_SDC_DD_ID-PRS-Fur$0$table lamp 01,A-2.Noi That,1B2460,194.826,-3505.020,198,198,500,450,89.7,suite-coffee-table-002,1,
+suite-lamp-006,suite,lamp,Lamp,table lamp 01,Xr_SDC_DD_ID-PRS-Fur$0$table lamp 01,A-2.Noi That,1B2462,194.877,-3504.811,198,198,500,450,89.7,suite-coffee-table-002,1,
+suite-lamp-007,suite,lamp,Lamp,wall lamp king top,Xr_SDC_DD_ID-PRS-Fur$0$wall lamp king top,A-2.Noi That,1B245E,194.919,-3502.207,301,283,500,450,180.0,suite-coffee-table-001,1,
+suite-lamp-008,suite,lamp,Lamp,1X-LAMP1,Xr_SDC_DD_ID-PRS-Fur$0$XR_TP FL 8-27 INTERIOR$0$1X-LAMP1,Xr_SDC_DD_ID-PRS-Fur$0$DA-LEVEL-LIGHT,1B2375,199.704,-3495.743,327,309,500,750,33.9,suite-table-002,1,
+suite-lamp-009,suite,lamp,Lamp,1X-LAMP1,Xr_SDC_DD_ID-PRS-Fur$0$XR_TP FL 8-27 INTERIOR$0$1X-LAMP1,Xr_SDC_DD_ID-PRS-Fur$0$DA-LEVEL-LIGHT,1B2376,199.704,-3494.568,327,309,500,750,146.1,suite-table-002,1,
+suite-plant-001,suite,plant,Plant,jdlkasdjkla,jdlkasdjkla,A-4. Cay (goccay),1B2296,175.370,-3495.433,941,941,2500,0,78.6,,1,
+suite-plant-002,suite,plant,Plant,jdlkasdjkla,jdlkasdjkla,A-4. Cay (goccay),1B2297,175.677,-3495.950,540,540,2500,0,78.6,,1,
+suite-plant-003,suite,plant,Plant,jdlkasdjkla,jdlkasdjkla,A-4. Cay (goccay),1B2291,175.752,-3492.449,2219,2219,2500,0,78.6,,1,
+suite-plant-004,suite,plant,Plant,jdlkasdjkla,jdlkasdjkla,A-4. Cay (goccay),1B2292,178.301,-3499.451,2219,2219,2500,0,11.4,,1,
+suite-plant-005,suite,plant,Plant,jdlkasdjkla,jdlkasdjkla,A-4. Cay (goccay),1B2294,178.366,-3496.789,941,941,2500,0,11.4,,1,
+suite-plant-006,suite,plant,Plant,jdlkasdjkla,jdlkasdjkla,A-4. Cay (goccay),1B2295,178.833,-3497.114,540,540,2500,0,78.6,,1,
+suite-plant-007,suite,plant,Plant,jdlkasdjkla,jdlkasdjkla,A-4. Cay (goccay),1B22A3,179.102,-3500.715,1331,1331,2500,0,78.6,,1,
+suite-plant-008,suite,plant,Plant,jdlkasdjkla,jdlkasdjkla,A-4. Cay (goccay),1B2293,180.719,-3484.321,2219,2219,2500,0,78.6,,1,
+suite-plant-009,suite,plant,Plant,jdlkasdjkla,jdlkasdjkla,A-4. Cay (goccay),1B22A1,188.236,-3504.742,2219,2219,2500,0,11.4,,1,
+suite-plant-010,suite,plant,Plant,jdlkasdjkla,jdlkasdjkla,A-4. Cay (goccay),1B22A2,189.167,-3505.714,1331,1331,2500,0,78.6,,1,
+suite-plant-011,suite,plant,Plant,jdlkasdjkla,jdlkasdjkla,A-4. Cay (goccay),1B22A5,190.201,-3483.055,1065,1065,2500,0,11.4,,1,
+suite-plant-012,suite,plant,Plant,jdlkasdjkla,jdlkasdjkla,A-4. Cay (goccay),1B22A4,190.930,-3483.004,1775,1775,2500,0,11.4,,1,
+suite-sanitary-001,suite,sanitary,Sanitary fitting,sdfhsdfhsdfh,sdfhsdfhsdfh,A-2.Noi That,1B23F6,198.224,-3503.168,491,480,850,0,133.9,,1,
+suite-sanitary-002,suite,sanitary,Sanitary fitting,sdfhsdfhsdfh,sdfhsdfhsdfh,A-2.Noi That,1B23F7,198.224,-3502.268,491,480,850,0,46.1,,1,
+suite-sanitary-003,suite,sanitary,Sanitary fitting,SmartToilet-Plan,Xr_SDC_DD_ID-PRS-ID wall$0$SmartToilet-Plan,Xr_SDC_DD_ID-PRS-ID wall$0$DA-SANR,1B23FC,202.410,-3502.709,683,366,850,0,60.0,,1,
+suite-sanitary-004,suite,sanitary,Sanitary fitting,chạu rua 2 ho,Xr_SDC_DD_ID-PCS-Fur$0$chạu rua 2 ho,Xr_SDC_DD_ID-PCS-Fur$0$DA-SANR-FIXT,1B232B,203.838,-3489.291,770,440,850,0,120.0,,1,
+suite-sanitary-005,suite,sanitary,Sanitary fitting,sdfhsdfhsdfh,sdfhsdfhsdfh,A-2.Noi That,1B23F5,205.241,-3498.612,491,480,850,0,103.9,,1,
+suite-appliance-001,suite,appliance,Appliance,01.MINIBAR800X600,Xr_SDC_DD_ID-PRS-Fur$0$01.MINIBAR800X600,A-2.Noi That,1B22FE,193.960,-3499.932,1940,650,900,0,0.0,,1,
+suite-appliance-002,suite,appliance,Appliance,A$C632aa080,Xr_SDC_DD_ID-PCS-Fur$0$A$C632aa080,Xr_SDC_DD_ID-PCS-Fur$0$DA-SANR-FIXT,1B232C,202.608,-3491.220,590,520,900,0,120.0,,1,
+suite-bed-001,suite,bed,Bed,SDC_MUR.BED KING PLAN,Xr_SDC_DD_ID-PRS-Fur$0$SDC_MUR.BED KING PLAN,A-2.Noi That,1B2464,194.012,-3503.575,2125,2040,500,0,0.0,,1,
+suite-seat-001,suite,seat,Chair / stool,SDC_JUNIOR SUITE_DINING CHAIR-PLAN,Xr_SDC_DD_ID-PRS-Fur$0$Xr_SDC_DD_ID-MUR.JS-Furniture$0$SDC_JUNIOR SUITE_DINING CHAIR-PLAN,Xr_SDC_DD_ID-PRS-Fur$0$DA-LOOSE-FURN,1B328C,190.345,-3487.305,798,671,450,0,140.9,,1,
+suite-seat-002,suite,seat,Chair / stool,A$C1919ec32,Xr_SDC_DD_ID-PRS-Fur$0$A$C1919ec32,A-2.Noi That,1B2465,192.525,-3503.578,1800,600,450,0,90.0,,1,
+suite-seat-003,suite,seat,Chair / stool,dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$DA-LOOSE-FURN,1B237F,194.688,-3496.308,605,601,450,0,90.0,,1,
+suite-seat-004,suite,seat,Chair / stool,dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$DA-LOOSE-FURN,1B2384,194.688,-3494.003,605,601,450,0,90.0,,1,
+suite-seat-005,suite,seat,Chair / stool,dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$DA-LOOSE-FURN,1B237E,195.488,-3496.308,605,601,450,0,90.0,,1,
+suite-seat-006,suite,seat,Chair / stool,dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$DA-LOOSE-FURN,1B2383,195.488,-3494.003,605,601,450,0,90.0,,1,
+suite-seat-007,suite,seat,Chair / stool,chair 1 1,chair 1 1,A-2.Noi That,1B2300,196.103,-3503.518,546,500,450,0,0.0,,1,
+suite-seat-008,suite,seat,Chair / stool,dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$DA-LOOSE-FURN,1B237D,196.288,-3496.308,605,601,450,0,90.0,,1,
+suite-seat-009,suite,seat,Chair / stool,dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$DA-LOOSE-FURN,1B2382,196.288,-3494.003,605,601,450,0,90.0,,1,
+suite-seat-010,suite,seat,Chair / stool,dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$DA-LOOSE-FURN,1B237C,197.088,-3496.308,605,601,450,0,90.0,,1,
+suite-seat-011,suite,seat,Chair / stool,dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$DA-LOOSE-FURN,1B2381,197.088,-3494.003,605,601,450,0,90.0,,1,
+suite-seat-012,suite,seat,Chair / stool,dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$DA-LOOSE-FURN,1B237B,197.888,-3496.308,605,601,450,0,90.0,,1,
+suite-seat-013,suite,seat,Chair / stool,dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$DA-LOOSE-FURN,1B2380,197.888,-3494.003,605,601,450,0,90.0,,1,
+suite-seat-014,suite,seat,Chair / stool,dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$dining chair RS01,Xr_SDC_DD_ID-PRS-Fur$0$DA-LOOSE-FURN,1B2385,198.751,-3495.156,726,721,450,0,0.0,,1,
+suite-sofa-001,suite,sofa,Sofa / armchair,sofa 1 1,sofa 1 1,A-2.Noi That,1B2345,189.099,-3502.501,2187,1292,800,0,52.5,,1,
+suite-sofa-002,suite,sofa,Sofa / armchair,sdhsdfhsdfh,sdhsdfhsdfh,A-2.Noi That,1B236D,189.303,-3498.047,3508,1569,800,0,1.2,,1,
+suite-sofa-003,suite,sofa,Sofa / armchair,sdhsdfhsdfh,sdhsdfhsdfh,A-2.Noi That,1B237A,189.303,-3492.163,3508,1569,800,0,178.8,,1,
+suite-sofa-004,suite,sofa,Sofa / armchair,A$Cfa141486,A$Cfa141486,A-4. Dim,1B243C,190.795,-3485.903,2341,2215,800,0,177.0,,1,
+suite-sofa-005,suite,sofa,Sofa / armchair,TZSUCAI-30+精选家具品牌沙发 茶几 扶手椅等  53,TZSUCAI-30+精选家具品牌沙发 茶几 扶手椅等  53,A-2.Noi That,1B236E,191.968,-3496.509,1332,1181,800,0,154.1,,1,
+suite-sofa-006,suite,sofa,Sofa / armchair,A$C2b06494e,A$C2b06494e,A-2.Noi That,1B23B7,196.952,-3487.038,5991,746,800,0,90.0,,1,
+suite-sofa-007,suite,sofa,Sofa / armchair,A$Cfa141486,A$Cfa141486,A-4. Dim,1B23BC,198.182,-3488.025,2341,2215,800,0,57.0,,1,
+suite-table-001,suite,table,Table / desk,A$Cf34708b2,A$Cf34708b2,A-2.Noi That,1B23BB,194.917,-3487.048,2536,2531,750,0,135.1,,1,
+suite-table-002,suite,table,Table / desk,CONSOLE TABLE - PLAN,Xr_SDC_DD_ID-PRS-Fur$0$CONSOLE TABLE - PLAN,A-2.Noi That,1B2374,199.719,-3495.156,1800,350,750,0,90.0,,1,
+suite-coffee-table-001,suite,coffee-table,Coffee / side table,1 BEDSIDE TABLE - PLAN,Xr_SDC_DD_ID-PRS-Fur$0$1 BEDSIDE TABLE - PLAN,A-2.Noi That,1B05B7,194.753,-3502.197,490,490,450,0,11.4,,1,
+suite-coffee-table-002,suite,coffee-table,Coffee / side table,nightstand 01,Xr_SDC_DD_ID-PRS-Fur$0$nightstand 01,A-2.Noi That,1B245F,194.754,-3504.895,500,499,450,0,179.7,,1,
+suite-tall-cabinet-001,suite,tall-cabinet,Tall cabinet / wardrobe,*U1637,*U1637,A-2.Noi That,1B24BC,195.570,-3504.800,877,680,2100,0,90.0,,1,
+suite-tall-cabinet-002,suite,tall-cabinet,Tall cabinet / wardrobe,*U1637,*U1637,A-2.Noi That,1B24B4,195.570,-3502.237,877,680,2100,0,90.0,,1,
+suite-tall-cabinet-003,suite,tall-cabinet,Tall cabinet / wardrobe,*U1636,*U1636,A-2.Noi That,1B246E,197.350,-3503.518,3440,680,2100,0,90.0,,1,
+suite-other-001,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,178.340,-3494.806,840,700,750,0,0.0,,1,"drawn loose, not as a block"
+suite-other-002,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,178.340,-3494.156,3760,1000,750,0,90.0,,3,"drawn loose, not as a block"
+suite-other-003,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,178.340,-3493.506,840,700,750,0,0.0,,1,"drawn loose, not as a block"
+suite-other-004,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,183.536,-3503.129,4023,1900,750,0,0.0,,10,"drawn loose, not as a block"
+suite-other-005,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,186.416,-3495.151,2000,550,750,0,90.0,,1,"drawn loose, not as a block"
+suite-other-006,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,188.220,-3502.559,289,289,750,0,11.4,,1,"drawn loose, not as a block"
+suite-other-007,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,189.127,-3495.032,2408,1677,750,0,0.1,,2,"drawn loose, not as a block"
+suite-other-008,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,189.274,-3493.060,815,815,750,0,78.6,,1,"drawn loose, not as a block"
+suite-other-009,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,189.319,-3497.272,815,815,750,0,11.4,,1,"drawn loose, not as a block"
+suite-other-010,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,189.888,-3503.075,908,601,750,0,63.6,,1,"drawn loose, not as a block"
+suite-other-011,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,190.116,-3502.313,349,349,750,0,11.4,,1,"drawn loose, not as a block"
+suite-other-012,suite,other,Other furniture,*U1315,*U1315,A-2.Noi That,1B22F3,190.285,-3505.615,1600,400,750,0,150.0,,1,
+suite-other-013,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,191.157,-3493.230,451,451,750,0,11.4,,1,"drawn loose, not as a block"
+suite-other-014,suite,other,Other furniture,3 3,3 3,A-2.Noi That,1B244C,191.702,-3493.710,890,801,750,0,41.8,,1,
+suite-other-015,suite,other,Other furniture,*U1025,*U1025,A-2.Noi That,1B2466,192.117,-3504.140,490,490,750,0,78.6,,1,
+suite-other-016,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,192.308,-3495.689,451,451,750,0,78.6,,1,"drawn loose, not as a block"
+suite-other-017,suite,other,Other furniture,A$C17cdd4d6,A$C17cdd4d6,A-2.Noi That,1B248F,194.061,-3499.263,1500,350,750,0,0.0,,1,
+suite-other-018,suite,other,Other furniture,A$C17cdd4d6,A$C17cdd4d6,A-2.Noi That,1B8E5C,194.061,-3491.048,1500,350,750,0,0.0,,1,
+suite-other-019,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,194.800,-3503.518,3600,700,750,0,90.0,,1,"drawn loose, not as a block"
+suite-other-020,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,195.570,-3503.518,3440,680,750,0,90.0,,3,"drawn loose, not as a block"
+suite-other-021,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,196.288,-3495.156,4000,1500,750,0,0.0,,1,"drawn loose, not as a block"
+suite-other-022,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,198.170,-3502.718,2000,600,750,0,90.0,,3,"drawn loose, not as a block"
+suite-other-023,suite,other,Other furniture,A$Ccffa946e,A$Ccffa946e,A-4. Dim,1B8E5A,198.573,-3500.160,1538,1076,750,0,12.6,,1,in the approach of O3
+suite-other-024,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,199.670,-3505.668,2500,1400,750,0,0.0,,1,"drawn loose, not as a block"
+suite-other-025,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,199.862,-3496.110,276,94,750,0,50.5,,1,"drawn loose, not as a block"
+suite-other-026,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,199.862,-3494.201,276,94,750,0,129.5,,1,"drawn loose, not as a block"
+suite-other-027,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,199.877,-3499.905,1400,250,750,0,60.0,,2,"drawn loose, not as a block"
+suite-other-028,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,200.546,-3498.957,294,294,750,0,11.4,,2,"drawn loose, not as a block"
+suite-other-029,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,200.843,-3492.073,1500,600,750,0,120.0,,4,"drawn loose, not as a block; in the approach of O1"
+suite-other-030,suite,other,Other furniture,*U1448,*U1448,A-2.Noi That,1B243D,201.580,-3487.766,1800,700,750,0,30.0,,1,
+suite-other-031,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,202.240,-3491.738,2282,350,750,0,120.0,,1,"drawn loose, not as a block"
+suite-other-032,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,202.889,-3488.995,2688,1935,750,0,169.0,,6,"drawn loose, not as a block; in the approach of D8"
+suite-other-033,suite,other,Other furniture,*U1665,*U1665,A-2.Noi That,1B24FD,203.258,-3501.240,1400,85,750,0,150.0,,1,in the approach of D12
+suite-other-034,suite,other,Other furniture,*U1664,*U1664,A-2.Noi That,1B24F3,203.404,-3500.986,1400,500,750,0,150.0,,1,
+suite-other-035,suite,other,Other furniture,*U1666,*U1666,A-2.Noi That,1B24E9,203.654,-3500.553,1400,500,750,0,150.0,,1,
+suite-other-036,suite,other,Other furniture,grgr,grgr,A-2.Noi That,1B225C,203.710,-3497.757,2100,800,750,0,150.0,,1,in the approach of O2
+suite-other-037,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,204.336,-3493.436,730,420,750,0,0.0,,1,"drawn loose, not as a block; in the approach of D7"
+suite-other-038,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,204.638,-3499.822,294,294,750,0,78.6,,2,"drawn loose, not as a block"
+suite-other-039,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,204.707,-3490.568,900,300,750,0,120.2,,1,"drawn loose, not as a block"
+suite-other-040,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,205.238,-3498.610,1200,600,750,0,60.0,,1,"drawn loose, not as a block"
+suite-other-041,suite,other,Other furniture,loose shapes on A-2.Noi That,,A-2.Noi That,,205.666,-3497.952,294,294,750,0,11.4,,1,"drawn loose, not as a block"

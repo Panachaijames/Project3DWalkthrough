@@ -1,0 +1,8 @@
+{
+  "parts": [
+    {"file": "keys4/final/parts/l29-W.json", "floor": "tower:L29", "box": [-4.5, -61.0, 15.5, -29.5], "own": [-4.5, -61.0, 13.3, -29.5]},
+    {"file": "keys4/final/parts/l29-E.json", "floor": "tower:L29", "box": [11.0, -61.0, 31.0, -29.5], "own": [13.3, -61.0, 31.0, -29.5]},
+    {"file": "keys4/final/parts/l30-W.json", "floor": "tower:L30", "box": [-4.5, -58.0, 15.5, -29.5], "own": [-4.5, -58.0, 13.3, -29.5]},
+    {"file": "keys4/final/parts/l30-E.json", "floor": "tower:L30", "box": [11.0, -58.0, 31.0, -29.5], "own": [13.3, -58.0, 31.0, -29.5]}
+  ]
+}

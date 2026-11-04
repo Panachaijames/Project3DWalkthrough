@@ -1,0 +1,19 @@
+{
+  "name": "@walkthrough/viewer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The framework-free walkthrough viewer: createViewer(container, project) and dispose() (DESIGN.md 11).",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./offline": "./src/offline/entry.ts"
+  },
+  "scripts": {
+    "test": "vitest run --config ../../vitest.config.ts --project viewer",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "three": "0.186.1",
+    "three-mesh-bvh": "0.9.16"
+  }
+}

@@ -1,0 +1,77 @@
+﻿id,level,kind,kind_label,family,block,layer,dxf_handle,x_m,y_m,width_mm,depth_mm,height_mm,base_mm,rotation_deg,on_top_of,merged,note
+ground-sanitary-001,ground,sanitary,Sanitary fitting,TF2092P,TF2092P,FIXT,E1DE,8.680,15.426,665,445,850,0,90.0,,1,
+ground-sanitary-002,ground,sanitary,Sanitary fitting,TF0560P,TF0560P,FIXT,E1DD,9.543,12.998,606,479,850,0,178.9,,1,
+ground-sanitary-003,ground,sanitary,Sanitary fitting,SINK-720-400,XR_L44$0$SINK-720-400,XR_L44$0$I-FURN,,28.613,22.787,740,494,850,0,0.0,,1,inside block jkllllkk
+ground-sanitary-004,ground,sanitary,Sanitary fitting,A$C2619574F,A$C2619574F,XR_L44$0$I-FURN,10469,34.977,15.972,1008,630,850,0,0.0,,1,
+ground-sanitary-005,ground,sanitary,Sanitary fitting,TF2092P,TF2092P,FIXT,C57D,35.960,15.723,665,445,850,0,90.0,,1,
+ground-sanitary-006,ground,sanitary,Sanitary fitting,TF2092P,TF2092P,FIXT,C577,53.430,21.026,665,445,850,0,0.0,,1,
+ground-appliance-001,ground,appliance,Appliance,FRIDGE-600,XR_L44$0$FRIDGE-600,XR_L44$0$I-FURN,,27.244,22.498,1174,600,900,0,90.0,,1,inside block jkllllkk
+ground-appliance-002,ground,appliance,Appliance,FRIDGE-600,XR_L44$0$FRIDGE-600,XR_L44$0$I-FURN,,27.843,22.498,1174,600,900,0,90.0,,1,inside block jkllllkk
+ground-seat-001,ground,seat,Chair / stool,jkjllll,jkjllll,XR_L44$0$I-FURN,10462,11.904,13.597,572,543,450,0,176.8,,1,"in the approach of ground-002, ground-003"
+ground-sofa-001,ground,sofa,Sofa / armchair,bvvvv,bvvvv,XR_L44$0$I-FURN,10489,9.607,11.843,738,738,800,0,36.1,,1,
+ground-sofa-002,ground,sofa,Sofa / armchair,jkhjhjj,jkhjhjj,XR_L44$0$I-FURN,C28B,21.340,16.838,874,798,800,0,4.2,,1,
+ground-sofa-003,ground,sofa,Sofa / armchair,jkhjhjj,jkhjhjj,XR_L44$0$I-FURN,C28A,21.340,18.203,874,798,800,0,175.8,,1,
+ground-sofa-004,ground,sofa,Sofa / armchair,kjjkjkkkk,kjjkjkkkk,XR_L44$0$I-FURN,C05F,23.671,16.308,3475,2319,800,0,180.0,,1,in the approach of ground-004
+ground-sofa-005,ground,sofa,Sofa / armchair,kjjkjkkkk,kjjkjkkkk,XR_L44$0$I-FURN,C28C,24.294,16.931,3475,2319,800,0,90.0,,1,in the approach of ground-004
+ground-sofa-006,ground,sofa,Sofa / armchair,kjjkjkkkk,kjjkjkkkk,XR_L44$0$I-FURN,E2A3,35.072,10.476,3475,2319,800,0,180.0,,1,
+ground-sofa-007,ground,sofa,Sofa / armchair,bvvvv,bvvvv,XR_L44$0$I-FURN,1044E,37.160,9.782,738,738,800,0,0.2,,1,
+ground-coffee-table-001,ground,coffee-table,Coffee / side table,fghfh,fghfh,XR_L44$0$I-FURN,C28E,23.062,17.523,1400,1300,450,0,90.0,,1,
+ground-coffee-table-002,ground,coffee-table,Coffee / side table,A$C5BF14633,A$C5BF14633,XR_L44$0$I-FURN,1044F,35.495,9.773,1300,900,450,0,0.0,,1,
+ground-counter-001,ground,counter,Counter top,A$Ce0b21054,XR_L44$0$A$Ce0b21054,XR_L44$0$I-FURN,,29.258,20.857,2719,1244,850,0,0.0,,1,"inside block jkllllkk; holds 1 x BASE1000-625, 2 x BASE500"
+ground-cabinet-001,ground,cabinet,Cabinet / casework,BASE,XR_L44$0$BASE,XR_L44$0$I-FURN,,29.363,22.763,600,596,900,0,0.0,,1,inside block jkllllkk
+ground-cabinet-002,ground,cabinet,Cabinet / casework,BASE,XR_L44$0$BASE,XR_L44$0$I-FURN,,31.802,20.280,600,596,900,0,90.0,,1,inside block jkllllkk
+ground-other-001,ground,other,Other furniture,jhkhkk,jhkhkk,XR_L44$0$I-FURN,10464,8.480,18.641,665,618,750,0,90.0,,1,
+ground-other-002,ground,other,Other furniture,kjll,kjll,XR_L44$0$I-FURN,10465,8.974,17.762,1262,398,750,0,0.0,,1,
+ground-other-003,ground,other,Other furniture,kkk,kkk,XR_L44$0$I-FURN,10466,9.233,16.518,1825,853,750,0,0.0,,1,
+ground-other-004,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,10.389,12.010,441,441,750,0,11.4,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+ground-other-005,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,10.637,9.974,1930,780,750,0,90.0,,6,"drawn loose, not as a block; plain outline: nothing says what it is"
+ground-other-006,ground,other,Other furniture,hjhk,hjhk,XR_L44$0$I-FURN,10467,11.401,18.224,1130,423,750,0,0.0,,1,
+ground-other-007,ground,other,Other furniture,gjghhh,gjghhh,XR_L44$0$I-FURN,10468,11.495,16.697,1346,977,750,0,94.8,,1,in the approach of ground-021
+ground-other-008,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,11.523,7.758,4450,498,750,0,0.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+ground-other-009,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,11.910,13.107,1875,698,750,0,0.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+ground-other-010,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,11.910,15.357,1875,804,750,0,0.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+ground-other-011,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,12.306,9.905,1618,608,750,0,90.0,,31,"drawn loose, not as a block"
+ground-other-012,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,14.497,11.782,1451,700,750,0,90.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+ground-other-013,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,14.497,14.233,2951,700,750,0,90.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+ground-other-014,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,14.498,17.309,1201,700,750,0,90.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+ground-other-015,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,14.498,18.759,1201,700,750,0,90.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+ground-other-016,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,24.913,19.056,588,588,750,0,11.4,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+ground-other-017,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,28.703,16.919,585,561,750,0,90.0,,92,"drawn loose, not as a block"
+ground-other-018,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,28.703,17.695,585,561,750,0,90.0,,92,"drawn loose, not as a block"
+ground-other-019,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,28.703,18.491,585,561,750,0,90.0,,92,"drawn loose, not as a block"
+ground-other-020,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,29.512,17.695,2800,1000,750,0,90.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+ground-other-021,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,30.320,16.919,585,561,750,0,90.0,,92,"drawn loose, not as a block"
+ground-other-022,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,30.320,17.695,585,561,750,0,90.0,,92,"drawn loose, not as a block"
+ground-other-023,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,30.320,18.491,585,561,750,0,90.0,,92,"drawn loose, not as a block"
+ground-other-024,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,35.154,11.889,1800,500,750,0,0.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+ground-other-025,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,35.172,7.356,4753,606,750,0,0.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+ground-other-026,ground,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,36.837,9.051,441,441,750,0,78.6,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+upper-sanitary-001,upper,sanitary,Sanitary fitting,klkjlll,klkjlll,XR_L44$0$I-FURN,10463,9.986,13.110,699,491,850,0,90.0,,1,
+upper-sanitary-002,upper,sanitary,Sanitary fitting,TF2092P,TF2092P,FIXT,,37.331,12.306,665,445,850,0,90.0,,1,inside block hjhjj
+upper-sanitary-003,upper,sanitary,Sanitary fitting,TF0560P,TF0560P,FIXT,,41.894,22.111,606,479,850,0,91.1,,1,inside block hjhjj
+upper-sanitary-004,upper,sanitary,Sanitary fitting,TF2092P,TF2092P,FIXT,,43.588,20.541,665,445,850,0,90.0,,1,inside block hjhjj
+upper-bed-001,upper,bed,Bed,A$C238E5230,A$C238E5230,XR_L44$0$I-FURN,F4AB,11.201,9.470,3589,2922,500,0,0.0,,1,
+upper-bed-002,upper,bed,Bed,A$C238E5230,A$C238E5230,XR_L44$0$I-FURN,F4A7,35.173,9.120,3589,2922,500,0,0.0,,1,
+upper-seat-001,upper,seat,Chair / stool,jkjllll,jkjllll,XR_L44$0$I-FURN,10461,9.598,16.767,572,543,450,0,3.2,,1,
+upper-other-001,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,9.573,16.160,3150,601,750,0,0.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+upper-other-002,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,9.623,18.233,3250,650,750,0,0.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+upper-other-003,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,9.623,18.983,3250,650,750,0,0.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+upper-other-004,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,10.537,20.797,1425,325,750,0,0.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+upper-other-005,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,10.924,22.460,2200,900,750,0,0.0,,30,"drawn loose, not as a block"
+upper-other-006,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,10.998,12.283,3700,450,750,0,0.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+upper-other-007,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,11.201,10.389,1391,471,750,0,0.0,,98,"drawn loose, not as a block"
+upper-other-008,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,11.526,7.784,4455,450,750,0,0.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+upper-other-009,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,29.593,20.608,3300,711,750,0,90.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+upper-other-010,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,33.856,19.616,511,471,750,0,1.2,,117,"drawn loose, not as a block"
+upper-other-011,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,33.856,20.208,511,471,750,0,1.2,,115,"drawn loose, not as a block"
+upper-other-012,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,34.526,12.260,1800,601,750,0,0.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+upper-other-013,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,34.529,12.867,572,543,750,0,176.8,,1901,"drawn loose, not as a block; in the approach of upper-020"
+upper-other-014,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,35.085,19.864,1307,843,750,0,11.4,,2,"drawn loose, not as a block; plain outline: nothing says what it is"
+upper-other-015,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,35.173,7.384,4759,550,750,0,0.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+upper-other-016,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,35.173,10.039,1391,471,750,0,0.0,,100,"drawn loose, not as a block"
+upper-other-017,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,35.173,11.634,3295,450,750,0,0.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+upper-other-018,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,35.502,18.259,3500,450,750,0,0.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+upper-other-019,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,35.761,20.819,2826,1420,750,0,0.0,,83,"drawn loose, not as a block"
+upper-other-020,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,35.803,22.074,1800,960,750,0,0.0,,227,"drawn loose, not as a block"
+upper-other-021,upper,other,Other furniture,loose shapes on XR_L44$0$I-FURN,,XR_L44$0$I-FURN,,36.562,15.784,2273,650,750,0,0.0,,1,"drawn loose, not as a block; plain outline: nothing says what it is"
+upper-other-022,upper,other,Other furniture,kkk,kkk,XR_L44$0$I-FURN,10486,38.707,19.040,1825,853,750,0,90.0,,1,

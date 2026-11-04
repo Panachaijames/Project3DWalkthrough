@@ -1,0 +1,97 @@
+{
+ "key": "sofa",
+ "name": "sofa",
+ "file": "banquet/sofa.glb",
+ "kind": "seat",
+ "family": "CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA_VISIONA STOOL",
+ "piece": "L1-seat-028",
+ "furnishes": 3,
+ "turnUndone_deg": 270,
+ "turnFrom": "its real turn in the scene (analysis.json)",
+ "standsAt_m": 0,
+ "size_m": [
+  1.9,
+  0.7,
+  1.199
+ ],
+ "gltfSceneToModelFrame_columnMajor": [
+  0,
+  0,
+  -1,
+  0,
+  0,
+  1,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  -1.3472751,
+  0,
+  3.4000875,
+  1
+ ],
+ "full": {
+  "triangles": 2223,
+  "vertices": 1539,
+  "weldedVertices": 1116,
+  "parts": [
+   {
+    "name": "CHAIR_BENCH_BACK_SE107_STOOL_LOW_VITRA_VISIONA_STOOL_2572013_1",
+    "triangles": 2126,
+    "vertices": 1428,
+    "mirrored": false
+   },
+   {
+    "name": "CHAIR_BENCH_BACK_SE107_STOOL_LOW_VITRA_VISIONA_STOOL_2572013_2",
+    "triangles": 97,
+    "vertices": 111,
+    "mirrored": false
+   }
+  ],
+  "area_m2": 10.9324
+ },
+ "levels": [
+  {
+   "id": "50%",
+   "label": "50 %",
+   "triangles": 1108,
+   "vertices": 527,
+   "posOffset": 0,
+   "posCount": 1581,
+   "idxOffset": 6324,
+   "idxCount": 3324
+  },
+  {
+   "id": "25%",
+   "label": "25 %",
+   "triangles": 554,
+   "vertices": 260,
+   "posOffset": 19620,
+   "posCount": 780,
+   "idxOffset": 22740,
+   "idxCount": 1662
+  },
+  {
+   "id": "12%",
+   "label": "12 %",
+   "triangles": 256,
+   "vertices": 120,
+   "posOffset": 29388,
+   "posCount": 360,
+   "idxOffset": 30828,
+   "idxCount": 768
+  },
+  {
+   "id": "6%",
+   "label": "6 %",
+   "triangles": 132,
+   "vertices": 62,
+   "posOffset": 33900,
+   "posCount": 186,
+   "idxOffset": 34644,
+   "idxCount": 396
+  }
+ ]
+}

@@ -1,0 +1,18 @@
+id,level,kind,kind_label,family,block,layer,dxf_handle,x_m,y_m,width_mm,depth_mm,height_mm,base_mm,rotation_deg,on_top_of,merged,note
+L1-computer-001,L1,computer,Computer / monitor,Enscape AssetDefinition - Computer 003,Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003,I-FURN,A1,1.300,2.100,740,430,450,750,0.0,L1-table-001,1,
+L1-printer-001,L1,printer,Printer / copier,PRINTER_DESKTOP_LASER - Type 1,PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1,Q-SPCQ,A2,0.500,1.900,400,300,300,750,0.0,L1-table-001,1,
+L1-tv-001,L1,tv,TV / wall screen,APPLIANCE_TV_WALL MOUNT WITH BRACKET - 75_,APPLIANCE_TV_WALL MOUNT WITH BRACKET - 75_,Q-SPCQ,A3,8.000,5.000,1680,50,600,900,90.0,,1,
+L1-curtain-001,L1,curtain,Curtain,Double Curtain,Double Curtain,DA-FACILITIES,A4,1.000,7.000,3000,150,2400,0,0.0,,1,
+L1-plant-001,L1,plant,Plant,Enscape AssetDefinition - Potted Plant 028 Peace Lily,Enscape AssetDefinition - Potted Plant 028 Peace Lily,L-PLNT,A5,7.000,2.000,500,500,600,0,0.0,,1,
+L1-seat-001,L1,seat,Chair / stool,mollie_chair_a685_revit - A685 2,mollie_chair_a685_revit - A685 2-1234567-LEVEL 1 GENERAL ARRANGEMENT,I-FURN,A6,2.000,3.000,600,570,450,0,0.0,,1,
+L1-seat-002,L1,seat,Chair / stool,mollie_chair_a685_revit - A685 2,mollie_chair_a685_revit - A685 2-1234568-LEVEL 1 GENERAL ARRANGEMENT,I-FURN,A7,3.000,3.000,600,570,450,0,30.0,,1,"in the approach of L1-001, L1-002"
+L1-seat-003,L1,seat,Chair / stool,CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE,CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE,I-FURN,A8,0.000,5.000,500,500,450,0,90.0,,1,
+L1-table-001,L1,table,Table / desk,IA_J15_WORKING TABLE - 1800W 1000D 750H,IA_J15_WORKING TABLE - 1800W 1000D 750H,I-FURN,A9,1.000,2.000,1800,1000,750,0,0.0,,1,
+L1-table-002,L1,table,Table / desk,IA_J15_WORKING TABLE - 1400W 1000D 750H,IA_J15_WORKING TABLE - 1400W 1000D 750H,I-FURN,AA,5.000,4.000,1400,1000,750,0,150.0,,1,
+L1-coffee-table-001,L1,coffee-table,Coffee / side table,COFFEE TABLE RETANGLE - VENNATIVE - TYPE 1,COFFEE TABLE RETANGLE - VENNATIVE - TYPE 1,I-FURN,AB,-2.000,0.000,1000,500,450,0,0.0,,1,
+L1-cabinet-001,L1,cabinet,Cabinet / casework,IA_J10_WORK CABINET - IA_J10_WORK CABINET,IA_J10_WORK CABINET - IA_J10_WORK CABINET,Q-CASE,AC,-3.000,6.000,2450,600,900,0,0.0,,1,
+L1-tall-cabinet-001,L1,tall-cabinet,Tall cabinet / wardrobe,TALL CABINET - TALL CABINET 2800W,TALL CABINET - TALL CABINET 2800W,Q-CASE,AD,6.000,-1.000,2800,410,2100,0,90.0,,1,
+L2-computer-001,L2,computer,Computer / monitor,Enscape AssetDefinition - Computer 003,Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003,I-FURN,B1,3.100,4.000,740,430,450,750,45.0,L2-table-001,1,
+L2-seat-001,L2,seat,Chair / stool,HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range,HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range,I-FURN,B2,2.000,3.000,610,550,450,0,0.0,,1,in the approach of L2-001
+L2-table-001,L2,table,Table / desk,IA_J15_WORKING TABLE - 1400W 1000D 750H,IA_J15_WORKING TABLE - 1400W 1000D 750H,I-FURN,B3,3.000,4.000,1400,1000,750,0,45.0,,1,
+L2-cabinet-001,L2,cabinet,Cabinet / casework,PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR,PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR,Q-CASE,,-1.000,0.000,3600,1200,900,0,0.0,,4,merged 4 cupboard-door fronts

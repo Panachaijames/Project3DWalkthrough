@@ -1,0 +1,14 @@
+{
+  "cache": "l29",
+  "units": "mm",
+  "floors": {"l29": "tower:L29"},
+  "layers": {
+    "wall": ["A-WALL", "A-WALL-PATT"],
+    "column": ["S-COLS"],
+    "glass": ["A-GLAZ-CURT"],
+    "door": ["A-DOOR", "A-DOOR-FRAM", "A-DOOR-HDLN"],
+    "stair": ["S-STRS", "S-STRS-MBND"],
+    "ignore": ["A-AREA", "A-DETL", "A-DETL-GENF", "A-DETL-GENF-HDLN", "A-DETL-MEDM", "A-FLOR", "A-FLOR-PATT", "E-DATA", "E-LITE-EQPM",
+               "I-FURN", "L-PLNT", "P-SANR-FIXT", "Q-CASE"]
+  }
+}

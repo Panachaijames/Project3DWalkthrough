@@ -1,0 +1,149 @@
+{
+ "key": "visitor_chair01",
+ "name": "visitor chair01",
+ "file": "banquet/visitor chair01.glb",
+ "kind": "seat",
+ "family": "mollie_chair_a685_revit - A685 2",
+ "piece": "L1-seat-012",
+ "furnishes": 19,
+ "turnUndone_deg": 270,
+ "turnFrom": "its real turn in the scene (analysis.json)",
+ "standsAt_m": 0,
+ "size_m": [
+  0.5738,
+  0.7687,
+  0.553
+ ],
+ "gltfSceneToModelFrame_columnMajor": [
+  0,
+  0,
+  -1,
+  0,
+  0,
+  1,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  -2.0975734,
+  0.0022329,
+  -0.5892989,
+  1
+ ],
+ "full": {
+  "triangles": 241326,
+  "vertices": 162800,
+  "weldedVertices": 113502,
+  "parts": [
+   {
+    "name": "Object005",
+    "triangles": 7494,
+    "vertices": 5088,
+    "mirrored": false
+   },
+   {
+    "name": "model_part006",
+    "triangles": 28464,
+    "vertices": 19953,
+    "mirrored": false
+   },
+   {
+    "name": "model_part007",
+    "triangles": 88344,
+    "vertices": 61292,
+    "mirrored": false
+   },
+   {
+    "name": "model_part008",
+    "triangles": 117024,
+    "vertices": 76467,
+    "mirrored": false
+   }
+  ],
+  "area_m2": 1.9943
+ },
+ "levels": [
+  {
+   "id": "50%",
+   "label": "50 %",
+   "triangles": 119658,
+   "vertices": 55398,
+   "posOffset": 0,
+   "posCount": 166194,
+   "idxOffset": 664776,
+   "idxCount": 358974
+  },
+  {
+   "id": "25%",
+   "label": "25 %",
+   "triangles": 59888,
+   "vertices": 27534,
+   "posOffset": 2100672,
+   "posCount": 82602,
+   "idxOffset": 2431080,
+   "idxCount": 179664
+  },
+  {
+   "id": "12%",
+   "label": "12 %",
+   "triangles": 28450,
+   "vertices": 12829,
+   "posOffset": 3149736,
+   "posCount": 38487,
+   "idxOffset": 3303684,
+   "idxCount": 85350
+  },
+  {
+   "id": "20000",
+   "label": "20,000 budget",
+   "triangles": 19744,
+   "vertices": 8784,
+   "posOffset": 3645084,
+   "posCount": 26352,
+   "idxOffset": 3750492,
+   "idxCount": 59232
+  },
+  {
+   "id": "6%",
+   "label": "6 %",
+   "triangles": 14338,
+   "vertices": 6268,
+   "posOffset": 3987420,
+   "posCount": 18804,
+   "idxOffset": 4062636,
+   "idxCount": 43014
+  },
+  {
+   "id": "10000",
+   "label": "10,000 budget",
+   "triangles": 9712,
+   "vertices": 4172,
+   "posOffset": 4234692,
+   "posCount": 12516,
+   "idxOffset": 4284756,
+   "idxCount": 29136
+  },
+  {
+   "id": "5000",
+   "label": "5,000 budget",
+   "triangles": 4940,
+   "vertices": 2053,
+   "posOffset": 4401300,
+   "posCount": 6159,
+   "idxOffset": 4425936,
+   "idxCount": 14820
+  },
+  {
+   "id": "2500",
+   "label": "2,500 budget",
+   "triangles": 2346,
+   "vertices": 929,
+   "posOffset": 4485216,
+   "posCount": 2787,
+   "idxOffset": 4496364,
+   "idxCount": 7038
+  }
+ ]
+}

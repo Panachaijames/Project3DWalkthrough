@@ -1,0 +1,6 @@
+Objects: 757
+Vertices: 6056
+L1 walls: z=0..4
+L2 walls: z=5..9
+L2 slab: z=4.75..5 with two void cutouts
+Metres; Z up.

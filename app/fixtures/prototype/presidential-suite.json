@@ -1,0 +1,460 @@
+{
+  "format": "walkthrough-prototype-facts/1",
+  "page": "presidential_test/presidential_3d_preview.html",
+  "capturedAt": "2026-11-03T04:17:48.687Z",
+  "how": "tools/capture-prototype-facts.mjs (DESIGN.md 17.1): scene with ?build=0&nodownload=1, card with the plain address",
+  "title": "Presidential suite test",
+  "stamp": "f1b95c53eb3d",
+  "heading": "Presidential suite (test): CAD → 3D",
+  "intro": {
+    "text": "Built automatically from layout presidential test.dwg. Walls come from the drawing's wall layer (its solid fills and outlines); the glass facade, doors, balustrade and floor from the rest of the plan. Furniture: 120 coloured boxes in 13 kinds, one per piece; they come in at the end of the replay. Floor to floor 3.00 m, as given for the project. No AI used.",
+    "html": "Built automatically from <b>layout presidential test.dwg</b>. Walls come from the drawing's wall layer (its solid fills and outlines); the glass facade, doors, balustrade and floor from the rest of the plan. Furniture: 120 coloured boxes in 13 kinds, one per piece; they come in at the end of the replay. Floor to floor 3.00 m, as given for the project. No AI used."
+  },
+  "floorButtons": [],
+  "ticks": [
+    {
+      "id": "plates",
+      "label": "Floor slab",
+      "checked": true,
+      "title": null
+    },
+    {
+      "id": "glass",
+      "label": "Glass",
+      "checked": true,
+      "title": null
+    },
+    {
+      "id": "rooms",
+      "label": "Room names",
+      "checked": true,
+      "title": null
+    }
+  ],
+  "legend": {
+    "layout": "inline",
+    "items": [
+      {
+        "colour": "#e3ddd3",
+        "text": "Walls and columns (3.00 m)"
+      },
+      {
+        "colour": "#9cc3d5",
+        "text": "Glass"
+      },
+      {
+        "colour": "#d2c6b2",
+        "text": "Low walls, built-in seats, kerbs"
+      },
+      {
+        "colour": "#c9a77f",
+        "text": "Built-ins"
+      },
+      {
+        "colour": "#9cc3d5",
+        "text": "Balustrade (1.10 m)"
+      },
+      {
+        "colour": "#b08a5c",
+        "text": "Terrace decks"
+      },
+      {
+        "colour": "#6f6153",
+        "text": "Pergola posts"
+      },
+      {
+        "colour": "#d4d8d2",
+        "text": "Floor slab"
+      }
+    ]
+  },
+  "panelOrder": [
+    "h1",
+    "p",
+    "#shows",
+    "div",
+    ".legend",
+    "div",
+    "div"
+  ],
+  "accent": "#8a6d3b",
+  "hint": "Drag to orbit · right-drag to pan · scroll to zoom · double-click a floor to walk there · 1 / 2 / 3: Orbit / Walk / Ghost · P: photo",
+  "rooms": 16,
+  "scene": {
+    "floors": [
+      {
+        "key": "suite",
+        "name": "Suite (FL-01)",
+        "level": 0,
+        "walkLevel": 0,
+        "stack": "suite",
+        "colliders": [
+          {
+            "name": "solid",
+            "vertices": 4236,
+            "visible": true
+          },
+          {
+            "name": "low",
+            "vertices": 588,
+            "visible": true
+          },
+          {
+            "name": "builtin",
+            "vertices": 228,
+            "visible": true
+          },
+          {
+            "name": "glass",
+            "vertices": 1596,
+            "visible": true
+          },
+          {
+            "name": "balustrade",
+            "vertices": 1284,
+            "visible": true
+          },
+          {
+            "name": "post",
+            "vertices": 720,
+            "visible": true
+          }
+        ],
+        "colliderVertices": 8652,
+        "furnitureColliders": 93,
+        "walkables": [
+          {
+            "name": "",
+            "vertices": 768
+          }
+        ],
+        "walkableVertices": 768,
+        "late": 121,
+        "lateWithoutFurniture": 1,
+        "rise": [],
+        "labels": 0,
+        "groupChildren": 135
+      }
+    ],
+    "camera": {
+      "position": [
+        -26.000000000000004,
+        31.999999999999996,
+        30.000000000000004
+      ],
+      "target": [
+        0,
+        1.2,
+        0
+      ],
+      "fov": 39.96621304379996,
+      "near": 0.1,
+      "far": 600,
+      "source": "__host.camera, __host.controls"
+    },
+    "model": {
+      "photoName": null,
+      "floors": [],
+      "parts": 62,
+      "openings": null,
+      "rooms": 16
+    },
+    "labels": 16
+  },
+  "ticksFlip": {
+    "plates": {
+      "objects": 1,
+      "names": [
+        ""
+      ],
+      "pictures": 0,
+      "roomLabels": 0,
+      "startsChecked": true
+    },
+    "glass": {
+      "objects": 4,
+      "names": [
+        "",
+        "",
+        "balustrade",
+        "glass"
+      ],
+      "pictures": 0,
+      "roomLabels": 0,
+      "startsChecked": true
+    },
+    "rooms": {
+      "objects": 0,
+      "names": [],
+      "pictures": 0,
+      "roomLabels": 16,
+      "startsChecked": true
+    }
+  },
+  "card": {
+    "phase": "settings",
+    "visible": true,
+    "inputs": [
+      {
+        "floor": "suite",
+        "prop": "level",
+        "value": "0.00"
+      },
+      {
+        "floor": "suite",
+        "prop": "height",
+        "value": "3.00"
+      }
+    ],
+    "introTitle": "layout presidential test.dwg",
+    "facts": [
+      "One floor plan (FL-01), in millimetres; the corridor beyond the entrance is left out",
+      "5,951 drawing items in the suite area, on 36 layers",
+      "Walls on their own layer, with solid fills; furniture on separate layers",
+      "Floor to floor 3.00 m, as given for the project"
+    ],
+    "factsHtml": [
+      "One floor plan (FL-01), in millimetres; the corridor beyond the entrance is left out",
+      "5,951 drawing items in the suite area, on 36 layers",
+      "Walls on their own layer, with solid fills; furniture on separate layers",
+      "Floor to floor 3.00 m, as given for the project"
+    ],
+    "layersTitle": "How the drawing was read",
+    "layers": [
+      [
+        "Walls",
+        "A-1.Netcat - tuong (fills, outlines and paired lines)"
+      ],
+      [
+        "Glass facade",
+        "A-4. Dim double line (octagon); north and south glazing inferred from the room outlines"
+      ],
+      [
+        "Doors",
+        "Door blocks and door swings (A-1.Netthay)"
+      ],
+      [
+        "Balustrade",
+        "KT-Lancan (frameless glass, 1.10 m assumed)"
+      ],
+      [
+        "Added",
+        "Walls on the corridor side (not drawn on any layer), 0.20 m"
+      ],
+      [
+        "Furniture",
+        "Blocks on 9 layers, A-2.Noi That first (one coloured box per piece, its height set per kind)"
+      ],
+      [
+        "Left out",
+        "Dimensions, door symbols, the pergola outline and terrace edge lines"
+      ]
+    ],
+    "settings": {
+      "suite": {
+        "level": 0,
+        "height": 3
+      }
+    },
+    "steps": [
+      {
+        "key": "read",
+        "title": "Read the drawing",
+        "caption": "5,951 drawing items in the suite area, on 36 layers, in millimetres.",
+        "t0": 0,
+        "t1": 0.12244897959183675
+      },
+      {
+        "key": "sort",
+        "title": "Sort the line work",
+        "caption": "Walls are on their own layer: 193 items, 22 of them solid fills. The glass facade is a double line around the octagon; doors and the balustrade have their own layers. 11,977 lines of furniture, fixtures, plants and dimensions build no walls: the 120 furniture pieces among them become one coloured box each, the rest is set aside.",
+        "t0": 0.12244897959183675,
+        "t1": 0.23469387755102042
+      },
+      {
+        "key": "align",
+        "title": "Check the floor",
+        "caption": "One floor in this drawing (FL-01). Floor to floor 3.00 m, as given for the project; the floor is at 0.00 m.",
+        "t0": 0.23469387755102042,
+        "t1": 0.38775510204081637
+      },
+      {
+        "key": "pair",
+        "title": "Find the wall faces",
+        "caption": "The wall fills and outlines give the wall pieces (528), and the facade's double line gives the glass. On the corridor side no wall is drawn, so 3 runs are added along the room outlines.",
+        "t0": 0.38775510204081637,
+        "t1": 0.5204081632653061
+      },
+      {
+        "key": "merge",
+        "title": "Merge into wall runs",
+        "caption": "The pieces merge into 12 wall runs and 2 columns; the glass into 15 panes and bands.",
+        "t0": 0.5204081632653061,
+        "t1": 0.6224489795918368
+      },
+      {
+        "key": "raise",
+        "title": "Raise the walls",
+        "caption": "Walls and glass rise to 3.00 m (floor to floor); the balustrade to 1.10 m; a lintel over each door from 2.10 m.",
+        "t0": 0.6224489795918368,
+        "t1": 0.8571428571428571
+      },
+      {
+        "key": "finish",
+        "title": "Slab and room names",
+        "caption": "The floor slab and terraces go in, and last the furniture: 120 coloured boxes, one per piece, 13 kinds. Done: 12 wall runs, 15 glass pieces, 17 door lintels; 16 rooms named.",
+        "t0": 0.8571428571428571,
+        "t1": 1
+      }
+    ],
+    "stepList": [
+      "1Read the drawing",
+      "2Sort the line work",
+      "3Check the floor",
+      "4Find the wall faces",
+      "5Merge into wall runs",
+      "6Raise the walls",
+      "7Slab and room names"
+    ]
+  },
+  "hintOnSettingsScreen": "Drag to orbit · right-drag to pan · scroll to zoom · double-click a floor to walk there · 1 / 2 / 3: Orbit / Walk / Ghost · P: photo",
+  "furniture": {
+    "kinds": [
+      {
+        "key": "tv",
+        "label": "TV / wall screen",
+        "colour": "#34408f",
+        "height": 600,
+        "defaultHeight": 600,
+        "count": 1,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "curtain",
+        "label": "Curtain",
+        "colour": "#c9a0dc",
+        "height": 2700,
+        "defaultHeight": 2700,
+        "count": 21,
+        "visible": true,
+        "blocks": false
+      },
+      {
+        "key": "lamp",
+        "label": "Lamp",
+        "colour": "#ffd23f",
+        "height": 500,
+        "defaultHeight": 500,
+        "count": 9,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "plant",
+        "label": "Plant",
+        "colour": "#2e9e4f",
+        "height": 2500,
+        "defaultHeight": 2500,
+        "count": 12,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "sanitary",
+        "label": "Sanitary fitting",
+        "colour": "#17a2a2",
+        "height": 850,
+        "defaultHeight": 850,
+        "count": 5,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "appliance",
+        "label": "Appliance",
+        "colour": "#b8860b",
+        "height": 900,
+        "defaultHeight": 900,
+        "count": 2,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "bed",
+        "label": "Bed",
+        "colour": "#e377c2",
+        "height": 500,
+        "defaultHeight": 500,
+        "count": 1,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "seat",
+        "label": "Chair / stool",
+        "colour": "#e07b00",
+        "height": 450,
+        "defaultHeight": 450,
+        "count": 14,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "sofa",
+        "label": "Sofa / armchair",
+        "colour": "#ffb347",
+        "height": 800,
+        "defaultHeight": 800,
+        "count": 7,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "table",
+        "label": "Table / desk",
+        "colour": "#8a5a2b",
+        "height": 750,
+        "defaultHeight": 750,
+        "count": 2,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "coffee-table",
+        "label": "Coffee / side table",
+        "colour": "#c9a37a",
+        "height": 450,
+        "defaultHeight": 450,
+        "count": 2,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "tall-cabinet",
+        "label": "Tall cabinet / wardrobe",
+        "colour": "#1b4f8a",
+        "height": 2100,
+        "defaultHeight": 2100,
+        "count": 3,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "other",
+        "label": "Other furniture",
+        "colour": "#6b6b6b",
+        "height": 750,
+        "defaultHeight": 750,
+        "count": 41,
+        "visible": true,
+        "blocks": true
+      }
+    ],
+    "pieces": 120,
+    "keepDoorways": true,
+    "csvSha1": "b3576ceeb8c2176984bbc1323c338b2171855e3e",
+    "csvBytes": 19425
+  },
+  "errors": []
+}

@@ -1,0 +1,745 @@
+{
+ "openings": [
+  {
+   "id": "U-D03",
+   "floor": "upper",
+   "kind": "door",
+   "d": "v",
+   "c": 106.3703,
+   "lo": 14.88,
+   "hi": 16.137,
+   "o1": 106.3196,
+   "o2": 106.4196,
+   "a": [
+    106.3703,
+    14.88
+   ],
+   "b": [
+    106.3703,
+    16.137
+   ],
+   "width": 1.257,
+   "encodings": [
+    "*U31 unequal double door on I-DOOR",
+    "wall gap"
+   ],
+   "note": "",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-D04",
+   "floor": "upper",
+   "kind": "door",
+   "d": "v",
+   "c": 109.497,
+   "lo": 13.4606,
+   "hi": 14.4606,
+   "o1": 109.447,
+   "o2": 109.547,
+   "a": [
+    109.497,
+    13.4606
+   ],
+   "b": [
+    109.497,
+    14.4606
+   ],
+   "width": 1.0,
+   "encodings": [
+    "_1D3R90 block",
+    "JAMB-pair",
+    "wall gap"
+   ],
+   "note": "",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-D05",
+   "floor": "upper",
+   "kind": "door",
+   "d": "h",
+   "c": 23.1591,
+   "lo": 107.0213,
+   "hi": 108.047,
+   "o1": 23.1091,
+   "o2": 23.2091,
+   "a": [
+    107.0213,
+    23.1591
+   ],
+   "b": [
+    108.047,
+    23.1591
+   ],
+   "width": 1.026,
+   "encodings": [
+    "leaf + arc on WIN",
+    "D-JAMB rects",
+    "WALL-GL line in the opening"
+   ],
+   "note": "wall face lines run straight through",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-D09",
+   "floor": "upper",
+   "kind": "door",
+   "d": "v",
+   "c": 116.2218,
+   "lo": 18.1585,
+   "hi": 19.1584,
+   "o1": 116.1718,
+   "o2": 116.2718,
+   "a": [
+    116.2218,
+    18.1585
+   ],
+   "b": [
+    116.2218,
+    19.1584
+   ],
+   "width": 1.0,
+   "encodings": [
+    "leaf + arc on WIN",
+    "JAMB-pair",
+    "wall gap"
+   ],
+   "note": "",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-D10",
+   "floor": "upper",
+   "kind": "door",
+   "d": "h",
+   "c": 23.159,
+   "lo": 116.2717,
+   "hi": 117.0717,
+   "o1": 23.109,
+   "o2": 23.209,
+   "a": [
+    116.2717,
+    23.159
+   ],
+   "b": [
+    117.0717,
+    23.159
+   ],
+   "width": 0.8,
+   "encodings": [
+    "leaf + arc on WIN",
+    "WIN threshold band 3 lines",
+    "D-JAMB rects"
+   ],
+   "note": "",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-D11",
+   "floor": "upper",
+   "kind": "door",
+   "d": "h",
+   "c": 23.159,
+   "lo": 118.1466,
+   "hi": 120.9219,
+   "o1": 23.109,
+   "o2": 23.209,
+   "a": [
+    118.1466,
+    23.159
+   ],
+   "b": [
+    120.9219,
+    23.159
+   ],
+   "width": 2.775,
+   "encodings": [
+    "3 x (leaf + arc on WIN)",
+    "WIN threshold bands",
+    "D-JAMB rects"
+   ],
+   "note": "three leaves side by side, no wall between",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-D12",
+   "floor": "upper",
+   "kind": "door",
+   "d": "h",
+   "c": 23.1591,
+   "lo": 121.1719,
+   "hi": 123.9466,
+   "o1": 23.1091,
+   "o2": 23.2091,
+   "a": [
+    121.1719,
+    23.1591
+   ],
+   "b": [
+    123.9466,
+    23.1591
+   ],
+   "width": 2.775,
+   "encodings": [
+    "3 x (leaf + arc on WIN)",
+    "WIN threshold bands",
+    "D-JAMB rects",
+    "wall gap"
+   ],
+   "note": "three leaves side by side",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-D13",
+   "floor": "upper",
+   "kind": "door",
+   "d": "h",
+   "c": 20.159,
+   "lo": 119.1969,
+   "hi": 120.0969,
+   "o1": 20.109,
+   "o2": 20.209,
+   "a": [
+    119.1969,
+    20.159
+   ],
+   "b": [
+    120.0969,
+    20.159
+   ],
+   "width": 0.9,
+   "encodings": [
+    "leaf + arc on WIN",
+    "single JAMB",
+    "wall gap"
+   ],
+   "note": "",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-D14",
+   "floor": "upper",
+   "kind": "door",
+   "d": "h",
+   "c": 20.159,
+   "lo": 122.0969,
+   "hi": 122.9969,
+   "o1": 20.109,
+   "o2": 20.209,
+   "a": [
+    122.0969,
+    20.159
+   ],
+   "b": [
+    122.9969,
+    20.159
+   ],
+   "width": 0.9,
+   "encodings": [
+    "leaf + arc on WIN",
+    "single JAMB",
+    "wall gap"
+   ],
+   "note": "",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-D15",
+   "floor": "upper",
+   "kind": "door",
+   "d": "v",
+   "c": 123.9969,
+   "lo": 18.1639,
+   "hi": 19.0639,
+   "o1": 123.947,
+   "o2": 124.047,
+   "a": [
+    123.9969,
+    18.1639
+   ],
+   "b": [
+    123.9969,
+    19.0639
+   ],
+   "width": 0.9,
+   "encodings": [
+    "leaf + arc on WIN",
+    "JAMB-pair",
+    "wall gap"
+   ],
+   "note": "",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-D16",
+   "floor": "upper",
+   "kind": "door",
+   "d": "v",
+   "c": 117.1217,
+   "lo": 20.884,
+   "hi": 21.584,
+   "o1": 117.0717,
+   "o2": 117.1717,
+   "a": [
+    117.1217,
+    20.884
+   ],
+   "b": [
+    117.1217,
+    21.584
+   ],
+   "width": 0.7,
+   "encodings": [
+    "loose LEAF",
+    "JAMB-pair",
+    "arc on WIN",
+    "wall gap"
+   ],
+   "note": "",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-D17",
+   "floor": "upper",
+   "kind": "door",
+   "d": "v",
+   "c": 117.1217,
+   "lo": 21.8839,
+   "hi": 22.5839,
+   "o1": 117.0717,
+   "o2": 117.1717,
+   "a": [
+    117.1217,
+    21.8839
+   ],
+   "b": [
+    117.1217,
+    22.5839
+   ],
+   "width": 0.7,
+   "encodings": [
+    "loose LEAF",
+    "JAMB-pair",
+    "arc on WIN",
+    "wall gap"
+   ],
+   "note": "",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-P06",
+   "floor": "upper",
+   "kind": "passage",
+   "d": "v",
+   "c": 107.597,
+   "lo": 12.757,
+   "hi": 14.457,
+   "o1": 107.547,
+   "o2": 107.647,
+   "a": [
+    107.597,
+    12.757
+   ],
+   "b": [
+    107.597,
+    14.457
+   ],
+   "width": 1.7,
+   "encodings": [
+    "wall gap"
+   ],
+   "note": "",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-P07",
+   "floor": "upper",
+   "kind": "passage",
+   "d": "v",
+   "c": 112.0195,
+   "lo": 10.685,
+   "hi": 11.858,
+   "o1": 111.969,
+   "o2": 112.07,
+   "a": [
+    112.0195,
+    10.685
+   ],
+   "b": [
+    112.0195,
+    11.858
+   ],
+   "width": 1.173,
+   "encodings": [
+    "wall gap"
+   ],
+   "note": "",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-P09",
+   "floor": "upper",
+   "kind": "passage",
+   "d": "v",
+   "c": 116.222,
+   "lo": 19.258,
+   "hi": 21.11,
+   "o1": 116.172,
+   "o2": 116.272,
+   "a": [
+    116.222,
+    19.258
+   ],
+   "b": [
+    116.222,
+    21.11
+   ],
+   "width": 1.852,
+   "encodings": [
+    "wall gap"
+   ],
+   "note": "open side of a small room",
+   "sure": false,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-P10",
+   "floor": "upper",
+   "kind": "passage",
+   "d": "v",
+   "c": 116.222,
+   "lo": 21.209,
+   "hi": 23.11,
+   "o1": 116.172,
+   "o2": 116.272,
+   "a": [
+    116.222,
+    21.209
+   ],
+   "b": [
+    116.222,
+    23.11
+   ],
+   "width": 1.901,
+   "encodings": [
+    "wall gap"
+   ],
+   "note": "open side of a WC",
+   "sure": false,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-P11",
+   "floor": "upper",
+   "kind": "passage",
+   "d": "v",
+   "c": 106.9715,
+   "lo": 23.759,
+   "hi": 24.459,
+   "o1": 106.921,
+   "o2": 107.021,
+   "a": [
+    106.9715,
+    23.759
+   ],
+   "b": [
+    106.9715,
+    24.459
+   ],
+   "width": 0.7,
+   "encodings": [
+    "wall gap"
+   ],
+   "note": "open side of a small niche next to glass panel U-W12",
+   "sure": false,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-W12",
+   "floor": "upper",
+   "kind": "window",
+   "d": "v",
+   "c": 106.2196,
+   "lo": 23.7588,
+   "hi": 24.4591,
+   "o1": 106.1696,
+   "o2": 106.2696,
+   "a": [
+    106.2196,
+    23.7588
+   ],
+   "b": [
+    106.2196,
+    24.4591
+   ],
+   "width": 0.7,
+   "encodings": [
+    "JAMB-pair",
+    "WALL-GL single line"
+   ],
+   "note": "wall face lines drawn between the jambs",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-W13",
+   "floor": "upper",
+   "kind": "window",
+   "d": "v",
+   "c": 106.37,
+   "lo": 7.658,
+   "hi": 10.556,
+   "o1": 106.32,
+   "o2": 106.42,
+   "a": [
+    106.37,
+    7.658
+   ],
+   "b": [
+    106.37,
+    10.556
+   ],
+   "width": 2.898,
+   "encodings": [
+    "WIN band 5 lines",
+    "D-JAMB rects"
+   ],
+   "note": "bay",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-W14",
+   "floor": "upper",
+   "kind": "window",
+   "d": "v",
+   "c": 112.02,
+   "lo": 7.658,
+   "hi": 10.531,
+   "o1": 111.97,
+   "o2": 112.07,
+   "a": [
+    112.02,
+    7.658
+   ],
+   "b": [
+    112.02,
+    10.531
+   ],
+   "width": 2.873,
+   "encodings": [
+    "WIN band 5 lines",
+    "D-JAMB rects"
+   ],
+   "note": "bay",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-W15",
+   "floor": "upper",
+   "kind": "window",
+   "d": "v",
+   "c": 112.02,
+   "lo": 11.959,
+   "hi": 14.359,
+   "o1": 111.97,
+   "o2": 112.07,
+   "a": [
+    112.02,
+    11.959
+   ],
+   "b": [
+    112.02,
+    14.359
+   ],
+   "width": 2.4,
+   "encodings": [
+    "WIN band 5 lines",
+    "D-JAMB rects"
+   ],
+   "note": "",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-W16",
+   "floor": "upper",
+   "kind": "window",
+   "d": "v",
+   "c": 112.02,
+   "lo": 15.459,
+   "hi": 17.86,
+   "o1": 111.97,
+   "o2": 112.07,
+   "a": [
+    112.02,
+    15.459
+   ],
+   "b": [
+    112.02,
+    17.86
+   ],
+   "width": 2.401,
+   "encodings": [
+    "WIN band 5 lines",
+    "D-JAMB rects",
+    "wall gap"
+   ],
+   "note": "",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-W17",
+   "floor": "upper",
+   "kind": "window",
+   "d": "v",
+   "c": 112.02,
+   "lo": 20.36,
+   "hi": 23.11,
+   "o1": 111.97,
+   "o2": 112.07,
+   "a": [
+    112.02,
+    20.36
+   ],
+   "b": [
+    112.02,
+    23.11
+   ],
+   "width": 2.75,
+   "encodings": [
+    "WIN band 5 lines",
+    "D-JAMB rects",
+    "wall gap"
+   ],
+   "note": "",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-W18",
+   "floor": "upper",
+   "kind": "window",
+   "d": "h",
+   "c": 17.884,
+   "lo": 114.216,
+   "hi": 126.745,
+   "o1": 17.834,
+   "o2": 17.934,
+   "a": [
+    114.216,
+    17.884
+   ],
+   "b": [
+    126.745,
+    17.884
+   ],
+   "width": 12.529,
+   "encodings": [
+    "A_Grill + WIN band",
+    "frame blocks (posts)",
+    "HATCH crosses"
+   ],
+   "note": "east block south facade (grille / glazing)",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-W19",
+   "floor": "upper",
+   "kind": "window",
+   "d": "v",
+   "c": 126.683,
+   "lo": 17.834,
+   "hi": 23.434,
+   "o1": 126.62,
+   "o2": 126.745,
+   "a": [
+    126.683,
+    17.834
+   ],
+   "b": [
+    126.683,
+    23.434
+   ],
+   "width": 5.6,
+   "encodings": [
+    "A_Grill band 3 lines",
+    "frame blocks (posts)"
+   ],
+   "note": "east block east facade",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  },
+  {
+   "id": "U-W20",
+   "floor": "upper",
+   "kind": "window",
+   "d": "h",
+   "c": 23.235,
+   "lo": 124.047,
+   "hi": 126.421,
+   "o1": 23.11,
+   "o2": 23.36,
+   "a": [
+    124.047,
+    23.235
+   ],
+   "b": [
+    126.421,
+    23.235
+   ],
+   "width": 2.374,
+   "encodings": [
+    "A_Grill 2 lines just outside the wall line",
+    "frame blocks (posts)",
+    "wall gap"
+   ],
+   "note": "east room north side",
+   "sure": true,
+   "optional": true,
+   "decision": "provisional: evidence inventory only"
+  }
+ ]
+}

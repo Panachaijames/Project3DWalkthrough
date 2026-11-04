@@ -1,0 +1,597 @@
+{
+ "openings": [
+  {
+   "id": "GW-01",
+   "kind": "window",
+   "subtype": "sliding, 4 panels in 2 tracks",
+   "a": [
+    8.7733,
+    8.0062
+   ],
+   "b": [
+    8.7733,
+    12.5073
+   ],
+   "width": 4.5011,
+   "wallThickness": 0.25,
+   "host": "spa/salon room west side between columns x 8.65-8.90 (grid x 8.773); planter strip outside",
+   "evidence": "COL 8.6483-8.8983 at y 7.7562-8.0062 and 12.5073-12.7573; between them only WIN lines (block hjkhkk) x 8.7983-8.8983, D-JAMB end boxes 8.0062-8.0562 / 12.4573-12.5073, 4 panels 8.06-9.10, 9.15-10.21, 10.30-11.35, 11.40-12.46 alternating between two tracks; FLOOR outer-face line x 8.6483",
+   "confidence": "low",
+   "notes": "Kind from plan cues only: planter outside, so not a door; may be full-height glazing (then a glass wall). Frame flush with inner face (x 8.80-8.90).",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "GW-02",
+   "kind": "window",
+   "subtype": "sliding, 2 sashes in 2 tracks",
+   "a": [
+    7.8733,
+    13.3591
+   ],
+   "b": [
+    7.8733,
+    15.1585
+   ],
+   "width": 1.7994,
+   "wallThickness": 0.25,
+   "host": "bathroom west exterior wall x 7.75-8.00, between hollow box piers x 7.75-8.27",
+   "evidence": "box-pier WALL lines (x 7.7483/7.8483/8.1681/8.2681) end at y 13.3591 and restart at 15.1585; WIN frame x 7.8983-7.9983, sashes 13.41-14.23 (x 7.90-7.95) and 14.28-15.06 (x 7.95-8.00), jamb boxes 13.3591-13.4091 / 15.1085-15.1585; TREE outer line x 7.7483; TREE lines x 7.9983 inside both piers mark the 0.25 m wall",
+   "confidence": "medium",
+   "notes": "Centre line on the 0.25 m wall (grid x 7.8733); taking the 0.52 m piers as the wall would put it at x 8.0082.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "GW-04",
+   "kind": "door",
+   "subtype": "hinged single, leaf 0.9 m swinging in (south)",
+   "a": [
+    12.2483,
+    24.7591
+   ],
+   "b": [
+    13.2483,
+    24.7591
+   ],
+   "width": 1,
+   "wallThickness": 0.1,
+   "host": "north exterior wall y 24.71-24.81 of the room x 12.25-14.85, y 21.20-24.71 (its only access)",
+   "evidence": "wall lines y 24.7091/24.8091 end at x 12.2483 and restart at 13.2483 (fins x 12.12-12.25 and 13.25-13.37 to y 25.06); JAMB inserts (12.2483,24.7091) and (13.2483,24.7091); layer-0 leaf x 12.2983-12.3333, y 23.8542-24.7091 and arc r 0.87 to (13.1983,24.7091); TREE threshold y 24.8091, step line y 25.0591",
+   "confidence": "high",
+   "notes": "Clear opening between jambs 12.2983-13.1983 (0.90 m).",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "GW-05",
+   "kind": "passage",
+   "subtype": "open gap, no door",
+   "a": [
+    14.8983,
+    19.459
+   ],
+   "b": [
+    14.8983,
+    21.1043
+   ],
+   "width": 1.6453,
+   "wallThickness": 0.1,
+   "host": "west wing east wall x 14.85-14.95: hall (y 19.46-21.10) into the glazed link",
+   "evidence": "WALL lines x 14.8483/14.9483 run 16.608-19.459 and 21.104-24.809; nothing (no leaf, arc or glass) in 19.459-21.104",
+   "confidence": "medium",
+   "notes": "Where the glazed link joins the west wing.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "GW-07",
+   "kind": "window",
+   "subtype": "sliding, 2 panels in 2 tracks",
+   "a": [
+    14.2733,
+    8.0062
+   ],
+   "b": [
+    14.2733,
+    10.9062
+   ],
+   "width": 2.9,
+   "wallThickness": 0.25,
+   "host": "spa/salon room east side on grid x 14.27 (x 14.15-14.40), planter strip outside",
+   "evidence": "COL 14.1483-14.3983 y 7.7562-8.0062; wall-stub end face y 10.9062 (piece x 14.15-14.25 below stub y 10.9562-11.0562); WIN frame x 14.1483-14.2483, panels 8.06-9.43 and 9.48-10.81 in two tracks, D-JAMB boxes 8.0062-8.0562 and 10.8562-10.9062; FLOOR outer line x 14.3983",
+   "confidence": "low",
+   "notes": "Planter outside, so not a door; may be full-height glazing. The frame-centre line would be x 14.1983.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "GW-08",
+   "kind": "door",
+   "subtype": "hinged single, leaf 1.0 m swinging west into the room",
+   "a": [
+    12.1993,
+    19.759
+   ],
+   "b": [
+    12.1993,
+    20.859
+   ],
+   "width": 1.1,
+   "wallThickness": 0.1,
+   "host": "wall x 12.15-12.25 between the hall and the NW room (x 7.85-12.15, y 19.46-24.71)",
+   "evidence": "_1D0L100 insert (12.1493,19.8090) rot 90, leaf to x 11.15, arc r 0.98; JAMB inserts (12.1493,19.7590) and (12.1493,20.8590) giving boxes 19.759-19.809 and 20.809-20.859",
+   "confidence": "high",
+   "notes": "The wall lines x 12.1487/12.2483 are NOT trimmed at the door: they run unbroken from 19.359 to 24.709. Extent taken from the outer edges of the JAMB pair.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "GW-09",
+   "kind": "passage",
+   "subtype": "open gap (corridor mouth), no door",
+   "a": [
+    12.9483,
+    19.409
+   ],
+   "b": [
+    14.148,
+    19.409
+   ],
+   "width": 1.1997,
+   "wallThickness": 0.1,
+   "host": "wall line y 19.36-19.46: mouth of the N-S corridor (x 12.95-14.15) into the hall",
+   "evidence": "WALL lines y 19.3590/19.4590 end at x 12.9483 (gym NE corner, return stub x 12.85-12.95 down to y 19.159) and restart at x 14.1480 (end line), running to 14.948",
+   "confidence": "medium",
+   "notes": "A gap between two wall ends of one wall line. For circulation it is simply where the corridor joins the hall.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "GW-10",
+   "kind": "passage",
+   "subtype": "open side of gym",
+   "a": [
+    12.8983,
+    15.8585
+   ],
+   "b": [
+    12.8983,
+    19.159
+   ],
+   "width": 3.3005,
+   "wallThickness": 0.1,
+   "host": "gym east side on wall line x 12.85-12.95, facing the corridor",
+   "evidence": "wall x 12.8483/12.9483 of the bathroom block stops at y 15.8585; return stub x 12.8483-12.9483, y 19.159-19.459; between them only a single WALL polyline x 12.9483 (handle 10452), with no door block, leaf or arc; the gym has no other entrance",
+   "confidence": "low",
+   "notes": "The single line may be a thin or glass partition, or a floor edge. Treated as the open entrance side of the gym.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); not in the inventory"
+  },
+  {
+   "id": "GW-11",
+   "kind": "door",
+   "subtype": "hinged single, leaf 1.0 m swinging south",
+   "a": [
+    12.9483,
+    15.8085
+   ],
+   "b": [
+    14.0483,
+    15.8085
+   ],
+   "width": 1.1,
+   "wallThickness": 0.1,
+   "host": "wall y 15.76-15.86 at the south end of the corridor (into the lobby x 12.95-14.85, y 12.76-15.71)",
+   "evidence": "_1D0L100 insert (12.9983,15.7585) mirrored, leaf x 13.00-13.03 y 14.76-15.76, arc r 0.98 to (13.998,15.7585); JAMB inserts (12.9483,15.7585) and (14.0483,15.7585); wall lines y 15.7585/15.8585 end at x 12.9483 and restart at 14.0483",
+   "confidence": "high",
+   "notes": "Clear opening 12.9983-13.9983.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "GW-12",
+   "kind": "passage",
+   "subtype": "doorless opening with reveal lines",
+   "a": [
+    12.8983,
+    13.5572
+   ],
+   "b": [
+    12.8983,
+    14.9548
+   ],
+   "width": 1.3976,
+   "wallThickness": 0.1,
+   "host": "wall x 12.85-12.95 between the lobby and the room x 10.97-12.85 (ante-room to the bathroom)",
+   "evidence": "wall x 12.8483/12.9483 has end caps at y 13.5572 and 14.9548 (extra cross lines at 13.4550 and 15.0548); no door block, leaf or arc",
+   "confidence": "medium",
+   "notes": "Could be a door opening whose door was not drawn.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "GW-13",
+   "kind": "door",
+   "subtype": "hinged single, leaf 0.9 m swinging west into the bathroom",
+   "a": [
+    10.9233,
+    13.7578
+   ],
+   "b": [
+    10.9233,
+    14.7578
+   ],
+   "width": 1,
+   "wallThickness": 0.1,
+   "host": "bathroom east wall x 10.87-10.97",
+   "evidence": "_1D3R90 insert (10.8733,14.7078) rot 180, leaf to x 9.97, arc r 0.88; JAMB inserts (10.8733,13.7578) and (10.8733,14.7578); wall lines x 10.8733/10.9733 end at 13.7578 and restart at 14.7578",
+   "confidence": "high",
+   "notes": "Clear opening 13.8078-14.7078.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "GW-14",
+   "kind": "passage",
+   "subtype": "open gap, no door",
+   "a": [
+    12.9483,
+    12.6323
+   ],
+   "b": [
+    14.1475,
+    12.6323
+   ],
+   "width": 1.1992,
+   "wallThickness": 0.25,
+   "host": "wall y 12.51-12.76 between the lobby and the spa/salon room (its only access)",
+   "evidence": "4-line wall y 12.5071-12.7572 ends at x 12.9483; COL 14.1475-14.3975 at y 12.5073-12.7573, then wall to 14.8477; nothing in the 1.20 m gap",
+   "confidence": "medium",
+   "notes": "",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "GW-18",
+   "kind": "door",
+   "subtype": "pivot, single leaf 1.75 m",
+   "a": [
+    19.3733,
+    19.4085
+   ],
+   "b": [
+    19.3733,
+    21.1591
+   ],
+   "width": 1.7506,
+   "wallThickness": 0.25,
+   "host": "living room west wall x 19.25-19.50 between the two piers, at the end of the glazed link",
+   "evidence": "COL 19.2483-19.4983 at y 19.1585-19.4085 and 21.1591-21.4091; layer-0 leaf 18.2305-19.9805 x 20.765-20.800 with pivot mark x 19.2305 and two swing arcs ending at y 19.4585 and 21.1044 (all drawn twice: E2A6-E2AC, E2C4-E2CA)",
+   "confidence": "high",
+   "notes": "Structural faces used. The piers carry 50 mm cladding (D-JAMB outlines), giving a finished opening of 19.4585-21.1044 (1.646 m), which is where the swing arcs end.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "GW-22",
+   "kind": "window",
+   "subtype": "sliding, 4 panels, slide arrows",
+   "a": [
+    27.4924,
+    23.2341
+   ],
+   "b": [
+    31.5425,
+    23.2341
+   ],
+   "width": 4.0501,
+   "wallThickness": 0.25,
+   "host": "kitchen north wall y 23.11-23.36, above the sink counter, facing the service yard",
+   "evidence": "wall y 23.1091-23.3591 ends at x 27.4924 (reveal line 27.3924) and restarts at 31.5425 (31.6425); WIN panels 27.59-28.51 / 28.56-29.47 / 29.57-30.48 / 30.53-31.44 in two tracks, WALL-GL slide arrows on the middle pair, D-JAMB boxes at both ends; TREE outer line y 23.3591; counter with sink directly in front",
+   "confidence": "high",
+   "notes": "",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "GW-03",
+   "kind": "window",
+   "subtype": "glazing on glass layer, 2 panels offset in depth",
+   "a": [
+    7.8733,
+    15.8585
+   ],
+   "b": [
+    7.8733,
+    17.9085
+   ],
+   "width": 2.05,
+   "wallThickness": 0.25,
+   "host": "gym west exterior wall, between box pier (ends y 15.8585) and column x 7.75-8.00 at y 17.91-18.16",
+   "evidence": "no wall lines in the gap; WALL-GL glass x 7.9233 (15.9585-16.8575) and x 7.9733 (16.9075-17.8085), HATCH frame lines x 7.8983/7.9483/7.9983, D-JAMB boxes 15.8585-15.9585, 16.8575-16.9075, 17.8585-17.9085; TREE outer line x 7.7483",
+   "confidence": "low",
+   "notes": "Drawn on WALL-GL (glass), not WIN. Treadmill and bike stand right in front, so not a door. May be full-height fixed glass (glass wall).",
+   "optional": true,
+   "agreement": "one",
+   "decision": "provisional: disputed (kind A window / B door); not scored until adjudicated"
+  },
+  {
+   "id": "GW-14",
+   "kind": "door",
+   "subtype": "hinged glass shower door (0.6 m)",
+   "a": [
+    9.2408,
+    14.7578
+   ],
+   "b": [
+    9.8243,
+    14.7578
+   ],
+   "width": 0.5835,
+   "wallThickness": 0.02,
+   "host": "shower glass screen (WALL-GL) along y 14.7578, x 9.098-10.873",
+   "evidence": "leaf lines on layer 0 at x 9.2408/9.2583, y 14.758-15.358; WALL-GL arc from (9.8243,14.7578) to (9.2583,15.3578), centre about (9.223,14.758)",
+   "confidence": "low",
+   "notes": "host is a shower screen, not a building wall; drop it if screens do not count",
+   "optional": true,
+   "agreement": "one",
+   "decision": "provisional: disputed (listed by B only); not scored until adjudicated"
+  },
+  {
+   "id": "GW-06",
+   "kind": "window",
+   "subtype": "single sash",
+   "a": [
+    14.2733,
+    15.8585
+   ],
+   "b": [
+    14.2733,
+    16.608
+   ],
+   "width": 0.7495,
+   "wallThickness": 0.25,
+   "host": "corridor east exterior wall on grid x 14.27 (x 14.15-14.40), facing a small exterior planter notch",
+   "evidence": "corner piece top face y 15.8585 (x 14.05-14.25) and wall stub y 16.608-16.708; WIN lines x 14.1485-14.2485 from 15.9085 to 16.558, D-JAMB boxes 15.8582-15.9082 and 16.558-16.608; TREE outer line x 14.398",
+   "confidence": "medium",
+   "notes": "Frame x 14.15-14.25 flush with inner face. The frame-centre line would be x 14.1983.",
+   "optional": true,
+   "agreement": "one",
+   "decision": "provisional: disputed (ends differ by 0.075 m); not scored until adjudicated"
+  },
+  {
+   "id": "G-P09",
+   "floor": "ground",
+   "kind": "passage",
+   "d": "v",
+   "c": 14.8983,
+   "lo": 15.807,
+   "hi": 16.608,
+   "o1": 14.8483,
+   "o2": 14.9483,
+   "a": [
+    14.8983,
+    15.807
+   ],
+   "b": [
+    14.8983,
+    16.608
+   ],
+   "width": 0.801,
+   "encodings": [
+    "wall gap"
+   ],
+   "note": "mouth of a small outdoor recess; may not count",
+   "sure": false,
+   "optional": true,
+   "agreement": "one",
+   "decision": "provisional: disputed (listed by E only); not scored until adjudicated"
+  },
+  {
+   "id": "GW-15",
+   "kind": "window",
+   "subtype": "2 panels (0.95 + 3.10 m) in 2 tracks",
+   "a": [
+    14.9483,
+    19.2835
+   ],
+   "b": [
+    19.2483,
+    19.2835
+   ],
+   "width": 4.3,
+   "wallThickness": 0.25,
+   "host": "glazed link, south side (grid y 19.2835), from west-wing wall face x 14.9483 to the living-room pier/column x 19.2483",
+   "evidence": "WIN glass 14.998-15.953 at y 19.334 and 16.003-19.098 at y 19.384, HATCH frame lines y 19.309/19.359/19.409, D-JAMB boxes 14.9483-14.9983, 15.9533-16.0033, 19.0983-19.1983; COL 19.2483-19.4983 y 19.1585-19.4085; TREE outer line y 19.1585",
+   "confidence": "low",
+   "notes": "Frame y 19.31-19.41 flush with inner face. Probably full-height link glazing, which would make it a glass wall; the 0.95 m outer-track panel may slide. Clad pier face x 19.1983.",
+   "optional": true,
+   "agreement": "one",
+   "decision": "provisional: disputed (listed by A+E only); not scored until adjudicated"
+  },
+  {
+   "id": "GW-16",
+   "kind": "window",
+   "subtype": "2 panels (0.95 + 3.10 m) in 2 tracks",
+   "a": [
+    14.9482,
+    21.2841
+   ],
+   "b": [
+    19.2483,
+    21.2841
+   ],
+   "width": 4.3001,
+   "wallThickness": 0.25,
+   "host": "glazed link, north side (grid y 21.2841), from west-wing wall face x 14.9482 to column x 19.2483",
+   "evidence": "WIN glass 15.048-15.953 at y 21.234 and 16.003-19.098 at y 21.184, HATCH frame lines y 21.159/21.209/21.259, D-JAMB boxes 14.9482-15.0482, 15.9533-16.0033, 19.0983-19.1983; COL 19.2483-19.4983 y 21.1591-21.4091; TREE outer line y 21.4091",
+   "confidence": "low",
+   "notes": "Same as GW-15 (frame y 21.16-21.26 flush with inner face).",
+   "optional": true,
+   "agreement": "one",
+   "decision": "provisional: disputed (listed by A+E only); not scored until adjudicated"
+  },
+  {
+   "id": "GW-19",
+   "kind": "door",
+   "subtype": "sliding, 2 panels in 2 tracks",
+   "a": [
+    19.3733,
+    15.755
+   ],
+   "b": [
+    19.3733,
+    18.6544
+   ],
+   "width": 2.8994,
+   "wallThickness": 0.25,
+   "host": "living room west facade (grid x 19.3733), from the end of the fixed corner glass to the pier x 19.25-19.50",
+   "evidence": "pier bottom face y 18.6544 (cladding 18.6044); WIN unit x 19.398-19.498: jamb 18.5544-18.6044, sash 17.2047-18.5044 (x 19.448-19.498), meeting stiles 17.1547-17.2047, sash 15.855-17.1547 (x 19.398-19.448), jamb/mullion 15.755-15.855 against the WALL-GL fixed glass, which ends at y 15.755; TREE outer line x 19.1983",
+   "confidence": "low",
+   "notes": "Door vs window cannot be read from the plan; it opens onto the side courtyard. End a is the mullion where the fixed corner glass (listed as a glass wall) ends. Clad pier face 18.6044.",
+   "optional": true,
+   "agreement": "one",
+   "decision": "provisional: disputed (inventory kind window); not scored until adjudicated"
+  },
+  {
+   "id": "GW-17",
+   "kind": "window",
+   "subtype": "fixed glass",
+   "a": [
+    19.3733,
+    23.0045
+   ],
+   "b": [
+    19.3733,
+    24.4591
+   ],
+   "width": 1.4546,
+   "wallThickness": 0.25,
+   "host": "stair hall west wall x 19.25-19.50, beside the stair landing",
+   "evidence": "upper pier x 19.2483-19.4983 ends y 23.0045 (D-JAMB cladding to 23.0545); COL 19.2483-19.4983 y 24.4591-24.8091; WALL-GL glass x 19.4483 23.1045-24.4091 between WALL frame lines x 19.3983/19.4983 (on WALL layer, not trimmed); D-JAMB boxes 23.0545-23.1045 and 24.4091-24.4591; TREE outer line x 19.2483",
+   "confidence": "medium",
+   "notes": "Next to the first landing (about 1.2 m up), so a window with a sill. Measured from the clad face the opening would be 23.0545-24.4591 (1.405 m).",
+   "optional": true,
+   "agreement": "one",
+   "decision": "provisional: disputed (listed by A+E only); not scored until adjudicated"
+  },
+  {
+   "id": "G-W10",
+   "floor": "ground",
+   "kind": "window",
+   "d": "h",
+   "c": 14.508,
+   "lo": 19.398,
+   "hi": 21.148,
+   "o1": 14.458,
+   "o2": 14.558,
+   "a": [
+    19.398,
+    14.508
+   ],
+   "b": [
+    21.148,
+    14.508
+   ],
+   "width": 1.75,
+   "encodings": [
+    "WIN + WALL-GL band",
+    "D-JAMB rects"
+   ],
+   "note": "living room south, corner to column",
+   "sure": true,
+   "optional": true,
+   "agreement": "one",
+   "decision": "provisional: disputed (listed by E only); not scored until adjudicated"
+  },
+  {
+   "id": "GW-20",
+   "kind": "door",
+   "subtype": "sliding, 4 panels in 2 tracks",
+   "a": [
+    21.3983,
+    14.4335
+   ],
+   "b": [
+    26.6483,
+    14.4335
+   ],
+   "width": 5.25,
+   "wallThickness": 0.25,
+   "host": "living room south facade (grid y 14.4335) between columns x 21.15-21.40 and 26.65-26.90, onto the covered pool deck",
+   "evidence": "COL 21.1483-21.3983 and 26.6483-26.8983 (y 14.3085-14.5585); WIN frame y 14.4585-14.5585, panels 21.448-22.686 / 22.736-23.973 / 24.073-25.311 / 25.361-26.598, middle pair in the outer track; D-JAMB boxes 21.398-21.448 and 26.598-26.648; deck lines continue the mullions (TREE x 22.6856, 25.3607 to y 11.455)",
+   "confidence": "medium",
+   "notes": "Glazing height is not drawn; the sliding panels and the deck alignment indicate doors.",
+   "optional": true,
+   "agreement": "one",
+   "decision": "provisional: disputed (inventory kind window); not scored until adjudicated"
+  },
+  {
+   "id": "GW-20",
+   "kind": "door",
+   "subtype": "folding or stacking glass doors, 6 framed panels of 1.1 m",
+   "a": [
+    26.7733,
+    14.5585
+   ],
+   "b": [
+    26.7733,
+    21.1591
+   ],
+   "width": 6.6006,
+   "wallThickness": 0.25,
+   "host": "living/dining boundary, column line x 26.6483-26.8983 (axis x 26.775)",
+   "evidence": "between column top y 14.5585 and column bottom y 21.1591; six separate inserts of panel block jkljlll, each with its own stiles (D-JAMB) and glass (WIN), frame x 26.750-26.800",
+   "confidence": "low",
+   "notes": "only connection between living and dining apart from the terrace, so read as operable doors; no fold or slide symbol, so it could be a fixed glass partition",
+   "optional": true,
+   "agreement": "one",
+   "decision": "provisional: disputed (listed by B+E only); not scored until adjudicated"
+  },
+  {
+   "id": "GW-23",
+   "kind": "window",
+   "subtype": "single glazed, JAMB pair",
+   "a": [
+    26.7733,
+    23.3591
+   ],
+   "b": [
+    26.7733,
+    24.4591
+   ],
+   "width": 1.1,
+   "wallThickness": 0.25,
+   "host": "stair hall east wall x 26.65-26.90 (to the outdoor service yard)",
+   "evidence": "kitchen-wall top face y 23.3591 and north-wall inner face y 24.4591; JAMB inserts (26.6483,23.3591) and (26.6483,24.4091), each inserted twice; WIN glass x 26.6983 between WALL frame lines x 26.6483/26.7483 (wall lines run through); TREE outer line x 26.898",
+   "confidence": "medium",
+   "notes": "Frame x 26.65-26.75 flush with inner face.",
+   "optional": true,
+   "agreement": "one",
+   "decision": "provisional: disputed (ends differ by 0.075 m); not scored until adjudicated"
+  },
+  {
+   "id": "GW-21",
+   "kind": "door",
+   "subtype": "sliding, 4 panels in 2 tracks",
+   "a": [
+    26.8983,
+    14.4335
+   ],
+   "b": [
+    32.1483,
+    14.4335
+   ],
+   "width": 5.25,
+   "wallThickness": 0.25,
+   "host": "dining room south facade (grid y 14.4335) between columns x 26.65-26.90 and 32.15-32.40, onto the pool deck",
+   "evidence": "COL 26.6483-26.8983 and 32.1483-32.3983 (y 14.3085-14.5585); WIN panels 26.948-28.205 / 28.255-29.468 / 29.568-30.780 / 30.830-32.098 in two tracks; D-JAMB boxes 26.898-26.948 and 32.098-32.148; deck lines continue the mullions (x 28.2050, 30.8301)",
+   "confidence": "medium",
+   "notes": "End b lies just outside the box (x 32.15), but the centre (29.52) is inside.",
+   "optional": true,
+   "agreement": "one",
+   "decision": "provisional: disputed (inventory kind window); not scored until adjudicated"
+  }
+ ]
+}

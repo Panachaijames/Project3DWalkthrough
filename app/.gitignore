@@ -1,0 +1,24 @@
+# app/.gitignore (scaffold, 3 Nov 2026). The folder is not a repository yet; this is for when it becomes one.
+
+# installed
+node_modules/
+services/api/.venv/
+
+# build outputs (npm run build)
+dist/
+
+# caches and tool output
+.vite/
+*.tsbuildinfo
+__pycache__/
+*.py[cod]
+.pytest_cache/
+test-results/
+playwright-report/
+blob-report/
+
+# Not listed on purpose: data/ (the local store, rebuilt by `npm run seed`, but it also holds the furniture heights staff
+# saved) and apps/web/openapi.json + apps/web/src/api/generated/ (generated, but committed: DESIGN.md 10.5).
+
+# the store's cross-process lock (services/api/walkthrough_api/store/filelock.py): an empty file, made on first use
+data/.lock

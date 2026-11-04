@@ -1,0 +1,3 @@
+# Store every file exactly as it is: no line-ending conversion. Several files are compared byte for byte by the tests
+# (the plan is CRLF, most files LF, the furniture CSVs CRLF with a byte-order mark).
+* -text

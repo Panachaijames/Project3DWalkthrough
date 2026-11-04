@@ -1,0 +1,79 @@
+{
+  "rule": "Every checker must reject each file with an issue at `path` (JSON Pointer; it may report more): parseBuiltModel (viewer: \"throws\" = ModelError; \"warns\" = console.warn and the furniture leniency of DESIGN.md 5.6), ajv (schema cases) and walkthrough_api.builtmodel.validate (the API rejects every file, the furniture cases included). A missing property is reported at its parent object (as ajv and jsonschema do); a duplicate at its later occurrence.",
+  "base": "fixtures/models/bank-v2.model.json",
+  "madeBy": "node tools/make-broken-fixtures.mjs",
+  "cases": {
+    "schema/wrong-type.json": {
+      "path": "/parts/3/z1",
+      "kind": "schema",
+      "viewer": "throws",
+      "fault": "parts[3].z1 is the string \"3.7\""
+    },
+    "schema/missing-field.json": {
+      "path": "/floors/1",
+      "kind": "schema",
+      "viewer": "throws",
+      "fault": "floors[1] has no wallHeight (a missing property is reported at its parent object)"
+    },
+    "schema/bad-pattern.json": {
+      "path": "/photoName",
+      "kind": "schema",
+      "viewer": "throws",
+      "fault": "photoName \"Bangkok Bank\" has a space"
+    },
+    "schema/pattern-trailing-newline.json": {
+      "path": "/photoName",
+      "kind": "schema",
+      "viewer": "throws",
+      "fault": "photoName ends in a newline (\"BangkokBank-Sampeng\\n\")"
+    },
+    "cross/unknown-floor.json": {
+      "path": "/parts/10/floor",
+      "kind": "cross",
+      "viewer": "throws",
+      "fault": "parts[10] is on floor \"L9\", which the model does not have"
+    },
+    "cross/duplicate-opening-id.json": {
+      "path": "/openings/5/id",
+      "kind": "cross",
+      "viewer": "throws",
+      "fault": "openings[5] repeats the id of openings[4] (the later occurrence is reported)"
+    },
+    "cross/z1-not-above-z0.json": {
+      "path": "/parts/3/z1",
+      "kind": "cross",
+      "viewer": "throws",
+      "fault": "parts[3].z1 equals its z0 (0)"
+    },
+    "cross/stair-6-numbers.json": {
+      "path": "/stairs/L1/below",
+      "kind": "cross",
+      "viewer": "throws",
+      "fault": "stairs.L1.below has 6 numbers (not a multiple of 4)"
+    },
+    "cross/furniture-unknown-kind.json": {
+      "path": "/furniture/0/kind",
+      "kind": "cross",
+      "viewer": "warns",
+      "fault": "furniture[0].kind \"spaceship\" is not in furnitureKinds (its old kind's count is lowered by one, so the counts still agree)"
+    },
+    "cross/furniture-missing-support.json": {
+      "path": "/furniture/3/on",
+      "kind": "cross",
+      "viewer": "warns",
+      "fault": "furniture[3].on names no piece"
+    },
+    "cross/furniture-unknown-approach.json": {
+      "path": "/furniture/28/approach/0",
+      "kind": "cross",
+      "viewer": "warns",
+      "fault": "furniture[28].approach[0] names no opening"
+    },
+    "cross/furniture-count.json": {
+      "path": "/furnitureKinds/0/count",
+      "kind": "cross",
+      "viewer": "warns",
+      "fault": "furnitureKinds[0].count is one more than its pieces"
+    }
+  }
+}

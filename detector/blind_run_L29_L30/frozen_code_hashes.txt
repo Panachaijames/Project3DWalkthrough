@@ -1,0 +1,5 @@
+730a29203309 *openings.py
+8fdf077944f4 *geomkit.py
+8269f9dddba2 *render_openings.py
+0e5566a0cf5b *prims_as_used.py
+frozen at: 2026-10-27 12:05

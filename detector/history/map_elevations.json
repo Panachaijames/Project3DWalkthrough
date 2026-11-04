@@ -1,0 +1,375 @@
+{
+ "facades": [
+  {
+   "name": "elev_left: west face of the central volume, seen from the courtyard between the west wing and the central volume (the west wing is not drawn; the glazed link is shown cut)",
+   "region": "elev_left",
+   "planSide": "West face of the central volume. Ground plan: wall/column line x 19.198-19.548 (centre about 19.37; glazing on x 19.448), y 14.51-24.81. Upper plan: the same line at x about 93.39 (drawing x, includes +74.021). Also drawn, set back across the covered terrace: the ground-floor family-room west glazing at x about 32.27 (y 7.66-14.31) and the upper master-bedroom west wall at x about 106.29 (y 7.0-14.3).",
+   "mapping": "This is a side elevation drawn at 2:1 with north (grid A) on the left, so the elevation's x axis runs along plan y: y_plan = 28.2745 - 0.5 * x_elev. The same formula holds for both floors (the upper plan only shifts x by +74.021); x_plan is the face line given in planSide. Heights in metres above FFL: ground = (y_elev - 44.7934) / 2, upper = (y_elev - 52.5934) / 2, measured from the tips of the TAG-LEV triangles (+0.90 and +4.80). Anchor points: grid D 13.982->21.284, F 17.983->19.283, H 27.683->14.433; link jambs 14.232->21.159 and 17.724->19.408; living-room jambs 19.341->18.604 and 27.533->14.508; NW column 6.932->24.809. Residuals are 5 mm or less on the main face and up to 2 cm on the set-back faces.",
+   "openings": [
+    {
+     "elevX": [
+      7.632,
+      10.241
+     ],
+     "floor": "ground",
+     "kind": "window: double-height glazing of the stair hall (ground part)",
+     "sill": 0,
+     "head": 3.9,
+     "planA": [
+      19.373,
+      23.054
+     ],
+     "planB": [
+      19.373,
+      24.459
+     ],
+     "notes": "Glass 0.05-2.95 plus transom glass 3.00-3.90, then continuing upward; it is one window from ground FFL to 6.50 (upper FFL + 2.60). The elevation's glass is 1.20 m wide, the plan's 1.305 m (south end 0.10 m short)."
+    },
+    {
+     "elevX": [
+      7.632,
+      10.241
+     ],
+     "floor": "upper",
+     "kind": "window: double-height glazing of the stair hall (upper part)",
+     "sill": 0,
+     "head": 2.6,
+     "planA": [
+      93.395,
+      23.059
+     ],
+     "planB": [
+      93.395,
+      24.459
+     ],
+     "notes": "Glass 0.05-2.55, frame head 2.60, wall opening up to the 2.90 ceiling. The stair void is behind it."
+    },
+    {
+     "elevX": [
+      14.232,
+      17.724
+     ],
+     "floor": "ground",
+     "kind": "passage: the glazed link corridor (Thai label 'connecting bridge') entering the central volume",
+     "sill": 0,
+     "head": 3,
+     "planA": [
+      19.373,
+      19.458
+     ],
+     "planB": [
+      19.373,
+      21.104
+     ],
+     "notes": "The elevation cuts through the link. Link ceiling (ELEV line) is at 3.00. The link's glass side walls, seen edge-on, run 0.05-2.95 (JAMB 0.00-3.00). The elevation measures between the link's glass jambs, which map to y 19.413-21.159. The ground plan has an arc and a 1.0 m leaf on layer 0 at the link's east end, so this passage may actually be a door."
+    },
+    {
+     "elevX": [
+      14.232,
+      17.724
+     ],
+     "floor": "upper",
+     "kind": "passage: the glazed link onto the upper bridge between the stair void and the living-room void",
+     "sill": 0,
+     "head": 2.9,
+     "planA": [
+      93.395,
+      19.458
+     ],
+     "planB": [
+      93.395,
+      21.108
+     ],
+     "notes": "Link ceiling (ELEV) at 2.90. Glass side walls 0.05-2.55 above the upper FFL. No door is drawn in the upper plan."
+    },
+    {
+     "elevX": [
+      19.341,
+      27.633
+     ],
+     "floor": "ground",
+     "kind": "window/door: double-height glazed living-room west wall; a 2-panel sliding door in the two north bays, a fixed south bay",
+     "sill": 0,
+     "head": 3.9,
+     "planA": [
+      19.448,
+      14.508
+     ],
+     "planB": [
+      19.448,
+      18.604
+     ],
+     "notes": "Bays run 0.00-2.95 (the south bay from 0.05), with transom glass 3.00-3.90, continuing to 6.50 above ground FFL. Bays map to y 18.554-17.229 and 17.179-15.804 (sliding, inner leaves drawn on layer HATCH) and 15.754-14.508 (fixed). Plan jambs are at 17.155-17.205 and 15.755-15.855."
+    },
+    {
+     "elevX": [
+      19.341,
+      27.633
+     ],
+     "floor": "upper",
+     "kind": "window: double-height glazed living-room west wall (upper part)",
+     "sill": 0,
+     "head": 2.6,
+     "planA": [
+      93.47,
+      14.509
+     ],
+     "planB": [
+      93.47,
+      18.608
+     ],
+     "notes": "Glass 0.05-2.55, frame head 2.60, wall opening up to 2.90. The double-height void is behind it."
+    },
+    {
+     "elevX": [
+      27.933,
+      41.273
+     ],
+     "floor": "ground",
+     "kind": "window/door: full-height glazed wall of the family room facing the terrace, 3 bays (door leaves cannot be told apart)",
+     "sill": 0,
+     "head": 3,
+     "planA": [
+      32.273,
+      7.658
+     ],
+     "planB": [
+      32.273,
+      14.308
+     ],
+     "notes": "Frames 0.00-2.95, head line 3.00, terrace beam 3.30. Drawn on layer HATCH as a background face 12.9 m behind the main face, partly hidden by the round terrace column (y 11.63-12.18). Plan bays: y 12.880-14.258, 11.455-12.830 and 7.708-11.355."
+    },
+    {
+     "elevX": [
+      35.473,
+      41.273
+     ],
+     "floor": "upper",
+     "kind": "window: full-height master-bedroom west window, 2 sashes",
+     "sill": 0,
+     "head": 2.6,
+     "planA": [
+      106.294,
+      7.658
+     ],
+     "planB": [
+      106.294,
+      10.556
+     ],
+     "notes": "Frame 0.00-2.55, opening line 2.60, sashes 0.05-2.50, wall line up to 2.90. Plan jambs at 7.658-7.708 and 10.456-10.556, mullion at 9.081-9.131. It maps to y 7.638-10.538 (2 cm)."
+    }
+   ]
+  },
+  {
+   "name": "elev_right: east face of the main house (the east service/staff block and its stair are not drawn)",
+   "region": "elev_right",
+   "planSide": "East face of the main house. Ground plan: family-room east wall at x about 38.07 (wall 37.948-38.198, y 7.41-17.0), the glazed bay on x 38.70 (y 16.86-20.91), and the NE-room east wall at x about 36.52, recessed in the NE porch (y 20.91-23.41). Upper plan (drawing x): master-bedroom east wall at x about 112.02 and the outer screen wall at x about 113.47 (y 10.56-23.36); the upper-hall east wall at x about 106.22 just north of the master suite (y 23.36-24.46).",
+   "mapping": "This is a side elevation drawn at 2:1 with south (grid M) on the left, so the elevation's x axis runs along plan y: y_plan = 0.5 * x_elev - 38.9405, for both floors; x_plan is the face line given in planSide. Heights in metres above FFL: ground = (y_elev - 43.4679) / 2, upper = (y_elev - 51.2679) / 2, from the TAG-LEV tips. Anchor points: grid J 103.145->12.632, H 106.747->14.433; AW1 jambs 93.197->7.658 and 100.590->11.358; D1 102.390->12.258 and 104.790->13.455; D3 120.790->21.455 and 122.790->22.455; screen bay 108.797->15.459 and 113.597->17.859; AW17 125.403->23.759. Residuals are 3 mm or less.",
+   "openings": [
+    {
+     "elevX": [
+      93.197,
+      100.59
+     ],
+     "floor": "ground",
+     "kind": "window (tag AW1): full-height 2-panel glazing, right panel sliding (works as a sliding glass door)",
+     "sill": 0,
+     "head": 3,
+     "planA": [
+      38.073,
+      7.658
+     ],
+     "planB": [
+      38.073,
+      11.358
+     ],
+     "notes": "Frame (WALL-GL) 0.00-2.95, panes 0.05-2.90, opening (ELEV) line 3.00, beam soffit 3.30. Family-room east wall. The plan opening is 3.70 m; the elevation shows 3.697 m."
+    },
+    {
+     "elevX": [
+      102.39,
+      104.79
+     ],
+     "floor": "ground",
+     "kind": "door (tag D1): single hinged leaf of 1.00 m, hinged at the north jamb",
+     "sill": 0,
+     "head": 3,
+     "planA": [
+      38.073,
+      12.258
+     ],
+     "planB": [
+      38.073,
+      13.455
+     ],
+     "notes": "Opening 0.00-3.00, frame 2.95, leaf 0.05-2.90. In the plan, the leaf is on layer 0, hinged at y 13.255."
+    },
+    {
+     "elevX": [
+      111.597,
+      118.603
+     ],
+     "floor": "ground",
+     "kind": "door (tag AD1): 2-panel sliding glass door",
+     "sill": 0,
+     "head": 3,
+     "planA": [
+      38.698,
+      16.858
+     ],
+     "planB": [
+      38.698,
+      20.908
+     ],
+     "notes": "Outer frame 0.00-3.00, inner frame 0.05-2.95. This is the east side of the glazed bay. The elevation draws it 3.50 m wide (y 16.858-20.361), but the plan's glazing runs to 20.908 (4.05 m), so the north 0.55 m disagree."
+    },
+    {
+     "elevX": [
+      120.79,
+      122.79
+     ],
+     "floor": "ground",
+     "kind": "door (tag D3): single hinged leaf (plan block _1D3R90, hinge at y 22.405)",
+     "sill": 0,
+     "head": 3,
+     "planA": [
+      36.523,
+      21.455
+     ],
+     "planB": [
+      36.523,
+      22.455
+     ],
+     "notes": "Opening 1.00 m x 3.00, frame 0.90 m x 2.95, leaf 0.80 m x 2.90 (the plan leaf is 0.90). It is in the NE-room east wall, recessed 2.2 m in the porch under the canopy at +3.30 (2.40 above FFL)."
+    },
+    {
+     "elevX": [
+      124.803,
+      126.798
+     ],
+     "floor": "ground",
+     "kind": "window (tag AW14): full-height fixed glazing, about 0.95 m wide",
+     "sill": 0,
+     "head": 3,
+     "planA": null,
+     "planB": null,
+     "notes": "Frame 0.05-2.95, sill line 0.00, head line 3.00; above 2.30 the left part is hidden by the canopy end. It maps to y 23.461-24.459, but the ground plan has no window there, only a single line at x 32.398 (y 23.355-24.573) and a duct box. Best candidate: (32.398, 23.759)-(32.398, 24.459), directly below the upper AW17."
+    },
+    {
+     "elevX": [
+      93.197,
+      98.997
+     ],
+     "floor": "upper",
+     "kind": "window (tag AW12): full-height, fixed lower pane plus 2 sliding sashes",
+     "sill": 0,
+     "head": 2.6,
+     "planA": [
+      112.02,
+      7.658
+     ],
+     "planB": [
+      112.02,
+      10.556
+     ],
+     "notes": "Frame 0.00-2.60, lower fixed pane 0.05-0.975, sashes 1.00-2.50, structural opening up to the 2.90 ceiling. Master-bedroom east window."
+    },
+    {
+     "elevX": [
+      108.797,
+      113.597
+     ],
+     "floor": "upper",
+     "kind": "passage by the shared definition (a gap with no glazing): an unglazed bay in the outer screen wall, crossed with an X and the Thai label 'open'; a void strip lies behind it, so it cannot be walked through",
+     "sill": 0,
+     "head": 2.9,
+     "planA": [
+      113.495,
+      15.459
+     ],
+     "planB": [
+      113.495,
+      17.859
+     ],
+     "notes": "The OPEN-layer X spans 0.00-2.90. The screen wall is at x 113.345-113.595; the plan marks the 1.2 m strip behind it with an X."
+    },
+    {
+     "elevX": [
+      108.797,
+      113.597
+     ],
+     "floor": "upper",
+     "kind": "window (tag AW14): full-height, fixed lower pane plus 2 sliding sashes, seen through the open screen bay",
+     "sill": 0,
+     "head": 2.6,
+     "planA": [
+      112.02,
+      15.459
+     ],
+     "planB": [
+      112.02,
+      17.859
+     ],
+     "notes": "Head line (WIN) at 2.60, lower panes 0.05-0.975, sashes 1.00-2.50. Plan jambs at 15.459-15.509 and 17.809-17.859. The same tag AW14 is also used for the ground-floor NE light."
+    },
+    {
+     "elevX": [
+      125.403,
+      126.798
+     ],
+     "floor": "upper",
+     "kind": "window (tag AW17): narrow full-height glazing, 0.70 m",
+     "sill": 0,
+     "head": 2.55,
+     "planA": [
+      106.22,
+      23.759
+     ],
+     "planB": [
+      106.22,
+      24.459
+     ],
+     "notes": "Sash outline 0.05-2.55 on layer 0, bottom line 0.00, no head line drawn (the other upper windows are 2.60). Upper-hall east wall north of the master suite; glass y 23.809-24.409."
+    }
+   ]
+  }
+ ],
+ "defaults": {
+  "doorHead": 3,
+  "windowSill": 0,
+  "windowHead": 2.6,
+  "fullHeightTop": 3,
+  "evidence": "Values differ by floor. GROUND FLOOR (FFL +0.90; the ceiling-level tags labelled 'ceiling line level' sit at 3.00 above FFL): every door and glazed opening in both elevations runs from the floor to 3.00. That covers D1 and D3 (frames 2.95, leaves 2.90), AD1 and AW1 (frames 2.95-3.00), AW14, the family-room and living-room glazing, and the link passage. UPPER FLOOR (FFL +4.80; ceiling 2.90): every window frame runs from the floor to 2.60 (AW12, AW14, the master-bedroom west window, the stair-hall and living-room glazing; AW17 is drawn to 2.55). Structural openings, the open screen bay and the link passage run to the 2.90 ceiling. No upper-floor door appears in either elevation. No window in either elevation has a raised sill: the lowest frame is at 0.00-0.05. Upper windows have a fixed lower pane up to 0.975 and opening sashes from 1.00 to 2.50. Double-height glazing runs unbroken from ground FFL to 6.50 (upper FFL + 2.60). Summary: door head 3.00 (ground-floor exterior doors only; interior and upper-floor doors unknown, no higher than the 2.90 upper ceiling); window sill 0.00; window head 2.60 on the upper floor and 3.00 on the ground floor; full-height glazing top 3.00 on the ground floor and 2.60 on the upper floor. The plan's project defaults (door head 2.10, window sill 0.90, window head 2.10) do not fit this house."
+ },
+ "caveats": [
+  "Coverage is limited. Both elevations are side elevations (they carry the letter grids A-M) and show the main house only. elev_left is the west face of the central volume seen from the courtyard: the west wing (x 7.7-14.8) and its facades are not drawn, and the glazed link is cut. elev_right is the east face of the main house: the east service/staff block (ground x 40-54, upper x 114-127) and its stair are not drawn. There is no north or south elevation. So most of the plan's openings get no height from this drawing: the north and south facades, the whole west wing, the staff block and every interior door. The 17 entries here cover 14 distinct openings (the stair-hall window, the link and the living-room glazing are each split into a ground and an upper entry).",
+  "Both elevations are drawn at 2:1. The level tags put 7.80 drawing units per 3.90 m storey, and opening widths match the plan at a factor of 2.000 within 3 mm. Heights are (y_elev - datum) / 2 from the TAG-LEV triangle tips: +0.90 is at y 44.7934 (left) and 43.4679 (right); +4.80 is at 52.5934 and 51.2679.",
+  "Several grid bubbles in the elevations are misplaced: A, K and M in elev_left, and M, G, C and A in elev_right (A and M sit at the building edges, A-to-M is 17.1 m instead of 19.37 m). Only D, F and H (elev_left) and J and H (elev_right) fall exactly on the plan grid lines. The mapping was fitted on those bubbles plus the jambs, so do not map anything through the other bubbles.",
+  "AD1 (east glazed bay): the elevation draws a 3.50 m sliding door (y 16.858-20.361) followed by wall, but the plan's bay glazing runs to y 20.908 (4.05 m). The elevation and plan disagree by 0.55 m, probably a design revision. I gave the plan's ends.",
+  "AW14 on the ground floor (east elevation, y 23.46-24.46): there is no matching window in the ground plan, only a single line at x 32.398 and a duct box. planA/planB are null; the candidate position is in its notes. The upper AW17 directly above matches the upper plan exactly. The tag AW14 is used twice, for this 0.95 m light and for the 2.40 m upper east window.",
+  "Stair-hall window: the elevation's glass is 1.20 m wide but the plan's is 1.305 m (the south end differs by 0.10 m).",
+  "Upper-floor windows: the frames stop at 2.60 but the structural opening (wall lines) runs to the 2.90 ceiling. The 2.60-2.90 band is not drawn as glass and is treated as solid (lintel from 2.60). The fixed lower panes (0.05-0.975) carry a glass-reflection hatch, so I read them as glass; if they are opaque, the effective sill would be 1.00.",
+  "The double-height glazing (stair hall, living-room west wall) is one curtain window from ground FFL to 6.50. It is split into a ground entry (0.00-3.90, including a glass transom in the floor zone, because there is no slab behind it) and an upper entry (0.00-2.60).",
+  "Glazed link: on the ground floor it may be a door rather than an open passage, because the plan has an arc and a 1.0 m leaf on layer 0 at the link's east end. The link's own glass side walls (glass walls, not openings) run 0.05-2.95 on the ground floor and 0.05-2.55 above FFL on the upper floor.",
+  "elev_left also shows an X on the Section layer with the Thai label 'open' at y 12.18-14.31, 0.00-3.30. That is the open covered terrace (roof soffit 3.30 above FFL), not an opening. The family-room glazing behind it is drawn on layer HATCH (background faces) and disappears if HATCH is filtered out.",
+  "The door/window tags (AW1, D1, AD1, D3, AW12, AW14 twice, AW17) appear only in elev_right, and the drawing contains no door/window schedule; elev_left has no tags, and the plan's DSYM tags are empty. All heights here are therefore measured from the elevation geometry.",
+  "The elevations do not seem fully checked against the plan: elev_left's +9.05 tag sits 0.10 m low (its geometry gives +8.95), and there are the AD1, AW14 and stair-window mismatches above. Use the heights from the elevations but the positions from the plan."
+ ],
+ "files": [
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-elevations/elevation_openings.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-elevations/openings.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-elevations/overlay.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-elevations/check_elev_left.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-elevations/check_elev_right.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-elevations/check_plan_ground.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-elevations/check_plan_upper.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-elevations/erender.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-elevations/dump_elev.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-elevations/dump_plan.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-elevations/el_left_half_all.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-elevations/el_right_half_all.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-elevations/er_all.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-elevations/er_upper_zoom.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-elevations/er_ne_zoom.png"
+ ]
+}

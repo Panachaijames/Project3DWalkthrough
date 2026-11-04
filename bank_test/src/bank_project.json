@@ -1,0 +1,52 @@
+{
+  "_what": "Everything the builder knows about this drawing: the layer roles staff confirm once per office, the floors with their decided levels and wall heights, and where the flattened drawings and the detected openings are. No coordinates, handles or block names. Paths are relative to this file unless absolute.",
+  "project": "Bangkok Bank, Sampeng Branch",
+  "projectNo": "26-0216",
+  "shortName": "Bank branch",
+  "photoName": "BangkokBank-Sampeng",
+  "maxPrefix": "BB",
+  "titleBlock": "dwp, schematic design, 1:100",
+  "exportedFrom": "Revit",
+  "units": "mm",
+  "floors": [
+    {"key": "L1", "name": "Level 1", "dwg": "I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg",
+     "cache": "../../detector/bank1/prims.pkl",
+     "area": "L1", "openings": "detector_out/openings_L1.json", "level": 0.0, "wallHeight": 3.7},
+    {"key": "L2", "name": "Level 2", "dwg": "I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg",
+     "cache": "../../detector/bank2/prims.pkl",
+     "area": "L2", "openings": "detector_out/openings_L2.json", "level": 3.7, "wallHeight": 3.7}
+  ],
+  "detectorMappings": ["../../detector/mappings/bank1.json",
+                       "../../detector/mappings/bank2.json"],
+  "layers": {
+    "wall": ["A-WALL", "A-WALL-PATT"],
+    "column": ["S-COLS"],
+    "glass": ["A-GLAZ-CURT", "A-GLAZ-CWMG"],
+    "door": ["A-DOOR", "A-DOOR-FRAM", "A-DOOR-GLAZ", "A-DOOR-HDLN"],
+    "stair": ["S-STRS"],
+    "stair-above": ["S-STRS-MBND"],
+    "railing": ["A-FLOR-HRAL"],
+    "room-name": ["A-AREA-IDEN", "G-ANNO-TEXT"],
+    "grid": ["S-GRID", "S-GRID-IDEN"],
+    "furniture": ["I-FURN", "Q-CASE", "Q-CASE-HDLN", "Q-SPCQ", "P-SANR-FIXT", "L-PLNT", "E-COMM", "A-GENM"],
+    "other": ["A-FLOR", "A-FLOR-HRAL-MBND", "A-DETL", "A-DETL-GENF"],
+    "ignore": ["E-ELEC-FIXT", "A-ANNO-DIMS", "A-ANNO-DIMS-100"]
+  },
+  "furniture": {
+    "_why": "One coloured box per furniture piece (the blocks on the layers with the furniture role); the 3D team swaps each box for their own model by family name. The kinds, their colours and their office-default heights live in furniture/furniture_kit.py. heights and bases: millimetres per kind, only for the kinds this office wants different from the defaults, e.g. {\"table\": 740} (a base is the height of the underside above the floor, e.g. a wall TV). words: extra words per kind that win over the built-in vocabulary, e.g. {\"seat\": [\"pouf\"]}. skip: extra words for blocks that are not furniture (outlets, covers and mullions are skipped already). minSize: a piece whose long side is shorter (metres) is left out.",
+    "heights": {},
+    "bases": {},
+    "words": {"seat": ["Fritz-Hansen"]},
+    "skip": [],
+    "minSize": 0.08
+  },
+  "defaults": {
+    "_why": "Used only where the drawing says nothing. Door heads come from the door names first; a door whose name has no height gets the most common height among the door names (2.40 m here), and only if no name has one, doorHead.",
+    "doorHead": 2.1,
+    "windowSill": 0.9,
+    "windowHead": 2.1,
+    "railingHeight": 1.1,
+    "slabThickness": 0.25,
+    "singleLineHeight": 1.0
+  }
+}

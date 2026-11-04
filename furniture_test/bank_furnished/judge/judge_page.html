@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slimming judge</title>
+<style>
+  :root { --bg: #eef0f2; --ink: #22272e; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #eef0f2; --ink: #22272e; } }
+  :root[data-theme="dark"] { --bg: #eef0f2; --ink: #22272e; }
+  html, body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.4 system-ui, sans-serif; }
+  canvas { display: block; }
+  #note { position: fixed; left: 8px; bottom: 6px; opacity: 0.6; }
+</style>
+<script type="importmap">
+{ "imports": { "three": "/three/build/three.module.js", "three/addons/": "/three/examples/jsm/" } }
+</script>
+</head>
+<body>
+<div id="note">Slimming judge: cells are drawn on request by render_cells.mjs (window.__judge).</div>
+<script type="module" src="judge_page.js"></script>
+</body>
+</html>

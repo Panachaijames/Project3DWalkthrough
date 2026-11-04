@@ -1,0 +1,1547 @@
+Warning: Unstable Class object 504 TABLESTYLE (0xfff) 42/0
+Warning: TODO TABLESTYLE r2010+ missing fields
+Warning: Unstable Class object 505 MATERIAL (0x481) 45/0
+Warning: Unstable Class object 505 MATERIAL (0x481) 46/0
+Warning: Unstable Class object 505 MATERIAL (0x481) 47/0
+Warning: Unstable Class object 508 MLEADERSTYLE (0xfff) 68/0
+Warning: Unstable Class object 508 MLEADERSTYLE (0xfff) 75/0
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Object handle not found 31716/0x7BE4 in 685 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BE4
+Warning: Object handle not found 1109/0x455 in 685 objects of max 0x112A7 handles
+Warning: Object handle not found 31716/0x7BE4 in 692 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BE4
+Warning: Object handle not found 1116/0x45C in 692 objects of max 0x112A7 handles
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Object handle not found 31716/0x7BE4 in 706 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BE4
+Warning: Object handle not found 1130/0x46A in 706 objects of max 0x112A7 handles
+Warning: Object handle not found 31716/0x7BE4 in 713 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BE4
+Warning: Object handle not found 1137/0x471 in 713 objects of max 0x112A7 handles
+ERROR: bit_read_RC buffer overflow at 300.3 + 1 > 301
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Unstable Class object 519 ACAD_EVALUATION_GRAPH (0x481) 1085/0
+Warning: Unstable Class object 520 BLOCKLINEARPARAMETER (0x481) 1086/0
+Warning: Unstable Class object 523 BLOCKSTRETCHACTION (0x481) 1090/0
+ERROR: Invalid ATTRIB.keep_duplicate_records 144
+ERROR: Invalid ATTRIB.keep_duplicate_records 144
+Warning: Object handle not found 31658/0x7BAA in 1541 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 1965/0x7AD in 1541 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 1592 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 2016/0x7E0 in 1592 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 1643 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 2067/0x813 in 1643 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 1694 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 2118/0x846 in 1694 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 1745 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 2169/0x879 in 1745 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 1796 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 2220/0x8AC in 1796 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 1847 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 2271/0x8DF in 1847 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 1898 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 2322/0x912 in 1898 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 1949 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 2373/0x945 in 1949 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 2000 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 2424/0x978 in 2000 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 2051 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 2475/0x9AB in 2051 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 2102 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 2526/0x9DE in 2102 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 2153 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 2577/0xA11 in 2153 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 2204 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 2628/0xA44 in 2204 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 2255 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 2679/0xA77 in 2255 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 2306 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 2730/0xAAA in 2306 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 2357 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 2781/0xADD in 2357 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 2408 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 2832/0xB10 in 2408 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 2459 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 2883/0xB43 in 2459 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 2510 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 2934/0xB76 in 2510 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 2561 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 2985/0xBA9 in 2561 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 2612 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 3036/0xBDC in 2612 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 2663 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 3087/0xC0F in 2663 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 2714 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 3138/0xC42 in 2714 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 2765 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 3189/0xC75 in 2765 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 2816 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 3240/0xCA8 in 2816 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 2867 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 3291/0xCDB in 2867 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 2918 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 3342/0xD0E in 2918 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 2969 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 3393/0xD41 in 2969 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 3020 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 3444/0xD74 in 3020 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 3071 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 3495/0xDA7 in 3071 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 3122 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 3546/0xDDA in 3122 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 3173 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 3597/0xE0D in 3173 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 3224 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 3648/0xE40 in 3224 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 3275 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 3699/0xE73 in 3275 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 3326 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 3750/0xEA6 in 3326 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 3377 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 3801/0xED9 in 3377 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 3428 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 3852/0xF0C in 3428 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 3479 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 3903/0xF3F in 3479 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 3530 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 3954/0xF72 in 3530 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 3581 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 4005/0xFA5 in 3581 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 3632 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 4056/0xFD8 in 3632 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 3683 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 4107/0x100B in 3683 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 3734 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 4158/0x103E in 3734 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 3785 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 4209/0x1071 in 3785 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 3836 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 4260/0x10A4 in 3836 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 3887 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 4311/0x10D7 in 3887 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 3938 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 4362/0x110A in 3938 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 3989 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 4413/0x113D in 3989 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 4040 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 4464/0x1170 in 4040 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 4091 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 4515/0x11A3 in 4091 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 4142 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 4566/0x11D6 in 4142 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 4193 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 4617/0x1209 in 4193 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 4244 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 4668/0x123C in 4244 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 4295 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 4719/0x126F in 4295 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 4346 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 4770/0x12A2 in 4346 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 4397 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 4821/0x12D5 in 4397 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 4448 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 4872/0x1308 in 4448 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 4499 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 4923/0x133B in 4499 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 4550 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 4974/0x136E in 4550 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 4601 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 5025/0x13A1 in 4601 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 4652 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 5076/0x13D4 in 4652 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 4703 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 5127/0x1407 in 4703 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 4754 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 5178/0x143A in 4754 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 4805 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 5229/0x146D in 4805 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 4856 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 5280/0x14A0 in 4856 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 4907 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 5331/0x14D3 in 4907 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 4958 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 5382/0x1506 in 4958 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 5009 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 5433/0x1539 in 5009 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 5060 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 5484/0x156C in 5060 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 5111 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 5535/0x159F in 5111 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 5216 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 5640/0x1608 in 5216 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 5267 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 5691/0x163B in 5267 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 5318 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 5742/0x166E in 5318 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 5369 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 5793/0x16A1 in 5369 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 5420 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 5844/0x16D4 in 5420 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 5471 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 5895/0x1707 in 5471 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 5522 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 5946/0x173A in 5522 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 5573 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 5997/0x176D in 5573 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 5624 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 6048/0x17A0 in 5624 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 5675 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 6099/0x17D3 in 5675 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 5726 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 6150/0x1806 in 5726 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 5777 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 6201/0x1839 in 5777 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 5828 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 6252/0x186C in 5828 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 5879 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 6303/0x189F in 5879 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 5930 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 6354/0x18D2 in 5930 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 5981 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 6405/0x1905 in 5981 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 6032 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 6456/0x1938 in 6032 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 6083 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 6507/0x196B in 6083 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 6134 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 6558/0x199E in 6134 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 6185 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 6609/0x19D1 in 6185 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 6236 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 6660/0x1A04 in 6236 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 6287 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 6711/0x1A37 in 6287 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 6338 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 6762/0x1A6A in 6338 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 6389 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 6813/0x1A9D in 6389 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 6440 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 6864/0x1AD0 in 6440 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 6491 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 6915/0x1B03 in 6491 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 6542 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 6966/0x1B36 in 6542 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 6593 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 7017/0x1B69 in 6593 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 6644 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 7068/0x1B9C in 6644 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 6695 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 7119/0x1BCF in 6695 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 6746 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 7170/0x1C02 in 6746 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 6797 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 7221/0x1C35 in 6797 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 6848 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 7272/0x1C68 in 6848 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 6899 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 7323/0x1C9B in 6899 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 7217 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 7641/0x1DD9 in 7217 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 7268 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 7692/0x1E0C in 7268 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 7319 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 7743/0x1E3F in 7319 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 7370 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 7794/0x1E72 in 7370 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 7421 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 7845/0x1EA5 in 7421 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 7472 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 7896/0x1ED8 in 7472 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 7523 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 7947/0x1F0B in 7523 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 7574 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 7998/0x1F3E in 7574 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 7625 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 8049/0x1F71 in 7625 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 7676 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 8100/0x1FA4 in 7676 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 7727 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 8151/0x1FD7 in 7727 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 7778 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 8202/0x200A in 7778 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 7829 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 8253/0x203D in 7829 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 7880 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 8304/0x2070 in 7880 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 7931 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 8355/0x20A3 in 7931 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 7982 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 8406/0x20D6 in 7982 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 8033 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 8457/0x2109 in 8033 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 8084 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 8508/0x213C in 8084 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 8135 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 8559/0x216F in 8135 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 8186 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 8610/0x21A2 in 8186 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 8237 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 8661/0x21D5 in 8237 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 8288 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 8712/0x2208 in 8288 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 8339 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 8763/0x223B in 8339 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 8390 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 8814/0x226E in 8390 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 8441 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 8865/0x22A1 in 8441 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 8492 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 8916/0x22D4 in 8492 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 8543 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 8967/0x2307 in 8543 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 8594 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 9018/0x233A in 8594 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 8645 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 9069/0x236D in 8645 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 8696 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 9120/0x23A0 in 8696 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 8747 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 9171/0x23D3 in 8747 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 8798 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 9222/0x2406 in 8798 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 8849 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 9273/0x2439 in 8849 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 8900 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 9324/0x246C in 8900 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 8951 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 9375/0x249F in 8951 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 9002 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 9426/0x24D2 in 9002 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 9053 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 9477/0x2505 in 9053 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 9104 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 9528/0x2538 in 9104 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 9155 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 9579/0x256B in 9155 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 9206 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 9630/0x259E in 9206 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 9257 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 9681/0x25D1 in 9257 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 9308 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 9732/0x2604 in 9308 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 9359 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 9783/0x2637 in 9359 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 9410 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 9834/0x266A in 9410 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 9461 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 9885/0x269D in 9461 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 9512 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 9936/0x26D0 in 9512 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 9563 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 9987/0x2703 in 9563 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 9614 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 10038/0x2736 in 9614 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 9665 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 10089/0x2769 in 9665 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 9716 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 10140/0x279C in 9716 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 9767 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 10191/0x27CF in 9767 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 9818 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 10242/0x2802 in 9818 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 9869 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 10293/0x2835 in 9869 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 9920 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 10344/0x2868 in 9920 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 9971 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 10395/0x289B in 9971 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 10022 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 10446/0x28CE in 10022 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 10073 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 10497/0x2901 in 10073 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 10124 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 10548/0x2934 in 10124 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 10175 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 10599/0x2967 in 10175 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 10226 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 10650/0x299A in 10226 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 10277 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 10701/0x29CD in 10277 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 10328 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 10752/0x2A00 in 10328 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 10379 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 10803/0x2A33 in 10379 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 10430 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 10854/0x2A66 in 10430 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 10481 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 10905/0x2A99 in 10481 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 10532 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 10956/0x2ACC in 10532 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 10583 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 11007/0x2AFF in 10583 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 10634 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 11058/0x2B32 in 10634 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 10685 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 11109/0x2B65 in 10685 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 10736 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 11160/0x2B98 in 10736 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 10787 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 11211/0x2BCB in 10787 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 10838 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 11262/0x2BFE in 10838 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 10889 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 11313/0x2C31 in 10889 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 10940 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 11364/0x2C64 in 10940 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 10991 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 11415/0x2C97 in 10991 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 11042 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 11466/0x2CCA in 11042 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 11093 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 11517/0x2CFD in 11093 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 11144 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 11568/0x2D30 in 11144 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 11195 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 11619/0x2D63 in 11195 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 11246 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 11670/0x2D96 in 11246 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 11297 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 11721/0x2DC9 in 11297 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 11348 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 11772/0x2DFC in 11348 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 11399 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 11823/0x2E2F in 11399 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 11450 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 11874/0x2E62 in 11450 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 11501 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 11925/0x2E95 in 11501 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 11552 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 11976/0x2EC8 in 11552 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 11603 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 12027/0x2EFB in 11603 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 11654 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 12078/0x2F2E in 11654 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 11705 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 12129/0x2F61 in 11705 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 11756 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 12180/0x2F94 in 11756 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 11807 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 12231/0x2FC7 in 11807 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 11858 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 12282/0x2FFA in 11858 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 11909 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 12333/0x302D in 11909 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 11960 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 12384/0x3060 in 11960 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 12011 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 12435/0x3093 in 12011 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 12062 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 12486/0x30C6 in 12062 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 12113 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 12537/0x30F9 in 12113 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 12164 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 12588/0x312C in 12164 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 12215 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 12639/0x315F in 12215 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 12266 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 12690/0x3192 in 12266 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 12317 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 12741/0x31C5 in 12317 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 12368 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 12792/0x31F8 in 12368 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 12419 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 12843/0x322B in 12419 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 12470 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 12894/0x325E in 12470 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 12521 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 12945/0x3291 in 12521 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 12572 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 12996/0x32C4 in 12572 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 12623 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 13047/0x32F7 in 12623 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 12674 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 13098/0x332A in 12674 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 12725 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 13149/0x335D in 12725 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 12776 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 13200/0x3390 in 12776 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 12827 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 13251/0x33C3 in 12827 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 12878 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 13302/0x33F6 in 12878 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 12929 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 13353/0x3429 in 12929 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 12980 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 13404/0x345C in 12980 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 13031 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 13455/0x348F in 13031 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 13082 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 13506/0x34C2 in 13082 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 13133 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 13557/0x34F5 in 13133 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 13184 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 13608/0x3528 in 13184 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 13235 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 13659/0x355B in 13235 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 13286 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 13710/0x358E in 13286 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 13337 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 13761/0x35C1 in 13337 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 13388 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 13812/0x35F4 in 13388 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 13439 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 13863/0x3627 in 13439 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 13490 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 13914/0x365A in 13490 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 13541 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 13965/0x368D in 13541 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 13592 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 14016/0x36C0 in 13592 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 13643 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 14067/0x36F3 in 13643 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 13694 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 14118/0x3726 in 13694 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 13745 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 14169/0x3759 in 13745 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 13796 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 14220/0x378C in 13796 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 13847 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 14271/0x37BF in 13847 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 13898 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 14322/0x37F2 in 13898 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 13949 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 14373/0x3825 in 13949 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 14000 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 14424/0x3858 in 14000 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 14051 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 14475/0x388B in 14051 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 14102 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 14526/0x38BE in 14102 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 14153 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 14577/0x38F1 in 14153 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 14204 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 14628/0x3924 in 14204 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 14255 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 14679/0x3957 in 14255 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 14306 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 14730/0x398A in 14306 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 14357 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 14781/0x39BD in 14357 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 14408 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 14832/0x39F0 in 14408 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 14459 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 14883/0x3A23 in 14459 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 14510 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 14934/0x3A56 in 14510 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 14561 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 14985/0x3A89 in 14561 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 14612 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 15036/0x3ABC in 14612 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 14663 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 15087/0x3AEF in 14663 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 14714 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 15138/0x3B22 in 14714 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 14765 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 15189/0x3B55 in 14765 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 14816 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 15240/0x3B88 in 14816 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 14867 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 15291/0x3BBB in 14867 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 14918 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 15342/0x3BEE in 14918 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 14969 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 15393/0x3C21 in 14969 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 15020 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 15444/0x3C54 in 15020 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 15071 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 15495/0x3C87 in 15071 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 15122 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 15546/0x3CBA in 15122 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 15173 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 15597/0x3CED in 15173 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 15224 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 15648/0x3D20 in 15224 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 15275 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 15699/0x3D53 in 15275 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 15326 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 15750/0x3D86 in 15326 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 15377 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 15801/0x3DB9 in 15377 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 15428 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 15852/0x3DEC in 15428 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 15479 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 15903/0x3E1F in 15479 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 15530 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 15954/0x3E52 in 15530 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 15581 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 16005/0x3E85 in 15581 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 15632 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 16056/0x3EB8 in 15632 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 15683 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 16107/0x3EEB in 15683 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 15734 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 16158/0x3F1E in 15734 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 15785 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 16209/0x3F51 in 15785 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 15836 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 16260/0x3F84 in 15836 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 15887 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 16311/0x3FB7 in 15887 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 15938 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 16362/0x3FEA in 15938 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 15989 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 16413/0x401D in 15989 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 16040 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 16464/0x4050 in 16040 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 16091 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 16515/0x4083 in 16091 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 16142 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 16566/0x40B6 in 16142 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 16193 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 16617/0x40E9 in 16193 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 16244 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 16668/0x411C in 16244 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 16295 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 16719/0x414F in 16295 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 16346 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 16770/0x4182 in 16346 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 16397 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 16821/0x41B5 in 16397 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 16448 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 16872/0x41E8 in 16448 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 16499 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 16923/0x421B in 16499 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 16550 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 16974/0x424E in 16550 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 16601 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 17025/0x4281 in 16601 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 16652 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 17076/0x42B4 in 16652 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 16703 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 17127/0x42E7 in 16703 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 16754 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 17178/0x431A in 16754 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 16805 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 17229/0x434D in 16805 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 16856 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 17280/0x4380 in 16856 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 16907 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 17331/0x43B3 in 16907 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 16958 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 17382/0x43E6 in 16958 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 17009 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 17433/0x4419 in 17009 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 17060 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 17484/0x444C in 17060 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 17111 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 17535/0x447F in 17111 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 17183 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 17607/0x44C7 in 17183 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 17234 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 17658/0x44FA in 17234 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 17285 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 17709/0x452D in 17285 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 17336 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 17760/0x4560 in 17336 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 17387 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 17811/0x4593 in 17387 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 17438 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 17862/0x45C6 in 17438 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 17489 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 17913/0x45F9 in 17489 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 17540 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 17964/0x462C in 17540 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 17595 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 18019/0x4663 in 17595 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 17646 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 18070/0x4696 in 17646 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 17697 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 18121/0x46C9 in 17697 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 17748 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 18172/0x46FC in 17748 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 17799 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 18223/0x472F in 17799 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 17850 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 18274/0x4762 in 17850 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 17901 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 18325/0x4795 in 17901 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 17952 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 18376/0x47C8 in 17952 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 18003 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 18427/0x47FB in 18003 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 18054 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 18478/0x482E in 18054 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 18105 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 18529/0x4861 in 18105 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 18156 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 18580/0x4894 in 18156 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 18207 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 18631/0x48C7 in 18207 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 18258 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 18682/0x48FA in 18258 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 18309 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 18733/0x492D in 18309 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 18360 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 18784/0x4960 in 18360 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 18411 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 18835/0x4993 in 18411 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 18462 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 18886/0x49C6 in 18462 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 18513 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 18937/0x49F9 in 18513 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 18564 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 18988/0x4A2C in 18564 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 18615 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 19039/0x4A5F in 18615 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 18666 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 19090/0x4A92 in 18666 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 18717 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 19141/0x4AC5 in 18717 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 18768 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 19192/0x4AF8 in 18768 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 18819 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 19243/0x4B2B in 18819 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 18870 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 19294/0x4B5E in 18870 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 18921 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 19345/0x4B91 in 18921 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 18972 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 19396/0x4BC4 in 18972 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 19023 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 19447/0x4BF7 in 19023 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 19074 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 19498/0x4C2A in 19074 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 19125 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 19549/0x4C5D in 19125 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 19176 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 19600/0x4C90 in 19176 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 19227 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 19651/0x4CC3 in 19227 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 19278 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 19702/0x4CF6 in 19278 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 19329 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 19753/0x4D29 in 19329 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 19380 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 19804/0x4D5C in 19380 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 19431 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 19855/0x4D8F in 19431 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 19482 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 19906/0x4DC2 in 19482 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 19533 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 19957/0x4DF5 in 19533 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 19584 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 20008/0x4E28 in 19584 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 19635 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 20059/0x4E5B in 19635 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 19686 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 20110/0x4E8E in 19686 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 19737 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 20161/0x4EC1 in 19737 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 19788 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 20212/0x4EF4 in 19788 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 19839 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 20263/0x4F27 in 19839 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 19890 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 20314/0x4F5A in 19890 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 19941 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 20365/0x4F8D in 19941 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 19992 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 20416/0x4FC0 in 19992 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 20043 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 20467/0x4FF3 in 20043 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 20094 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 20518/0x5026 in 20094 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 20145 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 20569/0x5059 in 20145 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 20196 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 20620/0x508C in 20196 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 20247 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 20671/0x50BF in 20247 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 20298 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 20722/0x50F2 in 20298 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 20349 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 20773/0x5125 in 20349 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 20400 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 20824/0x5158 in 20400 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 20451 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 20875/0x518B in 20451 objects of max 0x112A7 handles
+Warning: Object handle not found 31658/0x7BAA in 20502 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BAA
+Warning: Object handle not found 20926/0x51BE in 20502 objects of max 0x112A7 handles
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Object handle not found 31656/0x7BA8 in 20632 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BA8
+Warning: Object handle not found 21056/0x5240 in 20632 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 20683 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 21107/0x5273 in 20683 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 20734 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 21158/0x52A6 in 20734 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 20785 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 21209/0x52D9 in 20785 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 20836 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 21260/0x530C in 20836 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 20887 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 21311/0x533F in 20887 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 20938 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 21362/0x5372 in 20938 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 20989 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 21413/0x53A5 in 20989 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 21040 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 21464/0x53D8 in 21040 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 21091 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 21515/0x540B in 21091 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 21142 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 21566/0x543E in 21142 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 21193 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 21617/0x5471 in 21193 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 21244 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 21668/0x54A4 in 21244 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 21295 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 21719/0x54D7 in 21295 objects of max 0x112A7 handles
+Warning: Object handle not found 31700/0x7BD4 in 21346 objects of max 0x112A7 handles
+Warning: Wrong POLYLINE.layer 7BD4
+Warning: Object handle not found 21770/0x550A in 21346 objects of max 0x112A7 handles
+Warning: Unstable Class object 525 ACDB_BLOCKREPRESENTATION_DATA (0x481) 21600/0
+Warning: Unstable Class object 525 ACDB_BLOCKREPRESENTATION_DATA (0x481) 21610/0
+Warning: Unstable Class object 526 DBCOLOR (0x0) 31325/0
+ERROR: Invalid ATTRIB.keep_duplicate_records 144
+ERROR: Invalid ATTRIB.keep_duplicate_records 144
+ERROR: Invalid ATTRIB.keep_duplicate_records 144
+ERROR: Invalid ATTRIB.keep_duplicate_records 144
+ERROR: Invalid ATTRIB.keep_duplicate_records 144
+ERROR: Invalid ATTRIB.keep_duplicate_records 144
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+ERROR: Invalid ATTRIB.keep_duplicate_records 144
+ERROR: Invalid ATTRIB.keep_duplicate_records 144
+ERROR: Invalid ATTRIB.keep_duplicate_records 144
+ERROR: Invalid ATTRIB.keep_duplicate_records 144
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 144
+ERROR: Invalid ATTRIB.keep_duplicate_records 144
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+Warning: Skip HATCH common handles due to short handle stream
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+Warning: Skip HATCH common handles due to short handle stream
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+Warning: Skip HATCH common handles due to short handle stream
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+ERROR: Invalid ATTRIB.keep_duplicate_records 65
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+Warning: Skip HATCH common handles due to short handle stream
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+ERROR: Invalid ATTRIB.keep_duplicate_records 64
+Warning: AcDs schdat segment yet unhandled
+Warning: AcDs _data_ segment yet unhandled
+Warning: AcDs prvsav segment yet unhandled
+Warning: Object handle not found 40264/0x9D48 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40166/0x9CE6 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 33056/0x8120 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32831/0x803F in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32442/0x7EBA in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 49194/0xC02A in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 49195/0xC02B in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40332/0x9D8C in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40333/0x9D8D in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40263/0x9D47 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40265/0x9D49 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40304/0x9D70 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40305/0x9D71 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67567/0x107EF in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67568/0x107F0 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67604/0x10814 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67605/0x10815 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67606/0x10816 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67607/0x10817 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67608/0x10818 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67609/0x10819 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 33057/0x8121 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32830/0x803E in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32832/0x8040 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32670/0x7F9E in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32671/0x7F9F in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32672/0x7FA0 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32589/0x7F4D in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32590/0x7F4E in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32596/0x7F54 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32597/0x7F55 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32615/0x7F67 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32616/0x7F68 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32618/0x7F6A in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32619/0x7F6B in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32441/0x7EB9 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32443/0x7EBB in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40306/0x9D72 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32585/0x7F49 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32598/0x7F56 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40325/0x9D85 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40326/0x9D86 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 33055/0x811F in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 33061/0x8125 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40334/0x9D8E in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32620/0x7F6C in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 33052/0x811C in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 33053/0x811D in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40089/0x9C99 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40090/0x9C9A in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40093/0x9C9D in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40097/0x9CA1 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67401/0x10749 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67413/0x10755 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67415/0x10757 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67428/0x10764 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67429/0x10765 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67431/0x10767 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67867/0x1091B in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67870/0x1091E in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67887/0x1092F in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67888/0x10930 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67891/0x10933 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67893/0x10935 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32919/0x8097 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32920/0x8098 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32921/0x8099 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32922/0x809A in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32923/0x809B in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32932/0x80A4 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32934/0x80A6 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32935/0x80A7 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32936/0x80A8 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32937/0x80A9 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32948/0x80B4 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32950/0x80B6 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32952/0x80B8 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32955/0x80BB in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32957/0x80BD in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40523/0x9E4B in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32308/0x7E34 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 31751/0x7C07 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32306/0x7E32 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32307/0x7E33 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 32310/0x7E36 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40515/0x9E43 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40604/0x9E9C in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40516/0x9E44 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40517/0x9E45 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40518/0x9E46 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40519/0x9E47 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40520/0x9E48 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40521/0x9E49 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 40522/0x9E4A in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 41051/0xA05B in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 45135/0xB04F in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 45139/0xB053 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 45948/0xB37C in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 45949/0xB37D in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 45950/0xB37E in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 46027/0xB3CB in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 49142/0xBFF6 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 49201/0xC031 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 49143/0xBFF7 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 49161/0xC009 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 49162/0xC00A in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 49163/0xC00B in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 49164/0xC00C in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 49165/0xC00D in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 49166/0xC00E in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 49198/0xC02E in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 49167/0xC00F in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 49168/0xC010 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 49169/0xC011 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 49170/0xC012 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67292/0x106DC in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67300/0x106E4 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67324/0x106FC in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67327/0x106FF in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67330/0x10702 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67334/0x10706 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67337/0x10709 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67340/0x1070C in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67344/0x10710 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67347/0x10713 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67350/0x10716 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67674/0x1085A in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67681/0x10861 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67687/0x10867 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67691/0x1086B in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68003/0x109A3 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68006/0x109A6 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68019/0x109B3 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68086/0x109F6 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68094/0x109FE in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68101/0x10A05 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68105/0x10A09 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68112/0x10A10 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68123/0x10A1B in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68126/0x10A1E in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68129/0x10A21 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68132/0x10A24 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67546/0x107DA in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67547/0x107DB in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67548/0x107DC in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67550/0x107DE in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67551/0x107DF in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67578/0x107FA in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67579/0x107FB in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67580/0x107FC in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67416/0x10758 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67385/0x10739 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67386/0x1073A in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67387/0x1073B in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67388/0x1073C in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67389/0x1073D in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67390/0x1073E in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67391/0x1073F in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67392/0x10740 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67393/0x10741 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67394/0x10742 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67395/0x10743 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67396/0x10744 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67397/0x10745 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67304/0x106E8 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67354/0x1071A in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67357/0x1071D in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67900/0x1093C in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67903/0x1093F in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67906/0x10942 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67909/0x10945 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67912/0x10948 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67916/0x1094C in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67919/0x1094F in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67924/0x10954 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67927/0x10957 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67930/0x1095A in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67933/0x1095D in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67936/0x10960 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67939/0x10963 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67942/0x10966 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67981/0x1098D in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67984/0x10990 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67996/0x1099C in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67999/0x1099F in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68079/0x109EF in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68146/0x10A32 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68150/0x10A36 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68154/0x10A3A in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68158/0x10A3E in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68162/0x10A42 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67353/0x10719 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67969/0x10981 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67973/0x10985 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67977/0x10989 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67992/0x10998 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68009/0x109A9 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68010/0x109AA in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68014/0x109AE in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68083/0x109F3 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67649/0x10841 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67650/0x10842 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67651/0x10843 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67655/0x10847 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67656/0x10848 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67657/0x10849 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67660/0x1084C in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67661/0x1084D in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67662/0x1084E in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67663/0x1084F in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67664/0x10850 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67665/0x10851 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67666/0x10852 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67667/0x10853 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67668/0x10854 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67695/0x1086F in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67696/0x10870 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68017/0x109B1 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68018/0x109B2 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68038/0x109C6 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68039/0x109C7 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68060/0x109DC in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68061/0x109DD in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68115/0x10A13 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67669/0x10855 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67694/0x1086E in 50510 objects of max 0x112A7 handles
+WarniReading DWG file plan.dwg
+Writing DXF file plan.dxf
+ng: Object handle not found 67717/0x10885 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67720/0x10888 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67723/0x1088B in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67731/0x10893 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67746/0x108A2 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 67749/0x108A5 in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68011/0x109AB in 50510 objects of max 0x112A7 handles
+Warning: Object handle not found 68024/0x109B8 in 50510 objects of max 0x112A7 handles
+Warning: Unhandled Object TABLESTYLE in out_dxf 42/87
+Warning: Unstable Class object 505 MATERIAL (0x481) 45/96
+Warning: Unstable Class object 505 MATERIAL (0x481) 46/97
+Warning: Unstable Class object 505 MATERIAL (0x481) 47/98
+Warning: Unstable Class object 508 MLEADERSTYLE (0xfff) 68/D8
+Warning: Unstable Class object 508 MLEADERSTYLE (0xfff) 75/E5
+Warning: Unstable Class object 519 ACAD_EVALUATION_GRAPH (0x481) 1085/5E5
+Warning: Unstable Class object 520 BLOCKLINEARPARAMETER (0x481) 1086/5E6
+Warning: Unstable Class object 523 BLOCKSTRETCHACTION (0x481) 1090/5EA
+Warning: Unstable Class object 525 ACDB_BLOCKREPRESENTATION_DATA (0x481) 21600/5608
+Warning: Unstable Class object 525 ACDB_BLOCKREPRESENTATION_DATA (0x481) 21610/5612
+Warning: Unstable Class object 526 DBCOLOR (0x0) 31325/7C05

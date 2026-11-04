@@ -1,0 +1,973 @@
+{
+ "made": "2026-11-03T10:51:38.474Z",
+ "three": "0.186.1",
+ "budgets": [
+  20000,
+  10000,
+  5000,
+  2500
+ ],
+ "method": "per part: welded by position at 0.1 mm, SimplifyModifier (three 0.186.1, meshoptimizer), normals creased at 40 degrees; the budget shared out by triangles (parts of 24 triangles or less kept whole)",
+ "models": {
+  "banquet": {
+   "file": "banquet/banquet.glb",
+   "sha1": "46d5b08d7750",
+   "triangles": 4720,
+   "bytes": 170672,
+   "gzipBytes": 84731,
+   "vertices": 3466,
+   "parts": [
+    {
+     "name": "Rectangle089",
+     "triangles": 12,
+     "mirrored": false
+    },
+    {
+     "name": "Rectangle090",
+     "triangles": 4352,
+     "mirrored": false
+    },
+    {
+     "name": "Line2038381558",
+     "triangles": 356,
+     "mirrored": false
+    }
+   ],
+   "projectionOnly": false,
+   "budgets": {
+    "2500": {
+     "kept": false,
+     "file": "slim/banquet@2500.glb",
+     "triangles": 2496,
+     "vertices": 1876,
+     "bytes": 62684,
+     "gzipBytes": 43858,
+     "share": 52.88,
+     "ms": 84,
+     "parts": [
+      {
+       "name": "Rectangle089",
+       "from": 12,
+       "asked": 12,
+       "got": 12
+      },
+      {
+       "name": "Rectangle090",
+       "from": 4352,
+       "asked": 2299,
+       "got": 2298
+      },
+      {
+       "name": "Line2038381558",
+       "from": 356,
+       "asked": 188,
+       "got": 186
+      }
+     ]
+    },
+    "5000": {
+     "kept": true,
+     "triangles": 4720
+    },
+    "10000": {
+     "kept": true,
+     "triangles": 4720
+    },
+    "20000": {
+     "kept": true,
+     "triangles": 4720
+    }
+   }
+  },
+  "monitor": {
+   "file": "banquet/monitor.glb",
+   "sha1": "4ebaffb4a33d",
+   "triangles": 15290,
+   "bytes": 944444,
+   "gzipBytes": 441709,
+   "vertices": 22893,
+   "parts": [
+    {
+     "name": "office_workplace_100_27_inch_screen002_1",
+     "triangles": 2486,
+     "mirrored": false
+    },
+    {
+     "name": "office_workplace_100_27_inch_screen002_2",
+     "triangles": 144,
+     "mirrored": false
+    },
+    {
+     "name": "office_workplace_100_27_inch_screen002_3",
+     "triangles": 8,
+     "mirrored": false
+    },
+    {
+     "name": "office_workplace_100_keyboard002_1",
+     "triangles": 216,
+     "mirrored": false
+    },
+    {
+     "name": "office_workplace_100_keyboard002_2",
+     "triangles": 180,
+     "mirrored": false
+    },
+    {
+     "name": "office_workplace_100_keyboard002_3",
+     "triangles": 11440,
+     "mirrored": false
+    },
+    {
+     "name": "office_workplace_100_pc_mouse002_1",
+     "triangles": 448,
+     "mirrored": false
+    },
+    {
+     "name": "office_workplace_100_pc_mouse002_2",
+     "triangles": 368,
+     "mirrored": false
+    }
+   ],
+   "projectionOnly": false,
+   "budgets": {
+    "2500": {
+     "kept": false,
+     "file": "slim/monitor@2500.glb",
+     "triangles": 2489,
+     "vertices": 4669,
+     "bytes": 134044,
+     "gzipBytes": 76200,
+     "share": 16.28,
+     "ms": 82,
+     "parts": [
+      {
+       "name": "office_workplace_100_27_inch_screen002_1",
+       "from": 2486,
+       "asked": 405,
+       "got": 404
+      },
+      {
+       "name": "office_workplace_100_27_inch_screen002_2",
+       "from": 144,
+       "asked": 23,
+       "got": 22
+      },
+      {
+       "name": "office_workplace_100_27_inch_screen002_3",
+       "from": 8,
+       "asked": 8,
+       "got": 8
+      },
+      {
+       "name": "office_workplace_100_keyboard002_1",
+       "from": 216,
+       "asked": 35,
+       "got": 34
+      },
+      {
+       "name": "office_workplace_100_keyboard002_2",
+       "from": 180,
+       "asked": 29,
+       "got": 27
+      },
+      {
+       "name": "office_workplace_100_keyboard002_3",
+       "from": 11440,
+       "asked": 1865,
+       "got": 1863
+      },
+      {
+       "name": "office_workplace_100_pc_mouse002_1",
+       "from": 448,
+       "asked": 73,
+       "got": 73
+      },
+      {
+       "name": "office_workplace_100_pc_mouse002_2",
+       "from": 368,
+       "asked": 60,
+       "got": 58
+      }
+     ]
+    },
+    "5000": {
+     "kept": false,
+     "file": "slim/monitor@5000.glb",
+     "triangles": 4990,
+     "vertices": 8403,
+     "bytes": 238676,
+     "gzipBytes": 160028,
+     "share": 32.64,
+     "ms": 122,
+     "parts": [
+      {
+       "name": "office_workplace_100_27_inch_screen002_1",
+       "from": 2486,
+       "asked": 812,
+       "got": 810
+      },
+      {
+       "name": "office_workplace_100_27_inch_screen002_2",
+       "from": 144,
+       "asked": 47,
+       "got": 46
+      },
+      {
+       "name": "office_workplace_100_27_inch_screen002_3",
+       "from": 8,
+       "asked": 8,
+       "got": 8
+      },
+      {
+       "name": "office_workplace_100_keyboard002_1",
+       "from": 216,
+       "asked": 70,
+       "got": 68
+      },
+      {
+       "name": "office_workplace_100_keyboard002_2",
+       "from": 180,
+       "asked": 58,
+       "got": 57
+      },
+      {
+       "name": "office_workplace_100_keyboard002_3",
+       "from": 11440,
+       "asked": 3736,
+       "got": 3736
+      },
+      {
+       "name": "office_workplace_100_pc_mouse002_1",
+       "from": 448,
+       "asked": 146,
+       "got": 146
+      },
+      {
+       "name": "office_workplace_100_pc_mouse002_2",
+       "from": 368,
+       "asked": 120,
+       "got": 119
+      }
+     ]
+    },
+    "10000": {
+     "kept": false,
+     "file": "slim/monitor@10000.glb",
+     "triangles": 9989,
+     "vertices": 15518,
+     "bytes": 439444,
+     "gzipBytes": 315330,
+     "share": 65.33,
+     "ms": 189,
+     "parts": [
+      {
+       "name": "office_workplace_100_27_inch_screen002_1",
+       "from": 2486,
+       "asked": 1625,
+       "got": 1624
+      },
+      {
+       "name": "office_workplace_100_27_inch_screen002_2",
+       "from": 144,
+       "asked": 94,
+       "got": 92
+      },
+      {
+       "name": "office_workplace_100_27_inch_screen002_3",
+       "from": 8,
+       "asked": 8,
+       "got": 8
+      },
+      {
+       "name": "office_workplace_100_keyboard002_1",
+       "from": 216,
+       "asked": 141,
+       "got": 140
+      },
+      {
+       "name": "office_workplace_100_keyboard002_2",
+       "from": 180,
+       "asked": 117,
+       "got": 117
+      },
+      {
+       "name": "office_workplace_100_keyboard002_3",
+       "from": 11440,
+       "asked": 7479,
+       "got": 7478
+      },
+      {
+       "name": "office_workplace_100_pc_mouse002_1",
+       "from": 448,
+       "asked": 292,
+       "got": 292
+      },
+      {
+       "name": "office_workplace_100_pc_mouse002_2",
+       "from": 368,
+       "asked": 240,
+       "got": 238
+      }
+     ]
+    },
+    "20000": {
+     "kept": true,
+     "triangles": 15290
+    }
+   }
+  },
+  "side table": {
+   "file": "banquet/side table.glb",
+   "sha1": "91fa49df3a53",
+   "triangles": 1564,
+   "bytes": 82760,
+   "gzipBytes": 28182,
+   "vertices": 2160,
+   "parts": [
+    {
+     "name": "Line042",
+     "triangles": 332,
+     "mirrored": false
+    },
+    {
+     "name": "Line043",
+     "triangles": 332,
+     "mirrored": true
+    },
+    {
+     "name": "Object018",
+     "triangles": 622,
+     "mirrored": false
+    },
+    {
+     "name": "Rectangle057",
+     "triangles": 278,
+     "mirrored": false
+    }
+   ],
+   "projectionOnly": false,
+   "budgets": {
+    "2500": {
+     "kept": true,
+     "triangles": 1564
+    },
+    "5000": {
+     "kept": true,
+     "triangles": 1564
+    },
+    "10000": {
+     "kept": true,
+     "triangles": 1564
+    },
+    "20000": {
+     "kept": true,
+     "triangles": 1564
+    }
+   }
+  },
+  "sofa": {
+   "file": "banquet/sofa.glb",
+   "sha1": "bf893d18aae4",
+   "triangles": 2223,
+   "bytes": 77748,
+   "gzipBytes": 39693,
+   "vertices": 1539,
+   "parts": [
+    {
+     "name": "CHAIR_BENCH_BACK_SE107_STOOL_LOW_VITRA_VISIONA_STOOL_2572013_1",
+     "triangles": 2126,
+     "mirrored": false
+    },
+    {
+     "name": "CHAIR_BENCH_BACK_SE107_STOOL_LOW_VITRA_VISIONA_STOOL_2572013_2",
+     "triangles": 97,
+     "mirrored": false
+    }
+   ],
+   "projectionOnly": false,
+   "budgets": {
+    "2500": {
+     "kept": true,
+     "triangles": 2223
+    },
+    "5000": {
+     "kept": true,
+     "triangles": 2223
+    },
+    "10000": {
+     "kept": true,
+     "triangles": 2223
+    },
+    "20000": {
+     "kept": true,
+     "triangles": 2223
+    }
+   }
+  },
+  "stool": {
+   "file": "banquet/stool.glb",
+   "sha1": "3707c30ffc8e",
+   "triangles": 2680,
+   "bytes": 89280,
+   "gzipBytes": 43501,
+   "vertices": 1720,
+   "parts": [
+    {
+     "name": "Rectangle038",
+     "triangles": 2348,
+     "mirrored": false
+    },
+    {
+     "name": "Rectangle039",
+     "triangles": 332,
+     "mirrored": false
+    }
+   ],
+   "projectionOnly": false,
+   "budgets": {
+    "2500": {
+     "kept": false,
+     "file": "slim/stool@2500.glb",
+     "triangles": 2498,
+     "vertices": 1409,
+     "bytes": 50708,
+     "gzipBytes": 35068,
+     "share": 93.21,
+     "ms": 27,
+     "parts": [
+      {
+       "name": "Rectangle038",
+       "from": 2348,
+       "asked": 2190,
+       "got": 2190
+      },
+      {
+       "name": "Rectangle039",
+       "from": 332,
+       "asked": 309,
+       "got": 308
+      }
+     ]
+    },
+    "5000": {
+     "kept": true,
+     "triangles": 2680
+    },
+    "10000": {
+     "kept": true,
+     "triangles": 2680
+    },
+    "20000": {
+     "kept": true,
+     "triangles": 2680
+    }
+   }
+  },
+  "visitor chair01": {
+   "file": "banquet/visitor chair01.glb",
+   "sha1": "62910f65deb6",
+   "triangles": 241326,
+   "bytes": 8109756,
+   "gzipBytes": 4442160,
+   "vertices": 162800,
+   "parts": [
+    {
+     "name": "Object005",
+     "triangles": 7494,
+     "mirrored": false
+    },
+    {
+     "name": "model_part006",
+     "triangles": 28464,
+     "mirrored": false
+    },
+    {
+     "name": "model_part007",
+     "triangles": 88344,
+     "mirrored": false
+    },
+    {
+     "name": "model_part008",
+     "triangles": 117024,
+     "mirrored": false
+    }
+   ],
+   "projectionOnly": false,
+   "budgets": {
+    "2500": {
+     "kept": false,
+     "file": "slim/visitor chair01@2500.glb",
+     "triangles": 2498,
+     "vertices": 3367,
+     "bytes": 99288,
+     "gzipBytes": 67333,
+     "share": 1.04,
+     "ms": 2814,
+     "parts": [
+      {
+       "name": "Object005",
+       "from": 7494,
+       "asked": 77,
+       "got": 77
+      },
+      {
+       "name": "model_part006",
+       "from": 28464,
+       "asked": 294,
+       "got": 294
+      },
+      {
+       "name": "model_part007",
+       "from": 88344,
+       "asked": 915,
+       "got": 915
+      },
+      {
+       "name": "model_part008",
+       "from": 117024,
+       "asked": 1212,
+       "got": 1212
+      }
+     ]
+    },
+    "5000": {
+     "kept": false,
+     "file": "slim/visitor chair01@5000.glb",
+     "triangles": 4994,
+     "vertices": 5668,
+     "bytes": 169496,
+     "gzipBytes": 119977,
+     "share": 2.07,
+     "ms": 2429,
+     "parts": [
+      {
+       "name": "Object005",
+       "from": 7494,
+       "asked": 155,
+       "got": 153
+      },
+      {
+       "name": "model_part006",
+       "from": 28464,
+       "asked": 589,
+       "got": 588
+      },
+      {
+       "name": "model_part007",
+       "from": 88344,
+       "asked": 1830,
+       "got": 1829
+      },
+      {
+       "name": "model_part008",
+       "from": 117024,
+       "asked": 2424,
+       "got": 2424
+      }
+     ]
+    },
+    "10000": {
+     "kept": false,
+     "file": "slim/visitor chair01@10000.glb",
+     "triangles": 9987,
+     "vertices": 10009,
+     "bytes": 303648,
+     "gzipBytes": 222311,
+     "share": 4.14,
+     "ms": 2135,
+     "parts": [
+      {
+       "name": "Object005",
+       "from": 7494,
+       "asked": 310,
+       "got": 308
+      },
+      {
+       "name": "model_part006",
+       "from": 28464,
+       "asked": 1179,
+       "got": 1174
+      },
+      {
+       "name": "model_part007",
+       "from": 88344,
+       "asked": 3660,
+       "got": 3657
+      },
+      {
+       "name": "model_part008",
+       "from": 117024,
+       "asked": 4849,
+       "got": 4848
+      }
+     ]
+    },
+    "20000": {
+     "kept": false,
+     "file": "slim/visitor chair01@20000.glb",
+     "triangles": 19993,
+     "vertices": 18220,
+     "bytes": 560756,
+     "gzipBytes": 417691,
+     "share": 8.28,
+     "ms": 2177,
+     "parts": [
+      {
+       "name": "Object005",
+       "from": 7494,
+       "asked": 621,
+       "got": 620
+      },
+      {
+       "name": "model_part006",
+       "from": 28464,
+       "asked": 2358,
+       "got": 2356
+      },
+      {
+       "name": "model_part007",
+       "from": 88344,
+       "asked": 7321,
+       "got": 7321
+      },
+      {
+       "name": "model_part008",
+       "from": 117024,
+       "asked": 9698,
+       "got": 9696
+      }
+     ]
+    }
+   }
+  },
+  "visitor chair02": {
+   "file": "banquet/visitor chair02.glb",
+   "sha1": "0bdb9c01a4be",
+   "triangles": 6084,
+   "bytes": 187044,
+   "gzipBytes": 95245,
+   "vertices": 3495,
+   "parts": [
+    {
+     "name": "Circle005",
+     "triangles": 1764,
+     "mirrored": false
+    },
+    {
+     "name": "Cylinder003",
+     "triangles": 4320,
+     "mirrored": false
+    }
+   ],
+   "projectionOnly": false,
+   "budgets": {
+    "2500": {
+     "kept": false,
+     "file": "slim/visitor chair02@2500.glb",
+     "triangles": 2498,
+     "vertices": 1469,
+     "bytes": 52144,
+     "gzipBytes": 37699,
+     "share": 41.06,
+     "ms": 71,
+     "parts": [
+      {
+       "name": "Circle005",
+       "from": 1764,
+       "asked": 724,
+       "got": 724
+      },
+      {
+       "name": "Cylinder003",
+       "from": 4320,
+       "asked": 1775,
+       "got": 1774
+      }
+     ]
+    },
+    "5000": {
+     "kept": false,
+     "file": "slim/visitor chair02@5000.glb",
+     "triangles": 4998,
+     "vertices": 2606,
+     "bytes": 94436,
+     "gzipBytes": 64739,
+     "share": 82.15,
+     "ms": 85,
+     "parts": [
+      {
+       "name": "Circle005",
+       "from": 1764,
+       "asked": 1449,
+       "got": 1448
+      },
+      {
+       "name": "Cylinder003",
+       "from": 4320,
+       "asked": 3550,
+       "got": 3550
+      }
+     ]
+    },
+    "10000": {
+     "kept": true,
+     "triangles": 6084
+    },
+    "20000": {
+     "kept": true,
+     "triangles": 6084
+    }
+   }
+  },
+  "working table": {
+   "file": "banquet/working table.glb",
+   "sha1": "73c8be02b110",
+   "triangles": 104,
+   "bytes": 11164,
+   "gzipBytes": 3252,
+   "vertices": 216,
+   "parts": [
+    {
+     "name": "Object13484",
+     "triangles": 16,
+     "mirrored": false
+    },
+    {
+     "name": "Object13483",
+     "triangles": 12,
+     "mirrored": false
+    },
+    {
+     "name": "Object13485",
+     "triangles": 76,
+     "mirrored": false
+    }
+   ],
+   "projectionOnly": false,
+   "budgets": {
+    "2500": {
+     "kept": true,
+     "triangles": 104
+    },
+    "5000": {
+     "kept": true,
+     "triangles": 104
+    },
+    "10000": {
+     "kept": true,
+     "triangles": 104
+    },
+    "20000": {
+     "kept": true,
+     "triangles": 104
+    }
+   }
+  },
+  "Chair": {
+   "file": "Chair.glb",
+   "sha1": "90eef73bbc8b",
+   "triangles": 41921,
+   "bytes": 1839232,
+   "gzipBytes": 1184015,
+   "vertices": 41598,
+   "parts": [
+    {
+     "name": "Object2111126973",
+     "triangles": 7972,
+     "mirrored": false
+    },
+    {
+     "name": "Object2111126974",
+     "triangles": 11188,
+     "mirrored": false
+    },
+    {
+     "name": "Object2111126975",
+     "triangles": 6226,
+     "mirrored": false
+    },
+    {
+     "name": "Result006",
+     "triangles": 10933,
+     "mirrored": false
+    },
+    {
+     "name": "Object2111126976",
+     "triangles": 5602,
+     "mirrored": false
+    }
+   ],
+   "projectionOnly": true,
+   "budgets": {
+    "2500": {
+     "kept": false,
+     "file": "slim/Chair@2500.glb",
+     "triangles": 2497,
+     "vertices": 3301,
+     "bytes": 98516,
+     "gzipBytes": 64534,
+     "share": 5.96,
+     "ms": 378,
+     "parts": [
+      {
+       "name": "Object2111126973",
+       "from": 7972,
+       "asked": 475,
+       "got": 473
+      },
+      {
+       "name": "Object2111126974",
+       "from": 11188,
+       "asked": 667,
+       "got": 665
+      },
+      {
+       "name": "Object2111126975",
+       "from": 6226,
+       "asked": 371,
+       "got": 375
+      },
+      {
+       "name": "Result006",
+       "from": 10933,
+       "asked": 652,
+       "got": 651
+      },
+      {
+       "name": "Object2111126976",
+       "from": 5602,
+       "asked": 334,
+       "got": 333
+      }
+     ]
+    },
+    "5000": {
+     "kept": false,
+     "file": "slim/Chair@5000.glb",
+     "triangles": 4991,
+     "vertices": 5621,
+     "bytes": 169176,
+     "gzipBytes": 117284,
+     "share": 11.91,
+     "ms": 422,
+     "parts": [
+      {
+       "name": "Object2111126973",
+       "from": 7972,
+       "asked": 950,
+       "got": 950
+      },
+      {
+       "name": "Object2111126974",
+       "from": 11188,
+       "asked": 1334,
+       "got": 1333
+      },
+      {
+       "name": "Object2111126975",
+       "from": 6226,
+       "asked": 742,
+       "got": 739
+      },
+      {
+       "name": "Result006",
+       "from": 10933,
+       "asked": 1304,
+       "got": 1302
+      },
+      {
+       "name": "Object2111126976",
+       "from": 5602,
+       "asked": 668,
+       "got": 667
+      }
+     ]
+    },
+    "10000": {
+     "kept": false,
+     "file": "slim/Chair@10000.glb",
+     "triangles": 9986,
+     "vertices": 9276,
+     "bytes": 286860,
+     "gzipBytes": 210953,
+     "share": 23.82,
+     "ms": 513,
+     "parts": [
+      {
+       "name": "Object2111126973",
+       "from": 7972,
+       "asked": 1901,
+       "got": 1899
+      },
+      {
+       "name": "Object2111126974",
+       "from": 11188,
+       "asked": 2668,
+       "got": 2664
+      },
+      {
+       "name": "Object2111126975",
+       "from": 6226,
+       "asked": 1485,
+       "got": 1483
+      },
+      {
+       "name": "Result006",
+       "from": 10933,
+       "asked": 2608,
+       "got": 2606
+      },
+      {
+       "name": "Object2111126976",
+       "from": 5602,
+       "asked": 1336,
+       "got": 1334
+      }
+     ]
+    },
+    "20000": {
+     "kept": false,
+     "file": "slim/Chair@20000.glb",
+     "triangles": 19990,
+     "vertices": 16312,
+     "bytes": 515756,
+     "gzipBytes": 391233,
+     "share": 47.68,
+     "ms": 489,
+     "parts": [
+      {
+       "name": "Object2111126973",
+       "from": 7972,
+       "asked": 3803,
+       "got": 3801
+      },
+      {
+       "name": "Object2111126974",
+       "from": 11188,
+       "asked": 5337,
+       "got": 5336
+      },
+      {
+       "name": "Object2111126975",
+       "from": 6226,
+       "asked": 2970,
+       "got": 2968
+      },
+      {
+       "name": "Result006",
+       "from": 10933,
+       "asked": 5216,
+       "got": 5214
+      },
+      {
+       "name": "Object2111126976",
+       "from": 5602,
+       "asked": 2672,
+       "got": 2671
+      }
+     ]
+    }
+   }
+  }
+ }
+}

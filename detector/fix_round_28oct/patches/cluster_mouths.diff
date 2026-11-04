@@ -1,0 +1,146 @@
+--- a/openings.py
++++ b/openings.py
+@@ -68,6 +68,16 @@
+     set against cross walls); not at a free-standing post; not across a stair (stair lines coming more than 3 cm
+     into the wall band: an outline along a face, or treads stopping at it, mean a stair hall beside the gap, whose
+     door it is); not on walls thinner than 7 cm; building on both sides.
++    A passage interrupts a wall line: an opening cuts the wall through and the wall carries on past it. Mouths are not
++    passages: one wall end or corner facing the side of another wall across an aisle or a corridor (a partition end
++    short of the wall, a corridor seen in section). So a gap is kept when the faces of its wall go on in line past the
++    far end for 0.45 m or more, after a jamb piece of 0.2 m at most (the free end of a wall of the same thickness, or of
++    another thickness with one face in line; the corner of a wall that turns away is not that: its end face is as long as
++    the wall is thick); or when its opening frame is drawn; or when its far end is a wall end of the same thickness
++    found as such; or when the centre line meets no face at the far end (a diagonal or ragged end: no mouth to speak
++    of); or when it is door-sized (<= 1.4 m) between two corners whose faces are flush. Not a passage whatever the ends:
++    a face of the wall drawn unbroken across the gap (a recess or niche, a fitting standing in the wall: the wall is
++    not cut through).
+  8. Duplicates (both faces, two leaves of a double wall, gap + symbol) are fused: door > window > passage.
+ """
+ import argparse, json, math, sys, time
+@@ -340,7 +350,9 @@
+             if ang_diff(g.u, h.u) < 3 and ((math.dist(g.a, h.a) < 0.06 and math.dist(g.b, h.b) < 0.06) or
+                                            (math.dist(g.a, h.b) < 0.06 and math.dist(g.b, h.a) < 0.06)):
+                 dup = True
+-                # found from both sides: both ends are wall ends
++                # Found twice. Every strip comes in two oriented copies (one per face pair), so the same near end is found
++                # twice as a rule and says nothing about the far end: 'end' here only means "not typed by a strip". Whether
++                # the wall carries on past the far end is judged by passage_ok (interrupts_wall_line).
+                 if h.far != 'end' and g.near in ('cap', 'L'): h.far = 'end'; h.how_end = 'found from both ends'
+                 h.flen = max(h.flen, g.nlen)
+                 break
+@@ -571,6 +583,7 @@
+     t0 = time.time()
+     W = build_walls(fl)
+     G = Geo(W)
++    fl.edges = wall_edges(G)
+     strips = find_strips(W)
+     gaps = strip_gaps(fl, G, strips)
+     T['walls'] = time.time() - t0
+@@ -1398,6 +1411,89 @@
+     return len(ends) == 2
+ 
+ 
++# Limits of the mouth test (interrupts_wall_line), each swept alone over the six floors. Inside the range given every
++# scored key passage is kept and the detections are the same (the extras listed leave at the other side of it); the
++# values sit in the middle of their range.
++CROSS_PIECE = 0.20      # m: the wall faces may start this far past the far end (a jamb return, a reveal, a thin cross wall).
++                        #    Range 0.11-0.25: UE-23 needs 0.08 (its corner piece is 0.07-0.08 m thick), L29W-06's 0.26 m
++                        #    cross wall is covered by its drawn frame; from 0.26 m a 0.30 m cross wall lets two false
++                        #    corridor crossings through (L30-026)
++WALL_RUN = 0.45         # m: a face that runs on this far is a wall carrying on, not the end face of a corner or of a cross
++                        #    wall (as long as the wall is thick). Range 0.25-0.9: the corner of the false Sukhumvit
++                        #    upper-039 runs 0.25 m; GW-10 carries on 0.90 m (O3 0.68, AUD-01 0.88)
++DOORWAY = 1.4           # m: a gap between two flush corners is a doorway only this wide at most (a pair of leaves).
++                        #    Range 1.32-1.55: UW-06 is 1.30 m wide, the false L29-029 and upper-039 are 1.59 and 1.55 m
++FACE_TOL = 0.03         # m: two faces are in line within this (the tolerance that closes cracks, rule 1). The keys do not
++                        #    mind (0.005-0.1); false detections come in above 0.04 (one more per 0.01)
++FACE_REACH = 0.10       # m: the centre line meets the far wall within this of the gap's end, else the end is no face. Range
++                        #    0.02-0.33: a face 1.6 cm off (presidential suite-024) is one. From 0.35 m the ragged end of the
++                        #    false suite-021 (0.34 m off) would count as a face too, and O1's (1.0 m off) is lost from 1.0 m
++
++
++def wall_edges(G):
++    """The boundary edges of the wall solid (every edge of 2 cm or more): [x0, y0, x1, y1] rows and their unit directions."""
++    E = [(a, b) for part in G.parts for ring in [part.exterior] + list(part.interiors)
++         for a, b in zip(ring.coords, list(ring.coords)[1:]) if math.dist(a, b) >= 0.02]
++    A = np.array([[a[0], a[1], b[0], b[1]] for a, b in E], dtype=float).reshape(-1, 4)
++    D = A[:, 2:] - A[:, :2]
++    return A, D / np.maximum(np.hypot(D[:, 0], D[:, 1]), 1e-12)[:, None]
++
++
++def far_face(fl, g):
++    """The wall face the far end of an empty gap runs into -> (face, lo, hi). face: the centre line of the gap meets wall
++    material within FACE_REACH of the gap's end (a diagonal or ragged end that the line passes by is no face). lo, hi: how
++    far that material goes on past the two faces of the gap's wall, to the left (lo) and right (hi) of a->b: 0 = flush
++    with the face, 3 = the wall is still there 3 m on; both large is the side of a wall running across the line (a T)."""
++    d1 = end_profile(fl.G, g.a, g.u, g.n, g.t, g.w + FACE_REACH + 0.05)[1][1]
++    if d1 is None or d1 > g.w + FACE_REACH: return False, 0.0, 0.0
++    own = [s for s in fl.G.section(g.at(d1 + 0.004), g.n, 3.0) if s[0] - 0.02 <= 0 <= s[1] + 0.02]
++    if not own: return False, 0.0, 0.0
++    return True, -own[0][0] - g.t / 2, own[0][1] - g.t / 2
++
++
++def face_runs(fl, g):
++    """Where the faces of the gap's wall go on along the line of the gap: the boundary edges of the wall solid that run
++    along one of the two faces (FACE_TOL) -> {face: [(s0, s1), ...]}, merged, s from the start of the gap (face +1 / -1
++    = the left / right face of a->b)."""
++    A, U = fl.edges
++    box = rect(g.a, g.u, -0.1, g.w + CROSS_PIECE + WALL_RUN + 0.1, -g.t / 2 - FACE_TOL, g.t / 2 + FACE_TOL).bounds
++    sel = np.nonzero((np.maximum(A[:, 0], A[:, 2]) >= box[0]) & (np.minimum(A[:, 0], A[:, 2]) <= box[2]) &
++                     (np.maximum(A[:, 1], A[:, 3]) >= box[1]) & (np.minimum(A[:, 1], A[:, 3]) <= box[3]) &
++                     (np.abs(U[:, 0] * g.u[0] + U[:, 1] * g.u[1]) > math.cos(math.radians(2))))[0]
++    runs = {1: [], -1: []}
++    for k in sel:
++        (sp, lp), (sq, lq) = g.frame(A[k, :2]), g.frame(A[k, 2:])
++        for face in runs:
++            if abs(lp - face * g.t / 2) <= FACE_TOL and abs(lq - face * g.t / 2) <= FACE_TOL:
++                runs[face].append((min(sp, sq), max(sp, sq)))
++    for face in runs:
++        merged = []
++        for s0, s1 in sorted(runs[face]):
++            if merged and s0 <= merged[-1][1] + 0.02: merged[-1] = (merged[-1][0], max(merged[-1][1], s1))
++            else: merged.append((s0, s1))
++        runs[face] = merged
++    return runs
++
++
++def interrupts_wall_line(fl, g, framed_):
++    """Is an empty gap an opening in a wall line, not the space between a wall end and another wall? An opening cuts
++    the wall through, and the wall carries on past it. Not an opening: a face of the wall drawn unbroken across the gap
++    (a recess or niche: a fitting stands in the wall); a gap that ends on the face of a wall that does not carry on,
++    one wall end or corner facing the side of another wall (a mouth: a partition end across an aisle, a corridor seen
++    in section). Open: the faces of the gap's wall go on in line past the far end (after a jamb piece of CROSS_PIECE at
++    most) for WALL_RUN or more (that includes the free end of a wall of the same thickness, or of another thickness with
++    one face in line); a drawn opening frame; an end with no face for the line to meet; and a door-sized gap (DOORWAY)
++    between two corners whose faces are flush."""
++    runs = face_runs(fl, g)
++    if any(s0 <= FACE_TOL and s1 >= g.w - FACE_TOL for r in runs.values() for s0, s1 in r): return False
++    if framed_ or g.how_end == 'collinear strip': return True
++    face, lo, hi = far_face(fl, g)
++    if not face: return True
++    if any(s0 <= g.w + CROSS_PIECE and s1 - max(s0, g.w) >= WALL_RUN for r in runs.values() for s0, s1 in r): return True
++    flush = (abs(lo) <= FACE_TOL and hi >= 0.15) or (abs(hi) <= FACE_TOL and lo >= 0.15)
++    return flush and g.w <= DOORWAY
++
++
+ def passage_ok(fl, g):
+     """A gap with nothing drawn in it is a passage only when it looks like one: both ends are wall ends on one wall
+     line (up to 3.6 m), or a short gap (up to 1.6 m) from a wall end to the side of a wall or pier that carries on;
+@@ -1413,7 +1509,8 @@
+     # when both ends are free wall ends found on their own (a collinear strip of the same thickness at the far end:
+     # "found from both ends" only sees the near end twice) and the gap is door-wide (1.6 m, the short-gap limit
+     # below; the plans fix it only from 1.2 m up).
+-    if max(g.nlen, g.flen) < 0.3 and not (framed(fl, g) or (g.near == 'cap' and g.how_end == 'collinear strip' and g.w <= 1.6)):
++    fr = framed(fl, g)
++    if max(g.nlen, g.flen) < 0.3 and not (fr or (g.near == 'cap' and g.how_end == 'collinear strip' and g.w <= 1.6)):
+         return False
+     run = fl.G.cover(sub(g.b, mul(g.u, 0.005)), g.u, 0.5)
+     far_run = run[0][1] if run and run[0][0] <= 0.01 else 0.0      # does the wall line carry on past the far end?
+@@ -1427,6 +1524,7 @@
+     for p in (g.at(-0.02), g.at(g.w + 0.02)):                       # a free-standing post is not a wall end
+         if is_free_post(fl, p): return False
+     if crosses_stair(fl, g): return False
++    if not interrupts_wall_line(fl, g, fr): return False
+     if g.near == 'cap' and g.far == 'end': return True
+     m = g.at(g.w / 2)
+     for sgn in (1, -1):

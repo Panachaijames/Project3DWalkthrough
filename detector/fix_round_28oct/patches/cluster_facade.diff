@@ -1,0 +1,147 @@
+--- a/detector/openings.py
++++ b/detector/openings.py
+@@ -39,6 +39,11 @@
+     over it or jambs bound it. Glass walls, not openings: a glass screen from one cross wall to another; glass from
+     the side of a cross wall round a post-less corner (a shower, a glass box); one side of an all-glass corridor (a
+     parallel band opposite), also when it stands in a gap that is not between two wall ends of one wall line.
++    Curtain walls, not openings (glazing on glass layers with no window-layer line; the mullions, caps and fins of a
++    curtain wall are wall-layer pieces standing on its glass line): a window's glazing stops at its wall ends, so glass
++    that runs on past them by more than a mullion width (0.2 m) is not the gap's own, and a gap whose own glazing does
++    not fill 80 % of it is no opening; glass lying along a wall strip that runs on unbroken (the frame of a module) is
++    no bay; a bay needs wall ends / columns in its own line at both ends, not a corner or a cross wall at one.
+     Fixed glazing is a window; sliding sashes are a window (flagged eitherKind) unless they open straight onto a
+     hatched floor (terrace, deck) with no planting, then a sliding glass door.
+  6. Other gap contents: a thin panel or a centre-line leaf running into a wall pocket (the line's part past the gap
+@@ -50,7 +55,8 @@
+     another = frame-only sliding unit.
+  7. A gap with nothing in it is a passage only when it looks like one: both ends wall ends of one wall line (<= 3.6 m;
+     <= 2.75 m from an L-corner), or a short gap (<= 1.6 m) from a wall end to a wall face that carries on; not stub
+-    to stub, not at a free-standing post, not across a stair, not on walls thinner than 7 cm, building on both sides.
++    to stub, not at a free-standing post, not across a stair, not on walls thinner than 7 cm, building on both sides,
++    not in front of a glass wall (glazing along the gap over 90 % of it within 0.6 m behind it: a recess, nowhere to go).
+  8. Duplicates (both faces, two leaves of a double wall, gap + symbol) are fused: door > window > passage.
+ """
+ import argparse, json, math, sys, time
+@@ -67,6 +73,7 @@
+ from geomkit import orient                      # noqa: E402
+ 
+ UNITS = {'mm': 1.0, 'cm': 10.0, 'm': 1000.0, 'in': 25.4, 'inch': 25.4, 'ft': 304.8}   # prims coords are DXF units / 1000
++MULLION = 0.20      # m: widest mullion, frame member or reveal (curtain-wall mullions, caps and fins are 50-200 mm)
+ 
+ 
+ class Floor:
+@@ -218,13 +225,14 @@
+ 
+ 
+ class Gap:
+-    __slots__ = ('a', 'b', 'u', 'n', 't', 'w', 'near', 'far', 'swings', 'bands', 'panels', 'kind', 'sub', 'ev', 'conf',
+-                 'jambs', 'notes', 'either', 'nlen', 'flen', 'how_end')
++    __slots__ = ('a', 'b', 'u', 'n', 't', 'w', 'near', 'far', 'swings', 'bands', 'through', 'panels', 'kind', 'sub', 'ev',
++                 'conf', 'jambs', 'notes', 'either', 'nlen', 'flen', 'how_end')
+ 
+     def __init__(self, a, b, t, near, far):
+         self.a, self.b, self.t, self.near, self.far = a, b, t, near, far
+         self.u = unit(sub(b, a)); self.n = perp(self.u); self.w = math.dist(a, b)
+         self.swings, self.bands, self.panels, self.kind, self.sub, self.ev, self.conf = [], [], [], None, '', [], 0.0
++        self.through = []                      # glass-layer bands that run on past the wall ends (see detect_floor)
+         self.jambs, self.notes, self.either = [], [], False
+         self.nlen, self.flen, self.how_end = 0.0, 0.0, ''
+ 
+@@ -600,7 +608,11 @@
+             s0, l0 = g.frame(b.at(b.s0)); s1, l1 = g.frame(b.at(b.s1))
+             if max(abs(l0), abs(l1)) > g.t / 2 + 0.12: continue
+             lo, hi = max(min(s0, s1), 0.0), min(max(s0, s1), g.w)
+-            if hi - lo >= 0.4 * g.w: g.bands.append(b)
++            if hi - lo >= 0.4 * g.w:
++                # A window's glazing stops at the wall ends. Glass-layer glazing that runs on past them (by more than a
++                # mullion width) is a longer glazed line with the wall pieces standing on it, not this gap's glazing.
++                runs_on = max(-min(s0, s1), max(s0, s1) - g.w) > MULLION and 'window' not in b.roles
++                (g.through if runs_on else g.bands).append(b)
+         gap_contents(fl, g)
+ 
+     openings = []
+@@ -627,8 +639,13 @@
+             if any(p[0] == 'closed leaf' for p in g.panels) and g.sub == 'sliding': g.sub = 'sliding (leaf drawn closed)'
+             g.ev = [base] + sorted(set(f'{k} on {lay}' for k, lay in g.panels if k != 'low wall'))
+             g.conf = 0.75
++        elif g.through and band_cover(g) < 0.8 * g.w:
++            # the glazing runs on past the wall pieces and nothing of its own fills the gap: a curtain wall (fins, caps
++            # and mullions standing on a long glass line), not a window in a wall
++            for b in g.through + g.bands: b.used = True
++            continue
+         elif g.bands:
+-            for b in g.bands: b.used = True
++            for b in g.through + g.bands: b.used = True
+             if not (g.near == 'cap' and g.far == 'end') and any(glazed_corridor(b, bands) for b in g.bands):
+                 # one side of an all-glass corridor (a link or bridge) running from a wall corner to a wall face: a
+                 # glass wall, as when the same glass stands in no gap (below). A window in a wall line sits between
+@@ -721,8 +738,12 @@
+         # opposite it); a window in a wall line has a wall end / column in its own line at one end at least. Glass
+         # that turns a post-less corner is a window corner only when its other end is such a wall end: glass from
+         # the side of a cross wall round a corner is a glass enclosure (a shower, a glass box), whatever its layer.
++        # Glazing on glass layers only (no window-layer line: curtain walls, screens, fins) is a window between wall
++        # ends in line at both ends only.
+         inline = [e == 'wall' and in_line_end(G, b, se, lm) for e, se in ((ends[0], s0 - 0.03), (ends[1], s1 + 0.03))]
+-        if glazed_corridor(b, bands) or (not any(inline) and ('window' not in b.roles or 'corner' in ends)): continue
++        glass_only = 'window' not in b.roles
++        if glazed_corridor(b, bands) or not (all(inline) if glass_only else (any(inline) or 'corner' not in ends)): continue
++        if along_wall(fl, b): continue         # glass against a wall that runs on unbroken: nothing is cut in that wall
+         t, mid_l = 0.1, 0.0
+         for se in ((s0 - 0.05) if ends[0] == 'wall' else None, (s1 + 0.05) if ends[1] == 'wall' else None):
+             if se is None: continue
+@@ -796,6 +817,26 @@
+     return out
+ 
+ 
++def along_wall(fl, b, share=0.8):
++    """Does a wall strip run along glazing band b - parallel to it, its faces within a mullion width of the glass lines -
++    over at least 80 % of the band? Glass standing against a wall that is not interrupted there (the frame of a
++    curtain-wall module, a facing) is not a window in a gap of that wall."""
++    iv = []
++    for S in fl.strips:
++        if ang_diff(S.u, b.u) > 3: continue
++        ss = [dot(sub(S.at(x), b.c), b.u) for x in (S.s0, S.s1)]
++        ds = [dot(sub(S.at(x), b.c), b.n) for x in (S.s0, S.s1)]
++        lo, hi = max(min(ss), b.s0), min(max(ss), b.s1)
++        if hi <= lo or ss[1] == ss[0]: continue
++        d = ds[0] + (ds[1] - ds[0]) * (((lo + hi) / 2 - ss[0]) / (ss[1] - ss[0]))      # strip centre line, mid-overlap
++        if max(d - S.t / 2 - b.l1, b.l0 - d - S.t / 2) <= MULLION: iv.append((lo, hi))
++    covered, reach = 0.0, b.s0
++    for lo, hi in sorted(iv):
++        lo = max(lo, reach)
++        if hi > lo: covered += hi - lo; reach = hi
++    return covered >= share * b.length
++
++
+ def in_line_end(G, b, s, lm):
+     """Is the wall material just past a glazing end a wall end, pier or column standing in the glazing's own line
+     (narrow across it), rather than the long side of a cross wall?"""
+@@ -1249,6 +1290,20 @@
+     return False
+ 
+ 
++def closed_by_glass(fl, g, depth=0.6, share=0.9):
++    """Glazing running along the gap close behind it - within 0.6 m of its wall faces, the narrowest a person can pass -
++    over at least 90 % of its width: the gap opens onto a sliver against a glass wall (a recess beside a facade), not
++    onto somewhere to go."""
++    m = g.at(g.w / 2)
++    for b in fl.bands:
++        if math.dist(b.at((b.s0 + b.s1) / 2), m) > (g.w + b.length) / 2 + depth + g.t + 0.3 or ang_diff(b.u, g.u) > 5: continue
++        ls = [g.frame(b.at(b.s0, l))[1] for l in (b.l0, b.l1)]
++        d = (min(abs(x) for x in ls) if min(ls) * max(ls) > 0 else 0.0) - g.t / 2
++        s = sorted(g.frame(b.at(x))[0] for x in (b.s0, b.s1))
++        if d <= depth and min(s[1], g.w) - max(s[0], 0.0) >= share * g.w: return True
++    return False
++
++
+ def passage_ok(fl, g):
+     """A gap with nothing drawn in it is a passage only when it looks like one: both ends are wall ends on one wall
+     line (up to 3.6 m), or a short gap (up to 1.6 m) from a wall end to the side of a wall or pier that carries on;
+@@ -1272,6 +1327,7 @@
+     for p in (g.at(-0.02), g.at(g.w + 0.02)):                       # a free-standing post is not a wall end
+         if is_free_post(fl, p): return False
+     if crosses_stair(fl, g): return False
++    if closed_by_glass(fl, g): return False
+     if g.near == 'cap' and g.far == 'end': return True
+     m = g.at(g.w / 2)
+     for sgn in (1, -1):

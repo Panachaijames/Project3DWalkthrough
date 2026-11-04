@@ -1,0 +1,89 @@
+{
+  "documentTitle": "CAD to 3D test",
+  "heading": "Test Sukhumvit Residence: CAD → 3D",
+  "intro": [
+    {
+      "text": "Built automatically from the DWG. Each wall's two face lines are paired, filled and merged into one solid per wall run, so there are no seams. 32 doors and 37 windows found in the plan are cut in (the 17 passages are gaps that are already open). Doors open to 3.00 m (upper floor 2.60 m) under a lintel; windows, and the 3 sliding glass doors that may be windows, are glazed to their heads (3.00 / 3.90 m; upper floor 2.55 / 2.60 m). Heights from the elevations (floors +0.90 m, +4.80 m). Furniture: 76 boxes, one per piece, coloured by kind (9 kinds); 48 are grey because the drawing does not say what they are. They come in at the end of the replay. No AI used."
+    }
+  ],
+  "accent": "#c9773e",
+  "legend": {
+    "layout": "inline",
+    "items": [
+      {
+        "colour": "#e3ddd3",
+        "text": "Walls and lintels"
+      },
+      {
+        "colour": "#8fd0e0",
+        "text": "Glass walls"
+      },
+      {
+        "colour": "#7fb8e8",
+        "text": "Window glass"
+      },
+      {
+        "colour": "#5aa65a",
+        "text": "Stairs"
+      },
+      {
+        "colour": "#e0a458",
+        "text": "Single line: wall, railing or edge?"
+      },
+      {
+        "colour": "#d4d8d2",
+        "text": "Floor plate (approximate outline)"
+      }
+    ]
+  },
+  "floorButtons": {
+    "all": "Both floors",
+    "labels": {
+      "ground": "Ground",
+      "upper": "Upper"
+    }
+  },
+  "camera": {
+    "kind": "fixed",
+    "position": [
+      -28,
+      30,
+      34
+    ],
+    "target": [
+      0,
+      3,
+      0
+    ],
+    "far": 500
+  },
+  "partStyles": {
+    "glass": {
+      "color": "#8fd0e0",
+      "edge": "#4f9fb3",
+      "opacity": 0.35,
+      "roughness": 0.85,
+      "edgeOpacity": 0.6,
+      "renderOrder": 0
+    },
+    "pane": {
+      "color": "#7fb8e8",
+      "edge": "#3f7fb3",
+      "opacity": 0.35,
+      "roughness": 0.85,
+      "edgeOpacity": 0.6,
+      "renderOrder": 0
+    },
+    "single": {
+      "opacity": 0.9
+    }
+  },
+  "creaseAngle": 40,
+  "groundPlane": {
+    "size": [
+      80,
+      50
+    ],
+    "colour": "#dfe3e0"
+  }
+}

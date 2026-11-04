@@ -1,0 +1,460 @@
+{
+  "format": "walkthrough-prototype-facts/1",
+  "page": "bank_test/previous_before_fix_round_2026-10-27/bank_3d_preview.html",
+  "capturedAt": "2026-11-03T04:17:37.189Z",
+  "how": "tools/capture-prototype-facts.mjs (DESIGN.md 17.1): scene with ?build=0&nodownload=1, card with the plain address",
+  "title": "Bank branch test",
+  "stamp": "4b02dc17f286",
+  "heading": "Bangkok Bank, Sampeng Branch (test): CAD → 3D",
+  "intro": {
+    "text": "Built automatically from the 2 Revit-exported DWGs of Bangkok Bank, Sampeng Branch: walls from the wall layers, glass from the curtain-wall layers and from the glass wall types Revit names on its wall blocks, and the 39 doors, 7 windows and 9 passages from the openings detector, used as found. Levels +0.00 / +3.70 m. No drawing-specific rules; no AI used.",
+    "html": "Built automatically from the 2 Revit-exported DWGs of <b>Bangkok Bank, Sampeng Branch</b>: walls from the wall layers, glass from the curtain-wall layers and from the glass wall types Revit names on its wall blocks, and the 39 doors, 7 windows and 9 passages from the openings detector, used as found. Levels +0.00 / +3.70 m. No drawing-specific rules; no AI used."
+  },
+  "floorButtons": [
+    {
+      "key": "both",
+      "text": "Both levels",
+      "on": true
+    },
+    {
+      "key": "L1",
+      "text": "Level 1",
+      "on": false
+    },
+    {
+      "key": "L2",
+      "text": "Level 2",
+      "on": false
+    }
+  ],
+  "ticks": [
+    {
+      "id": "plates",
+      "label": "Floor plates",
+      "checked": true,
+      "title": null
+    },
+    {
+      "id": "glass",
+      "label": "Glass",
+      "checked": true,
+      "title": null
+    },
+    {
+      "id": "rooms",
+      "label": "Room names",
+      "checked": true,
+      "title": null
+    }
+  ],
+  "legend": {
+    "layout": "inline",
+    "items": [
+      {
+        "colour": "#e3ddd3",
+        "text": "Walls, columns and door lintels (3.70 m per level)"
+      },
+      {
+        "colour": "#9cc3d5",
+        "text": "Glass: curtain wall, window panes, glass partitions (2.60 m, from the Revit wall types)"
+      },
+      {
+        "colour": "#77727c",
+        "text": "Railings (1.10 m) and the parapet"
+      },
+      {
+        "colour": "#b9c7b4",
+        "text": "Stairs: steps where the drawing says UP / DOWN, flat tread lines elsewhere (faint: flights above the cut)"
+      },
+      {
+        "colour": "#d4d8d2",
+        "text": "Floor plate (approximate outline)"
+      }
+    ]
+  },
+  "panelOrder": [
+    "h1",
+    "p",
+    "#floors",
+    "div",
+    "#shows",
+    ".legend",
+    "div"
+  ],
+  "accent": "#2f6f8f",
+  "hint": "Drag to orbit · right-drag to pan · scroll to zoom · double-click a floor to walk there · 1 / 2 / 3: Orbit / Walk / Ghost · P: photo",
+  "rooms": 18,
+  "scene": {
+    "floors": [
+      {
+        "key": "L1",
+        "name": "Level 1",
+        "level": 0,
+        "walkLevel": 0,
+        "stack": "bank",
+        "colliders": [
+          {
+            "name": "L1 solid:follow",
+            "vertices": 2352,
+            "visible": true
+          },
+          {
+            "name": "L1 glass:follow",
+            "vertices": 456,
+            "visible": true
+          },
+          {
+            "name": "L1 glass:own",
+            "vertices": 660,
+            "visible": true
+          },
+          {
+            "name": "L1 mullion:own",
+            "vertices": 36,
+            "visible": true
+          },
+          {
+            "name": "L1 railing:own",
+            "vertices": 264,
+            "visible": true
+          },
+          {
+            "name": "L1 walk skins",
+            "vertices": 156,
+            "visible": true
+          },
+          {
+            "name": "L1 walk skins (glass)",
+            "vertices": 876,
+            "visible": true
+          }
+        ],
+        "colliderVertices": 4800,
+        "furnitureColliders": 0,
+        "walkables": [
+          {
+            "name": "",
+            "vertices": 336
+          }
+        ],
+        "walkableVertices": 336,
+        "late": 3,
+        "lateWithoutFurniture": 3,
+        "rise": [
+          {
+            "name": "L1 solid:follow",
+            "scales": true
+          },
+          {
+            "name": "L1 glass:follow",
+            "scales": true
+          },
+          {
+            "name": "L1 glass:own",
+            "scales": false
+          },
+          {
+            "name": "L1 mullion:own",
+            "scales": false
+          },
+          {
+            "name": "L1 railing:own",
+            "scales": false
+          }
+        ],
+        "labels": 7,
+        "groupChildren": 15
+      },
+      {
+        "key": "L2",
+        "name": "Level 2",
+        "level": 3.7,
+        "walkLevel": 3.7,
+        "stack": "bank",
+        "colliders": [
+          {
+            "name": "L2 solid:follow",
+            "vertices": 4476,
+            "visible": true
+          },
+          {
+            "name": "L2 parapet:own",
+            "vertices": 432,
+            "visible": true
+          },
+          {
+            "name": "L2 glass:own",
+            "vertices": 228,
+            "visible": true
+          },
+          {
+            "name": "L2 railing:own",
+            "vertices": 216,
+            "visible": true
+          },
+          {
+            "name": "L2 step:own",
+            "vertices": 576,
+            "visible": true
+          },
+          {
+            "name": "L2 walk skins",
+            "vertices": 612,
+            "visible": true
+          },
+          {
+            "name": "L2 walk skins (glass)",
+            "vertices": 192,
+            "visible": true
+          }
+        ],
+        "colliderVertices": 6732,
+        "furnitureColliders": 0,
+        "walkables": [
+          {
+            "name": "",
+            "vertices": 480
+          }
+        ],
+        "walkableVertices": 480,
+        "late": 3,
+        "lateWithoutFurniture": 3,
+        "rise": [
+          {
+            "name": "L2 solid:follow",
+            "scales": true
+          },
+          {
+            "name": "L2 parapet:own",
+            "scales": false
+          },
+          {
+            "name": "L2 glass:own",
+            "scales": false
+          },
+          {
+            "name": "L2 railing:own",
+            "scales": false
+          },
+          {
+            "name": "L2 step:own",
+            "scales": false
+          }
+        ],
+        "labels": 11,
+        "groupChildren": 15
+      }
+    ],
+    "camera": {
+      "position": [
+        24,
+        27.000000000000007,
+        29
+      ],
+      "target": [
+        0,
+        2.5,
+        0
+      ],
+      "fov": 39.96621304379996,
+      "near": 0.1,
+      "far": 600,
+      "source": "__viewer.probe.camera() (position, fov); target, near, far from the generator"
+    },
+    "model": {
+      "project": "Bangkok Bank, Sampeng Branch",
+      "shortName": "Bank branch",
+      "photoName": "BangkokBank-Sampeng",
+      "floors": [
+        "L1",
+        "L2"
+      ],
+      "parts": 124,
+      "openings": 55,
+      "rooms": 18
+    },
+    "labels": 18
+  },
+  "ticksFlip": {
+    "plates": {
+      "objects": 2,
+      "names": [
+        "",
+        ""
+      ],
+      "pictures": 0,
+      "roomLabels": 0,
+      "startsChecked": true
+    },
+    "glass": {
+      "objects": 8,
+      "names": [
+        "",
+        "",
+        "",
+        "L1 glass:follow",
+        "L1 glass:own",
+        "L1 walk skins (glass)",
+        "L2 glass:own",
+        "L2 walk skins (glass)"
+      ],
+      "pictures": 0,
+      "roomLabels": 0,
+      "startsChecked": true
+    },
+    "rooms": {
+      "objects": 0,
+      "names": [],
+      "pictures": 0,
+      "roomLabels": 10,
+      "startsChecked": true
+    }
+  },
+  "card": {
+    "phase": "settings",
+    "visible": true,
+    "inputs": [
+      {
+        "floor": "L1",
+        "prop": "level",
+        "value": "0.00"
+      },
+      {
+        "floor": "L1",
+        "prop": "height",
+        "value": "3.70"
+      },
+      {
+        "floor": "L2",
+        "prop": "level",
+        "value": "3.70"
+      },
+      {
+        "floor": "L2",
+        "prop": "height",
+        "value": "3.70"
+      }
+    ],
+    "introTitle": "I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg + I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg",
+    "facts": [
+      "2 plans, one per DWG (Level 1 / Level 2), in millimetres, exported from Revit",
+      "5,877 + 21,379 drawing items, on 30 and 27 layers in use",
+      "Both levels share one origin: 10 grid labels match within 0.0 mm",
+      "39 doors, 7 windows and 9 passages found by the openings detector"
+    ],
+    "factsHtml": [
+      "2 plans, one per DWG (Level 1 / Level 2), in millimetres, exported from Revit",
+      "5,877 + 21,379 drawing items, on 30 and 27 layers in use",
+      "Both levels share one origin: 10 grid labels match within 0.0 mm",
+      "39 doors, 7 windows and 9 passages found by the openings detector"
+    ],
+    "layersTitle": "How the drawing was read",
+    "layers": [
+      [
+        "Walls",
+        "A-WALL, A-WALL-PATT (cut fills, outlines, paired lines)"
+      ],
+      [
+        "Columns",
+        "S-COLS"
+      ],
+      [
+        "Glass",
+        "A-GLAZ-CURT, A-GLAZ-CWMG (curtain wall); glass wall types on the wall layers (by their Revit type name)"
+      ],
+      [
+        "Doors",
+        "A-DOOR, A-DOOR-FRAM, A-DOOR-GLAZ, A-DOOR-HDLN (head heights from the door names)"
+      ],
+      [
+        "Stairs",
+        "S-STRS; S-STRS-MBND above the cut (faint)"
+      ],
+      [
+        "Railings",
+        "A-FLOR-HRAL (1.10 m)"
+      ],
+      [
+        "Room names",
+        "A-AREA-IDEN, G-ANNO-TEXT"
+      ],
+      [
+        "Left out",
+        "A-FLOR, A-FLOR-HRAL-MBND, A-DETL, A-DETL-GENF, A-GENM, I-FURN, Q-CASE, Q-CASE-HDLN, Q-SPCQ, P-SANR-FIXT, L-PLNT, E-COMM, E-ELEC-FIXT, A-ANNO-DIMS, A-ANNO-DIMS-100 (and the grid, used only to line the levels up)"
+      ]
+    ],
+    "settings": {
+      "L1": {
+        "level": 0,
+        "height": 3.7
+      },
+      "L2": {
+        "level": 3.7,
+        "height": 3.7
+      }
+    },
+    "steps": [
+      {
+        "key": "read",
+        "title": "Read the drawing",
+        "caption": "5,877 drawing items on Level 1 and 21,379 on Level 2, read from 2 DWGs in millimetres.",
+        "t0": 0,
+        "t1": 0.12244897959183675
+      },
+      {
+        "key": "sort",
+        "title": "Sort the layers",
+        "caption": "Walls are on A-WALL, A-WALL-PATT: 939 items, 176 of them cut fills. Glass on A-GLAZ-CURT, A-GLAZ-CWMG, doors on 4 door layers, stairs and railings on their own. 24,577 items on the 15 other layers (furniture, fittings, grid, labels and the like) are set aside.",
+        "t0": 0.12244897959183675,
+        "t1": 0.23469387755102042
+      },
+      {
+        "key": "align",
+        "title": "Line up the levels",
+        "caption": "The 10 grid labels sit at the same coordinates in both drawings (within 0.0 mm), so Level 2 goes straight onto Level 1, with no shift, and rises to 3.70 m.",
+        "t0": 0.23469387755102042,
+        "t1": 0.38775510204081637
+      },
+      {
+        "key": "pair",
+        "title": "Find the wall faces",
+        "caption": "The cut fills and the paired face lines give 3,978 wall pieces (737 line pairings); the curtain wall gives the glass, and the Revit glass wall types give 19 glass partition panes (2.60 m, from the Revit wall type names).",
+        "t0": 0.38775510204081637,
+        "t1": 0.5204081632653061
+      },
+      {
+        "key": "merge",
+        "title": "Merge, cut the openings",
+        "caption": "The pieces merge into 24 wall runs and 7 columns. Each of the 39 doors is cut out of its wall and the 7 windows get panes; the 9 passages stay as they are. 1 wall gap with an object standing in it is closed.",
+        "t0": 0.5204081632653061,
+        "t1": 0.6224489795918368
+      },
+      {
+        "key": "raise",
+        "title": "Raise the walls",
+        "caption": "Walls rise to 3.70 m on Level 1 and 3.70 m on Level 2; 33 lintels over the doors from their heads (2.40 / 2.00 m), 6 glass transoms; glass partitions 2.60 m; railings and the parapet 1.10 m.",
+        "t0": 0.6224489795918368,
+        "t1": 0.8571428571428571
+      },
+      {
+        "key": "finish",
+        "title": "Floors, stairs, room names",
+        "caption": "Floor plates (open over the stairs and the lift shaft above the ground floor), stairs and room names go in. Done: 2 levels, 24 wall runs, 33 lintels, 36 glass pieces, 16 stair steps, 18 rooms named.",
+        "t0": 0.8571428571428571,
+        "t1": 1
+      }
+    ],
+    "stepList": [
+      "1Read the drawing",
+      "2Sort the layers",
+      "3Line up the levels",
+      "4Find the wall faces",
+      "5Merge, cut the openings",
+      "6Raise the walls",
+      "7Floors, stairs, room names"
+    ]
+  },
+  "hintOnSettingsScreen": "Drag to orbit · right-drag to pan · scroll to zoom · double-click a floor to walk there · 1 / 2 / 3: Orbit / Walk / Ghost · P: photo",
+  "furniture": null,
+  "errors": []
+}

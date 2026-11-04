@@ -1,0 +1,140 @@
+{
+  "format": "walkthrough-version/1",
+  "projectId": "hotel-lobby",
+  "version": 1,
+  "label": "2 Nov 2026: read from two plan pictures",
+  "createdAt": "2026-11-02T11:56:02Z",
+  "sourceKind": "pictures",
+  "sourceFiles": [
+    "source/floor1_plan.png",
+    "source/floor2_plan.png"
+  ],
+  "modelFormat": "built-model/1",
+  "modelSha1": "6ab03075088689f7b694f71c422927a289a7005e",
+  "stamp": "6ab030750886",
+  "stampSource": "model.json",
+  "counts": {
+    "floors": 2,
+    "parts": 89,
+    "openings": 20,
+    "furniture": 159,
+    "furnitureKinds": 8,
+    "rooms": 24
+  },
+  "floors": [
+    {
+      "key": "F1",
+      "name": "Floor 1",
+      "level": 0.0
+    },
+    {
+      "key": "F2",
+      "name": "Floor 2",
+      "level": 2.9
+    }
+  ],
+  "hasStages": false,
+  "assets": [
+    {
+      "name": "floor1_plan.png",
+      "role": "plan-picture",
+      "floor": "F1",
+      "mediaType": "image/png",
+      "bytes": 609351,
+      "sha1": "be89e58da9b32c1fc9a2544f2d3a07f6c70811bf",
+      "modelRef": "../source/floor1_plan.png"
+    },
+    {
+      "name": "floor2_plan.png",
+      "role": "plan-picture",
+      "floor": "F2",
+      "mediaType": "image/png",
+      "bytes": 632170,
+      "sha1": "1d6a3c99ee931a26680e56f9646acad17052584d",
+      "modelRef": "../source/floor2_plan.png"
+    },
+    {
+      "name": "topview.png",
+      "role": "thumbnail",
+      "mediaType": "image/png",
+      "bytes": 154285,
+      "sha1": "a5b5f05eae2ed183bdc66581c27373c57a967488"
+    }
+  ],
+  "downloads": {
+    "maxScript": "Hotel_Lobby.ms",
+    "furnitureCsv": true
+  },
+  "presentation": {
+    "documentTitle": "Hotel test",
+    "heading": "Hotel (test): two pictures → 3D",
+    "intro": [
+      {
+        "text": "No CAD: read from two presentation pictures, Floor 1 at 0.00 m and Floor 2 at +2.90 m, scaled from the one real size the owner gave, the main stair's width between its side walls, 2.50 m: Floor 1's picture has 59.28 px per metre across and 56.94 down, Floor 2's 42.06. Lift doors built 1.00 m wide (the owner's). The circles with a cross are lights, not furniture. Tick Plan picture to see each picture under the model."
+      }
+    ],
+    "accent": "#2f6f8f",
+    "legend": {
+      "layout": "lines",
+      "items": [
+        {
+          "colour": "#e3ddd3",
+          "text": "Walls and door lintels, 2.90 m (up to the next floor); 2 hatches (serving hatch, food lift hatch (dumbwaiter)), open from 0.85 / 0.90 to 2.10 m"
+        },
+        {
+          "colour": "#e3ddd3",
+          "text": "Low walls, 1.10 m: outside stair spine"
+        },
+        {
+          "colour": "#9cc3d5",
+          "text": "Glass read from the pictures, full height, and its frame posts"
+        },
+        {
+          "colour": "#77727c",
+          "text": "Railings, 1.10 m, round the open stair and on the terrace's open edges"
+        },
+        {
+          "colour": "#b9c7b4",
+          "text": "Stairs: 16 steps from Floor 1 up to Floor 2's open stair; 7 steps from Floor 2 up toward the floor above (not in the pictures), ending at +1.19 m; the outside stair as flat tread lines (up or down not known)"
+        },
+        {
+          "colour": "#d4d8d2",
+          "text": "Floor plates: the inside of the walls and glass; outdoors at the same level, Floor 1's forecourt (0.56 m deep in front of the entrance doors, as drawn) and Floor 2's terrace"
+        }
+      ]
+    },
+    "floorButtons": {
+      "all": "Both floors"
+    },
+    "camera": {
+      "kind": "fitSlabs",
+      "away": [
+        21.6,
+        22.05,
+        26.1
+      ],
+      "targetY": 2.5,
+      "panForPanel": true,
+      "far": 600
+    },
+    "creaseAngle": 25,
+    "groundPlane": null
+  },
+  "seed": {
+    "from": [
+      "hotel_test/src/hotel_model.json",
+      "hotel_test/source/floor1_plan.png",
+      "hotel_test/source/floor2_plan.png",
+      "hotel_test/hotel_topview.png",
+      "hotel_test/Hotel_Lobby.ms",
+      "hotel_test/hotel_furniture_list.csv",
+      "hotel_test/src/hotel_project.json",
+      "hotel_test/src/hotel_summary.json",
+      "hotel_test/src/picture_readings.json",
+      "hotel_test/src/takeoff.json",
+      "hotel_test/README.md"
+    ],
+    "seededAt": "2026-11-04T04:35:50Z",
+    "seedVersion": "1"
+  }
+}

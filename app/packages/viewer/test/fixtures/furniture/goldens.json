@@ -1,0 +1,53 @@
+{
+  "made": "2026-11-03T04:57:56.516Z",
+  "by": "make-goldens.mjs",
+  "source": "furniture/fixtures/mini_model.json",
+  "oracle": "furniture/fixtures/expected_csv.py",
+  "files": {
+    "mini-original.json": {
+      "sha1": "198a7ba85263bb044343c6fe75d884b118d61d79",
+      "bytes": 7980
+    },
+    "awkward.json": {
+      "sha1": "10b2b545179acf518f4443845143d18bbcf67913",
+      "bytes": 8642
+    },
+    "broken.json": {
+      "sha1": "e960d23bb717246c7101c439b195daec77791838",
+      "bytes": 9271
+    },
+    "mini-typed-heights.json": {
+      "sha1": "65b5b44224671c03325d037148e4c8943e013566",
+      "bytes": 52
+    },
+    "mini.csv": {
+      "sha1": "ff83f44d007bedca35ace00a121bbe3ed77627dc",
+      "bytes": 3310
+    },
+    "mini.kit.csv": {
+      "sha1": "ff83f44d007bedca35ace00a121bbe3ed77627dc",
+      "bytes": 3310
+    },
+    "mini-typed.csv": {
+      "sha1": "ea0114052dd887a39be57dc0032e8867935f8d75",
+      "bytes": 3310
+    },
+    "mini-typed.kit.csv": {
+      "sha1": "ea0114052dd887a39be57dc0032e8867935f8d75",
+      "bytes": 3310
+    },
+    "awkward.csv": {
+      "sha1": "023c39f7cfff338023cb5eb88a964f77f6fbb338",
+      "bytes": 3191
+    },
+    "awkward.kit.csv": {
+      "sha1": "023c39f7cfff338023cb5eb88a964f77f6fbb338",
+      "bytes": 3191
+    }
+  },
+  "agree": {
+    "mini": true,
+    "mini-typed": true,
+    "awkward": true
+  }
+}

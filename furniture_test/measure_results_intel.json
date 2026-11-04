@@ -1,0 +1,223 @@
+{
+ "at": "2026-11-03T04:37:22.610Z",
+ "tag": "intel",
+ "gpu": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x000046A8) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "edgeSwitches": [],
+ "window": [
+  1920,
+  1080,
+  1
+ ],
+ "repeats": 3,
+ "walkView": {
+  "mode": "walk",
+  "floor": "L1",
+  "x": 0.5,
+  "planY": -5.2,
+  "eye": 1.6,
+  "yawDeg": -26.6,
+  "pitchDeg": -8
+ },
+ "walkUrl": "file:///C:/Users/DWP2/Desktop/Project%20walkthrough/furniture_test/chair_test.html?build=0&mode=walk&floor=L1&x=0&z=5.2&yaw=-26.6&pitch=-8",
+ "seatBoxesDrawnAgainInA": true,
+ "cpu": {
+  "cores": 12,
+  "model": "12th Gen Intel(R) Core(TM) i7-1255U",
+  "beforeEdge": 12,
+  "meanDuringRun": 21,
+  "max": 56,
+  "min": 7
+ },
+ "results": [
+  {
+   "view": "orbit",
+   "mode": "A",
+   "triangles": 6434,
+   "calls": 401,
+   "ms": 6.74,
+   "fps": 148.4,
+   "msRuns": [
+    7.87,
+    6.2,
+    6.74
+   ],
+   "liveFps": 60,
+   "chairTriangles": 0,
+   "width": 1920,
+   "height": 1080,
+   "cpuLoad": 17,
+   "seconds": 3.5
+  },
+  {
+   "view": "orbit",
+   "mode": "B",
+   "triangles": 3149609,
+   "calls": 626,
+   "ms": 10.84,
+   "fps": 92.3,
+   "msRuns": [
+    10.84,
+    11.13,
+    10.8
+   ],
+   "liveFps": 60,
+   "chairTriangles": 3144075,
+   "width": 1920,
+   "height": 1080,
+   "cpuLoad": 18,
+   "seconds": 5.1
+  },
+  {
+   "view": "orbit",
+   "mode": "C",
+   "triangles": 3149609,
+   "calls": 261,
+   "ms": 18.75,
+   "fps": 53.3,
+   "msRuns": [
+    18.75,
+    18.3,
+    18.77
+   ],
+   "liveFps": 57,
+   "chairTriangles": 3144075,
+   "width": 1920,
+   "height": 1080,
+   "cpuLoad": 17,
+   "seconds": 8.1
+  },
+  {
+   "view": "orbit",
+   "mode": "D",
+   "triangles": 382784,
+   "calls": 253,
+   "ms": 6.59,
+   "fps": 151.7,
+   "msRuns": [
+    6.1,
+    6.59,
+    7.09
+   ],
+   "liveFps": 60,
+   "chairTriangles": 377250,
+   "width": 1920,
+   "height": 1080,
+   "cpuLoad": 16,
+   "seconds": 3.4
+  },
+  {
+   "view": "orbit",
+   "mode": "E",
+   "triangles": 382784,
+   "calls": 326,
+   "ms": 4.89,
+   "fps": 204.5,
+   "msRuns": [
+    4.89,
+    5.78,
+    4.86
+   ],
+   "liveFps": 60,
+   "chairTriangles": 377250,
+   "width": 1920,
+   "height": 1080,
+   "cpuLoad": 22,
+   "seconds": 2.9
+  },
+  {
+   "view": "walk",
+   "mode": "A",
+   "triangles": 5198,
+   "calls": 194,
+   "ms": 8.04,
+   "fps": 124.4,
+   "msRuns": [
+    7.53,
+    8.04,
+    8.88
+   ],
+   "liveFps": 60,
+   "chairTriangles": 0,
+   "width": 1920,
+   "height": 1080,
+   "cpuLoad": 16,
+   "seconds": 4
+  },
+  {
+   "view": "walk",
+   "mode": "B",
+   "triangles": 1270736,
+   "calls": 280,
+   "ms": 8.25,
+   "fps": 121.2,
+   "msRuns": [
+    9.8,
+    8.09,
+    8.25
+   ],
+   "liveFps": 60,
+   "chairTriangles": 3144075,
+   "width": 1920,
+   "height": 1080,
+   "cpuLoad": 17,
+   "seconds": 4.2
+  },
+  {
+   "view": "walk",
+   "mode": "C",
+   "triangles": 3148889,
+   "calls": 140,
+   "ms": 19.55,
+   "fps": 51.2,
+   "msRuns": [
+    19.32,
+    19.55,
+    19.69
+   ],
+   "liveFps": 48,
+   "chairTriangles": 3144075,
+   "width": 1920,
+   "height": 1080,
+   "cpuLoad": 20,
+   "seconds": 8.5
+  },
+  {
+   "view": "walk",
+   "mode": "D",
+   "triangles": 382064,
+   "calls": 132,
+   "ms": 8.39,
+   "fps": 119.2,
+   "msRuns": [
+    8.39,
+    8.39,
+    8.79
+   ],
+   "liveFps": 60,
+   "chairTriangles": 377250,
+   "width": 1920,
+   "height": 1080,
+   "cpuLoad": 24,
+   "seconds": 4.1
+  },
+  {
+   "view": "walk",
+   "mode": "E",
+   "triangles": 165774,
+   "calls": 162,
+   "ms": 6.97,
+   "fps": 143.5,
+   "msRuns": [
+    7.73,
+    6.92,
+    6.97
+   ],
+   "liveFps": 60,
+   "chairTriangles": 377250,
+   "width": 1920,
+   "height": 1080,
+   "cpuLoad": 22,
+   "seconds": 3.7
+  }
+ ]
+}

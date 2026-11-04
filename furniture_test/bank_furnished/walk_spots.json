@@ -1,0 +1,278 @@
+{
+ "how": "python -B find_walk_spots.py (run from anywhere; reads ../../bank_test/src/bank_model.json and placements.json)",
+ "radius_m": 3.0,
+ "levels": {
+  "L1": {
+   "busiest": {
+    "x": 0.6,
+    "y": -0.4,
+    "yawDeg": -78,
+    "pitchDeg": -8.0,
+    "eye_m": 1.6,
+    "facing": "east",
+    "url": "mode=walk&floor=L1&x=0.60&z=0.40&yaw=-78&pitch=-8",
+    "nearestRooms": [
+     "MO 4 PAX",
+     "MANAGER · 11.4 m²"
+    ],
+    "inView": {
+     "models": 9,
+     "trianglesFullDetail": 991122,
+     "byModel": {
+      "banquet": 1,
+      "monitor": 1,
+      "side table": 2,
+      "stool": 1,
+      "visitor chair01": 4
+     },
+     "within3m": 7,
+     "within3mTriangles": 984838,
+     "pieces": [
+      "L1-coffee-table-004",
+      "L1-coffee-table-007",
+      "L1-computer-007",
+      "L1-seat-026",
+      "L1-seat-027",
+      "L1-seat-033",
+      "L1-seat-036",
+      "L1-seat-037",
+      "L1-sofa-002"
+     ]
+    },
+    "around3m": {
+     "models": 17,
+     "trianglesFullDetail": 1744305,
+     "byModel": {
+      "monitor": 2,
+      "side table": 3,
+      "sofa": 1,
+      "stool": 2,
+      "visitor chair01": 7,
+      "visitor chair02": 2
+     },
+     "pieces": [
+      "L1-coffee-table-001",
+      "L1-coffee-table-002",
+      "L1-coffee-table-004",
+      "L1-computer-006",
+      "L1-computer-007",
+      "L1-seat-008",
+      "L1-seat-009",
+      "L1-seat-013",
+      "L1-seat-014",
+      "L1-seat-020",
+      "L1-seat-024",
+      "L1-seat-026",
+      "L1-seat-027",
+      "L1-seat-028",
+      "L1-seat-033",
+      "L1-seat-036",
+      "L1-seat-037"
+     ]
+    },
+    "path": {
+     "from": [
+      0.79,
+      -0.63
+     ],
+     "to": [
+      -1.3,
+      1.86
+     ],
+     "metres": 3.25,
+     "directionDeg": 130
+    }
+   },
+   "widest": {
+    "x": 3.0,
+    "y": -5.6,
+    "yawDeg": 36,
+    "pitchDeg": -8.0,
+    "eye_m": 1.6,
+    "facing": "north-west",
+    "url": "mode=walk&floor=L1&x=3.00&z=5.60&yaw=36&pitch=-8",
+    "nearestRooms": [
+     "LIFT HALL · 6.1 m²",
+     "MO 4 PAX"
+    ],
+    "inView": {
+     "models": 27,
+     "trianglesFullDetail": 2744641,
+     "byModel": {
+      "monitor": 4,
+      "side table": 4,
+      "sofa": 1,
+      "stool": 3,
+      "visitor chair01": 11,
+      "visitor chair02": 2,
+      "working table": 2
+     },
+     "within3m": 3,
+     "within3mTriangles": 245570,
+     "pieces": [
+      "L1-coffee-table-001",
+      "L1-coffee-table-002",
+      "L1-coffee-table-004",
+      "L1-coffee-table-005",
+      "L1-computer-004",
+      "L1-computer-005",
+      "L1-computer-006",
+      "L1-computer-007",
+      "L1-seat-008",
+      "L1-seat-009",
+      "L1-seat-011",
+      "L1-seat-012",
+      "L1-seat-013",
+      "L1-seat-014",
+      "L1-seat-015",
+      "L1-seat-020",
+      "L1-seat-024",
+      "L1-seat-026",
+      "L1-seat-027",
+      "L1-seat-028",
+      "L1-seat-031",
+      "L1-seat-033",
+      "L1-seat-035",
+      "L1-seat-036",
+      "L1-seat-037",
+      "L1-table-003",
+      "L1-table-004"
+     ]
+    },
+    "around3m": {
+     "models": 4,
+     "trianglesFullDetail": 247134,
+     "byModel": {
+      "side table": 2,
+      "stool": 1,
+      "visitor chair01": 1
+     },
+     "pieces": [
+      "L1-coffee-table-005",
+      "L1-coffee-table-006",
+      "L1-seat-031",
+      "L1-seat-035"
+     ]
+    }
+   }
+  },
+  "L2": {
+   "busiest": {
+    "x": -1.4,
+    "y": 1.4,
+    "yawDeg": 178,
+    "pitchDeg": -8.0,
+    "eye_m": 1.6,
+    "facing": "south",
+    "url": "mode=walk&floor=L2&x=-1.40&z=-1.40&yaw=178&pitch=-8",
+    "nearestRooms": [
+     "CSO 5PAX",
+     "MINI BAR / WEALTH ROOM"
+    ],
+    "inView": {
+     "models": 9,
+     "trianglesFullDetail": 1254064,
+     "byModel": {
+      "monitor": 3,
+      "side table": 1,
+      "visitor chair01": 5
+     },
+     "within3m": 3,
+     "within3mTriangles": 497942,
+     "pieces": [
+      "L2-coffee-table-001",
+      "L2-computer-004",
+      "L2-computer-005",
+      "L2-computer-006",
+      "L2-seat-014",
+      "L2-seat-015",
+      "L2-seat-016",
+      "L2-seat-017",
+      "L2-seat-026"
+     ]
+    },
+    "around3m": {
+     "models": 7,
+     "trianglesFullDetail": 1011174,
+     "byModel": {
+      "monitor": 3,
+      "visitor chair01": 4
+     },
+     "pieces": [
+      "L2-computer-006",
+      "L2-computer-007",
+      "L2-computer-008",
+      "L2-seat-016",
+      "L2-seat-017",
+      "L2-seat-018",
+      "L2-seat-019"
+     ]
+    },
+    "path": {
+     "from": [
+      -1.44,
+      1.15
+     ],
+     "to": [
+      -1.01,
+      3.62
+     ],
+     "metres": 2.5,
+     "directionDeg": 80
+    }
+   },
+   "widest": {
+    "x": -1.8,
+    "y": -6.2,
+    "yawDeg": 32,
+    "pitchDeg": -8.0,
+    "eye_m": 1.6,
+    "facing": "north-west",
+    "url": "mode=walk&floor=L2&x=-1.80&z=6.20&yaw=32&pitch=-8",
+    "nearestRooms": [
+     "LIFT HALL · 6.0 m²",
+     "PANTRY · 3.9 m²"
+    ],
+    "inView": {
+     "models": 12,
+     "trianglesFullDetail": 1539696,
+     "byModel": {
+      "monitor": 6,
+      "visitor chair01": 6
+     },
+     "within3m": 3,
+     "within3mTriangles": 497942,
+     "pieces": [
+      "L2-computer-004",
+      "L2-computer-005",
+      "L2-computer-006",
+      "L2-computer-007",
+      "L2-computer-008",
+      "L2-computer-009",
+      "L2-seat-014",
+      "L2-seat-015",
+      "L2-seat-016",
+      "L2-seat-017",
+      "L2-seat-018",
+      "L2-seat-019"
+     ]
+    },
+    "around3m": {
+     "models": 4,
+     "trianglesFullDetail": 499506,
+     "byModel": {
+      "monitor": 1,
+      "side table": 1,
+      "visitor chair01": 2
+     },
+     "pieces": [
+      "L2-coffee-table-001",
+      "L2-computer-004",
+      "L2-seat-014",
+      "L2-seat-015"
+     ]
+    }
+   }
+  }
+ }
+}

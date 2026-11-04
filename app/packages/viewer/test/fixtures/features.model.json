@@ -1,0 +1,87 @@
+{
+  "project": "Features test building",
+  "shortName": "Features",
+  "projectNo": null,
+  "source": ["features.dwg (made by hand for the viewer's tests)"],
+  "units": "m",
+  "offset": [12.5, -3.0],
+  "photoName": "Features",
+  "maxPrefix": "FT",
+  "floors": [
+    { "key": "G", "name": "Ground", "level": 0.6, "wallHeight": 3.0, "slabThickness": 0.6, "stack": "tower" },
+    { "key": "U", "name": "Upper", "level": 3.6, "wallHeight": 2.8, "slabThickness": 0.25, "stack": "tower", "sheetShift": [10, 0] }
+  ],
+  "railingHeight": 1.1,
+  "singleLineHeight": 1.0,
+  "doorHeadDefault": 2.1,
+  "pictureFrame": {
+    "G": { "file": "floor1_plan.png", "size": [1498, 945], "pxPerMetreX": 59.276, "pxPerMetreY": 56.9378, "originPx": [100, 800], "yDown": true, "_": "a picture under the ground floor" }
+  },
+  "parts": [
+    { "floor": "G", "kind": "slab", "z0": -0.6, "z1": 0, "follow": false, "o": [[0, 0], [10, 0], [10, 8], [0, 8]], "h": [], "plinth": true, "label": "ground plate" },
+    { "floor": "G", "kind": "wall", "z0": 0, "z1": 3.0, "follow": true, "o": [[0, 0], [4, 0], [4, 0.2], [0, 0.2]], "h": [], "label": "south wall west" },
+    { "floor": "G", "kind": "wall", "z0": 0, "z1": 3.0, "follow": true, "o": [[5, 0], [10, 0], [10, 0.2], [5, 0.2]], "h": [], "label": "south wall east" },
+    { "floor": "G", "kind": "lintel", "z0": 2.1, "z1": 3.0, "follow": true, "o": [[4, 0], [5, 0], [5, 0.2], [4, 0.2]], "h": [], "label": "D1 lintel", "fit": "top" },
+    { "floor": "G", "kind": "wall", "z0": 0, "z1": 3.0, "follow": true, "o": [[9.8, 0.2], [10, 0.2], [10, 8], [9.8, 8]], "h": [], "label": "east wall" },
+    { "floor": "G", "kind": "wall", "z0": 0, "z1": 3.0, "follow": true, "o": [[0, 0.2], [0.2, 0.2], [0.2, 3], [0, 3]], "h": [], "label": "west wall south" },
+    { "floor": "G", "kind": "wall", "z0": 0, "z1": 3.0, "follow": true, "o": [[0, 4], [0.2, 4], [0.2, 8], [0, 8]], "h": [], "label": "west wall north" },
+    { "floor": "G", "kind": "wall", "z0": 0, "z1": 3.0, "follow": true, "o": [[0.2, 7.8], [9.8, 7.8], [9.8, 8], [0.2, 8]], "h": [], "label": "north wall" },
+    { "floor": "G", "kind": "column", "z0": 0, "z1": 3.0, "follow": true, "o": [[0.5, 7.0], [0.8, 7.0], [0.8, 7.3], [0.5, 7.3]], "h": [], "label": "column" },
+    { "floor": "G", "kind": "sill", "z0": 0, "z1": 0.9, "follow": false, "o": [[0, 3], [0.2, 3], [0.2, 4], [0, 4]], "h": [], "label": "W1 sill", "fit": "clip" },
+    { "floor": "G", "kind": "pane", "z0": 0.9, "z1": 3.0, "follow": true, "o": [[0.08, 3], [0.12, 3], [0.12, 4], [0.08, 4]], "h": [], "label": "W1 pane", "fit": "top" },
+    { "floor": "G", "kind": "pane", "z0": 0.9, "z1": 2.4, "follow": false, "o": [[9.88, 3], [9.92, 3], [9.92, 4], [9.88, 4]], "h": [], "label": "W2 pane", "fit": "clip" },
+    { "floor": "G", "kind": "glass", "z0": 0, "z1": 2.6, "follow": false, "o": [[5, 4], [8, 4], [8, 4.02], [5, 4.02]], "h": [], "label": "glass partition" },
+    { "floor": "G", "kind": "mullion", "z0": 0, "z1": 2.6, "follow": false, "o": [[8, 3.98], [8.05, 3.98], [8.05, 4.06], [8, 4.06]], "h": [], "label": "mullion" },
+    { "floor": "G", "kind": "railing", "z0": 0, "z1": 1.1, "follow": false, "o": [[2, 5], [4, 5], [4, 5.05], [2, 5.05]], "h": [], "label": "railing" },
+    { "floor": "G", "kind": "single", "z0": 0, "z1": 1.0, "follow": false, "o": [[6, 6], [7, 6], [7, 6.02], [6, 6.02]], "h": [], "label": "single line" },
+    { "floor": "G", "kind": "step", "z0": 0, "z1": 0.18, "follow": false, "o": [[2, 6], [3, 6], [3, 6.3], [2, 6.3]], "h": [], "label": "S1 step 1 up" },
+    { "floor": "U", "kind": "slab", "z0": -0.25, "z1": 0, "follow": false, "o": [[0, 0], [10, 0], [10, 8], [0, 8]], "h": [[[2, 5.5], [4, 5.5], [4, 7], [2, 7]]], "label": "upper plate" },
+    { "floor": "U", "kind": "wall", "z0": 0, "z1": 2.8, "follow": true, "o": [[0, 0], [10, 0], [10, 0.2], [0, 0.2]], "h": [], "label": "south wall" },
+    { "floor": "U", "kind": "parapet", "z0": 0, "z1": 1.1, "follow": false, "o": [[0, 7.8], [10, 7.8], [10, 8], [0, 8]], "h": [], "label": "parapet" },
+    { "floor": "U", "kind": "balustrade", "z0": 0, "z1": 1.1, "follow": false, "o": [[4.5, 5.5], [4.55, 5.5], [4.55, 7], [4.5, 7]], "h": [], "label": "balustrade" },
+    { "floor": "U", "kind": "low", "z0": 0, "z1": 0.45, "follow": false, "o": [[6, 2], [8, 2], [8, 2.5], [6, 2.5]], "h": [], "label": "low wall" },
+    { "floor": "U", "kind": "builtin", "z0": 0, "z1": 2.8, "follow": true, "o": [[8, 6], [9.5, 6], [9.5, 6.6], [8, 6.6]], "h": [], "label": "full-height built-in" },
+    { "floor": "U", "kind": "deck", "z0": 0, "z1": 0.05, "follow": false, "o": [[0.5, 1], [3, 1], [3, 3], [0.5, 3]], "h": [], "label": "deck" },
+    { "floor": "U", "kind": "post", "z0": 0, "z1": 2.8, "follow": false, "o": [[5, 1], [5.15, 1], [5.15, 1.15], [5, 1.15]], "h": [], "label": "pergola post" }
+  ],
+  "stairs": {
+    "G": { "below": [2, 6.5, 3, 6.5, 2, 6.8, 3, 6.8], "above": [2, 5.6, 4, 5.6] },
+    "U": { "below": [], "above": [], "panels": [2, 5.6, 4, 5.6, 2, 5.9, 4, 5.9] }
+  },
+  "voids": { "G": [], "U": [{ "what": "stair", "x": 3, "y": 6.25, "area": 3 }] },
+  "closures": { "G": [{ "object": "ATM", "width": 0.9, "x": 7, "y": 0.1 }] },
+  "stairOutlines": { "G": [{ "id": "S1", "x": 2.5, "y": 6.4, "bbox": [2, 6, 3, 6.9], "flights": 1, "withWord": 1 }] },
+  "rooms": [
+    { "floor": "G", "name": "LOBBY", "label": "Lobby", "area": 40, "x": 3, "y": 2 },
+    { "floor": "G", "name": "OFFICE", "label": "Office", "area": 12, "x": 7, "y": 6 },
+    { "floor": "U", "name": "LOUNGE", "label": "Lounge", "area": null, "x": 5, "y": 4, "callout": false }
+  ],
+  "openings": [
+    { "id": "D1", "floor": "G", "kind": "door", "x": 4.5, "y": 0.1, "nx": 0, "ny": 1, "width": 1, "wallThickness": 0.2, "exterior": true, "inside": [1], "head": 2.1, "lintel": "lintel", "lintelTop": 3.0, "label": "entrance" },
+    { "id": "W1", "floor": "G", "kind": "window", "x": 0.1, "y": 3.5, "nx": 1, "ny": 0, "width": 1, "wallThickness": 0.2, "sill": 0.9, "head": 3.0, "lintel": null },
+    { "id": "P1", "floor": "U", "kind": "passage", "x": 5, "y": 3, "nx": 1, "ny": 0, "width": 1.2, "eitherKind": false }
+  ],
+  "probes": [
+    { "floor": "G", "id": "G glass 1", "what": "glass partition", "x": 6.5, "y": 4.01, "nx": 0, "ny": 1, "inside": [1, -1], "top": 2.6, "label": null }
+  ],
+  "colliderSkins": {
+    "G": [
+      { "o": [[4.96, 3.96], [8.09, 3.96], [8.09, 4.1], [4.96, 4.1]], "h": [], "z0": 0, "z1": 2.6, "glass": true },
+      { "o": [[1.96, 4.96], [4.04, 4.96], [4.04, 5.09], [1.96, 5.09]], "h": [], "z0": 0, "z1": 1.1, "glass": false }
+    ]
+  },
+  "furnitureKinds": [
+    { "key": "table", "label": "Table / desk", "colour": "#8e6c4a", "height": 750, "base": 0, "onTop": false, "support": true, "blocks": true, "count": 2 },
+    { "key": "computer", "label": "Computer / monitor", "colour": "#7b3fb5", "height": 450, "base": 0, "onTop": true, "support": false, "blocks": true, "count": 1 },
+    { "key": "seat", "label": "Chair / stool", "colour": "#e07b00", "height": 450, "base": 0, "onTop": false, "support": false, "blocks": true, "count": 2 },
+    { "key": "plant", "label": "Plant", "colour": "#2e9e4f", "height": 1200, "base": 0, "onTop": false, "support": false, "blocks": false, "count": 1 }
+  ],
+  "furniture": [
+    { "id": "G-table-1", "floor": "G", "kind": "table", "family": "desk 1600", "block": "DESK", "layer": "A-FURN", "handle": "1A", "x": 3, "y": 3, "w": 1.6, "d": 0.8, "rot": 0, "on": null, "approach": [], "n": 1, "note": "" },
+    { "id": "G-computer-1", "floor": "G", "kind": "computer", "family": "monitor", "block": "PC", "layer": "A-FURN", "handle": "1B", "x": 3, "y": 3.1, "w": 0.5, "d": 0.2, "rot": 0, "on": "G-table-1", "approach": [], "n": 1, "note": "on the desk" },
+    { "id": "G-seat-1", "floor": "G", "kind": "seat", "family": "chair", "block": "CHAIR", "layer": "A-FURN", "handle": "1C", "x": 4.5, "y": 0.9, "w": 0.5, "d": 0.5, "rot": 0, "on": null, "approach": ["D1"], "n": 1, "note": "in front of the entrance" },
+    { "id": "G-plant-1", "floor": "G", "kind": "plant", "family": "plant pot", "block": "PLANT", "layer": "A-FURN", "handle": "1D", "x": 9, "y": 7, "w": 0.4, "d": 0.4, "rot": 0, "on": null, "approach": [], "n": 1, "note": "" },
+    { "id": "U-table-1", "floor": "U", "kind": "table", "family": "meeting table", "block": "TABLE", "layer": "A-FURN", "handle": "2A", "x": 6, "y": 4.5, "w": 2.0, "d": 1.0, "rot": 30, "on": null, "approach": [], "n": 1, "note": "" },
+    { "id": "U-seat-1", "floor": "U", "kind": "seat", "family": "chair", "block": "CHAIR", "layer": "A-FURN", "handle": "2B", "x": 6, "y": 3.5, "w": 0.5, "d": 0.5, "rot": 0, "on": null, "approach": ["P1"], "n": 1, "note": "" }
+  ]
+}

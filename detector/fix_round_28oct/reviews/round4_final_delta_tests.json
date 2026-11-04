@@ -1,0 +1,90 @@
+{
+ "reviewer": "tests_g adversarial tester (independent run, final candidate sha1 82f1c05746767d vs BEFORE integrated_c vs ORIGINAL frozen_code)",
+ "checkedWhat": "Ran the regression harness (run7) on both versions, then ~25 scripts in tests_g (a-k plus constant sweeps, shuffles, rotation fuzz on real drawings, CLI unit runs). All numbers below come from scripts in C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/fix4/review_final/tests_g (call it T). Note: code_g/after/openings.py is NOT the final candidate (sha1 b86e27...); my lib.py loads integrated_g.",
+ "findings": [
+  {
+   "id": "G1",
+   "severity": "medium",
+   "area": "symbol_door band limit (b - a <= 0.6 + EPS) / real drawing L29-026",
+   "summary": "The +EPS on the symbol_door wall-band limit moves the real L29 shaft door (L29-026, key L29W-16) 0.30 m off the chord and reports wallThickness 0.6 instead of 0.1. OB.section(...,0.6) clips any mass >= 0.6 m to a band of 0.6 + (distance of its face beyond the chord); here the mass behind the chord is >= 1.0 m thick and the face lies 0.1 mm beyond the chord (b-a = 0.6001). BEFORE/ORIGINAL reject it (0.6001 > 0.6), AFTER accepts it (<= 0.6005). So for a mass thicker than 0.6 m the verdict now flips at 0.5 mm of chord-to-face offset: d <= 0.4 mm inside -> door centred on a 'band' 0.3 m behind the chord; d >= 0.6 mm -> on the chord. The author's note 'a thicker wall is clipped by the 0.6 m window and still read, as before' is only true for a chord on or short of the face. Real-data effect: L29 'ends' score 28/28 -> 27/28 (end error vs key 0.05 m -> 0.25 m, tolerance 0.15), evidence loses 'line work along the opening on another layer'. Not in the author's list; gate figures unchanged because width/class still match.",
+   "repro": "python -B T/tp_variant_l29.py prints L29-026: before a=[2.5213,-45.6902] t=0.1; after a=[2.2214,-45.6902] t=0.6; AFTER with only that line put back to 'b - a <= 0.6' (T/g_variant) = before. T/regress_before|after/*/score_tower.json pair L29W-16: endErr 0.05 -> 0.25, endsOk true -> false. python -B T/th0_l29_shaft.py shows OB.section at the chord = (-0.6, 0.0014) and wall solid section (-1.0, 0.0014). python -B T/th2_symbol_band.py part 2 (T=1.0 mass, chord d mm inside the face): before flips between d=0.0 and 0.2 mm, after between 0.4 and 0.6 mm. Code: openings.py line 1865.",
+   "suggestedFix": "Do not let EPS decide the clipped case. Detect a clipped band (a <= -0.6 + 1e-6 or b >= 0.6 - 1e-6, i.e. the wall is thicker than the section window) and treat it one way for every offset (reject it, which restores the BEFORE output for L29-026, or cap t and keep mlat on the chord), and keep '+ EPS' only for unclipped bands. Re-run run7: L29W-16 endErr should return to 0.05.",
+   "expected": "L29-026 stays on the chord x=2.5213 with wallThickness 0.1 (end error 0.05 m to key)",
+   "actual": "x=2.2214, wallThickness 0.6, end error 0.25 m"
+  },
+  {
+   "id": "G2",
+   "severity": "medium",
+   "area": "attached_to_wall (stub-to-stub rule)",
+   "summary": "attached_to_wall measures the wall component with AXIS-ALIGNED bounds (max(x1-x0, y1-y0) >= 0.8, no EPS), so 'a wall of 0.8 m or more' (docstring rule 7) depends on orientation and on float noise. A doorway between two 0.17 m nibs on cross walls (0.2 thick) is kept at 0/17/60/90 deg but dropped at 33 and 45 deg for cross walls 0.81-0.90 m long ((L+t)/sqrt2 < 0.8 at 45 deg); at exactly 0.80 m the verdict is noise (12/40 kept at 0 and 90 deg). BEFORE had no such rule, so doorways against 0.8-0.9 m cross walls at 33-45 deg that BEFORE kept at 0 deg are now angle dependent, and 0.80 m (a common drawn size) is a coin toss.",
+   "repro": "python -B T/tb3_attached_fix.py: shipped keeps (of 20) at angles 0/17/33/45/60/90: L=0.80: 3/20/0/0/0/2; L=0.81: 20/20/0/0/20/20; L=0.85 and 0.90: 0 at 45 deg only; with attached_to_wall patched to the minimum-rotated-rectangle long side every angle gives 20/20 (L>=0.80) and 0/20 (L=0.79). T/tb_stubs.py part 3: after keeps 12/40 at L=0.80 (0 and 90 deg), before 10/10. Code: openings.py lines 1691-1697.",
+   "suggestedFix": "Use the long side of q.minimum_rotated_rectangle (as is_free_post now does) and compare >= min_extent - EPS."
+  },
+  {
+   "id": "G3",
+   "severity": "medium",
+   "area": "is_free_post (minimum rotated rectangle) thresholds without EPS",
+   "summary": "`big > 0.9 or small < 0.5 * big` sit on very common drawn sizes (900 mm columns; 1:2 piers 200x400, 250x500, 300x600, 400x800). With the axis-aligned box BEFORE was noise-free at 17/45 deg (rotated 1:2 piers always looked squarish = post); the minimum rotated rectangle has its own rounding noise at every angle, so the post verdict is now decided by sheet position. Free-post verdicts of 40 positions at 0/17/45 deg: 0.25x0.5 before 40/40/40 after 40/20/16; 0.2x0.4 before 35/40/40 after 27/18/30; 0.3x0.6 before 19/40/40 after 17/22/19; 0.4x0.8 before 33/40/40 after 33/13/25; 0.9x0.9 before 8/0/0 after 13/8/5. Consequence: a colonnade of free-standing 1:2 piers (long side across the row, 1.2 m gaps) reports false passages in AFTER at rotated angles where BEFORE reported none: 0.3x0.6 17/45 deg: before 0 in 20/20 placements, after 0..3 per placement (mean 1.1 / 0.6); 0.2x0.4: 0 vs 0..3 (1.3/1.1); 0.4x0.8: 0 vs up to 3 (0.7/1.3); 0.25x0.5: 0 vs up to 2 (0.5/0.6). Also makes the centred-block scenes with a 0.9 m column angle dependent (2 of 252 scenes in tc_centred). The docstring says 'a small piece of any orientation'.",
+   "repro": "python -B T/tb2_freepost.py (part 1) and python -B T/tb4_pier_rows.py; python -B T/tc_centred.py (INCONSISTENT rows: column c=0.9). Code: openings.py lines 1528-1533.",
+   "suggestedFix": "Make both comparisons generous: `big > 0.9 + EPS or small < 0.5 * big - EPS`. Optionally skip the MRR when q.bounds already shows the piece cannot be a post (see G7)."
+  },
+  {
+   "id": "G4",
+   "severity": "low",
+   "area": "tolerances left without EPS in the new sidelight code and door filters",
+   "summary": "(a) NARROWEST_DOOR guard `s1 - s0 < max(NARROWEST_DOOR, ...)` has no EPS: a 0.5 m leaf with 0.2 m panes is trimmed in 37 of 40 sheet positions and left 0.9 m wide in 3. (b) SIDELIGHT_SHARE `share >= 0.5` ties: glass over exactly half the stretch gives 19/40 trimmed. (c) The 'layers listed only when their lines cover part of the cut stretch' claim is decided by noise when a window/glass line only touches the stretch end (frame lines starting at the hinge): the layer is listed in 35 of 40 placements (`hi_ > lo_` by 6e-17). (d) Still unprotected and unchanged by the delta: door filters 0.45 <= r (symbol_door) and r <= 1.6: a leaf of exactly 0.45 m is found in 26/40 (before) and 29/40 (after) placements, 1.6 m in 21/40 and 26/40. After the circle3 rewrite a 0.45 m leaf with 0.2 m panes that BEFORE found at the origin is lost (ta_sidelights section 9).",
+   "repro": "python -B T/ta_sidelights.py (sections 9, 10, 11); python -B T/tm_misc.py (parts 3 and 4). Code: openings.py lines 1486, 1507, 1510, 1512; 799, 807.",
+   "suggestedFix": "NARROWEST_DOOR - EPS; share >= SIDELIGHT_SHARE - 1e-9; require hi_ - lo_ > EPS for the layer list; give the r limits the same EPS."
+  },
+  {
+   "id": "G5",
+   "severity": "low",
+   "area": "docstring / comment statements that contradict the code",
+   "summary": "(1) Module docstring 'Known limits' says a doorway beside a cross wall of 0.25 m or more is dropped, but the code (CROSS_PIECE 0.225 + EPS; rule 7 itself says 0.225) drops it from 0.2255 m: a 0.23 and a 0.24 m (240 mm brick) cross wall are dropped, kept = 10/10 only up to 0.225. (2) SIDELIGHT comment: 'from 0.2005 m the 0.20 m panes are lost (tower 53, from 0.206 m 50 of 54)': measured 53 at 0.2005 but already 50 at 0.201. (3) Rule 7 'a small piece of any orientation' is not true at the 0.9 m / 1:2 drawn sizes (see G3).",
+   "repro": "python -B T/tm_misc.py part 1 (cross wall 0.23 / 0.24 / 0.25: kept 0/10 in after); python -B T/tl_sweep.py SIDELIGHT_MIN=0.2005 SIDELIGHT_MIN=0.201 (tower 53, 50). Docstring lines 100-103 vs constants at lines 1594-1598.",
+   "suggestedFix": "Change 'Known limits' to 0.23 m (or CROSS_PIECE to 0.24 and document the margin); fix the sentence about 0.206 m."
+  },
+  {
+   "id": "G6",
+   "severity": "low",
+   "area": "build_walls unary_union fallback: not the same result",
+   "summary": "With a forced exception the grid-snapped union gives the same kinds / subtypes / widths but not the same records: openings come out in a different order (ids shift: sukhumvit 5 records differ by id order), ends move by up to 4.6 mm (presidential 4.34 mm, bank1 4.60 mm; the simplify(0.003) step depends on ring start vertices) and one evidence string differs (bank1 L1-001 'sliding sashes (6 lines)' vs '(4 lines)'); only l30 is identical as a set. Wall-area difference 0.0026 m2 on sukhumvit ground. Without the fallback BEFORE crashes, so this is the right trade, but 'falls back to the same result' is not literally true.",
+   "repro": "python -B T/tf_fallback.py then python -B T/tf2_compare.py (T/fallback_out/*_forced.json vs *_normal.json).",
+   "suggestedFix": "Document it (equal to within 5 mm, ids not stable) or sort the openings before numbering so ids do not depend on ring order."
+  },
+  {
+   "id": "G7",
+   "severity": "low",
+   "area": "is_free_post performance",
+   "summary": "is_free_post now calls minimum_rotated_rectangle on the whole connected wall component for every candidate end (before: cached bounds). Per call: 200 vertices 0.05 -> 0.10 ms, 2,000 vertices 0.07 -> 0.42 ms, 20,000 vertices 0.50 -> 3.4 ms, 100,000 vertices 2.3 -> 43.7 ms. No effect on the six floors (same 13 s total), but a floor with one huge wall component and many candidate gaps pays it twice per candidate.",
+   "repro": "python -B T/tb2_freepost.py part 3.",
+   "suggestedFix": "Early-out on q.bounds: if max(x1-x0, y1-y0) > 0.9 * 1.4143 + EPS return False before computing the MRR."
+  }
+ ],
+ "regressions": [
+  "L29-026 (real drawing, shaft door L29W-16): BEFORE a=[2.5213,-45.6902] wallThickness 0.1 end error 0.05 m; AFTER a=[2.2214,-45.6902] wallThickness 0.6 end error 0.25 m, L29 'ends' 28/28 -> 27/28 (finding G1). Not in the author's change list.",
+  "Stub-to-stub doorways against short cross walls: BEFORE kept them at 0/90 deg for cross walls 0.70-0.90 m (10/10); AFTER drops <0.8 m by design, keeps 0.80 m only 12/40 (noise) and drops 0.81-0.90 m at 33/45 deg (finding G2).",
+  "Free 1:2 piers (200x400 .. 400x800) at 17/45 deg: BEFORE never made a passage between them, AFTER makes 0..3 per colonnade depending on sheet position (finding G3).",
+  "Empty doorway in a wall of exactly 0.55 m: BEFORE found it in 28/40 placements (noise), AFTER 0/40; 0.5495..0.5499 m walls (BEFORE 40/40) now 0..19/40 by design of STRIP_MAX = 0.55 - EPS (td_ties 1 and 1b). Pieces of 0.0300-0.0305 m changed from wall strips to screens. Both intended, but they are behaviour losses for those thicknesses.",
+  "Door with 0.45 m leaf and 0.2 m panes found by BEFORE, no door in AFTER at the origin (circle3 noise at the unprotected r >= 0.45 limit), same ~70% coin toss in both over random positions (G4 d).",
+  "Unlisted real-data changes that are NOT regressions: L30-020 passage -> 'pocket sliding' door (key says door: kind now right, kind score 24 -> 25 of 26), L30-002 gains 'pocket panel on A-DOOR' evidence and confidence 0.65 -> 0.75 (1 cm level test / 0.1 - EPS).",
+  "Behaviour change, not clearly worse: window-role glazing between two piers right beside an unbroken wall (alcove, glass lines within 0.2 m of the face) now gives a 2.8 m window (BEFORE none, ORIGINAL also a window) because along_wall is now skipped for window-role bands (T/ti_runs_on.py part 3); no real floor changes."
+ ],
+ "verifiedTrue": [
+  "Regression harness (run7, integrated_g, baseline_integrated_c): older four 139/143 with 8 extras, tower 54/54 with 6 extras; sukhumvit, presidential, bank1, bank2 identical to BEFORE; only L29 (4 sidelit doors + L29-026) and L30 (L30-002, L30-020) differ; wall time unchanged (13 s).",
+  "'sidelights' appears only on the 4 sidelit L29 doors (16 keys; every other record keeps its 15 keys); all six outputs parse with strict JSON (no NaN); sidelight ends are in drawing metres: 32 rotation / mirror / shift variants (0,17,33,45,90,135,180,270 x mirror x shift 1234.567,-765.4321) give records equal to the 0 degree one after mapping back (unordered ends).",
+  "SIDELIGHT_MIN 0.17 + EPS: pane 0.165 not cut, 0.1695 and above cut; one pane / two panes / double leaf (also leaves 0.7 + 0.5) / glass through the whole gap all trimmed with a record; leaf outside its gap and a door that would be < 0.5 m are not trimmed (leaf 0.45, panes 0.18: AFTER 0.81 m untrimmed, BEFORE 0.45 m).",
+  "strip_gaps pre-filter: gap lists identical (order, a, b, t, near, far, how_end, nlen, flen, w; exact floats) on all six real floors (walls and screen call) and on 20 random rotated scenes; faster: 400 thin screens 1.77 s -> 0.72 s, 800 screens 5.62 -> 1.64 s, 200 nibs 7.77 -> 3.73 s, passages and facade equal or better.",
+  "circle3 relative to p0: new error <= 9.3e-10 m at offset 1e7 m where the old formula is off by up to 6e2 m (1e-3 radius) / 0.63 m (1 m radius); near the origin max |old - new| 6.0e-10 m (claim 1e-9); never worse than old by > 1e-9 in 10,500 triples; collinear and p0 = p1 triples return None in both; real drawings shifted by 1e5 m: 0 differences in AFTER vs 3 in BEFORE.",
+  "Unit scale before dedupe, real CLI (python -B openings.py map out from the AFTER folder): AFTER equals the mm run exactly for 'm' on presidential, bank1, sukhumvit, l30 (BEFORE: sukhumvit 69 vs 86 openings, l30 32 vs 34, bank1 8 differ); cm / in / ft equal within 1 cm (0-2 records differ at the mm level: ends up to 4.6 mm because simplify(0.003) is ring-start dependent).",
+  "passage_ok limits 0.6 / 1.6 / 2.75 / 3.6 (+EPS): at 40 random sheet positions every width from limit-1 mm to limit+1 mm is 0/40 or 40/40 in AFTER in 5 scene families (collinear, L-corner, face, nibs, other thickness); BEFORE gives 9-25 of 40 at the limits.",
+  "0.1 m overlap tolerance (gap_contents / line_leaves / pocket line): overlap 0.1 and 0.0999999 accepted 40/40 (BEFORE 32/40 and 0/40), 0.0949 rejected; line_leaves 1 cm level test accepts skew up to 0.0099 (BEFORE 0.005) and creates no new false leaf for a door-layer sill pair (the closed-leaf route already accepted it).",
+  "find_strips ties: 0.0294 / 0.0300 / 0.0304 m screen only, 0.0306 and 0.30 wall only, no thickness is in neither call; 0.5499 - 0.56 m never a strip, 0.5495 noisy only at the EPS edge.",
+  "RUNS_ON 0.7: glass-role band overshooting by <= 0.7004 m is a window, >= 0.7006 m curtain wall, stable over 6 sheet positions; window-role bands always window; overshoot 0.2 m is noise in BEFORE (3/6) and stable in AFTER.",
+  "Order independence: 10 item shuffles give identical openings in AFTER on L29, L30, bank1 and presidential; BEFORE differs in 5/10 (L29), 8/10 (L30). Free double doors read in both arc orders; leaves of different radii (0.9 + 0.3 is now a double, BEFORE a single); one glass-layer leaf no longer decides by item order.",
+  "Rotation / mirror / shift fuzz on real drawings (9 transforms x l29, l30, presidential, bank1): AFTER 8 differences in total (presidential 2 per rotation), BEFORE 28.",
+  "Every 'Range' statement in the constant comments was re-measured with the six floors (T/tl_sweep_*.out): SIDELIGHT_MIN 0.02-0.20 identical, SIDELIGHT_SHARE 0-0.84 identical, JAMB_RETURN identical 0.21-0.335 and presidential changes at 0.34, CROSS_PIECE identical 0.10-0.245 and false 1.65 m passages on both tower floors at 0.25, WALL_RUN identical 0.26-0.90 (0.25 adds upper-039, 0.905 loses GW-10), DOORWAY identical 1.30-1.55 (1.29 loses UW-06, 1.555 adds upper-039), FACE_TOL identical 0.03-0.045 (0.05 one extra, 0.08 five), RUNS_ON identical 0.2-1.1 (1.2 adds a window on L30), CENTRED_OUT identical 0-1.0.",
+  "Centred-block clause: collinear walls of another thickness (0.1-0.6) and a pier followed by the carried-on wall are kept (36/42 and 18/18 vs BEFORE 6 and 2); plain T, 2 m cross walls (0.2-0.5 m) and wall at 45-90 deg are never kept (0 of 72); at an L-corner near end AFTER equals BEFORE (8 of 66 kept) while integrated_f kept 18 of 66 (10 more: 0.9 m column alone, 0.7 m column then wall), i.e. the cap-only restriction costs those doorways but never regresses BEFORE; JAMB_RETURN 0.275: stubs 0.15-0.2755 m are jambs, 0.28+ are wall, 0.25 and 0.30 are stable.",
+  "Crash fixes: self-crossing / bow-tie / zero-area / sliver / speck wall pieces run without a crash in AFTER (8 degenerate scenes); is_free_post survives degenerate geometry (line- or point-like MRR returns False); forced unary_union exception is survived by AFTER and kills BEFORE."
+ ]
+}

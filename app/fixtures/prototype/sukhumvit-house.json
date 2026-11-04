@@ -1,0 +1,561 @@
+{
+  "format": "walkthrough-prototype-facts/1",
+  "page": "cad_test/house_3d_preview.html",
+  "capturedAt": "2026-11-03T04:17:55.202Z",
+  "how": "tools/capture-prototype-facts.mjs (DESIGN.md 17.1): scene with ?build=0&nodownload=1, card with the plain address",
+  "title": "CAD to 3D test",
+  "stamp": null,
+  "heading": "Test Sukhumvit Residence: CAD → 3D",
+  "intro": {
+    "text": "Built automatically from the DWG. Each wall's two face lines are paired, filled and merged into one solid per wall run, so there are no seams. 32 doors and 37 windows found in the plan are cut in (the 17 passages are gaps that are already open). Doors open to 3.00 m (upper floor 2.60 m) under a lintel; windows, and the 3 sliding glass doors that may be windows, are glazed to their heads (3.00 / 3.90 m; upper floor 2.55 / 2.60 m). Heights from the elevations (floors +0.90 m, +4.80 m). Furniture: 76 boxes, one per piece, coloured by kind (9 kinds); 48 are grey because the drawing does not say what they are. They come in at the end of the replay. No AI used.",
+    "html": "Built automatically from the DWG. Each wall's two face lines are paired, filled and merged into one solid per wall run, so there are no seams. 32 doors and 37 windows found in the plan are cut in (the 17 passages are gaps that are already open). Doors open to 3.00 m (upper floor 2.60 m) under a lintel; windows, and the 3 sliding glass doors that may be windows, are glazed to their heads (3.00 / 3.90 m; upper floor 2.55 / 2.60 m). Heights from the elevations (floors +0.90 m, +4.80 m). Furniture: 76 boxes, one per piece, coloured by kind (9 kinds); 48 are grey because the drawing does not say what they are. They come in at the end of the replay. No AI used."
+  },
+  "floorButtons": [
+    {
+      "key": "both",
+      "text": "Both floors",
+      "on": true
+    },
+    {
+      "key": "ground",
+      "text": "Ground",
+      "on": false
+    },
+    {
+      "key": "upper",
+      "text": "Upper",
+      "on": false
+    }
+  ],
+  "ticks": [
+    {
+      "id": "plates",
+      "label": "Floor plates",
+      "checked": true,
+      "title": null
+    },
+    {
+      "id": "glass",
+      "label": "Glass",
+      "checked": true,
+      "title": null
+    },
+    {
+      "id": "single",
+      "label": "Single-line items",
+      "checked": true,
+      "title": null
+    }
+  ],
+  "legend": {
+    "layout": "inline",
+    "items": [
+      {
+        "colour": "#e3ddd3",
+        "text": "Walls and lintels"
+      },
+      {
+        "colour": "#8fd0e0",
+        "text": "Glass walls"
+      },
+      {
+        "colour": "#7fb8e8",
+        "text": "Window glass"
+      },
+      {
+        "colour": "#5aa65a",
+        "text": "Stairs"
+      },
+      {
+        "colour": "#e0a458",
+        "text": "Single line: wall, railing or edge?"
+      },
+      {
+        "colour": "#d4d8d2",
+        "text": "Floor plate (approximate outline)"
+      }
+    ]
+  },
+  "panelOrder": [
+    "h1",
+    "p",
+    "#floors",
+    "div",
+    ".row",
+    ".legend",
+    "div",
+    "div"
+  ],
+  "accent": "#c9773e",
+  "hint": "Drag to orbit · right-drag to pan · scroll to zoom · double-click a floor to walk there · 1 / 2 / 3: Orbit / Walk / Ghost · P: photo",
+  "rooms": 0,
+  "scene": {
+    "floors": [
+      {
+        "key": "ground",
+        "name": "Ground floor",
+        "level": 0.9,
+        "walkLevel": 0.9,
+        "stack": "house",
+        "colliders": [
+          {
+            "name": "ground:wall",
+            "vertices": 4044,
+            "visible": true
+          },
+          {
+            "name": "ground:glass",
+            "vertices": 360,
+            "visible": true
+          },
+          {
+            "name": "ground:single",
+            "vertices": 696,
+            "visible": true
+          },
+          {
+            "name": "ground:lintels and sills",
+            "vertices": 1152,
+            "visible": true
+          },
+          {
+            "name": "ground:window panes",
+            "vertices": 684,
+            "visible": true
+          }
+        ],
+        "colliderVertices": 6936,
+        "furnitureColliders": 43,
+        "walkables": [
+          {
+            "name": "",
+            "vertices": 792
+          }
+        ],
+        "walkableVertices": 792,
+        "late": 49,
+        "lateWithoutFurniture": 2,
+        "rise": [
+          {
+            "name": "ground:wall",
+            "scales": true
+          },
+          {
+            "name": "ground:glass",
+            "scales": true
+          },
+          {
+            "name": "ground:single",
+            "scales": false
+          },
+          {
+            "name": "ground:lintels and sills",
+            "scales": false
+          },
+          {
+            "name": "ground:window panes",
+            "scales": false
+          }
+        ],
+        "labels": 0,
+        "groupChildren": 59
+      },
+      {
+        "key": "upper",
+        "name": "Upper floor",
+        "level": 4.8,
+        "walkLevel": 4.8,
+        "stack": "house",
+        "colliders": [
+          {
+            "name": "upper:wall",
+            "vertices": 3288,
+            "visible": true
+          },
+          {
+            "name": "upper:glass",
+            "vertices": 588,
+            "visible": true
+          },
+          {
+            "name": "upper:single",
+            "vertices": 516,
+            "visible": true
+          },
+          {
+            "name": "upper:lintels and sills",
+            "vertices": 1224,
+            "visible": true
+          },
+          {
+            "name": "upper:window panes",
+            "vertices": 756,
+            "visible": true
+          }
+        ],
+        "colliderVertices": 6372,
+        "furnitureColliders": 28,
+        "walkables": [
+          {
+            "name": "",
+            "vertices": 588
+          }
+        ],
+        "walkableVertices": 588,
+        "late": 31,
+        "lateWithoutFurniture": 2,
+        "rise": [
+          {
+            "name": "upper:wall",
+            "scales": true
+          },
+          {
+            "name": "upper:glass",
+            "scales": true
+          },
+          {
+            "name": "upper:single",
+            "scales": false
+          },
+          {
+            "name": "upper:lintels and sills",
+            "scales": false
+          },
+          {
+            "name": "upper:window panes",
+            "scales": false
+          }
+        ],
+        "labels": 0,
+        "groupChildren": 41
+      }
+    ],
+    "plinths": [
+      {
+        "name": "",
+        "vertices": 792
+      }
+    ],
+    "pieces": {
+      "ground": [
+        {
+          "look": "solid",
+          "mesh": "ground:lintels and sills",
+          "vertices": 1152
+        },
+        {
+          "look": "pane",
+          "mesh": "ground:window panes",
+          "vertices": 684
+        }
+      ],
+      "upper": [
+        {
+          "look": "solid",
+          "mesh": "upper:lintels and sills",
+          "vertices": 1224
+        },
+        {
+          "look": "pane",
+          "mesh": "upper:window panes",
+          "vertices": 756
+        }
+      ]
+    },
+    "plates": {
+      "ground": 3,
+      "upper": 1
+    },
+    "camera": {
+      "position": [
+        -27.999999999999986,
+        30.00000000000001,
+        33.999999999999986
+      ],
+      "target": [
+        0,
+        3,
+        0
+      ],
+      "fov": 39.96621304379996,
+      "near": 0.1,
+      "far": 500,
+      "source": "__host.camera, __host.controls"
+    },
+    "labels": 0
+  },
+  "ticksFlip": {
+    "plates": {
+      "objects": 2,
+      "names": [
+        "",
+        ""
+      ],
+      "pictures": 0,
+      "roomLabels": 0,
+      "startsChecked": true
+    },
+    "glass": {
+      "objects": 8,
+      "names": [
+        "",
+        "",
+        "",
+        "",
+        "ground:glass",
+        "ground:window panes",
+        "upper:glass",
+        "upper:window panes"
+      ],
+      "pictures": 0,
+      "roomLabels": 0,
+      "startsChecked": true
+    },
+    "single": {
+      "objects": 4,
+      "names": [
+        "",
+        "",
+        "ground:single",
+        "upper:single"
+      ],
+      "pictures": 0,
+      "roomLabels": 0,
+      "startsChecked": true
+    }
+  },
+  "card": {
+    "phase": "settings",
+    "visible": true,
+    "inputs": [
+      {
+        "floor": "ground",
+        "prop": "level",
+        "value": "0.90"
+      },
+      {
+        "floor": "ground",
+        "prop": "height",
+        "value": "3.90"
+      },
+      {
+        "floor": "upper",
+        "prop": "level",
+        "value": "4.80"
+      },
+      {
+        "floor": "upper",
+        "prop": "height",
+        "value": "3.50"
+      }
+    ],
+    "introTitle": "Test Sukhumvit Residence.dwg",
+    "facts": [
+      "Two floor plans side by side on one sheet, in millimetres",
+      "30,644 drawing items in the plan areas, on 38 layers in use",
+      "Floors lined up by 24 grid labels; levels from the elevation tags"
+    ],
+    "factsHtml": [
+      "Two floor plans side by side on one sheet, in millimetres",
+      "30,644 drawing items in the plan areas, on 38 layers in use",
+      "Floors lined up by 24 grid labels; levels from the elevation tags"
+    ],
+    "layersTitle": "Layers found",
+    "layers": [
+      [
+        "Walls",
+        "COL, WALL, A-WALL (incl. 1 from linked drawings)"
+      ],
+      [
+        "Glass",
+        "WALL-GL"
+      ],
+      [
+        "Windows",
+        "A_Grill, WIN, W_Grill"
+      ],
+      [
+        "Stairs",
+        "STAIR"
+      ],
+      [
+        "Doors",
+        "D-JAMB, DOOR, A-DOOR, I-DOOR (incl. 2 from linked drawings)"
+      ],
+      [
+        "Ignored",
+        "26 other layers: furniture, floor patterns, grid, dimensions, labels"
+      ]
+    ],
+    "settings": {
+      "ground": {
+        "level": 0.9,
+        "height": 3.9
+      },
+      "upper": {
+        "level": 4.8,
+        "height": 3.500000000000001
+      }
+    },
+    "steps": [
+      {
+        "key": "read",
+        "title": "Read the drawing",
+        "caption": "30,644 drawing items in the two plan areas, on 38 layers, in millimetres.",
+        "t0": 0,
+        "t1": 0.12244897959183675
+      },
+      {
+        "key": "sort",
+        "title": "Sort the layers",
+        "caption": "Walls 1,290 lines, windows and glass 1,002, stairs 370, door symbols 2,883. 39,463 lines ignored: furniture, floor patterns, grid and dimensions.",
+        "t0": 0.12244897959183675,
+        "t1": 0.23469387755102042
+      },
+      {
+        "key": "align",
+        "title": "Line up the floors",
+        "caption": "The upper plan sits beside the ground plan on the sheet. 24 grid labels match on both, so it moves 74.02 m onto the ground plan and rises to its level: ground +0.90 m, upper +4.80 m.",
+        "t0": 0.23469387755102042,
+        "t1": 0.38775510204081637
+      },
+      {
+        "key": "pair",
+        "title": "Pair the wall faces",
+        "caption": "Each wall is drawn as two lines. Pairing them gives 1,495 wall pieces and 2,096 glass pieces; 94% of the ground-floor wall lines and 98% of the upper ones found their partner.",
+        "t0": 0.38775510204081637,
+        "t1": 0.5204081632653061
+      },
+      {
+        "key": "merge",
+        "title": "Merge into wall runs",
+        "caption": "3,591 pieces merge into 59 wall runs and 11 glass runs: one solid each, no seams. The 32 doors and 37 windows found in the plan are cut through them; window glass goes in each window and in the 3 sliding glass doors that may be windows.",
+        "t0": 0.5204081632653061,
+        "t1": 0.6224489795918368
+      },
+      {
+        "key": "raise",
+        "title": "Raise the walls",
+        "caption": "The walls rise to their height: ground floor 3.90 m, upper floor 3.50 m. Doors stay open to their heads (ground 3.00 m, upper 2.60 m, from the elevations) with 65 lintels above doors and windows; windows get glass from the sill to the head (ground 3.00 / 3.90 m, upper 2.55 / 2.60 m).",
+        "t0": 0.6224489795918368,
+        "t1": 0.8571428571428571
+      },
+      {
+        "key": "finish",
+        "title": "Floors, stairs, done",
+        "caption": "Floor plates and stairs go in, and last the furniture: 76 coloured boxes, one per piece, 9 kinds. Done: 2 floors, 59 wall runs, 11 glass runs; found on the ground floor 19 doors, 16 windows and 8 passages, upstairs 13 doors, 21 windows and 9 passages. The real build takes seconds; this replay slows it down so you can follow it.",
+        "t0": 0.8571428571428571,
+        "t1": 1
+      }
+    ],
+    "stepList": [
+      "1Read the drawing",
+      "2Sort the layers",
+      "3Line up the floors",
+      "4Pair the wall faces",
+      "5Merge into wall runs",
+      "6Raise the walls",
+      "7Floors, stairs, done"
+    ]
+  },
+  "hintOnSettingsScreen": "Drag to orbit · right-drag to pan · scroll to zoom · double-click a floor to walk there · 1 / 2 / 3: Orbit / Walk / Ghost · P: photo",
+  "furniture": {
+    "kinds": [
+      {
+        "key": "sanitary",
+        "label": "Sanitary fitting",
+        "colour": "#17a2a2",
+        "height": 850,
+        "defaultHeight": 850,
+        "count": 10,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "appliance",
+        "label": "Appliance",
+        "colour": "#b8860b",
+        "height": 900,
+        "defaultHeight": 900,
+        "count": 2,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "bed",
+        "label": "Bed",
+        "colour": "#e377c2",
+        "height": 500,
+        "defaultHeight": 500,
+        "count": 2,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "seat",
+        "label": "Chair / stool",
+        "colour": "#e07b00",
+        "height": 450,
+        "defaultHeight": 450,
+        "count": 2,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "sofa",
+        "label": "Sofa / armchair",
+        "colour": "#ffb347",
+        "height": 800,
+        "defaultHeight": 800,
+        "count": 7,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "coffee-table",
+        "label": "Coffee / side table",
+        "colour": "#c9a37a",
+        "height": 450,
+        "defaultHeight": 450,
+        "count": 2,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "counter",
+        "label": "Counter top",
+        "colour": "#a0522d",
+        "height": 850,
+        "defaultHeight": 850,
+        "count": 1,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "cabinet",
+        "label": "Cabinet / casework",
+        "colour": "#2f7fc1",
+        "height": 900,
+        "defaultHeight": 900,
+        "count": 2,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "other",
+        "label": "Other furniture",
+        "colour": "#6b6b6b",
+        "height": 750,
+        "defaultHeight": 750,
+        "count": 48,
+        "visible": true,
+        "blocks": true
+      }
+    ],
+    "pieces": 76,
+    "keepDoorways": true,
+    "csvSha1": "eac8e4dbfaaa30779a1546732031d4a43b186884",
+    "csvBytes": 12561
+  },
+  "errors": []
+}

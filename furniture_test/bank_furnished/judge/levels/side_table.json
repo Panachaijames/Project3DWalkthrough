@@ -1,0 +1,109 @@
+{
+ "key": "side_table",
+ "name": "side table",
+ "file": "banquet/side table.glb",
+ "kind": "coffee-table",
+ "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H",
+ "piece": "L1-coffee-table-002",
+ "furnishes": 9,
+ "turnUndone_deg": 0,
+ "turnFrom": "its real turn in the scene (analysis.json)",
+ "standsAt_m": 0,
+ "size_m": [
+  0.45,
+  0.55,
+  0.3
+ ],
+ "gltfSceneToModelFrame_columnMajor": [
+  1,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  -2.7684792,
+  1e-7,
+  -0.7968574,
+  1
+ ],
+ "full": {
+  "triangles": 1564,
+  "vertices": 2160,
+  "weldedVertices": 796,
+  "parts": [
+   {
+    "name": "Line042",
+    "triangles": 332,
+    "vertices": 352,
+    "mirrored": false
+   },
+   {
+    "name": "Line043",
+    "triangles": 332,
+    "vertices": 352,
+    "mirrored": true
+   },
+   {
+    "name": "Object018",
+    "triangles": 622,
+    "vertices": 1140,
+    "mirrored": false
+   },
+   {
+    "name": "Rectangle057",
+    "triangles": 278,
+    "vertices": 316,
+    "mirrored": false
+   }
+  ],
+  "area_m2": 2.0192
+ },
+ "levels": [
+  {
+   "id": "50%",
+   "label": "50 %",
+   "triangles": 782,
+   "vertices": 405,
+   "posOffset": 0,
+   "posCount": 1215,
+   "idxOffset": 4860,
+   "idxCount": 2346
+  },
+  {
+   "id": "25%",
+   "label": "25 %",
+   "triangles": 390,
+   "vertices": 209,
+   "posOffset": 14244,
+   "posCount": 627,
+   "idxOffset": 16752,
+   "idxCount": 1170
+  },
+  {
+   "id": "12%",
+   "label": "12 %",
+   "triangles": 186,
+   "vertices": 107,
+   "posOffset": 21432,
+   "posCount": 321,
+   "idxOffset": 22716,
+   "idxCount": 558
+  },
+  {
+   "id": "6%",
+   "label": "6 %",
+   "triangles": 92,
+   "vertices": 60,
+   "posOffset": 24948,
+   "posCount": 180,
+   "idxOffset": 25668,
+   "idxCount": 276
+  }
+ ]
+}

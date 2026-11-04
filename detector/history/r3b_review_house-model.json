@@ -1,0 +1,229 @@
+{
+ "findings": [
+  {
+   "id": "H-01",
+   "model": "house",
+   "severity": "high",
+   "floor": "sukhumvit:ground",
+   "at": [
+    26.77,
+    14.43
+   ],
+   "what": "Missed. Three sliding glass doors that the detector flags eitherKind are built as open holes, with only a lintel and no pane: ground-004 and ground-006 (5.25 m each, the living/dining south facade) and ground-018 (2.90 m, the family-room terrace bay). That is 13.4 m of the main garden-facing glazing with no glass. The decided treatment makes eitherKind sliding glazing a window (pane), and tools/score.py defines eitherKind as 'both become glass in 3D'. openings3d.cut_floor only tests kind == 'window' and never reads eitherKind. The fixed bays beside them (ground-044, ground-019) are glazed, and so is the identical courtyard slider ground-043 (eitherKind window). So the four garden sliders get two different treatments.",
+   "evidence": "build/house/src/openings.json: ground-004/-006/-018 are kind 'door', subtype 'sliding glass door', eitherKind true (evidence 'sliding sashes (5/5/4 lines)', 'opens onto a hatched floor'). house3d_merged.json pieces: a lintel 3.0-3.9 only, no pane. In the 0.95 m sections the sashes on y 14.46-14.56 and x 32.30-32.40 are cut away and nothing replaces them: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-house/png/tiles/g_21_cut.png, g_30_cut.png. Browser, new against baseline: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-house/png/views/garden_living_south_new.png vs garden_living_south_base.png (the glass curtain is gone), and terrace_family_west_new.png (a glazed bay next to an open bay, although elev_left draws this face as a 3-bay full-height glazed wall). CHANGES.md lowered the 'sliding at random spots' test from 90 % to 80 % because these doors are now open.",
+   "suggestedFix": "Set one general rule in openings3d.cut_floor: treat kind == 'window' OR eitherKind as glazing (pane sill-to-head plus lintel), doors included. If the owner would rather have walkable sliders, apply that rule to every eitherKind opening instead, ground-043 included. Either way, do not mix the two. Restore the 90 % test threshold and adjust the door and window test lists.",
+   "alreadyListedByBuilder": false
+  },
+  {
+   "id": "H-02",
+   "model": "house",
+   "severity": "medium",
+   "floor": "sukhumvit:upper",
+   "at": [
+    90.845,
+    21.259
+   ],
+   "what": "upper-042 is confirmed (an extra window on the north side of the glass bridge). The key lists this side as a glass wall: 'not set in a gap of any wall line', and the section shows it floor to ceiling. In 3D the 2.9 m glass became a 3 cm pane from 0 to 2.6 m with a 4.85 m x 0.20 m solid lintel from 2.6 to 3.5 m. This is on the north side only; the south side keeps its glass to 2.9 m and is open above. The bridge is a feature element seen from both courtyards and in orbit, and it now looks lopsided.",
+   "evidence": "The pane and lintel sit at x 88.42-93.27, y 21.16-21.36; checks.txt section 4 reports 'NO KEY OPENING HERE'. The cut-away glass (y 21.16-21.24) is flagged GLASSWALL in section 1: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-house/checks.txt. Sections: .../png/tiles/u_12_cut.png, u_12_top.png. Browser: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-house/png/views/bridge_north_new.png vs bridge_north_base.png: a solid band now crosses the bridge top where the baseline showed sky. It is also visible in sw_corner_double_new.png.",
+   "suggestedFix": "Detector, as a general rule: a window must sit in a broken wall line, with wall pieces on its own line beyond both jambs. A run of window frames that goes from one wall face to another along a corridor (here the end is only an 'L-end') is a glass wall, not a window.",
+   "alreadyListedByBuilder": true
+  },
+  {
+   "id": "H-03",
+   "model": "house",
+   "severity": "medium",
+   "floor": "sukhumvit:ground+upper",
+   "at": [
+    19.41,
+    14.47
+   ],
+   "what": "Missed. The living room's post-less double-height glass corner is built inconsistently, in three ways.\n(1) The west leg (ground-043) has glass to 3.90 m from the elevation row. The south leg (ground-044, which is GW-25) got the 3.00 m default and a 0.9 m solid lintel. GW-25 lies below UW-17, which the key notes as double-height glazing in front of the void. So one face of the corner has a solid band and the other does not.\n(2) On both floors the panes stop 0.075 m short of the corner: ground-043 ends at y 14.509 and ground-044 at x 19.448, and upper-055 and upper-054 do the same. This leaves a see-through slit about 8.5 cm wide from 0.9 m to 7.4 m.\n(3) The upper lintel ring has an empty 0.2 x 0.2 m notch at the corner.",
+   "evidence": "heights.json matched only the x 19.448 row, which reads 'transom glass 3.00-3.90, continuing to 6.50'. The key's uncertain list says UW-16, -17 and -18 are double-height glazing from ground FFL to upper +2.60. checks2.txt section A: the corner ends of ground-044, upper-054 and upper-055 report support 'NOTHING'. Sections: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-house/png/tiles/g_11_top.png, u_11_top.png. Browser: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-house/png/views/sw_corner_double_new.png shows a white slit at the corner and a band on one face only. The baseline (sw_corner_double_base.png) had a continuous, symmetric corner.",
+   "suggestedFix": "General rule: when two windows meet at a post-less corner (perpendicular, ends within 0.15 m), give both legs the same matched elevation head and the same lintel decision. Extend both panes, and both lintels, to the intersection of the two wall centre lines so the corner closes.",
+   "alreadyListedByBuilder": false
+  },
+  {
+   "id": "H-04",
+   "model": "house",
+   "severity": "medium",
+   "floor": "sukhumvit:upper",
+   "at": [
+    121.5,
+    17.86
+   ],
+   "what": "Missed. The aluminium grille screens were cut away. The key lists them under glassWalls ('not glass', A_Grill layer). They run along the staff-block south facade (y 17.834-17.884) in front of UE-12, UE-11 and UE-10, and along the service yard's east and north sides (UE-09, UE-08). The cut's 0.1 m 'glass band' widening took them in. What remains is 2.06 m of grille in front of the solid stair wall and 0.1-0.25 m stubs at the columns and corners. The unglazed, grille-closed service yard (UE-08, -09 and -10, all optional in the key) has become a glass box. On three sides it has 0.33 m deep solid lintels from 2.6 to 3.5 m.",
+   "evidence": "checks.txt section 1: cut pieces at y 17.834-17.884 and x 126.62-126.745 are flagged 'GLASSWALL Aluminium grille screen'. checks2.txt section A: the upper-007/-008/-009/-033 lintels are 0.33 m deep and include the grille band. Sections: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-house/png/tiles/u_41_cut.png, u_51_cut.png, u_52_cut.png, u_51_top.png. Browser: .../png/views/staff_south_grille_new.png shows the grille left only on the stair wall and the columns. .../png/views/service_yard_east_new.png vs service_yard_east_base.png shows a new solid band across the yard.",
+   "suggestedFix": "Per-drawing layer roles: give A_Grill and W_Grill their own 'screen' role instead of 'window'. In openings3d, as a general rule: do not widen a cut to screen lines outside the wall faces, and give no pane to an opening whose only band is a screen.",
+   "alreadyListedByBuilder": false
+  },
+  {
+   "id": "H-05",
+   "model": "house",
+   "severity": "medium",
+   "floor": "sukhumvit:upper",
+   "at": [
+    115.95,
+    18.66
+   ],
+   "what": "upper-048 is confirmed, and it is worse than listed. The lintel is a skewed 1.0 x 0.64 m block (depth -0.401..+0.241, 8 degrees off the wall) at 2.6-3.5 m over the stair landing. It sits about 0.5 m west of the real doorway (D-JAMB at x 116.17-116.27) and sticks 0.15 m out into the corridor. The cut also notches both wall faces. The south notch (x 115.90-116.27, y 18.10-18.16) was listed. A second notch on the north wall (x 115.77-116.00, y 19.16-19.19) was not.",
+   "evidence": "checks.txt section 1 lists '(115.851,19.169) area 0.004 ... upper-048 NOT IN ANY KEY OPENING'. Zoomed sections: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-house/png/z_u048_cut.png and z_u048_top.png show the parallelogram against the doorway jambs. Browser: .../png/views/stair_landing_u048_new.png shows a slanted block over the end of the staff corridor. It is the only non-orthogonal element in the model, and it is also visible from above in orbit.",
+   "suggestedFix": "Detector, as a general rule: take a hinged door's line from the wall ends or jamb boxes, not from the leaf and arc. Snap or reject lines more than about 3 degrees off the host wall, and cap the thickness at the host wall's thickness.",
+   "alreadyListedByBuilder": true
+  },
+  {
+   "id": "H-06",
+   "model": "house",
+   "severity": "low",
+   "floor": "sukhumvit:upper",
+   "at": [
+    116.296,
+    20.159
+   ],
+   "what": "upper-045 is confirmed. A 1.55 m x 0.10 m lintel at 2.6-3.5 m spans the upper stair hall between the stair wall (x 115.52) and the WC block (x 117.07). Nothing is cut. It reads as a door head with no door, crossing the hall 0.3 m below the 2.9 m ceiling.",
+   "evidence": "checks.txt section 4: 'lintel upper-045 ... NO KEY OPENING HERE'. Nothing was removed on y 20.11-20.21. Section: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-house/png/tiles/u_42_top.png. Browser: .../png/views/upper_hall_u045_new.png shows a band across the hall.",
+   "suggestedFix": "Detector, as a general rule: a door needs door-layer evidence (a leaf, arc or jamb on a door layer). A line on TREE alone gives at most a passage, which is left untouched.",
+   "alreadyListedByBuilder": true
+  },
+  {
+   "id": "H-07",
+   "model": "house",
+   "severity": "low",
+   "floor": "sukhumvit:ground",
+   "at": [
+    9.098,
+    10.257
+   ],
+   "what": "ground-030 is confirmed. The pane on x 9.098 is 0.20-0.30 m behind the drawn sashes (x 8.80-8.90). The 0.40 m lintel spans x 8.90-9.30, entirely inside the column line (x 8.65-8.90). The sash band was cut away, so the facade has a 0.25 m slot between the columns from floor to top, with the glass and lintel set back behind it.",
+   "evidence": "checks2.txt section E: the nearest long glazing line is 0.20 m away (lines at +0.200..+0.300). Sections: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-house/png/tiles/g_00_cut.png, g_00_top.png. Browser: .../png/views/spa_west_outside_new.png shows the recess, visible but subtle.",
+   "suggestedFix": "Detector, as a general rule: put a glazed opening's line on its glazing band. When the gap is between columns, use the band between the column faces, not the centre of the corner block.",
+   "alreadyListedByBuilder": true
+  },
+  {
+   "id": "H-08",
+   "model": "house",
+   "severity": "low",
+   "floor": "sukhumvit:ground",
+   "at": [
+    19.373,
+    16.581
+   ],
+   "what": "ground-043 is confirmed. The detector's 4.15 m eitherKind window takes in the 2.90 m slider GW-19 (a door in the key) and the fixed corner glass. It is a pane from 0 to 3.90 m. In orbit it correctly reads as glass. In Walk mode the south courtyard cannot be reached from the living room. Under the decided eitherKind = pane rule the pane is consistent; the real defect is the mix with H-01.",
+   "evidence": "checks.txt section 2: the GW-19 doorway holds 0.084 m2 of pane at 0.5, 1.5 and 2.4 m. Section: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-house/png/tiles/g_11_cut.png.",
+   "suggestedFix": "Settle this together with H-01. Also split glazing units at their internal D-JAMB jambs (y 15.755-15.855) whatever their lengths, so the slider and the fixed bay become separate units.",
+   "alreadyListedByBuilder": true
+  },
+  {
+   "id": "H-09",
+   "model": "house",
+   "severity": "low",
+   "floor": "sukhumvit:ground",
+   "at": [
+    12.898,
+    17.509
+   ],
+   "what": "Something is still standing in a doorway. A 3.2 m long, 1 m high single-line bar (x 12.92-12.97, y 15.90-19.12) stands across the gym's open side: ground-021, a real passage (GW-10). It is unchanged from the baseline and the passage rule leaves it in place. The gym cannot be entered in Walk mode.",
+   "evidence": "checks.txt section 2: GW-10 holds 0.160 m2 now, and 0.160 m2 in the baseline, at 0.5 m. Section: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-house/png/tiles/g_01_cut.png. The builder's passage test fails here.",
+   "suggestedFix": "This is the owner's call (the builder's open question 1). One general option: a passage clears single lines that lie along its own line, within its own span.",
+   "alreadyListedByBuilder": true
+  },
+  {
+   "id": "H-10",
+   "model": "house",
+   "severity": "low",
+   "floor": "sukhumvit:ground+upper",
+   "at": [
+    38,
+    9.5
+   ],
+   "what": "Missed. Several lintels do not match the wall depth.\nSlot: ground-022 (AW1, on the family-room east facade) has a 0.10 m lintel in a 0.25 m wall. The depth probe, 0.03 m past the jamb, hit a 0.10 m jamb nib. The result is a 0.15 m x 3.7 m slot on the outside face from 3.0 to 3.9 m. upper-036's 0.10 m lintel is recessed 7-8 cm inside its 0.25 m pier band.\nProtrusions: ground-035 sticks out 0.27 m into the gym at its north jamb (a 0.52 m lintel against a 0.25 m wall). ground-026 overhangs 0.15 m west with nothing under its north end. upper-003 sticks out 0.15 m into the corridor beyond the corridor wall's 0.10 m outer leaf. ground-038's east end rests on foyer glass that stops at 3.3 m.\nAll of this is above head height and shows mainly from above in orbit.",
+   "evidence": "checks2.txt section A lists these as WALL-WIDER, LINTEL-WIDER or support NOTHING: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-house/checks2.txt. A probe of the baseline walls finds x 37.949-38.048 at y 11.36-11.39 and x 37.949-38.199 from y 11.42. Sections: .../png/tiles/g_30_top.png, g_01_top.png, u_00_top.png, u_01_top.png. Browser: .../png/views/east_family_aw1_new.png shows a small step at the pier.",
+   "suggestedFix": "In openings3d.depth(), as a general rule: sample the wall 0.10-0.30 m beyond each jamb, past nibs and cladding, and use that depth. Then clip lintels and sills to the wall faces beyond their jambs.",
+   "alreadyListedByBuilder": false
+  },
+  {
+   "id": "H-11",
+   "model": "house",
+   "severity": "low",
+   "floor": "sukhumvit:ground",
+   "at": [
+    32.273,
+    21.459
+   ],
+   "what": "ground-010 (GE-03) is a kitchen pass-through over a low wall: no glass is drawn, and the key says it is unglazed. It got a 0.90 m sill wall, which is the plan's general default rather than a value from the elevations, plus a glass pane from 0.90 to 3.00 m. In 3D the counter opening looks glazed.",
+   "evidence": "openings.json heightFrom reads 'drawing: opening over a low wall, plan default sill 0.90 m'. Its pieces are a sill 0-0.9, a pane 0.9-3.0 and a lintel 3.0-3.9. Section: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-house/png/tiles/g_32_cut.png.",
+   "suggestedFix": "General rule, by subtype: an 'opening over a low wall (no glass drawn)' gets the sill wall and lintel but no pane. The 0.90 m sill is the owner's call (the builder's open question 3).",
+   "alreadyListedByBuilder": true
+  },
+  {
+   "id": "H-12",
+   "model": "house",
+   "severity": "low",
+   "floor": "sukhumvit:upper",
+   "at": [
+    117,
+    23.31
+   ],
+   "what": "Missed. Some panes sit 9-20 cm off the drawn glazing because they are placed on the detector's wall centre line:\n- upper-036 (UW-01): 0.10-0.20 m outboard of the sashes at x 82.82-82.92.\n- upper-046 and upper-047 (the north-facade casements UE-05 and UE-06): pane at y 23.309, glazing at y 23.11-23.21.\n- upper-029 (UE-12): pane at y 18.059, frame line at y 17.934.\n- upper-008 (UE-11): 0.09 m off.\nThey all stay inside the wall depth, so this is barely visible. Every other pane is within 7.5 cm of its glazing; the grille openings in H-04 have no glass at all.",
+   "evidence": "checks2.txt section E measures the long WIN and WALL-GL lines (at least 0.3 m) inside each opening: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-house/checks2.txt. Sections: .../png/tiles/u_00_cut.png, u_42_cut.png, u_41_cut.png.",
+   "suggestedFix": "General rule: put each pane in the middle of the glazing band found inside its opening, within the wall faces. Fall back to the centre line only when there is no band.",
+   "alreadyListedByBuilder": false
+  },
+  {
+   "id": "H-13",
+   "model": "house",
+   "severity": "low",
+   "floor": "sukhumvit:upper",
+   "at": [
+    82.721,
+    10.258
+   ],
+   "what": "upper-036 is confirmed, with a correction. The detector did not flag eitherKind (eitherKind is false); the key's UW-01 is the one marked eitherKind. Under the decision it is a pane either way, and it correctly reads as glass. The side effect is that the west balcony cannot be reached in Walk mode. The 0.10-0.20 m pane offset is part of H-12.",
+   "evidence": "openings.json upper-036 has eitherKind false and the evidence 'planter / kerb / edge along it outside'. The key UW-01 is a door with eitherKind. Section: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-house/png/tiles/u_00_cut.png.",
+   "suggestedFix": "No change beyond H-12. Correct the wording in the builder's report.",
+   "alreadyListedByBuilder": true
+  },
+  {
+   "id": "H-14",
+   "model": "house",
+   "severity": "low",
+   "floor": "sukhumvit:upper",
+   "at": [
+    83.08,
+    14.305
+   ],
+   "what": "upper-050 is confirmed. 0.70 m of the 1 m single-line shower screen (x 83.04-83.10, y 13.956-14.655) is cut away, and there is no lintel. The gap is exactly where the hinged shower door is drawn, so in 3D it reads as that door opening. It is hardly visible.",
+   "evidence": "checks.txt section 1: the piece at (83.072, 14.305) is flagged GLASSWALL. Section: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-house/png/tiles/u_01_cut.png.",
+   "suggestedFix": "Detector, optional general rule: a door with host 'none' and no wall at either jamb is not cut.",
+   "alreadyListedByBuilder": true
+  },
+  {
+   "id": "H-15",
+   "model": "house",
+   "severity": "low",
+   "floor": "sukhumvit:upper",
+   "at": [
+    110.047,
+    13.379
+   ],
+   "what": "upper-058 is confirmed as a misclassification, but I refute the harm. The 1.0 m pane (0-2.6 m, no lintel) stands at y 13.379, 0.08 m from the drawn WALL-GL shower screen (y 13.4606, x 109.547-110.547). The key lists that screen as a glass wall. So the 3D actually shows the shower screen, and more completely than the baseline's two 0.6 m glass strips did. The only differences are the 2.6 m top (a glass wall would stop at 2.9 m) and the window-glass colour.",
+   "evidence": "checks.txt section 1: glass at y 13.30-13.46, x 109.95-110.55 was cut. Section 4: a pane with 'NO KEY OPENING HERE'. Section: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-house/png/tiles/u_31_cut.png.",
+   "suggestedFix": "No 3D fix needed. Only fix it if the detector's glass-wall rule (see H-02) also covers short screens between a wall end and glass.",
+   "alreadyListedByBuilder": true
+  },
+  {
+   "id": "H-16",
+   "model": "house",
+   "severity": "low",
+   "floor": "sukhumvit:ground+upper",
+   "at": [
+    53.763,
+    9.879
+   ],
+   "what": "These are confirmed to have no 3D effect.\n- upper-028, upper-030 and upper-031 are extra passages with no cut, no lintel and no pieces.\n- GE-17 (the missed vehicle gate): its closed leaf, a 1 m single on WALL at x 53.55-53.63, y 7.94-11.82, stays as before, which matches a closed gate.\n- ground-036 (the pedestrian gate, skewed 3.4 degrees and 0.10-0.15 m off the key line) cut nothing and has no lintel.",
+   "evidence": "house3d_merged.json: depth None and no pieces for the passages. Neither checks.txt section 1 nor section 4 has any entry for them. Sections: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-house/png/tiles/u_41_cut.png, u_42_cut.png, g_50_cut.png.",
+   "suggestedFix": "None needed for 3D.",
+   "alreadyListedByBuilder": true
+  }
+ ],
+ "checkedWhat": "I independently reviewed the Sukhumvit house model in C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/house/src/house3d_merged.json against the DXF, the final key and the elevations. Nothing in the build folders or the project was changed, and nothing was deployed. All output is in C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-house.\n\nTile sweep:\n- 18 tiles of 8 x 7 m (ground) and 8 x 6.5 m (upper), each sectioned twice over the DXF. That is 72 renders in png/tiles/, made with scripts/section.py.\n- Section heights: 0.95 m for cuts, panes, sills and single lines; 3.4 m (ground) and 3.0 m (upper) for lintels, which is above both glass and door heads.\n- Each render also shows the key's opening lines, the key's glass walls, and the material removed relative to the baseline model.\n- I viewed every tile that holds an opening, and a contact sheet of the rest (png/contact_unviewed.png).\n\nProgrammatic checks (checks.txt, checks2.txt, openings_list.txt, with scripts list_openings.py, checks.py and checks2.py):\n- All 105 openings, matched to the key with the scorer's own matcher.\n- All 71 lintels, 42 panes and 1 sill: ends against the key, depth against the wall beyond the jambs, end supports, and heights against heights.json.\n- Every piece removed relative to the baseline, at 0.5 m and 2.0 m, tested against the key's opening footprints and its glass-wall list.\n- What stands inside every key doorway and passage at 0.5, 1.5 and 2.4 m.\n- Pane offsets from long WIN, WALL-GL and grille lines.\n- The 11 removed fins, checked against the drawn layers beneath them.\n\nBrowser: 13 ghost-mode viewpoints of the built page and the baseline page, side by side, in png/views/ (scripts/views.mjs). They ran headless on port 9377 with a profile in my output folder.\n\nConfirmed fine:\n- Every key door that the model treats as a door is clear, apart from a 5 cm sliver at the GE-19/GE-01 boundary.\n- Walls drawn through doorways were cut, including GW-08, GE-11 and D3's face line (this removes the old 1 m bars).\n- All 11 removed fins are real leaves, sashes or swings.\n- Heights are as decided: ground 3.00 m, upper 2.60 m, 3.90 m for the double-height glazing, 2.55 m for AW17. Panes start at 0. Passages are untouched.\n- No glass wall was cut except upper-042, upper-058, upper-050 and the grilles (H-04).\n- ground-005's 6.6 m living/dining screen lintel sits under an upper wall on x 100.865, so it is plausible.\n\nOf the builder's 12 detectorIssues, all are confirmed as described, with these exceptions:\n- upper-048 has a second notch and a 0.64 m depth.\n- upper-036 is not eitherKind in the detector.\n- upper-058 is visually harmless.\n\nMissed items: H-01, H-03, H-04, H-10 and H-12.\n\nOutside the openings scope, but very visible and unchanged from the baseline:\n- The pool coping (R-08), modelled as 3.3 m glass walls.\n- An upper washbasin drawn on the WIN layer, modelled as a 2.9 m glass block at x 110.5-111.0, y 14.75-15.2.\n- X lines inside ducts, modelled as 1 m singles."
+}

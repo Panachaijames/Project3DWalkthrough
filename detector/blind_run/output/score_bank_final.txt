@@ -1,0 +1,17 @@
+bank:L1                  key  16  detected  19  matched  16  right  15  recall 1.0  precision 0.842  RIGHT 0.938  door: 14/15  passage: 1/1  (optional 8/9 found)
+    extra  L1-024 passage at [-3.505, -5.83] w 1.453
+    extra  L1-025 passage at [5.413, 3.208] w 1.229
+    extra  L1-026 passage at [0.623, 6.396] w 1.076
+    wrong  B1-05~L1-004 kind door/window width 1.1/1.1 ends 0.0
+bank:L2                  key  25  detected  32  matched  25  right  24  recall 1.0  precision 0.781  RIGHT 0.96  door: 23/24  passage: 1/1
+    extra  L2-016 passage at [-4.332, -3.381] w 1.498
+    extra  L2-017 passage at [-4.38, 0.044] w 1.592
+    extra  L2-018 passage at [-4.425, 3.331] w 1.683
+    extra  L2-021 passage at [-3.045, 10.691] w 1.822
+    extra  L2-023 passage at [-2.884, 10.742] w 2.212
+    extra  L2-024 passage at [-0.429, 10.545] w 1.498
+    extra  L2-025 passage at [0.713, 4.962] w 2.983
+    wrong  B2-22~L2-006 kind door/passage width 1.1/1.1 ends 0.0
+    wrong  B2-07~L2-019 kind door/door width 1.0/0.875 ends 0.125
+TOTAL key 41 detected 51 matched 41 right 39  recall 1.0  precision 0.804  RIGHT 0.951  (gate: >= 0.80)
+ 

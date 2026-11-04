@@ -1,0 +1,754 @@
+{
+ "openings": [
+  {
+   "id": "B1-01",
+   "kind": "door",
+   "subtype": "single swing 700x2400 (flush leaf 0.70, 50 mm frames inside the opening)",
+   "a": [
+    -4.3804,
+    -6.73
+   ],
+   "b": [
+    -3.5804,
+    -6.73
+   ],
+   "width": 0.8,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_GEN_SWING_1 PANEL_FLUSH - 700x2400 (2146164) ins (-3.9804,-6.73); wall y -6.78..-6.68 ends at x -4.3804; east bound = lift-shaft wall face x -3.5804; A-DOOR-FRAM 50 mm frames at both ends",
+   "confidence": "high",
+   "notes": "SW TOILET door off the back corridor; leaf hinged at the east jamb, swings south into the toilet"
+  },
+  {
+   "id": "B1-02",
+   "kind": "door",
+   "subtype": "single swing 1000X2400 (leaf 0.90, frames inside the opening)",
+   "a": [
+    -4.9304,
+    -5.054
+   ],
+   "b": [
+    -3.9304,
+    -5.054
+   ],
+   "width": 1,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR block SINGLE SWING DOOR-GENERIC - 1000X2400 (2369985, handle 1B95) ins (-4.4304,-5.054) rot 180; wall y -5.104..-5.004: stub x -5.0499..-4.9304 and wall x -3.9304..-3.0854",
+   "confidence": "high",
+   "notes": "from the back corridor north into the long west store corridor (x -5.05..-3.58, y -5.0..5.1); leaf hinged at the west jamb, swings north"
+  },
+  {
+   "id": "B1-03",
+   "kind": "passage",
+   "subtype": "doorless opening (no door or glazing drawn; A-FLOR threshold line at y -4.99 from x -3.08 to -1.88)",
+   "a": [
+    -3.0854,
+    -5.054
+   ],
+   "b": [
+    -1.8804,
+    -5.0403
+   ],
+   "width": 1.205,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-WALL pieces on the same wall line: x -3.9304..-3.0854 (y -5.104..-5.004) and x -1.8804..-0.8804 (y -5.0903..-4.9903, offset 14 mm); 1.205 m gap with nothing in it but a floor line",
+   "confidence": "high",
+   "notes": "opening from the back room (south of y -5.05, door B1-04 on its east side) into the staff side of the banking hall; a and b are each on the centre line of their own wall piece (the two pieces are 14 mm apart in y)"
+  },
+  {
+   "id": "B1-04",
+   "kind": "door",
+   "subtype": "single swing 1000X2400 (leaf 0.90, frames inside the opening)",
+   "a": [
+    -0.9304,
+    -6.3469
+   ],
+   "b": [
+    -0.9304,
+    -5.3469
+   ],
+   "width": 1,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR block SINGLE SWING DOOR-GENERIC - 1000X2400 (2369985, handle 1B94) ins (-0.9304,-5.8469) rot -90; wall x -0.9804..-0.8804, stubs y -6.5569..-6.3469 and -5.3469..-5.0903",
+   "confidence": "high",
+   "notes": "between the banking hall (east) and the back room (west); leaf hinged at the south jamb, swings west"
+  },
+  {
+   "id": "B1-05",
+   "kind": "door",
+   "subtype": "lift door 1100x2400 (sliding, _GEN_LIFT_DOOR - DOOR1100x2400)",
+   "a": [
+    -1.5554,
+    -8.18
+   ],
+   "b": [
+    -1.5554,
+    -7.08
+   ],
+   "width": 1.1,
+   "wallThickness": 0.15,
+   "host": "wall",
+   "evidence": "A-DOOR block _GEN_LIFT_DOOR - DOOR1100x2400 (2145865) ins (-1.5554,-7.63) rot -90; lift-shaft east wall x -1.6304..-1.4804 (150 mm) ends at y -8.18 and -7.08; A-DOOR-FRAM 50 mm jambs inside",
+   "confidence": "high",
+   "notes": "lift door into the LIFT HALL; lift car drawn at x -3.21..-1.81"
+  },
+  {
+   "id": "B1-06",
+   "kind": "door",
+   "subtype": "double glass swing, 2 x 0.80 leaves (DOUBLE GLASS SWING DOOR-GENERIC - TYPE 1; no size or height in the name)",
+   "a": [
+    1.0734,
+    -8.6679
+   ],
+   "b": [
+    1.0734,
+    -7.0679
+   ],
+   "width": 1.6,
+   "wallThickness": 0.01,
+   "host": "glass",
+   "evidence": "A-DOOR block DOUBLE GLASS SWING DOOR-GENERIC - TYPE 1 (2419761) ins (1.0734,-7.8679) rot 90; frameless 10 mm glass screen x 1.0684..1.0784 ends at y -8.6679 and -7.0679; leaves 0.80 swing west",
+   "confidence": "high",
+   "notes": "LIFT HALL to the entrance/ATM lobby; the screen is drawn as 10 mm glass only (no 100 mm envelope), so wallThickness 0.01"
+  },
+  {
+   "id": "B1-07",
+   "kind": "door",
+   "subtype": "double glass swing, 2 x 0.79 leaves (DOUBLE GLASS SWING DOOR-GENERIC - TYPE 1; no size or height in the name)",
+   "a": [
+    2.2995,
+    -5.9796
+   ],
+   "b": [
+    3.4043,
+    -4.788
+   ],
+   "width": 1.625,
+   "wallThickness": 0.1,
+   "host": "glass",
+   "evidence": "A-DOOR block DOUBLE GLASS SWING DOOR-GENERIC - TYPE 1 (2613250) ins (2.8519,-5.3838) rot 47.161 (= midpoint of a and b); glass walls 2612402 / 2612404 (GLASS WALL 2600H 20X100) end faces; 100X25 jamb mullions included as the frame",
+   "confidence": "high",
+   "notes": "in the diagonal glass screen between the banking hall and the entrance/ATM lobby; clear width between the jamb mullions 1.575 (inner faces (2.3165,-5.9612) / (3.3874,-4.8063)); both leaves swing north-west into the banking hall"
+  },
+  {
+   "id": "B1-08",
+   "kind": "door",
+   "subtype": "double pivot, unequal leaves 0.77 + 0.73 (two DOOR-CW_PIVOT_1 PANEL_FLUSH4 - D3 - PL03 curtain-wall door panels; no height in the name)",
+   "a": [
+    4.9181,
+    -8.5088
+   ],
+   "b": [
+    5.812,
+    -7.1787
+   ],
+   "width": 1.603,
+   "wallThickness": 0.1,
+   "host": "glass",
+   "evidence": "A-DOOR blocks DOOR-CW_PIVOT_1 PANEL_FLUSH4 2568134 (ins 5.1621,-8.1457) and 2568539 (ins 5.5812,-7.5222) side by side in the SE corner chamfer, meeting at (5.378,-7.824) with no mullion between; end mullions 2185589 / 2185588 (100X50) included as frame; solid wall on both sides",
+   "confidence": "high",
+   "notes": "street entrance at the chamfered SE corner into the entrance/ATM lobby; ONE wall interruption with two leaves although the drawing has two door blocks; clear width between the end mullions 1.503 (inner faces (4.946,-8.4674) / (5.7841,-7.2202)); both leaves open inwards"
+  },
+  {
+   "id": "B1-09",
+   "kind": "door",
+   "subtype": "single glass swing in the facade curtain wall (SINGLE GLASS SWING DOOR-GENERIC - TYPE 1, leaf about 0.92; no height in the name)",
+   "a": [
+    6.0447,
+    4.8914
+   ],
+   "b": [
+    6.0244,
+    5.9162
+   ],
+   "width": 1.025,
+   "wallThickness": 0.1,
+   "host": "glass",
+   "evidence": "A-DOOR block SINGLE GLASS SWING DOOR-GENERIC - TYPE 1 (2369549) ins (6.0346,5.4038) rot 91.135; curtain wall: glazed panel 2369548 ends at y 4.8914, solid wall piece starts at y 5.9153; mullions 2369210 / 2369214 (100X50) included as frame",
+   "confidence": "high",
+   "notes": "street door in the east facade into the lobby north of the meeting room; clear panel slot between the mullion inner faces 0.925 ((6.0437,4.9414) / (6.0254,5.8662)); leaf hinged at the north jamb, swings in (west)"
+  },
+  {
+   "id": "B1-10",
+   "kind": "door",
+   "subtype": "single glass swing (SINGLE GLASS SWING DOOR-GENERIC - TYPE 1, leaf about 0.87; no height in the name)",
+   "a": [
+    4.9422,
+    4.8904
+   ],
+   "b": [
+    5.8672,
+    4.8904
+   ],
+   "width": 0.925,
+   "wallThickness": 0.1,
+   "host": "glass",
+   "evidence": "A-DOOR block SINGLE GLASS SWING DOOR-GENERIC - TYPE 1 (2613220, handle 19F4) ins (5.4047,4.8904); glass screen y 4.8854..4.8954 pieces end at x 4.9422 and 5.8672; 100X25 jamb mullions included as frame",
+   "confidence": "high",
+   "notes": "glass screen between the facade-door lobby (north) and the small hall in front of the meeting room (south); clear width 0.875 (x 4.9672..5.8422); leaf hinged at the east jamb, swings south"
+  },
+  {
+   "id": "B1-11",
+   "kind": "door",
+   "subtype": "single glass swing (SINGLE GLASS SWING DOOR-GENERIC - TYPE 1, leaf about 0.87; no height in the name)",
+   "a": [
+    4.7483,
+    3.3458
+   ],
+   "b": [
+    4.7483,
+    4.2708
+   ],
+   "width": 0.925,
+   "wallThickness": 0.1,
+   "host": "glass",
+   "evidence": "A-DOOR block SINGLE GLASS SWING DOOR-GENERIC - TYPE 1 (2613220, handle 18BF) ins (4.7483,3.8083) rot -90; glass walls 2613106 (y 3.2833..3.3458) and 2613108 (y 4.2708..5.7582); 100X25 jamb mullions included as frame",
+   "confidence": "high",
+   "notes": "MEETING 4 PAX door in its east glass wall; clear width 0.875 (y 3.3708..4.2458); leaf hinged at the south jamb, swings west into the room"
+  },
+  {
+   "id": "B1-12",
+   "kind": "door",
+   "subtype": "single glass swing (SINGLE GLASS SWING DOOR-GENERIC - TYPE 1, leaf about 0.83; no height in the name)",
+   "a": [
+    -0.4192,
+    2.2689
+   ],
+   "b": [
+    0.5058,
+    2.2689
+   ],
+   "width": 0.925,
+   "wallThickness": 0.1,
+   "host": "glass",
+   "evidence": "A-DOOR block SINGLE GLASS SWING DOOR-GENERIC - TYPE 1 (2628564) ins (0.0433,2.2689); glass walls 2613116 (x -0.8804..-0.4192) and 2613114 (x 0.5058..0.5733); 100X25 jamb mullions included as frame",
+   "confidence": "high",
+   "notes": "MANAGER room door in its south glass wall; clear width 0.875 (x -0.3942..0.4808); leaf hinged at the east jamb, swings north into the room"
+  },
+  {
+   "id": "B1-13",
+   "kind": "door",
+   "subtype": "single swing 1000X2400 (leaf 0.90, frames inside the opening)",
+   "a": [
+    1.0733,
+    5.8582
+   ],
+   "b": [
+    1.0733,
+    6.8582
+   ],
+   "width": 1,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR block SINGLE SWING DOOR-GENERIC - 1000X2400 (2330559) ins (1.0733,6.3582) rot 90; wall x 1.0233..1.1233: stub y 6.8582..6.9339 to the north, meeting-room north wall face y 5.8582 to the south",
+   "confidence": "high",
+   "notes": "from the hall north of the meeting room (east) into the staff corridor north of the manager room (west); leaf hinged at the north jamb, swings west"
+  },
+  {
+   "id": "B1-14",
+   "kind": "door",
+   "subtype": "single swing 700X2400 (leaf 0.60, frames inside the opening)",
+   "a": [
+    2.4696,
+    6.985
+   ],
+   "b": [
+    3.1696,
+    6.985
+   ],
+   "width": 0.7,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR block SINGLE SWING DOOR-GENERIC - 700X2400 (2275644) ins (2.8196,6.985); wall y 6.935..7.035 ends at x 2.4696; east bound = toilet east wall face x 3.1696",
+   "confidence": "high",
+   "notes": "north TOILET door; leaf hinged at the east jamb, swings north into the toilet"
+  },
+  {
+   "id": "B1-15",
+   "kind": "door",
+   "subtype": "single swing 1200x2400 (flush leaf 1.20, 50 mm frames inside the opening)",
+   "a": [
+    -3.0178,
+    7.0839
+   ],
+   "b": [
+    -1.7178,
+    7.0839
+   ],
+   "width": 1.3,
+   "wallThickness": 0.3,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_GEN_SWING_1 PANEL_FLUSH - 1200x2400 (2135044) ins (-2.3678,7.0839); 300 mm base-building wall y 6.9339..7.2339 ends at x -3.0178 and -1.7178; A-DOOR-FRAM hatches at both ends",
+   "confidence": "high",
+   "notes": "into the large unlabelled north room (x -5.4..1.1, y 7.2..11.5, filled with an A-DETL-GENF hatch); leaf hinged at the east jamb, swings south into the corridor"
+  },
+  {
+   "id": "B1-16",
+   "kind": "door",
+   "subtype": "single swing 900x2400 (flush leaf 0.90, 50 mm frames inside the opening)",
+   "a": [
+    -3.0678,
+    5.2189
+   ],
+   "b": [
+    -3.0678,
+    6.2189
+   ],
+   "width": 1,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_GEN_SWING_1 PANEL_FLUSH - 900x2400 (2135364) ins (-3.0678,5.7189) rot 90; wall x -3.1178..-3.0178: stub y 6.2189..6.9339 to the north, F/C south wall face y 5.2189 to the south; A-DOOR-FRAM at both ends",
+   "confidence": "high",
+   "notes": "F/C room door; leaf hinged at the north jamb, swings east into the corridor"
+  }
+ ],
+ "glassWalls": [
+  {
+   "a": [
+    -0.6266,
+    -9.13
+   ],
+   "b": [
+    0.5734,
+    -9.13
+   ],
+   "notes": "south facade curtain wall in front of the LIFT HALL: System Panel GLAZED 2570895 between mullions 2168599 / 2168598 (100X50); taken as full height (length 1.200 m)"
+  },
+  {
+   "a": [
+    1.4655,
+    -9.13
+   ],
+   "b": [
+    2.9855,
+    -9.13
+   ],
+   "notes": "south facade curtain wall in front of the entrance lobby: System Panel GLAZED 2572731 between 100X160 mullions; taken as full height (length 1.520 m)"
+  },
+  {
+   "a": [
+    3.7176,
+    -8.5267
+   ],
+   "b": [
+    4.3176,
+    -8.5267
+   ],
+   "notes": "south facade (stepped part) curtain wall: 0.5 m System Panel GLAZED 2567163 between 100X50 mullions; taken as full height (length 0.600 m)"
+  },
+  {
+   "a": [
+    5.862,
+    -6.6794
+   ],
+   "b": [
+    5.862,
+    -6.0794
+   ],
+   "notes": "east side of the SE corner: 0.5 m System Panel GLAZED 2567163 between mullions V2 / V1 (100X50); taken as full height (length 0.600 m)"
+  },
+  {
+   "a": [
+    6.2527,
+    -5.6145
+   ],
+   "b": [
+    6.2196,
+    -3.9477
+   ],
+   "notes": "east facade curtain wall at the ATM lobby: System Panel GLAZED 2578883 between 100X160 mullions 2572104 / 2572103; taken as full height (length 1.667 m)"
+  },
+  {
+   "a": [
+    6.1993,
+    -3.0151
+   ],
+   "b": [
+    6.1486,
+    -0.4525
+   ],
+   "notes": "east facade curtain wall: System Panel GLAZED 2575508 between mullions V4 / V3 (100X160); taken as full height (length 2.563 m)"
+  },
+  {
+   "a": [
+    6.1346,
+    0.3474
+   ],
+   "b": [
+    6.0841,
+    2.8969
+   ],
+   "notes": "east facade curtain wall: System Panel GLAZED 2575552 between mullions V6 / V5 (100X160); taken as full height (length 2.550 m)"
+  },
+  {
+   "a": [
+    6.064,
+    3.9166
+   ],
+   "b": [
+    6.0447,
+    4.8914
+   ],
+   "notes": "east facade curtain wall south of door B1-09: System Panel GLAZED 2369548 and mullion 2369215; taken as full height (length 0.975 m)"
+  },
+  {
+   "a": [
+    1.0734,
+    -9.079
+   ],
+   "b": [
+    1.0734,
+    -8.6679
+   ],
+   "notes": "frameless 10 mm glass screen LIFT HALL / lobby, south of door B1-06 (length 0.411 m)"
+  },
+  {
+   "a": [
+    1.0734,
+    -7.0679
+   ],
+   "b": [
+    1.0734,
+    -6.6569
+   ],
+   "notes": "frameless 10 mm glass screen LIFT HALL / lobby, north of door B1-06 (length 0.411 m)"
+  },
+  {
+   "a": [
+    1.5178,
+    -6.6069
+   ],
+   "b": [
+    1.7178,
+    -6.6069
+   ],
+   "notes": "glass partition 2612406 (GLASS WALL 2600H 20X100) on the y -6.61 line between the solid stub x 1.12..1.52 and the diagonal screen (length 0.200 m)"
+  },
+  {
+   "a": [
+    1.7178,
+    -6.6069
+   ],
+   "b": [
+    2.2995,
+    -5.9796
+   ],
+   "notes": "diagonal glass partition 2612402 (GLASS WALL 2600H 20X100), south-west of door B1-07 (length 0.855 m)"
+  },
+  {
+   "a": [
+    3.4043,
+    -4.788
+   ],
+   "b": [
+    4.3522,
+    -3.7659
+   ],
+   "notes": "diagonal glass partition 2612404 (GLASS WALL 2600H 20X100), north-east of door B1-07 (length 1.394 m)"
+  },
+  {
+   "a": [
+    4.3522,
+    -3.7659
+   ],
+   "b": [
+    5.2522,
+    -3.7659
+   ],
+   "notes": "glass partition 2612400 (GLASS WALL 2600H 20X100), north side of the ATM lobby, west of the solid wall x 5.25..6.15 (length 0.900 m)"
+  },
+  {
+   "a": [
+    -0.8804,
+    2.2689
+   ],
+   "b": [
+    -0.4192,
+    2.2689
+   ],
+   "notes": "MANAGER south glass partition 2613116, west of door B1-12 (length 0.461 m)"
+  },
+  {
+   "a": [
+    0.5058,
+    2.2689
+   ],
+   "b": [
+    0.5733,
+    2.2689
+   ],
+   "notes": "MANAGER south glass partition 2613114, east of door B1-12 (tiny infill) (length 0.068 m)"
+  },
+  {
+   "a": [
+    0.6233,
+    2.3189
+   ],
+   "b": [
+    0.6233,
+    3.1583
+   ],
+   "notes": "MANAGER east glass partition 2613120 (up to the column at y 3.16) (length 0.839 m)"
+  },
+  {
+   "a": [
+    4.7483,
+    1.1189
+   ],
+   "b": [
+    4.7483,
+    3.1583
+   ],
+   "notes": "free-ended glass screen 2613112 east of the BA / BE desks (end mullion at y 1.12) (length 2.039 m)"
+  },
+  {
+   "a": [
+    4.7483,
+    3.2583
+   ],
+   "b": [
+    4.7483,
+    3.3458
+   ],
+   "notes": "MEETING east glass partition 2613106 south of door B1-11 (tiny infill incl. mullion 1B47) (length 0.087 m)"
+  },
+  {
+   "a": [
+    4.7483,
+    4.2708
+   ],
+   "b": [
+    4.7483,
+    5.7582
+   ],
+   "notes": "MEETING east glass partition 2613108, north of door B1-11 (length 1.487 m)"
+  },
+  {
+   "a": [
+    4.7983,
+    4.8904
+   ],
+   "b": [
+    4.9422,
+    4.8904
+   ],
+   "notes": "glass screen piece west of door B1-10 (10 mm glass lines, joins 2613108) (length 0.144 m)"
+  },
+  {
+   "a": [
+    5.8672,
+    4.8904
+   ],
+   "b": [
+    5.9947,
+    4.8904
+   ],
+   "notes": "glass partition 2613110 east of door B1-10, up to the facade mullion (tiny infill) (length 0.127 m)"
+  }
+ ],
+ "uncertain": [
+  {
+   "where": [
+    6.185,
+    7.91
+   ],
+   "what": "East facade wall gap at x 6.18, y 7.62..8.20 (0.58 m): a through-wall ATM unit (A-GENM 'ATM Machine-V26', with fascia and canopy outside) fills it. I left it out because no person or light passes through. If the 3D model must cut the facade for the ATM, use a=(6.1905,7.62), b=(6.179,8.1999), wall 0.10. A detector will likely report a passage here."
+  },
+  {
+   "where": [
+    6.17,
+    -1.73
+   ],
+   "what": "I listed all 8 facade curtain-wall panels (A-GLAZ-CURT System Panel GLAZED) as full-height glass walls. The plan shows no sill heights, so any that sit on a sill would be windows. Panel centres: (-0.03,-9.13), (2.23,-9.13), (4.02,-8.53), (5.86,-6.38), (6.24,-4.78), (6.17,-1.73), (6.11,1.62), (6.05,4.40)."
+  },
+  {
+   "where": [
+    5.365,
+    -7.844
+   ],
+   "what": "B1-08 is two separate DOOR-CW_PIVOT door blocks (2568134 and 2568539) in the SE chamfer, with no mullion between them. I counted them as ONE double pivot opening, 1.603 m with frame or 1.503 m clear. A scorer that counts door blocks would expect two openings of 0.77 and 0.73 m."
+  },
+  {
+   "where": [
+    2.852,
+    -5.384
+   ],
+   "what": "Width rule for doors in glazed screens and curtain walls (B1-07 to B1-12): a and b are on the adjoining glass or solid wall elements, so the jamb mullions count as the door frame. The clear widths between the mullions are 0.05 m smaller (0.10 m for B1-08 and B1-09). Each opening's notes give the clear width. Centres are the same under either rule."
+  },
+  {
+   "where": [
+    -2.483,
+    -5.047
+   ],
+   "what": "B1-03 is a 1.205 m gap in the y -5.05 wall. Nothing is drawn in it except an A-FLOR threshold line, so I labelled it a passage. The two wall pieces are 14 mm apart in y. If a door was intended, it is missing from the model."
+  },
+  {
+   "where": [
+    1.0734,
+    -7.868
+   ],
+   "what": "B1-06 sits in a frameless screen that is drawn as 10 mm glass only, so I gave wallThickness 0.01. A detector that expects 100 mm glass walls may measure a different thickness here."
+  },
+  {
+   "where": [
+    4,
+    0
+   ],
+   "what": "Door heights are unknown for the glass doors and pivot doors (B1-06 to B1-12): their block names are 'TYPE 1' or 'D3 - PL03', with no height. The other doors carry 2400 in their names."
+  }
+ ],
+ "rejected": [
+  {
+   "id": "ATM-NE",
+   "where": [
+    6.185,
+    7.91
+   ],
+   "reason": "East facade wall gap y 7.62..8.20 is filled by a through-wall ATM. Equipment, not a door, window or passage (see uncertain)."
+  },
+  {
+   "id": "SW-slot",
+   "where": [
+    -4.88,
+    -9.13
+   ],
+   "reason": "10 cm slot between the SW corner column (x -5.23..-4.93) and the south facade wall (starts at x -4.8304), y -9.18..-9.08. A modelling joint, too narrow to pass."
+  },
+  {
+   "id": "lift-void",
+   "where": [
+    -2.555,
+    -8.905
+   ],
+   "reason": "Enclosed void under the lift shaft (x -3.48..-1.63, y -9.08..-8.73) between two parallel wall stubs. The wall-gap search paired them, but no wall is interrupted."
+  },
+  {
+   "id": "party-wall",
+   "where": [
+    -5.2,
+    0
+   ],
+   "reason": "The two party-wall leaves (x about -5.8..-4.93) break only at the concrete columns (y -6.52, -3.41, 0.00, 3.30), which fill the breaks. The 0.1 m cavity between the leaves is not an opening."
+  },
+  {
+   "id": "casework",
+   "where": [
+    -3.46,
+    0
+   ],
+   "reason": "Q-CASE ADJUSTABLE CUPBOARD DOOR / ADJUSTABLE DRAWER / TALL CABINET blocks and their swing arcs along x -3.46 (y -4.6..5.0). Casework, not openings."
+  },
+  {
+   "id": "end-1",
+   "where": [
+    5.2522,
+    -5.6294
+   ],
+   "reason": "The west end of the ATM-lobby south wall (y -5.63, x 5.25..6.20) faces the open lobby. A wall that ends in open space."
+  },
+  {
+   "id": "end-2",
+   "where": [
+    4.7483,
+    1.1189
+   ],
+   "reason": "The south end of the free-standing glass screen east of the BA / BE desks ends in open space."
+  },
+  {
+   "id": "end-3",
+   "where": [
+    4.7983,
+    5.8082
+   ],
+   "reason": "The east end of the meeting-room north wall is a corner open to the facade-door lobby, with no wall line continuing. Not an opening."
+  },
+  {
+   "id": "end-4",
+   "where": [
+    3.2196,
+    6.9339
+   ],
+   "reason": "The south end of the north toilet's east wall faces a 1.08 m wide corridor bounded by the perpendicular meeting-room north wall. A corridor, not an interrupted wall."
+  },
+  {
+   "id": "end-5",
+   "where": [
+    0.6733,
+    2.2689
+   ],
+   "reason": "The east end of the manager's south wall is its corner with the east glass wall, with the open BA / BE area beyond. Not an opening."
+  },
+  {
+   "id": "glass-inside",
+   "where": [
+    6.2,
+    -1.7
+   ],
+   "reason": "The wall-gap search also paired faces inside the curtain-wall panels (between the mullions) and inside the 100 mm glass-wall envelopes (for example (4.78, 1.14..3.16) and (6.22, -5.45..-4.11)). These are glass walls, not openings."
+  },
+  {
+   "id": "pivot-2",
+   "where": [
+    5.5812,
+    -7.5222
+   ],
+   "reason": "The second pivot door block (2568539) is merged with 2568134 into the single double-door opening B1-08, because the two leaves meet with no mullion between them."
+  },
+  {
+   "id": "stairs",
+   "where": [
+    -1.8,
+    12.2
+   ],
+   "reason": "The stair drawn outside the north wall (x -4.0..0.4, y 11.75..12.65) and the L1 stair (x 1.4..4.2, y 7.9..9.6) are stairs, with no wall openings."
+  },
+  {
+   "id": "lobby-circle",
+   "where": [
+    3.856,
+    -6.703
+   ],
+   "reason": "The A-DETL circle (radius 1.0 m) in the entrance lobby is a floor or ceiling feature, not an opening."
+  },
+  {
+   "id": "stair-stub",
+   "where": [
+    1.52,
+    9.48
+   ],
+   "reason": "The wall stubs at x 1.35..1.70, y 9.33..9.63 by the stair stick out from the side of the slanted 300 mm wall. No gap."
+  }
+ ],
+ "method": "I worked geometry first in prims.pkl (bank1, area L1) and did not look at any other labeller's or detector's output.\n\n1. I listed every INSERT: 16 A-DOOR blocks, 11 'Basic Wall _ GLASS WALL 2600H 20X100' blocks, and the curtain-wall panels and mullions. Mirrored inserts carry OCS insert points (x is negated), so I took every position from the flattened geometry, not from 'ins'.\n2. I checked the conversion. A dwgread JSON dump of I1201 has the same counts as plan.dxf for every A-WALL, A-DOOR and A-GLAZ entity type, including 16 door inserts.\n3. In shapely I built wall polygons from the A-WALL / A-WALL-PATT hatches, the polygonised A-WALL / A-GLAZ / S-COLS lines and the column hatches. I then (a) paired facing wall end faces on the same line (gap 0.25..3.2 m, free path between them) and (b) cast rays from every short wall end face to find ends that face a wall or open space.\n4. I matched every candidate against each A-DOOR block's frame, leaf and arc lines and the wall end coordinates. I took a and b at the bounding wall-end faces on the wall centre line. For doors in solid walls the A-DOOR-FRAM frames lie inside the opening. For doors in glazed screens and curtain walls, the jamb mullions count as the frame, and the clear widths are in the notes.\n5. I made visual checks on:\n   - the overview and my own full render, L1_full (grid 1, inserts);\n   - 15 tiles of 5.2 x 5.2 m (grid 0.5, inserts, 2000 px): x -6.6..-1.4, -1.8..3.4 and 2.8..7.0 against y -9.8..-4.6, -5.0..0.2, -0.2..5.0, 4.6..9.8 and 9.4..13.0;\n   - zooms of the back-room gap and the NE ATM gap;\n   - a final full render with a marker at every opening (L1_marked);\n   - end-point zooms of the SE lobby, the NE meeting / facade doors, the SW back rooms, the north corridor, the lift hall and the manager door.\n   No unmarked door swing, leaf, door block or wall gap was left, apart from the rejected items.\n\nThe result is 16 openings: 15 doors (one of them the merged pair of pivot leaves) and 1 passage. There are no windows; all glazing is curtain wall or full-height glass partitions, listed under glassWalls. The machine-readable copy is key.json, and key.py rebuilds it.",
+ "files": [
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/L1_marked.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/L1_full.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/t_-6.6_-9.8.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/t_-6.6_-5.0.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/t_-6.6_-0.2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/t_-6.6_4.6.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/t_-6.6_9.4.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/t_-1.8_-9.8.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/t_-1.8_-5.0.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/t_-1.8_-0.2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/t_-1.8_4.6.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/t_-1.8_9.4.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/t_2.8_-9.8.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/t_2.8_-5.0.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/t_2.8_-0.2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/t_2.8_4.6.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/t_2.8_9.4.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/z_backroom.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/z_atm_north.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/v_se.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/v_ne.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/v_sw.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/v_n.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/v_lift.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/v_mgr.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L1-A/key.json"
+ ]
+}

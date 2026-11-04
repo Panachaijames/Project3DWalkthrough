@@ -1,0 +1,104 @@
+{
+ "reviewer": "Fresh independent reviewer of the BEFORE-to-AFTER delta (openings.py, geomkit.py), final round",
+ "checkedWhat": "CODE = C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/fix4/review_final/code (my folder: before/, after/, orig/ copies; synth/ = synthetic scenes with each detector loaded with its OWN geomkit; scripts/ = sweep, units, invariance, order, jitter, fallback tests; out_after/ = harness outputs). Read both diffs in full (and regenerated the diff from the copies ignoring CRLF: identical to the supplied one, nothing else changed; render_openings.py and tools/ are identical) and the surrounding AFTER code of all 32 hunks. Ran: regression harness (AFTER, BEFORE, ORIGINAL); JSON/type/NaN audit of all 451 output records; 6 constant sweeps at the edges of every claimed range (JAMB_RETURN, SIDELIGHT_MIN, RUNS_ON, CENTRED_OUT, CROSS_PIECE, WALL_RUN, DOORWAY, FACE_TOL); unit invariance (cm, m, in, ft) on 5 drawings; placement invariance (translations, 90 deg, rotation+mirror, 30 runs each); item-order shuffles (24 runs each); jitter fuzz for crashes (48 runs AFTER, 12 BEFORE); a forced unary_union failure; circle3 numerics; about 300 synthetic scenes (mouth families, cross-wall ties, sidelights, thick walls, self-touching outlines, degenerate input, perf on 800-1000 piece rows). Compiles without warnings, no undefined names, EPS is defined at module level before any use, geomkit does not use EPS. Two real regressions and several smaller defects found (below).",
+ "findings": [
+  {
+   "id": "F1",
+   "severity": "medium",
+   "area": "symbol_door wall band limit (openings.py:1852-1853, hunk 'wall band must be thinner than 0.6 - EPS')",
+   "summary": "OB.section(..., n, 0.6) clips the band of any wall thicker than 0.6 m to exactly 0.6 m. BEFORE's `b - a <= 0.6` accepted that clipped band; AFTER's `b - a < 0.6 - EPS` rejects it, so every door symbol on a wall of 0.6 m or more (drawn through or cut at the door) loses the wall: thickness becomes 0.1, the door centre moves onto the wall face (0.3 m off the centre line of a 0.6 m wall, 0.4 m for 0.8 m, 0.5 m for 1.0 m) and, for a wall drawn through, host becomes 'none'. The four twins of the same limit stay inclusive (openings.py:843, 992, 1173, 1230 use `<= 0.6`), so one rule treats a 0.6 m wall as a wall and symbol_door does not. Only L30-034 gains (key x 2.471: BEFORE 2.2213, AFTER 2.5213) and the six drawings have no wall over 0.5 m, so the harness cannot see the loss.",
+   "expected": "A door symbol on a 0.6-1.0 m wall keeps the wall (BEFORE: thickness 0.6, host wall).",
+   "actual": "Wall drawn through, door symbol on its face, 20 placements: 0.60 m wall AFTER door t=0.10, centre y +0.30, host none in 19/20 (BEFORE t=0.60 centred, host wall 20/20); 0.80 m: host none 18/20 (BEFORE wall); 1.00 m: host none 20/20. Wall cut at the door: 0.60 m BEFORE t 0.60 centred, AFTER t 0.10 centre +0.30; 0.80 m AFTER t 0.10 centre +0.40 and the end moves to x 3.05 (opening ends at 3.0).",
+   "repro": "cd CODE/synth && PYTHONIOENCODING=utf-8 python -B t03_symbol_door_06.py ; PYTHONIOENCODING=utf-8 python -B t03b_thick_wall_cut.py   (CODE = ...fix4/review_final/code)",
+   "suggestedFix": "Use `b - a <= 0.6 + EPS` like the other four 0.6 m wall limits (clipped bands of thick walls then stay accepted), and settle L30-034 another way (for example reject a band that is a merge of two wall pieces), or widen the section window so a thick wall is measured instead of clipped."
+  },
+  {
+   "id": "F2",
+   "severity": "medium",
+   "area": "geomkit.Prim.poly keeps only the largest polygon (geomkit.py:168-170) and small_shapes (openings.py:610)",
+   "summary": "For a closed outline whose buffer(0) is a MultiPolygon (two lobes wound the same way: a ring that touches itself, two wall pieces drawn in ONE polyline over a zero-width bridge) BEFORE kept every lobe in the wall solid; AFTER keeps only the larger, so the other wall piece, and the gap beside it, silently vanish. The hunk is redundant: the crash it targets (jamb_at reading .exterior of a small MultiPolygon, presidential with 5 mm vertex jitter, seeds 1 and 2 crash BEFORE) is already fixed by small_shapes iterating polys(). With the geomkit hunk reverted and small_shapes kept, 12 jitter runs have 0 crashes and the scene below gives BEFORE's result. After the hunk Prim.poly is always one Polygon, so `polys(p.poly)` in small_shapes is a no-op and its comment ('a self-crossing outline buffers to several polygons') is stale. On the six real drawings 20 such outlines exist (Sukhumvit 19, L29 1) and none is on a wall or column layer, so the harness is unchanged.",
+   "expected": "Both wall pieces stay in the wall solid (as BEFORE and ORIGINAL).",
+   "actual": "Wall A x 0..6 and wall B x 7.5..11 (0.2 thick) in one closed polyline, B wound the other way: BEFORE wall parts [(0,-0.1,6,0.1),(7.5,-0.1,11,0.1)] and a 1.5 m passage; AFTER wall parts [(0,-0.1,6,0.1)] and nothing.",
+   "repro": "cd CODE/synth && PYTHONIOENCODING=utf-8 python -B t01b_multipolygon_wall.py ; count on real data: python -B CODE/scripts/count_multipoly.py ; crash check: python -B CODE/scripts/jit_crash.py <dir> 0.005 1,2 with dir = CODE/before (2 crashes), CODE/after, CODE/after_nogk (0 crashes each)",
+   "suggestedFix": "Drop the geomkit change (keep self.poly = g, MultiPolygon allowed) and rely on small_shapes' polys(); or split a MultiPolygon outline into one Prim per polygon so no piece is lost."
+  },
+  {
+   "id": "F3",
+   "severity": "low",
+   "area": "find_strips thickness limit `t < tmax - EPS` (openings.py:272) with the thin-screen call (openings.py:1309: find_strips(fl.W, 0.005, 0.03, 0.3)) and the wall call (tmin 0.03, no EPS)",
+   "summary": "The EPS was applied to the upper limit only, and exclusive, which opens a dead zone 0.0295 <= t < 0.03 that neither the thin-screen call nor the wall call accepts. A glass screen drawn 29.5-30 mm (rule 6 says '5-30 mm') is no strip at all. BEFORE found every such strip as a screen or as a wall strip. The EPS comment (openings.py:125-126) says comparisons are inclusive; this one and F1 are exclusive.",
+   "expected": "Every thickness is a wall strip or a thin screen.",
+   "actual": "Rectangles 3 m x t at 400 random sheet positions: t = 0.0299: BEFORE found as thin screen 400/400, AFTER 0/400 (found by neither 400); t = 0.0300 exactly: found by neither 0/400 BEFORE, 81/400 AFTER. (t = 0.5500 and 0.5499 are no strip in AFTER, as intended.)",
+   "repro": "cd CODE/synth && PYTHONIOENCODING=utf-8 python -B t02_strip_deadzone.py",
+   "suggestedFix": "Apply the tolerance on both sides of the 0.03 hand-over (wall call tmin 0.03 - EPS, screen call tmax 0.03 + EPS minus nothing), or leave the screen call inclusive; at least keep the two calls complementary."
+  },
+  {
+   "id": "F4",
+   "severity": "low",
+   "area": "drawn-size tie left in a modified line: passage_ok stub-to-stub clause `g.w <= 1.6` (openings.py:1705-1706; also 1714)",
+   "summary": "The delta rewrote the stub-to-stub condition and moved the other limits off drawn sizes or gave them EPS, but the 1.6 m limit (a common 1600 mm doorway) has neither, so a 1.60 m doorway between nibs attached to cross walls is kept or dropped by float noise.",
+   "expected": "Deterministic verdict for a 1.60 m gap, like the cross-wall and DOORWAY ties.",
+   "actual": "1.0 m gaps between 0.17 m nibs of two long cross walls, 40 random sheet positions each: g 1.59 kept 40/40, g 1.60 kept 28/40 (BEFORE 27/40), g 1.61 kept 0/40.",
+   "repro": "cd CODE/synth && PYTHONIOENCODING=utf-8 python -B t11_limit_1_6.py",
+   "suggestedFix": "`g.w <= 1.6 + EPS` in both places (and consider moving the limit off 1.6)."
+  },
+  {
+   "id": "F5",
+   "severity": "low",
+   "area": "constants' comments contradicted by sweeps on AFTER (openings.py:119-124, 1449-1460, 1581-1606)",
+   "summary": "EPS and SIDELIGHT_TOL move the real edges of the quoted ranges. Sweeps of the shipped code: CROSS_PIECE comment 'Range 0.11-0.25': at 0.25 (and 0.26) two false passages enter, L29 and L30 (4.19,-37.44)->(4.19,-35.79), extras 15 -> 17. WALL_RUN 'Range 0.25-0.9': at 0.24 and 0.25 the false Sukhumvit upper passage (99.11,21.26)->(100.67,21.26) enters (extras 16); at 0.91 GW-10 (12.9,15.86)->(12.9,19.16) is lost (old 138/143), so the run that matters is 0.90, not 'the shortest real run-on 0.68 m'. SIDELIGHT_MIN 'from 0.20 m the 0.20 m panes are lost (tower 52, then 50 of 54)': with the 0.005 tolerance 0.20 and 0.204 change nothing, 0.206 goes straight to 50/54 (the four L29 doors keep their sidelights). FACE_TOL 'false detections come in above 0.04 (one more per 0.01)': nothing at 0.045, one at 0.05 (Sukhumvit upper (113.54,18.06)->(114.32,18.06)), five at 0.08. RUNS_ON 'smallest overshoot of a curtain-wall gap 0.98 m': nothing changes from 0.2 to 1.1; the first change is at 1.2 (window (29.4,-50.12)->(29.42,-51.01)). Confirmed as stated: JAMB_RETURN identical 0.21-0.33 and first change at 0.34; DOORWAY identical 1.31-1.55, 1.56 adds upper-039; CENTRED_OUT identical 0.10-0.80.",
+   "repro": "cd CODE && PYTHONIOENCODING=utf-8 python -B scripts/sweep.py after CROSS_PIECE 0.24 0.25 0.26 ; ... WALL_RUN 0.24 0.25 0.9 0.91 ; ... SIDELIGHT_MIN 0.20 0.204 0.206 ; ... FACE_TOL 0.045 0.05 0.08 ; ... RUNS_ON 1.1 1.2",
+   "suggestedFix": "Restate the ranges (CROSS_PIECE 0.11-0.24, WALL_RUN 0.26-0.90, SIDELIGHT_MIN edge at about 0.205, FACE_TOL up to 0.045, RUNS_ON up to about 1.1) or say they are measured without EPS/TOL."
+  },
+  {
+   "id": "F6",
+   "severity": "low",
+   "area": "docstring and comment inconsistencies in the delta",
+   "summary": "(a) Module docstring 'Output:' list (openings.py:13-15) does not list the new optional field sidelights, although README and rule 4 do. (b) Rule 4 says a sidelight stands '0.17 m or more' beyond the leaf; the code cuts from 0.165 (SIDELIGHT_MIN - SIDELIGHT_TOL): a 0.165 m pane is cut, 0.164 not. (c) EPS comment (125-126) says every comparison is inclusive and generous; two uses are exclusive and strict (find_strips 272, symbol_door 1853). (d) small_shapes comment (610) is stale after the geomkit hunk (see F2). (e) README table row says 'glass beside an uncut wall is no bay' without the glass-only qualifier; AFTER's along_wall now applies to glass-only bands (openings.py:838), so window-role glass 0.05-0.2 m beside an unbroken wall between two columns is a 3.6 m window (BEFORE none). That follows an earlier finding and has no user on the six drawings, but the text is no longer true.",
+   "repro": "cd CODE/synth && PYTHONIOENCODING=utf-8 python -B t04_sidelight.py   (pane 0.164 vs 0.165) ; python -B t07_along_wall.py",
+   "suggestedFix": "Update the four texts; state the 0.165 effective limit."
+  },
+  {
+   "id": "F7",
+   "severity": "low",
+   "area": "glass_share layers list / sidelights record (openings.py:1475-1479)",
+   "summary": "lays.add(pr.lay) runs for every glass or window line inside the lateral band even if its interval along the stretch is empty. A window-role line that only touches the end of the cut stretch (frame lines from x = 0.2 on) is listed as a layer of the glass that was left out, in the record ('layers') and in the evidence ('... of A-GLAZ-CURT, A-WIND').",
+   "expected": "Only layers that cover part of the cut stretch.",
+   "actual": "Left pane 0.0-0.2 on A-GLAZ-CURT plus A-WIND lines from 0.2 to 0.45: sidelights[0].layers = ['A-GLAZ-CURT','A-WIND'].",
+   "repro": "cd CODE/synth && PYTHONIOENCODING=utf-8 python -B t04_sidelight.py   (section 'layers list')",
+   "suggestedFix": "Add the layer only when min(a1, s1) > max(a0, s0)."
+  },
+  {
+   "id": "F8",
+   "severity": "low",
+   "area": "new CENTRED_OUT clause (openings.py:1672-1674)",
+   "summary": "On the six drawings the clause has one user and it is a false passage: Sukhumvit ground (40.2933,17.1085)->(40.2933,15.5585), w 1.55 (an L-corner near end, a 0.2 m stair wall facing a 0.4 m column box on its line). Setting CENTRED_OUT 0.0 restores BEFORE exactly (older four 8 extras, total 14); shipped 0.35 gives 9 / 15 and no key opening gains. The README lists it as the one 'split' passage. The synthetic gains are real (0.2 m wall - 1.0 m gap - centred column up to 0.90 m with the wall carrying on: kept 40/40, 0.91 m not; centred thinner or thicker wall: kept), but nothing on real data supports them.",
+   "repro": "cd CODE && PYTHONIOENCODING=utf-8 python -B scripts/sweep.py after CENTRED_OUT 0.0 0.10 0.8 ; python -B scripts/inspect_g033.py after",
+   "suggestedFix": "Accept knowingly, or require near == 'cap' for the clause (the false case has an L-corner at the near end) and re-sweep."
+  }
+ ],
+ "regressions": [
+  "Door symbols on walls of 0.6 m and more (F1): BEFORE thickness 0.6, host wall; AFTER thickness 0.1, door centre moved 0.3-0.5 m onto the face, host none in 53/60 (0.6 m, first run), 19/20, 18/20 and 20/20 placements (0.6, 0.8, 1.0 m, drawn through). Cut thick walls: 0.1 m thickness on the wall face. Script CODE/synth/t03_symbol_door_06.py and t03b_thick_wall_cut.py.",
+  "Wall-layer outline that buffers to a MultiPolygon (F2): BEFORE keeps both wall pieces and finds the 1.5 m passage, AFTER keeps one piece and finds nothing. CODE/synth/t01b_multipolygon_wall.py.",
+  "Sukhumvit ground passage (40.2933,17.1085)->(40.2933,15.5585) (F8): extras on the older four 8 -> 9 (all six floors 14 -> 15), no key opening gained; matches 139/143 and 54/54 unchanged.",
+  "Thin glass strips 29.5-30 mm (F3): found as a screen by BEFORE in 400/400 placements at t 0.0299, by neither wall nor screen call in AFTER.",
+  "By design but worth knowing: two free thin wall pieces 0.28 x 0.1 m with a 1.0 m gap: BEFORE passage, AFTER none (attached_to_wall); window-role glass beside an unbroken wall now becomes a window (CODE/synth/t08_nibs.py, t07_along_wall.py).",
+  "Output changes on the six drawings versus BEFORE (all accounted for): Sukhumvit +1 passage (ids after ground-033 shift by one), L29 four doors gain 'sidelights' and longer evidence, L30-002 gets conf 0.75 and 'pocket panel', L30-020 passage -> pocket sliding door (key L30E-07, a gain), L30-034 moves from x 2.2213 t 0.6 to x 2.5213 t 0.1 (key x 2.471 t 0.1, closer)."
+ ],
+ "verifiedTrue": [
+  "Harness on AFTER: older four 139/143 right with 9 extras; tower 54/54 with 6 extras; my fresh outputs equal out_f3 for all six; BEFORE copy reproduces baseline_integrated_c (139/143, 8 extras); ORIGINAL is 139/143 with 26 extras and tower 39/54.",
+  "The supplied delta is exactly the BEFORE-to-AFTER difference (only openings.py and geomkit.py differ, CRLF aside); no unlisted code change.",
+  "Output JSON: all 451 records parse, no NaN/Infinity, field types as before; only the four L29 sidelit doors have the extra 'sidelights' key (floats rounded to 4 decimals, layers as strings); every other record has the old key set.",
+  "Item 7 (unit scale before dedupe): AFTER gives the same openings in cm, m, in, ft on bank1, sukhumvit, l29, l30, presidential; BEFORE in m changes 4 bank1 doors.",
+  "Item 6 / order independence: item-order shuffles 21 diffs (BEFORE) -> 4 (AFTER, a Sukhumvit window whose ends move 5-6 cm); the tower double door no longer splits.",
+  "Item 5 ties: a 0.20 and 0.225 m cross wall beside a doorway is kept in 60/60 sheet positions in AFTER (BEFORE 34/60 and 0/60); 0.25 and 0.30 m are dropped 0/60; translations/rotation/mirror differences fall from 16 to 4 over 30 runs.",
+  "Mouth rule on 272 synthetic gap scenes: AFTER passages are a superset of BEFORE's, 35 gains (flush corner doorway at 1.45 m, 0.2/0.225 m cross walls, centred columns and other-thickness walls), no losses; CENTRED_OUT claim '0.2 m wall against a square column up to 0.9 m' holds (0.90 kept 40/40, 0.91 not).",
+  "Item 3: attached_to_wall keeps a doorway between 0.17 m nibs of long cross walls and drops free thin pieces; is_free_post now uses the rotated rectangle (docstring rule 7 matches).",
+  "Item 2 guards: a door that would be left under 0.5 m, or whose leaf lies outside its gap, is not trimmed; trimmed doors get host 'glass' if none; 0.165 m is the effective cut.",
+  "Item 8: crash fixes work (jitter 1.5-10 mm on all six drawings, 48 runs, 0 crashes; BEFORE crashes in 2 of 12 at 5 mm); a forced unary_union failure in build_walls runs the union_all fallback and gives the same openings within 1 cm on bank1, presidential, sukhumvit.",
+  "Item 9: circle3 equals the old formula to 6e-10 on 20000 random arcs and keeps millimetres at 3000 km (BEFORE error 2.9 mm); degenerate input returns None as before.",
+  "Item 10: strip_gaps pre-filter keeps results identical and cuts 800 thin screens in a grid from 8.7 s to 3.3 s (and 800 piers 35 s to 19 s); on a collinear row it gives no gain but no loss (1000 pieces 11.7 s vs 11.6 s). attached_to_wall adds no measurable cost.",
+  "far_face docstring (lo = right, hi = left of a->b) and face_runs docstring are correct; rule 6 claim that two separate lines under 4 cm are not paired is correct; JAMB_RETURN (0.21-0.33), DOORWAY (1.31-1.55), RUNS_ON (0.2-1.1), CENTRED_OUT (0.10-0.80) ranges are unchanged on the six floors.",
+  "Import order: EPS defined at module level before any function runs; geomkit has no EPS or constant dependence; no undefined names; compiles clean with warnings as errors."
+ ]
+}

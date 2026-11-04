@@ -1,0 +1,1128 @@
+{
+ "openings": [
+  {
+   "id": "L29-001",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "hinged double",
+   "a": [
+    12.6173,
+    -54.7702
+   ],
+   "b": [
+    12.6173,
+    -52.8902
+   ],
+   "width": 1.88,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "2 swing arc(s)",
+    "arc on A-DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-002",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    4.6125,
+    -50.4262
+   ],
+   "b": [
+    4.6125,
+    -49.4462
+   ],
+   "width": 0.98,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-003",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    3.8173,
+    -53.5052
+   ],
+   "b": [
+    2.8373,
+    -53.5052
+   ],
+   "width": 0.98,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-004",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "sliding (leaf drawn closed)",
+   "a": [
+    6.2993,
+    -44.4402
+   ],
+   "b": [
+    5.3193,
+    -44.4402
+   ],
+   "width": 0.98,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.75,
+   "evidence": [
+    "wall gap (cap-end)",
+    "closed leaf on A-DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-005",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "sliding (leaf drawn closed)",
+   "a": [
+    8.2283,
+    -44.4402
+   ],
+   "b": [
+    9.2083,
+    -44.4402
+   ],
+   "width": 0.98,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.75,
+   "evidence": [
+    "wall gap (cap-end)",
+    "closed leaf on A-DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-006",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "sliding (leaf drawn closed)",
+   "a": [
+    11.1373,
+    -44.4402
+   ],
+   "b": [
+    12.1173,
+    -44.4402
+   ],
+   "width": 0.98,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.75,
+   "evidence": [
+    "wall gap (cap-end)",
+    "closed leaf on A-DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-007",
+   "floor": "tower:L29",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    0.7868,
+    -51.6255
+   ],
+   "b": [
+    -0.2469,
+    -51.6255
+   ],
+   "width": 1.034,
+   "wallThickness": 0.14,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-008",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    2.4713,
+    -47.9406
+   ],
+   "b": [
+    2.4713,
+    -47.1206
+   ],
+   "width": 0.82,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-DETL-GENF-HDLN"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-009",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "hinged double",
+   "a": [
+    1.8423,
+    -40.5966
+   ],
+   "b": [
+    1.8423,
+    -39.0766
+   ],
+   "width": 1.52,
+   "wallThickness": 0.15,
+   "host": "wall",
+   "hinge": null,
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "2 swing arc(s)",
+    "arc on A-DETL-GENF-HDLN"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-010",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "sliding (leaf drawn closed)",
+   "a": [
+    1.1676,
+    -41.2166
+   ],
+   "b": [
+    -0.3318,
+    -41.2246
+   ],
+   "width": 1.499,
+   "wallThickness": 0.304,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.75,
+   "evidence": [
+    "wall gap (cap-end)",
+    "closed leaf on A-DOOR-HDLN"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-011",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    1.5803,
+    -37.1902
+   ],
+   "b": [
+    1.5803,
+    -36.2102
+   ],
+   "width": 0.98,
+   "wallThickness": 0.12,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-012",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    4.4573,
+    -35.6654
+   ],
+   "b": [
+    5.4773,
+    -35.6654
+   ],
+   "width": 1.02,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-DETL-GENF-HDLN"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-013",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "hinged double",
+   "a": [
+    8.0578,
+    -35.6654
+   ],
+   "b": [
+    9.6778,
+    -35.6654
+   ],
+   "width": 1.62,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "2 swing arc(s)",
+    "arc on A-DETL-GENF-HDLN"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-014",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    4.1883,
+    -41.0464
+   ],
+   "b": [
+    4.1883,
+    -40.0264
+   ],
+   "width": 1.02,
+   "wallThickness": 0.15,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-DETL-GENF-HDLN"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-015",
+   "floor": "tower:L29",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    15.7773,
+    -41.9402
+   ],
+   "b": [
+    15.1503,
+    -41.9402
+   ],
+   "width": 0.627,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-016",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    22.1087,
+    -45.8646
+   ],
+   "b": [
+    22.1087,
+    -44.4646
+   ],
+   "width": 1.4,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-017",
+   "floor": "tower:L29",
+   "kind": "window",
+   "subtype": "fixed",
+   "a": [
+    -2.869,
+    -56.448
+   ],
+   "b": [
+    -2.9701,
+    -57.6036
+   ],
+   "width": 1.16,
+   "wallThickness": 0.17,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.8,
+   "evidence": [
+    "wall gap (cap-end)",
+    "glazing band",
+    "A-GLAZ-CURT",
+    "fixed glazing"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    -0.165,
+    0.085
+   ]
+  },
+  {
+   "id": "L29-018",
+   "floor": "tower:L29",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    1.7003,
+    -35.165
+   ],
+   "b": [
+    1.7003,
+    -34.265
+   ],
+   "width": 0.9,
+   "wallThickness": 0.12,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-019",
+   "floor": "tower:L29",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    1.134,
+    -34.195
+   ],
+   "b": [
+    0.0573,
+    -34.195
+   ],
+   "width": 1.077,
+   "wallThickness": 0.14,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-020",
+   "floor": "tower:L29",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    4.3173,
+    -35.7904
+   ],
+   "b": [
+    4.3173,
+    -37.4402
+   ],
+   "width": 1.65,
+   "wallThickness": 0.28,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-021",
+   "floor": "tower:L29",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    6.1178,
+    -32.4654
+   ],
+   "b": [
+    6.9178,
+    -32.4654
+   ],
+   "width": 0.8,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-022",
+   "floor": "tower:L29",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    6.1678,
+    -32.5154
+   ],
+   "b": [
+    6.1678,
+    -31.8656
+   ],
+   "width": 0.65,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-023",
+   "floor": "tower:L29",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    3.4135,
+    -37.4902
+   ],
+   "b": [
+    2.5176,
+    -37.4902
+   ],
+   "width": 0.896,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-024",
+   "floor": "tower:L29",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    20.5637,
+    -50.095
+   ],
+   "b": [
+    19.5773,
+    -50.095
+   ],
+   "width": 0.986,
+   "wallThickness": 0.17,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.55,
+   "evidence": [
+    "wall gap (cap-end)",
+    "glazing band",
+    "A-GLAZ-CURT",
+    "sliding sashes (3 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    -0.085,
+    0.165
+   ]
+  },
+  {
+   "id": "L29-025",
+   "floor": "tower:L29",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    1.4195,
+    -48.2656
+   ],
+   "b": [
+    1.4195,
+    -49.8152
+   ],
+   "width": 1.55,
+   "wallThickness": 0.204,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (L-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-026",
+   "floor": "tower:L29",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    2.5216,
+    -41.2136
+   ],
+   "b": [
+    4.1133,
+    -41.2136
+   ],
+   "width": 1.592,
+   "wallThickness": 0.304,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (L-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-027",
+   "floor": "tower:L29",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    2.4472,
+    -38.6116
+   ],
+   "b": [
+    2.4556,
+    -41.0615
+   ],
+   "width": 2.45,
+   "wallThickness": 0.148,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (L-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-028",
+   "floor": "tower:L29",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    1.7603,
+    -35.6004
+   ],
+   "b": [
+    2.7603,
+    -35.6004
+   ],
+   "width": 1.0,
+   "wallThickness": 0.12,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "wall gap (L-face), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-029",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    3.1573,
+    -35.7304
+   ],
+   "b": [
+    4.1773,
+    -35.7304
+   ],
+   "width": 1.02,
+   "wallThickness": 0.12,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (L-end)",
+    "1 swing arc(s)",
+    "arc on A-DETL-GENF-HDLN"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-030",
+   "floor": "tower:L29",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    13.1963,
+    -35.7904
+   ],
+   "b": [
+    13.1963,
+    -37.4402
+   ],
+   "width": 1.65,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (L-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-031",
+   "floor": "tower:L29",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    4.9173,
+    -39.4904
+   ],
+   "b": [
+    4.9173,
+    -41.1864
+   ],
+   "width": 1.696,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (L-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-032",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    20.6773,
+    -41.9402
+   ],
+   "b": [
+    22.0587,
+    -41.9402
+   ],
+   "width": 1.381,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (L-end)",
+    "1 swing arc(s)",
+    "arc on A-DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-033",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    14.6773,
+    -41.9402
+   ],
+   "b": [
+    13.3176,
+    -41.9402
+   ],
+   "width": 1.36,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (L-end)",
+    "1 swing arc(s)",
+    "arc on A-DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-034",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "hinged double",
+   "a": [
+    22.6087,
+    -50.195
+   ],
+   "b": [
+    24.5637,
+    -50.195
+   ],
+   "width": 1.955,
+   "wallThickness": 0.05,
+   "host": "glass",
+   "hinge": null,
+   "swing": "right",
+   "confidence": 0.8,
+   "evidence": [
+    "swing arc + leaf on A-DOOR",
+    "second leaf, closed tips meet",
+    "ends: wall end, wall end"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-035",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    2.5213,
+    -45.6902
+   ],
+   "b": [
+    2.5213,
+    -44.6902
+   ],
+   "width": 1.0,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.5,
+   "evidence": [
+    "swing arc + leaf on A-DETL-GENF-HDLN",
+    "ends from the swing",
+    "line work along the opening on another layer"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-036",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    22.7774,
+    -40.5705
+   ],
+   "b": [
+    22.7774,
+    -39.6405
+   ],
+   "width": 0.93,
+   "wallThickness": 0.03,
+   "host": "glass",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.8,
+   "evidence": [
+    "swing arc + leaf on A-DOOR",
+    "ends: wall end, wall end"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-037",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    16.2158,
+    -45.9146
+   ],
+   "b": [
+    17.4158,
+    -45.9146
+   ],
+   "width": 1.2,
+   "wallThickness": 0.03,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.8,
+   "evidence": [
+    "swing arc + leaf on A-DOOR",
+    "ends: wall end, wall end"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-038",
+   "floor": "tower:L29",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    22.7774,
+    -36.4961
+   ],
+   "b": [
+    22.7774,
+    -35.5661
+   ],
+   "width": 0.93,
+   "wallThickness": 0.03,
+   "host": "glass",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.8,
+   "evidence": [
+    "swing arc + leaf on A-DOOR",
+    "ends: wall end, wall end"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "L29-039",
+   "floor": "tower:L29",
+   "kind": "window",
+   "subtype": "fixed",
+   "a": [
+    29.7885,
+    -53.1169
+   ],
+   "b": [
+    29.76,
+    -51.9586
+   ],
+   "width": 1.159,
+   "wallThickness": 0.317,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.65,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "A-GLAZ-CURT",
+    "fixed glazing"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    -0.11,
+    0.094
+   ]
+  },
+  {
+   "id": "L29-040",
+   "floor": "tower:L29",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    19.1771,
+    -59.1521
+   ],
+   "b": [
+    19.1771,
+    -59.7055
+   ],
+   "width": 0.553,
+   "wallThickness": 0.09,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "A-GLAZ-CURT",
+    "sliding sashes (5 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    -0.05,
+    0.05
+   ]
+  },
+  {
+   "id": "L29-041",
+   "floor": "tower:L29",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    -2.3229,
+    -59.1521
+   ],
+   "b": [
+    -2.3229,
+    -59.7055
+   ],
+   "width": 0.553,
+   "wallThickness": 0.09,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "A-GLAZ-CURT",
+    "sliding sashes (5 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    -0.05,
+    0.05
+   ]
+  },
+  {
+   "id": "L29-042",
+   "floor": "tower:L29",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    19.8823,
+    -50.2146
+   ],
+   "b": [
+    19.8823,
+    -54.965
+   ],
+   "width": 4.75,
+   "wallThickness": 0.268,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "A-GLAZ-CURT",
+    "sliding sashes (2 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    -0.134,
+    0.134
+   ]
+  }
+ ],
+ "mapping": "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/mappings_v2/l29.json"
+}

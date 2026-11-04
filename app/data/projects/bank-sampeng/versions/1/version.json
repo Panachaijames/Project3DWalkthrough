@@ -1,0 +1,123 @@
+{
+  "format": "walkthrough-version/1",
+  "projectId": "bank-sampeng",
+  "version": 1,
+  "label": "27 Oct 2026: two levels, openings from the detector (before the fix round)",
+  "createdAt": "2026-10-27T04:31:57Z",
+  "sourceKind": "cad",
+  "sourceFiles": [
+    "I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg",
+    "I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg"
+  ],
+  "modelFormat": "built-model/1",
+  "modelSha1": "4b02dc17f286db688a55f0784d0b2fbb5642cb79",
+  "stamp": "4b02dc17f286",
+  "stampSource": "model.json",
+  "counts": {
+    "floors": 2,
+    "parts": 124,
+    "openings": 55,
+    "furniture": 0,
+    "furnitureKinds": 0,
+    "rooms": 18
+  },
+  "floors": [
+    {
+      "key": "L1",
+      "name": "Level 1",
+      "level": 0.0
+    },
+    {
+      "key": "L2",
+      "name": "Level 2",
+      "level": 3.7
+    }
+  ],
+  "hasStages": true,
+  "assets": [
+    {
+      "name": "topview.png",
+      "role": "thumbnail",
+      "mediaType": "image/png",
+      "bytes": 173402,
+      "sha1": "e156e34a3040f8066b23993b1c188df7d1bc4acb"
+    }
+  ],
+  "downloads": {
+    "maxScript": "Bangkok_Bank_Sampeng.ms",
+    "furnitureCsv": false
+  },
+  "presentation": {
+    "documentTitle": "Bank branch test",
+    "heading": "Bangkok Bank, Sampeng Branch (test): CAD → 3D",
+    "intro": [
+      {
+        "text": "Built automatically from the 2 Revit-exported DWGs of "
+      },
+      {
+        "text": "Bangkok Bank, Sampeng Branch",
+        "bold": true
+      },
+      {
+        "text": ": walls from the wall layers, glass from the curtain-wall layers and from the glass wall types Revit names on its wall blocks, and the 39 doors, 7 windows and 9 passages from the openings detector, used as found. Levels +0.00 / +3.70 m. No drawing-specific rules; no AI used."
+      }
+    ],
+    "accent": "#2f6f8f",
+    "legend": {
+      "layout": "inline",
+      "items": [
+        {
+          "colour": "#e3ddd3",
+          "text": "Walls, columns and door lintels (3.70 m per level)"
+        },
+        {
+          "colour": "#9cc3d5",
+          "text": "Glass: curtain wall, window panes, glass partitions (2.60 m, from the Revit wall types)"
+        },
+        {
+          "colour": "#77727c",
+          "text": "Railings (1.10 m) and the parapet"
+        },
+        {
+          "colour": "#b9c7b4",
+          "text": "Stairs: steps where the drawing says UP / DOWN, flat tread lines elsewhere (faint: flights above the cut)"
+        },
+        {
+          "colour": "#d4d8d2",
+          "text": "Floor plate (approximate outline)"
+        }
+      ]
+    },
+    "floorButtons": {
+      "all": "Both levels"
+    },
+    "camera": {
+      "kind": "fixed",
+      "position": [
+        24,
+        27,
+        29
+      ],
+      "target": [
+        0,
+        2.5,
+        0
+      ],
+      "far": 600
+    },
+    "creaseAngle": 25,
+    "groundPlane": null
+  },
+  "seed": {
+    "from": [
+      "bank_test/previous_before_fix_round_2026-10-27/src/bank_model.json",
+      "bank_test/previous_before_fix_round_2026-10-27/src/bank_stages.json",
+      "bank_test/previous_before_fix_round_2026-10-27/bank_topview.png",
+      "bank_test/previous_before_fix_round_2026-10-27/Bangkok_Bank_Sampeng.ms",
+      "bank_test/previous_before_fix_round_2026-10-27/src/bank_summary.json",
+      "bank_test/previous_before_fix_round_2026-10-27/README.md"
+    ],
+    "seededAt": "2026-11-04T04:35:50Z",
+    "seedVersion": "1"
+  }
+}

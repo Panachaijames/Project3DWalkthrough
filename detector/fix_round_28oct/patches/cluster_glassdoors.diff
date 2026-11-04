@@ -1,0 +1,89 @@
+--- integrated/detector/openings.py	2026-10-27 14:26:20.941133200 +0700
++++ glassdoors/detector/openings.py	2026-10-27 15:10:13.638678500 +0700
+@@ -35,6 +35,11 @@
+     ends, glazing or jambs (small closed shapes on any layer) within 0.35 m. Dropped: glass doors in glass (shower)
+     screens, leaves closing against a single wall-layer line drawn unbroken through the chord (a door in a one-line
+     screen), and pairs of arcs with nothing to bound them (furniture).
++    Fixed sidelights: a door ends at its leaf (hinge to closed tip) where fixed glass stands beside it. The opening (the
++    gap's wall ends, or the wall end / jamb a symbol snapped to) stands 0.15 m or more beyond the leaf and glass-layer
++    lines (window / glass roles, 0.08 m or more long) cover half of that stretch or more: a sidelight, drawn as part of
++    the glass partition. It is no part of the door and no window (a pane that short is no glazing band, rule 5).
++    Frames, reveals and mullions (under 0.15 m beyond the leaf) stay part of the door.
+  5. Glazing: parallel lines on window/glass layers grouped into bands. A band in a gap glazes it; when the gap was
+     measured from a block shorter than it is thick (a corner block) and the glazing stands outside that block, the
+     window takes the glazing's own line. A band in no gap is a bay when wall ends / columns in its own line (or a
+@@ -774,6 +779,8 @@
+             openings.append(glazed_opening(fl, add(a0, mul(b.u, u0)), add(a0, mul(b.u, u1)), t, kind, nl,
+                                            ['glazing between wall ends (bay)'] + b.lays, 0.65))
+     openings += screen_doors(fl)                                # sliding leaves in a gap of a thin glass screen
++    for o in openings:                                          # fixed glass beside a leaf is part of the partition
++        if o['kind'] == 'door' and o['swings']: trim_to_leaf(fl, o)
+     openings = fuse(openings)
+     T['total'] = time.time() - t0
+     fl.T = T
+@@ -1349,6 +1356,57 @@
+     g.ev.append('ends on jambs beside the swings')
+ 
+ 
++# Limits checked on the six drawings (fixed sidelights, rule 4). SIDELIGHT_MIN: every door end of the older drawings and
++# of L30 stands 0.14 m or less beyond its leaf (frames, reveals, 0.10 m mullions), the four sidelit doors of L29 stand
++# 0.20-0.28 m beyond (panes 0.20-0.28 m wide). Nothing changes for any value from 0.02 to 0.19 m; from 0.20 m the 0.20 m
++# panes are lost (tower 52, then 50 of 54 right). 0.15 m is just above the widest frame, well below the narrowest pane.
++# SIDELIGHT_SHARE: a pane is drawn as two glass lines that stop at the wall end and at the hinge hardware, so the stretch
++# beside the hinge is covered 85 % (0.17 of 0.20 m) and the one beside the closed tip 100 %; no other door end stands
++# 0.15 m or more beyond its leaf, so any share from 0 to 0.84 gives the same result: 0.5 asks for "mostly glass".
++SIDELIGHT_MIN = 0.15       # m: a fixed pane beside a leaf is wider than a frame, reveal or mullion
++SIDELIGHT_SHARE = 0.5      # share of that stretch the glass-layer lines must cover
++
++
++def glass_share(fl, c, u, s0, s1, lat):
++    """The share of the stretch s0..s1 (along u from c) that glass covers: straight lines of 0.08 m or more (shorter
++    ones are frame stubs, as in glazing_bands) on window / glass layers running along it, within lat of its line (a
++    pane is two lines a few mm apart)."""
++    SI = fl.SI
++    if s1 <= s0: return 0.0
++    p, q = add(c, mul(u, s0)), add(c, mul(u, s1))
++    idx = SI.near_box(min(p[0], q[0]) - lat, min(p[1], q[1]) - lat, max(p[0], q[0]) + lat, max(p[1], q[1]) + lat)
++    if not len(idx): return 0.0
++    a0, a1, la, lb, cs = SI.in_frame(idx, c, u)
++    ok = (cs > math.cos(math.radians(3))) & (np.maximum(np.abs(la), np.abs(lb)) <= lat) & (SI.L[idx] >= 0.08)
++    iv = []
++    for k in np.nonzero(ok)[0]:
++        roles = fl.P[SI.pid[idx[k]]].roles
++        if roles & {'window', 'glass'} and not roles & {'wall', 'column'}:
++            iv.append((max(float(a0[k]), s0), min(float(a1[k]), s1)))
++    tot, reach = 0.0, s0
++    for a_, b_ in sorted(iv):
++        a_ = max(a_, reach)
++        if b_ > a_: tot += b_ - a_; reach = b_
++    return tot / (s1 - s0)
++
++
++def trim_to_leaf(fl, o):
++    """A door ends at its leaf where fixed glass stands beside it: the opening was read from the wall ends of the gap
++    (or the wall end / jamb the symbol snapped to) and stands SIDELIGHT_MIN or more beyond the leaf, with glass-layer
++    lines along that stretch (a sidelight, drawn as part of the glass partition). The glass is not part of the door."""
++    a, b = o['a'], o['b']
++    u = unit(sub(b, a)); w = math.dist(a, b)
++    ss = [dot(sub(q, a), u) for h in o['swings'] for q in (h.hinge, h.closed)]
++    lo, hi = min(ss), max(ss)
++    lat = o['t'] / 2 + 0.05
++    s0 = lo if lo >= SIDELIGHT_MIN and glass_share(fl, a, u, 0.0, lo, lat) >= SIDELIGHT_SHARE else 0.0
++    s1 = hi if w - hi >= SIDELIGHT_MIN and glass_share(fl, a, u, hi, w, lat) >= SIDELIGHT_SHARE else w
++    if s0 == 0.0 and s1 == w: return
++    o['a'], o['b'] = add(a, mul(u, s0)), add(a, mul(u, s1))
++    o['ev'] = o['ev'] + ['fixed glass beside the leaf (sidelight): the door ends at the leaf']
++    o['sidelit'] = True
++
++
+ def is_free_post(fl, p):
+     """The material at p is a free-standing post or column: a small squarish piece (up to 0.9 m) of the wall solid
+     (glazing included) with nothing else within 0.15 m (carport columns, pergola posts, round columns)."""
+@@ -1652,6 +1710,7 @@
+             side = cross(sub(b, a), sub(o['swings'][0].open, o['swings'][0].hinge))
+             swing = 'left' if side > 0 else 'right'
+         host = o['host'] if o['host'] == 'none' else host_of(fl, a, b)
++        if host == 'none' and o.get('sidelit'): host = 'glass'       # the sidelights bound it
+         out.append({'id': f"{floor_name.split(':')[-1]}-{k:03d}", 'floor': floor_name, 'kind': o['kind'],
+                     'subtype': o['subtype'], 'a': [round(float(a[0]), 4), round(float(a[1]), 4)],
+                     'b': [round(float(b[0]), 4), round(float(b[1]), 4)],

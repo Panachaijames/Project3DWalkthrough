@@ -1,0 +1,140 @@
+{
+ "findings": [
+  {
+   "id": "bank-se-parapet-full-height",
+   "model": "bank",
+   "severity": "high",
+   "floor": "bank:L2",
+   "at": [
+    6.9,
+    -10.45
+   ],
+   "what": "The curved element at the south-east corner of the Level 2 terrace, with its 0.9 m straight return at x 8.05-8.22, is built as a 3.70 m curved wall (Max object BB_L2_Wall_006). In the default Orbit view it is the object nearest the camera. From the street and from the terrace it towers over the 1.10 m terrace railings on both sides. Every piece of drawing evidence says it is a low parapet. Confirms the builder's open question.",
+   "evidence": "Drawing: 2 concentric A-WALL ARCs (centre (5.651,-8.274), r 2.425 / 2.575, so 0.15 m thick) plus 4 lines, in the Revit link block. All are colour 8 with no line weight, and there is no fill (poché). The other 199 A-WALL lines in the L2 link block are cut lines (0.25 mm, colour 7), and all other base-building walls have A-WALL-PATT fills. So this is the only wall drawn entirely in projection style, which means it is below the cut plane, i.e. low. The terrace railings (Railing - 100X150, A-FLOR-HRAL) run into both of its ends: the south rail ends at x 5.699, the east rail starts at y -7.338. On L1 there is only the A-FLOR paving outline under it, so nothing could carry a 3.7 m wall. The builder rejected an 'unfilled wall = low wall' rule. That objection is right about fills (the L1 west party wall has unfilled cavity strips), but those strips are drawn with cut lines, so a line-style test separates the two cases. Screenshots: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-bank/shots/orbit_default.png, .../shots/se_corner_outside.png, .../shots/se_corner_terrace_L2.png. Overlay: .../evidence/L2_SE_curve_3p70m.png",
+   "suggestedFix": "Add a general builder rule: a wall-layer piece whose faces are all drawn without the layer's cut line weight and that has no fill is below the cut plane. Build it as a parapet at railing height (1.10 m), with follow=false, and list it for the owner. An alternative general rule: an unfilled wall piece whose ends meet railing ends takes the railing height. The owner still confirms the exact height.",
+   "alreadyListedByBuilder": true
+  },
+  {
+   "id": "bank-glass-partitions-solid",
+   "model": "bank",
+   "severity": "high",
+   "floor": "bank:L1+L2",
+   "at": [
+    -0.4,
+    2.27
+   ],
+   "what": "The Revit 'GLASS WALL 2600H' partitions are built as opaque 3.70 m walls. On Level 1: the manager's room (south and east sides), the meeting room's east side, the BA/BE screen and the lobby screen between the entrance/ATM lobby and the banking hall. On Level 2: the mini bar / wealth room on three sides. Their glass doors (L1-005, L1-007, L1-008, L1-022, L2-010) get opaque lintels from 2.40 to 3.70 m. The 10 mm frameless screen around the double glass door L1-027 (lift hall) is probably glass too. In Max the problem is worse: the L1 glass is fused into BB_L1_Wall_005 (20.24 m2, 87% of all L1 wall area) and the L2 glass into BB_L2_Wall_005 and BB_L2_Wall_010. The 3D team cannot select the glass to change its material or height without splitting splines.",
+   "evidence": "There are 16 'Basic Wall _ GLASS WALL 2600H 20X100' blocks on A-WALL (11 on L1, 5 on L2), about 8.4 m of glass wall on each level. Each block's 10 mm glass is a separate top-level A-WALL hatch (line weight 5) outside the block, as the builder said. Model wall area inside the blocks' 100 mm bands: about 0.9 m2 on L1 and 0.6 m2 on L2, all kind 'wall'. Fused objects: BB_L1_Wall_005 holds 0.605 m2 of it, BB_L1_Wall_008 0.234 m2, BB_L2_Wall_005 0.416 m2, BB_L2_Wall_010 0.202 m2. Screenshots: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-bank/shots/L1_lobby_screen.png, .../shots/L2_waiting_to_wealth.png. Overlays: .../evidence/L1_glass_partitions_manager_meeting.png, .../evidence/L1_glass_lobby_screen.png, .../evidence/L2_glass_wealth_room.png",
+   "suggestedFix": "Read the Revit wall-type name the same way door heads are read from 'WxH': this is a generic vocabulary rule, so no per-drawing data is needed. A 'Basic Wall' block whose type name contains GLASS is glass, and its height comes from '<n>H' (2600H = 2.60 m). Build it as its own glass part: a 10 mm pane on the hatch inside the block's 100 mm band, with mullion strips at the ends, and nothing above 2.60 m. Lintels over its doors become glass transoms up to 2.60 m. Keep the glass as separate Max objects on BB_<L>_Glass.",
+   "alreadyListedByBuilder": true
+  },
+  {
+   "id": "bank-atm-slot-open",
+   "model": "bank",
+   "severity": "medium",
+   "floor": "bank:L1",
+   "at": [
+    6.19,
+    7.91
+   ],
+   "what": "The 0.58 m slot in the Level 1 east facade, in the stair / ATM hall beside door L1-023, is left open for the full 0-3.70 m. In Walk it shows as a strip of daylight. From the street it is a dark slot through the facade. In the drawing a through-wall ATM fills it (A-GENM 'ATM Machine-V26', a layer with no role). Neither the README nor the report mentions it.",
+   "evidence": "The facade fills stop at y 7.62 and start again at y 8.20 (A-WALL-PATT hatches (6.14..6.25, 6.95..7.62) and (6.11..6.23, 8.20..9.63)). The ATM block spans x 5.50..6.56, y 7.59..8.35. In the box x 5.9..6.6, y 7.66..8.16 the model has only the slab: no wall, glass or collider skin at any height. Because of the slot the L1 envelope is not closed: 12.9 m2 of stair hall and corridor counts as outside. The detector correctly does not report it as an opening. Screenshots: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-bank/shots/east_facade_atm_slot.png, .../shots/atm_slot_inside.png. Overlay: .../evidence/L1_ATM_slot_open.png",
+   "suggestedFix": "Add a general builder rule: a gap in an exterior wall line that no detected opening explains, and that is narrower than the narrowest door or has an object block standing in it, is closed with wall from 0 (or from the object's top) to the wall top. List each such closure in the summary for the owner.",
+   "alreadyListedByBuilder": false
+  },
+  {
+   "id": "bank-stair-void-and-fins",
+   "model": "bank",
+   "severity": "medium",
+   "floor": "bank:L2",
+   "at": [
+    3.5,
+    7.6
+   ],
+   "what": "The stairs do not read as stairs. Every S-STRS line becomes a 15 cm vertical fin standing on a flat floor. The Level 2 floor plate is not cut over the down-flight, so on Level 2 you walk across the stairwell on flat slab between 1.10 m railings. The lift shaft also has floor on both levels. Confirms the builder's note.",
+   "evidence": "The L2 slab is a single polygon with no holes. It covers the down-flight at x 2.53-4.53, y 7.01-8.16. make_html.py builds a 0.15 m vertical quad for each stair line. Screenshot: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-bank/shots/L2_stair_hall.png",
+   "suggestedFix": "Cut a void in the upper plate wherever stair lines below the cut lie inside a railing- or wall-bounded area on that level (the down-flight), and over the lift-shaft interior. Build the treads as solids between the riser lines rather than as fins.",
+   "alreadyListedByBuilder": true
+  },
+  {
+   "id": "bank-floor-over-north-stair",
+   "model": "bank",
+   "severity": "medium",
+   "floor": "bank:L2",
+   "at": [
+    -2,
+    12.2
+   ],
+   "what": "The rule that a railing marks a floor edge lays Level 2 floor over the stair outside the north wall. The result is a slab trapezoid of about 0.95 m x 7 m (roughly 4 m2) outside the north wall at +3.70 m, with tread fins on it and a 1.10 m railing along it. The L1 plate also gets a bulge at the foot of the stair (1.1 m2, reaching 0.93 m out). There is no door to this area on either level, and on L2 all 18 risers are below the cut, so this is a stairwell, not a floor. The builder's question 'keep or drop the north stair' does not cover the floor plate.",
+   "evidence": "The L2 slab reaches y 12.71 between x -5.8 and 1.3; 2.73 m2 of it lies more than 10 cm outside the walls and railings. The L2 railing part (-4.02..0.40, 11.75..12.68) closes the pocket. On L1 the extra slab piece is (-4.93..-2.46, 11.87..12.71). Overlay: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-bank/evidence/L2_floor_over_north_stair.png. Screenshot: .../shots/north_stair_L2.png",
+   "suggestedFix": "Let a railing extend a floor plate only over area that is reachable from inside (through a detected door or passage) and that contains no stair-layer lines. Otherwise stop the plate at the wall.",
+   "alreadyListedByBuilder": false
+  },
+  {
+   "id": "bank-room-labels-overlap",
+   "model": "bank",
+   "severity": "low",
+   "floor": "bank:L1+L2",
+   "at": [
+    -3.8,
+    10.8
+   ],
+   "what": "In the default Orbit view at 1600x1000, room names overlap. On Level 2 (shown with Both levels), 'FEMALE TOILET · 6.4 m²' sits over 'RACK · 7.3 m²' and 'MALE TOILET · 4.7 m²'. On Level 1 (Level 1 button), 'MANAGER · 11.4 m²' overlaps 'MEEETING 4 PAX · 8.2 m²'. All 18 names are in the correct rooms; the 'MEEETING' spelling is the drawing's.",
+   "evidence": "Screen boxes [left, top, right, bottom] in pixels: FEMALE TOILET [780,251,913,271] against RACK [751,267,834,287] and MALE TOILET [837,268,958,288]; MANAGER [705,416,820,436] against MEEETING [810,421,951,441]. Screenshot: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-bank/shots/orbit_default.png",
+   "suggestedFix": "On the bank page (not shared code), hide or stack labels whose screen boxes overlap, keeping the larger room, or leave the area out of labels at overview zoom.",
+   "alreadyListedByBuilder": false
+  },
+  {
+   "id": "bank-slab-scallops",
+   "model": "bank",
+   "severity": "low",
+   "floor": "bank:L1+L2",
+   "at": [
+    6.3,
+    -6.5
+   ],
+   "what": "The floor plates bulge outside the building at concave facade corners, because they are a closing with a 1.5 m disc. From outside this shows as a wavy plinth along the L1 east facade. Confirms the builder's note.",
+   "evidence": "Slab more than 10 cm outside the envelope: L1 0.16 m2 outside window L1-020 (reaching 0.30 m out), 0.11 m2 outside L1-011 (0.28 m), 0.25 m2 at the strongroom / stair-hall NE outside corner (0.33 m); L2 0.26 m2 at the same corner. Screenshot: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-bank/shots/se_corner_outside.png",
+   "suggestedFix": "Clip the closed plate back to the walls+glass envelope wherever a wall or glass face exists, adding railing-bounded areas only where the north-stair fix allows them. Alternatively use a smaller disc for concave corners.",
+   "alreadyListedByBuilder": true
+  },
+  {
+   "id": "detector-L1-023-offset-lintel",
+   "model": "detector",
+   "severity": "low",
+   "floor": "bank:L1",
+   "at": [
+    5.93,
+    5.43
+   ],
+   "what": "Confirmed: the curtain-wall door L1-023 is 0.975 m wide against a 1.025 m slot, and its centre line is 0.1 m west of the slot. As a result the lintel (x 5.87-5.99) sits about 0.1 m inside the facade glass line (x 5.99-6.11), leaving a 10 cm recess above the door. The facade is otherwise closed, so the effect is cosmetic.",
+   "evidence": "Key B1-09: a (6.045, 4.891), b (6.024, 5.916). Detector: x 5.931, y 4.940-5.915, wallThickness 0.127. The lintel centre is offset 0.09 m from the centre of the wall at the jamb. The 15 cm cut margin clears the slot frame, and nothing remains below the head.",
+   "suggestedFix": "In the detector, add a general rule: when frame lines show a slot in a glass or wall line, snap the door's centre line to that slot. No builder change is needed.",
+   "alreadyListedByBuilder": true
+  },
+  {
+   "id": "bank-max-parapet-follow-reset",
+   "model": "bank",
+   "severity": "low",
+   "floor": "bank:L2",
+   "at": [
+    6.9,
+    -10.45
+   ],
+   "what": "In the Max script the SE curve (BB_L2_Wall_006) is a 'follow' part. If the 3D team sets its Extrude to a parapet height, pressing 'Update levels and heights' puts it back to the level's wall height.",
+   "evidence": "Its BB_part call passes follow=true. BB_updateLevels sets ex.amount = newHeights[fi] - base on every part whose BB_follow is true.",
+   "suggestedFix": "Fixed together with bank-se-parapet-full-height: parapets are built with follow=false. As an extra safeguard, Update could skip objects whose Extrude amount was edited by hand.",
+   "alreadyListedByBuilder": false
+  },
+  {
+   "id": "tests-debug-port-collision",
+   "model": "tests",
+   "severity": "low",
+   "what": "test_bank.mjs uses fixed port 9377 by default, and the shared cdp.mjs launch() attaches to whatever browser already answers on the debugging port. Two sessions on the same port drive, and finally close, each other's browser, which can give false passes or fails. This happened during this review: a first screenshot run on port 9391 captured the Sukhumvit house page from another session's browser. The run was repeated on a port checked to be free.",
+   "evidence": "cdp.mjs launch() polls http://127.0.0.1:<port>/json/version, attaches to the first page listed, and close() sends Browser.close to that browser. The builder's runs 4 and 5 took 49 s and 48 s against 23-33 s before, which the builder put down to 'probably the other agent's load'.",
+   "suggestedFix": "In test_bank.mjs (not shared code), stop with an error if the port already answers before launch, or pick a free port. Changing the shared helper to use --remote-debugging-port=0 with DevToolsActivePort is the owner's decision, since viewer-modes is shared.",
+   "alreadyListedByBuilder": false
+  }
+ ],
+ "checkedWhat": "Coordinates are drawing metres (model JSON = drawing minus offset (1.213, 0.809)). Output folder: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-bank. It holds ov.py (overlay tool), tiles/ (30 tiles of 6 x 6 m, model parts over the DXF, both levels), evidence/ (6 focused overlays), zoom/, shots/ (14 headless-Edge screenshots of bank_3d_preview.html taken on a port checked free) and shots.mjs. Nothing in the build folders or the project folder was changed. The project folder's only files dated today are from 09:41-09:54, before the build.\n\nWALLS: every A-WALL, A-WALL-PATT and S-COLS fill is built. Unbuilt fill is 0.005 m2 on L1 (a 3 cm groove where window L1-021's cut reaches the ATM-lobby wall) and 0 on L2. Only 0.12 m of wall-layer line is left out. Nothing from furniture, casework, plant, equipment, A-FLOR or A-DETL is built. Extra solid appears only in enclosed voids (the gap between lift shaft and facade, 0.63 / 0.67 m2; two small ducts on L2), harmless, and in the glass-wall bands. Wall thicknesses follow the fills: the L1 west party wall is 0.38 m (two leaves plus a cavity), L2 0.23 m, the strongroom 0.30-0.43 m.\nCOLUMNS: 4 free-standing on L1 and 3 on L2, at the S-COLS positions. The facade columns merge into walls.\n\nOPENINGS: all 39 doors match the answer key to 1 mm, apart from L1-023 (0.1 m off; detector finding) and L2-016 (0.875 m against 1.00 m, cross wall through the frame; invisible, builder-listed). An independent check of every door found nothing solid below its head, and a lintel covering at least 99% of the opening from the head to 3.70 m. Heads: 29 at 2.40 m and 10 at 2.00 m; all 31 doors whose names carry a size match it, and the 8 glass and pivot doors take 2.40 m. The 9 passages are clear and have no lintel. The 7 windows are full-height 20 mm panes on the drawn glazing.\nDetector notes in the report, all confirmed: L1-023 offset; the 6 extra passages (L1-024/025/026, L2-019/020/021) cut nothing and are harmless; the 7 windows are typed sliding, 5 of them eitherKind; the B1-98 sidelight is not reported and its glass is kept; L2-028 has host 'none' but its lintel is built. The detector output is byte-identical to detector/output.\n\nGLASS: the 7 panes plus the sidelight account for all 8 curtain panels, plus one 25 mm jamb mullion. The glass partitions are a separate finding.\nRAILINGS: 2 on L1 and 5 on L2, 1.10 m, on the A-FLOR-HRAL lines. The terrace bands are 15 cm wide, not the 5-10 cm the README says.\nTERRACE: building it as floor fits the drawing. The L2 louvred doors swing out onto it, the L1 A-FLOR paving outline matches its shape, and its edge is a 100x150 balustrade.\nFLOOR PLATES: no floor is missing. The extras are the north-stair floor and the corner bulges; the stair void is not cut.\nROOM NAMES: all 18 are in the correct rooms; only some overlap.\n\nMAX SCRIPT: the 86 BB_part calls match bank_model.json one for one (kind, z0, z1, follow, level). It also builds 4 stair shapes (30/76/87/54 lines) and 18 room texts. Levels are #(0.00,3.70) and heights #(3.70,3.70). The model-data stamp 7bfd8b700cb7 is the same in the JSON, the HTML and the .ms. Layers are named BB_<level>_<kind> as the README says. The script reuses the presidential constructs, adding only per-level arrays, open stair splines and the level update; reading it found no fault. Complexity is close to the presidential script (at most 2 holes per part; 930 vertices against 866). It has not been run in Max, which this review cannot do.\n\nOWNER QUESTIONS: floor-to-floor 3.70 m cannot be checked beyond the 21 risers. 2.40 m for the glass and pivot doors is plausible. The terrace question is answered above; the north stair is a separate finding."
+}

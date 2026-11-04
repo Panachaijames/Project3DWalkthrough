@@ -1,0 +1,179 @@
+{
+ "findings": [
+  {
+   "id": "T1-slide-threshold",
+   "model": "tests",
+   "severity": "medium",
+   "what": "The model change does explain the drop from 90% to 80% on 'sliding works at random spots along walls'. Lowering the threshold is still the wrong fix: the check now allows 8 misses out of 40 instead of 4, while what it counts stays the same.",
+   "evidence": "I re-ran the seeded 40-spot procedure on the pre-openings project page and on the build page. Before each slide, every contact was sorted into wall face or not (out/review-code/probe_review.mjs, results in probe_old.json and probe_new.json). Old page: 37/40 slid, 33/33 on wall faces; the 3 misses are all non-wall contacts: (38.88,22.84) twice and (13.14,14.69). New page: 33/40 slid, 28/28 on wall faces; all 7 misses are at piers, columns or convex corners. Four of them are new: the piers between the now-open sliding doors ground-004/-006/-018 at (31.92,14.14), (31.91,14.11) and (27.08,14.09), and the round column at (21.86,12.03). Before the cut, those 4 spots ended on the closed floor-to-ceiling glass at y 14.4. So the builder's explanation holds. What changed is the mix of contacts (wall-face contacts went from 33 to 28); sliding along walls did not get worse.",
+   "suggestedFix": "Keep 90% and count only contacts on a wall face. After walking to the contact p, take d0 = probe.open(k*5). Then cast probe.open(k*5) from p moved 0.3 m and 0.6 m sideways. The contact is a wall face if, on at least one side, both hits are within 0.12 m of d0. Otherwise skip the spot as 'pier/column/corner' and report how many were skipped. Draw spots until there are 40 wall-face contacts (at most 3000 tries, at least 30 needed). Today this gives 33/33 on the old page and 28/28 on the new one, so the 80% comment can go. Either version edits viewer-modes/test_viewers.mjs in the shared folder, so the owner should approve it.",
+   "alreadyListedByBuilder": true,
+   "floor": "sukhumvit:ground",
+   "at": [
+    31.92,
+    14.14
+   ]
+  },
+  {
+   "id": "T2-house-passage-check",
+   "model": "tests",
+   "severity": "medium",
+   "what": "In test_house_openings.mjs, 'every passage can be walked through' (25 of 29 pass) checks something the decided treatment does not do: passages are not cut. The check can only pass if the detector finds no false passages and the base model has nothing standing in any gap. Its failure has nothing to do with this change.",
+   "evidence": "I walked the same passages with the same cross() on the pre-openings project page, with the openings injected in the same frozen frame. The 4 blocked passages give identical numbers before and after: ground-021 fwd -0.3 / back -0.4; upper-028 fwd -0.2; upper-030 tight/tight; upper-031 fwd 0.2 / back -0.9. ground-031 got better: blocked before, walkable from one side now. Geometric check (out/review-code/house_check.py): cut_floor leaves the wall, glass and single-line area inside all 29 passage footprints unchanged (0.0000 m2), and no lintel, sill or pane stands in a passage. Lintels of neighbouring doors only touch the 0.15 m margin, at 2.6 m and above. 3 of the 4 blocked passages are detector extras (upper-028/030/031). ground-021 is a real passage (GW-10) blocked by a 1 m single-line piece that was already in the model. The same walk also shows the door cut works: 7 doors were blocked on the old page and 0 are now.",
+   "suggestedFix": "Replace it with two checks. (a) 'Passages are left as they were': knee and chest rays across each passage, and a ray up from 1 m, hit no 'lintels and sills' or 'window panes' mesh. Add a merge-time assertion that the solids inside passage footprints are unchanged. (b) 'No passage is harder to walk through than before the openings were cut': run the same cross() against a stored before-list or the pre-openings page, and fail only on passages that are newly blocked. Print the blocked passages, with what stands in the way, as information. Whether a detected passage is real is a question for score.py, not for this browser test.",
+   "alreadyListedByBuilder": true,
+   "floor": "sukhumvit:ground",
+   "at": [
+    12.898,
+    17.509
+   ]
+  },
+  {
+   "id": "T3-bank-passage-lanes",
+   "model": "tests",
+   "severity": "medium",
+   "what": "test_bank.mjs checks that every detected passage can be walked through. After run 1, the passage part was loosened so that the false passage L2-019 would pass: lanes 0.3 m apart are tried, and the first lane that works counts. The test was bent to fit a false detection. Per the bank report, 6 of its 9 passages are false detections (L1-024/025/026, L2-019/020/021), so a pass says nothing about how openings are treated.",
+   "evidence": "test_bank.mjs L102-149, with the lane search at L130-137 and the 'passages walked off their middle' log line. The bank report's reruns say: 'the exact middle of false passage L2-019 clips a partition corner. The test now ... tries lanes 0.3 m apart across wide passages'. Passages are left untouched by decision, and the heads check (L153-162) already asserts that passages have no lintel.",
+   "suggestedFix": "Walk doors only: through the middle, both ways. Keep the extra 0.45 / 0.4 m start spots, which are a fair geometry fix for the 0.65 m closet behind L2-007. For passages, assert only that they are untouched: the existing up-ray check plus knee and chest rays that hit no lintel or pane mesh. List passages that cannot be crossed as information, and remove the lane search.",
+   "alreadyListedByBuilder": false,
+   "floor": "bank:L2",
+   "at": [
+    -2.884,
+    10.742
+   ]
+  },
+  {
+   "id": "H1-stale-openings",
+   "model": "house",
+   "severity": "medium",
+   "what": "merge_cad.py cuts with whatever openings.json is in the folder. Nothing checks that the file belongs to the current plan.dxf or to the current model frame, so an out-of-date openings.json is used without warning.",
+   "evidence": "merge_cad.py L62-67 only checks os.path.exists('openings.json'). openings.json records the plan's sha1 and the frame centre (find_openings.py L119-125), but merge_cad never compares them with plan.dxf or house3d.json. In the project this is a likely path: find_openings.py stops with 'opening detector not found' once the scratch default path is gone. The README chain is then easy to resume at merge_cad.py, which would cut old openings into new walls. build_stages.py also reads openings.json without any check.",
+   "suggestedFix": "When openings.json exists, merge_cad.main() should require O['source']['sha1'] == sha1(plan.dxf) (if plan.dxf is present) and O['frame']['centre'] == D['centre']. Otherwise it should stop with 'openings.json is from another plan: run find_openings.py'. Add the same check to build_stages.py.",
+   "alreadyListedByBuilder": false
+  },
+  {
+   "id": "H2-detector-path",
+   "model": "house",
+   "severity": "low",
+   "what": "find_openings.py looks for the detector in the session scratch folder by default, and the bank's bank_project.json also holds absolute scratch paths. Once the files are copied into the project as CHANGES.md lists and the scratch folder is cleaned, the documented rebuild command fails.",
+   "evidence": "find_openings.py L28-42 (DEFAULT_DETECTOR, plus the TOOLS search for ../tools/prims.py). The rebuild command in CHANGES.md does not pass --detector. The bank report's assumptions mention the absolute paths in bank_project.json.",
+   "suggestedFix": "Copy openings.py, geomkit.py and tools/prims.py into the project, for example a detector folder next to viewer-modes. Default to a path relative to the script and keep OPENINGS_DETECTOR as an override.",
+   "alreadyListedByBuilder": true
+  },
+  {
+   "id": "H3-required-inputs",
+   "model": "house",
+   "severity": "low",
+   "what": "The pipeline breaks on a drawing that lacks its hand-made inputs. find_openings.py requires heights.json and has no fallback to the plan section 3.2 defaults (2.10 / 0.90 / 2.10 m). merge_cad.py requires 'centre' and 'shift' in house3d.json and raises a KeyError on a house3d.json from the old build3d.py.",
+   "evidence": "find_openings.py L77-78 reads args.heights with no default and indexes DEF[f]. merge_cad.py L65 reads D['centre'] and D['shift'].",
+   "suggestedFix": "When heights.json is missing, use the plan defaults and print a note. If 'centre' is missing, stop with 're-run build3d.py'.",
+   "alreadyListedByBuilder": false
+  },
+  {
+   "id": "H4-raise-gap",
+   "model": "house",
+   "severity": "low",
+   "what": "When a floor's wall height is raised above the height in the data, an open slot appears above windows whose head reaches the wall top (ground-042 and ground-043, at 3.90 m). They have no lintel to stretch, and fitPieces keeps panes at their own top.",
+   "evidence": "out/review-code/raise_check.mjs on the build page. At 3.90 m, only ground-036 (which has no wall) is open just under the wall top. At 4.50 m, ground-042 and ground-043 are open too: rays across the window line at 4.20 m and 4.45 m hit nothing. In make_html, fitPieces sets panes to y = min(z, height). The house test only tries 3.50 m and 2.00 m.",
+   "suggestedFix": "Let panes that reach the top follow the wall top (stretch their top vertices to the new height), or add a head-to-top piece that fitPieces stretches. Add a 4.50 m case to the 'heads stay put' check.",
+   "alreadyListedByBuilder": false,
+   "floor": "sukhumvit:ground",
+   "at": [
+    19.373,
+    16.581
+   ]
+  },
+  {
+   "id": "H5-intro-text",
+   "model": "house",
+   "severity": "low",
+   "what": "The page intro is wrong on two points. It says '34 doors, 42 windows and 29 passages found in the plan are cut in ... windows glazed to the same height', but passages are not cut, and ground-042/043 are glazed to 3.90 m, not to the 3.00 m door head.",
+   "evidence": "pages/house_3d_preview.html intro; make_html_cad_merged.py intro block (L46-61). The merge caption gets it right: '34 doors and 42 windows ... are cut through them'.",
+   "suggestedFix": "Write '34 doors and 42 windows are cut in (the 29 passages are gaps that are already open) ... windows glazed to their heads (3.00 / 2.60 m; the double-height glazing to 3.90 m)', taking the numbers from the stats. The owner's sync rule applies to the plan and the doc.",
+   "alreadyListedByBuilder": false
+  },
+  {
+   "id": "H6-skew-notch",
+   "model": "house",
+   "severity": "low",
+   "what": "A cut follows the detector's line even when that line is skewed against the wall. upper-048 is 8 degrees off: its cut notches the corridor wall's corner, and its lintel is a skewed 1.01 x 0.64 m block.",
+   "evidence": "house_check.log reports 'lintel upper-048 1.01 x 0.64, odd depth', with a cut depth of 0.64 m against the detector's 0.48 m. png/u_029_zoom.png shows the top face of the wall cut from y 18.16 at x 115.88 down to y 18.10 at x 116.27.",
+   "suggestedFix": "Fix it with general rules, no ids. In the detector, snap a door's line to the host wall's direction (the wall band beside the chord) when it is within about 10 degrees. In openings3d, clip each cut to the band between the two jamb planes, perpendicular to the wall strip, so a cut never removes wall beyond the jambs.",
+   "alreadyListedByBuilder": true,
+   "floor": "sukhumvit:upper",
+   "at": [
+    115.951,
+    18.659
+   ]
+  },
+  {
+   "id": "D1-knife-edge-L-passage",
+   "model": "detector",
+   "severity": "medium",
+   "what": "The passage limit next to an L-corner (<= 2.5 m, openings.py L1165) sits exactly on the width of the one key passage that needs it, UE-23. The detector outputs it as upper-038 with a width of 2.500000 m, so the rule has zero margin.",
+   "evidence": "Threshold sweep: each variant changes one literal, runs the detector on all five floors and scores with tools/score.py (out/review-code/sens/sensitivity.log and sens2.log). Changing 2.5 to 2.4999 loses UE-23 (139 drops to 138). Changing it to 2.75 still gives 139/143 with the same 30 extras. A round drawn width at an inclusive float limit flips on 0.1 mm of drawing noise.",
+   "suggestedFix": "Give the limit a margin backed by a general rule: 2.75 m changes nothing on the five floors. Alternatively compare with a tolerance (<= limit + 0.05). Re-score, and record why the L-corner and wall-end limits differ.",
+   "alreadyListedByBuilder": false,
+   "floor": "sukhumvit:upper",
+   "at": [
+    113.495,
+    16.659
+   ]
+  },
+  {
+   "id": "D2-frame-rows-scaling",
+   "model": "detector",
+   "severity": "medium",
+   "what": "frame_rows() is pure Python and its cost grows with the square of the number of small closed shapes (0.025-0.30 m) on every layer not set to ignore. Each aligned pair also triggers a scan over all shapes. A new drawing whose symbol or tile layers are not put on 'ignore' can stall the detector.",
+   "evidence": "Synthetic test with 0.20 m squares on a 0.6 m grid and no walls: 100 shapes take 0.3 s, 400 take 2.6 s, 900 take 9.6 s and 1,600 take 16.3 s. That extrapolates to about 3 minutes at 5,000 shapes and about 10 minutes at 10,000. The five real floors have only 4-393 small shapes because furniture and fixture layers are mapped to ignore, which is why detection takes 0.4-1.3 s per floor today. SegIndex.near_box is also a linear scan per query, and find_strips and glazing_bands loop over all pairs in numpy.",
+   "suggestedFix": "Put the jamb centres in a spatial index (STRtree or a 1.6 m grid hash) and query neighbours instead of looping over every j. Build rows from direction buckets. Above about 3,000 shapes per floor, warn and skip frame_rows. Add a warning when a stage runs long. Use the same STRtree approach for SegIndex.",
+   "alreadyListedByBuilder": false
+  },
+  {
+   "id": "D3-area-code",
+   "model": "detector",
+   "severity": "medium",
+   "what": "The detector code has no per-drawing special cases, but the split into floors does. tools/prims.py build() decides which items belong to which floor with per-drawing code: regions.json for sukhumvit, a whole-file tag for bank1/bank2, and for the presidential suite a hard-coded layer name and coordinate ('A-1.Netcat - tuong', y < -3450 m). A new drawing needs a code change before its mapping's 'floors' entry can name its areas.",
+   "evidence": "I scanned every literal in openings.py, geomkit.py and render_openings.py: there are no coordinates, handles, ids, layer names or block names, only role names and generic words. The per-drawing branches are in tools/prims.py L113-128, and find_openings.py L48-62 re-implements the sukhumvit branch. Re-runs gave identical JSON with a different PYTHONHASHSEED and matched detector/output exactly. Synthetic edge cases (empty floor, ignored layers only, no arcs, no wall pairs, arcs only, degenerate items, missing area) ran without crashing.",
+   "suggestedFix": "Move floor areas into the mapping as data, for example 'floors': {'suite': {'name': ..., 'bbox': [...]}} or 'wholeFile': true, and make prims.build generic. Then the per-drawing configuration really is the mapping alone.",
+   "alreadyListedByBuilder": false
+  },
+  {
+   "id": "D4-tight-thresholds",
+   "model": "detector",
+   "severity": "low",
+   "what": "A few rules sit close to a single key item; most thresholds have plenty of margin.",
+   "evidence": "From the sweep: the stub-to-stub limit 0.3 m loses O1 at 0.36 (0.33 still passes). Casement band cover 0.8 loses UE-05 at 0.9 (0.86 still passes). The minimum passage wall 0.07 m loses O5 and O6 at 0.081 (their walls are 0.08 m). The wall-end passage limit 3.6 m loses GW-10 (3.30 m) at 3.2, and 3.8 adds 3 extras. These showed no change at plus or minus 10-25%: unit split 2.0 m (down to 1.5), track spacing 0.032, planting >= 5, paving cover, the 1.3 m outside check, leaf cover 0.55, swing fit, arc and symbol-door ranges, glazed corridor, in-line pier 0.65, fuse overlap, the 7 m bay limit and the 0.30 m small-shape limit.",
+   "suggestedFix": "Document each tight threshold with its nearest key case. Re-run out/review-code/sens/sensitivity.py whenever a drawing or rule is added.",
+   "alreadyListedByBuilder": false
+  },
+  {
+   "id": "D5-in-sample-score",
+   "model": "detector",
+   "severity": "low",
+   "what": "The 139/143 (0.972) score was measured on the development set. The only held-out figure is the blind bank run of frozen_v1: 39/41 (0.951). After that run, several changes were made for single cases.",
+   "evidence": "frozen_v1/openings.py differs from openings.py in 12 places; geomkit.py is identical. Examples: the leaf finder was loosened for UE-18 (reverting it loses UE-18), the free-post limit went from 0.8 to 0.9 m (removing one extra), a stub-to-stub rule was added, and a closed-leaf rule was added for the two bank lifts. The bank was used for development after the blind run. The r2b report shows both scores. I reproduced 139/143 with tools/score.py.",
+   "suggestedFix": "Quote both figures at the gate. Freeze the code and confirm on one unseen drawing before claiming the rules generalise.",
+   "alreadyListedByBuilder": true
+  },
+  {
+   "id": "D6-units-error",
+   "model": "detector",
+   "severity": "low",
+   "what": "An unknown 'units' value in a mapping crashes with a bare KeyError, while an unknown role gets a clear message.",
+   "evidence": "openings.py L1340 reads UNITS[mp.get('units', 'mm')]. A mapping with units 'feet' fails with KeyError 'feet'. A misspelt role ('wal') stops with 'unknown layer role ... allowed: ...'.",
+   "suggestedFix": "Check units the same way as roles: stop with a message listing mm, cm, m, in, inch and ft.",
+   "alreadyListedByBuilder": false
+  },
+  {
+   "id": "T4-house-test-gaps",
+   "model": "tests",
+   "severity": "low",
+   "what": "The other checks in test_house_openings.mjs do what they claim, with three gaps. (1) The lintel check accepts any door the data marks lintel:false, so it cannot catch a door that lost its lintel by mistake. (2) The window ray check accepts any collider 0.30-0.62 m ahead, not specifically the window's pane or sill. (3) Wall heights are only tried below the data height (3.50 m and 2.00 m), which misses H4-raise-gap.",
+   "evidence": "test_house_openings.mjs: lintel check L141-156, ray check L131-136, wall heights L159-172. The fin checks are proven to work by the builder's negative control. The plate fingerprint, door and window walks, and page-error checks are sound.",
+   "suggestedFix": "(1) Allow lintel:false only where jambGap has a null, and list those doors. (2) Require the hit mesh to match /window panes|lintels and sills/. (3) Add a 4.50 m wall-height case.",
+   "alreadyListedByBuilder": false
+  }
+ ],
+ "checkedWhat": "Read only; nothing in the build, detector or project folders changed (checked with find -newer). Evidence is in C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/review-code.\n\n1. House pipeline. I diffed build3d, merge_cad, build_stages and make_html against cad_test/src and read openings3d.py and find_openings.py in full. The contracts in map_integration_baseline.json hold:\n- strips() and solidify() are AST-identical.\n- The solids keys are only wall, glass and single.\n- Pieces rise after the wall mesh, each with its own material and aDelay.\n- fitPieces keeps door heads where they are.\n- The plates are identical to the project's.\n- The frozen centre is used everywhere.\n- The presidential import of merge_cad is unaffected, and the shared viewer code is unchanged.\n\nWithout openings.json:\n- merge_cad gives a house3d_merged.json byte-identical to the project's.\n- build_stages differs only by rounding of at most 1 mm and empty door keys.\n- The new page generator with the old data loads with no errors (compat/).\n\nhouse_check.py found no material left in any door or window footprint and no glass remnants at window ends. All 11 removed fins are genuine leaves.\n\nBrowser probes (my own port and profile):\n- probe_review.mjs: on wall faces, sliding works 33/33 on the old page and 28/28 on the new one. All 7 misses are at piers, columns or corners.\n- The 4 blocked passages are blocked identically before the openings were cut. Blocked doors went from 7 to 0.\n- raise_check.mjs found the open slot above windows at a 4.50 m wall height.\n\n2. Tests. I read test_house_openings.mjs, test_bank.mjs, the test_viewers diff, the logs and slide_base/new.json.\n\n3. Detector. I scanned every literal in the code: there are no coordinates, ids, handles, layer names or block names. It is deterministic (identical JSON with a different PYTHONHASHSEED, and equal to detector/output). I reproduced the 139/143 score.\n\nThe threshold sweep in sens/ ran 55 variants over all five floors; sensitivity.log and sens2.log hold the results.\n\nSynthetic edge cases ran without crashing; only an unknown units value fails, with a bare KeyError. I also stress-tested frame_rows and diffed frozen_v1 against the final code.\n\nPNG overlays are in png/."
+}

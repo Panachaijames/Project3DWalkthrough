@@ -1,0 +1,107 @@
+{
+ "key": "stool",
+ "name": "stool",
+ "file": "banquet/stool.glb",
+ "kind": "seat",
+ "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE",
+ "piece": "L1-seat-020",
+ "furnishes": 5,
+ "turnUndone_deg": 39.999,
+ "turnFrom": "no front: its long side along x",
+ "standsAt_m": 0,
+ "size_m": [
+  0.413,
+  0.45,
+  0.2941
+ ],
+ "gltfSceneToModelFrame_columnMajor": [
+  0.7660557,
+  0,
+  0.6427742,
+  0,
+  0,
+  1,
+  0,
+  0,
+  -0.6427742,
+  0,
+  0.7660557,
+  0,
+  -1.7468086,
+  0,
+  -1.879916,
+  1
+ ],
+ "full": {
+  "triangles": 2680,
+  "vertices": 1720,
+  "weldedVertices": 1260,
+  "parts": [
+   {
+    "name": "Rectangle038",
+    "triangles": 2348,
+    "vertices": 1376,
+    "mirrored": false
+   },
+   {
+    "name": "Rectangle039",
+    "triangles": 332,
+    "vertices": 344,
+    "mirrored": false
+   }
+  ],
+  "area_m2": 0.893
+ },
+ "levels": [
+  {
+   "id": "2500",
+   "label": "2,500 budget",
+   "triangles": 2500,
+   "vertices": 1179,
+   "posOffset": 0,
+   "posCount": 3537,
+   "idxOffset": 14148,
+   "idxCount": 7500
+  },
+  {
+   "id": "50%",
+   "label": "50 %",
+   "triangles": 1330,
+   "vertices": 641,
+   "posOffset": 44148,
+   "posCount": 1923,
+   "idxOffset": 51840,
+   "idxCount": 3990
+  },
+  {
+   "id": "25%",
+   "label": "25 %",
+   "triangles": 670,
+   "vertices": 322,
+   "posOffset": 67800,
+   "posCount": 966,
+   "idxOffset": 71664,
+   "idxCount": 2010
+  },
+  {
+   "id": "12%",
+   "label": "12 %",
+   "triangles": 320,
+   "vertices": 151,
+   "posOffset": 79704,
+   "posCount": 453,
+   "idxOffset": 81516,
+   "idxCount": 960
+  },
+  {
+   "id": "6%",
+   "label": "6 %",
+   "triangles": 158,
+   "vertices": 76,
+   "posOffset": 85356,
+   "posCount": 228,
+   "idxOffset": 86268,
+   "idxCount": 474
+  }
+ ]
+}

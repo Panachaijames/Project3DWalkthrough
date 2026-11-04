@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Furniture boxes harness</title>
+<!--
+  Test page for furniture_boxes.js: the shared viewer modes and build replay, the furniture module and a minimal scene
+  (a floor plate and one wall per level around the furniture) built the way the bank page builds its levels.
+  Open it from the project folder (a browser started with --allow-file-access-from-files, as viewer-modes/cdp.mjs does, or
+  any local web server). ?model=<url of a model JSON> loads another model (default: mini_model.json next to this file);
+  the bank's once it carries furniture:  harness.html?model=../../bank_test/src/bank_model.json  (its walls and slabs are drawn too).
+  The usual viewer options work (build=0 skips the Build settings card, mode=walk, floor=L1, nodownload=1 ...).
+-->
+<style>
+  :root { --bg:#eef0f2; --panel:#ffffffee; --ink:#1d2329; --muted:#5b6670; --accent:#2f6f8f; --line:#d5dade; }
+  html, body { margin:0; height:100%; background:var(--bg); font:14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; color:var(--ink); overflow:hidden; }
+  #panel { position:fixed; top:12px; left:12px; width:min(330px, calc(100vw - 48px)); max-height:calc(100vh - 60px); overflow:auto; background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:12px 14px; box-shadow:0 2px 10px #0001; }
+  h1 { font-size:15px; margin:0 0 4px; }
+  p { margin:0 0 10px; color:var(--muted); font-size:12.5px; }
+  .row { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px; }
+  button { border:1px solid var(--line); background:#fff; border-radius:7px; padding:5px 10px; cursor:pointer; font:inherit; font-size:13px; color:var(--ink); }
+  button.on { background:var(--accent); border-color:var(--accent); color:#fff; }
+  label { font-size:13px; display:flex; align-items:center; gap:6px; }
+  #hint { position:fixed; bottom:10px; left:12px; right:12px; color:var(--muted); font-size:12px; }
+</style>
+</head>
+<body>
+<div id="panel">
+  <h1 id="title">Furniture boxes (test page)</h1>
+  <p id="intro">Loading the model ...</p>
+  <div class="row" id="floors">
+    <button data-f="both" class="on">Both levels</button>
+  </div>
+</div>
+<div id="hint"></div>
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+               "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+               "three-mesh-bvh": "https://cdn.jsdelivr.net/npm/three-mesh-bvh@0.8.3/build/index.module.js" } }
+</script>
+<!-- In a page these three are pasted into the module script below; here they are plain scripts and read THREE as a global. -->
+<script src="../../viewer-modes/viewer_modes.js"></script>
+<script src="../../viewer-modes/build_replay.js"></script>
+<script src="../furniture_boxes.js"></script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { computeBoundsTree, acceleratedRaycast } from 'three-mesh-bvh';
+THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
+THREE.Mesh.prototype.raycast = acceleratedRaycast;
+window.THREE = THREE;
+const q = new URLSearchParams(location.search);
+const panel = document.getElementById('panel');
+
+// file: pages cannot fetch() other files, a request object can; works from a web server too
+const load = url => new Promise((ok, fail) => {
+  const x = new XMLHttpRequest();
+  x.open('GET', url);
+  x.onload = () => { try { ok(JSON.parse(x.responseText)); } catch (e) { fail(new Error(url + ' is not JSON')); } };
+  x.onerror = () => fail(new Error('could not load ' + url));
+  x.send();
+});
+let D;
+try { D = await load(q.get('model') || 'mini_model.json'); } catch (e) { document.getElementById('intro').textContent = String(e.message); throw e; }
+document.getElementById('intro').textContent = `${D.project}: ${(D.furniture || []).length} pieces of furniture on ${D.floors.length} levels, in a bare scene.`;
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xeef0f2);
+const camera = new THREE.PerspectiveCamera(40, innerWidth / innerHeight, 0.1, 600);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+scene.add(new THREE.HemisphereLight(0xffffff, 0xe4dfd6, 1.6));
+const sun = new THREE.DirectionalLight(0xffffff, 1.6);
+sun.position.set(-20, 40, 15);
+scene.add(sun);
+
+const FL = {};                    // per level: group, colliders, walkables, rise, late (as in the bank page)
+for (const f of D.floors) FL[f.key] = { ...f, group: new THREE.Group(), colliders: [], walkables: [], rise: [], late: [] };
+const wallMat = new THREE.MeshStandardMaterial({ color: 0xe3ddd3, roughness: 0.85, side: THREE.DoubleSide });
+const plateMat = new THREE.MeshStandardMaterial({ color: 0xd4d8d2, roughness: 0.95, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1 });
+function extrudePart(p, level) {   // one part (outline + inner loops) from z0 to z1 above its level; plan (x, y) -> three.js (x, z = -y)
+  const shape = new THREE.Shape(p.o.map(([x, y]) => new THREE.Vector2(x, y)));
+  for (const hole of p.h) shape.holes.push(new THREE.Path(hole.map(([x, y]) => new THREE.Vector2(x, y))));
+  const g = new THREE.ExtrudeGeometry(shape, { depth: p.z1 - p.z0, bevelEnabled: false, curveSegments: 1 });
+  g.rotateX(-Math.PI / 2);
+  g.translate(0, level + p.z0, 0);
+  return g;
+}
+const outlines = {};              // per level: the plate's outline as plan line segments, for the replay
+for (const f of Object.values(FL)) {
+  const parts = (D.parts || []).filter(p => p.floor === f.key);
+  // plan extent: the pieces and the parts, plus 3 m all round
+  let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+  const take = (x, y) => { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); };
+  for (const p of D.furniture || []) if (p.floor === f.key) { const r = (p.w + p.d) / 2; take(p.x - r, p.y - r); take(p.x + r, p.y + r); }
+  for (const p of parts) p.o.forEach(([x, y]) => take(x, y));
+  if (x0 === Infinity) { x0 = -2; x1 = 2; y0 = -2; y1 = 2; }
+  x0 -= 3; x1 += 3; y0 -= 3; y1 += 3;
+  outlines[f.key] = [x0, y0, x1, y0, x1, y0, x1, y1, x1, y1, x0, y1, x0, y1, x0, y0];
+  const slabs = parts.filter(p => p.kind === 'slab'), solids = parts.filter(p => p.kind !== 'slab');
+  const plates = slabs.map(p => extrudePart(p, f.level));
+  if (!slabs.length) plates.push(new THREE.BoxGeometry(x1 - x0, 0.25, y1 - y0).translate((x0 + x1) / 2, f.level - 0.125, -(y0 + y1) / 2));
+  for (const g of plates) {
+    g.computeVertexNormals(); g.computeBoundsTree();
+    const m = new THREE.Mesh(g, plateMat);
+    f.group.add(m); f.walkables.push(m); f.late.push(m);
+  }
+  const walls = solids.map(p => extrudePart(p, f.level));
+  // no parts in the model: one wall along the east edge of the plate (the Walk checks need something that is not furniture)
+  if (!solids.length) walls.push(new THREE.BoxGeometry(0.2, f.wallHeight, y1 - y0).translate(x1 - 1, f.level + f.wallHeight / 2, -(y0 + y1) / 2));
+  for (const g of walls) {
+    g.computeVertexNormals(); g.computeBoundsTree();
+    const m = new THREE.Mesh(g, wallMat);
+    m.name = f.key + ' wall';
+    f.group.add(m); f.colliders.push(m);
+  }
+  scene.add(f.group);
+}
+const bounds = new THREE.Box3();
+Object.values(FL).forEach(f => bounds.expandByObject(f.group));
+const mid = bounds.getCenter(new THREE.Vector3()), span = Math.max(...bounds.getSize(new THREE.Vector3()).toArray());
+camera.position.set(mid.x + 0.7 * span, mid.y + 0.8 * span, mid.z + 0.9 * span);
+controls.target.copy(mid);
+
+document.getElementById('floors').insertAdjacentHTML('beforeend', D.floors.map(f => `<button data-f="${f.key}">${f.name}</button>`).join(''));
+let floorMode = 'both';
+function applyFloor() { for (const f of Object.values(FL)) f.group.visible = floorMode === 'both' || floorMode === f.key; }
+function markFloors(st) {
+  const key = st.mode === 'walk' ? st.floor : floorMode;
+  document.querySelectorAll('#floors button').forEach(b => b.classList.toggle('on', b.dataset.f === key));
+}
+
+const FLOORS = D.floors.map(f => ({ key: f.key, name: f.name, level: f.level, stack: 'harness', group: FL[f.key].group,
+                                    colliders: FL[f.key].colliders, walkables: FL[f.key].walkables }));
+const modes = installViewerModes({
+  scene, camera, renderer, controls, project: D.photoName || D.shortName || 'harness',
+  panel, anchor: document.getElementById('floors'), hint: document.getElementById('hint'),
+  restoreVisibility: applyFloor, onChange: markFloors, floors: FLOORS,
+});
+document.querySelectorAll('#floors button').forEach(btn => {
+  btn.onclick = () => {
+    const f = btn.dataset.f;
+    if (modes.mode === 'walk') { modes.goToFloor(f === 'both' ? FLOORS[0].key : f); return; }
+    floorMode = f;
+    applyFloor();
+    markFloors({ mode: modes.mode });
+  };
+});
+applyFloor();
+
+// The furniture goes in before the build replay is installed (the replay reads each level's 'late' list when it starts).
+let changes = 0;                  // how often the module reported a change (a read-out for the tests)
+const furniture = installFurnitureBoxes({ THREE, model: D, FL, panel, canvas: renderer.domElement, camera, getMode: () => modes.mode,
+                                          onChange: () => { changes++; }, params: q });
+
+const replay = installBuildReplay({
+  scene, camera, renderer, controls, modes, panel, project: D.photoName || D.shortName || 'harness',
+  intro: { title: D.project, facts: ['A test page: no drawing behind this model.'] },
+  layers: [],
+  floors: D.floors.map(f => ({ key: f.key, name: f.name, level: f.level, height: f.wallHeight, sheet: [0, 0],
+    group: FL[f.key].group, lines: { wall: outlines[f.key] }, pieces: {}, rings: {}, rise: FL[f.key].rise, late: FL[f.key].late })),
+  colors: {},
+  steps: Object.fromEntries(['read', 'sort', 'align', 'pair', 'merge', 'raise', 'finish'].map(k => [k, { title: k, caption: () => '' }])),
+  applySettings: st => { FLOORS.forEach(f => { f.level = st[f.key].level; }); },
+  restore: () => { applyFloor(); if (furniture) furniture.apply(); },
+});
+
+window.__host = { FL, floors: FLOORS, model: D, camera, scene, furniture, get changes() { return changes; } };
+modes.applyUrl();
+renderer.setAnimationLoop(() => { replay.tick(); modes.tick(); renderer.render(scene, camera); });
+</script>
+</body>
+</html>

@@ -1,0 +1,381 @@
+{
+ "files": [
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/openings.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/geomkit.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/render_openings.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/mappings/sukhumvit.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/mappings/presidential.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/mappings/bank1.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/mappings/bank2.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/frozen_v1/openings.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/frozen_v1/geomkit.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/frozen_v1/render_openings.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/blind_v1/bank_openings.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/blind_v1/openings_bank_L1.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/blind_v1/openings_bank_L2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/blind_v1/score_bank_provisional.txt",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/blind_v1/score_bank_final.txt",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/output/all_openings.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/output/sukhumvit_openings.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/output/presidential_openings.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/output/bank1_openings.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/output/bank2_openings.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/output/openings_sukhumvit_ground.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/output/openings_sukhumvit_upper.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/output/openings_presidential_suite.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/output/openings_bank_L1.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/output/openings_bank_L2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/output/score_final.txt",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/work/score_safe.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/work/dev_all.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/work/crop.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/work/v1_all/score_final.txt"
+ ],
+ "usage": "From C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector:\n  python openings.py mappings/<drawing>.json <out.json> [--png <dir>]\ne.g. python openings.py mappings/bank1.json output/bank1_openings.json --png output\nIt finds tools/prims.py by walking up from the script folder, loads the cache named in the mapping, writes {\"openings\": [...]} and one PNG per floor (openings_<floor>.png: doors red, windows blue, passages green, ids labelled, '?' = eitherKind, wall solid grey). Output fields: id, floor, kind, subtype, a, b (wall centre line, drawing metres), width, wallThickness, host (wall|glass|none), hinge (a|b|null), swing (left|right of a->b, null when unknown), confidence, evidence (rules fired, layers), eitherKind.\nScoring: python work/score_safe.py ../keys/final/all.json output/all_openings.json [--only sukhumvit,presidential] [--out x.json]. score_safe.py runs the UNMODIFIED tools/score.py on a copy of the key with \"eitherKind\": false added where missing, because score.py crashes otherwise (see notes). work/dev_all.py runs all four drawings and scores them in one go; work/crop.py <drawing> <area> x0,y0,x1,y1 draws a review crop with the key overlaid. The blind-run code is frozen in frozen_v1/ (same command line).",
+ "rules": [
+  {
+   "name": "1 Wall solid",
+   "what": "Wall/column-layer fills, thin closed outlines (mean width <= 0.35 m) and face lines paired 4-45 cm apart, continuous linetypes only; cracks and corner squares closed. Wider closed outlines (room outlines) and pieces under 0.15 m are not walls.",
+   "catches": "The base for every gap; drops room-outline polylines on wall layers (E291, the presidential toilet outline) and dashed overhead lines."
+  },
+  {
+   "name": "2 Strip-end gaps",
+   "what": "Wall strips = pairs of opposite faces of the wall solid. From every strip end look along its centre line for the next wall material; the stretch is a gap, typed by near end (cap / L-corner / T) and far end (end of a collinear strip of the same thickness, or the face of a wall).",
+   "catches": "Locator for most doors, windows and passages, including corner-ended gaps (GW-05, GW-14, UW-06, UW-07, O1-O6) that end-cap pairing misses."
+  },
+  {
+   "name": "3 Swing arcs",
+   "what": "Arcs on any layer and linetype (r 0.28-2 m, sweep 20-125 deg). Closed vs open end from a leaf (line or thin rectangle, any non-wall layer, tolerant of 3-point arcs off the hinge) and from the closed tip lying on the wall.",
+   "catches": "Door symbols on DOOR, 0, WALL, WIN, A-DOOR, xref and Vietnamese door layers, HIDDEN arcs, partial sweeps (43-61 deg)."
+  },
+  {
+   "name": "4 Swings in gaps",
+   "what": "Each arc goes to the gap that fits it best (greedy by score); leaves must cover >= 55% of the gap. Two leaves with meeting closed tips = double door, also when drawn in front of a deep reveal (offset <= 1 m, same span). If the wall gap is much wider than the leaves, ends move to jambs beside them.",
+   "catches": "Single, double, pivot and 3-leaf doors; UW-09 (double door drawn 0.7 m in front of its partition); D1 (gap 2.09 m narrowed to the 1.6 m jambs)."
+  },
+  {
+   "name": "5 Doors from the symbol alone",
+   "what": "Arc + leaf in no gap: wall band from sections beside the chord, ends snapped to wall ends, glazing or jambs (small closed shapes on any layer, outer faces of 50 mm frames, inner faces of wall-sized stubs) within 0.35 m; else the chord. Glass doors in glass screens and arc pairs with nothing to bound them are dropped.",
+   "catches": "Walls drawn through (GW-08, GE-11), undrawn wall (D14), facade door on a dimensions layer (D15), door in a glazed screen (GE-06), UE-18."
+  },
+  {
+   "name": "6 Casement windows",
+   "what": "Sashes (arcs not on a door layer) in a gap whose glazing is drawn across the whole gap in the closed position, or over glass drawn inside a drawn-through wall, are windows.",
+   "catches": "UE-03, UE-05, UE-06, UE-07 (outward sashes on WIN); keeps curtain-wall doors (arc on A-DOOR) as doors (B1-09)."
+  },
+  {
+   "name": "7 Glazing bands",
+   "what": "Parallel lines on window/glass layers grouped into bands; a band in a gap glazes it. Units split fixed vs sliding (25 mm track spacing / shifting panels) only between two units >= 2 m. Fixed -> window; sliding -> window (eitherKind) unless it opens straight onto a hatched floor with no planting, then a sliding glass door.",
+   "catches": "Windows in gaps and bays; GE-01 (fixed pane) vs GE-19 (sliding door); GW-20, GW-21 (sliding doors onto the deck); UW-14 stays a window (planted roof)."
+  },
+  {
+   "name": "8 Bays, corners, glass walls",
+   "what": "A band in no gap is a bay when wall ends/columns bound it within 0.25 m, including a post-less glass corner (end on the other band's line). Rejected as glass walls: glass-layer screens running from one cross wall to another, one side of an all-glass corridor (parallel band 0.8-3.5 m away, similar length >= 2.5 m), runs over 7 m.",
+   "catches": "GW-01, GW-07, UW-05, UE-20, UW-16/UW-17 corner; rejects the glazed link sides, shower screens, pool glass."
+  },
+  {
+   "name": "9 Glass inside a drawn-through wall",
+   "what": "A band inside the wall solid: the opening is where the wall is thinner over the glass (free stretch along the missing strip) or between jambs at the glass ends.",
+   "catches": "GW-17, GW-23, UW-15, UW-18, UE-01."
+  },
+  {
+   "name": "10 Sliding, pocket and lift doors",
+   "what": "In a gap: a thin panel (15-70 mm) running into a wall pocket, a centre-line leaf slid part-way out of a pocket on one side, or a leaf drawn shut across the gap on a door layer. Outside gaps: a panel half out of a pocket where the wall simply ends, running to the next wall or to the line of a second pocket door met at a corner. Swing leaves are never read as panels.",
+   "catches": "UW-11, UW-12, UW-13, GE-09, D7, lift doors B1-05 and B2-22."
+  },
+  {
+   "name": "11 Frame-only and low-wall openings",
+   "what": "Both wall faces drawn on across a gap between two wall ends (continuous, non-outline lines) = opening over a low wall (window); >= 2 frame pieces standing inside a gap, or >= 3 edge-aligned frame pieces in a row from one wall face to another with no wall between = frame-only sliding unit (window).",
+   "catches": "GE-03, GE-16, GE-04."
+  },
+  {
+   "name": "12 Passages",
+   "what": "Empty gap accepted only if: both ends wall ends of one wall line (<= 3.6 m, <= 2.5 m from an L-corner, and the line carries on past the far end), or a wall end to a wall face that carries on (<= 1.6 m); not stub to stub, not at a free-standing post (squarish, <= 0.9 m, nothing within 0.15 m), not across a stair, wall >= 7 cm, building on both sides.",
+   "catches": "All 18 scored passages; rejects carport posts, pilasters, kerbs, stair ends, 5 cm cladding lines."
+  },
+  {
+   "name": "13 Fusion",
+   "what": "Parallel overlapping detections on one wall line are merged; door > window > passage, then confidence, then far-end type, then wall thickness.",
+   "catches": "Both faces of a wall, two leaves of a double wall, gap + symbol duplicates, duplicated blocks."
+  }
+ ],
+ "perDrawingConfig": "Each mappings/<drawing>.json holds only the four things staff confirm: \"cache\" (which prims cache), \"units\" (\"mm\"), \"floors\" (area -> floor name), and \"layers\" (role -> list of layer names; roles used: wall, column, glass, window, door, stair, ignore). There are no coordinates, handles, thresholds, block names or exception lists. sukhumvit: wall 3, column 1, glass 1, window 3, door 5, stair 1, ignore 16 layers (furniture, fixtures, grid, dimensions, text, site; TREE left unmapped). presidential: wall 1, column 1, door 2, ignore 21. bank1/bank2: wall A-WALL, A-WALL-PATT; column S-COLS; glass A-GLAZ-CURT, A-GLAZ-CWMG; door A-DOOR, A-DOOR-FRAM, A-DOOR-GLAZ, A-DOOR-HDLN; stair S-STRS, S-STRS-MBND; ignore 16 annotation, furniture, casework, services and grid layers. The bank mappings were written once, from the layer names and the overview PNGs, at the blind run (14:10) and never changed afterwards. The code has no layer names, block names or coordinates in it: it checks only the role sets and generic geometry.",
+ "scoresDevelopment": [
+  {
+   "floor": "sukhumvit:ground",
+   "key": "provisional (frozen v1)",
+   "keyCount": 25,
+   "detCount": 32,
+   "matched": 25,
+   "right": 25,
+   "rightShare": 1,
+   "recall": 1,
+   "precision": 0.781
+  },
+  {
+   "floor": "sukhumvit:upper",
+   "key": "provisional (frozen v1)",
+   "keyCount": 11,
+   "detCount": 27,
+   "matched": 11,
+   "right": 11,
+   "rightShare": 1,
+   "recall": 1,
+   "precision": 0.407
+  },
+  {
+   "floor": "presidential:suite",
+   "key": "provisional (frozen v1)",
+   "keyCount": 21,
+   "detCount": 32,
+   "matched": 20,
+   "right": 20,
+   "rightShare": 0.952,
+   "recall": 0.952,
+   "precision": 0.625
+  },
+  {
+   "floor": "TOTAL dev floors",
+   "key": "provisional (frozen v1)",
+   "keyCount": 57,
+   "detCount": 91,
+   "matched": 56,
+   "right": 56,
+   "rightShare": 0.982,
+   "recall": 0.982,
+   "precision": 0.615
+  },
+  {
+   "floor": "sukhumvit:ground",
+   "key": "final (frozen v1, scored after the final key appeared)",
+   "keyCount": 41,
+   "detCount": 48,
+   "matched": 39,
+   "right": 38,
+   "rightShare": 0.927,
+   "recall": 0.951,
+   "precision": 0.812
+  },
+  {
+   "floor": "sukhumvit:upper",
+   "key": "final (frozen v1)",
+   "keyCount": 40,
+   "detCount": 50,
+   "matched": 38,
+   "right": 34,
+   "rightShare": 0.85,
+   "recall": 0.95,
+   "precision": 0.76
+  },
+  {
+   "floor": "presidential:suite",
+   "key": "final (frozen v1)",
+   "keyCount": 21,
+   "detCount": 32,
+   "matched": 20,
+   "right": 20,
+   "rightShare": 0.952,
+   "recall": 0.952,
+   "precision": 0.625
+  },
+  {
+   "floor": "TOTAL dev floors",
+   "key": "final (frozen v1)",
+   "keyCount": 102,
+   "detCount": 130,
+   "matched": 97,
+   "right": 92,
+   "rightShare": 0.902
+  }
+ ],
+ "scoresBankFirstRun": [
+  {
+   "floor": "bank:L1",
+   "key": "provisional (the only complete key at blind-run time)",
+   "keyCount": 16,
+   "detCount": 27,
+   "matched": 16,
+   "right": 15,
+   "rightShare": 0.938,
+   "recall": 1,
+   "precision": 0.593
+  },
+  {
+   "floor": "bank:L2",
+   "key": "provisional",
+   "keyCount": 25,
+   "detCount": 32,
+   "matched": 25,
+   "right": 24,
+   "rightShare": 0.96,
+   "recall": 1,
+   "precision": 0.781
+  },
+  {
+   "floor": "TOTAL bank",
+   "key": "provisional",
+   "keyCount": 41,
+   "detCount": 59,
+   "matched": 41,
+   "right": 39,
+   "rightShare": 0.951,
+   "recall": 1,
+   "precision": 0.695
+  },
+  {
+   "floor": "bank:L1",
+   "key": "final (same frozen v1 output, re-scored)",
+   "keyCount": 16,
+   "detCount": 19,
+   "matched": 16,
+   "right": 15,
+   "rightShare": 0.938,
+   "recall": 1,
+   "precision": 0.842
+  },
+  {
+   "floor": "bank:L2",
+   "key": "final (same frozen v1 output)",
+   "keyCount": 25,
+   "detCount": 32,
+   "matched": 25,
+   "right": 24,
+   "rightShare": 0.96,
+   "recall": 1,
+   "precision": 0.781
+  },
+  {
+   "floor": "TOTAL bank",
+   "key": "final (same frozen v1 output)",
+   "keyCount": 41,
+   "detCount": 51,
+   "matched": 41,
+   "right": 39,
+   "rightShare": 0.951,
+   "recall": 1,
+   "precision": 0.804
+  }
+ ],
+ "scoresFinal": [
+  {
+   "floor": "sukhumvit:ground",
+   "key": "final",
+   "keyCount": 41,
+   "detCount": 43,
+   "matched": 40,
+   "right": 39,
+   "rightShare": 0.951,
+   "recall": 0.976,
+   "precision": 0.93
+  },
+  {
+   "floor": "sukhumvit:upper",
+   "key": "final",
+   "keyCount": 40,
+   "detCount": 52,
+   "matched": 40,
+   "right": 40,
+   "rightShare": 1,
+   "recall": 1,
+   "precision": 0.769
+  },
+  {
+   "floor": "presidential:suite",
+   "key": "final",
+   "keyCount": 21,
+   "detCount": 29,
+   "matched": 20,
+   "right": 20,
+   "rightShare": 0.952,
+   "recall": 0.952,
+   "precision": 0.69
+  },
+  {
+   "floor": "bank:L1",
+   "key": "final",
+   "keyCount": 16,
+   "detCount": 19,
+   "matched": 16,
+   "right": 16,
+   "rightShare": 1,
+   "recall": 1,
+   "precision": 0.842
+  },
+  {
+   "floor": "bank:L2",
+   "key": "final",
+   "keyCount": 25,
+   "detCount": 28,
+   "matched": 25,
+   "right": 24,
+   "rightShare": 0.96,
+   "recall": 1,
+   "precision": 0.893
+  },
+  {
+   "floor": "TOTAL",
+   "key": "final",
+   "keyCount": 143,
+   "detCount": 171,
+   "matched": 141,
+   "right": 139,
+   "rightShare": 0.972,
+   "recall": 0.986,
+   "precision": 0.825
+  }
+ ],
+ "keyUsedForFinal": "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/keys/final/all.json (appeared at 14:17; its 170 openings are identical to the development key I had combined from the final parts). It was scored with the unmodified tools/score.py through work/score_safe.py, because score.py crashes on this key and output (see notes).",
+ "remainingErrors": [
+  {
+   "floor": "presidential:suite",
+   "what": "D16 missed: the 5.93 m movable glass partition between the study and the living room.",
+   "why": "It is drawn as 9 stacked panel blocks on a 3-line dashed overhead track, with no wall at either end. The facade it meets is drawn on the dimensions layer. No general rule covers a track with stacked panels, and writing one would fit this single case.",
+   "at": [
+    189.902,
+    -3489.351
+   ]
+  },
+  {
+   "floor": "sukhumvit:ground",
+   "what": "GE-17 missed: a 3.95 m sliding vehicle gate in the boundary fence (a site element).",
+   "why": "The closed leaf is a pair of WALL-layer lines 4 cm apart. That is too thin to pair into a wall, and the lines sit outside the fence band and run into a pocket. The 3.95 m fence gap is longer than the passage limit. The key itself notes that site gates could be dropped if site elements are out of scope.",
+   "at": [
+    53.763,
+    9.879
+   ]
+  },
+  {
+   "floor": "sukhumvit:ground",
+   "what": "GW-19 wrong (class and width): a 2-panel sliding glass door onto the courtyard was output as a 4.15 m window (key 2.90 m door).",
+   "why": "The plan draws it exactly like a sliding window: no sill, and no paving hatch outside. The key decided 'door' from the elevation. The detector also merges it with the post-less fixed corner glass to the south (GW-26, optional), because units are split only when both are at least 2 m.",
+   "at": [
+    19.373,
+    17.205
+   ]
+  },
+  {
+   "floor": "bank:L2",
+   "what": "B2-07 width 0.875 m against the key's 1.00 m.",
+   "why": "The 1000x2400 door family sits at a T-junction and its frame overlaps the cross wall. The cross wall's A-WALL lines and A-WALL-PATT hatch run straight across, so the wall gap stops at the cross-wall face (y 9.605) instead of the family frame (y 9.73).",
+   "at": [
+    -3.045,
+    9.23
+   ]
+  },
+  {
+   "floor": "all",
+   "what": "Precision 0.825: 30 extras. 26 are passages; the other 4 are on the upper floor: the north side of the glass bridge read as a window, a TREE line read as a pocket leaf, the shower door in the single-line shower screen (U-D01), and the master-bath shower screen read as a window.",
+   "why": "The extra passages are wall ends facing walls across corridors or alcoves (corridor crossings such as x 106.4-107.6 upper), jacuzzi kerb and kitchen-stub gaps in the suite, toilet-cubicle lines in bank L2, and alcove sides. Geometrically they look like the accepted passage mouths (UW-06, UW-07); the key separates them by room use. In 3D they sit in gaps that are already open, so they cut nothing."
+  }
+ ],
+ "suspectedKeyErrors": [
+  {
+   "floor": "bank:L2",
+   "keyId": "B2-07",
+   "what": "Width 1.00 m (y 8.73-9.73): the opening extends 0.025 m past the far face of a cross wall that is drawn continuous.",
+   "evidence": "The A-WALL lines at y 9.605 and 9.705 (x -5.589 to -2.508) and an A-WALL-PATT hatch over the same band run straight across x -3.10..-3.00. The door's own leaf (A-DOOR lines at y 9.63/9.68) is drawn inside that wall. The walkable structural opening ends at the cross-wall face y 9.605 (0.875 m). 1.00 m is the family's nominal size, so this is a drawing clash that the key resolved in favour of the family. Worth a second look rather than a certain error."
+  }
+ ],
+ "runtimes": "Detection per floor: 0.3-0.9 s (cache load about 0.1 s). End to end per drawing, including Python start-up, cache load, all floors and PNG rendering: sukhumvit (2 floors) 4.6 s, presidential 3.4 s, bank1 2.6 s, bank2 2.6 s. The whole set takes about 13 s. Runs are deterministic: a second run of each drawing gave identical JSON.",
+ "notes": "Process: development on sukhumvit and presidential, first against the provisional key, then against final parts as they appeared, then the final key. The code was frozen in detector/frozen_v1 at 14:09. The bank mappings were written once from layer names and the overview PNGs. The blind run happened at 14:10, and I scored it once before looking at any bank key file or bank geometry. Its result is 39/41 (0.951) on both the provisional and the final key; the only misses were the two lift doors read as window/passage. The improvement rounds after that worked on all five floors with general rules:\n(1) lift doors (a leaf drawn shut on a door layer), and passages between two stubs rejected;\n(2) after the final u-east part arrived: casement windows, glazed-corridor glass walls, and a looser leaf finder for 3-point arcs;\n(3) frame-only rows, swing leaves never read as sliding panels, and a free-post size limit.\nEvery floor's RIGHT is now at least 0.90, so I stopped.\n\nScorer bug: tools/score.py crashes ('TypeError: int += NoneType' at line 79) whenever a matched pair has different classes and the key item has no eitherKind field. In the final key 168 of 170 items have no such field. The cause is that c_ok = (...) or (k.get('eitherKind') and ...) evaluates to None instead of False; wrapping it in bool() would fix it. I did not modify score.py. work/score_safe.py runs the unmodified script on a key copy with eitherKind: false added, which changes no score.\n\nKind caveats: sliding sashes without paving outside are output as windows with eitherKind true, because the plan cannot show sills. Door vs passage confusions are counted right by the scorer; none remain in the final output.\n\nThe final key changed a lot from the provisional one. For example, the WIN-layer sash sets UE-05/06/07 became casement windows, U-P09/U-P10 were rejected, and the sliding units GW-19/20/21 and GE-19 became doors. The frozen v1 therefore scores 0.902 on the dev floors against the final key, against 0.982 on the provisional key.\n\nNothing was deployed or published. Everything is in the scratchpad detector folder."
+}

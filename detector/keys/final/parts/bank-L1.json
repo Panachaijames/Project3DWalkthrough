@@ -1,0 +1,538 @@
+{
+ "openings": [
+  {
+   "id": "B1-01",
+   "kind": "door",
+   "subtype": "single swing 700x2400 (flush leaf 0.70, 50 mm frames inside the opening)",
+   "a": [
+    -4.3804,
+    -6.73
+   ],
+   "b": [
+    -3.5804,
+    -6.73
+   ],
+   "width": 0.8,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_GEN_SWING_1 PANEL_FLUSH - 700x2400 (2146164) ins (-3.9804,-6.73); wall y -6.78..-6.68 ends at x -4.3804; east bound = lift-shaft wall face x -3.5804; A-DOOR-FRAM 50 mm frames at both ends",
+   "confidence": "high",
+   "notes": "SW TOILET door off the back corridor; leaf hinged at the east jamb, swings south into the toilet",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); not in the inventory"
+  },
+  {
+   "id": "B1-02",
+   "kind": "door",
+   "subtype": "single swing 1000X2400 (leaf 0.90, frames inside the opening)",
+   "a": [
+    -4.9304,
+    -5.054
+   ],
+   "b": [
+    -3.9304,
+    -5.054
+   ],
+   "width": 1,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR block SINGLE SWING DOOR-GENERIC - 1000X2400 (2369985, handle 1B95) ins (-4.4304,-5.054) rot 180; wall y -5.104..-5.004: stub x -5.0499..-4.9304 and wall x -3.9304..-3.0854",
+   "confidence": "high",
+   "notes": "from the back corridor north into the long west store corridor (x -5.05..-3.58, y -5.0..5.1); leaf hinged at the west jamb, swings north",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); not in the inventory"
+  },
+  {
+   "id": "B1-03",
+   "kind": "passage",
+   "subtype": "doorless opening (no door or glazing drawn; A-FLOR threshold line at y -4.99 from x -3.08 to -1.88)",
+   "a": [
+    -3.0854,
+    -5.054
+   ],
+   "b": [
+    -1.8804,
+    -5.0403
+   ],
+   "width": 1.205,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-WALL pieces on the same wall line: x -3.9304..-3.0854 (y -5.104..-5.004) and x -1.8804..-0.8804 (y -5.0903..-4.9903, offset 14 mm); 1.205 m gap with nothing in it but a floor line",
+   "confidence": "high",
+   "notes": "opening from the back room (south of y -5.05, door B1-04 on its east side) into the staff side of the banking hall; a and b are each on the centre line of their own wall piece (the two pieces are 14 mm apart in y)",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); not in the inventory"
+  },
+  {
+   "id": "B1-04",
+   "kind": "door",
+   "subtype": "single swing 1000X2400 (leaf 0.90, frames inside the opening)",
+   "a": [
+    -0.9304,
+    -6.3469
+   ],
+   "b": [
+    -0.9304,
+    -5.3469
+   ],
+   "width": 1,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR block SINGLE SWING DOOR-GENERIC - 1000X2400 (2369985, handle 1B94) ins (-0.9304,-5.8469) rot -90; wall x -0.9804..-0.8804, stubs y -6.5569..-6.3469 and -5.3469..-5.0903",
+   "confidence": "high",
+   "notes": "between the banking hall (east) and the back room (west); leaf hinged at the south jamb, swings west",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); not in the inventory"
+  },
+  {
+   "id": "B1-05",
+   "kind": "door",
+   "subtype": "lift door 1100x2400 (sliding, _GEN_LIFT_DOOR - DOOR1100x2400)",
+   "a": [
+    -1.5554,
+    -8.18
+   ],
+   "b": [
+    -1.5554,
+    -7.08
+   ],
+   "width": 1.1,
+   "wallThickness": 0.15,
+   "host": "wall",
+   "evidence": "A-DOOR block _GEN_LIFT_DOOR - DOOR1100x2400 (2145865) ins (-1.5554,-7.63) rot -90; lift-shaft east wall x -1.6304..-1.4804 (150 mm) ends at y -8.18 and -7.08; A-DOOR-FRAM 50 mm jambs inside",
+   "confidence": "high",
+   "notes": "lift door into the LIFT HALL; lift car drawn at x -3.21..-1.81",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); not in the inventory"
+  },
+  {
+   "id": "B1-06",
+   "kind": "door",
+   "subtype": "double glass swing, 2 x 0.80 leaves (DOUBLE GLASS SWING DOOR-GENERIC - TYPE 1; no size or height in the name)",
+   "a": [
+    1.0734,
+    -8.6679
+   ],
+   "b": [
+    1.0734,
+    -7.0679
+   ],
+   "width": 1.6,
+   "wallThickness": 0.01,
+   "host": "glass",
+   "evidence": "A-DOOR block DOUBLE GLASS SWING DOOR-GENERIC - TYPE 1 (2419761) ins (1.0734,-7.8679) rot 90; frameless 10 mm glass screen x 1.0684..1.0784 ends at y -8.6679 and -7.0679; leaves 0.80 swing west",
+   "confidence": "high",
+   "notes": "LIFT HALL to the entrance/ATM lobby; the screen is drawn as 10 mm glass only (no 100 mm envelope), so wallThickness 0.01",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); not in the inventory"
+  },
+  {
+   "id": "B1-07",
+   "kind": "door",
+   "subtype": "double glass swing, 2 x 0.79 leaves (DOUBLE GLASS SWING DOOR-GENERIC - TYPE 1; no size or height in the name)",
+   "a": [
+    2.2995,
+    -5.9796
+   ],
+   "b": [
+    3.4043,
+    -4.788
+   ],
+   "width": 1.625,
+   "wallThickness": 0.1,
+   "host": "glass",
+   "evidence": "A-DOOR block DOUBLE GLASS SWING DOOR-GENERIC - TYPE 1 (2613250) ins (2.8519,-5.3838) rot 47.161 (= midpoint of a and b); glass walls 2612402 / 2612404 (GLASS WALL 2600H 20X100) end faces; 100X25 jamb mullions included as the frame",
+   "confidence": "high",
+   "notes": "in the diagonal glass screen between the banking hall and the entrance/ATM lobby; clear width between the jamb mullions 1.575 (inner faces (2.3165,-5.9612) / (3.3874,-4.8063)); both leaves swing north-west into the banking hall",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); not in the inventory"
+  },
+  {
+   "id": "B1-10",
+   "kind": "door",
+   "subtype": "single glass swing (SINGLE GLASS SWING DOOR-GENERIC - TYPE 1, leaf about 0.87; no height in the name)",
+   "a": [
+    4.9422,
+    4.8904
+   ],
+   "b": [
+    5.8672,
+    4.8904
+   ],
+   "width": 0.925,
+   "wallThickness": 0.1,
+   "host": "glass",
+   "evidence": "A-DOOR block SINGLE GLASS SWING DOOR-GENERIC - TYPE 1 (2613220, handle 19F4) ins (5.4047,4.8904); glass screen y 4.8854..4.8954 pieces end at x 4.9422 and 5.8672; 100X25 jamb mullions included as frame",
+   "confidence": "high",
+   "notes": "glass screen between the facade-door lobby (north) and the small hall in front of the meeting room (south); clear width 0.875 (x 4.9672..5.8422); leaf hinged at the east jamb, swings south",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); not in the inventory"
+  },
+  {
+   "id": "B1-11",
+   "kind": "door",
+   "subtype": "single glass swing (SINGLE GLASS SWING DOOR-GENERIC - TYPE 1, leaf about 0.87; no height in the name)",
+   "a": [
+    4.7483,
+    3.3458
+   ],
+   "b": [
+    4.7483,
+    4.2708
+   ],
+   "width": 0.925,
+   "wallThickness": 0.1,
+   "host": "glass",
+   "evidence": "A-DOOR block SINGLE GLASS SWING DOOR-GENERIC - TYPE 1 (2613220, handle 18BF) ins (4.7483,3.8083) rot -90; glass walls 2613106 (y 3.2833..3.3458) and 2613108 (y 4.2708..5.7582); 100X25 jamb mullions included as frame",
+   "confidence": "high",
+   "notes": "MEETING 4 PAX door in its east glass wall; clear width 0.875 (y 3.3708..4.2458); leaf hinged at the south jamb, swings west into the room",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); not in the inventory"
+  },
+  {
+   "id": "B1-12",
+   "kind": "door",
+   "subtype": "single glass swing (SINGLE GLASS SWING DOOR-GENERIC - TYPE 1, leaf about 0.83; no height in the name)",
+   "a": [
+    -0.4192,
+    2.2689
+   ],
+   "b": [
+    0.5058,
+    2.2689
+   ],
+   "width": 0.925,
+   "wallThickness": 0.1,
+   "host": "glass",
+   "evidence": "A-DOOR block SINGLE GLASS SWING DOOR-GENERIC - TYPE 1 (2628564) ins (0.0433,2.2689); glass walls 2613116 (x -0.8804..-0.4192) and 2613114 (x 0.5058..0.5733); 100X25 jamb mullions included as frame",
+   "confidence": "high",
+   "notes": "MANAGER room door in its south glass wall; clear width 0.875 (x -0.3942..0.4808); leaf hinged at the east jamb, swings north into the room",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); not in the inventory"
+  },
+  {
+   "id": "B1-13",
+   "kind": "door",
+   "subtype": "single swing 1000X2400 (leaf 0.90, frames inside the opening)",
+   "a": [
+    1.0733,
+    5.8582
+   ],
+   "b": [
+    1.0733,
+    6.8582
+   ],
+   "width": 1,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR block SINGLE SWING DOOR-GENERIC - 1000X2400 (2330559) ins (1.0733,6.3582) rot 90; wall x 1.0233..1.1233: stub y 6.8582..6.9339 to the north, meeting-room north wall face y 5.8582 to the south",
+   "confidence": "high",
+   "notes": "from the hall north of the meeting room (east) into the staff corridor north of the manager room (west); leaf hinged at the north jamb, swings west",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); not in the inventory"
+  },
+  {
+   "id": "B1-14",
+   "kind": "door",
+   "subtype": "single swing 700X2400 (leaf 0.60, frames inside the opening)",
+   "a": [
+    2.4696,
+    6.985
+   ],
+   "b": [
+    3.1696,
+    6.985
+   ],
+   "width": 0.7,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR block SINGLE SWING DOOR-GENERIC - 700X2400 (2275644) ins (2.8196,6.985); wall y 6.935..7.035 ends at x 2.4696; east bound = toilet east wall face x 3.1696",
+   "confidence": "high",
+   "notes": "north TOILET door; leaf hinged at the east jamb, swings north into the toilet",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); not in the inventory"
+  },
+  {
+   "id": "B1-15",
+   "kind": "door",
+   "subtype": "single swing 1200x2400 (flush leaf 1.20, 50 mm frames inside the opening)",
+   "a": [
+    -3.0178,
+    7.0839
+   ],
+   "b": [
+    -1.7178,
+    7.0839
+   ],
+   "width": 1.3,
+   "wallThickness": 0.3,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_GEN_SWING_1 PANEL_FLUSH - 1200x2400 (2135044) ins (-2.3678,7.0839); 300 mm base-building wall y 6.9339..7.2339 ends at x -3.0178 and -1.7178; A-DOOR-FRAM hatches at both ends",
+   "confidence": "high",
+   "notes": "into the large unlabelled north room (x -5.4..1.1, y 7.2..11.5, filled with an A-DETL-GENF hatch); leaf hinged at the east jamb, swings south into the corridor",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); not in the inventory"
+  },
+  {
+   "id": "B1-16",
+   "kind": "door",
+   "subtype": "single swing 900x2400 (flush leaf 0.90, 50 mm frames inside the opening)",
+   "a": [
+    -3.0678,
+    5.2189
+   ],
+   "b": [
+    -3.0678,
+    6.2189
+   ],
+   "width": 1,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_GEN_SWING_1 PANEL_FLUSH - 900x2400 (2135364) ins (-3.0678,5.7189) rot 90; wall x -3.1178..-3.0178: stub y 6.2189..6.9339 to the north, F/C south wall face y 5.2189 to the south; A-DOOR-FRAM at both ends",
+   "confidence": "high",
+   "notes": "F/C room door; leaf hinged at the north jamb, swings east into the corridor",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); not in the inventory"
+  },
+  {
+   "id": "B1-08",
+   "kind": "door",
+   "subtype": "double pivot, unequal leaves 0.77 + 0.73 (two DOOR-CW_PIVOT_1 PANEL_FLUSH4 - D3 - PL03 curtain-wall door panels; no height in the name)",
+   "a": [
+    4.9181,
+    -8.5088
+   ],
+   "b": [
+    5.812,
+    -7.1787
+   ],
+   "width": 1.603,
+   "wallThickness": 0.1,
+   "host": "glass",
+   "evidence": "A-DOOR blocks DOOR-CW_PIVOT_1 PANEL_FLUSH4 2568134 (ins 5.1621,-8.1457) and 2568539 (ins 5.5812,-7.5222) side by side in the SE corner chamfer, meeting at (5.378,-7.824) with no mullion between; end mullions 2185589 / 2185588 (100X50) included as frame; solid wall on both sides",
+   "confidence": "high",
+   "notes": "street entrance at the chamfered SE corner into the entrance/ATM lobby; ONE wall interruption with two leaves although the drawing has two door blocks; clear width between the end mullions 1.503 (inner faces (4.946,-8.4674) / (5.7841,-7.2202)); both leaves open inwards",
+   "agreement": "fixed",
+   "decision": "structural opening, frame included (shared definition)"
+  },
+  {
+   "id": "B1-09",
+   "kind": "door",
+   "subtype": "single glass swing in the facade curtain wall (SINGLE GLASS SWING DOOR-GENERIC - TYPE 1, leaf about 0.92; no height in the name)",
+   "a": [
+    6.0447,
+    4.8914
+   ],
+   "b": [
+    6.0244,
+    5.9162
+   ],
+   "width": 1.025,
+   "wallThickness": 0.1,
+   "host": "glass",
+   "evidence": "A-DOOR block SINGLE GLASS SWING DOOR-GENERIC - TYPE 1 (2369549) ins (6.0346,5.4038) rot 91.135; curtain wall: glazed panel 2369548 ends at y 4.8914, solid wall piece starts at y 5.9153; mullions 2369210 / 2369214 (100X50) included as frame",
+   "confidence": "high",
+   "notes": "street door in the east facade into the lobby north of the meeting room; clear panel slot between the mullion inner faces 0.925 ((6.0437,4.9414) / (6.0254,5.8662)); leaf hinged at the north jamb, swings in (west)",
+   "agreement": "fixed",
+   "decision": "structural opening, frame included (shared definition)"
+  },
+  {
+   "id": "B1-91",
+   "kind": "window",
+   "subtype": "fixed curtain-wall glazing, full height in plan (1.200 m incl. its mullions)",
+   "a": [
+    -0.6266,
+    -9.13
+   ],
+   "b": [
+    0.5734,
+    -9.13
+   ],
+   "width": 1.2,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-GLAZ-CURT System Panel - GLAZED 2570895 (x -0.5766..0.5234) between A-GLAZ-CWMG 100X50 mullions to x -0.6266 / 0.5734; south facade wall (y -9.18..-9.08) ends at x -0.6266; column 300x550 west face x 0.5733; nothing solid between (checked on the hatch fills)",
+   "confidence": "medium",
+   "notes": "LIFT HALL, south facade",
+   "optional": true,
+   "agreement": "new",
+   "decision": "optional: curtain-wall glazing set in a gap of the facade wall line (between solid wall ends and/or columns). The plan cannot tell a shopfront window in a wall gap from a curtain-wall glass wall: by the 26 Oct definition (glazing in a wall gap = window, whatever the sill) it reads as a window, by its Revit element (curtain wall, no window family anywhere in this drawing) as a glass wall, which is how both labellers listed it. A detector reading the A-WALL gaps will likely report a window here, so it is listed but not scored either way."
+  },
+  {
+   "id": "B1-92",
+   "kind": "window",
+   "subtype": "fixed curtain-wall glazing, full height in plan (1.520 m incl. its mullions)",
+   "a": [
+    1.4655,
+    -9.13
+   ],
+   "b": [
+    2.9855,
+    -9.13
+   ],
+   "width": 1.52,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-GLAZ-CURT System Panel - GLAZED 2572731 (x 1.6255..2.8255) between 100X160 mullions to x 1.4655 / 2.9855; facade wall pieces x 1.12..1.4655 and 2.9855..3.33 (y -9.18..-9.08) on both sides",
+   "confidence": "medium",
+   "notes": "entrance / ATM lobby, south facade",
+   "optional": true,
+   "agreement": "new",
+   "decision": "optional: curtain-wall glazing set in a gap of the facade wall line (between solid wall ends and/or columns). The plan cannot tell a shopfront window in a wall gap from a curtain-wall glass wall: by the 26 Oct definition (glazing in a wall gap = window, whatever the sill) it reads as a window, by its Revit element (curtain wall, no window family anywhere in this drawing) as a glass wall, which is how both labellers listed it. A detector reading the A-WALL gaps will likely report a window here, so it is listed but not scored either way."
+  },
+  {
+   "id": "B1-93",
+   "kind": "window",
+   "subtype": "fixed curtain-wall glazing, full height in plan (0.600 m incl. its mullions)",
+   "a": [
+    3.7176,
+    -8.5267
+   ],
+   "b": [
+    4.3176,
+    -8.5267
+   ],
+   "width": 0.6,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-GLAZ-CURT System Panel - GLAZED 2567163 (0.50 m) between 100X50 mullions; column 700x390 east face x 3.7176 to the west, facade wall x 4.3176..4.95 (y -8.58..-8.48) to the east",
+   "confidence": "medium",
+   "notes": "entrance lobby, stepped part of the south facade",
+   "optional": true,
+   "agreement": "new",
+   "decision": "optional: curtain-wall glazing set in a gap of the facade wall line (between solid wall ends and/or columns). The plan cannot tell a shopfront window in a wall gap from a curtain-wall glass wall: by the 26 Oct definition (glazing in a wall gap = window, whatever the sill) it reads as a window, by its Revit element (curtain wall, no window family anywhere in this drawing) as a glass wall, which is how both labellers listed it. A detector reading the A-WALL gaps will likely report a window here, so it is listed but not scored either way."
+  },
+  {
+   "id": "B1-94",
+   "kind": "window",
+   "subtype": "fixed curtain-wall glazing, full height in plan (0.600 m incl. its mullions)",
+   "a": [
+    5.862,
+    -6.6794
+   ],
+   "b": [
+    5.862,
+    -6.0794
+   ],
+   "width": 0.6,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-GLAZ-CURT System Panel - GLAZED 2567163 (0.50 m) between 100X50 mullions V2 / V1; wall x 5.812..5.912 ends at y -6.6794 (south), column 400x900 south face y -6.0794 (north)",
+   "confidence": "medium",
+   "notes": "entrance lobby, east side of the SE corner",
+   "optional": true,
+   "agreement": "new",
+   "decision": "optional: curtain-wall glazing set in a gap of the facade wall line (between solid wall ends and/or columns). The plan cannot tell a shopfront window in a wall gap from a curtain-wall glass wall: by the 26 Oct definition (glazing in a wall gap = window, whatever the sill) it reads as a window, by its Revit element (curtain wall, no window family anywhere in this drawing) as a glass wall, which is how both labellers listed it. A detector reading the A-WALL gaps will likely report a window here, so it is listed but not scored either way."
+  },
+  {
+   "id": "B1-95",
+   "kind": "window",
+   "subtype": "fixed curtain-wall glazing, full height in plan (1.667 m incl. its mullions)",
+   "a": [
+    6.2527,
+    -5.6145
+   ],
+   "b": [
+    6.2196,
+    -3.9477
+   ],
+   "width": 1.6671,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-GLAZ-CURT System Panel - GLAZED 2578883 (1.347 m) between 100X160 mullions 2572104 / 2572103; facade wall ends at y -5.6145 (south, by column 400x900) and y -3.9477 (north wall stub)",
+   "confidence": "medium",
+   "notes": "ATM lobby, east facade",
+   "optional": true,
+   "agreement": "new",
+   "decision": "optional: curtain-wall glazing set in a gap of the facade wall line (between solid wall ends and/or columns). The plan cannot tell a shopfront window in a wall gap from a curtain-wall glass wall: by the 26 Oct definition (glazing in a wall gap = window, whatever the sill) it reads as a window, by its Revit element (curtain wall, no window family anywhere in this drawing) as a glass wall, which is how both labellers listed it. A detector reading the A-WALL gaps will likely report a window here, so it is listed but not scored either way."
+  },
+  {
+   "id": "B1-96",
+   "kind": "window",
+   "subtype": "fixed curtain-wall glazing, full height in plan (2.563 m incl. its mullions)",
+   "a": [
+    6.1993,
+    -3.0151
+   ],
+   "b": [
+    6.1486,
+    -0.4525
+   ],
+   "width": 2.5631,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-GLAZ-CURT System Panel - GLAZED 2575508 (2.243 m) between 100X160 mullions V4 / V3; columns 300x800 at both ends (faces y -3.0151 and -0.4525)",
+   "confidence": "medium",
+   "notes": "banking hall, east facade",
+   "optional": true,
+   "agreement": "new",
+   "decision": "optional: curtain-wall glazing set in a gap of the facade wall line (between solid wall ends and/or columns). The plan cannot tell a shopfront window in a wall gap from a curtain-wall glass wall: by the 26 Oct definition (glazing in a wall gap = window, whatever the sill) it reads as a window, by its Revit element (curtain wall, no window family anywhere in this drawing) as a glass wall, which is how both labellers listed it. A detector reading the A-WALL gaps will likely report a window here, so it is listed but not scored either way."
+  },
+  {
+   "id": "B1-97",
+   "kind": "window",
+   "subtype": "fixed curtain-wall glazing, full height in plan (2.550 m incl. its mullions)",
+   "a": [
+    6.1346,
+    0.3474
+   ],
+   "b": [
+    6.0841,
+    2.8969
+   ],
+   "width": 2.55,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-GLAZ-CURT System Panel - GLAZED 2575552 (2.23 m) between 100X160 mullions V6 / V5; columns 300x800 at both ends (faces y 0.3474 and 2.8969)",
+   "confidence": "medium",
+   "notes": "banking hall (BA / BE desks), east facade",
+   "optional": true,
+   "agreement": "new",
+   "decision": "optional: curtain-wall glazing set in a gap of the facade wall line (between solid wall ends and/or columns). The plan cannot tell a shopfront window in a wall gap from a curtain-wall glass wall: by the 26 Oct definition (glazing in a wall gap = window, whatever the sill) it reads as a window, by its Revit element (curtain wall, no window family anywhere in this drawing) as a glass wall, which is how both labellers listed it. A detector reading the A-WALL gaps will likely report a window here, so it is listed but not scored either way."
+  },
+  {
+   "id": "B1-98",
+   "kind": "window",
+   "subtype": "fixed curtain-wall glazing, full height in plan (0.975 m incl. its mullions)",
+   "a": [
+    6.064,
+    3.9166
+   ],
+   "b": [
+    6.0447,
+    4.8914
+   ],
+   "width": 0.975,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-GLAZ-CURT System Panel - GLAZED 2369548 (0.925 m) with 100X50 mullion 2369215 at its south end; facade wall stub ends at y 3.9166 (south); north end = B1-09's frame mullion at y 4.8914",
+   "confidence": "medium",
+   "notes": "strip east of the meeting room, east facade; sidelight of door B1-09",
+   "optional": true,
+   "agreement": "new",
+   "decision": "optional: curtain-wall glazing set in a gap of the facade wall line (between solid wall ends and/or columns). The plan cannot tell a shopfront window in a wall gap from a curtain-wall glass wall: by the 26 Oct definition (glazing in a wall gap = window, whatever the sill) it reads as a window, by its Revit element (curtain wall, no window family anywhere in this drawing) as a glass wall, which is how both labellers listed it. A detector reading the A-WALL gaps will likely report a window here, so it is listed but not scored either way."
+  },
+  {
+   "id": "B1-99",
+   "kind": "passage",
+   "subtype": "passage mouth (corridor north of the meeting room opening into the stair / ATM hall; no door, nothing to cut)",
+   "a": [
+    3.2196,
+    6.9339
+   ],
+   "b": [
+    3.2196,
+    5.8582
+   ],
+   "width": 1.0757,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-WALL / A-WALL-PATT fills: the north toilet's east wall (x 3.1696..3.2696) has a free south end at y 6.9339 (door B1-14's east jamb); straight south of it the meeting room's north wall (y 5.7582..5.8582) runs past; nothing solid between along x 3.2196",
+   "confidence": "medium",
+   "notes": "east end of the corridor that serves B1-13 / B1-14; the corridor continues east into the stair foot and the ATM / facade-door hall",
+   "optional": true,
+   "agreement": "new",
+   "decision": "optional: a passage mouth (one wall end facing the side of a perpendicular wall, 1.08 m), the case the shared definition leaves unscored. No wall line is interrupted, and both labellers rejected it as the corridor simply widening, but a detector that pairs free wall ends with walls in front of them will find it."
+  }
+ ]
+}

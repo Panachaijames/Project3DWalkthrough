@@ -1,0 +1,403 @@
+{
+ "part": "l29-E",
+ "accepted": [
+  {
+   "id": "L29E-01",
+   "kind": "door",
+   "subtype": "single swing 900 (Curtain Wall Door_Swing, glass leaf)",
+   "a": [
+    22.777,
+    -35.566
+   ],
+   "b": [
+    22.777,
+    -36.466
+   ],
+   "width": 0.9,
+   "wallThickness": 0.01,
+   "host": "glass",
+   "evidence": "A-DOOR block 'Curtain Wall Door_Swing-4493872' (h 3173) ins (22.777,-36.016) rot 90: leaf x 22.785-23.685, arc r 0.90 about hinge (22.785,-36.466); partition glass panels (GLAZED-4497411 / GLAZED-4497412) end exactly at y=-35.566 and y=-36.466.",
+   "confidence": "high",
+   "notes": "Door in the long glass partition x=22.777 between the open office and the NE office. Hinge at the south end, leaf opens 90 deg east into the NE office. Glass line is drawn 0.01 thick (adjoining solid wall piece in the same line, y -36.97..-39.21, is 0.10).",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "L29E-02",
+   "kind": "door",
+   "subtype": "single swing 900 (Curtain Wall Door_Swing, glass leaf)",
+   "a": [
+    22.777,
+    -39.64
+   ],
+   "b": [
+    22.777,
+    -40.54
+   ],
+   "width": 0.9,
+   "wallThickness": 0.01,
+   "host": "glass",
+   "evidence": "A-DOOR block 'Curtain Wall Door_Swing-4493872' (h 2598) ins (22.777,-40.090) rot 90: arc r 0.90 about hinge (22.785,-40.540), leaf opens 90 deg east; glass panels end at y=-39.640 (GLAZED-4497431) and y=-40.540 (GLAZED-4497412).",
+   "confidence": "high",
+   "notes": "Door of the lounge room (x 22.8-29.3, y -36.9..-41.0) in the same glass partition x=22.777. The glass panel ends coincide with the leaf ends.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "L29E-03",
+   "kind": "door",
+   "subtype": "single swing 900 (Curtain Wall Door_Swing, glass leaf) with 2 fixed sidelights",
+   "a": [
+    13.518,
+    -41.94
+   ],
+   "b": [
+    14.418,
+    -41.94
+   ],
+   "width": 0.9,
+   "wallThickness": 0.1,
+   "host": "glass",
+   "evidence": "A-DOOR block 'Curtain Wall Door_Swing-4493832' (h 31D0) ins (13.968,-41.940) rot 0: arc r 0.90 about hinge (13.518,-41.933), leaf opens 90 deg north; sidelights GLAZED-V39 (x 13.318-13.518) and GLAZED-4493830 (x 14.418-14.677).",
+   "confidence": "medium",
+   "notes": "Existence certain; extent is a convention call. The door + two fixed glass sidelights (0.20 and 0.26) fill a 1.359 m glazed gap in the y=-41.94 line between the core wall east face (x=13.318) and the end stub of the 0.10 thin wall (x=14.677). I labelled the door unit (leaf 0.90 = where people pass) and listed the whole glazed unit under glassWalls. If the key measures wall end to wall end instead: a=(13.318,-41.94) b=(14.677,-41.94) w=1.359. wallThickness = the adjoining thin wall (the glass line itself is 0.01).",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "L29E-04",
+   "kind": "door",
+   "subtype": "single swing 900 (Curtain Wall Door_Swing, glass leaf) with 2 fixed sidelights",
+   "a": [
+    20.959,
+    -41.94
+   ],
+   "b": [
+    21.859,
+    -41.94
+   ],
+   "width": 0.9,
+   "wallThickness": 0.1,
+   "host": "glass",
+   "evidence": "A-DOOR block 'Curtain Wall Door_Swing-4493872' (h 31D1) ins (21.409,-41.940) rot 180: arc r 0.90 about hinge (21.859,-41.933), leaf opens 90 deg north; sidelights GLAZED-4493871 (x 20.677-20.959) and GLAZED-V39 (x 21.859-22.059).",
+   "confidence": "medium",
+   "notes": "Mirror of L29E-03 at the east end of the same wall line: glazed gap 1.382 m between the end stub of the 0.10 thin wall (x=20.677) and the wall x=22.059. Door unit labelled (leaf 0.90); wall-end alternative a=(20.677,-41.94) b=(22.059,-41.94) w=1.382.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "L29E-06",
+   "kind": "door",
+   "subtype": "single swing 1000 (Curtain Wall Door_Swing, glass leaf) with 2 fixed sidelights",
+   "a": [
+    22.109,
+    -44.665
+   ],
+   "b": [
+    22.109,
+    -45.665
+   ],
+   "width": 1.0,
+   "wallThickness": 0.1,
+   "host": "glass",
+   "evidence": "A-DOOR block 'Curtain Wall Door_Swing-4494147' (h 2408) ins (22.109,-45.165) rot 90: arc r 1.00 about hinge (22.116,-45.665), leaf opens 90 deg east; sidelights GLAZED-V34 (y -44.465..-44.665) and GLAZED-4493831 (y -45.665..-45.865); wall x 22.059-22.159 (A-WALL 58B / 57A) ends at y=-44.465 and y=-45.865.",
+   "confidence": "medium",
+   "notes": "Door of the large east room (x 22.2-29.3, y -41..-50.1). Glazed unit 0.20 + 1.00 + 0.20 fills a 1.40 m gap in the 0.10 wall x=22.109 (floor-finish line A-FLOR 2765 spans the whole gap y -44.46..-45.86). Door leaf labelled; wall-end alternative a=(22.109,-44.465) b=(22.109,-45.865) w=1.40.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "L29E-07",
+   "kind": "door",
+   "subtype": "single swing 1000 (Curtain Wall Door_Swing, glass leaf)",
+   "a": [
+    16.416,
+    -45.915
+   ],
+   "b": [
+    17.416,
+    -45.915
+   ],
+   "width": 1.0,
+   "wallThickness": 0.01,
+   "host": "glass",
+   "evidence": "A-DOOR block 'Curtain Wall Door_Swing-4494147' (h 2658) ins (16.916,-45.915) rot 0: arc r 1.00 about hinge (16.416,-45.922), leaf opens 90 deg south into the conference room; glass panels end at x=16.416 (GLAZED-V39, x 16.216-16.416) and x=17.416 (GLAZED-4494146, x 17.416-22.059); floor line A-FLOR 2763 x 16.45-17.42.",
+   "confidence": "high",
+   "notes": "Only door of the conference room (x 16.2-22.06, y -45.9..-50.2), set in its 5.84 m glass north wall.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "L29E-08",
+   "kind": "door",
+   "subtype": "bi-parting glass sliding door 2 x 1000 (DOOR_CP_SLIDE_2_GLASS_FULL - INTERIOR)",
+   "a": [
+    12.822,
+    -46.346
+   ],
+   "b": [
+    12.822,
+    -48.346
+   ],
+   "width": 2.0,
+   "wallThickness": 0.01,
+   "host": "wall",
+   "evidence": "A-DOOR block 'DOOR_CP_SLIDE_2_GLASS_FULL - INTERIOR-4495923' (h 260A) ins (12.822,-47.346) rot -90: two 1.00 m glass leaves drawn in their open positions (y -45.846..-46.846 and -47.846..-48.846) with opening arrows; thin A-WALL pieces (x 12.817-12.827, hatches 603 / 609) end at y=-46.346 and y=-48.346.",
+   "confidence": "high",
+   "notes": "East end sliding door of the lift lobby (the west one at x~4.6 is outside this part). a/b = clear structural opening between the wall ends (2.00), not a single leaf. The host line is a 10 mm wall (probably a glass line); see uncertain.",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "L29E-10",
+   "kind": "door",
+   "subtype": "double swing 2 x 900x2000 (DOOR_SWING_2_SOLID - 900x2000_INT)",
+   "a": [
+    12.617,
+    -52.89
+   ],
+   "b": [
+    12.617,
+    -54.77
+   ],
+   "width": 1.88,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR / A-DOOR-FRAM block 'DOOR_SWING_2_SOLID - 900x2000_INT-4495878' (h 210A) ins (12.617,-53.830) rot 90: two 0.90 leaves drawn open 90 deg to the west (arcs r 0.90), frame stubs 0.04 at y -52.89/-52.93 and -54.73/-54.77; wall x 12.567-12.667 (A-WALL 574 / 574b) ends at y=-52.890 and y=-54.770.",
+   "confidence": "high",
+   "notes": "Double door in the thin wall x=12.617 between the lift lobby side and the open south area. Opening = wall end to wall end including the frames (1.88 = 2 x 0.90 + 2 x 0.04).",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  }
+ ],
+ "disputes": [
+  {
+   "why": "ends differ by 0.223 m",
+   "at": [
+    11.627,
+    -44.365
+   ],
+   "versions": {
+    "A": {
+     "id": "L29E-05",
+     "kind": "door",
+     "subtype": "lift landing door 900x2100, 2-panel centre-opening (DOOR_LIFT_2_SOLID)",
+     "a": [
+      10.927,
+      -44.365
+     ],
+     "b": [
+      12.327,
+      -44.365
+     ],
+     "width": 1.4,
+     "wallThickness": 0.25,
+     "host": "wall",
+     "evidence": "A-DOOR block 'DOOR_LIFT_2_SOLID - 900x2100-3439061' (h 239F) ins (11.627,-44.440) rot 180: leaf pairs x 11.177-12.077 (0.90 clear), frame lines at x 11.137/12.117, car frame x 10.927-12.327; shaft front wall (link 'Project UOBH ... ROOF Central', A-WALL / A-WALL-PATT, y -44.24..-44.49) has wall ends at x=10.927 and x=12.327; 0.10-deep jamb liners (A-WALL hatch 5D8) at x 10.927-11.137 and 12.117-12.327 on the south face only.",
+     "confidence": "medium",
+     "notes": "Lift 3 landing door (lifts 1-2 are outside this part). Width = structural opening between the shaft wall ends measured on the wall centre line (y=-44.365, where the jamb liners do not reach); it equals the 1.40 m car frame and would be the same opening if no leaf were drawn. Alternatives if the key prefers them: 0.98 between the jamb liners, 0.90 clear leaf opening."
+    },
+    "B": {
+     "id": "L29E-05",
+     "kind": "door",
+     "subtype": "lift landing door, 2 sliding leaves, 900x2100 (DOOR_LIFT_2_SOLID)",
+     "a": [
+      11.137,
+      -44.44
+     ],
+     "b": [
+      12.117,
+      -44.44
+     ],
+     "width": 0.98,
+     "wallThickness": 0.1,
+     "host": "wall",
+     "evidence": "A-DOOR insert 'DOOR_LIFT_2_SOLID - 900x2100-3439061' (h 239F) at (11.627,-44.440) rot 180: leaves x 11.177..12.077 (0.90) at y -44.29..-44.39, A-DOOR-FRAM jamb lines x 11.097..11.177 and 12.077..12.157; the 0.10 m jamb-return walls (A-WALL hatch 5D8, y -44.49..-44.39) end at x=11.137 and x=12.117; shaft x 10.927..12.327, y -42.67..-44.27 (A-DOOR-FRAM cross).",
+     "confidence": "high",
+     "notes": "Landing door of lift 3 in the lift-lobby wall (door block drawn, so a door). Clear opening between the jamb-return wall ends = 0.98 m (leaves 0.90). The 0.25 m shaft wall behind it (y -44.24..-44.49) is open over the whole shaft width x 10.927..12.327 (1.40 m); same centre x=11.627. Centre line taken on the return/door line y=-44.44 (thick wall centre would be y=-44.365)."
+    },
+    "E": {
+     "id": "V29-29",
+     "floor": "l29",
+     "kind": "door",
+     "a": [
+      10.927,
+      -44.365
+     ],
+     "b": [
+      12.327,
+      -44.365
+     ],
+     "width": 1.4,
+     "encodings": [
+      "DOOR_LIFT_2_SOLID block + A-DETL 1.4 m line",
+      "sliding leaf rectangles + direction arrows (A-DOOR)",
+      "A-DOOR-FRAM / A-DOOR-HDLN frame and head lines",
+      "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)"
+     ],
+     "note": "[lift landing door 900x2100, 2-panel sliding] Block DOOR_LIFT_2_SOLID - 900x2100 (h 239F): structural opening in the tan core wall (y=-44.365 centre line) is 1.40 m (x 10.927..12.327, also an A-DETL line of 1.400 m at the shaft face); 0.21 m grey jamb stubs (A-WALL) narrow the door+frame to 0.98 m (x 11.137..12.117). Two red sliding leaves drawn with arrows; lift car outline (A-DOOR-FRAM square with X) behind.",
+     "subtype": "lift landing door 900x2100, 2-panel sliding",
+     "host": "wall"
+    }
+   }
+  },
+  {
+   "why": "listed by E only",
+   "at": [
+    12.143,
+    -37.59
+   ],
+   "versions": {
+    "E": {
+     "id": "V29-26",
+     "floor": "l29",
+     "kind": "passage",
+     "a": [
+      11.268,
+      -37.59
+     ],
+     "b": [
+      13.017,
+      -37.59
+     ],
+     "width": 1.75,
+     "encodings": [
+      "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)"
+     ],
+     "note": "OPTIONAL: the 0.30 m tan core wall (y=-37.59) of the central stair is interrupted between x=11.268 and x=13.017 (1.75 m), exactly the width of the stair top landing behind it (S-STRS hatch x 11.2..13.0), but a 0.10 m grey A-WALL furring wall (y -37.54..-37.44, x 3.41..13.32) runs across the gap on the corridor face, so the wall line is drawn closed. Probably a door that is not drawn / blocked in.",
+     "host": "wall",
+     "optional": true
+    }
+   }
+  },
+  {
+   "why": "listed by E only",
+   "at": [
+    12.822,
+    -48.746
+   ],
+   "versions": {
+    "E": {
+     "id": "V29-35",
+     "floor": "l29",
+     "kind": "window",
+     "a": [
+      12.822,
+      -49.146
+     ],
+     "b": [
+      12.822,
+      -48.346
+     ],
+     "width": 0.8,
+     "encodings": [
+      "thin 10 mm A-WALL wall pieces beside a door (glass sidelight)",
+      "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)"
+     ],
+     "note": "OPTIONAL: fixed glazing beside the sliding door (h 260A): 10 mm A-WALL hatch wall (x 12.817..12.827), 0.80 m long, south side of the 2.0 m door gap, between the door and the y=-49.2 wall corner. Floor-to-ceiling glass in the wall line; may equally be read as part of the glass wall (glassWall) or of the door set.",
+     "host": "glass",
+     "optional": true
+    }
+   }
+  },
+  {
+   "why": "listed by E only",
+   "at": [
+    12.822,
+    -45.946
+   ],
+   "versions": {
+    "E": {
+     "id": "V29-33",
+     "floor": "l29",
+     "kind": "window",
+     "a": [
+      12.822,
+      -46.346
+     ],
+     "b": [
+      12.822,
+      -45.546
+     ],
+     "width": 0.8,
+     "encodings": [
+      "thin 10 mm A-WALL wall pieces beside a door (glass sidelight)",
+      "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)"
+     ],
+     "note": "OPTIONAL: fixed glazing beside the sliding door (h 260A): 10 mm A-WALL hatch wall (x 12.817..12.827), 0.80 m long, north side of the 2.0 m door gap, between the door and the U-shaped wall pocket (y=-45.546). Floor-to-ceiling glass in the wall line; may equally be read as part of the glass wall (glassWall) or of the door set.",
+     "host": "glass",
+     "optional": true
+    }
+   }
+  },
+  {
+   "why": "ends differ by 0.084 m",
+   "at": [
+    23.609,
+    -50.116
+   ],
+   "versions": {
+    "A": {
+     "id": "L29E-09",
+     "kind": "door",
+     "subtype": "double swing glass door 2 x 0.96 (Curtain Wall Dbl Glass - TYP)",
+     "a": [
+      22.609,
+      -50.116
+     ],
+     "b": [
+      24.609,
+      -50.116
+     ],
+     "width": 2.0,
+     "wallThickness": 0.2,
+     "host": "glass",
+     "evidence": "A-DOOR / A-DOOR-FRAM block in the 2501_ARCH_KPF link: '2501_Curtain Wall Dbl Glassrfa - TYP-16688590' ins (23.609,-50.216) rot 180: leaves x 22.647-24.571 (arcs r 0.962 swing south into the executive room), jambs x 22.609-22.647 and 24.571-24.609 (y -50.016..-50.216); inner glass skin ends at x=22.61 and x=24.61; threshold line A-FLOR 234F x 22.65-24.56.",
+     "confidence": "high",
+     "notes": "Entrance of the executive room (x 19.8-29.6, y -50.2..-54.95) from the open meeting area. a/b = jamb outer face to jamb outer face (2.00); the clear leaf span is 1.924."
+    },
+    "B": {
+     "id": "L29E-09",
+     "kind": "door",
+     "subtype": "double swing glass door about 2 x 950 (Curtain Wall Dbl Glass, linked 2501 model)",
+     "a": [
+      22.609,
+      -50.2
+     ],
+     "b": [
+      24.609,
+      -50.2
+     ],
+     "width": 2.0,
+     "wallThickness": 0.03,
+     "host": "glass",
+     "evidence": "Block '2501_Curtain Wall Dbl Glassrfa - TYP-16688590' (h C2, layer 0 inside the 2501 link) at (23.609,-50.216) rot 180: posts x 22.609..22.647 and 24.571..24.609 (y -50.016..-50.216), leaves x 22.647..23.552 and 23.666..24.571 hinged at the posts, arcs r 0.96 swing south; mullions at x=22.609 and 24.609 on the glass line y=-50.18..-50.21; A-FLOR threshold lines x 22.65..24.56 at y=-50.11/-50.01.",
+     "confidence": "high",
+     "notes": "Double glass door between the big room R1 (north) and the glazed east bay (south); swings south into the bay. Taken between the posts (door + frames = 2.00 m; clear between post faces 1.92 m). Glass plane thickness 0.03; the mullions are 0.2 m deep north of it (partition centre line would be y=-50.11)."
+    },
+    "E": {
+     "id": "V29-43",
+     "floor": "l29",
+     "kind": "door",
+     "a": [
+      22.609,
+      -50.206
+     ],
+     "b": [
+      24.609,
+      -50.206
+     ],
+     "width": 2.0,
+     "encodings": [
+      "double glass door block inside linked KPF facade model",
+      "swing arc + open leaf line",
+      "A-DOOR-FRAM / A-DOOR-HDLN frame and head lines"
+     ],
+     "note": "[double swing glass door, 2 x 0.96 m] Block 2501_Curtain Wall Dbl Glassrfa - TYP inside the linked KPF facade model (insert at (23.609,-50.216) rot 180): A-DOOR frame posts 0.038 m wide at x=22.609..22.647 and 24.571..24.609 (2.00 m incl. frames; clear between posts 1.924 m), two open leaves drawn as red lines from y=-50.216 to y=-51.159 with swing arcs r=0.962 meeting at x=23.609; hinges at both ends, swing toward -y. Glass partition y=-50.2 of the SE office (curtain-wall system 0.2 deep, A-FLOR room lines y=-50.01/-50.11 across the gap).",
+     "subtype": "double swing glass door, 2 x 0.96 m",
+     "host": "glass"
+    }
+   }
+  }
+ ]
+}

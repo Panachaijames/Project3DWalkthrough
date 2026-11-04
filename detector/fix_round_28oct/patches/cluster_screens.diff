@@ -1,0 +1,98 @@
+--- a/detector/openings.py
++++ b/detector/openings.py
+@@ -48,6 +48,12 @@
+     Elsewhere: a sliding leaf half out of a pocket where the wall simply ends = pocket door (to the next wall or to
+     the line of a second pocket door met at a corner); three or more frame pieces in a row from one wall face to
+     another = frame-only sliding unit.
++    Thin glass screens: a screen drawn as a wall strip under 3 cm (hatch or double line, 5-30 mm) is no wall for rules
++    2-7 (a window or passage in every gap of every screen would be false). Only a gap of 0.6-6 m that starts at a free
++    end of such a screen (0.3 m or more of it) is read, and only with sliding leaves in it: thin rectangles on a door
++    layer (two parallel lines 12-70 mm apart, 0.4-2 m long, within 0.15 m of the gap's line, 0.1 m or more of each
++    inside it; a hinged leaf's lines excluded) that are together at least 80 % as long as the gap = sliding door. The
++    leaves are often drawn half open over the fixed glass beside the gap, so they run past its ends.
+  7. A gap with nothing in it is a passage only when it looks like one: both ends wall ends of one wall line (<= 3.6 m;
+     <= 2.75 m from an L-corner), or a short gap (<= 1.6 m) from a wall end to a wall face that carries on; not stub
+     to stub, not at a free-standing post, not across a stair, not on walls thinner than 7 cm, building on both sides.
+@@ -176,9 +182,10 @@
+         return (self.c[0] + self.u[0] * s + self.n[0] * l, self.c[1] + self.u[1] * s + self.n[1] * l)
+ 
+ 
+-def find_strips(W, tmin=0.03, tmax=0.55):
++def find_strips(W, tmin=0.03, tmax=0.55, min_len=0.03):
+     """Pairs of opposite faces of the wall solid (parallel boundary edges with opposite outward normals, tmin..tmax
+-    apart, overlapping) -> wall strips, whatever the walls were drawn with (lines, outlines, fills)."""
++    apart, overlapping) -> wall strips, whatever the walls were drawn with (lines, outlines, fills). Faces shorter
++    than min_len are not looked at."""
+     E = []
+     for poly in polys(W):
+         poly = orient(poly, 1.0)
+@@ -195,7 +202,7 @@
+     mn = np.minimum(A[:, :2], A[:, 2:]) - tmax; mx = np.maximum(A[:, :2], A[:, 2:]) + tmax
+     strips = []
+     for i in range(len(E)):
+-        if L[i] < 0.03: continue
++        if L[i] < min_len: continue
+         cand = np.nonzero((mx[:, 0] >= min(A[i, 0], A[i, 2])) & (mn[:, 0] <= max(A[i, 0], A[i, 2])) &
+                           (mx[:, 1] >= min(A[i, 1], A[i, 3])) & (mn[:, 1] <= max(A[i, 1], A[i, 3])))[0]
+         cand = cand[(N[cand] @ N[i]) < -0.9994]                 # opposite faces, within ~2 degrees
+@@ -734,6 +741,7 @@
+         for u0, u1, kind, nl in glazing_units(fl, [b], a0, b.u, s1 - s0):
+             openings.append(glazed_opening(fl, add(a0, mul(b.u, u0)), add(a0, mul(b.u, u1)), t, kind, nl,
+                                            ['glazing between wall ends (bay)'] + b.lays, 0.65))
++    openings += screen_doors(fl)                                # sliding leaves in a gap of a thin glass screen
+     openings = fuse(openings)
+     T['total'] = time.time() - t0
+     fl.T = T
+@@ -1098,6 +1106,52 @@
+     return out
+ 
+ 
++def screen_leaves(fl, g, reach=0.15):
++    """Sliding leaves along a gap: thin rectangles on a door layer (two parallel lines 12-70 mm apart, drawn the same
++    length, 0.4-2 m long; the lines of a hinged leaf are left out) that run along the gap within `reach` of its centre
++    line with at least 0.1 m of their length inside it. -> [(s0, s1), ...] along the gap, one per leaf (a leaf drawn
++    half open over the fixed glass beside the gap runs past the gap's end)."""
++    SI = fl.SI
++    idx = SI.near_box(*rect(g.a, g.u, -2.0, g.w + 2.0, -reach, reach).bounds)
++    if not len(idx): return []
++    s0, s1, la, lb, cs = SI.in_frame(idx, g.a, g.u)
++    ok = (cs > math.cos(math.radians(3))) & (np.abs(la - lb) <= 0.01) & (np.maximum(np.abs(la), np.abs(lb)) <= reach) & \
++         (s1 - s0 >= 0.4) & (s1 - s0 <= 2.0) & (np.minimum(s1, g.w) - np.maximum(s0, 0.0) >= 0.1)
++    rows = []
++    for k in np.nonzero(ok)[0]:
++        p = fl.P[SI.pid[idx[k]]]
++        if 'door' in p.roles and not p.roles & {'wall', 'column', 'window', 'glass'} and p.i not in fl.leaf_prims:
++            rows.append((float(s0[k]), float(s1[k]), float((la[k] + lb[k]) / 2)))
++    leaves = []
++    for i, (a0, a1, al) in enumerate(rows):
++        for b0, b1, bl in rows[i + 1:]:
++            if abs(a0 - b0) <= 0.02 and abs(a1 - b1) <= 0.02 and 0.012 <= abs(al - bl) <= 0.07:
++                lf = ((a0 + b0) / 2, (a1 + b1) / 2)
++                if not any(abs(lf[0] - x[0]) <= 0.05 and abs(lf[1] - x[1]) <= 0.05 for x in leaves): leaves.append(lf)
++    return sorted(leaves)
++
++
++def screen_doors(fl):
++    """Sliding doors in thin glass screens (a screen here is a wall strip thinner than 3 cm: a glass pane drawn as a
++    hatch or a double line, 5-30 mm; not the 'screen' layer role). Such a strip is no wall for rules 2-7, which would
++    make a window or a passage of every gap in every glass screen. Only a gap of 0.6-6 m that starts at a free end of
++    a screen (0.3 m or more of screen) is read, and only when sliding leaves stand in it: leaf panels (screen_leaves)
++    that are together at least 80 % as long as the gap, leaves that could close it. The gap runs from the screen end
++    to the next wall material (the other screen end, a wall, a column)."""
++    out = []
++    screens = [S for S in find_strips(fl.W, 0.005, 0.03, 0.3) if S.s1 - S.s0 >= 0.3]
++    for g in strip_gaps(fl, fl.G, screens, 0.6, 6.0):
++        if g.near != 'cap': continue
++        leaves = screen_leaves(fl, g)
++        total = sum(b - a for a, b in leaves)
++        if total < 0.8 * g.w: continue
++        out.append(dict(kind='door', subtype='sliding (leaves beside a glass screen)', a=g.a, b=g.b, t=g.t, host='wall',
++                        ev=[f'gap in a thin glass screen (cap-{g.far})', f'{len(leaves)} leaf panel(s) on a door layer, '
++                            f'{total:.2f} m of leaf for a {g.w:.2f} m gap'],
++                        conf=0.7, swings=[], src='screen', far=g.far))
++    return out
++
++
+ def gap_contents(fl, g):
+     """What is drawn inside a gap besides swings and glazing: sliding / pocket leaves (a thin panel or a single line
+     along the gap that runs on into the wall) and frame pieces standing inside it (stiles of a sliding unit)."""

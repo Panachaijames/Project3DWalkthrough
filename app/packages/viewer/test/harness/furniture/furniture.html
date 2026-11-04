@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Furniture and panel harness (builder C)</title>
+<!--
+  Builder C's harness page (DESIGN.md 17.4; WORK_BREAKDOWN C): the shared test context (makeTestContext, real WebGL) with
+  C's real root (createRoot: BASE_CSS in the adopted sheet), side panel (createPanel) and furniture (installFurniture).
+  ?model=mini (default) | bank-v2 | suite | house | hotel     ?mode=host (furnitureHeights 'host')     ?nodownload=1
+  ?reset=tailwind  adds a host page reset like Tailwind's preflight (in @layer base), which the root's all: revert undoes.
+  window.__furn: { ctx, F, downloads, ready } for furniture.spec.ts.
+-->
+<style>html, body { margin: 0; height: 100%; background: #fff; } #app { position: fixed; inset: 0; }</style>
+</head>
+<body><div id="app"></div><script type="module" src="./furniture-page.ts"></script></body>
+</html>

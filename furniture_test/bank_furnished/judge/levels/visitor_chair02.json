@@ -1,0 +1,117 @@
+{
+ "key": "visitor_chair02",
+ "name": "visitor chair02",
+ "file": "banquet/visitor chair02.glb",
+ "kind": "seat",
+ "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY",
+ "piece": "L1-seat-007",
+ "furnishes": 4,
+ "turnUndone_deg": 0,
+ "turnFrom": "round: no turn",
+ "standsAt_m": 0,
+ "size_m": [
+  0.4723,
+  0.4523,
+  0.4723
+ ],
+ "gltfSceneToModelFrame_columnMajor": [
+  1,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0.6329557,
+  0.0027474,
+  -2.775031,
+  1
+ ],
+ "full": {
+  "triangles": 6084,
+  "vertices": 3495,
+  "weldedVertices": 3046,
+  "parts": [
+   {
+    "name": "Circle005",
+    "triangles": 1764,
+    "vertices": 1149,
+    "mirrored": false
+   },
+   {
+    "name": "Cylinder003",
+    "triangles": 4320,
+    "vertices": 2346,
+    "mirrored": false
+   }
+  ],
+  "area_m2": 1.1748
+ },
+ "levels": [
+  {
+   "id": "5000",
+   "label": "5,000 budget",
+   "triangles": 5000,
+   "vertices": 2504,
+   "posOffset": 0,
+   "posCount": 7512,
+   "idxOffset": 30048,
+   "idxCount": 15000
+  },
+  {
+   "id": "50%",
+   "label": "50 %",
+   "triangles": 3042,
+   "vertices": 1525,
+   "posOffset": 90048,
+   "posCount": 4575,
+   "idxOffset": 108348,
+   "idxCount": 9126
+  },
+  {
+   "id": "2500",
+   "label": "2,500 budget",
+   "triangles": 2500,
+   "vertices": 1254,
+   "posOffset": 144852,
+   "posCount": 3762,
+   "idxOffset": 159900,
+   "idxCount": 7500
+  },
+  {
+   "id": "25%",
+   "label": "25 %",
+   "triangles": 1520,
+   "vertices": 764,
+   "posOffset": 189900,
+   "posCount": 2292,
+   "idxOffset": 199068,
+   "idxCount": 4560
+  },
+  {
+   "id": "12%",
+   "label": "12 %",
+   "triangles": 728,
+   "vertices": 368,
+   "posOffset": 217308,
+   "posCount": 1104,
+   "idxOffset": 221724,
+   "idxCount": 2184
+  },
+  {
+   "id": "6%",
+   "label": "6 %",
+   "triangles": 364,
+   "vertices": 186,
+   "posOffset": 230460,
+   "posCount": 558,
+   "idxOffset": 232692,
+   "idxCount": 1092
+  }
+ ]
+}

@@ -1,0 +1,382 @@
+{
+  "format": "walkthrough-prototype-facts/1",
+  "page": "hotel_test/hotel_3d_preview.html",
+  "capturedAt": "2026-11-03T04:18:01.524Z",
+  "how": "tools/capture-prototype-facts.mjs (DESIGN.md 17.1): scene with ?build=0&nodownload=1, card with the plain address",
+  "title": "Hotel test",
+  "stamp": "6ab030750886",
+  "heading": "Hotel (test): two pictures → 3D",
+  "intro": {
+    "text": "No CAD: read from two presentation pictures, Floor 1 at 0.00 m and Floor 2 at +2.90 m, scaled from the one real size the owner gave, the main stair's width between its side walls, 2.50 m: Floor 1's picture has 59.28 px per metre across and 56.94 down, Floor 2's 42.06. Lift doors built 1.00 m wide (the owner's). The circles with a cross are lights, not furniture. Tick Plan picture to see each picture under the model.",
+    "html": "No CAD: read from two presentation pictures, Floor 1 at 0.00 m and Floor 2 at +2.90 m, scaled from the one real size the owner gave, the main stair's width between its side walls, 2.50 m: Floor 1's picture has 59.28 px per metre across and 56.94 down, Floor 2's 42.06. Lift doors built 1.00 m wide (the owner's). The circles with a cross are lights, not furniture. Tick Plan picture to see each picture under the model."
+  },
+  "floorButtons": [
+    {
+      "key": "both",
+      "text": "Both floors",
+      "on": true
+    },
+    {
+      "key": "F1",
+      "text": "Floor 1",
+      "on": false
+    },
+    {
+      "key": "F2",
+      "text": "Floor 2",
+      "on": false
+    }
+  ],
+  "ticks": [
+    {
+      "id": "plates",
+      "label": "Floor plates",
+      "checked": true,
+      "title": null
+    },
+    {
+      "id": "glass",
+      "label": "Glass",
+      "checked": true,
+      "title": null
+    },
+    {
+      "id": "rooms",
+      "label": "Room names",
+      "checked": true,
+      "title": null
+    },
+    {
+      "id": "picture",
+      "label": "Plan picture",
+      "checked": false,
+      "title": "Each floor's source picture, laid on its floor plate at the model's scale and position"
+    }
+  ],
+  "legend": {
+    "layout": "lines",
+    "items": [
+      {
+        "colour": "#e3ddd3",
+        "text": "Walls and door lintels, 2.90 m (up to the next floor); 2 hatches (serving hatch, food lift hatch (dumbwaiter)), open from 0.85 / 0.90 to 2.10 m"
+      },
+      {
+        "colour": "#e3ddd3",
+        "text": "Low walls, 1.10 m: outside stair spine"
+      },
+      {
+        "colour": "#9cc3d5",
+        "text": "Glass read from the pictures, full height, and its frame posts"
+      },
+      {
+        "colour": "#77727c",
+        "text": "Railings, 1.10 m, round the open stair and on the terrace's open edges"
+      },
+      {
+        "colour": "#b9c7b4",
+        "text": "Stairs: 16 steps from Floor 1 up to Floor 2's open stair; 7 steps from Floor 2 up toward the floor above (not in the pictures), ending at +1.19 m; the outside stair as flat tread lines (up or down not known)"
+      },
+      {
+        "colour": "#d4d8d2",
+        "text": "Floor plates: the inside of the walls and glass; outdoors at the same level, Floor 1's forecourt (0.56 m deep in front of the entrance doors, as drawn) and Floor 2's terrace"
+      }
+    ]
+  },
+  "panelOrder": [
+    "h1",
+    "p",
+    "#floors",
+    "div",
+    "#shows",
+    ".legend",
+    "div"
+  ],
+  "accent": "#2f6f8f",
+  "hint": "Drag to orbit · right-drag to pan · scroll to zoom · double-click a floor to walk there · 1 / 2 / 3: Orbit / Walk / Ghost · P: photo",
+  "rooms": 24,
+  "scene": {
+    "floors": [
+      {
+        "key": "F1",
+        "name": "Floor 1",
+        "level": 0,
+        "walkLevel": 0,
+        "stack": "hotel",
+        "colliders": [
+          {
+            "name": "F1 solid:follow",
+            "vertices": 2088,
+            "visible": true
+          },
+          {
+            "name": "F1 mullion:follow",
+            "vertices": 288,
+            "visible": true
+          },
+          {
+            "name": "F1 glass:follow",
+            "vertices": 288,
+            "visible": true
+          },
+          {
+            "name": "F1 step:own",
+            "vertices": 576,
+            "visible": true
+          },
+          {
+            "name": "F1 walk skins",
+            "vertices": 516,
+            "visible": true
+          },
+          {
+            "name": "F1 walk skins (glass)",
+            "vertices": 288,
+            "visible": true
+          }
+        ],
+        "colliderVertices": 4044,
+        "furnitureColliders": 23,
+        "walkables": [
+          {
+            "name": "F1 floor plate",
+            "vertices": 732
+          },
+          {
+            "name": "F1 floor plate",
+            "vertices": 552
+          }
+        ],
+        "walkableVertices": 1284,
+        "late": 25,
+        "lateWithoutFurniture": 2,
+        "rise": [],
+        "labels": 10,
+        "groupChildren": 35
+      },
+      {
+        "key": "F2",
+        "name": "Floor 2",
+        "level": 2.9,
+        "walkLevel": 2.9,
+        "stack": "hotel",
+        "colliders": [
+          {
+            "name": "F2 solid:follow",
+            "vertices": 3252,
+            "visible": true
+          },
+          {
+            "name": "F2 parapet:own",
+            "vertices": 36,
+            "visible": true
+          },
+          {
+            "name": "F2 glass:follow",
+            "vertices": 108,
+            "visible": true
+          },
+          {
+            "name": "F2 sill:own",
+            "vertices": 96,
+            "visible": true
+          },
+          {
+            "name": "F2 railing:own",
+            "vertices": 252,
+            "visible": true
+          },
+          {
+            "name": "F2 step:own",
+            "vertices": 252,
+            "visible": true
+          },
+          {
+            "name": "F2 walk skins",
+            "vertices": 360,
+            "visible": true
+          },
+          {
+            "name": "F2 walk skins (glass)",
+            "vertices": 72,
+            "visible": true
+          }
+        ],
+        "colliderVertices": 4428,
+        "furnitureColliders": 135,
+        "walkables": [
+          {
+            "name": "F2 floor plate",
+            "vertices": 684
+          }
+        ],
+        "walkableVertices": 684,
+        "late": 138,
+        "lateWithoutFurniture": 2,
+        "rise": [],
+        "labels": 14,
+        "groupChildren": 152
+      }
+    ],
+    "camera": {
+      "position": [
+        16.242409448619483,
+        24.55,
+        30.5333680425218
+      ],
+      "target": [
+        -5.357590551380515,
+        2.4999999999999996,
+        4.4333680425218045
+      ],
+      "fov": 39.96621304379996,
+      "near": 0.1,
+      "far": 600,
+      "source": "__host.camera, __host.controls"
+    },
+    "model": {
+      "project": "Hotel ground floor and floor 2 (from two pictures)",
+      "shortName": "Hotel",
+      "photoName": "Hotel-pictures",
+      "floors": [
+        "F1",
+        "F2"
+      ],
+      "parts": 89,
+      "openings": 20,
+      "rooms": 24
+    },
+    "labels": 24
+  },
+  "ticksFlip": {
+    "plates": {
+      "objects": 3,
+      "names": [
+        "F1 floor plate",
+        "F1 floor plate",
+        "F2 floor plate"
+      ],
+      "pictures": 0,
+      "roomLabels": 0,
+      "startsChecked": true
+    },
+    "glass": {
+      "objects": 6,
+      "names": [
+        "",
+        "",
+        "F1 glass:follow",
+        "F1 walk skins (glass)",
+        "F2 glass:follow",
+        "F2 walk skins (glass)"
+      ],
+      "pictures": 0,
+      "roomLabels": 0,
+      "startsChecked": true
+    },
+    "rooms": {
+      "objects": 0,
+      "names": [],
+      "pictures": 0,
+      "roomLabels": 14,
+      "startsChecked": true
+    },
+    "picture": {
+      "objects": 0,
+      "names": [],
+      "pictures": 2,
+      "roomLabels": 0,
+      "startsChecked": false
+    }
+  },
+  "card": null,
+  "hintOnSettingsScreen": "Drag to orbit · right-drag to pan · scroll to zoom · double-click a floor to walk there · 1 / 2 / 3: Orbit / Walk / Ghost · P: photo",
+  "furniture": {
+    "kinds": [
+      {
+        "key": "plant",
+        "label": "Plant",
+        "colour": "#2e9e4f",
+        "height": 600,
+        "defaultHeight": 600,
+        "count": 3,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "seat",
+        "label": "Chair / stool",
+        "colour": "#e07b00",
+        "height": 450,
+        "defaultHeight": 450,
+        "count": 50,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "sofa",
+        "label": "Sofa / armchair",
+        "colour": "#ffb347",
+        "height": 800,
+        "defaultHeight": 800,
+        "count": 37,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "seat-back",
+        "label": "Seat back",
+        "colour": "#fa8072",
+        "height": 800,
+        "defaultHeight": 800,
+        "count": 5,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "table",
+        "label": "Table / desk",
+        "colour": "#8a5a2b",
+        "height": 750,
+        "defaultHeight": 750,
+        "count": 4,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "coffee-table",
+        "label": "Coffee / side table",
+        "colour": "#c9a37a",
+        "height": 450,
+        "defaultHeight": 450,
+        "count": 24,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "counter",
+        "label": "Counter top",
+        "colour": "#a0522d",
+        "height": 850,
+        "defaultHeight": 850,
+        "count": 11,
+        "visible": true,
+        "blocks": true
+      },
+      {
+        "key": "cabinet",
+        "label": "Cabinet / casework",
+        "colour": "#2f7fc1",
+        "height": 900,
+        "defaultHeight": 900,
+        "count": 25,
+        "visible": true,
+        "blocks": true
+      }
+    ],
+    "pieces": 159,
+    "keepDoorways": true,
+    "csvSha1": "1ca847f340613452f68956c2c9a52e450a1e9c4f",
+    "csvBytes": 21277
+  },
+  "errors": []
+}

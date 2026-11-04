@@ -1,0 +1,130 @@
+{
+ "key": "visitor_chair02_n",
+ "name": "visitor chair02 (normals kept)",
+ "file": "banquet/visitor chair02.glb",
+ "kind": "seat",
+ "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY",
+ "piece": "L1-seat-007",
+ "furnishes": 4,
+ "normals": "the exported normals, carried through the slimming",
+ "turnUndone_deg": 0,
+ "turnFrom": "round: no turn",
+ "standsAt_m": 0,
+ "size_m": [
+  0.4723,
+  0.4523,
+  0.4723
+ ],
+ "gltfSceneToModelFrame_columnMajor": [
+  1,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0.6329557,
+  0.0027474,
+  -2.775031,
+  1
+ ],
+ "full": {
+  "triangles": 6084,
+  "vertices": 3495,
+  "weldedVertices": 3202,
+  "parts": [
+   {
+    "name": "Circle005",
+    "triangles": 1764,
+    "vertices": 1149,
+    "mirrored": false
+   },
+   {
+    "name": "Cylinder003",
+    "triangles": 4320,
+    "vertices": 2346,
+    "mirrored": false
+   }
+  ],
+  "area_m2": 1.1748
+ },
+ "levels": [
+  {
+   "id": "5000",
+   "label": "5,000 budget",
+   "triangles": 5000,
+   "vertices": 2660,
+   "posOffset": 0,
+   "posCount": 7980,
+   "idxOffset": 31920,
+   "idxCount": 15000,
+   "nrmOffset": 91920,
+   "nrmCount": 7980
+  },
+  {
+   "id": "50%",
+   "label": "50 %",
+   "triangles": 3042,
+   "vertices": 1680,
+   "posOffset": 123840,
+   "posCount": 5040,
+   "idxOffset": 144000,
+   "idxCount": 9126,
+   "nrmOffset": 180504,
+   "nrmCount": 5040
+  },
+  {
+   "id": "2500",
+   "label": "2,500 budget",
+   "triangles": 2500,
+   "vertices": 1409,
+   "posOffset": 200664,
+   "posCount": 4227,
+   "idxOffset": 217572,
+   "idxCount": 7500,
+   "nrmOffset": 247572,
+   "nrmCount": 4227
+  },
+  {
+   "id": "25%",
+   "label": "25 %",
+   "triangles": 1520,
+   "vertices": 886,
+   "posOffset": 264480,
+   "posCount": 2658,
+   "idxOffset": 275112,
+   "idxCount": 4560,
+   "nrmOffset": 293352,
+   "nrmCount": 2658
+  },
+  {
+   "id": "12%",
+   "label": "12 %",
+   "triangles": 728,
+   "vertices": 436,
+   "posOffset": 303984,
+   "posCount": 1308,
+   "idxOffset": 309216,
+   "idxCount": 2184,
+   "nrmOffset": 317952,
+   "nrmCount": 1308
+  },
+  {
+   "id": "6%",
+   "label": "6 %",
+   "triangles": 364,
+   "vertices": 228,
+   "posOffset": 323184,
+   "posCount": 684,
+   "idxOffset": 325920,
+   "idxCount": 1092,
+   "nrmOffset": 330288,
+   "nrmCount": 684
+  }
+ ]
+}

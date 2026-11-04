@@ -1,0 +1,5448 @@
+{
+ "made": "2026-11-03T10:44:26.981Z",
+ "three": "0.186.1",
+ "offset": [
+  1.212,
+  0.348
+ ],
+ "levels": {
+  "L1": 0,
+  "L2": 3.7
+ },
+ "sources": {
+  "analysis": "analysis.json",
+  "inserts": "dxf_pieces.json of the analysis step (LibreDWG 0.14 conversions of I1201 / I1202, read with ezdxf 1.4.4)",
+  "bases": "bank_test/bank_furniture_list.csv base_mm"
+ },
+ "formula": "full model at piece P: place(P) x normalise; slimmed GLBs are already normalised: place(P). place(P) = T(insert x - 1.212, level + base, -(insert y - 0.348)) Ry(insert turn) F(P), F = diag(1, 1, -1) for a block drawing mirrored in y against the matched piece's. Matrices row-major (three.js world of the bank page, in the level's group).",
+ "models": {
+  "banquet": {
+   "file": "banquet/banquet.glb",
+   "bytes": 170672,
+   "sha256": "18f9daf300ae9e89bcded9afa1af90d772e8274e114638de16ce84942836461e",
+   "family": "SOFA_BENCH_DIOR - TYPE 2",
+   "kind": "sofa",
+   "triangles": 4720,
+   "vertices": 3466,
+   "parts": [
+    {
+     "index": 0,
+     "name": "Rectangle089",
+     "triangles": 12,
+     "mirrored": false,
+     "exportMaterial": 0
+    },
+    {
+     "index": 1,
+     "name": "Rectangle090",
+     "triangles": 4352,
+     "mirrored": false,
+     "exportMaterial": 1
+    },
+    {
+     "index": 2,
+     "name": "Line2038381558",
+     "triangles": 356,
+     "mirrored": false,
+     "exportMaterial": 2
+    }
+   ],
+   "matchedPiece": "L1-sofa-002",
+   "normalise": [
+    [
+     0,
+     0,
+     1,
+     -2.92239
+    ],
+    [
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     -1,
+     0,
+     0,
+     5.58221
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "normaliseBox": [
+    [
+     0,
+     0,
+     -1,
+     2.2159
+    ],
+    [
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     1,
+     0,
+     0,
+     -5.6736
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "suggested": "moved 0.030 m onto the centre of the run of four, and placed once for the whole run (relative to the run, not to one piece)",
+   "sizeNormalised_m": [
+    3.0322,
+    0.4744,
+    0.6927
+   ],
+   "centreNormalised": [
+    -1.2064,
+    0.2372,
+    -0.0914
+   ],
+   "placedBackAtOwnPiece_m": null,
+   "piecesFurnished": 4,
+   "copies": 1,
+   "pieces": [
+    {
+     "key": "L1-sofa-002",
+     "ids": [
+      "L1-sofa-001",
+      "L1-sofa-002",
+      "L1-sofa-003",
+      "L1-sofa-004"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": 4.3686,
+      "y": -3.2405,
+      "turn": 270
+     },
+     "mirror": "none",
+     "box": {
+      "x": 4.46,
+      "y": -2.534,
+      "rot": 90
+     },
+     "boxInBlockGap_m": 0,
+     "modelCentreFromBoxCentre_m": 0.5,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       4.36861
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       1,
+       0,
+       0,
+       3.24049
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0,
+       0,
+       1,
+       4.46
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -1,
+       0,
+       0,
+       2.534
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    }
+   ]
+  },
+  "monitor": {
+   "file": "banquet/monitor.glb",
+   "bytes": 944444,
+   "sha256": "f311224c79db449ccf2fecaefd35dcc278df56139387698ec811db4e0e6a4bd4",
+   "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+   "kind": "computer",
+   "triangles": 15290,
+   "vertices": 22893,
+   "parts": [
+    {
+     "index": 0,
+     "name": "office_workplace_100_27_inch_screen002_1",
+     "triangles": 2486,
+     "mirrored": false,
+     "exportMaterial": 0
+    },
+    {
+     "index": 1,
+     "name": "office_workplace_100_27_inch_screen002_2",
+     "triangles": 144,
+     "mirrored": false,
+     "exportMaterial": 1
+    },
+    {
+     "index": 2,
+     "name": "office_workplace_100_27_inch_screen002_3",
+     "triangles": 8,
+     "mirrored": false,
+     "exportMaterial": 2
+    },
+    {
+     "index": 3,
+     "name": "office_workplace_100_keyboard002_1",
+     "triangles": 216,
+     "mirrored": false,
+     "exportMaterial": 3
+    },
+    {
+     "index": 4,
+     "name": "office_workplace_100_keyboard002_2",
+     "triangles": 180,
+     "mirrored": false,
+     "exportMaterial": 4
+    },
+    {
+     "index": 5,
+     "name": "office_workplace_100_keyboard002_3",
+     "triangles": 11440,
+     "mirrored": false,
+     "exportMaterial": 5
+    },
+    {
+     "index": 6,
+     "name": "office_workplace_100_pc_mouse002_1",
+     "triangles": 448,
+     "mirrored": false,
+     "exportMaterial": 6
+    },
+    {
+     "index": 7,
+     "name": "office_workplace_100_pc_mouse002_2",
+     "triangles": 368,
+     "mirrored": false,
+     "exportMaterial": 7
+    }
+   ],
+   "matchedPiece": "L1-computer-003",
+   "normalise": [
+    [
+     0.494476,
+     0,
+     0.869191,
+     -0.91092
+    ],
+    [
+     0,
+     1,
+     0,
+     -0.75
+    ],
+    [
+     -0.869191,
+     0,
+     0.494476,
+     -2.04078
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "normaliseBox": [
+    [
+     -0.406577,
+     0,
+     -0.913616,
+     1.135696
+    ],
+    [
+     0,
+     1,
+     0,
+     -0.75
+    ],
+    [
+     0.913616,
+     0,
+     -0.406577,
+     2.049819
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "suggested": null,
+   "sizeNormalised_m": [
+    0.8691,
+    0.482,
+    0.783
+   ],
+   "centreNormalised": [
+    0.1971,
+    0.241,
+    0.3854
+   ],
+   "placedBackAtOwnPiece_m": 0.0000013,
+   "piecesFurnished": 16,
+   "copies": 16,
+   "pieces": [
+    {
+     "key": "L1-computer-001",
+     "ids": [
+      "L1-computer-001"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0.75,
+     "insert": {
+      "x": -2.6315,
+      "y": 4.4137,
+      "turn": 299.6352
+     },
+     "mirror": "none",
+     "box": {
+      "x": -2.72,
+      "y": 4.344,
+      "rot": 113.99
+     },
+     "boxInBlockGap_m": 0.001,
+     "modelCentreFromBoxCentre_m": 0.328,
+     "place": [
+      [
+       0.494476,
+       0,
+       -0.8691913,
+       -2.63148
+      ],
+      [
+       0,
+       1,
+       0,
+       0.75
+      ],
+      [
+       0.8691913,
+       0,
+       0.494476,
+       -4.41374
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.4065772,
+       0,
+       0.9136164,
+       -2.72
+      ],
+      [
+       0,
+       1,
+       0,
+       0.75
+      ],
+      [
+       -0.9136164,
+       0,
+       -0.4065772,
+       -4.344
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-computer-002",
+     "ids": [
+      "L1-computer-002"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0.75,
+     "insert": {
+      "x": -2.5354,
+      "y": -3.9555,
+      "turn": 299.6352
+     },
+     "mirror": "none",
+     "box": {
+      "x": -2.623,
+      "y": -4.025,
+      "rot": 113.99
+     },
+     "boxInBlockGap_m": 0.0006,
+     "modelCentreFromBoxCentre_m": 0.3286,
+     "place": [
+      [
+       0.494476,
+       0,
+       -0.8691913,
+       -2.5354
+      ],
+      [
+       0,
+       1,
+       0,
+       0.75
+      ],
+      [
+       0.8691913,
+       0,
+       0.494476,
+       3.95551
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.4065772,
+       0,
+       0.9136164,
+       -2.623
+      ],
+      [
+       0,
+       1,
+       0,
+       0.75
+      ],
+      [
+       -0.9136164,
+       0,
+       -0.4065772,
+       4.025
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-computer-003",
+     "ids": [
+      "L1-computer-003"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0.75,
+     "insert": {
+      "x": -2.5354,
+      "y": -2.1489,
+      "turn": 299.6352
+     },
+     "mirror": "none",
+     "box": {
+      "x": -2.623,
+      "y": -2.219,
+      "rot": 113.99
+     },
+     "boxInBlockGap_m": 0,
+     "modelCentreFromBoxCentre_m": 0.3281,
+     "place": [
+      [
+       0.494476,
+       0,
+       -0.8691913,
+       -2.5354
+      ],
+      [
+       0,
+       1,
+       0,
+       0.75
+      ],
+      [
+       0.8691913,
+       0,
+       0.494476,
+       2.14888
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.4065772,
+       0,
+       0.9136164,
+       -2.623
+      ],
+      [
+       0,
+       1,
+       0,
+       0.75
+      ],
+      [
+       -0.9136164,
+       0,
+       -0.4065772,
+       2.219
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-computer-004",
+     "ids": [
+      "L1-computer-004"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0.75,
+     "insert": {
+      "x": -2.5354,
+      "y": -0.3489,
+      "turn": 299.6352
+     },
+     "mirror": "none",
+     "box": {
+      "x": -2.623,
+      "y": -0.419,
+      "rot": 113.99
+     },
+     "boxInBlockGap_m": 0,
+     "modelCentreFromBoxCentre_m": 0.3281,
+     "place": [
+      [
+       0.494476,
+       0,
+       -0.8691913,
+       -2.5354
+      ],
+      [
+       0,
+       1,
+       0,
+       0.75
+      ],
+      [
+       0.8691913,
+       0,
+       0.494476,
+       0.34888
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.4065772,
+       0,
+       0.9136164,
+       -2.623
+      ],
+      [
+       0,
+       1,
+       0,
+       0.75
+      ],
+      [
+       -0.9136164,
+       0,
+       -0.4065772,
+       0.419
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-computer-005",
+     "ids": [
+      "L1-computer-005"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0.75,
+     "insert": {
+      "x": -2.5354,
+      "y": 1.4961,
+      "turn": 299.6352
+     },
+     "mirror": "none",
+     "box": {
+      "x": -2.623,
+      "y": 1.426,
+      "rot": 113.99
+     },
+     "boxInBlockGap_m": 0,
+     "modelCentreFromBoxCentre_m": 0.3281,
+     "place": [
+      [
+       0.494476,
+       0,
+       -0.8691913,
+       -2.5354
+      ],
+      [
+       0,
+       1,
+       0,
+       0.75
+      ],
+      [
+       0.8691913,
+       0,
+       0.494476,
+       -1.49612
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.4065772,
+       0,
+       0.9136164,
+       -2.623
+      ],
+      [
+       0,
+       1,
+       0,
+       0.75
+      ],
+      [
+       -0.9136164,
+       0,
+       -0.4065772,
+       -1.426
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-computer-006",
+     "ids": [
+      "L1-computer-006"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0.75,
+     "insert": {
+      "x": 0.9677,
+      "y": 1.2515,
+      "turn": 119.6352
+     },
+     "mirror": "none",
+     "box": {
+      "x": 1.056,
+      "y": 1.321,
+      "rot": 113.99
+     },
+     "boxInBlockGap_m": 0.001,
+     "modelCentreFromBoxCentre_m": 0.3283,
+     "place": [
+      [
+       -0.494476,
+       0,
+       0.8691913,
+       0.96768
+      ],
+      [
+       0,
+       1,
+       0,
+       0.75
+      ],
+      [
+       -0.8691913,
+       0,
+       -0.494476,
+       -1.2515
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.4065772,
+       0,
+       0.9136164,
+       1.056
+      ],
+      [
+       0,
+       1,
+       0,
+       0.75
+      ],
+      [
+       -0.9136164,
+       0,
+       -0.4065772,
+       -1.321
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-computer-007",
+     "ids": [
+      "L1-computer-007"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0.75,
+     "insert": {
+      "x": 2.378,
+      "y": 1.2515,
+      "turn": 119.6352
+     },
+     "mirror": "none",
+     "box": {
+      "x": 2.466,
+      "y": 1.321,
+      "rot": 113.99
+     },
+     "boxInBlockGap_m": 0.0007,
+     "modelCentreFromBoxCentre_m": 0.3284,
+     "place": [
+      [
+       -0.494476,
+       0,
+       0.8691913,
+       2.37803
+      ],
+      [
+       0,
+       1,
+       0,
+       0.75
+      ],
+      [
+       -0.8691913,
+       0,
+       -0.494476,
+       -1.2515
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.4065772,
+       0,
+       0.9136164,
+       2.466
+      ],
+      [
+       0,
+       1,
+       0,
+       0.75
+      ],
+      [
+       -0.9136164,
+       0,
+       -0.4065772,
+       -1.321
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-computer-001",
+     "ids": [
+      "L2-computer-001"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0.9,
+     "insert": {
+      "x": -4.9917,
+      "y": -0.1329,
+      "turn": 270
+     },
+     "mirror": "none",
+     "box": {
+      "x": -5.103,
+      "y": -0.15,
+      "rot": 84.36
+     },
+     "boxInBlockGap_m": 0.0007,
+     "modelCentreFromBoxCentre_m": 0.3279,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       -4.9917
+      ],
+      [
+       0,
+       1,
+       0,
+       4.6
+      ],
+      [
+       1,
+       0,
+       0,
+       0.13291
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.0982777,
+       0,
+       0.995159,
+       -5.103
+      ],
+      [
+       0,
+       1,
+       0,
+       4.6
+      ],
+      [
+       -0.995159,
+       0,
+       0.0982777,
+       0.15
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-computer-002",
+     "ids": [
+      "L2-computer-002"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0.9,
+     "insert": {
+      "x": -4.9917,
+      "y": 1.3946,
+      "turn": 270
+     },
+     "mirror": "none",
+     "box": {
+      "x": -5.103,
+      "y": 1.377,
+      "rot": 84.36
+     },
+     "boxInBlockGap_m": 0.0005,
+     "modelCentreFromBoxCentre_m": 0.3276,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       -4.9917
+      ],
+      [
+       0,
+       1,
+       0,
+       4.6
+      ],
+      [
+       1,
+       0,
+       0,
+       -1.39464
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.0982777,
+       0,
+       0.995159,
+       -5.103
+      ],
+      [
+       0,
+       1,
+       0,
+       4.6
+      ],
+      [
+       -0.995159,
+       0,
+       0.0982777,
+       -1.377
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-computer-003",
+     "ids": [
+      "L2-computer-003"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0.9,
+     "insert": {
+      "x": -4.9917,
+      "y": 2.5946,
+      "turn": 270
+     },
+     "mirror": "none",
+     "box": {
+      "x": -5.103,
+      "y": 2.577,
+      "rot": 84.36
+     },
+     "boxInBlockGap_m": 0.0005,
+     "modelCentreFromBoxCentre_m": 0.3276,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       -4.9917
+      ],
+      [
+       0,
+       1,
+       0,
+       4.6
+      ],
+      [
+       1,
+       0,
+       0,
+       -2.59464
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.0982777,
+       0,
+       0.995159,
+       -5.103
+      ],
+      [
+       0,
+       1,
+       0,
+       4.6
+      ],
+      [
+       -0.995159,
+       0,
+       0.0982777,
+       -2.577
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-computer-004",
+     "ids": [
+      "L2-computer-004"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0.9,
+     "insert": {
+      "x": -2.7829,
+      "y": -4.4552,
+      "turn": 299.6352
+     },
+     "mirror": "none",
+     "box": {
+      "x": -2.871,
+      "y": -4.525,
+      "rot": 113.99
+     },
+     "boxInBlockGap_m": 0.0006,
+     "modelCentreFromBoxCentre_m": 0.3282,
+     "place": [
+      [
+       0.494476,
+       0,
+       -0.8691913,
+       -2.78293
+      ],
+      [
+       0,
+       1,
+       0,
+       4.6
+      ],
+      [
+       0.8691913,
+       0,
+       0.494476,
+       4.45524
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.4065772,
+       0,
+       0.9136164,
+       -2.871
+      ],
+      [
+       0,
+       1,
+       0,
+       4.6
+      ],
+      [
+       -0.9136164,
+       0,
+       -0.4065772,
+       4.525
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-computer-005",
+     "ids": [
+      "L2-computer-005"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0.9,
+     "insert": {
+      "x": -2.7829,
+      "y": -2.7799,
+      "turn": 299.6352
+     },
+     "mirror": "none",
+     "box": {
+      "x": -2.871,
+      "y": -2.85,
+      "rot": 113.99
+     },
+     "boxInBlockGap_m": 0.0005,
+     "modelCentreFromBoxCentre_m": 0.3279,
+     "place": [
+      [
+       0.494476,
+       0,
+       -0.8691913,
+       -2.78293
+      ],
+      [
+       0,
+       1,
+       0,
+       4.6
+      ],
+      [
+       0.8691913,
+       0,
+       0.494476,
+       2.77994
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.4065772,
+       0,
+       0.9136164,
+       -2.871
+      ],
+      [
+       0,
+       1,
+       0,
+       4.6
+      ],
+      [
+       -0.9136164,
+       0,
+       -0.4065772,
+       2.85
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-computer-006",
+     "ids": [
+      "L2-computer-006"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0.9,
+     "insert": {
+      "x": -2.7829,
+      "y": -0.7052,
+      "turn": 299.6352
+     },
+     "mirror": "none",
+     "box": {
+      "x": -2.871,
+      "y": -0.775,
+      "rot": 113.99
+     },
+     "boxInBlockGap_m": 0.0006,
+     "modelCentreFromBoxCentre_m": 0.3282,
+     "place": [
+      [
+       0.494476,
+       0,
+       -0.8691913,
+       -2.78293
+      ],
+      [
+       0,
+       1,
+       0,
+       4.6
+      ],
+      [
+       0.8691913,
+       0,
+       0.494476,
+       0.70524
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.4065772,
+       0,
+       0.9136164,
+       -2.871
+      ],
+      [
+       0,
+       1,
+       0,
+       4.6
+      ],
+      [
+       -0.9136164,
+       0,
+       -0.4065772,
+       0.775
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-computer-007",
+     "ids": [
+      "L2-computer-007"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0.9,
+     "insert": {
+      "x": -2.7829,
+      "y": 0.9698,
+      "turn": 299.6352
+     },
+     "mirror": "none",
+     "box": {
+      "x": -2.871,
+      "y": 0.9,
+      "rot": 113.99
+     },
+     "boxInBlockGap_m": 0.0006,
+     "modelCentreFromBoxCentre_m": 0.3282,
+     "place": [
+      [
+       0.494476,
+       0,
+       -0.8691913,
+       -2.78293
+      ],
+      [
+       0,
+       1,
+       0,
+       4.6
+      ],
+      [
+       0.8691913,
+       0,
+       0.494476,
+       -0.96976
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.4065772,
+       0,
+       0.9136164,
+       -2.871
+      ],
+      [
+       0,
+       1,
+       0,
+       4.6
+      ],
+      [
+       -0.9136164,
+       0,
+       -0.4065772,
+       -0.9
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-computer-008",
+     "ids": [
+      "L2-computer-008"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0.75,
+     "insert": {
+      "x": -2.7829,
+      "y": 3.0573,
+      "turn": 299.6352
+     },
+     "mirror": "none",
+     "box": {
+      "x": -2.871,
+      "y": 2.987,
+      "rot": 113.99
+     },
+     "boxInBlockGap_m": 0.0005,
+     "modelCentreFromBoxCentre_m": 0.3277,
+     "place": [
+      [
+       0.494476,
+       0,
+       -0.8691913,
+       -2.78293
+      ],
+      [
+       0,
+       1,
+       0,
+       4.45
+      ],
+      [
+       0.8691913,
+       0,
+       0.494476,
+       -3.05726
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.4065772,
+       0,
+       0.9136164,
+       -2.871
+      ],
+      [
+       0,
+       1,
+       0,
+       4.45
+      ],
+      [
+       -0.9136164,
+       0,
+       -0.4065772,
+       -2.987
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-computer-009",
+     "ids": [
+      "L2-computer-009"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0.75,
+     "insert": {
+      "x": -0.3053,
+      "y": 5.1906,
+      "turn": 209.6352
+     },
+     "mirror": "none",
+     "box": {
+      "x": -0.375,
+      "y": 5.279,
+      "rot": 23.99
+     },
+     "boxInBlockGap_m": 0.0009,
+     "modelCentreFromBoxCentre_m": 0.328,
+     "place": [
+      [
+       -0.8691913,
+       0,
+       -0.494476,
+       -0.30528
+      ],
+      [
+       0,
+       1,
+       0,
+       4.45
+      ],
+      [
+       0.494476,
+       0,
+       -0.8691913,
+       -5.19057
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.9136164,
+       0,
+       0.4065772,
+       -0.375
+      ],
+      [
+       0,
+       1,
+       0,
+       4.45
+      ],
+      [
+       -0.4065772,
+       0,
+       0.9136164,
+       -5.279
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    }
+   ]
+  },
+  "side table": {
+   "file": "banquet/side table.glb",
+   "bytes": 82760,
+   "sha256": "643cd5aa6f488f08d4374da47c83d491930c94974b44c8a5241485d876a317b2",
+   "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H",
+   "kind": "coffee-table",
+   "triangles": 1564,
+   "vertices": 2160,
+   "parts": [
+    {
+     "index": 0,
+     "name": "Line042",
+     "triangles": 332,
+     "mirrored": false,
+     "exportMaterial": 0
+    },
+    {
+     "index": 1,
+     "name": "Line043",
+     "triangles": 332,
+     "mirrored": true,
+     "exportMaterial": 0
+    },
+    {
+     "index": 2,
+     "name": "Object018",
+     "triangles": 622,
+     "mirrored": false,
+     "exportMaterial": 1
+    },
+    {
+     "index": 3,
+     "name": "Rectangle057",
+     "triangles": 278,
+     "mirrored": false,
+     "exportMaterial": 2
+    }
+   ],
+   "matchedPiece": "L1-coffee-table-002",
+   "normalise": [
+    [
+     1,
+     0,
+     0,
+     -2.76886
+    ],
+    [
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     1,
+     -0.79676
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "normaliseBox": [
+    [
+     0.380909,
+     0,
+     -0.924613,
+     -0.317723
+    ],
+    [
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     0.924613,
+     0,
+     0.380909,
+     -2.863336
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "suggested": "moved 0.437 m so that its footprint centre is on the box centre, its turn kept (the drawing is round and gives none)",
+   "sizeNormalised_m": [
+    0.45,
+    0.55,
+    0.3
+   ],
+   "centreNormalised": [
+    -0.0004,
+    0.275,
+    0.0001
+   ],
+   "placedBackAtOwnPiece_m": null,
+   "piecesFurnished": 9,
+   "copies": 9,
+   "pieces": [
+    {
+     "key": "L1-coffee-table-001",
+     "ids": [
+      "L1-coffee-table-001"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": 1.0863,
+      "y": -2.6786,
+      "turn": 0
+     },
+     "mirror": "none",
+     "box": {
+      "x": 1.086,
+      "y": -2.679,
+      "rot": 42.4
+     },
+     "boxInBlockGap_m": 0.0002,
+     "modelCentreFromBoxCentre_m": 0.0003,
+     "place": [
+      [
+       1,
+       0,
+       0,
+       1.08634
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       1,
+       2.67865
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.7384553,
+       0,
+       0.6743024,
+       1.086
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.6743024,
+       0,
+       0.7384553,
+       2.679
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-coffee-table-002",
+     "ids": [
+      "L1-coffee-table-002"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": 1.1634,
+      "y": -1.3339,
+      "turn": 0
+     },
+     "mirror": "none",
+     "box": {
+      "x": 1.163,
+      "y": -1.334,
+      "rot": 67.61
+     },
+     "boxInBlockGap_m": 0,
+     "modelCentreFromBoxCentre_m": 0,
+     "place": [
+      [
+       1,
+       0,
+       0,
+       1.16336
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       1,
+       1.33386
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.380909,
+       0,
+       0.9246125,
+       1.163
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.9246125,
+       0,
+       0.380909,
+       1.334
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-coffee-table-004",
+     "ids": [
+      "L1-coffee-table-004"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": 2.5493,
+      "y": -1.3339,
+      "turn": 180
+     },
+     "mirror": "none",
+     "box": {
+      "x": 2.549,
+      "y": -1.334,
+      "rot": 67.61
+     },
+     "boxInBlockGap_m": 0.0007,
+     "modelCentreFromBoxCentre_m": 0.0007,
+     "place": [
+      [
+       -1,
+       0,
+       0,
+       2.54932
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       -1,
+       1.33386
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.380909,
+       0,
+       0.9246125,
+       2.549
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.9246125,
+       0,
+       0.380909,
+       1.334
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-coffee-table-005",
+     "ids": [
+      "L1-coffee-table-005"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": 2.5613,
+      "y": -2.7739,
+      "turn": 180
+     },
+     "mirror": "none",
+     "box": {
+      "x": 2.561,
+      "y": -2.774,
+      "rot": 67.61
+     },
+     "boxInBlockGap_m": 0.0008,
+     "modelCentreFromBoxCentre_m": 0.0008,
+     "place": [
+      [
+       -1,
+       0,
+       0,
+       2.56134
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       -1,
+       2.77386
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.380909,
+       0,
+       0.9246125,
+       2.561
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.9246125,
+       0,
+       0.380909,
+       2.774
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-coffee-table-006",
+     "ids": [
+      "L1-coffee-table-006"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": 3.9513,
+      "y": -3.0491,
+      "turn": 0
+     },
+     "mirror": "none",
+     "box": {
+      "x": 3.951,
+      "y": -3.049,
+      "rot": 67.61
+     },
+     "boxInBlockGap_m": 0.0003,
+     "modelCentreFromBoxCentre_m": 0.0003,
+     "place": [
+      [
+       1,
+       0,
+       0,
+       3.95134
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       1,
+       3.04915
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.380909,
+       0,
+       0.9246125,
+       3.951
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.9246125,
+       0,
+       0.380909,
+       3.049
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-coffee-table-007",
+     "ids": [
+      "L1-coffee-table-007"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": 3.9513,
+      "y": -1.0691,
+      "turn": 0
+     },
+     "mirror": "none",
+     "box": {
+      "x": 3.951,
+      "y": -1.069,
+      "rot": 67.61
+     },
+     "boxInBlockGap_m": 0.0003,
+     "modelCentreFromBoxCentre_m": 0.0003,
+     "place": [
+      [
+       1,
+       0,
+       0,
+       3.95134
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       1,
+       1.06915
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.380909,
+       0,
+       0.9246125,
+       3.951
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.9246125,
+       0,
+       0.380909,
+       1.069
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-coffee-table-001",
+     "ids": [
+      "L2-coffee-table-001"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0,
+     "insert": {
+      "x": 0.9237,
+      "y": -5.4597,
+      "turn": 0
+     },
+     "mirror": "none",
+     "box": {
+      "x": 0.924,
+      "y": -5.46,
+      "rot": 2.82
+     },
+     "boxInBlockGap_m": 0.0006,
+     "modelCentreFromBoxCentre_m": 0.0007,
+     "place": [
+      [
+       1,
+       0,
+       0,
+       0.92375
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       0,
+       0,
+       1,
+       5.45971
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.998789,
+       0,
+       0.0491984,
+       0.924
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -0.0491984,
+       0,
+       0.998789,
+       5.46
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-coffee-table-002",
+     "ids": [
+      "L2-coffee-table-002"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0,
+     "insert": {
+      "x": 2.4066,
+      "y": 5.6615,
+      "turn": 0
+     },
+     "mirror": "none",
+     "box": {
+      "x": 2.407,
+      "y": 5.661,
+      "rot": 3.44
+     },
+     "boxInBlockGap_m": 0.0008,
+     "modelCentreFromBoxCentre_m": 0.0009,
+     "place": [
+      [
+       1,
+       0,
+       0,
+       2.4066
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       0,
+       0,
+       1,
+       -5.66146
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.9981982,
+       0,
+       0.0600033,
+       2.407
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -0.0600033,
+       0,
+       0.9981982,
+       -5.661
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-coffee-table-004",
+     "ids": [
+      "L2-coffee-table-004"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0,
+     "insert": {
+      "x": 3.1932,
+      "y": -9.0103,
+      "turn": 90
+     },
+     "mirror": "none",
+     "box": {
+      "x": 3.193,
+      "y": -9.01,
+      "rot": 32.61
+     },
+     "boxInBlockGap_m": 0.0007,
+     "modelCentreFromBoxCentre_m": 0.0007,
+     "place": [
+      [
+       0,
+       0,
+       1,
+       3.19321
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -1,
+       0,
+       0,
+       9.01025
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.8423584,
+       0,
+       0.5389178,
+       3.193
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -0.5389178,
+       0,
+       0.8423584,
+       9.01
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    }
+   ]
+  },
+  "sofa": {
+   "file": "banquet/sofa.glb",
+   "bytes": 77748,
+   "sha256": "fdab3ca738c20b0b0e5685aca7945f5487c4a445c4ef47d33cd408279e189ca1",
+   "family": "CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA_VISIONA STOOL",
+   "kind": "seat",
+   "triangles": 2223,
+   "vertices": 1539,
+   "parts": [
+    {
+     "index": 0,
+     "name": "CHAIR_BENCH_BACK_SE107_STOOL_LOW_VITRA_VISIONA_STOOL_2572013_1",
+     "triangles": 2126,
+     "mirrored": false,
+     "exportMaterial": 0
+    },
+    {
+     "index": 1,
+     "name": "CHAIR_BENCH_BACK_SE107_STOOL_LOW_VITRA_VISIONA_STOOL_2572013_2",
+     "triangles": 97,
+     "mirrored": false,
+     "exportMaterial": 1
+    }
+   ],
+   "matchedPiece": "L1-seat-028",
+   "normalise": [
+    [
+     0,
+     0,
+     1,
+     -1.34696
+    ],
+    [
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     -1,
+     0,
+     0,
+     3.47375
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "normaliseBox": [
+    [
+     0,
+     0,
+     -1,
+     1.3473
+    ],
+    [
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     1,
+     0,
+     0,
+     -3.3801
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "suggested": "turned 270 degrees about its footprint centre and moved 0.488 m: the pose that fits the block drawing best (mean line distance 0.042 m against 0.122 m as exported)",
+   "sizeNormalised_m": [
+    1.9,
+    0.7,
+    1.199
+   ],
+   "centreNormalised": [
+    0.0003,
+    0.35,
+    0.0737
+   ],
+   "placedBackAtOwnPiece_m": null,
+   "piecesFurnished": 3,
+   "copies": 3,
+   "pieces": [
+    {
+     "key": "L1-seat-028",
+     "ids": [
+      "L1-seat-028"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": 1.9163,
+      "y": -2.1736,
+      "turn": 180
+     },
+     "mirror": "none",
+     "box": {
+      "x": 1.916,
+      "y": -2.08,
+      "rot": 0
+     },
+     "boxInBlockGap_m": 0,
+     "modelCentreFromBoxCentre_m": 0.02,
+     "place": [
+      [
+       -1,
+       0,
+       0,
+       1.91634
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       -1,
+       2.17365
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       1,
+       0,
+       0,
+       1.916
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       1,
+       2.08
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-seat-024",
+     "ids": [
+      "L2-seat-024"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0,
+     "insert": {
+      "x": 1.564,
+      "y": -5.738,
+      "turn": 270
+     },
+     "mirror": "mirror y",
+     "box": {
+      "x": 1.649,
+      "y": -5.738,
+      "rot": 90
+     },
+     "boxInBlockGap_m": 0.0087,
+     "modelCentreFromBoxCentre_m": 0.0113,
+     "place": [
+      [
+       0,
+       0,
+       1,
+       1.56403
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       1,
+       0,
+       0,
+       5.738
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0,
+       0,
+       1,
+       1.649
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -1,
+       0,
+       0,
+       5.738
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-seat-030",
+     "ids": [
+      "L2-seat-030"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0,
+     "insert": {
+      "x": 3.1465,
+      "y": -7.0454,
+      "turn": 180
+     },
+     "mirror": "none",
+     "box": {
+      "x": 3.146,
+      "y": -6.96,
+      "rot": 0
+     },
+     "boxInBlockGap_m": 0.0082,
+     "modelCentreFromBoxCentre_m": 0.0118,
+     "place": [
+      [
+       -1,
+       0,
+       0,
+       3.14647
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       0,
+       0,
+       -1,
+       7.04544
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       1,
+       0,
+       0,
+       3.146
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       0,
+       0,
+       1,
+       6.96
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    }
+   ]
+  },
+  "stool": {
+   "file": "banquet/stool.glb",
+   "bytes": 89280,
+   "sha256": "b2d6eeeb52ab0c551465074fd788247e5972ba64ea4194b5e9ca67b25964f1d8",
+   "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE",
+   "kind": "seat",
+   "triangles": 2680,
+   "vertices": 1720,
+   "parts": [
+    {
+     "index": 0,
+     "name": "Rectangle038",
+     "triangles": 2348,
+     "mirrored": false,
+     "exportMaterial": 0
+    },
+    {
+     "index": 1,
+     "name": "Rectangle039",
+     "triangles": 332,
+     "mirrored": false,
+     "exportMaterial": 1
+    }
+   ],
+   "matchedPiece": "L1-seat-020",
+   "normalise": [
+    [
+     0,
+     0,
+     1,
+     -0.31765
+    ],
+    [
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     -1,
+     0,
+     0,
+     2.54601
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "normaliseBox": [
+    [
+     0.532581,
+     0,
+     -0.846379,
+     -1.087661
+    ],
+    [
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     0.846379,
+     0,
+     0.532581,
+     -2.324292
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "suggested": "moved 0.923 m so that its footprint centre is on the box centre, its turn kept (the drawing is round and gives none)",
+   "sizeNormalised_m": [
+    0.4073,
+    0.45,
+    0.4298
+   ],
+   "centreNormalised": [
+    0.0124,
+    0.225,
+    0.0103
+   ],
+   "placedBackAtOwnPiece_m": null,
+   "piecesFurnished": 5,
+   "copies": 5,
+   "pieces": [
+    {
+     "key": "L1-seat-020",
+     "ids": [
+      "L1-seat-020"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": 0.6245,
+      "y": -1.2563,
+      "turn": 270
+     },
+     "mirror": "none",
+     "box": {
+      "x": 0.625,
+      "y": -1.256,
+      "rot": 57.82
+     },
+     "boxInBlockGap_m": 0,
+     "modelCentreFromBoxCentre_m": 0.0167,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       0.62451
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       1,
+       0,
+       0,
+       1.25635
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.5325809,
+       0,
+       0.8463791,
+       0.625
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.8463791,
+       0,
+       0.5325809,
+       1.256
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-seat-035",
+     "ids": [
+      "L1-seat-035"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": 3.0402,
+      "y": -2.9139,
+      "turn": 90
+     },
+     "mirror": "none",
+     "box": {
+      "x": 3.04,
+      "y": -2.914,
+      "rot": 57.82
+     },
+     "boxInBlockGap_m": 0.0004,
+     "modelCentreFromBoxCentre_m": 0.0163,
+     "place": [
+      [
+       0,
+       0,
+       1,
+       3.04019
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -1,
+       0,
+       0,
+       2.91386
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.5325809,
+       0,
+       0.8463791,
+       3.04
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.8463791,
+       0,
+       0.5325809,
+       2.914
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-seat-036",
+     "ids": [
+      "L1-seat-036"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": 3.0882,
+      "y": -1.2963,
+      "turn": 270
+     },
+     "mirror": "none",
+     "box": {
+      "x": 3.088,
+      "y": -1.296,
+      "rot": 60.11
+     },
+     "boxInBlockGap_m": 0.0007,
+     "modelCentreFromBoxCentre_m": 0.0163,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       3.08817
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       1,
+       0,
+       0,
+       1.29635
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.4983364,
+       0,
+       0.8669837,
+       3.088
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.8669837,
+       0,
+       0.4983364,
+       1.296
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-seat-031",
+     "ids": [
+      "L2-seat-031"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0,
+     "insert": {
+      "x": 3.2632,
+      "y": -5.7942,
+      "turn": 270
+     },
+     "mirror": "none",
+     "box": {
+      "x": 3.263,
+      "y": -5.794,
+      "rot": 17.19
+     },
+     "boxInBlockGap_m": 0.0007,
+     "modelCentreFromBoxCentre_m": 0.0161,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       3.26324
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       1,
+       0,
+       0,
+       5.79421
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.95533,
+       0,
+       0.2955413,
+       3.263
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -0.2955413,
+       0,
+       0.95533,
+       5.794
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-seat-032",
+     "ids": [
+      "L2-seat-032"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0,
+     "insert": {
+      "x": 3.646,
+      "y": -7.928,
+      "turn": 90
+     },
+     "mirror": "none",
+     "box": {
+      "x": 3.646,
+      "y": -7.928,
+      "rot": 57.82
+     },
+     "boxInBlockGap_m": 0.0006,
+     "modelCentreFromBoxCentre_m": 0.0161,
+     "place": [
+      [
+       0,
+       0,
+       1,
+       3.64597
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -1,
+       0,
+       0,
+       7.92796
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.5325809,
+       0,
+       0.8463791,
+       3.646
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -0.8463791,
+       0,
+       0.5325809,
+       7.928
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    }
+   ]
+  },
+  "visitor chair01": {
+   "file": "banquet/visitor chair01.glb",
+   "bytes": 8109756,
+   "sha256": "6942107e1767a544bff993245d4dfa504f7983e9ff4ee5a931843d9c388c9e51",
+   "family": "mollie_chair_a685_revit - A685 2",
+   "kind": "seat",
+   "triangles": 241326,
+   "vertices": 162800,
+   "parts": [
+    {
+     "index": 0,
+     "name": "Object005",
+     "triangles": 7494,
+     "mirrored": false,
+     "exportMaterial": 0
+    },
+    {
+     "index": 1,
+     "name": "model_part006",
+     "triangles": 28464,
+     "mirrored": false,
+     "exportMaterial": 1
+    },
+    {
+     "index": 2,
+     "name": "model_part007",
+     "triangles": 88344,
+     "mirrored": false,
+     "exportMaterial": 1
+    },
+    {
+     "index": 3,
+     "name": "model_part008",
+     "triangles": 117024,
+     "mirrored": false,
+     "exportMaterial": 0
+    }
+   ],
+   "matchedPiece": "L1-seat-012",
+   "normalise": [
+    [
+     0,
+     0,
+     1,
+     -2.08507
+    ],
+    [
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     -1,
+     0,
+     0,
+     -0.61431
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "normaliseBox": [
+    [
+     0.998593,
+     0,
+     -0.053033,
+     0.687389
+    ],
+    [
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     0.053033,
+     0,
+     0.998593,
+     -2.044423
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "suggested": null,
+   "sizeNormalised_m": [
+    0.5738,
+    0.7687,
+    0.553
+   ],
+   "centreNormalised": [
+    0.0125,
+    0.3821,
+    -0.025
+   ],
+   "placedBackAtOwnPiece_m": 4.44e-16,
+   "piecesFurnished": 19,
+   "copies": 19,
+   "pieces": [
+    {
+     "key": "L1-seat-011",
+     "ids": [
+      "L1-seat-011"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": -1.8263,
+      "y": -4.2397,
+      "turn": 270
+     },
+     "mirror": "none",
+     "box": {
+      "x": -1.79,
+      "y": -4.232,
+      "rot": 3.04
+     },
+     "boxInBlockGap_m": 0.0006,
+     "modelCentreFromBoxCentre_m": 0.0231,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       -1.82631
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       1,
+       0,
+       0,
+       4.2397
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.9985928,
+       0,
+       0.0530331,
+       -1.79
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.0530331,
+       0,
+       0.9985928,
+       4.232
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-seat-012",
+     "ids": [
+      "L1-seat-012"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": -1.8263,
+      "y": -2.4331,
+      "turn": 270
+     },
+     "mirror": "none",
+     "box": {
+      "x": -1.79,
+      "y": -2.426,
+      "rot": 3.04
+     },
+     "boxInBlockGap_m": 0,
+     "modelCentreFromBoxCentre_m": 0.0226,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       -1.82631
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       1,
+       0,
+       0,
+       2.43307
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.9985928,
+       0,
+       0.0530331,
+       -1.79
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.0530331,
+       0,
+       0.9985928,
+       2.426
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-seat-013",
+     "ids": [
+      "L1-seat-013"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": -1.8263,
+      "y": -0.6331,
+      "turn": 270
+     },
+     "mirror": "none",
+     "box": {
+      "x": -1.79,
+      "y": -0.626,
+      "rot": 3.04
+     },
+     "boxInBlockGap_m": 0,
+     "modelCentreFromBoxCentre_m": 0.0226,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       -1.82631
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       1,
+       0,
+       0,
+       0.63307
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.9985928,
+       0,
+       0.0530331,
+       -1.79
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.0530331,
+       0,
+       0.9985928,
+       0.626
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-seat-014",
+     "ids": [
+      "L1-seat-014"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": -1.8263,
+      "y": 1.1669,
+      "turn": 270
+     },
+     "mirror": "none",
+     "box": {
+      "x": -1.79,
+      "y": 1.174,
+      "rot": 3.04
+     },
+     "boxInBlockGap_m": 0,
+     "modelCentreFromBoxCentre_m": 0.0226,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       -1.82631
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       1,
+       0,
+       0,
+       -1.16693
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.9985928,
+       0,
+       0.0530331,
+       -1.79
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.0530331,
+       0,
+       0.9985928,
+       -1.174
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-seat-015",
+     "ids": [
+      "L1-seat-015"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": -1.8163,
+      "y": 4.2709,
+      "turn": 270
+     },
+     "mirror": "none",
+     "box": {
+      "x": -1.78,
+      "y": 4.278,
+      "rot": 3.04
+     },
+     "boxInBlockGap_m": 0.0001,
+     "modelCentreFromBoxCentre_m": 0.0227,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       -1.81631
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       1,
+       0,
+       0,
+       -4.27085
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.9985928,
+       0,
+       0.0530331,
+       -1.78
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.0530331,
+       0,
+       0.9985928,
+       -4.278
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-seat-024",
+     "ids": [
+      "L1-seat-024"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": 1.0863,
+      "y": -3.2439,
+      "turn": 180
+     },
+     "mirror": "none",
+     "box": {
+      "x": 1.094,
+      "y": -3.28,
+      "rot": 93.04
+     },
+     "boxInBlockGap_m": 0.0006,
+     "modelCentreFromBoxCentre_m": 0.023,
+     "place": [
+      [
+       -1,
+       0,
+       0,
+       1.08634
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       -1,
+       3.24386
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.0530331,
+       0,
+       0.9985928,
+       1.094
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.9985928,
+       0,
+       -0.0530331,
+       3.28
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-seat-026",
+     "ids": [
+      "L1-seat-026"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": 1.4296,
+      "y": -0.8023,
+      "turn": 153.3975
+     },
+     "mirror": "mirror y",
+     "box": {
+      "x": 1.452,
+      "y": -0.773,
+      "rot": 60.35
+     },
+     "boxInBlockGap_m": 0.0002,
+     "modelCentreFromBoxCentre_m": 0.0224,
+     "place": [
+      [
+       -0.8941347,
+       0,
+       -0.4477981,
+       1.4296
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.4477981,
+       0,
+       0.8941347,
+       0.80226
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.4947005,
+       0,
+       0.8690636,
+       1.452
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.8690636,
+       0,
+       0.4947005,
+       0.773
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-seat-027",
+     "ids": [
+      "L1-seat-027"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": 1.7713,
+      "y": 0.4948,
+      "turn": 180
+     },
+     "mirror": "none",
+     "box": {
+      "x": 1.779,
+      "y": 0.459,
+      "rot": 93.04
+     },
+     "boxInBlockGap_m": 0.0008,
+     "modelCentreFromBoxCentre_m": 0.0229,
+     "place": [
+      [
+       -1,
+       0,
+       0,
+       1.77134
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       -1,
+       -0.4948
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.0530331,
+       0,
+       0.9985928,
+       1.779
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.9985928,
+       0,
+       -0.0530331,
+       -0.459
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-seat-031",
+     "ids": [
+      "L1-seat-031"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": 2.2065,
+      "y": -3.2889,
+      "turn": 329.9536
+     },
+     "mirror": "mirror y",
+     "box": {
+      "x": 2.182,
+      "y": -3.316,
+      "rot": 56.91
+     },
+     "boxInBlockGap_m": 0.0009,
+     "modelCentreFromBoxCentre_m": 0.0228,
+     "place": [
+      [
+       0.8656202,
+       0,
+       0.5007012,
+       2.20651
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0.5007012,
+       0,
+       -0.8656202,
+       3.28895
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.5459557,
+       0,
+       0.837814,
+       2.182
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.837814,
+       0,
+       0.5459557,
+       3.316
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-seat-033",
+     "ids": [
+      "L1-seat-033"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": 2.5493,
+      "y": -0.7393,
+      "turn": 0
+     },
+     "mirror": "none",
+     "box": {
+      "x": 2.542,
+      "y": -0.703,
+      "rot": 93.04
+     },
+     "boxInBlockGap_m": 0.0003,
+     "modelCentreFromBoxCentre_m": 0.0228,
+     "place": [
+      [
+       1,
+       0,
+       0,
+       2.54932
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       1,
+       0.73931
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.0530331,
+       0,
+       0.9985928,
+       2.542
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.9985928,
+       0,
+       -0.0530331,
+       0.703
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-seat-037",
+     "ids": [
+      "L1-seat-037"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": 3.1863,
+      "y": 0.4948,
+      "turn": 180
+     },
+     "mirror": "none",
+     "box": {
+      "x": 3.194,
+      "y": 0.459,
+      "rot": 93.04
+     },
+     "boxInBlockGap_m": 0.0008,
+     "modelCentreFromBoxCentre_m": 0.0229,
+     "place": [
+      [
+       -1,
+       0,
+       0,
+       3.18634
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       -1,
+       -0.4948
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.0530331,
+       0,
+       0.9985928,
+       3.194
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.9985928,
+       0,
+       -0.0530331,
+       -0.459
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-seat-014",
+     "ids": [
+      "L2-seat-014"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0,
+     "insert": {
+      "x": -1.9763,
+      "y": -5.1481,
+      "turn": 90
+     },
+     "mirror": "mirror y",
+     "box": {
+      "x": -1.94,
+      "y": -5.155,
+      "rot": 176.96
+     },
+     "boxInBlockGap_m": 0.0002,
+     "modelCentreFromBoxCentre_m": 0.0224,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       -1.97631
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -1,
+       0,
+       0,
+       5.14814
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.9985928,
+       0,
+       0.0530331,
+       -1.94
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -0.0530331,
+       0,
+       -0.9985928,
+       5.155
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-seat-015",
+     "ids": [
+      "L2-seat-015"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0,
+     "insert": {
+      "x": -1.9763,
+      "y": -3.6731,
+      "turn": 90
+     },
+     "mirror": "mirror y",
+     "box": {
+      "x": -1.94,
+      "y": -3.68,
+      "rot": 176.96
+     },
+     "boxInBlockGap_m": 0.0002,
+     "modelCentreFromBoxCentre_m": 0.0224,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       -1.97631
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -1,
+       0,
+       0,
+       3.67314
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.9985928,
+       0,
+       0.0530331,
+       -1.94
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -0.0530331,
+       0,
+       -0.9985928,
+       3.68
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-seat-016",
+     "ids": [
+      "L2-seat-016"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0,
+     "insert": {
+      "x": -1.9763,
+      "y": -1.2779,
+      "turn": 90
+     },
+     "mirror": "mirror y",
+     "box": {
+      "x": -1.94,
+      "y": -1.285,
+      "rot": 176.96
+     },
+     "boxInBlockGap_m": 0,
+     "modelCentreFromBoxCentre_m": 0.0226,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       -1.97631
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -1,
+       0,
+       0,
+       1.2779
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.9985928,
+       0,
+       0.0530331,
+       -1.94
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -0.0530331,
+       0,
+       -0.9985928,
+       1.285
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-seat-017",
+     "ids": [
+      "L2-seat-017"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0,
+     "insert": {
+      "x": -1.9763,
+      "y": 0.1221,
+      "turn": 90
+     },
+     "mirror": "mirror y",
+     "box": {
+      "x": -1.94,
+      "y": 0.115,
+      "rot": 176.96
+     },
+     "boxInBlockGap_m": 0,
+     "modelCentreFromBoxCentre_m": 0.0226,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       -1.97631
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -1,
+       0,
+       0,
+       -0.1221
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.9985928,
+       0,
+       0.0530331,
+       -1.94
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -0.0530331,
+       0,
+       -0.9985928,
+       -0.115
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-seat-018",
+     "ids": [
+      "L2-seat-018"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0,
+     "insert": {
+      "x": -1.9763,
+      "y": 2.2096,
+      "turn": 90
+     },
+     "mirror": "mirror y",
+     "box": {
+      "x": -1.94,
+      "y": 2.202,
+      "rot": 176.96
+     },
+     "boxInBlockGap_m": 0.0005,
+     "modelCentreFromBoxCentre_m": 0.0231,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       -1.97631
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -1,
+       0,
+       0,
+       -2.2096
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.9985928,
+       0,
+       0.0530331,
+       -1.94
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -0.0530331,
+       0,
+       -0.9985928,
+       -2.202
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-seat-019",
+     "ids": [
+      "L2-seat-019"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0,
+     "insert": {
+      "x": -1.1529,
+      "y": 4.2886,
+      "turn": 0
+     },
+     "mirror": "mirror y",
+     "box": {
+      "x": -1.16,
+      "y": 4.253,
+      "rot": 86.96
+     },
+     "boxInBlockGap_m": 0.0008,
+     "modelCentreFromBoxCentre_m": 0.0222,
+     "place": [
+      [
+       1,
+       0,
+       0,
+       -1.15293
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       0,
+       0,
+       -1,
+       -4.28855
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.0530331,
+       0,
+       0.9985928,
+       -1.16
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -0.9985928,
+       0,
+       0.0530331,
+       -4.253
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-seat-026",
+     "ids": [
+      "L2-seat-026"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0,
+     "insert": {
+      "x": 2.5482,
+      "y": -9.0103,
+      "turn": 270
+     },
+     "mirror": "mirror y",
+     "box": {
+      "x": 2.512,
+      "y": -9.003,
+      "rot": 176.96
+     },
+     "boxInBlockGap_m": 0.0002,
+     "modelCentreFromBoxCentre_m": 0.0227,
+     "place": [
+      [
+       0,
+       0,
+       1,
+       2.54816
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       1,
+       0,
+       0,
+       9.01025
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       -0.9985928,
+       0,
+       0.0530331,
+       2.512
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -0.0530331,
+       0,
+       -0.9985928,
+       9.003
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L2-seat-034",
+     "ids": [
+      "L2-seat-034"
+     ],
+     "floor": "L2",
+     "level": 3.7,
+     "base": 0,
+     "insert": {
+      "x": 3.8252,
+      "y": -9.0103,
+      "turn": 270
+     },
+     "mirror": "none",
+     "box": {
+      "x": 3.861,
+      "y": -9.003,
+      "rot": 3.04
+     },
+     "boxInBlockGap_m": 0.0006,
+     "modelCentreFromBoxCentre_m": 0.0225,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       3.82521
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       1,
+       0,
+       0,
+       9.01025
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.9985928,
+       0,
+       0.0530331,
+       3.861
+      ],
+      [
+       0,
+       1,
+       0,
+       3.7
+      ],
+      [
+       -0.0530331,
+       0,
+       0.9985928,
+       9.003
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    }
+   ]
+  },
+  "visitor chair02": {
+   "file": "banquet/visitor chair02.glb",
+   "bytes": 187044,
+   "sha256": "418183ebd5ea9b4bd9654b5302ac43a6ed98f718fd6ab0c4a50267c3e27e5672",
+   "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY",
+   "kind": "seat",
+   "triangles": 6084,
+   "vertices": 3495,
+   "parts": [
+    {
+     "index": 0,
+     "name": "Circle005",
+     "triangles": 1764,
+     "mirrored": false,
+     "exportMaterial": 0
+    },
+    {
+     "index": 1,
+     "name": "Cylinder003",
+     "triangles": 4320,
+     "mirrored": false,
+     "exportMaterial": 1
+    }
+   ],
+   "matchedPiece": "L1-seat-007",
+   "normalise": [
+    [
+     0,
+     0,
+     1,
+     -2.80507
+    ],
+    [
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     -1,
+     0,
+     0,
+     -0.61431
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "normaliseBox": [
+    [
+     0.652495,
+     0,
+     -0.757793,
+     2.526241
+    ],
+    [
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     0.757793,
+     0,
+     0.652495,
+     -1.364964
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "suggested": null,
+   "sizeNormalised_m": [
+    0.4723,
+    0.4523,
+    0.4723
+   ],
+   "centreNormalised": [
+    -0.03,
+    0.2234,
+    0.0186
+   ],
+   "placedBackAtOwnPiece_m": 0,
+   "piecesFurnished": 4,
+   "copies": 4,
+   "pieces": [
+    {
+     "key": "L1-seat-006",
+     "ids": [
+      "L1-seat-006"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": -1.8263,
+      "y": -4.9597,
+      "turn": 270
+     },
+     "mirror": "none",
+     "box": {
+      "x": -1.826,
+      "y": -4.96,
+      "rot": 49.27
+     },
+     "boxInBlockGap_m": 0.0004,
+     "modelCentreFromBoxCentre_m": 0.0358,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       -1.82631
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       1,
+       0,
+       0,
+       4.9597
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.6524953,
+       0,
+       0.7577928,
+       -1.826
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.7577928,
+       0,
+       0.6524953,
+       4.96
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-seat-007",
+     "ids": [
+      "L1-seat-007"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": -1.8263,
+      "y": -3.1531,
+      "turn": 270
+     },
+     "mirror": "none",
+     "box": {
+      "x": -1.826,
+      "y": -3.153,
+      "rot": 49.27
+     },
+     "boxInBlockGap_m": 0,
+     "modelCentreFromBoxCentre_m": 0.0355,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       -1.82631
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       1,
+       0,
+       0,
+       3.15307
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.6524953,
+       0,
+       0.7577928,
+       -1.826
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.7577928,
+       0,
+       0.6524953,
+       3.153
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-seat-008",
+     "ids": [
+      "L1-seat-008"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": -1.8263,
+      "y": -1.3531,
+      "turn": 270
+     },
+     "mirror": "none",
+     "box": {
+      "x": -1.826,
+      "y": -1.353,
+      "rot": 49.27
+     },
+     "boxInBlockGap_m": 0,
+     "modelCentreFromBoxCentre_m": 0.0355,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       -1.82631
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       1,
+       0,
+       0,
+       1.35307
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.6524953,
+       0,
+       0.7577928,
+       -1.826
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.7577928,
+       0,
+       0.6524953,
+       1.353
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-seat-009",
+     "ids": [
+      "L1-seat-009"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": -1.8263,
+      "y": 0.4469,
+      "turn": 270
+     },
+     "mirror": "none",
+     "box": {
+      "x": -1.826,
+      "y": 0.447,
+      "rot": 49.27
+     },
+     "boxInBlockGap_m": 0,
+     "modelCentreFromBoxCentre_m": 0.0355,
+     "place": [
+      [
+       0,
+       0,
+       -1,
+       -1.82631
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       1,
+       0,
+       0,
+       -0.44693
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0.6524953,
+       0,
+       0.7577928,
+       -1.826
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -0.7577928,
+       0,
+       0.6524953,
+       -0.447
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    }
+   ]
+  },
+  "working table": {
+   "file": "banquet/working table.glb",
+   "bytes": 11164,
+   "sha256": "691ee47cbcd415e039e950b416339c1e5bf0fdfaabd2f89ae6e2674ea74bd76a",
+   "family": "IA_J15_WORKING TABLE - 1800W 1000D 750H",
+   "kind": "table",
+   "triangles": 104,
+   "vertices": 216,
+   "parts": [
+    {
+     "index": 0,
+     "name": "Object13484",
+     "triangles": 16,
+     "mirrored": false,
+     "exportMaterial": 0
+    },
+    {
+     "index": 1,
+     "name": "Object13483",
+     "triangles": 12,
+     "mirrored": false,
+     "exportMaterial": 0
+    },
+    {
+     "index": 2,
+     "name": "Object13485",
+     "triangles": 76,
+     "mirrored": false,
+     "exportMaterial": 0
+    }
+   ],
+   "matchedPiece": "L1-table-002",
+   "normalise": [
+    [
+     0,
+     0,
+     -1,
+     2.32835
+    ],
+    [
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     1,
+     0,
+     0,
+     1.88037
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "normaliseBox": [
+    [
+     0,
+     0,
+     -1,
+     2.284
+    ],
+    [
+     0,
+     1,
+     0,
+     0
+    ],
+    [
+     1,
+     0,
+     0,
+     1.38
+    ],
+    [
+     0,
+     0,
+     0,
+     1
+    ]
+   ],
+   "suggested": null,
+   "sizeNormalised_m": [
+    1.8007,
+    0.75,
+    1
+   ],
+   "centreNormalised": [
+    0.0427,
+    0.375,
+    0.5
+   ],
+   "placedBackAtOwnPiece_m": 6.28e-16,
+   "piecesFurnished": 5,
+   "copies": 5,
+   "pieces": [
+    {
+     "key": "L1-table-001",
+     "ids": [
+      "L1-table-001"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": -3.0924,
+      "y": -4.483,
+      "turn": 90
+     },
+     "mirror": "none",
+     "box": {
+      "x": -2.592,
+      "y": -4.438,
+      "rot": 90
+     },
+     "boxInBlockGap_m": 0.0006,
+     "modelCentreFromBoxCentre_m": 0.0023,
+     "place": [
+      [
+       0,
+       0,
+       1,
+       -3.09237
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -1,
+       0,
+       0,
+       4.48298
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0,
+       0,
+       1,
+       -2.592
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -1,
+       0,
+       0,
+       4.438
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-table-002",
+     "ids": [
+      "L1-table-002"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": -3.0924,
+      "y": -2.6763,
+      "turn": 90
+     },
+     "mirror": "none",
+     "box": {
+      "x": -2.592,
+      "y": -2.632,
+      "rot": 90
+     },
+     "boxInBlockGap_m": 0,
+     "modelCentreFromBoxCentre_m": 0.0017,
+     "place": [
+      [
+       0,
+       0,
+       1,
+       -3.09237
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -1,
+       0,
+       0,
+       2.67635
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0,
+       0,
+       1,
+       -2.592
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -1,
+       0,
+       0,
+       2.632
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-table-003",
+     "ids": [
+      "L1-table-003"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": -3.0924,
+      "y": -0.8763,
+      "turn": 90
+     },
+     "mirror": "none",
+     "box": {
+      "x": -2.592,
+      "y": -0.832,
+      "rot": 90
+     },
+     "boxInBlockGap_m": 0,
+     "modelCentreFromBoxCentre_m": 0.0017,
+     "place": [
+      [
+       0,
+       0,
+       1,
+       -3.09237
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -1,
+       0,
+       0,
+       0.87635
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0,
+       0,
+       1,
+       -2.592
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -1,
+       0,
+       0,
+       0.832
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-table-004",
+     "ids": [
+      "L1-table-004"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": -3.0924,
+      "y": 0.9237,
+      "turn": 90
+     },
+     "mirror": "none",
+     "box": {
+      "x": -2.592,
+      "y": 0.972,
+      "rot": 90
+     },
+     "boxInBlockGap_m": 0.004,
+     "modelCentreFromBoxCentre_m": 0.0057,
+     "place": [
+      [
+       0,
+       0,
+       1,
+       -3.09237
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -1,
+       0,
+       0,
+       -0.92365
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0,
+       0,
+       1,
+       -2.592
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -1,
+       0,
+       0,
+       -0.972
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    },
+    {
+     "key": "L1-table-005",
+     "ids": [
+      "L1-table-005"
+     ],
+     "floor": "L1",
+     "level": 0,
+     "base": 0,
+     "insert": {
+      "x": -3.0924,
+      "y": 3.8262,
+      "turn": 90
+     },
+     "mirror": "none",
+     "box": {
+      "x": -2.592,
+      "y": 3.871,
+      "rot": 90
+     },
+     "boxInBlockGap_m": 0.0005,
+     "modelCentreFromBoxCentre_m": 0.0022,
+     "place": [
+      [
+       0,
+       0,
+       1,
+       -3.09237
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -1,
+       0,
+       0,
+       -3.82615
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ],
+     "boxPlace": [
+      [
+       0,
+       0,
+       1,
+       -2.592
+      ],
+      [
+       0,
+       1,
+       0,
+       0
+      ],
+      [
+       -1,
+       0,
+       0,
+       -3.871
+      ],
+      [
+       0,
+       0,
+       0,
+       1
+      ]
+     ]
+    }
+   ]
+  }
+ },
+ "piecesFurnished": 65
+}

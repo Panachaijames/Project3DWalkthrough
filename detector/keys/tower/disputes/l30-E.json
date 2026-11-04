@@ -1,0 +1,290 @@
+{
+ "part": "l30-E",
+ "accepted": [
+  {
+   "id": "L30E-01",
+   "kind": "door",
+   "subtype": "single swing 900x2000",
+   "a": [
+    13.521,
+    -34.415
+   ],
+   "b": [
+    14.501,
+    -34.415
+   ],
+   "width": 0.98,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_SWING_1_SOLID - 900x2000 (handle 3D9E) at (14.011,-34.415) rot 180; A-DOOR-FRAM jambs x 13.521-13.561 and 14.461-14.501; wall hatch 67F ends at x=13.521 and restarts at x=14.501 (wall y -34.465..-34.365)",
+   "confidence": "high",
+   "notes": "closet door in the thin wall y=-34.415; hinge on west jamb, leaf swings north into the closet (x 13.56-14.46, y to -33.49)",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "L30E-02",
+   "kind": "passage",
+   "subtype": "doorless gap in wall line (no door drawn)",
+   "a": [
+    14.868,
+    -34.465
+   ],
+   "b": [
+    14.868,
+    -35.79
+   ],
+   "width": 1.325,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "wall x=14.868 (0.1 thick): hatch 666 ends at y=-34.465 (closet SE corner), hatch 6A2 starts at y=-35.790 (free end); gap 1.325 m, no door/leaf/frame; Q-CASE counters left a matching walkway (Casework 149 ends y=-34.465, Casework 41 starts y=-35.790)",
+   "confidence": "medium",
+   "notes": "staff entrance from the service corridor into the pantry/servery room x 14.92-17.89, y -31.4..-39.9; same wall line as double door L30E-04",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "L30E-03",
+   "kind": "door",
+   "subtype": "sliding face-mounted, 2 panels 2400x2400x2400 (opening 4800)",
+   "a": [
+    18.042,
+    -35.073
+   ],
+   "b": [
+    18.042,
+    -39.873
+   ],
+   "width": 4.8,
+   "wallThickness": 0.3,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_SLIDING_FACE_2_SOLID - 2400x2400x2400 (handle 3D9D) at (18.042,-37.473) rot -90; A-DOOR-FRAM jambs at y -35.073..-35.113 and -39.833..-39.873; wall hatch 622 ends at y=-35.073 and restarts at y=-39.873; two 2.4 m leaves drawn open on the east face with slide arrows",
+   "confidence": "high",
+   "notes": "bi-parting sliding doors between the pantry and the banquet hall",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "L30E-04",
+   "kind": "door",
+   "subtype": "double swing 2x900x2000",
+   "a": [
+    14.868,
+    -39.973
+   ],
+   "b": [
+    14.868,
+    -41.853
+   ],
+   "width": 1.88,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_SWING_2_SOLID - 900x2000 (handle 3D83) at (14.868,-40.913) rot 90; A-DOOR-FRAM jambs y -39.973..-40.013 and -41.813..-41.853; wall hatch 6A2 ends at y=-39.973 (corner with wall 676) and restarts at y=-41.853; two leaves 0.9 m, both swing west to x 13.92",
+   "confidence": "high",
+   "notes": "double door from the service corridor into the small room x 14.92-17.89, y -39.97..-43.02",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "L30E-05",
+   "kind": "door",
+   "subtype": "single swing 900x2000",
+   "a": [
+    13.368,
+    -43.023
+   ],
+   "b": [
+    14.348,
+    -43.023
+   ],
+   "width": 0.98,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_SWING_1_SOLID - 900x2000 (handle 3A93) at (13.858,-43.023) rot 180; A-DOOR-FRAM jambs x 13.368-13.408 and 14.308-14.348; wall hatch 670 stub (x 13.318..13.368, against the core wall) and main piece from x=14.348; leaf hinged at west jamb swings north into the corridor",
+   "confidence": "high",
+   "notes": "door closing the south end of the service corridor (foyer side)",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "L30E-06",
+   "kind": "passage",
+   "subtype": "lift landing opening (lift 3)",
+   "a": [
+    10.927,
+    -44.365
+   ],
+   "b": [
+    12.327,
+    -44.365
+   ],
+   "width": 1.4,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "evidence": "lift lobby wall y -44.49..-44.24: A-WALL-PATT hatch ends at x=10.927 and restarts at x=12.327; behind it A-DETL lift car symbol (X box x 10.8-12.5, door jambs x=11.13/12.20); the opening is closed on both wall faces only by A-DETL lines (y=-44.24 handle 3532, y=-44.49 handle 3DE1), no A-DOOR leaf",
+   "confidence": "medium",
+   "notes": "lift landing, no door drawn (lift symbol and closing lines on A-DETL only); the two other lift gaps (centres x 5.81 and 8.72) are outside the box",
+   "optional": true,
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "L30E-07",
+   "kind": "door",
+   "subtype": "sliding cavity 920x2340 (vision panel narrow)",
+   "a": [
+    18.042,
+    -43.881
+   ],
+   "b": [
+    18.042,
+    -45.161
+   ],
+   "width": 1.28,
+   "wallThickness": 0.3,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_SLIDING_CAVITY_1_SOLID_VISION PANEL_NARROW - 920x2340 (handle 3DC6) at (18.042,-44.521) rot 90; A-DOOR-FRAM jambs y -43.881..-43.921 and -45.121..-45.161; wall hatch 622 ends at y=-43.881 (with cavity pocket x 18.017-18.087, y -42.721..-43.881) and restarts at y=-45.161; slide arrow",
+   "confidence": "high",
+   "notes": "entrance from the foyer into the banquet hall; leaf slides north into the wall pocket",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "L30E-08",
+   "kind": "door",
+   "subtype": "double swing glass door 2 x 0.96 in curtain wall (Curtain Wall Dbl Glass)",
+   "a": [
+    21.109,
+    -45.95
+   ],
+   "b": [
+    23.109,
+    -45.95
+   ],
+   "width": 2.0,
+   "wallThickness": 0.2,
+   "host": "glass",
+   "evidence": "block 2501_Curtain Wall Dbl Glassrfa - TYP (nested in the linked facade model C2) at (22.109,-45.966) rot 180; A-DOOR-FRAM jambs x 21.109..21.147 and 23.071..23.109; glass panels (2501_WT-01-vision) end at x=21.109 and restart at x=23.109; leaf arcs swing south (to y=-46.91)",
+   "confidence": "high",
+   "notes": "door from the banquet hall onto the terrace; wallThickness 0.2 = mullion/frame depth (glass pane itself 0.03); centre line y=-45.95",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "L30E-09",
+   "kind": "passage",
+   "subtype": "doorless gap in wall line (lift lobby entrance)",
+   "a": [
+    13.167,
+    -45.231
+   ],
+   "b": [
+    13.167,
+    -47.699
+   ],
+   "width": 2.468,
+   "wallThickness": 0.3,
+   "host": "wall",
+   "evidence": "core east wall x 13.017..13.317: hatch 5F1 ends at y=-45.231 and hatch 5EC starts at y=-47.699, both free closed ends facing each other 2.468 m apart; A-DETL dashed lines (- DASH SMALL) on both wall faces x=13.017 and x=13.317 bridge the gap (head/beam or wall above); no door/leaf",
+   "confidence": "medium",
+   "notes": "wide entrance from the foyer into the lift lobby (x<13)",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "L30E-10",
+   "kind": "door",
+   "subtype": "single swing 750x2000",
+   "a": [
+    13.242,
+    -49.07
+   ],
+   "b": [
+    13.242,
+    -49.9
+   ],
+   "width": 0.83,
+   "wallThickness": 0.15,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_SWING_1_SOLID - 750x2000 (handle 3980) at (13.242,-49.485) rot 90; A-DOOR-FRAM jambs y -49.070..-49.110 and -49.860..-49.900; wall hatch 643 ends at y=-49.070 and a 0.04 stub at y -49.94..-49.90; leaf drawn open 45 deg into the small room to the west",
+   "confidence": "high",
+   "notes": "door into the small room x 10.05-13.17, y -48.59..-49.94",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  },
+  {
+   "id": "L30E-12",
+   "kind": "door",
+   "subtype": "double swing 2x900x2000",
+   "a": [
+    14.665,
+    -50.015
+   ],
+   "b": [
+    16.545,
+    -50.015
+   ],
+   "width": 1.88,
+   "wallThickness": 0.15,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_SWING_2_SOLID - 900x2000 (handle 3AC9) at (15.605,-50.015) rot 0; A-DOOR-FRAM jambs x 14.665..14.705 and 16.505..16.545; wall hatch 661 ends at x=14.665 and restarts at x=16.545; both leaves swing north (arcs to y=-49.07) into the foyer",
+   "confidence": "high",
+   "notes": "double door from the foyer into the south dining zone (x 10-18, y -50.1..-56.2)",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees"
+  }
+ ],
+ "disputes": [
+  {
+   "why": "listed by A+E only",
+   "at": [
+    18.572,
+    -49.715
+   ],
+   "versions": {
+    "A": {
+     "id": "L30E-11",
+     "kind": "window",
+     "subtype": "fixed curtain-wall glazing (3 panels x 1.5 m) between solid panels",
+     "a": [
+      18.572,
+      -47.465
+     ],
+     "b": [
+      18.572,
+      -51.965
+     ],
+     "width": 4.5,
+     "wallThickness": 0.285,
+     "host": "wall",
+     "evidence": "x=18.43..18.71: facade-model A-WALL hatch pieces y -45.99..-47.465 and y -51.965..-56.168 with A-GLAZ-CURT hatches (2501_WT-01-UPDATED-INSTANCE North Facade 4, V104 / 13210840 / V105) between them, y -47.465..-51.965; no door drawn",
+     "confidence": "low",
+     "notes": "glazing is set between two solid wall pieces of the same line (so possibly a large window), but it is part of the curtain-wall system that separates the foyer from the terrace (so possibly just glass wall): not scored either way",
+     "optional": true
+    },
+    "E": {
+     "id": "V30-37",
+     "floor": "l30",
+     "kind": "window",
+     "a": [
+      18.571,
+      -47.465
+     ],
+     "b": [
+      18.571,
+      -51.965
+     ],
+     "width": 4.5,
+     "encodings": [
+      "A-GLAZ-CURT glazing in wall gap",
+      "wall-fill hatch gap"
+     ],
+     "note": "4.50 m of curtain-wall glazing (3 bays of 1.5 m, posts at y=-47.465/-48.965/-50.465/-51.965; WT-01 'North Facade 4' instances) in the gap of the 0.28 m wall line x=18.572 between two wall pieces. Could equally be a long glass partition (glassWall) rather than an opening, so low confidence; optional.",
+     "subtype": "fixed glazing band in wall-line gap",
+     "host": "glass",
+     "optional": true
+    }
+   }
+  }
+ ]
+}

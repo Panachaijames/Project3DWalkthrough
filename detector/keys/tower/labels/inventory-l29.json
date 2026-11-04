@@ -1,0 +1,931 @@
+[
+ {
+  "id": "V29-01",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   1.15,
+   -33.105
+  ],
+  "b": [
+   1.15,
+   -32.405
+  ],
+  "width": 0.7,
+  "encodings": [
+   "A-GENM Parametric_Toilet_stall (front posts + open 45-degree leaf)"
+  ],
+  "note": "[toilet cubicle door 700] OPTIONAL true - toilet cubicle door. Generic-model Parametric_Toilet_stall_14001 - toilet stall 900 w (h 2967, insert (2.750,-32.755) rot 90): gap between the two 0.02x0.10 m front posts (y -33.105..-32.405 on the stall front line x=1.1499) = 0.70 m; the leaf is drawn as a thin parallelogram open at 45 degrees into the stall (hinge at the b-end, free end toward +x, length 0.70). The partitions themselves are fittings and are not listed.",
+  "subtype": "toilet cubicle door 700",
+  "host": "wall",
+  "optional": true
+ },
+ {
+  "id": "V29-02",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   1.15,
+   -34.025
+  ],
+  "b": [
+   1.15,
+   -33.325
+  ],
+  "width": 0.7,
+  "encodings": [
+   "A-GENM Parametric_Toilet_stall (front posts + open 45-degree leaf)"
+  ],
+  "note": "[toilet cubicle door 700] OPTIONAL true - toilet cubicle door. Generic-model Parametric_Toilet_stall_14001 - toilet stall 900 w (h 299B, insert (2.750,-33.675) rot 90): gap between the two 0.02x0.10 m front posts (y -34.025..-33.325 on the stall front line x=1.1499) = 0.70 m; the leaf is drawn as a thin parallelogram open at 45 degrees into the stall (hinge at the b-end, free end toward +x, length 0.70). The partitions themselves are fittings and are not listed.",
+  "subtype": "toilet cubicle door 700",
+  "host": "wall",
+  "optional": true
+ },
+ {
+  "id": "V29-03",
+  "floor": "l29",
+  "kind": "passage?",
+  "a": [
+   1.7,
+   -35.165
+  ],
+  "b": [
+   1.7,
+   -34.265
+  ],
+  "width": 0.9,
+  "encodings": [
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)"
+  ],
+  "note": "OPTIONAL passage mouth: the tan wall stub x=1.70 (0.12 thick, y -35.79..-35.165) ends 0.90 m below the south partition bar of the men cubicles (y=-34.265, x 1.13..2.74): one wall end facing the side of a perpendicular wall; circulation baffle at the doorless entry, probably not an opening.",
+  "host": "wall",
+  "optional": true
+ },
+ {
+  "id": "V29-04",
+  "floor": "l29",
+  "kind": "passage",
+  "a": [
+   1.781,
+   -35.73
+  ],
+  "b": [
+   2.681,
+   -35.73
+  ],
+  "width": 0.9,
+  "encodings": [
+   "Door-Opening block (outline only, A-DETL-GENF/A-DETL-MEDM)",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)"
+  ],
+  "note": "[door-opening 900x2000] Block Door-Opening - 900 x 2000 (h 2FB8): 0.12 m thick wall y=-35.73 interrupted between the tan stub end (x=1.781) and the nub at x=2.681; the block only carries an outline rectangle (A-DETL-GENF/MEDM), no leaf or swing. Doorless entry to the men toilet area.",
+  "subtype": "door-opening 900x2000",
+  "host": "wall"
+ },
+ {
+  "id": "V29-05",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   3.157,
+   -35.665
+  ],
+  "b": [
+   4.177,
+   -35.665
+  ],
+  "width": 1.02,
+  "encodings": [
+   "door block nested in linked central model (A-DOOR/A-DOOR-HDLN frame, A-DETL-GENF swing arcs)",
+   "S-COLS tie columns (65x125) at the jambs",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)",
+   "swing arc + open leaf line"
+  ],
+  "note": "[single swing 1020 opening (D37)] Linked-model block D37 - D37 (no size in name; gap 1.02 m, leaf r=0.92) in the triple-line south wall y=-35.665 of the NW block. Tie columns (S-COLS 65x125) at both jambs; head lines on A-DOOR-HDLN, swing arc on A-DETL-GENF-HDLN, hinge at the b-end (x=4.123), leaf swings toward -y.",
+  "subtype": "single swing 1020 opening (D37)",
+  "host": "wall"
+ },
+ {
+  "id": "V29-06",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   4.457,
+   -35.665
+  ],
+  "b": [
+   5.477,
+   -35.665
+  ],
+  "width": 1.02,
+  "encodings": [
+   "door block nested in linked central model (A-DOOR/A-DOOR-HDLN frame, A-DETL-GENF swing arcs)",
+   "S-COLS tie columns (65x125) at the jambs",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)",
+   "swing arc + open leaf line"
+  ],
+  "note": "[single swing 1020 opening (D37)] Linked-model block D37 - D37 (no size in name; gap 1.02 m, leaf r=0.92) in the triple-line south wall y=-35.665 of the NW block. Tie columns (S-COLS 65x125) at both jambs; head lines on A-DOOR-HDLN, swing arc on A-DETL-GENF-HDLN, hinge at the a-end (x=4.512), leaf swings toward -y.",
+  "subtype": "single swing 1020 opening (D37)",
+  "host": "wall"
+ },
+ {
+  "id": "V29-07",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   8.058,
+   -35.665
+  ],
+  "b": [
+   9.678,
+   -35.665
+  ],
+  "width": 1.62,
+  "encodings": [
+   "door block nested in linked central model (A-DOOR/A-DOOR-HDLN frame, A-DETL-GENF swing arcs)",
+   "S-COLS tie columns (65x125) at the jambs",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)",
+   "swing arc + open leaf line"
+  ],
+  "note": "[double swing unequal 1000+500 (D36)] Linked-model block D36 - D36 (no size in name; gap 1.62 m = leaves 1.0 + 0.5 m + frames) in the south wall y=-35.665 of the NW block. Two swing arcs on A-DETL-GENF-HDLN (r=1.005 hinged at x=8.112, r=0.505 hinged at x=9.624), both swing toward -y; tie columns at the jambs; head lines on A-DOOR-HDLN across the gap.",
+  "subtype": "double swing unequal 1000+500 (D36)",
+  "host": "wall"
+ },
+ {
+  "id": "V29-08",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   1.58,
+   -37.19
+  ],
+  "b": [
+   1.58,
+   -36.21
+  ],
+  "width": 0.98,
+  "encodings": [
+   "A-DOOR top-level Revit door block",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)",
+   "A-DOOR-FRAM / A-DOOR-HDLN frame and head lines",
+   "swing arc + open leaf line"
+  ],
+  "note": "[single swing 900x2000] Block DOOR_SWING_1_SOLID - 900x2000_INT (h 2FB7) in the tan N-S wall x=1.58 of the accessible WC. Wall ends bound a 0.98 m gap (900 leaf + 2x40 mm frame, magenta A-DOOR-FRAM at both ends); hinge at the a-end (y=-37.15), leaf swings toward +x (arc r=0.90, open leaf drawn at 90 deg).",
+  "subtype": "single swing 900x2000",
+  "host": "wall"
+ },
+ {
+  "id": "V29-09",
+  "floor": "l29",
+  "kind": "passage?",
+  "a": [
+   2.517,
+   -37.54
+  ],
+  "b": [
+   3.414,
+   -37.54
+  ],
+  "width": 0.897,
+  "encodings": [
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)"
+  ],
+  "note": "OPTIONAL: along y~-37.5 the tan toilet-block wall ends at x=2.517 and a 0.10 m grey finish stub (x 3.414..13.318, in front of the stair-core wall that itself starts at x=4.12) begins at x=3.414: facing wall ends 0.90 m apart, but they are different walls with centre lines 0.10 m apart; the tan stair-core wall itself only starts at x=4.117 (1.60 m from the toilet-block wall end) and the gap is the open corridor x 2.52..4.12 between the toilet block and the core; probably no opening.",
+  "host": "wall",
+  "optional": true
+ },
+ {
+  "id": "V29-10",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   1.842,
+   -40.597
+  ],
+  "b": [
+   1.842,
+   -39.077
+  ],
+  "width": 1.52,
+  "encodings": [
+   "door block nested in linked central model (A-DOOR/A-DOOR-HDLN frame, A-DETL-GENF swing arcs)",
+   "S-COLS tie columns (65x125) at the jambs",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)",
+   "swing arc + open leaf line"
+  ],
+  "note": "[double swing unequal 1000+400 fire exit glass panel] Linked-model block Door NO_03 - Door_Swing_Double_Fire_Ex__Glass Panel in the thin grey wall x=1.842: gap 1.52 m between the wall ends (y=-39.077 and y=-40.597); leaves 1.0 m (hinge at y=-39.131) + 0.4 m (hinge at y=-40.543), swing toward +x.",
+  "subtype": "double swing unequal 1000+400 fire exit glass panel",
+  "host": "wall"
+ },
+ {
+  "id": "V29-11",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   4.188,
+   -41.046
+  ],
+  "b": [
+   4.188,
+   -40.026
+  ],
+  "width": 1.02,
+  "encodings": [
+   "door block nested in linked central model (A-DOOR/A-DOOR-HDLN frame, A-DETL-GENF swing arcs)",
+   "S-COLS tie columns (65x125) at the jambs",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)",
+   "swing arc + open leaf line"
+  ],
+  "note": "[single swing 900x2000 panel] Linked-model block D_Swing_Single - 900 x 2000_PAN in the thin wall x=4.188 (west wall of the riser rooms beside the stair core): gap 1.02 m between wall ends (y=-40.026 / y=-41.046), hinge at the a-end (y=-40.998), leaf swings toward -x; orange A-DOOR-HDLN head lines at both jambs.",
+  "subtype": "single swing 900x2000 panel",
+  "host": "wall"
+ },
+ {
+  "id": "V29-12",
+  "floor": "l29",
+  "kind": "passage",
+  "a": [
+   -0.332,
+   -41.215
+  ],
+  "b": [
+   1.168,
+   -41.215
+  ],
+  "width": 1.5,
+  "encodings": [
+   "D_Openning_Lift block (A-DOOR jamb frames + A-DOOR-HDLN head lines)",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)",
+   "A-DOOR-FRAM / A-DOOR-HDLN frame and head lines"
+  ],
+  "note": "[lift opening 1400x2250, no door drawn] OPTIONAL true - lift landing, no door drawn. Linked-model block D_Openning_Lift - 1400 X 2250mm in the tan wall y=-41.215 (0.30 thick) of the west lift shaft (A-DETL lift car symbol with X behind): wall ends at x=-0.332 / x=1.168 = 1.50 m (1.40 m clear between the 0.05 m jamb frames on A-DOOR + orange A-DOOR-HDLN head lines). No leaf or swing.",
+  "subtype": "lift opening 1400x2250, no door drawn",
+  "host": "wall",
+  "optional": true
+ },
+ {
+  "id": "V29-13",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   2.471,
+   -45.69
+  ],
+  "b": [
+   2.471,
+   -44.69
+  ],
+  "width": 1.0,
+  "encodings": [
+   "door block nested in linked central model (A-DOOR/A-DOOR-HDLN frame, A-DETL-GENF swing arcs)",
+   "S-COLS tie columns (65x125) at the jambs",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)",
+   "swing arc + open leaf line"
+  ],
+  "note": "[single swing 1000x2000 shaft door] Linked-model block Door NO_17 - D_Swing_Single_Shaft_1000_2000 in the thin wall x=2.471 (east side of the west stair core): wall ends at y=-45.690 / y=-44.690 (1.00 m), hinge at the a-end (y=-45.69), swings toward +x.",
+  "subtype": "single swing 1000x2000 shaft door",
+  "host": "wall"
+ },
+ {
+  "id": "V29-14",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   2.471,
+   -47.941
+  ],
+  "b": [
+   2.471,
+   -47.121
+  ],
+  "width": 0.82,
+  "encodings": [
+   "door block nested in linked central model (A-DOOR/A-DOOR-HDLN frame, A-DETL-GENF swing arcs)",
+   "S-COLS tie columns (65x125) at the jambs",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)",
+   "swing arc + open leaf line"
+  ],
+  "note": "[single swing 700x2000] Linked-model block D_Swing_Single - 700_2000 in the thin wall x=2.471: gap 0.82 m (700 leaf + frames) between wall ends y=-47.941 / y=-47.121, hinge at the a-end (y=-47.893), swings toward +x.",
+  "subtype": "single swing 700x2000",
+  "host": "wall"
+ },
+ {
+  "id": "V29-15",
+  "floor": "l29",
+  "kind": "passage",
+  "a": [
+   2.367,
+   -49.64
+  ],
+  "b": [
+   2.367,
+   -48.44
+  ],
+  "width": 1.2,
+  "encodings": [
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)"
+  ],
+  "note": "Gap in the 0.30 m thick tan stair-core wall (x=2.367) between two wall-end stubs (y=-49.640 / y=-48.440, 1.20 m), directly facing the stair landing (S-STRS outline at x=2.214). No door block, no leaf, no swing: doorless stair entrance (the base-building door is not drawn).",
+  "host": "wall"
+ },
+ {
+  "id": "V29-16",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   4.612,
+   -50.426
+  ],
+  "b": [
+   4.612,
+   -49.446
+  ],
+  "width": 0.98,
+  "encodings": [
+   "A-DOOR top-level Revit door block",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)",
+   "A-DOOR-FRAM / A-DOOR-HDLN frame and head lines",
+   "swing arc + open leaf line"
+  ],
+  "note": "[single swing 900x2000] Block DOOR_SWING_1_SOLID - 900x2000_INT (h 31E3) in the thin grey wall x=4.612 (south of the lobby; wall stub above hangs from the y=-49.2 wall): gap 0.98 m between wall ends (y=-49.446 / y=-50.426), hinge at the b-end (y=-49.486), leaf swings toward -x (open leaf along y=-49.45, arc r=0.90).",
+  "subtype": "single swing 900x2000",
+  "host": "wall"
+ },
+ {
+  "id": "V29-17",
+  "floor": "l29",
+  "kind": "passage",
+  "a": [
+   2.449,
+   -51.52
+  ],
+  "b": [
+   2.449,
+   -50.62
+  ],
+  "width": 0.9,
+  "encodings": [
+   "Door-Opening block (outline only, A-DETL-GENF/A-DETL-MEDM)",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)"
+  ],
+  "note": "[door-opening 900x2000] Block Door-Opening - 900 x 2000 (h 2EDE) in the east wall x=2.449 (0.12 thick tan) of the SW toilet block: wall ends at y=-50.620 and y=-51.520 (0.90 m); block carries only an outline rectangle on A-DETL-GENF/MEDM, no leaf or swing. Main entrance of the toilet room.",
+  "subtype": "door-opening 900x2000",
+  "host": "wall"
+ },
+ {
+  "id": "V29-18",
+  "floor": "l29",
+  "kind": "passage",
+  "a": [
+   -0.247,
+   -51.626
+  ],
+  "b": [
+   0.787,
+   -51.626
+  ],
+  "width": 1.034,
+  "encodings": [
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)"
+  ],
+  "note": "Two collinear tan partition bars y=-51.626 (0.12 thick, x -1.85..-0.247 and x 0.787..2.39) leave a 1.03 m gap = the aisle between the two stall rows (stall fronts at x=-0.2625 and x=0.7965). Doorless gap between the facing ends of the same wall line (entry from the basin area into the cubicle zone).",
+  "host": "wall"
+ },
+ {
+  "id": "V29-19",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   -0.263,
+   -52.476
+  ],
+  "b": [
+   -0.263,
+   -51.776
+  ],
+  "width": 0.7,
+  "encodings": [
+   "A-GENM Parametric_Toilet_stall (front posts + open 45-degree leaf)"
+  ],
+  "note": "[toilet cubicle door 700] OPTIONAL true - toilet cubicle door. Generic-model Parametric_Toilet_stall_14001 - toilet stall 900 w (h 2828, insert (-1.903,-52.126) rot -90): gap between the two 0.02x0.10 m front posts (y -52.476..-51.776 on the stall front line x=-0.2628) = 0.70 m; the leaf is drawn as a thin parallelogram open at 45 degrees into the stall (hinge at the a-end, free end toward -x, length 0.70). The partitions themselves are fittings and are not listed.",
+  "subtype": "toilet cubicle door 700",
+  "host": "wall",
+  "optional": true
+ },
+ {
+  "id": "V29-20",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   0.796,
+   -52.476
+  ],
+  "b": [
+   0.796,
+   -51.776
+  ],
+  "width": 0.7,
+  "encodings": [
+   "A-GENM Parametric_Toilet_stall (front posts + open 45-degree leaf)"
+  ],
+  "note": "[toilet cubicle door 700] OPTIONAL true - toilet cubicle door. Generic-model Parametric_Toilet_stall_14001 - toilet stall 900 w (h 2899, insert (2.397,-52.126) rot -90): gap between the two 0.02x0.10 m front posts (y -52.476..-51.776 on the stall front line x=0.7963) = 0.70 m; the leaf is drawn as a thin parallelogram open at 45 degrees into the stall (hinge at the a-end, free end toward +x, length 0.70). The partitions themselves are fittings and are not listed.",
+  "subtype": "toilet cubicle door 700",
+  "host": "wall",
+  "optional": true
+ },
+ {
+  "id": "V29-21",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   -0.263,
+   -53.396
+  ],
+  "b": [
+   -0.263,
+   -52.696
+  ],
+  "width": 0.7,
+  "encodings": [
+   "A-GENM Parametric_Toilet_stall (front posts + open 45-degree leaf)"
+  ],
+  "note": "[toilet cubicle door 700] OPTIONAL true - toilet cubicle door. Generic-model Parametric_Toilet_stall_14001 - toilet stall 900 w (h 27F4, insert (-1.903,-53.046) rot -90): gap between the two 0.02x0.10 m front posts (y -53.396..-52.696 on the stall front line x=-0.2628) = 0.70 m; the leaf is drawn as a thin parallelogram open at 45 degrees into the stall (hinge at the a-end, free end toward -x, length 0.70). The partitions themselves are fittings and are not listed.",
+  "subtype": "toilet cubicle door 700",
+  "host": "wall",
+  "optional": true
+ },
+ {
+  "id": "V29-22",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   0.796,
+   -53.396
+  ],
+  "b": [
+   0.796,
+   -52.696
+  ],
+  "width": 0.7,
+  "encodings": [
+   "A-GENM Parametric_Toilet_stall (front posts + open 45-degree leaf)"
+  ],
+  "note": "[toilet cubicle door 700] OPTIONAL true - toilet cubicle door. Generic-model Parametric_Toilet_stall_14001 - toilet stall 900 w (h 2865, insert (2.397,-53.046) rot -90): gap between the two 0.02x0.10 m front posts (y -53.396..-52.696 on the stall front line x=0.7963) = 0.70 m; the leaf is drawn as a thin parallelogram open at 45 degrees into the stall (hinge at the a-end, free end toward +x, length 0.70). The partitions themselves are fittings and are not listed.",
+  "subtype": "toilet cubicle door 700",
+  "host": "wall",
+  "optional": true
+ },
+ {
+  "id": "V29-23",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   2.837,
+   -53.505
+  ],
+  "b": [
+   3.817,
+   -53.505
+  ],
+  "width": 0.98,
+  "encodings": [
+   "A-DOOR top-level Revit door block",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)",
+   "A-DOOR-FRAM / A-DOOR-HDLN frame and head lines",
+   "swing arc + open leaf line"
+  ],
+  "note": "[single swing 900x2000] Block DOOR_SWING_1_SOLID - 900x2000_INT (h 2152) in the grey E-W wall y=-53.505 linking the SW toilet block to the long x=4.6 wall: gap 0.98 m between wall ends (x=2.837 / x=3.817), hinge at the b-end (x=3.777), leaf swings toward -y.",
+  "subtype": "single swing 900x2000",
+  "host": "wall"
+ },
+ {
+  "id": "V29-24",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   -0.263,
+   -54.316
+  ],
+  "b": [
+   -0.263,
+   -53.616
+  ],
+  "width": 0.7,
+  "encodings": [
+   "A-GENM Parametric_Toilet_stall (front posts + open 45-degree leaf)"
+  ],
+  "note": "[toilet cubicle door 700] OPTIONAL true - toilet cubicle door. Generic-model Parametric_Toilet_stall_14001 - toilet stall 900 w (h 27F3, insert (-1.903,-53.966) rot -90): gap between the two 0.02x0.10 m front posts (y -54.316..-53.616 on the stall front line x=-0.2628) = 0.70 m; the leaf is drawn as a thin parallelogram open at 45 degrees into the stall (hinge at the a-end, free end toward -x, length 0.70). The partitions themselves are fittings and are not listed.",
+  "subtype": "toilet cubicle door 700",
+  "host": "wall",
+  "optional": true
+ },
+ {
+  "id": "V29-25",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   0.796,
+   -54.316
+  ],
+  "b": [
+   0.796,
+   -53.616
+  ],
+  "width": 0.7,
+  "encodings": [
+   "A-GENM Parametric_Toilet_stall (front posts + open 45-degree leaf)"
+  ],
+  "note": "[toilet cubicle door 700] OPTIONAL true - toilet cubicle door. Generic-model Parametric_Toilet_stall_14001 - toilet stall 900 w (h 2864, insert (2.397,-53.966) rot -90): gap between the two 0.02x0.10 m front posts (y -54.316..-53.616 on the stall front line x=0.7963) = 0.70 m; the leaf is drawn as a thin parallelogram open at 45 degrees into the stall (hinge at the a-end, free end toward +x, length 0.70). The partitions themselves are fittings and are not listed.",
+  "subtype": "toilet cubicle door 700",
+  "host": "wall",
+  "optional": true
+ },
+ {
+  "id": "V29-26",
+  "floor": "l29",
+  "kind": "passage?",
+  "a": [
+   11.268,
+   -37.59
+  ],
+  "b": [
+   13.017,
+   -37.59
+  ],
+  "width": 1.75,
+  "encodings": [
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)"
+  ],
+  "note": "OPTIONAL: the 0.30 m tan core wall (y=-37.59) of the central stair is interrupted between x=11.268 and x=13.017 (1.75 m), exactly the width of the stair top landing behind it (S-STRS hatch x 11.2..13.0), but a 0.10 m grey A-WALL furring wall (y -37.54..-37.44, x 3.41..13.32) runs across the gap on the corridor face, so the wall line is drawn closed. Probably a door that is not drawn / blocked in.",
+  "host": "wall",
+  "optional": true
+ },
+ {
+  "id": "V29-27",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   5.109,
+   -44.365
+  ],
+  "b": [
+   6.509,
+   -44.365
+  ],
+  "width": 1.4,
+  "encodings": [
+   "DOOR_LIFT_2_SOLID block + A-DETL 1.4 m line",
+   "sliding leaf rectangles + direction arrows (A-DOOR)",
+   "A-DOOR-FRAM / A-DOOR-HDLN frame and head lines",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)"
+  ],
+  "note": "[lift landing door 900x2100, 2-panel sliding] Block DOOR_LIFT_2_SOLID - 900x2100 (h 23A1): structural opening in the tan core wall (y=-44.365 centre line) is 1.40 m (x 5.109..6.509, also an A-DETL line of 1.400 m at the shaft face); 0.21 m grey jamb stubs (A-WALL) narrow the door+frame to 0.98 m (x 5.319..6.299). Two red sliding leaves drawn with arrows; lift car outline (A-DOOR-FRAM square with X) behind.",
+  "subtype": "lift landing door 900x2100, 2-panel sliding",
+  "host": "wall"
+ },
+ {
+  "id": "V29-28",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   8.018,
+   -44.365
+  ],
+  "b": [
+   9.418,
+   -44.365
+  ],
+  "width": 1.4,
+  "encodings": [
+   "DOOR_LIFT_2_SOLID block + A-DETL 1.4 m line",
+   "sliding leaf rectangles + direction arrows (A-DOOR)",
+   "A-DOOR-FRAM / A-DOOR-HDLN frame and head lines",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)"
+  ],
+  "note": "[lift landing door 900x2100, 2-panel sliding] Block DOOR_LIFT_2_SOLID - 900x2100 (h 23A0): structural opening in the tan core wall (y=-44.365 centre line) is 1.40 m (x 8.018..9.418, also an A-DETL line of 1.400 m at the shaft face); 0.21 m grey jamb stubs (A-WALL) narrow the door+frame to 0.98 m (x 8.228..9.208). Two red sliding leaves drawn with arrows; lift car outline (A-DOOR-FRAM square with X) behind.",
+  "subtype": "lift landing door 900x2100, 2-panel sliding",
+  "host": "wall"
+ },
+ {
+  "id": "V29-29",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   10.927,
+   -44.365
+  ],
+  "b": [
+   12.327,
+   -44.365
+  ],
+  "width": 1.4,
+  "encodings": [
+   "DOOR_LIFT_2_SOLID block + A-DETL 1.4 m line",
+   "sliding leaf rectangles + direction arrows (A-DOOR)",
+   "A-DOOR-FRAM / A-DOOR-HDLN frame and head lines",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)"
+  ],
+  "note": "[lift landing door 900x2100, 2-panel sliding] Block DOOR_LIFT_2_SOLID - 900x2100 (h 239F): structural opening in the tan core wall (y=-44.365 centre line) is 1.40 m (x 10.927..12.327, also an A-DETL line of 1.400 m at the shaft face); 0.21 m grey jamb stubs (A-WALL) narrow the door+frame to 0.98 m (x 11.137..12.117). Two red sliding leaves drawn with arrows; lift car outline (A-DOOR-FRAM square with X) behind.",
+  "subtype": "lift landing door 900x2100, 2-panel sliding",
+  "host": "wall"
+ },
+ {
+  "id": "V29-30",
+  "floor": "l29",
+  "kind": "window?",
+  "a": [
+   4.612,
+   -46.346
+  ],
+  "b": [
+   4.612,
+   -45.546
+  ],
+  "width": 0.8,
+  "encodings": [
+   "thin 10 mm A-WALL wall pieces beside a door (glass sidelight)",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)"
+  ],
+  "note": "OPTIONAL: fixed glazing beside the sliding door (h 2624): 10 mm A-WALL hatch wall (x 4.607..4.617), 0.80 m long, north side of the 2.0 m door gap, between the door and the U-shaped wall pocket (y=-45.546). Floor-to-ceiling glass in the wall line; may equally be read as part of the glass wall (glassWall) or of the door set.",
+  "host": "glass",
+  "optional": true
+ },
+ {
+  "id": "V29-31",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   4.612,
+   -48.346
+  ],
+  "b": [
+   4.612,
+   -46.346
+  ],
+  "width": 2.0,
+  "encodings": [
+   "DOOR_CP_SLIDE_2_GLASS_FULL block + thin 10 mm A-WALL glass walls",
+   "sliding leaf rectangles + direction arrows (A-DOOR)",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)"
+  ],
+  "note": "[sliding glass 2-leaf, clear 2.0 m] Block DOOR_CP_SLIDE_2_GLASS_FULL - INTERIOR (h 2624) in the lift-lobby glass wall x=4.612: wall ends = the two thin (10 mm) A-WALL glass walls ending at y=-48.346 and y=-46.346 (2.00 m). The drawn leaves cover y -45.846..-48.846 = 3.0 m (half-open position, arrows show opening direction) and are NOT the structural opening; the thin glass walls beyond (0.8 m each side) are listed separately as sidelights (if they are counted with the door, the whole glazed gap between the U-shaped pocket wall at y=-45.546 and the y=-49.2 wall at y=-49.146 is 3.60 m).",
+  "subtype": "sliding glass 2-leaf, clear 2.0 m",
+  "host": "glass"
+ },
+ {
+  "id": "V29-32",
+  "floor": "l29",
+  "kind": "window?",
+  "a": [
+   4.612,
+   -49.146
+  ],
+  "b": [
+   4.612,
+   -48.346
+  ],
+  "width": 0.8,
+  "encodings": [
+   "thin 10 mm A-WALL wall pieces beside a door (glass sidelight)",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)"
+  ],
+  "note": "OPTIONAL: fixed glazing beside the sliding door (h 2624): 10 mm A-WALL hatch wall (x 4.607..4.617), 0.80 m long, south side of the 2.0 m door gap, between the door and the y=-49.2 wall corner. Floor-to-ceiling glass in the wall line; may equally be read as part of the glass wall (glassWall) or of the door set.",
+  "host": "glass",
+  "optional": true
+ },
+ {
+  "id": "V29-33",
+  "floor": "l29",
+  "kind": "window?",
+  "a": [
+   12.822,
+   -46.346
+  ],
+  "b": [
+   12.822,
+   -45.546
+  ],
+  "width": 0.8,
+  "encodings": [
+   "thin 10 mm A-WALL wall pieces beside a door (glass sidelight)",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)"
+  ],
+  "note": "OPTIONAL: fixed glazing beside the sliding door (h 260A): 10 mm A-WALL hatch wall (x 12.817..12.827), 0.80 m long, north side of the 2.0 m door gap, between the door and the U-shaped wall pocket (y=-45.546). Floor-to-ceiling glass in the wall line; may equally be read as part of the glass wall (glassWall) or of the door set.",
+  "host": "glass",
+  "optional": true
+ },
+ {
+  "id": "V29-34",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   12.822,
+   -48.346
+  ],
+  "b": [
+   12.822,
+   -46.346
+  ],
+  "width": 2.0,
+  "encodings": [
+   "DOOR_CP_SLIDE_2_GLASS_FULL block + thin 10 mm A-WALL glass walls",
+   "sliding leaf rectangles + direction arrows (A-DOOR)",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)"
+  ],
+  "note": "[sliding glass 2-leaf, clear 2.0 m] Block DOOR_CP_SLIDE_2_GLASS_FULL - INTERIOR (h 260A) in the lift-lobby glass wall x=12.822: wall ends = the two thin (10 mm) A-WALL glass walls ending at y=-46.346 and y=-48.346 (2.00 m). The drawn leaves cover y -45.846..-48.846 = 3.0 m (half-open position, arrows show opening direction) and are NOT the structural opening; the thin glass walls beyond (0.8 m each side) are listed separately as sidelights (if they are counted with the door, the whole glazed gap between the U-shaped pocket wall at y=-45.546 and the y=-49.2 wall at y=-49.146 is 3.60 m).",
+  "subtype": "sliding glass 2-leaf, clear 2.0 m",
+  "host": "glass"
+ },
+ {
+  "id": "V29-35",
+  "floor": "l29",
+  "kind": "window?",
+  "a": [
+   12.822,
+   -49.146
+  ],
+  "b": [
+   12.822,
+   -48.346
+  ],
+  "width": 0.8,
+  "encodings": [
+   "thin 10 mm A-WALL wall pieces beside a door (glass sidelight)",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)"
+  ],
+  "note": "OPTIONAL: fixed glazing beside the sliding door (h 260A): 10 mm A-WALL hatch wall (x 12.817..12.827), 0.80 m long, south side of the 2.0 m door gap, between the door and the y=-49.2 wall corner. Floor-to-ceiling glass in the wall line; may equally be read as part of the glass wall (glassWall) or of the door set.",
+  "host": "glass",
+  "optional": true
+ },
+ {
+  "id": "V29-36",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   12.617,
+   -54.77
+  ],
+  "b": [
+   12.617,
+   -52.89
+  ],
+  "width": 1.88,
+  "encodings": [
+   "A-DOOR top-level Revit door block",
+   "gap between wall ends (hatch faces A-WALL / A-WALL-PATT / S-COLS)",
+   "A-DOOR-FRAM / A-DOOR-HDLN frame and head lines",
+   "swing arc + open leaf line"
+  ],
+  "note": "[double swing 2x900x2000] Block DOOR_SWING_2_SOLID - 900x2000_INT (h 210A) in the thin grey N-S partition x=12.617 (below the lobby columns, in the south open office): gap 1.88 m between wall ends (y=-52.890 / y=-54.770), two 0.9 m leaves hinged at both ends (y=-54.730 and y=-52.930), both swing toward -x.",
+  "subtype": "double swing 2x900x2000",
+  "host": "wall"
+ },
+ {
+  "id": "V29-37",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   22.777,
+   -36.496
+  ],
+  "b": [
+   22.777,
+   -35.566
+  ],
+  "width": 0.93,
+  "encodings": [
+   "Curtain Wall Door_Swing block + System Panel - GLAZED blocks in glass partition",
+   "swing arc + open leaf line"
+  ],
+  "note": "[single swing glass door in glass partition, leaf 0.9 m] Block Curtain Wall Door_Swing (h 3173) on A-DOOR set in the N-S glass partition (10 mm System Panel - GLAZED blocks on A-GLAZ-CURT): door = open leaf rectangle + quarter arc r=0.90 + two knob circles; leaf -36.466..-35.566 plus 0.03 m hinge-side mullion piece. Flanked by glass panels: 4.10 m above (System Panel 4497411, y -35.566..-31.465) and 0.37 m below (4497412, y -36.866..-36.496), then the grey wall end at y=-36.866. hinge at the a-end, leaf swings toward +x (open leaf along y=-36.47 drawn).",
+  "subtype": "single swing glass door in glass partition, leaf 0.9 m",
+  "host": "glass"
+ },
+ {
+  "id": "V29-38",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   22.777,
+   -40.57
+  ],
+  "b": [
+   22.777,
+   -39.64
+  ],
+  "width": 0.93,
+  "encodings": [
+   "Curtain Wall Door_Swing block + System Panel - GLAZED blocks in glass partition",
+   "swing arc + open leaf line"
+  ],
+  "note": "[single swing glass door in glass partition, leaf 0.9 m] Block Curtain Wall Door_Swing (h 2598) on A-DOOR set in the N-S glass partition (10 mm System Panel - GLAZED blocks on A-GLAZ-CURT): door = open leaf rectangle + quarter arc r=0.90 + two knob circles; leaf -40.540..-39.640 plus 0.03 m hinge-side mullion piece. Flanked by glass panels 0.43 m above (25A5, y -39.640..-39.209, then the grey wall end) and 0.37 m below (2569, y -40.940..-40.570, then the E-W wall y=-40.94). hinge at the a-end, leaf swings toward +x.",
+  "subtype": "single swing glass door in glass partition, leaf 0.9 m",
+  "host": "glass"
+ },
+ {
+  "id": "V29-39",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   13.488,
+   -41.94
+  ],
+  "b": [
+   14.418,
+   -41.94
+  ],
+  "width": 0.93,
+  "encodings": [
+   "Curtain Wall Door_Swing block + System Panel - GLAZED blocks in glass partition",
+   "swing arc + open leaf line"
+  ],
+  "note": "[single swing glass door in glass partition, leaf 0.9 m] Block Curtain Wall Door_Swing (h 31D0) on A-DOOR set in the E-W glass partition (10 mm System Panel - GLAZED blocks on A-GLAZ-CURT): door = open leaf rectangle + quarter arc r=0.90 + two knob circles; leaf 13.518..14.418 plus 0.03 m hinge-side mullion piece. Flanked by glass sidelights 0.17 m left (31A1, x 13.318..13.488, touching the tan core wall) and 0.26 m right (3193, x 14.418..14.677, touching the screen post); wall gap 1.36 m. hinge at the a-end (x=13.518), leaf swings toward +y.",
+  "subtype": "single swing glass door in glass partition, leaf 0.9 m",
+  "host": "glass"
+ },
+ {
+  "id": "V29-40",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   20.959,
+   -41.94
+  ],
+  "b": [
+   21.889,
+   -41.94
+  ],
+  "width": 0.93,
+  "encodings": [
+   "Curtain Wall Door_Swing block + System Panel - GLAZED blocks in glass partition",
+   "swing arc + open leaf line"
+  ],
+  "note": "[single swing glass door in glass partition, leaf 0.9 m] Block Curtain Wall Door_Swing (h 31D1) on A-DOOR set in the E-W glass partition (10 mm System Panel - GLAZED blocks on A-GLAZ-CURT): door = open leaf rectangle + quarter arc r=0.90 + two knob circles; leaf 20.959..21.859 plus 0.03 m hinge-side mullion piece. Flanked by glass sidelights 0.28 m left (31A0, x 20.677..20.959, touching the screen post) and 0.17 m right (31D2, x 21.889..22.059, touching the east-office wall); wall gap 1.38 m. hinge at the b-end (x=21.859), leaf swings toward +y.",
+  "subtype": "single swing glass door in glass partition, leaf 0.9 m",
+  "host": "glass"
+ },
+ {
+  "id": "V29-41",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   22.109,
+   -45.695
+  ],
+  "b": [
+   22.109,
+   -44.665
+  ],
+  "width": 1.03,
+  "encodings": [
+   "Curtain Wall Door_Swing block + System Panel - GLAZED blocks in glass partition",
+   "swing arc + open leaf line"
+  ],
+  "note": "[single swing glass door in glass partition, leaf 1.0 m] Block Curtain Wall Door_Swing (h 2408) on A-DOOR set in the N-S glass partition (10 mm System Panel - GLAZED blocks on A-GLAZ-CURT): door = open leaf rectangle + quarter arc r=1.00 + two knob circles; leaf -45.665..-44.665 plus 0.03 m hinge-side mullion piece. Flanked by glass sidelights 0.20 m above (2415, y -44.665..-44.465) and 0.17 m below (23D8, y -45.865..-45.695); the grey wall ends at y=-44.465 and y=-45.865 (1.40 m wall gap). hinge at the a-end, leaf swings toward +x (leaf 1.0 m).",
+  "subtype": "single swing glass door in glass partition, leaf 1.0 m",
+  "host": "glass"
+ },
+ {
+  "id": "V29-42",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   16.386,
+   -45.915
+  ],
+  "b": [
+   17.416,
+   -45.915
+  ],
+  "width": 1.03,
+  "encodings": [
+   "Curtain Wall Door_Swing block + System Panel - GLAZED blocks in glass partition",
+   "swing arc + open leaf line"
+  ],
+  "note": "[single swing glass door in glass partition, leaf 1.0 m] Block Curtain Wall Door_Swing (h 2658) on A-DOOR set in the E-W glass partition (10 mm System Panel - GLAZED blocks on A-GLAZ-CURT): door = open leaf rectangle + quarter arc r=1.00 + two knob circles; leaf 16.416..17.416 plus 0.03 m hinge-side mullion piece. Flanked by glass sidelight 0.17 m left (2657, x 16.216..16.386, touching the grey wall x=16.1..16.216) and a 4.64 m long glass panel to the right (2645, x 17.416..22.059): glass partition gap 5.84 m of which only the door is an opening. hinge at the a-end (x=16.416), leaf swings toward -y (leaf 1.0 m).",
+  "subtype": "single swing glass door in glass partition, leaf 1.0 m",
+  "host": "glass"
+ },
+ {
+  "id": "V29-43",
+  "floor": "l29",
+  "kind": "door",
+  "a": [
+   22.609,
+   -50.206
+  ],
+  "b": [
+   24.609,
+   -50.206
+  ],
+  "width": 2.0,
+  "encodings": [
+   "double glass door block inside linked KPF facade model",
+   "swing arc + open leaf line",
+   "A-DOOR-FRAM / A-DOOR-HDLN frame and head lines"
+  ],
+  "note": "[double swing glass door, 2 x 0.96 m] Block 2501_Curtain Wall Dbl Glassrfa - TYP inside the linked KPF facade model (insert at (23.609,-50.216) rot 180): A-DOOR frame posts 0.038 m wide at x=22.609..22.647 and 24.571..24.609 (2.00 m incl. frames; clear between posts 1.924 m), two open leaves drawn as red lines from y=-50.216 to y=-51.159 with swing arcs r=0.962 meeting at x=23.609; hinges at both ends, swing toward -y. Glass partition y=-50.2 of the SE office (curtain-wall system 0.2 deep, A-FLOR room lines y=-50.01/-50.11 across the gap).",
+  "subtype": "double swing glass door, 2 x 0.96 m",
+  "host": "glass"
+ }
+]

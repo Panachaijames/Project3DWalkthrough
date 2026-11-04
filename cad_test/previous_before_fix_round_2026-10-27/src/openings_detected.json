@@ -1,0 +1,2732 @@
+{
+ "openings": [
+  {
+   "id": "ground-001",
+   "floor": "sukhumvit:ground",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    8.0082,
+    13.3591
+   ],
+   "b": [
+    8.0082,
+    15.1585
+   ],
+   "width": 1.799,
+   "wallThickness": 0.52,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.55,
+   "evidence": [
+    "wall gap (cap-end)",
+    "glazing band",
+    "WIN",
+    "sliding sashes (4 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    0.01,
+    0.11
+   ]
+  },
+  {
+   "id": "ground-002",
+   "floor": "sukhumvit:ground",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    12.8983,
+    13.5572
+   ],
+   "b": [
+    12.8983,
+    14.9548
+   ],
+   "width": 1.398,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-003",
+   "floor": "sukhumvit:ground",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    10.9233,
+    13.7578
+   ],
+   "b": [
+    10.9233,
+    14.7578
+   ],
+   "width": 1.0,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-004",
+   "floor": "sukhumvit:ground",
+   "kind": "door",
+   "subtype": "sliding glass door",
+   "a": [
+    21.3983,
+    14.4335
+   ],
+   "b": [
+    26.6483,
+    14.4335
+   ],
+   "width": 5.25,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.6,
+   "evidence": [
+    "wall gap (cap-end)",
+    "glazing band",
+    "WIN",
+    "sliding sashes (5 lines)",
+    "opens onto a hatched floor (terrace / deck)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    0.025,
+    0.125
+   ]
+  },
+  {
+   "id": "ground-005",
+   "floor": "sukhumvit:ground",
+   "kind": "window",
+   "subtype": "sliding (frame only, no glass drawn)",
+   "a": [
+    26.7733,
+    14.5585
+   ],
+   "b": [
+    26.7733,
+    21.1591
+   ],
+   "width": 6.601,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.55,
+   "evidence": [
+    "wall gap (cap-end)",
+    "10 frame pieces inside the gap"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-006",
+   "floor": "sukhumvit:ground",
+   "kind": "door",
+   "subtype": "sliding glass door",
+   "a": [
+    26.8983,
+    14.4335
+   ],
+   "b": [
+    32.1483,
+    14.4335
+   ],
+   "width": 5.25,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.6,
+   "evidence": [
+    "wall gap (cap-end)",
+    "glazing band",
+    "WIN",
+    "sliding sashes (5 lines)",
+    "opens onto a hatched floor (terrace / deck)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    0.025,
+    0.125
+   ]
+  },
+  {
+   "id": "ground-007",
+   "floor": "sukhumvit:ground",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    32.2733,
+    14.5585
+   ],
+   "b": [
+    32.2733,
+    16.0585
+   ],
+   "width": 1.5,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-008",
+   "floor": "sukhumvit:ground",
+   "kind": "door",
+   "subtype": "hinged double",
+   "a": [
+    19.3733,
+    19.4085
+   ],
+   "b": [
+    19.3733,
+    21.1591
+   ],
+   "width": 1.751,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "2 swing arc(s)",
+    "arc on 0"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-009",
+   "floor": "sukhumvit:ground",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    27.4924,
+    23.2341
+   ],
+   "b": [
+    31.5425,
+    23.2341
+   ],
+   "width": 4.05,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.55,
+   "evidence": [
+    "wall gap (cap-end)",
+    "glazing band",
+    "WALL-GL",
+    "WIN",
+    "sliding sashes (6 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    -0.125,
+    0.031
+   ]
+  },
+  {
+   "id": "ground-010",
+   "floor": "sukhumvit:ground",
+   "kind": "window",
+   "subtype": "opening over a low wall (no glass drawn)",
+   "a": [
+    32.2731,
+    22.5591
+   ],
+   "b": [
+    32.2731,
+    20.3591
+   ],
+   "width": 2.2,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end)",
+    "both wall faces drawn on across the gap (low wall or sill)"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-011",
+   "floor": "sukhumvit:ground",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    38.0729,
+    12.2585
+   ],
+   "b": [
+    38.0729,
+    13.455
+   ],
+   "width": 1.197,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on 0"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-012",
+   "floor": "sukhumvit:ground",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    36.5229,
+    21.455
+   ],
+   "b": [
+    36.5229,
+    22.455
+   ],
+   "width": 1.0,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-013",
+   "floor": "sukhumvit:ground",
+   "kind": "window",
+   "subtype": "sliding (frame only, no glass drawn)",
+   "a": [
+    50.4127,
+    25.6091
+   ],
+   "b": [
+    50.4127,
+    23.8341
+   ],
+   "width": 1.775,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.55,
+   "evidence": [
+    "wall gap (cap-end)",
+    "2 frame pieces inside the gap"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-014",
+   "floor": "sukhumvit:ground",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    52.4478,
+    22.2591
+   ],
+   "b": [
+    52.4476,
+    21.5591
+   ],
+   "width": 0.7,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on 0"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-015",
+   "floor": "sukhumvit:ground",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    52.4479,
+    20.3585
+   ],
+   "b": [
+    52.4479,
+    19.6585
+   ],
+   "width": 0.7,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on 0"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-016",
+   "floor": "sukhumvit:ground",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    14.0483,
+    15.8085
+   ],
+   "b": [
+    12.9483,
+    15.8102
+   ],
+   "width": 1.1,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-017",
+   "floor": "sukhumvit:ground",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    14.1475,
+    12.6323
+   ],
+   "b": [
+    12.9483,
+    12.6323
+   ],
+   "width": 1.199,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-018",
+   "floor": "sukhumvit:ground",
+   "kind": "door",
+   "subtype": "sliding glass door",
+   "a": [
+    32.2733,
+    14.3085
+   ],
+   "b": [
+    32.2733,
+    11.405
+   ],
+   "width": 2.903,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.6,
+   "evidence": [
+    "wall gap (cap-end)",
+    "glazing band",
+    "WIN",
+    "sliding sashes (4 lines)",
+    "opens onto a hatched floor (terrace / deck)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    0.025,
+    0.125
+   ]
+  },
+  {
+   "id": "ground-019",
+   "floor": "sukhumvit:ground",
+   "kind": "window",
+   "subtype": "fixed",
+   "a": [
+    32.2733,
+    11.405
+   ],
+   "b": [
+    32.2733,
+    7.6585
+   ],
+   "width": 3.747,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.8,
+   "evidence": [
+    "wall gap (cap-end)",
+    "glazing band",
+    "WIN",
+    "fixed glazing"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    0.025,
+    0.125
+   ]
+  },
+  {
+   "id": "ground-020",
+   "floor": "sukhumvit:ground",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    14.148,
+    19.409
+   ],
+   "b": [
+    12.9483,
+    19.409
+   ],
+   "width": 1.2,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-021",
+   "floor": "sukhumvit:ground",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    12.8983,
+    19.159
+   ],
+   "b": [
+    12.8983,
+    15.8585
+   ],
+   "width": 3.301,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-022",
+   "floor": "sukhumvit:ground",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    37.9978,
+    11.3585
+   ],
+   "b": [
+    37.9978,
+    7.6585
+   ],
+   "width": 3.7,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.55,
+   "evidence": [
+    "wall gap (cap-end)",
+    "glazing band",
+    "WIN",
+    "sliding sashes (4 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    -0.05,
+    0.05
+   ]
+  },
+  {
+   "id": "ground-023",
+   "floor": "sukhumvit:ground",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    34.4232,
+    16.9585
+   ],
+   "b": [
+    34.423,
+    19.1585
+   ],
+   "width": 2.2,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-024",
+   "floor": "sukhumvit:ground",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    34.4234,
+    15.555
+   ],
+   "b": [
+    34.4235,
+    14.5585
+   ],
+   "width": 0.997,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-025",
+   "floor": "sukhumvit:ground",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    36.398,
+    16.9085
+   ],
+   "b": [
+    36.398,
+    18.6085
+   ],
+   "width": 1.7,
+   "wallThickness": 0.5,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-026",
+   "floor": "sukhumvit:ground",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    41.5975,
+    18.8585
+   ],
+   "b": [
+    41.5974,
+    18.1585
+   ],
+   "width": 0.7,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on 0"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-027",
+   "floor": "sukhumvit:ground",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    51.6983,
+    23.3092
+   ],
+   "b": [
+    52.3982,
+    23.3092
+   ],
+   "width": 0.7,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on 0"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-028",
+   "floor": "sukhumvit:ground",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    14.1483,
+    15.8583
+   ],
+   "b": [
+    14.1484,
+    16.608
+   ],
+   "width": 0.75,
+   "wallThickness": 0.2,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.55,
+   "evidence": [
+    "wall gap (cap-end)",
+    "glazing band",
+    "WIN",
+    "sliding sashes (4 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    -0.1,
+    -0.0
+   ]
+  },
+  {
+   "id": "ground-029",
+   "floor": "sukhumvit:ground",
+   "kind": "door",
+   "subtype": "pocket sliding",
+   "a": [
+    32.3983,
+    14.4335
+   ],
+   "b": [
+    34.3733,
+    14.4335
+   ],
+   "width": 1.975,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.75,
+   "evidence": [
+    "wall gap (cap-end)",
+    "pocket panel on DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-030",
+   "floor": "sukhumvit:ground",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    8.8483,
+    8.0062
+   ],
+   "b": [
+    8.8483,
+    12.5073
+   ],
+   "width": 4.501,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.7,
+   "evidence": [
+    "wall gap (L-end)",
+    "glazing band",
+    "WIN",
+    "on the line of its glazing (outside the block it was measured from)",
+    "sliding sashes (5 lines)",
+    "planter / kerb / edge along it outside"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    -0.05,
+    0.05
+   ]
+  },
+  {
+   "id": "ground-031",
+   "floor": "sukhumvit:ground",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    14.8976,
+    15.8083
+   ],
+   "b": [
+    14.8976,
+    16.608
+   ],
+   "width": 0.8,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (L-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-032",
+   "floor": "sukhumvit:ground",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    14.8983,
+    19.459
+   ],
+   "b": [
+    14.8983,
+    21.1038
+   ],
+   "width": 1.645,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (L-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-033",
+   "floor": "sukhumvit:ground",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    13.2483,
+    24.7591
+   ],
+   "b": [
+    12.2488,
+    24.7591
+   ],
+   "width": 0.999,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (L-end)",
+    "1 swing arc(s)",
+    "arc on 0"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-034",
+   "floor": "sukhumvit:ground",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    40.2933,
+    17.1085
+   ],
+   "b": [
+    40.2933,
+    15.5585
+   ],
+   "width": 1.55,
+   "wallThickness": 0.2,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (L-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-035",
+   "floor": "sukhumvit:ground",
+   "kind": "window",
+   "subtype": "fixed",
+   "a": [
+    8.0082,
+    15.8585
+   ],
+   "b": [
+    8.0082,
+    17.9085
+   ],
+   "width": 2.05,
+   "wallThickness": 0.52,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.8,
+   "evidence": [
+    "wall gap (L-end)",
+    "glazing band",
+    "WALL-GL",
+    "fixed glazing"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    0.035,
+    0.085
+   ]
+  },
+  {
+   "id": "ground-036",
+   "floor": "sukhumvit:ground",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    53.1492,
+    7.7534
+   ],
+   "b": [
+    53.0972,
+    6.8534
+   ],
+   "width": 0.901,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.65,
+   "evidence": [
+    "swing arc + leaf on DOOR",
+    "ends: wall end"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-037",
+   "floor": "sukhumvit:ground",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    12.1994,
+    19.759
+   ],
+   "b": [
+    12.1992,
+    20.859
+   ],
+   "width": 1.1,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "left",
+   "confidence": 0.8,
+   "evidence": [
+    "swing arc + leaf on DOOR",
+    "ends: jamb, jamb"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-038",
+   "floor": "sukhumvit:ground",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    36.6479,
+    20.8585
+   ],
+   "b": [
+    37.8479,
+    20.8585
+   ],
+   "width": 1.2,
+   "wallThickness": 0.12,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.8,
+   "evidence": [
+    "swing arc + leaf on WALL",
+    "ends: wall end, wall end"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-039",
+   "floor": "sukhumvit:ground",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    37.848,
+    14.3585
+   ],
+   "b": [
+    36.878,
+    14.3585
+   ],
+   "width": 0.97,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.8,
+   "evidence": [
+    "swing arc + leaf on XR_L44 Plan$0$A-DOOR",
+    "ends: jamb, jamb"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-040",
+   "floor": "sukhumvit:ground",
+   "kind": "window",
+   "subtype": "sliding (frame only, no glass drawn)",
+   "a": [
+    36.3983,
+    23.1591
+   ],
+   "b": [
+    32.9999,
+    23.1591
+   ],
+   "width": 3.398,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "10 frame pieces in a row between two wall faces"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "ground-041",
+   "floor": "sukhumvit:ground",
+   "kind": "window",
+   "subtype": "sliding (frame only, no glass drawn)",
+   "a": [
+    14.1728,
+    8.0058
+   ],
+   "b": [
+    14.2237,
+    10.9066
+   ],
+   "width": 2.901,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "6 frame pieces in a row between two wall faces"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    -0.075,
+    0.025
+   ]
+  },
+  {
+   "id": "ground-042",
+   "floor": "sukhumvit:ground",
+   "kind": "window",
+   "subtype": "fixed",
+   "a": [
+    19.3733,
+    23.0045
+   ],
+   "b": [
+    19.3733,
+    24.4591
+   ],
+   "width": 1.455,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.6,
+   "evidence": [
+    "glazing inside a drawn-through wall",
+    "WALL-GL",
+    "wall thinned over the glass"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    -0.075,
+    -0.075
+   ]
+  },
+  {
+   "id": "ground-043",
+   "floor": "sukhumvit:ground",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    19.3733,
+    18.6544
+   ],
+   "b": [
+    19.373,
+    14.5085
+   ],
+   "width": 4.146,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "WALL-GL",
+    "WIN",
+    "sliding sashes (6 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    0.025,
+    0.125
+   ]
+  },
+  {
+   "id": "ground-044",
+   "floor": "sukhumvit:ground",
+   "kind": "window",
+   "subtype": "fixed",
+   "a": [
+    21.1483,
+    14.4335
+   ],
+   "b": [
+    19.448,
+    14.4335
+   ],
+   "width": 1.7,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.65,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "WALL-GL",
+    "WIN",
+    "fixed glazing"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    -0.125,
+    -0.025
+   ]
+  },
+  {
+   "id": "ground-045",
+   "floor": "sukhumvit:ground",
+   "kind": "window",
+   "subtype": "fixed",
+   "a": [
+    26.6983,
+    23.3591
+   ],
+   "b": [
+    26.6983,
+    24.4591
+   ],
+   "width": 1.1,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.6,
+   "evidence": [
+    "glazing inside a drawn-through wall",
+    "WIN",
+    "jambs at both ends of the glass"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "upper-001",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    106.1696,
+    14.4338
+   ],
+   "b": [
+    100.9196,
+    14.4338
+   ],
+   "width": 5.25,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.55,
+   "evidence": [
+    "wall gap (cap-end)",
+    "glazing band",
+    "WIN",
+    "sliding sashes (5 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    -0.125,
+    -0.025
+   ]
+  },
+  {
+   "id": "upper-002",
+   "floor": "sukhumvit:upper",
+   "kind": "door",
+   "subtype": "hinged double",
+   "a": [
+    106.3696,
+    14.8808
+   ],
+   "b": [
+    106.3696,
+    16.1368
+   ],
+   "width": 1.256,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "2 swing arc(s)",
+    "arc on XR_L44$0$I-DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-003",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "fixed",
+   "a": [
+    88.2949,
+    15.8585
+   ],
+   "b": [
+    88.2949,
+    16.608
+   ],
+   "width": 0.75,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.8,
+   "evidence": [
+    "wall gap (cap-end)",
+    "glazing band",
+    "WIN",
+    "fixed glazing"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    0.025,
+    0.125
+   ]
+  },
+  {
+   "id": "upper-004",
+   "floor": "sukhumvit:upper",
+   "kind": "door",
+   "subtype": "hinged double",
+   "a": [
+    85.2698,
+    18.6085
+   ],
+   "b": [
+    86.5698,
+    18.6085
+   ],
+   "width": 1.3,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "2 swing arc(s)",
+    "arc on WALL",
+    "double swing drawn 0.70 m in front of the gap"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-005",
+   "floor": "sukhumvit:upper",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    109.4969,
+    13.4606
+   ],
+   "b": [
+    109.4969,
+    14.4606
+   ],
+   "width": 1.0,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-006",
+   "floor": "sukhumvit:upper",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    123.9969,
+    18.1639
+   ],
+   "b": [
+    123.9974,
+    19.0638
+   ],
+   "width": 0.9,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on WIN"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-007",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "fixed",
+   "a": [
+    123.9468,
+    18.0237
+   ],
+   "b": [
+    121.1697,
+    18.0241
+   ],
+   "width": 2.777,
+   "wallThickness": 0.28,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.8,
+   "evidence": [
+    "wall gap (cap-end)",
+    "glazing band",
+    "WIN",
+    "fixed glazing"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    0.09,
+    0.09
+   ]
+  },
+  {
+   "id": "upper-008",
+   "floor": "sukhumvit:upper",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    122.9969,
+    20.159
+   ],
+   "b": [
+    122.0969,
+    20.159
+   ],
+   "width": 0.9,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on WIN"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-009",
+   "floor": "sukhumvit:upper",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    117.1218,
+    20.884
+   ],
+   "b": [
+    117.1218,
+    21.584
+   ],
+   "width": 0.7,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on WIN"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-010",
+   "floor": "sukhumvit:upper",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    119.1969,
+    20.1589
+   ],
+   "b": [
+    120.0969,
+    20.1589
+   ],
+   "width": 0.9,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on WIN"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-011",
+   "floor": "sukhumvit:upper",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    117.1218,
+    22.5839
+   ],
+   "b": [
+    117.1218,
+    21.8839
+   ],
+   "width": 0.7,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on WIN"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-012",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    106.3695,
+    10.5559
+   ],
+   "b": [
+    106.3695,
+    7.6585
+   ],
+   "width": 2.897,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.7,
+   "evidence": [
+    "wall gap (cap-end)",
+    "glazing band",
+    "WIN",
+    "sliding sashes (5 lines)",
+    "planter / kerb / edge along it outside"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    -0.05,
+    0.05
+   ]
+  },
+  {
+   "id": "upper-013",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    88.2948,
+    10.9062
+   ],
+   "b": [
+    88.2946,
+    8.0085
+   ],
+   "width": 2.898,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.7,
+   "evidence": [
+    "wall gap (cap-face)",
+    "glazing band",
+    "WIN",
+    "sliding sashes (4 lines)",
+    "planter / kerb / edge along it outside"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    -0.1,
+    -0.025
+   ]
+  },
+  {
+   "id": "upper-014",
+   "floor": "sukhumvit:upper",
+   "kind": "door",
+   "subtype": "hinged double",
+   "a": [
+    88.2949,
+    19.6085
+   ],
+   "b": [
+    88.2949,
+    20.959
+   ],
+   "width": 1.35,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "2 swing arc(s)",
+    "arc on XR_L44$0$I-DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-015",
+   "floor": "sukhumvit:upper",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    93.3946,
+    19.4085
+   ],
+   "b": [
+    93.3946,
+    21.1591
+   ],
+   "width": 1.751,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-016",
+   "floor": "sukhumvit:upper",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    108.2969,
+    14.507
+   ],
+   "b": [
+    109.4469,
+    14.507
+   ],
+   "width": 1.15,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-017",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    112.0196,
+    17.8588
+   ],
+   "b": [
+    112.0197,
+    15.4588
+   ],
+   "width": 2.4,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.7,
+   "evidence": [
+    "wall gap (cap-end)",
+    "glazing band",
+    "WIN",
+    "sliding sashes (5 lines)",
+    "planter / kerb / edge along it outside"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    -0.05,
+    0.05
+   ]
+  },
+  {
+   "id": "upper-018",
+   "floor": "sukhumvit:upper",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    86.8194,
+    17.9085
+   ],
+   "b": [
+    86.8194,
+    16.7084
+   ],
+   "width": 1.2,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-019",
+   "floor": "sukhumvit:upper",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    85.2198,
+    16.708
+   ],
+   "b": [
+    85.2198,
+    18.5585
+   ],
+   "width": 1.85,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-020",
+   "floor": "sukhumvit:upper",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    83.8447,
+    21.0089
+   ],
+   "b": [
+    82.0197,
+    21.0087
+   ],
+   "width": 1.825,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-021",
+   "floor": "sukhumvit:upper",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    85.2698,
+    21.0091
+   ],
+   "b": [
+    86.7693,
+    21.0093
+   ],
+   "width": 1.5,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-022",
+   "floor": "sukhumvit:upper",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    107.5969,
+    12.757
+   ],
+   "b": [
+    107.5969,
+    14.457
+   ],
+   "width": 1.7,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-023",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    112.0197,
+    10.5559
+   ],
+   "b": [
+    112.0197,
+    7.6584
+   ],
+   "width": 2.897,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.7,
+   "evidence": [
+    "wall gap (cap-end)",
+    "glazing band",
+    "WIN",
+    "sliding sashes (5 lines)",
+    "planter / kerb / edge along it outside"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    -0.05,
+    0.05
+   ]
+  },
+  {
+   "id": "upper-024",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    112.0946,
+    14.3088
+   ],
+   "b": [
+    112.0946,
+    11.9588
+   ],
+   "width": 2.35,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.55,
+   "evidence": [
+    "wall gap (cap-end)",
+    "glazing band",
+    "WIN",
+    "sliding sashes (5 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    -0.125,
+    -0.025
+   ]
+  },
+  {
+   "id": "upper-025",
+   "floor": "sukhumvit:upper",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    121.0446,
+    18.1585
+   ],
+   "b": [
+    121.0446,
+    20.1089
+   ],
+   "width": 1.95,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-026",
+   "floor": "sukhumvit:upper",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    114.3158,
+    18.0584
+   ],
+   "b": [
+    113.5446,
+    18.0584
+   ],
+   "width": 0.771,
+   "wallThickness": 0.2,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-027",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "fixed",
+   "a": [
+    116.2719,
+    18.0584
+   ],
+   "b": [
+    120.9196,
+    18.0584
+   ],
+   "width": 4.648,
+   "wallThickness": 0.2,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.8,
+   "evidence": [
+    "wall gap (cap-end)",
+    "glazing band",
+    "WIN",
+    "fixed glazing"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    -0.125,
+    -0.125
+   ]
+  },
+  {
+   "id": "upper-028",
+   "floor": "sukhumvit:upper",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    116.2717,
+    21.1588
+   ],
+   "b": [
+    118.0466,
+    21.1588
+   ],
+   "width": 1.775,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-029",
+   "floor": "sukhumvit:upper",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    117.0717,
+    21.734
+   ],
+   "b": [
+    115.5197,
+    21.734
+   ],
+   "width": 1.552,
+   "wallThickness": 0.3,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-030",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "casement (3 sashes)",
+   "a": [
+    121.1719,
+    23.234
+   ],
+   "b": [
+    123.9466,
+    23.234
+   ],
+   "width": 2.775,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.7,
+   "evidence": [
+    "wall gap (cap-end)",
+    "3 swing arc(s)",
+    "glazing drawn across the whole gap (closed position)",
+    "WIN"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    -0.125,
+    -0.025
+   ]
+  },
+  {
+   "id": "upper-031",
+   "floor": "sukhumvit:upper",
+   "kind": "door",
+   "subtype": "pocket sliding",
+   "a": [
+    100.8641,
+    19.4582
+   ],
+   "b": [
+    100.8641,
+    21.1591
+   ],
+   "width": 1.701,
+   "wallThickness": 0.389,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.75,
+   "evidence": [
+    "wall gap (cap-end)",
+    "pocket panel on DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-032",
+   "floor": "sukhumvit:upper",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    114.2158,
+    23.3088
+   ],
+   "b": [
+    113.5446,
+    23.3088
+   ],
+   "width": 0.671,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-033",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    82.8694,
+    8.0085
+   ],
+   "b": [
+    82.8694,
+    12.5073
+   ],
+   "width": 4.499,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.7,
+   "evidence": [
+    "wall gap (L-end)",
+    "glazing band",
+    "WIN",
+    "on the line of its glazing (outside the block it was measured from)",
+    "sliding sashes (5 lines)",
+    "planter / kerb / edge along it outside"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    -0.05,
+    0.05
+   ]
+  },
+  {
+   "id": "upper-034",
+   "floor": "sukhumvit:upper",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    86.8698,
+    12.6323
+   ],
+   "b": [
+    88.1699,
+    12.6323
+   ],
+   "width": 1.3,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (L-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-035",
+   "floor": "sukhumvit:upper",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    113.4946,
+    17.9088
+   ],
+   "b": [
+    113.4946,
+    15.4088
+   ],
+   "width": 2.5,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (L-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-036",
+   "floor": "sukhumvit:upper",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    107.5469,
+    17.9588
+   ],
+   "b": [
+    106.4196,
+    17.9588
+   ],
+   "width": 1.127,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (L-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-037",
+   "floor": "sukhumvit:upper",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    107.5469,
+    14.507
+   ],
+   "b": [
+    106.4196,
+    14.507
+   ],
+   "width": 1.127,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (L-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-038",
+   "floor": "sukhumvit:upper",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    85.2698,
+    15.8091
+   ],
+   "b": [
+    86.2696,
+    15.8091
+   ],
+   "width": 1.0,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (L-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-039",
+   "floor": "sukhumvit:upper",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    99.1148,
+    21.2591
+   ],
+   "b": [
+    100.6696,
+    21.2591
+   ],
+   "width": 1.555,
+   "wallThickness": 0.2,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (L-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-040",
+   "floor": "sukhumvit:upper",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    107.5469,
+    11.9088
+   ],
+   "b": [
+    106.4196,
+    11.9088
+   ],
+   "width": 1.127,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (L-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-041",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "fixed",
+   "a": [
+    117.0717,
+    23.3091
+   ],
+   "b": [
+    116.2717,
+    23.3091
+   ],
+   "width": 0.8,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.8,
+   "evidence": [
+    "wall gap (L-end)",
+    "glazing band",
+    "WIN",
+    "fixed glazing"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    0.1,
+    0.2
+   ]
+  },
+  {
+   "id": "upper-042",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "fixed",
+   "a": [
+    118.1466,
+    23.3091
+   ],
+   "b": [
+    120.9219,
+    23.3091
+   ],
+   "width": 2.775,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.8,
+   "evidence": [
+    "wall gap (L-end)",
+    "glazing band",
+    "WIN",
+    "fixed glazing"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    -0.2,
+    -0.1
+   ]
+  },
+  {
+   "id": "upper-043",
+   "floor": "sukhumvit:upper",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    116.2047,
+    18.1585
+   ],
+   "b": [
+    116.2046,
+    19.1584
+   ],
+   "width": 1.0,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.8,
+   "evidence": [
+    "swing arc + leaf on WIN",
+    "ends: wall end, wall end"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-044",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "casement",
+   "a": [
+    107.0212,
+    23.1582
+   ],
+   "b": [
+    108.0469,
+    23.1594
+   ],
+   "width": 1.026,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "left",
+   "confidence": 0.8,
+   "evidence": [
+    "swing arc + leaf on WIN",
+    "ends: jamb, jamb",
+    "glazing drawn across the opening (closed position): casement sash"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    0.001,
+    0.001
+   ]
+  },
+  {
+   "id": "upper-045",
+   "floor": "sukhumvit:upper",
+   "kind": "door",
+   "subtype": "pocket sliding",
+   "a": [
+    102.1968,
+    16.6088
+   ],
+   "b": [
+    100.9391,
+    16.6088
+   ],
+   "width": 1.258,
+   "wallThickness": 0.3,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.6,
+   "evidence": [
+    "sliding leaf on DOOR half out of a wall pocket",
+    "far end: corner with another pocket door"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-046",
+   "floor": "sukhumvit:upper",
+   "kind": "door",
+   "subtype": "pocket sliding",
+   "a": [
+    100.8641,
+    18.0335
+   ],
+   "b": [
+    100.8641,
+    16.6032
+   ],
+   "width": 1.43,
+   "wallThickness": 0.389,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.6,
+   "evidence": [
+    "sliding leaf on DOOR half out of a wall pocket",
+    "far end: corner with another pocket door"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "upper-047",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "sliding (frame only, no glass drawn)",
+   "a": [
+    111.9999,
+    23.1093
+   ],
+   "b": [
+    112.0509,
+    20.3583
+   ],
+   "width": 2.751,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "6 frame pieces in a row between two wall faces"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    -0.029,
+    0.071
+   ]
+  },
+  {
+   "id": "upper-048",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "fixed",
+   "a": [
+    95.1696,
+    14.4338
+   ],
+   "b": [
+    93.4697,
+    14.4338
+   ],
+   "width": 1.7,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.65,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "WALL-GL",
+    "WIN",
+    "fixed glazing"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    -0.125,
+    -0.025
+   ]
+  },
+  {
+   "id": "upper-049",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    93.3946,
+    18.6582
+   ],
+   "b": [
+    93.3947,
+    14.5088
+   ],
+   "width": 4.149,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "WALL-GL",
+    "WIN",
+    "sliding sashes (5 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    0.025,
+    0.125
+   ]
+  },
+  {
+   "id": "upper-050",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "fixed",
+   "a": [
+    93.3948,
+    23.0091
+   ],
+   "b": [
+    93.3948,
+    24.4591
+   ],
+   "width": 1.45,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.6,
+   "evidence": [
+    "glazing inside a drawn-through wall",
+    "WALL-GL",
+    "wall thinned over the glass"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    -0.075,
+    -0.075
+   ]
+  },
+  {
+   "id": "upper-051",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "fixed",
+   "a": [
+    106.2198,
+    23.7588
+   ],
+   "b": [
+    106.2195,
+    24.4591
+   ],
+   "width": 0.7,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.6,
+   "evidence": [
+    "glazing inside a drawn-through wall",
+    "WALL-GL",
+    "jambs at both ends of the glass"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "upper-052",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "fixed",
+   "a": [
+    81.8947,
+    19.3672
+   ],
+   "b": [
+    81.8946,
+    20.959
+   ],
+   "width": 1.592,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.6,
+   "evidence": [
+    "glazing inside a drawn-through wall",
+    "WALL-GL",
+    "wall thinned over the glass"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    -0.075,
+    -0.075
+   ]
+  },
+  {
+   "id": "upper-053",
+   "floor": "sukhumvit:upper",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    81.8198,
+    15.3591
+   ],
+   "b": [
+    81.8195,
+    12.7573
+   ],
+   "width": 2.602,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.55,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "WIN",
+    "sliding sashes (5 lines)",
+    "planter / kerb / edge along it outside"
+   ],
+   "eitherKind": false,
+   "glazing": [
+    -0.05,
+    0.05
+   ]
+  }
+ ],
+ "mapping": "openings_mapping.json"
+}

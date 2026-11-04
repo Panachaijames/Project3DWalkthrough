@@ -1,0 +1,129 @@
+--- a/detector/openings.py
++++ b/detector/openings.py
+@@ -20,7 +20,9 @@
+     small pieces (< 0.15 m) are not walls.
+  2. Gaps: wall strips are pairs of opposite faces of the wall solid. From each strip end, look along its centre line
+     for the next wall material; the stretch between is a gap, typed by its near end (cap / L-corner / T) and far end
+-    (the end of a collinear strip of the same thickness, or the face of another wall).
++    (the end of a collinear strip of the same thickness, or the face of another wall). A jamb return or pier (a stub
++    up to 0.25 m deep standing proud of a wall end on ONE face, the centre line and the other face ending together)
++    does not move the end: the gap is measured on the centre line, between the wall end faces.
+  3. Door swings: arcs on any layer (r 0.28-2 m, sweep 20-125 deg). Which end is the closed leaf: a leaf (line or thin
+     rectangle) drawn toward the other end, and the closed tip lying on the wall. Leaves of swings are never read as
+     sliding panels.
+@@ -42,9 +44,13 @@
+     Fixed glazing is a window; sliding sashes are a window (flagged eitherKind) unless they open straight onto a
+     hatched floor (terrace, deck) with no planting, then a sliding glass door.
+  6. Other gap contents: a thin panel or a centre-line leaf running into a wall pocket (the line's part past the gap
+-    lies in the wall), or a leaf drawn shut across the gap on a door layer (lift doors) = sliding door; both wall
+-    faces drawn on across a gap between two wall ends = opening over a low wall (window); two or more frame pieces
+-    standing inside = frame-only sliding unit (window); screen lines along the gap = closed by a screen (no opening).
++    lies in the wall), or a leaf drawn shut across the gap on a door layer (lift doors) = sliding door. So is a leaf
++    drawn as line work (two long lines 15-70 mm apart on a door layer, ends level) within the wall depth + 0.10 m (in
++    a wall pocket, or on a track just outside the wall face) that runs on past a gap end or across 60 % of the gap,
++    when the leaves together make up 70 % of the gap and the gap is not between two stubs (pocket sliding when the
++    leaf lies inside the wall faces). Both wall faces drawn on across a gap between two wall ends = opening over a
++    low wall (window); two or more frame pieces standing inside = frame-only sliding unit (window); screen lines
++    along the gap = closed by a screen (no opening).
+     Elsewhere: a sliding leaf half out of a pocket where the wall simply ends = pocket door (to the next wall or to
+     the line of a second pocket door met at a corner); three or more frame pieces in a row from one wall face to
+     another = frame-only sliding unit.
+@@ -253,6 +259,21 @@
+     return out
+ 
+ 
++# Limit checked against the answer keys (fourth office, L29 / L30; the nearest cases in brackets): the 0.115 m
++# return of the L30 cavity slider's thin skin (0.12 m already finds it), the 0.21 m jamb piers of the L29 lift doors
++# (0.22 m finds them), and the first change on an older drawing, a presidential passage whose far end has a 0.34 m
++# step (from 0.35 m on). 0.25 m keeps a margin on both sides; the four older drawings are identical from 0.12 to 0.30 m.
++JAMB_RETURN = 0.25         # m: a stub up to this deep on one face of a wall end is a jamb return or pier, not wall
++
++
++def one_face_step(v):
++    """v: the three lines across a wall end (face, centre, face). When the centre line and one face agree (3 cm) and the
++    other face differs: how far that other face stands off from the centre line's value, else None (a stub on ONE face)."""
++    for odd, same in ((0, 2), (2, 0)):
++        if abs(v[same] - v[1]) <= 0.03 and abs(v[odd] - v[1]) > 0.03: return v[odd] - v[1]
++    return None
++
++
+ def strip_gaps(fl, G, strips, dmin=0.3, dmax=7.0):
+     """From every wall end (a strip that stops, with or without a perpendicular wall right after it) look along the
+     wall's centre line for the next wall material: the stretch between is a candidate opening on that wall line."""
+@@ -267,8 +288,12 @@
+             d0s = [x[0] for x in prof]; d1s = [x[1] for x in prof]
+             if any(d is None for d in d1s): continue
+             d0 = d0s[1]
+-            if d0 > 0.6 or max(d0s) - min(d0s) > 0.03: continue          # wall goes on / end not square
+-            d1 = min(d1s)
++            # A jamb return or pier (a stub up to JAMB_RETURN deep standing proud of the wall end on ONE face; the
++            # centre line and the other face end together) does not move the end: measure on the centre line.
++            st0, st1 = one_face_step(d0s), one_face_step(d1s)
++            jamb0 = d0 <= 0.02 and st0 is not None and 0 < st0 <= JAMB_RETURN
++            if d0 > 0.6 or (max(d0s) - min(d0s) > 0.03 and not jamb0): continue   # wall goes on / end not square
++            d1 = d1s[1] if st1 is not None and -JAMB_RETURN <= st1 < 0 else min(d1s)   # the same stub at the far end
+             w = d1 - d0
+             if not (dmin <= w <= dmax): continue
+             flat = max(d1s) - min(d1s) <= 0.03
+@@ -1098,11 +1123,50 @@
+     return out
+ 
+ 
++def line_leaves(fl, g, idx, s0, s1, la, lb, cs):
++    """Sliding leaves drawn with line work (CAD exports draw a leaf as four lines, not as one closed outline): two long
++    straight lines 15-70 mm apart (a leaf's thickness) on a door layer, their ends level, running along the gap within
++    the wall's depth + 0.10 m (a leaf in a wall pocket, or on a track just outside the wall face: its outer line lies
++    at most 0.03 m of clearance + 0.07 m of thickness off the face) and on past a gap end, or across most of the gap.
++    Together they must be able to close the gap: their lengths add up to at least 70 % of it (the clear opening of a
++    leaf set is the gap less two frames or returns of 0.15 m at most, so 70 % holds for a gap of 1 m and up). Not
++    between two stubs (jamb returns, posts: under 0.3 m of wall each side), as for a passage: there is no wall line for
++    a leaf to run in. -> [(kind, layer)]: 'pocket panel' inside the wall faces, 'sliding panel' outside them.
++    Checked on the six drawings: the face-mounted pair of L30 covers 100 % of its gap with its outer line 0.06 m off
++    the face, the L30 cavity slider 86 % with the leaves inside the wall; changing 70 % to anything from 30 to 100 %
++    changes no output, and the window must reach 0.06 m beyond the face for the face-mounted pair (0.10 m used;
++    nothing else changes from 0.08 to 0.25 m)."""
++    SI = fl.SI
++    if max(g.nlen, g.flen) < 0.3: return []
++    ok = (cs > math.cos(math.radians(3))) & (np.abs(la - lb) <= 0.005) & (s1 - s0 >= 0.4) & \
++         (np.minimum(s1, g.w) - np.maximum(s0, 0) >= 0.1) & (np.maximum(np.abs(la), np.abs(lb)) <= g.t / 2 + 0.10)
++    cand = []
++    for k in np.nonzero(ok)[0]:
++        p = fl.P[SI.pid[idx[k]]]
++        if 'door' in p.roles and p.cont and not p.roles & {'wall', 'column', 'window', 'glass', 'screen'} and p.i not in fl.leaf_prims:
++            cand.append(k)
++    panels, total, used = [], 0.0, set()
++    for i, k in enumerate(cand):
++        for m in cand[i + 1:]:
++            if k in used or m in used: continue
++            if not (0.015 <= abs((la[k] + lb[k]) / 2 - (la[m] + lb[m]) / 2) <= 0.07): continue
++            if abs(s0[k] - s0[m]) > 0.03 or abs(s1[k] - s1[m]) > 0.03: continue            # ends level: a rectangle
++            lo, hi = float(min(s0[k], s0[m])), float(max(s1[k], s1[m]))
++            into_wall = lo < -0.15 or hi > g.w + 0.15
++            if not (into_wall or hi - lo >= 0.6 * g.w): continue
++            used |= {k, m}
++            inside = abs((la[k] + lb[k] + la[m] + lb[m]) / 4) <= g.t / 2
++            panels.append(('pocket panel' if (inside and into_wall) else 'sliding panel', fl.P[SI.pid[idx[k]]].lay))
++            total += hi - lo
++    return panels if total >= 0.7 * g.w else []
++
++
+ def gap_contents(fl, g):
+-    """What is drawn inside a gap besides swings and glazing: sliding / pocket leaves (a thin panel or a single line
+-    along the gap that runs on into the wall) and frame pieces standing inside it (stiles of a sliding unit)."""
++    """What is drawn inside a gap besides swings and glazing: sliding / pocket leaves (a thin panel, a leaf drawn as two
++    lines, or a single line along the gap that runs on into the wall) and frame pieces standing inside it (stiles of a
++    sliding unit)."""
+     SI = fl.SI
+-    box = rect(g.a, g.u, -0.8, g.w + 0.8, -g.t / 2 - 0.08, g.t / 2 + 0.08)
++    box = rect(g.a, g.u, -0.8, g.w + 0.8, -g.t / 2 - 0.12, g.t / 2 + 0.12)
+     x0, y0, x1, y1 = box.bounds
+     idx = SI.near_box(x0, y0, x1, y1)
+     if len(idx):
+@@ -1132,6 +1196,7 @@
+                 in_pocket = sum(y - x for x, y in fl.G.cover(st, g.u, ln)) >= 0.8 * ln
+                 if cover <= 0.85 * g.w and in_pocket:       # a leaf slid part-way out of its pocket on one side
+                     g.panels.append(('pocket line', p.lay))
++        g.panels += line_leaves(fl, g, idx, s0, s1, la, lb, cs)
+         # a leaf drawn closed across the gap on a door layer (lift doors, sliding doors shown shut)
+         closed_leaf = []
+         for k in np.nonzero((cs > math.cos(math.radians(3))) & (s1 - s0 >= 0.3))[0]:

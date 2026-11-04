@@ -1,0 +1,103 @@
+{
+ "key": "working_table",
+ "name": "working table",
+ "file": "banquet/working table.glb",
+ "kind": "table",
+ "family": "IA_J15_WORKING TABLE - 1800W 1000D 750H",
+ "piece": "L1-table-002",
+ "furnishes": 5,
+ "turnUndone_deg": 90,
+ "turnFrom": "its real turn in the scene (analysis.json)",
+ "standsAt_m": 0,
+ "size_m": [
+  1.8007,
+  0.75,
+  1
+ ],
+ "gltfSceneToModelFrame_columnMajor": [
+  0,
+  0,
+  1,
+  0,
+  0,
+  1,
+  0,
+  0,
+  -1,
+  0,
+  0,
+  0,
+  2.2856758,
+  3e-7,
+  1.3803658,
+  1
+ ],
+ "full": {
+  "triangles": 104,
+  "vertices": 216,
+  "weldedVertices": 56,
+  "parts": [
+   {
+    "name": "Object13484",
+    "triangles": 16,
+    "vertices": 32,
+    "mirrored": false
+   },
+   {
+    "name": "Object13483",
+    "triangles": 12,
+    "vertices": 24,
+    "mirrored": false
+   },
+   {
+    "name": "Object13485",
+    "triangles": 76,
+    "vertices": 160,
+    "mirrored": false
+   }
+  ],
+  "area_m2": 9.1464
+ },
+ "levels": [
+  {
+   "id": "50%",
+   "label": "50 %",
+   "triangles": 52,
+   "vertices": 30,
+   "posOffset": 0,
+   "posCount": 90,
+   "idxOffset": 360,
+   "idxCount": 156
+  },
+  {
+   "id": "25%",
+   "label": "25 %",
+   "triangles": 26,
+   "vertices": 17,
+   "posOffset": 984,
+   "posCount": 51,
+   "idxOffset": 1188,
+   "idxCount": 78
+  },
+  {
+   "id": "12%",
+   "label": "12 %",
+   "triangles": 12,
+   "vertices": 10,
+   "posOffset": 1500,
+   "posCount": 30,
+   "idxOffset": 1620,
+   "idxCount": 36
+  },
+  {
+   "id": "6%",
+   "label": "6 %",
+   "triangles": 6,
+   "vertices": 5,
+   "posOffset": 1764,
+   "posCount": 15,
+   "idxOffset": 1824,
+   "idxCount": 18
+  }
+ ]
+}

@@ -1,0 +1,474 @@
+{
+ "encodings": [
+  {
+   "name": "Two-leaf door block 'cua 2 cánh' (two-leaf door)",
+   "layers": [
+    "Xr_SDC_DD_ID-PRS-ID wall$0$DA-DOOR-WIND",
+    "Xr_SDC_DD_ID-PRS-ID wall$0$DA-ELEV-PEN1",
+    "Xr_SDC_DD_ID-PRS-ID wall$0$DA-ANNO-DIMS"
+   ],
+   "entities": "Top-level INSERT 'Xr_SDC_DD_ID-PRS-ID wall$0$cua 2 cánh' (rot -90; the D1 insert is mirrored). Each insert holds 2 swing ARCs (R 0.769, sweep 85.5 deg, HIDDEN linetype), leaf and frame LWPOLYLINEs, about 40 non-solid hatches and 4 circles. Nested inside: 8 x 'HSP_GR_MAIN DOOR_D1_HANDLE' (40 polylines), 2 x 'WOODEN DOOR SEAL', 1 x 'Xr- Door details$0$...' (382 LINEs: a frame-section detail in a 15 mm band), 2 x '34gteh54' (DA-ANNO-DIMS) and 2 x 'TACKE_887782356' (134 polylines each, DA-ELEV-PEN1)",
+   "meaning": "Hinged double door with two equal leaves: D1 (entrance) and D2 (living / foyer), 1.60 m each",
+   "howToGetEnds": "The insert point is one opening end, 0.03 m outside the wall or jamb face on the non-swing side. The other end is insert + 1.60 m along the block x-axis, and local +y (sign from mirroring) is the swing side. Equivalently, the two arc centres (hinges) +-0.031 m along the wall. Snap across to the wall centre line (D2 faces x 201.664 / 201.844) or to the inner faces of the A-4. Dim jambs (D1).",
+   "counts": "2 inserts make up all 1,116 items on the DA-DOOR-WIND layer: 558 each = 1 insert + 129 block items + 40 handle polylines + 6 seal items + 382 detail lines. A further 536 nested items sit on DA-ELEV-PEN1 and DA-ANNO-DIMS.",
+   "reliability": "high",
+   "edgeCases": "The frame-detail lines and handle drawings must not be read as walls or glass. The swing arcs are HIDDEN, so a continuous-lines-only filter drops them. The frame detail runs about 0.1 m into the jambs. D1 has no wall-layer wall beside it: its jambs are A-4. Dim rectangles."
+  },
+  {
+   "name": "Anonymous single-leaf door blocks *U1325 / *U1635",
+   "layers": [
+    "Xr_SDC_DD_ID-PCS-ID wall$0$DA-DOOR-WIND"
+   ],
+   "entities": "Top-level INSERT '*U1325' x2 (D5, and D4 mirrored) and '*U1635' x1 (D3, rot 180). Each contains 1 ARC (R 0.85 / 0.80, sweep 90 deg, linetype 'Xr_SDC_DD_ID-PCS-ID wall$0$HIDDEN'), a 0.04 x R leaf rectangle in the open position, and 2 closed frame stubs 0.05 x 0.08 m that exactly fill the wall thickness at both opening ends",
+   "meaning": "Hinged single door. These are dynamic-block anonymous instances, so the name carries no information.",
+   "howToGetEnds": "The opening ends are the outer edges of the two frame stubs: hinge - 0.025 and the closed arc end + 0.025 along the wall, so width = R + 0.05 (0.90 / 0.85). The stubs' depth is the wall thickness and their mid-depth is the centre line. The insert point is the hinge-side end on the swing-side face.",
+   "counts": "3 inserts (12 primitives), which together with the inserts make up all 15 items on that layer",
+   "reliability": "high",
+   "edgeCases": "Furniture uses '*U' names too (*U1025, *U1315, *U1448, *U1664-1666 on A-2.Noi That: sauna benches, circles), so classify by content, not by name. Mirroring flips the swing side. The arc is HIDDEN."
+  },
+  {
+   "name": "Loose swing fan (arc + leaf line, sometimes a chord) on visible-line layers",
+   "layers": [
+    "A-1.Netthay",
+    "A-1.Netthay - manh"
+   ],
+   "entities": "Depth-0 ARC (R 0.70-1.10 m, sweep 43-96.5 deg), plus a LINE from the hinge for the open leaf (length R, or 0.734 for the spa doors). D8-D12 also have a LINE along the wall between the jambs (the closed position or threshold: 0.75 / 0.90 / 0.95 m). D6 R0.80 96.5 deg; D8 R0.95 43 deg; D9-D11 R0.70 49 deg; D12 R0.90 61 deg; D13 R0.80 90 deg; D14 R1.00 53 deg; D15 R1.10 90 deg.",
+   "meaning": "Hinged single doors drawn by hand: D6 and D8-D15. D14 sits in a wall that is not drawn; D15 is in the glass facade and swings onto the terrace.",
+   "howToGetEnds": "Hinge = arc centre, 0.00-0.05 m from the wall end (0.09 m for D15, where the reference is on the facade centre line). Closed end = the arc end point that is not on the leaf line and touches the facing wall end (within 0.05 m). Where a chord line exists, its ends are the opening ends (on the centre line +-0.04). Snap to the wall caps. For D9-D11 the 0.70 radius is 0.05 m short of the 0.753 gap.",
+   "counts": "9 arcs (8 on A-1.Netthay in a continuous linetype; 1 on A-1.Netthay - manh where the whole fan is HIDDEN2), 9 leaf lines, 5 chord lines",
+   "reliability": "high",
+   "edgeCases": "Partial sweeps of 43-61 deg (D8-D12, D14), so a 90 deg or R = width test fails. D8 is entirely dashed. D14 has no wall within 0.15 m. D15's fan is outside the facade double line. Furniture blocks also contain arcs (chairs R 0.52-0.63 sweep 19 deg, armchairs R 0.92 sweep 28 deg, a terrace lounge R 1.00 sweep 60 deg), but all of them are 1.4 m or more from any wall."
+  },
+  {
+   "name": "Dashed head (soffit) lines spanning the opening",
+   "layers": [
+    "A-1.Netthay - manh"
+   ],
+   "entities": "Straight LINEs with the per-entity linetype 'floor plan R25(05-12-2013)$0$8324_E-ELTB-B$0$HIDDEN2' (the layer default is Continuous), parallel to the wall and running from wall end to wall end at one face, both faces, or the centre",
+   "meaning": "Edge of the wall, soffit or bulkhead above an opening (head line), or an overhead track",
+   "howToGetEnds": "The line's end points are the opening ends (+-0.054 m). Across: if the line is on a face, shift by half the wall thickness to reach the centre line.",
+   "counts": "11 lines at 7 openings: D2 x2 (both faces, exactly 1.60), D3 (north face, 0.90, overshoots the cap by 0.054), D6 (face), D7 x2 (both faces, exact), D8 (dashed chord), O1 (corner to corner, 3.101), D16 x3 (track 5.86-5.94 m). Of the 62 HIDDEN2 entities on this layer, 48 are not about openings: ceiling and bulkhead outlines (12 m foyer rectangle, 33 m octagon line), the dining table, bar shelves, kitchen wall cabinets.",
+   "reliability": "medium",
+   "edgeCases": "A continuous-lines-only filter deletes these lines. The same dashed style draws furniture and ceilings, so require both ends at wall ends and the line inside the wall's thickness band. The ends can overshoot. O1's head line implies a bulkhead, yet the reference has no lintel there."
+  },
+  {
+   "name": "Pocket door leaf",
+   "layers": [
+    "A-1.Netthay",
+    "A-1.Netthay - manh"
+   ],
+   "entities": "One 0.70 m continuous LINE on the wall centre line (y -3494.021), with 0.48 m inside the west wall pocket and 0.22 m across the 0.80 m gap. No arc. Two HIDDEN2 head lines on the wall faces (y -3493.931 / -3494.111).",
+   "meaning": "Pocket (sliding) door D7, drawn partly open",
+   "howToGetEnds": "From the wall caps of the gap (203.201-204.001, matching the head lines exactly). The leaf only says 'sliding, pocket on the west side'.",
+   "counts": "1",
+   "reliability": "medium",
+   "edgeCases": "There is no arc, so arc-based rules miss it. A centre-line segment is easy to confuse with a construction line. The leaf overlaps the wall solid."
+  },
+  {
+   "name": "Movable glass partition: stacked panels + dashed track",
+   "layers": [
+    "Xr_SDC_DD_ID-PCS-ID wall$0$DA-LATT-OTLN",
+    "A-1.Netthay - manh"
+   ],
+   "entities": "9 INSERT 'Xr_SDC_DD_ID-PCS-ID wall$0$Movable panel_11' (each a panel polyline + a pivot circle, rot -29.16), stacked 4 at the west end and 5 at the east end, plus 3 parallel HIDDEN2 track lines 5.86-5.94 m long",
+   "meaning": "Folding / stacking glass partition between the study and the living room, drawn open (D16)",
+   "howToGetEnds": "Clear span = between the innermost panels of the two stacks (reference 4.862 m, +-0.06). The full track runs from the octagon's inner A-4. Dim line to the living-room wall end, which is the line of the closed partition.",
+   "counts": "9 panels, 3 track lines, 1 partition",
+   "reliability": "medium",
+   "edgeCases": "There is no wall at either end; the east wall end is capped by a 0.083 m A-4. Dim tick 0.56 m beyond the reference end. Whether this counts as an opening or as a glass wall is a definition choice."
+  },
+  {
+   "name": "Jambs and end ticks on the dimensions layer",
+   "layers": [
+    "A-4. Dim"
+   ],
+   "entities": "2 closed LWPOLYLINE rectangles 0.18 x 0.20 m either side of the entrance (D1); 2 LINEs 0.18 m across the octagon facade double line (D15); 0.08 m LINE ticks at D9 b, D10 a and b, D11 a (these duplicate the wall caps); a 0.083 m tick at the living-room north wall end (D16 east)",
+   "meaning": "Door jambs or wall end caps drawn on a non-wall layer",
+   "howToGetEnds": "Opening ends = the jamb faces toward the opening. D1: the rectangles' inner faces; the reference line is their room-side face, x 206.973. D15: the jamb lines, whose midpoints are on the facade centre line.",
+   "counts": "4 jambs (2 openings) + 5 ticks",
+   "reliability": "high",
+   "edgeCases": "The same layer carries the octagon glass facade, long construction lines along walls, ANSI31 floor hatches, furniture A$C paste-blocks (benches, wall unit, study group, an X box) and the O2 curtain. Never map the whole layer to walls."
+  },
+  {
+   "name": "Octagonal glass facade double line",
+   "layers": [
+    "A-4. Dim"
+   ],
+   "entities": "2 open LWPOLYLINEs (27.3 m) 0.18 m apart, plus 2 closed pier polylines (5.4 m perimeter) at x 185.5-186.2",
+   "meaning": "Full-height glass facade, which is not an opening. D15 is the only door in it, between two 0.18 m jamb lines.",
+   "howToGetEnds": "Not applicable to the glass itself. For the door gap, use the space between the jamb lines.",
+   "counts": "1 facade, 1 door",
+   "reliability": "medium",
+   "edgeCases": "The north and south facade glazing is not drawn at all: there are only curtain blocks, the balustrade, room outlines and a dashed ceiling line. The suite has no windows in walls."
+  },
+  {
+   "name": "Designer's room-area outlines bridging gaps",
+   "layers": [
+    "Defpoints"
+   ],
+   "entities": "11 closed LWPOLYLINEs. Their areas (1.9-152.6 m2) match the A-Text room labels: living 152.6, study 56.4, bedroom incl. hall 47.7, gym 31.3, kitchen 14.2, foyer 10.7, massage 9.0, closet 8.5, bar 7.7, sauna 3.0, powder 1.9. They follow wall faces and cross door gaps at a face or the centre.",
+   "meaning": "Room boundary. A wall gap that an outline crosses separates two rooms, so it is an opening and not a wall that ends in open space.",
+   "howToGetEnds": "Not precise enough on its own; use it to confirm a gap found from wall caps (the outline lies on the gap line within 0.09 m)",
+   "counts": "Crosses 16 of 22 reference openings: D1-D8, D11, D13, O1, O2, O3, O5, O6, D16",
+   "reliability": "medium",
+   "edgeCases": "Wet rooms have no outlines (steam, shower, toilet, bath, jacuzzi, spa passage), so D9, D10, D12 and O4 are not crossed. This is office-specific: Sukhumvit has no Defpoints entities."
+  },
+  {
+   "name": "Curtains",
+   "layers": [
+    "Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES",
+    "A-4. Dim"
+   ],
+   "entities": "O2: a paste-block A$C86fb51a5 inserted on A-4. Dim (scale 2, rot -30) holding a 1,350-vertex wavy LWPOLYLINE plus a draw arrow (2 arcs + a line), DASHED. Facades: 20 'Xr_SDC_DD_ID-PRS-Fur$0$Double Curtain' blocks (0.8 m stacks, in mirrored pairs).",
+   "meaning": "A curtain across a doorless passage (O2). The facade curtain pairs bracket glazed spans and are not openings.",
+   "howToGetEnds": "O2: take the gap between the wall corners; the curtain is drawn about 0.1 m inside it. Facade pairs: the glazing runs between the outer ends of a mirrored pair.",
+   "counts": "1 passage curtain; 20 facade curtains",
+   "reliability": "medium",
+   "edgeCases": "The passage curtain is a paste-block on the dimensions layer, and its content is on a furniture-xref layer."
+  },
+  {
+   "name": "Gap in the wall-layer solid",
+   "layers": [
+    "A-1.Netcat - tuong"
+   ],
+   "entities": "25 SOLID HATCHes, 19 thin closed LWPOLYLINEs (mean width <= 0.35 m), and LINEs / open polylines (201 segments) paired 0.04-0.40 m into 26 pieces. 2 wide closed outlines on this layer are not walls (a 16.8 m2 pergola rectangle and a 2.76 m2 toilet room outline).",
+   "meaning": "Every reference opening is a clean gap: wall material stops with straight caps across the thickness, and nothing on the wall layer runs through",
+   "howToGetEnds": "Use the end caps of the two wall runs (cap-to-cap: D2-D13, O5, O6, within 5 mm of the reference). For corner-bounded passages (O1-O4), use the corner vertices.",
+   "counts": "22/22 openings are free of wall. 14 are cap-to-cap, 4 are corner-bounded, 2 are bounded by A-4. Dim jambs, and 2 have no wall. A quick cap-pairing test found 16 of 22 plus 9 extra gaps.",
+   "reliability": "high",
+   "edgeCases": "As a locator this is high; on its own it is a poor classifier. The toilet room outline crosses D12. Jacuzzi kerbs, terrace cabana and C-wall pieces on this layer make false gaps. The bath's fixed glass panel fills a wall gap. Unfilled line-pair corners shift ends by 0.08 m."
+  }
+ ],
+ "wallEndsAtOpenings": "Clean gaps with capped ends. The wall layer 'A-1.Netcat - tuong' draws each wall as a SOLID hatch (25) with its outline as separate entities: thin closed LWPOLYLINEs (19, mean width <= 0.35 m) or LINE / open-polyline pairs 0.04-0.40 m apart. Some walls have no fill: the bar's walls are closed outlines only, and the walk-in closet is two open polylines 0.08 m apart. Interior partitions are mostly 0.080-0.084 m thick, with a few at 0.18 m (D2, D7, O2, O3).\n\nAt all 22 reference openings the wall material stops with a straight end cap across the full thickness (hatch edge plus outline segment). No wall-layer hatch, outline or line pair continues through any opening: 0.000 m of wall inside every opening, tested with a 3 cm inset. The caps sit within 5 mm of the reference ends for D2-D13 and O1-O6.\n\nShapes:\n- 14 are cap-to-cap gaps in one straight run of constant thickness: D2-D13, O5 and O6. The caps at D3, D6 and D8 sit next to a curved, short or slanted corner.\n- 4 passages are bounded by L-corners or the side of a crossing wall: O1 corner-to-corner, O2 corner-to-cap, O3 corner-to-corner along the bath wall's face, O4 corner-to-wall-face.\n- 2 are bounded by jambs on 'A-4. Dim' instead. D1 has 0.18 x 0.20 m rectangles, and the wall layer stops 0.245 m further out on each side. D15 has 0.18 m lines across the glass-facade double line.\n- 2 have no wall at all: D14 on the undrawn corridor side, and D16, the movable partition.\n\nDoor blocks fill the jamb depth themselves: the *U blocks carry 0.05 x 0.08 m frame stubs at both ends, and the two-leaf block's frame detail runs about 0.1 m into the jambs.\n\nArtefacts:\n- Line-pair walls leave the corner square unfilled, so O3 end b reads 0.08 m long until corners are closed (build_model adds CORNER_FILL boxes for this).\n- The toilet's room outline, a closed polyline on the wall layer (2.76 m2, mean width > 0.35), lies across D12. The wide-outline rule must drop it.\n- Jacuzzi kerb lines and the terrace cabana and C-wall pieces on the wall layer produce false gaps.\n\nThe hand-made reference is not always on the centre line: D1 is +0.09 m off (jamb room-side face), D12 +0.042 m (west face), O3 +0.09 m (east face), and O1, O2 and O4 run along face lines between corners. Score along-wall end positions, or re-centre the reference before applying +-2 cm.",
+ "proposedRules": [
+  {
+   "rank": 1,
+   "rule": "Swing-arc door anchored to wall ends. Take every ARC at any block depth, on any layer and in any linetype (every block arc here is HIDDEN, and D8's loose fan is HIDDEN2) with 0.55 <= R <= 1.30 m and 40 <= sweep <= 100 deg. Its centre (hinge) must lie within 0.06 m of wall material (the wall-layer solid, a jamb, or the door block's own frame stub). Where no wall is drawn, it must instead have a straight leaf line of length R +- 0.05 from its centre. The opening runs from the hinge toward the closed-leaf end point: the arc end not on the leaf line, and the one nearer other wall material. Snap the ends to the facing wall caps within 0.08 m; with no caps, use hinge - 0.025 to hinge + R + 0.025. Two arcs of equal R whose closed ends meet within 0.06 m form one double door spanning both hinges plus the frames. Hinge side = arc centre; swing side = the side the arc is on.",
+   "covers": "Presidential: 14 of 22 (D1-D6 and D8-D15), i.e. 2 two-leaf blocks, 3 anonymous *U blocks and 9 loose fans, including D14 in an undrawn wall and D15 in the glass facade. After snapping, ends are within 5 mm for D2-D13. Sukhumvit (from its listed encodings): the _1D3R90 / _1D0L100 blocks (SWING arc inside), loose SWING inserts, *U31 linked-file doors (scale 0.8; use world geometry) and the door swings drawn on WIN in the upper east block.",
+   "failureCases": "- Furniture arcs (chairs R 0.52-0.63 sweep 19 deg, armchairs R 0.92 sweep 28 deg, a terrace lounge R 1.00 sweep 60 deg) are rejected only by the hinge-at-wall test; all of them are 1.4 m or more from walls here.\n- A 90 deg-only or R = width test misses the spa doors (sweep 49 deg, R 0.70 in a 0.753 gap) and D8 (43 deg).\n- A continuous-linetype filter deletes all block arcs and D8.\n- Double-door arcs close in mid-air (0.33-0.80 m from walls), so they must be paired.\n- D14 has no wall: its hinge is 0.2 m from the nearest fragment. The opening is right, but the wall must come from elsewhere (flag it).\n- D1's hinges sit on A-4. Dim jambs, 0.245 m from the wall layer's ends. Without rule 5, D1's width comes only from the block (1.60 m).",
+   "howToCheck": "List every arc in the window with its hinge-to-wall and closed-end-to-wall distances. In the presidential suite expect exactly 18 door arcs: 2 per two-leaf door, 3 *U, 9 loose. No furniture arc should be accepted, and snapped ends should match the reference along the wall within 5 mm (D2-D13)."
+  },
+  {
+   "rank": 2,
+   "rule": "Cap-to-cap wall gap as the locator. Build the wall solid from the wall layer:\n- fills;\n- thin closed outlines (mean width <= 0.35 m); drop wider closed outlines, which are room outlines or pergolas;\n- line pairs 0.04-0.40 m apart, with the corner squares closed.\nThen find strip end caps: an edge 0.04-0.40 m long across a strip with both neighbouring corners at 90 +- 15 deg; allow short, curved or slanted neighbours. Pair caps whose outward normals are opposite (+-10 deg), are collinear (lateral offset <= 0.10 m), are 0.55-3.6 m apart, have the same thickness (+-0.03) and have no wall material between them. The opening is the segment between the caps on the wall centre line. Its type comes from rules 1, 3, 6 or 7. If nothing marks it, it is a passage candidate, flagged unless rule 4 confirms it.",
+   "covers": "Presidential: 14 of 22 as cap-to-cap (D2-D13, O5, O6), with ends within 5 mm. It is the only geometric locator for O5 and O6, and the only width source for D7. It also gives exact positions to the doors found by rule 1. Sukhumvit: the existing merge_cad pairing builds the same solid, and its door blocks sit in such gaps.",
+   "failureCases": "A quick test found 16 of 22 plus 9 extra gaps:\n- terrace cabana pieces (2) and the jacuzzi kerb notch and end (2), all wall-layer items that are not full walls;\n- the bath's fixed glass panel: a 1.245 m gap from the closet corner to the facade filled by three parallel lines on A-1.Netthay, which is a glass wall, not an opening;\n- walls ending in open space facing another wall (kitchen wing wall, closet corners).\nOther failures:\n- The toilet's room outline on the wall layer crosses D12 unless wide outlines are dropped.\n- Unfilled pair corners shift ends by 0.08 m.\n- The rule misses D1 and D15 (jambs on A-4. Dim), D14 and D16 (no wall), and O1-O4 (corner-bounded).",
+   "howToCheck": "Run it on both drawings. Count caps paired, matches to the reference (both ends within 0.12 m), and unmatched gaps by cause: expect about 14 matches and about 9 extras in the presidential suite before any confirmation step."
+  },
+  {
+   "rank": 3,
+   "rule": "Head line. A straight line in a hidden or dashed linetype marks an opening with a head over it (a door, pocket door, or passage with a bulkhead), and gets a lintel. Check the entity linetype first, then the layer (here a per-entity bound-xref HIDDEN2 on 'A-1.Netthay - manh', whose layer default is Continuous). The line must be on a wall or visible-line layer, parallel to the wall within 3 deg, inside the wall's thickness band (across offset <= half thickness + 0.05 m), with both ends within 0.06 m of two wall ends or corners. One line on each face means both faces.",
+   "covers": "Presidential 7 of 22: D2, D3, D6, D7, D8, O1 and D16 (track). It is the only symbol for O1, and with the leaf it identifies the pocket door D7. Sukhumvit has 36 dashed lines on its WALL layer: check whether any of them span gaps.",
+   "failureCases": "- 48 of the 62 HIDDEN2 entities on that layer are ceilings, bulkheads, the dining table, bar shelves and wall cabinets. They are removed only by the both-ends-at-wall-ends test.\n- D3's line overshoots the cap by 0.054 m.\n- A pipeline that keeps only continuous lines never sees these lines.\n- In Sukhumvit, dashed WALL lines also draw void crosses and beams.\n- O1's line implies a bulkhead, but the reference built no lintel there.",
+   "howToCheck": "For each dashed line meeting the end tests, check that it coincides with a gap from rule 2 or a corner-bounded gap. In the presidential suite expect 11 lines at 7 openings and none elsewhere."
+  },
+  {
+   "rank": 4,
+   "rule": "Passage confirmation for corner-bounded gaps. A gap of 0.6-3.6 m between a wall end or corner and another wall's corner or side (no matching cap), with no door symbol, is a passage only if one of these confirms it:\n- (a) a head line (rule 3);\n- (b) a curtain across it: a long wavy polyline (>= 60 vertices) along the gap, or a curtain block;\n- (c) a room-area outline (closed polylines on a non-plotting layer such as Defpoints) running across the gap;\n- (d) different room labels on the two sides once the gap is closed with a virtual wall.\nOtherwise flag it for staff.",
+   "covers": "Presidential: O1 (a + c), O2 (b + c) and O3 (c), i.e. 3 of the 4 corner-bounded passages. With rule 2, this also confirms O5 and O6 (c). The Defpoints outlines bridge 16 of 22 openings in total.",
+   "failureCases": "- O4 (spa passage to bath, 1.212 m) has nothing but the gap. The label test fails because the spa passage has no label, so it must be flagged; this is the one reference opening no rule finds automatically.\n- Defpoints area outlines are office-specific (Sukhumvit has none) and missing for wet rooms.\n- Without confirmation, walls ending in open space (closet NW corner 2.28 m from the hall wall, kitchen wing wall) become false passages.",
+   "howToCheck": "List the corner-bounded gaps with their confirmations. Expect O1, O2 and O3 confirmed, O4 unconfirmed, and the 4 open-space wall ends unconfirmed."
+  },
+  {
+   "rank": 5,
+   "rule": "Jambs and frames on non-wall layers. Short closed rectangles (wall thickness x 0.05-0.30 m) or short lines (about the wall thickness long) lying across a wall line, in a pair at the two ends of a door symbol, count as wall material on any layer. Take the opening ends at their faces toward the opening. Door blocks with their own frame stubs (*U blocks: 0.05 x 0.08 m) give the ends directly.",
+   "covers": "Presidential: D1 (A-4. Dim rectangles) and D15 (A-4. Dim lines across the facade). It also confirms the ends of D9-D11 (0.08 ticks) and D3-D5 (frame stubs). Sukhumvit: the paired JAMB blocks on D-JAMB.",
+   "failureCases": "'A-4. Dim' is a dimensions layer that also holds the octagon glass facade, construction lines, floor hatches, furniture paste-blocks and a curtain. Mapping the whole layer to walls would be wrong, so accept only short pieces next to a door symbol. D1's corridor wall beyond the jambs is still undrawn (build_model fills those corners by hand).",
+   "howToCheck": "For every rule-1 door, look for paired short pieces within 0.06 m of both ends and report which layer they are on. Expect D1 and D15 to take their ends from jambs."
+  },
+  {
+   "rank": 6,
+   "rule": "Sliding, pocket and movable openings:\n- (a) A straight continuous leaf line on a visible-line layer, lying on the wall centre line (+-0.03 m) and partly inside a wall run and partly across a rule-2 gap, means a pocket or sliding door in that gap. Width comes from the caps.\n- (b) Two or three parallel dashed lines 0.03-0.08 m apart (a track), with groups of identical small panel blocks stacked at its ends, mean a movable partition. The clear span between the stacks is the opening; the full track is the glass line when closed.",
+   "covers": "Presidential: D7 (0.70 m leaf, 0.48 m in the pocket) and D16 (9 x 'Movable panel_11' on DA-LATT-OTLN stacked 4 + 5, and a 5.9 m track).",
+   "failureCases": "D7 has no arc, so rule 1 misses it. A single segment on the centre line can also be a construction line. D16 has no wall at either end, and whether it is an opening or a glass wall is a definition choice. The reference uses the clear span (4.862 m), not the 5.92 m track.",
+   "howToCheck": "Expect exactly 1 pocket leaf and 1 track with panel stacks in the presidential suite, and none elsewhere."
+  },
+  {
+   "rank": 7,
+   "rule": "Windows and fixed glass in gaps. 2-4 parallel lines spanning a rule-2 gap from cap to cap, on a window layer or inside a window block, make a window, with sill and head defaults. On a glass layer, or when they run from a wall end to a facade line (like the bath panel here), they are a fixed glass wall, not an opening. A swing arc in the gap overrides this (rule 1 wins).",
+   "covers": "Sukhumvit: WIN / W_Grill / A_Grill windows and WALL-GL glass. Presidential: 0 windows, because all glazing is facade glass; the bath's fixed glass panel (three lines on A-1.Netthay, 1.165 m) is correctly kept out of the openings.",
+   "failureCases": "Sukhumvit's upper east block draws door swings on the WIN layer, so rule 1 must take precedence. Here, glass is drawn on a visible-line layer (A-1.Netthay) and on the dimensions layer, never on a glass layer, so the layer mapping alone cannot find it.",
+   "howToCheck": "On the presidential suite expect 0 windows and 1 fixed glass panel. On Sukhumvit compare against its window list."
+  }
+ ],
+ "surprises": [
+  "The 1,116 items on 'Xr_SDC_DD_ID-PRS-ID wall$0$DA-DOOR-WIND' are just two inserts of one two-leaf door block ('cua 2 cánh', D1 and D2), at 558 flattened items each. Most of that is a nested 382-line frame-section detail plus 8 handle drawings. Item counts on a door layer say nothing about how many doors there are.",
+  "Only 5 of the 22 openings are door blocks, and their names are useless: anonymous dynamic-block instances (*U1325, *U1635) or Vietnamese ('cua 2 cánh' = two-leaf door). 9 doors are loose arc + leaf fans at depth 0 on the visible-line layers A-1.Netthay / A-1.Netthay - manh.",
+  "Every swing arc inside the door blocks uses a HIDDEN linetype. D8's whole fan and all the head lines use a per-entity bound-xref HIDDEN2 on a layer whose default is Continuous. The proven wall rule 'keep only continuous lines' would therefore delete door evidence, so the door rules must read linetypes per entity.",
+  "The spa door fans (D8-D12, D14) sweep only 43-61 deg, and at D9-D11 the 0.70 m arc radius is 0.05 m shorter than the 0.753 m gap. Tests for quarter circles or R = width fail.",
+  "Interior partitions are only 0.080-0.084 m thick (most doors), and the *U door blocks carry 0.05 x 0.08 m frame stubs that exactly fill that thickness.",
+  "The hand-made reference is not always on the wall centre line: D1 is +0.09 m off (jamb room-side face), D12 +0.042 m (west face), O3 +0.09 m (east face), and O1, O2 and O4 lie on face lines. Along the wall, the drawn wall ends match the reference within 5 mm (D2-D13, O1-O6), so +-2 cm scoring should compare along-wall ends or re-centre the reference.",
+  "The toilet's room outline is a closed polyline on the WALL layer and runs across D12. The same layer also carries a 16.8 m2 pergola rectangle, the jacuzzi kerbs and the terrace cabana / C-wall pieces, which together make 4 of the 9 false gaps in a quick end-cap test (16 of 22 found, 9 extra).",
+  "16 of 22 openings are bridged by the designer's Defpoints area outlines: 11 closed polygons whose areas match the room labels. This is a strong confirmation for this office, but Sukhumvit has no Defpoints at all.",
+  "D14 floats as a fan in a wall that is not drawn on any layer (the corridor side; build_model adds the CORE_SIDE wall and cuts D14 from it). D1 is bounded only by two A-4. Dim jamb rectangles, with the wall layer stopping 0.245 m further out on each side.",
+  "There are no windows anywhere in the suite, so this drawing adds only doors and passages to the gate count. The octagon facade is a double line on the dimensions layer, and the north and south glazing is not drawn (only curtains and the balustrade). The one glass panel in a wall gap (by the bath) would wrongly become an opening under a pure gap rule.",
+  "O4 (spa passage to bath, 1.21 m) has no machine-readable evidence except the gap between the shower's corner and the toilet wall face. It is the one reference opening that symbol rules cannot find, and that a gap rule finds only as an unconfirmed corner-to-face gap.",
+  "O1 has a dashed head line over its full 3.10 m, which suggests a bulkhead, but the reference built no lintel there. D16's reference opening is the clear span between the stacked panels (4.86 m), not the 5.92 m track.",
+  "The O2 passage is marked by a curtain: an A$C... paste-block placed on the dimensions layer, holding a 1,350-vertex wave on the furniture xref's DA-FACILITIES layer. The 20 'Double Curtain' blocks only mark facade glazing. All A$C blocks on A-4. Dim are furniture or annotation, not doors."
+ ],
+ "referenceCoverage": [
+  {
+   "id": "D1",
+   "encodings": [
+    "door-block-two-leaf (cua 2 cánh, 2 HIDDEN arcs R0.769)",
+    "jambs-on-A-4.Dim (2 closed 0.18 x 0.20 m rectangles)",
+    "defpoints-room-outline",
+    "wall-gap: bounded by A-4. Dim jambs"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "Insert (207.183,-3494.356), rot -90, mirrored. The reference ends are the jambs' inner faces, and the reference line (x 206.973) is their room-side face, 0.09 m off their centre. The corridor wall beside the jambs is not on the wall layer: the wall layer stops 0.245 m beyond each end, and build_model adds CORNER_FILL there."
+  },
+  {
+   "id": "D2",
+   "encodings": [
+    "door-block-two-leaf (cua 2 cánh)",
+    "dashed-head-line x2 (both faces, exactly 1.60 m)",
+    "defpoints-room-outline x2",
+    "wall-gap: cap-to-cap, 0.184 m hatched wall"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "Insert (201.634,-3494.356), 0.03 m outside the west face. The caps are within 6 mm of the reference."
+  },
+  {
+   "id": "D3",
+   "encodings": [
+    "door-block-anonymous (*U1635, arc R0.80, frame stubs)",
+    "dashed-head-line (north face, 0.90 m, overshoots by 0.054)",
+    "defpoints-room-outline x2",
+    "wall-gap: cap-to-cap, 0.084 m (west cap at a curved corner)"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "The frame stubs' outer edges are 202.044-202.894. The reference width of 0.846 matches the wall caps within 4 mm."
+  },
+  {
+   "id": "D4",
+   "encodings": [
+    "door-block-anonymous (*U1325 mirrored, arc R0.85)",
+    "defpoints-room-outline x2",
+    "wall-gap: cap-to-cap, 0.084 m"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "No head line."
+  },
+  {
+   "id": "D5",
+   "encodings": [
+    "door-block-anonymous (*U1325, arc R0.85)",
+    "defpoints-room-outline x2",
+    "wall-gap: cap-to-cap, 0.084 m (east end is the bar's unfilled closed outline)"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "The insert point is the hinge-side jamb corner on the swing face (198.986,-3490.793). No head line."
+  },
+  {
+   "id": "D6",
+   "encodings": [
+    "loose-swing-fan (A-1.Netthay, R0.80, sweep 96.5 deg, leaf 0.80)",
+    "dashed-head-line (south face, 0.80 m)",
+    "defpoints-room-outline",
+    "wall-gap: cap-to-cap, 0.084 m"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "Hinge 0.05 m from end b, on the face."
+  },
+  {
+   "id": "D7",
+   "encodings": [
+    "pocket-leaf-line (A-1.Netthay, 0.70 m on the centre line, 0.48 m inside the pocket)",
+    "dashed-head-line x2 (both faces, exactly 203.201-204.001)",
+    "defpoints-room-outline x2",
+    "wall-gap: cap-to-cap, 0.184 m"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "No arc. The width comes from the caps or head lines."
+  },
+  {
+   "id": "D8",
+   "encodings": [
+    "loose-swing-fan, all HIDDEN2 on A-1.Netthay - manh (arc R0.95, sweep 43 deg, 2 leaf lines, chord 0.95)",
+    "defpoints-room-outline",
+    "wall-gap: cap to slanted kitchen-wall end, 0.084 m"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "The arc end is 0.08 m from reference end a, across the wall. Snapping to the cap fixes it."
+  },
+  {
+   "id": "D9",
+   "encodings": [
+    "loose-swing-fan (A-1.Netthay, R0.70, sweep 49 deg, open leaf 0.734, chord 0.75)",
+    "jambs-on-A-4.Dim (0.08 m tick at b)",
+    "wall-gap: cap-to-cap, 0.084 m"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "The arc is 0.05 m short of the 0.753 gap; the chord gives the full width. No Defpoints outline (steam room)."
+  },
+  {
+   "id": "D10",
+   "encodings": [
+    "loose-swing-fan (A-1.Netthay, R0.70, sweep 49 deg, chord 0.75)",
+    "jambs-on-A-4.Dim (0.08 m ticks at a and b)",
+    "wall-gap: cap-to-cap, 0.084 m"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "No Defpoints outline (shower)."
+  },
+  {
+   "id": "D11",
+   "encodings": [
+    "loose-swing-fan (A-1.Netthay, R0.70, sweep 49 deg, chord 0.75)",
+    "jambs-on-A-4.Dim (0.08 m tick at a)",
+    "defpoints-room-outline (sauna)",
+    "wall-gap: cap-to-cap, 0.084 m"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true
+  },
+  {
+   "id": "D12",
+   "encodings": [
+    "loose-swing-fan (A-1.Netthay, R0.90, sweep 61 deg, leaf 0.90, chord 0.90)",
+    "wall-gap: cap-to-cap, 0.084 m"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "The reference is on the wall's west face (+0.042 m). The toilet's room outline (a closed polyline on the WALL layer) runs across the opening and must not be read as a wall. No Defpoints outline."
+  },
+  {
+   "id": "D13",
+   "encodings": [
+    "loose-swing-fan (A-1.Netthay, R0.80, sweep 90 deg, leaf 0.80; hinge exactly at a)",
+    "defpoints-room-outline (foyer)",
+    "wall-gap: cap-to-cap, 0.084 m"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true
+  },
+  {
+   "id": "D14",
+   "encodings": [
+    "loose-swing-fan (A-1.Netthay, R1.00, sweep 53 deg, leaf 1.00; hinge = a, closed end = b exactly)",
+    "wall-gap: none (wall not drawn on any layer)"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "This is in the corridor-side party wall that build_model adds (CORE_SIDE) and cuts D14 from. The nearest wall fragments are 0.15-0.23 m away, offset 0.125 m. No Defpoints outline."
+  },
+  {
+   "id": "D15",
+   "encodings": [
+    "loose-swing-fan (A-1.Netthay, R1.10, sweep 90 deg, leaf 1.10, terrace side)",
+    "jambs-on-A-4.Dim (0.18 m lines across the facade)",
+    "glass-facade-double-line (A-4. Dim)"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "The 'wall' is the octagon glass facade, a 0.18 m double line on A-4. Dim, not the wall layer. The reference ends are the jamb-line midpoints; the hinge is at the jamb's inner end, 0.09 m away."
+  },
+  {
+   "id": "O1",
+   "encodings": [
+    "dashed-head-line (HIDDEN2 on A-1.Netthay - manh, exactly corner to corner, 3.101 m)",
+    "defpoints-room-outline x2 (bar, living)",
+    "wall-gap: corner-to-corner"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "The ends are corners (the gym's closed-outline corner and the foyer block corner), not caps. The head line continues the foyer block's west face line. The reference has no lintel even though the head line suggests a bulkhead."
+  },
+  {
+   "id": "O2",
+   "encodings": [
+    "curtain-across-opening (A$C86fb51a5 on A-4. Dim: 1,350-vertex wave + arrow on DA-FACILITIES)",
+    "defpoints-room-outline (massage)",
+    "wall-gap: L-corner (steam) to 0.18 m cap (sauna), along the north face line"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true
+  },
+  {
+   "id": "O3",
+   "encodings": [
+    "defpoints-room-outline (bedroom incl. hall, along x 197.87)",
+    "wall-gap: L-corner to L-corner, in line with the 0.18 m bath west wall"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "The only evidence besides the gap is the Defpoints outline, which is office-specific and weak. The reference is on the east face (+0.09 m). The closet's corner square is not filled by line pairing (end b reads +0.08 m). The curved A$Ccffa946e bench beside end a (arcs R0.42) is furniture."
+  },
+  {
+   "id": "O4",
+   "encodings": [
+    "wall-gap: shower SE L-corner to the toilet's west wall face (only)"
+   ],
+   "onlyWallGap": true,
+   "wallDrawn": true,
+   "notes": "No head line, room outline, curtain or symbol. A gap rule would find it only as an unconfirmed corner-to-face gap."
+  },
+  {
+   "id": "O5",
+   "encodings": [
+    "defpoints-room-outline x2 (closet, bedroom)",
+    "wall-gap: cap-to-cap, 0.08 m wall drawn as unfilled open polylines"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "Besides the gap, only the Defpoints outlines mark it."
+  },
+  {
+   "id": "O6",
+   "encodings": [
+    "defpoints-room-outline x2 (closet, bedroom)",
+    "wall-gap: cap-to-cap, 0.08 m wall drawn as unfilled open polylines"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "Same as O5, on the closet's south wall."
+  },
+  {
+   "id": "D16",
+   "encodings": [
+    "movable-panels-and-track (9 x Movable panel_11 on DA-LATT-OTLN, stacked 4 + 5; 3 HIDDEN2 track lines 5.86-5.94 m)",
+    "defpoints-room-outline x2 (study, living)",
+    "wall-gap: none (no wall)"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "The track runs from the octagon's inner A-4. Dim line to the living-room wall end, which is capped by a 0.083 m A-4. Dim tick 0.56 m beyond end b. The reference ends are the innermost panels of the two stacks (+-0.06 m)."
+  }
+ ],
+ "existingMergeAtOpenings": "In the existing presidential build (build_model.py -> pres2_model.json), all 22 reference openings are still open in the merged walls: 0.000 m of wall or ground-level glass inside any opening, tested with a 3 cm inset. The merge cannot bridge a door. solidify only closes gaps up to 0.12 m (a 0.06 m buffer), and the final +-2 mm buffer only closes hairline cracks, while the narrowest opening is 0.75 m.\n\nLintels: 17 (D1-D14, O3, O5, O6), from 2.10 m up and as deep as the wall at the jambs. D15 gets a glass transom. O1, O2, O4 and D16 get nothing.\n\nThe openings themselves are hand-given, not detected. The hand-given parts are:\n- the DOORS list;\n- cutting D14 out of the added CORE_SIDE party wall;\n- ENTRANCE_JAMBS and CORNER_FILL boxes for the entrance and the closet corners at O3, O5 and O6;\n- LINTEL_DEPTH for O3, because its line is the wall face;\n- handle lists for the facade, the terrace-door jambs and the partition panels.\n\nNothing in the merge detects or classifies an opening; it only keeps the gaps the drawing already leaves.",
+ "files": [
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/summary_reference_encodings.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/coverage.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/evidence.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/gaps.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/ends.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/caps.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/w_foyer.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/w_spa.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/w_bed.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/w_bar.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/w_study.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/w_kitchen.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/w_north.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/w_south.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/s_d12_d14_o3.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/z_foyer.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/z_spa.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/scripts/evidence.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/scripts/caps.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/scripts/gaps.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/scripts/walls.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-presidential/scripts/wrender.py"
+ ]
+}

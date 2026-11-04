@@ -1,0 +1,259 @@
+{
+ "source": "Sukhumvit elevations elev_left / elev_right, read 26 Oct 2026 (map_elevations.json); heights above each floor FFL, drawing metres",
+ "defaults": {
+  "ground": {
+   "doorHead": 3.0,
+   "windowSill": 0.0,
+   "windowHead": 3.0,
+   "ceiling": 3.0
+  },
+  "upper": {
+   "doorHead": 2.6,
+   "windowSill": 0.0,
+   "windowHead": 2.6,
+   "ceiling": 2.9
+  }
+ },
+ "matched": [
+  {
+   "floor": "ground",
+   "a": [
+    19.373,
+    23.054
+   ],
+   "b": [
+    19.373,
+    24.459
+   ],
+   "sill": 0,
+   "head": 3.9,
+   "kind": "window: double-height glazing of the sta",
+   "facade": "elev_left: west face of the central volume, seen from the courtyard between the west wing and the central volume (the west wing is not drawn; the glazed link is shown cut)"
+  },
+  {
+   "floor": "upper",
+   "a": [
+    93.395,
+    23.059
+   ],
+   "b": [
+    93.395,
+    24.459
+   ],
+   "sill": 0,
+   "head": 2.6,
+   "kind": "window: double-height glazing of the sta",
+   "facade": "elev_left: west face of the central volume, seen from the courtyard between the west wing and the central volume (the west wing is not drawn; the glazed link is shown cut)"
+  },
+  {
+   "floor": "ground",
+   "a": [
+    19.373,
+    19.458
+   ],
+   "b": [
+    19.373,
+    21.104
+   ],
+   "sill": 0,
+   "head": 3,
+   "kind": "passage: the glazed link corridor (Thai ",
+   "facade": "elev_left: west face of the central volume, seen from the courtyard between the west wing and the central volume (the west wing is not drawn; the glazed link is shown cut)"
+  },
+  {
+   "floor": "upper",
+   "a": [
+    93.395,
+    19.458
+   ],
+   "b": [
+    93.395,
+    21.108
+   ],
+   "sill": 0,
+   "head": 2.9,
+   "kind": "passage: the glazed link onto the upper ",
+   "facade": "elev_left: west face of the central volume, seen from the courtyard between the west wing and the central volume (the west wing is not drawn; the glazed link is shown cut)"
+  },
+  {
+   "floor": "ground",
+   "a": [
+    19.448,
+    14.508
+   ],
+   "b": [
+    19.448,
+    18.604
+   ],
+   "sill": 0,
+   "head": 3.9,
+   "kind": "window/door: double-height glazed living",
+   "facade": "elev_left: west face of the central volume, seen from the courtyard between the west wing and the central volume (the west wing is not drawn; the glazed link is shown cut)"
+  },
+  {
+   "floor": "upper",
+   "a": [
+    93.47,
+    14.509
+   ],
+   "b": [
+    93.47,
+    18.608
+   ],
+   "sill": 0,
+   "head": 2.6,
+   "kind": "window: double-height glazed living-room",
+   "facade": "elev_left: west face of the central volume, seen from the courtyard between the west wing and the central volume (the west wing is not drawn; the glazed link is shown cut)"
+  },
+  {
+   "floor": "ground",
+   "a": [
+    32.273,
+    7.658
+   ],
+   "b": [
+    32.273,
+    14.308
+   ],
+   "sill": 0,
+   "head": 3,
+   "kind": "window/door: full-height glazed wall of ",
+   "facade": "elev_left: west face of the central volume, seen from the courtyard between the west wing and the central volume (the west wing is not drawn; the glazed link is shown cut)"
+  },
+  {
+   "floor": "upper",
+   "a": [
+    106.294,
+    7.658
+   ],
+   "b": [
+    106.294,
+    10.556
+   ],
+   "sill": 0,
+   "head": 2.6,
+   "kind": "window: full-height master-bedroom west ",
+   "facade": "elev_left: west face of the central volume, seen from the courtyard between the west wing and the central volume (the west wing is not drawn; the glazed link is shown cut)"
+  },
+  {
+   "floor": "ground",
+   "a": [
+    38.073,
+    7.658
+   ],
+   "b": [
+    38.073,
+    11.358
+   ],
+   "sill": 0,
+   "head": 3,
+   "kind": "window (tag AW1): full-height 2-panel gl",
+   "facade": "elev_right: east face of the main house (the east service/staff block and its stair are not drawn)"
+  },
+  {
+   "floor": "ground",
+   "a": [
+    38.073,
+    12.258
+   ],
+   "b": [
+    38.073,
+    13.455
+   ],
+   "sill": 0,
+   "head": 3,
+   "kind": "door (tag D1): single hinged leaf of 1.0",
+   "facade": "elev_right: east face of the main house (the east service/staff block and its stair are not drawn)"
+  },
+  {
+   "floor": "ground",
+   "a": [
+    38.698,
+    16.858
+   ],
+   "b": [
+    38.698,
+    20.908
+   ],
+   "sill": 0,
+   "head": 3,
+   "kind": "door (tag AD1): 2-panel sliding glass do",
+   "facade": "elev_right: east face of the main house (the east service/staff block and its stair are not drawn)"
+  },
+  {
+   "floor": "ground",
+   "a": [
+    36.523,
+    21.455
+   ],
+   "b": [
+    36.523,
+    22.455
+   ],
+   "sill": 0,
+   "head": 3,
+   "kind": "door (tag D3): single hinged leaf (plan ",
+   "facade": "elev_right: east face of the main house (the east service/staff block and its stair are not drawn)"
+  },
+  {
+   "floor": "upper",
+   "a": [
+    112.02,
+    7.658
+   ],
+   "b": [
+    112.02,
+    10.556
+   ],
+   "sill": 0,
+   "head": 2.6,
+   "kind": "window (tag AW12): full-height, fixed lo",
+   "facade": "elev_right: east face of the main house (the east service/staff block and its stair are not drawn)"
+  },
+  {
+   "floor": "upper",
+   "a": [
+    113.495,
+    15.459
+   ],
+   "b": [
+    113.495,
+    17.859
+   ],
+   "sill": 0,
+   "head": 2.9,
+   "kind": "passage by the shared definition (a gap ",
+   "facade": "elev_right: east face of the main house (the east service/staff block and its stair are not drawn)"
+  },
+  {
+   "floor": "upper",
+   "a": [
+    112.02,
+    15.459
+   ],
+   "b": [
+    112.02,
+    17.859
+   ],
+   "sill": 0,
+   "head": 2.6,
+   "kind": "window (tag AW14): full-height, fixed lo",
+   "facade": "elev_right: east face of the main house (the east service/staff block and its stair are not drawn)"
+  },
+  {
+   "floor": "upper",
+   "a": [
+    106.22,
+    23.759
+   ],
+   "b": [
+    106.22,
+    24.459
+   ],
+   "sill": 0,
+   "head": 2.55,
+   "kind": "window (tag AW17): narrow full-height gl",
+   "facade": "elev_right: east face of the main house (the east service/staff block and its stair are not drawn)"
+  }
+ ]
+}

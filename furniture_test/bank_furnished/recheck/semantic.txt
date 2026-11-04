@@ -1,0 +1,89 @@
+kinds: Counter({'seat': 75, 'computer': 16, 'coffee-table': 13, 'table': 12, 'cabinet': 12, 'sanitary': 10, 'sofa': 10, 'phone': 9, 'printer': 7, 'plant': 7, 'tall-cabinet': 5, 'partition': 4, 'atm': 3, 'tv': 2})
+
+== visitor chair01 (mollie_chair_a685_revit - A685 2)
+  L1-seat-011      turn    270 none      front  180.0  nearest L1-table-001         0.83 m at  194.4  off    14.4  OK
+  L1-seat-012      turn    270 none      front  180.0  nearest L1-table-002         0.83 m at  194.4  off    14.4  OK
+  L1-seat-013      turn    270 none      front  180.0  nearest L1-table-003         0.83 m at  194.4  off    14.4  OK
+  L1-seat-014      turn    270 none      front  180.0  nearest L1-table-004         0.83 m at  194.1  off    14.1  OK
+  L1-seat-015      turn    270 none      front  180.0  nearest L1-table-005         0.91 m at  206.6  off    26.6  OK
+  L1-seat-024      turn    180 none      front   90.0  nearest L1-coffee-table-001  0.60 m at   90.8  off     0.8  OK
+  L1-seat-026      turn 153.3975 mirror y  front  243.4  nearest L1-coffee-table-002  0.63 m at  242.7  off    -0.7  OK
+  L1-seat-027      turn    180 none      front   90.0  nearest L1-table-006         0.91 m at  116.7  off    26.7  OK
+  L1-seat-031      turn 329.9536 mirror y  front   60.0  nearest L1-coffee-table-005  0.66 m at   55.0  off    -4.9  OK
+  L1-seat-033      turn      0 none      front  270.0  nearest L1-coffee-table-004  0.63 m at  270.6  off     0.6  OK
+  L1-seat-037      turn    180 none      front   90.0  nearest L1-table-007         0.91 m at  116.6  off    26.6  OK
+  L2-seat-014      turn     90 mirror y  front  180.0  nearest L2-coffee-table-001  2.88 m at  353.9  off   173.9  AWAY
+  L2-seat-015      turn     90 mirror y  front  180.0  no coffee-table/table within 3 m
+  L2-seat-016      turn     90 mirror y  front  180.0  no coffee-table/table within 3 m
+  L2-seat-017      turn     90 mirror y  front  180.0  nearest L2-table-001         2.44 m at  109.4  off   -70.6  AWAY
+  L2-seat-018      turn     90 mirror y  front  180.0  nearest L2-table-001         0.84 m at  165.2  off   -14.8  OK
+  L2-seat-019      turn      0 mirror y  front   90.0  nearest L2-table-002         0.84 m at   75.3  off   -14.7  OK
+  L2-seat-026      turn    270 mirror y  front    0.0  nearest L2-coffee-table-004  0.68 m at  359.4  off    -0.6  OK
+  L2-seat-034      turn    270 none      front  180.0  nearest L2-coffee-table-004  0.67 m at  180.6  off     0.6  OK
+  15 of 19 faces the nearest one
+
+== working table (IA_J15_WORKING TABLE - 1800W 1000D 750H)
+  L1-table-001     turn     90 none      front    0.0  nearest L1-seat-001          0.78 m at  191.0  off  -169.0  AWAY
+  L1-table-002     turn     90 none      front    0.0  nearest L1-seat-002          0.78 m at  190.9  off  -169.1  AWAY
+  L1-table-003     turn     90 none      front    0.0  nearest L1-seat-003          0.78 m at  190.9  off  -169.1  AWAY
+  L1-table-004     turn     90 none      front    0.0  nearest L1-seat-004          0.78 m at  191.2  off  -168.8  AWAY
+  L1-table-005     turn     90 none      front    0.0  nearest L1-seat-005          0.77 m at  180.5  off  -179.5  AWAY
+  0 of 5 faces the nearest one
+
+== monitor (Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003)
+  L1-computer-001  turn 299.6352 none      front  210.0  nearest L1-seat-005          0.80 m at  216.9  off     6.9  OK
+  L1-computer-002  turn 299.6352 none      front  210.0  nearest L1-seat-011          0.86 m at  346.0  off   136.0  AWAY
+  L1-computer-003  turn 299.6352 none      front  210.0  nearest L1-seat-012          0.86 m at  346.0  off   136.0  AWAY
+  L1-computer-004  turn 299.6352 none      front  210.0  nearest L1-seat-013          0.86 m at  346.0  off   136.0  AWAY
+  L1-computer-005  turn 299.6352 none      front  210.0  nearest L1-seat-014          0.87 m at  343.2  off   133.1  AWAY
+  L1-computer-006  turn 119.6352 none      front   30.0  nearest L1-seat-025          0.78 m at   66.2  off    36.2  OK
+  L1-computer-007  turn 119.6352 none      front   30.0  nearest L1-seat-034          0.78 m at   65.9  off    35.8  OK
+  L2-computer-001  turn    270 none      front  180.4  nearest L2-seat-001          0.62 m at  178.3  off    -2.1  OK
+  L2-computer-002  turn    270 none      front  180.4  nearest L2-seat-002          0.62 m at  179.0  off    -1.4  OK
+  L2-computer-003  turn    270 none      front  180.4  nearest L2-seat-003          0.62 m at  179.0  off    -1.4  OK
+  L2-computer-004  turn 299.6352 none      front  210.0  nearest L2-seat-004          0.82 m at  206.7  off    -3.4  OK
+  L2-computer-005  turn 299.6352 none      front  210.0  nearest L2-seat-005          0.82 m at  206.7  off    -3.4  OK
+  L2-computer-006  turn 299.6352 none      front  210.0  nearest L2-seat-006          0.82 m at  206.7  off    -3.4  OK
+  L2-computer-007  turn 299.6352 none      front  210.0  nearest L2-seat-007          0.82 m at  206.7  off    -3.4  OK
+  L2-computer-008  turn 299.6352 none      front  210.0  nearest L2-seat-008          0.82 m at  206.7  off    -3.4  OK
+  L2-computer-009  turn 209.6352 none      front  120.0  nearest L2-seat-020          0.84 m at  130.8  off    10.7  OK
+  12 of 16 face the seat the nearest one
+
+== sofa (CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA_VISIONA STOOL)
+  L1-seat-028      turn    180 none      front   90.0  nearest L1-coffee-table-005  0.95 m at  312.9  off  -137.1  AWAY
+  L2-seat-024      turn    270 mirror y  front    0.0  nearest L2-table-003         0.74 m at    9.1  off     9.1  OK
+  L2-seat-030      turn    180 none      front   90.0  nearest L2-table-004         0.69 m at  278.5  off  -171.5  AWAY
+  1 of 3 faces the nearest one
+
+== monitor against the nearest piece whose family contains 'AER1A'
+  L1-computer-001  front  210.0  nearest L1-seat-005          0.80 m at  216.9  off     6.9  OK
+  L1-computer-002  front  210.0  nearest L1-seat-001          0.93 m at  217.4  off     7.3  OK
+  L1-computer-003  front  210.0  nearest L1-seat-002          0.93 m at  217.3  off     7.3  OK
+  L1-computer-004  front  210.0  nearest L1-seat-003          0.93 m at  217.3  off     7.3  OK
+  L1-computer-005  front  210.0  nearest L1-seat-004          0.95 m at  219.5  off     9.4  OK
+  L1-computer-006  front   30.0  nearest L1-seat-025          0.78 m at   66.2  off    36.2  OK
+  L1-computer-007  front   30.0  nearest L1-seat-034          0.78 m at   65.9  off    35.8  OK
+  L2-computer-001  front  180.4  nearest L2-seat-001          0.62 m at  178.3  off    -2.1  OK
+  L2-computer-002  front  180.4  nearest L2-seat-002          0.62 m at  179.0  off    -1.4  OK
+  L2-computer-003  front  180.4  nearest L2-seat-003          0.62 m at  179.0  off    -1.4  OK
+  L2-computer-004  front  210.0  nearest L2-seat-004          0.82 m at  206.7  off    -3.4  OK
+  L2-computer-005  front  210.0  nearest L2-seat-005          0.82 m at  206.7  off    -3.4  OK
+  L2-computer-006  front  210.0  nearest L2-seat-006          0.82 m at  206.7  off    -3.4  OK
+  L2-computer-007  front  210.0  nearest L2-seat-007          0.82 m at  206.7  off    -3.4  OK
+  L2-computer-008  front  210.0  nearest L2-seat-008          0.82 m at  206.7  off    -3.4  OK
+  L2-computer-009  front  120.0  nearest L2-seat-020          0.84 m at  130.8  off    10.7  OK
+  16 of 16 screens face the nearest Aeron task chair
+
+== working table against the nearest piece whose family contains 'mollie'
+  L1-table-001     front    0.0  nearest L1-seat-011          0.83 m at   14.4  off    14.4  OK
+  L1-table-002     front    0.0  nearest L1-seat-012          0.83 m at   14.4  off    14.4  OK
+  L1-table-003     front    0.0  nearest L1-seat-013          0.83 m at   14.4  off    14.4  OK
+  L1-table-004     front    0.0  nearest L1-seat-014          0.83 m at   14.1  off    14.1  OK
+  L1-table-005     front    0.0  nearest L1-seat-015          0.91 m at   26.6  off    26.6  OK
+  5 of 5 desks have their visitor (-Y, modesty panel) side towards the nearest mollie chair
+
+== in front of L2-seat-014 .. 017 (within 2.5 m, within 45 deg of the front)
+  L2-seat-014 at (-1.94, -5.155) front 180.0: [(0.67, 'L2-phone-001', 'TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 -'), (1.12, 'L2-computer-004', 'Enscape AssetDefinition - Computer 003 -'), (1.68, 'L2-seat-004', 'HermanMiller_Seating_AER1A_NewAeron_Work'), (2.47, 'L2-printer-002', 'PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Typ')]
+  L2-seat-015 at (-1.94, -3.68) front 180.0: [(0.59, 'L2-phone-002', 'TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 -'), (1.25, 'L2-computer-005', 'Enscape AssetDefinition - Computer 003 -'), (1.26, 'L2-computer-004', 'Enscape AssetDefinition - Computer 003 -'), (1.72, 'L2-seat-005', 'HermanMiller_Seating_AER1A_NewAeron_Work'), (2.05, 'L2-seat-004', 'HermanMiller_Seating_AER1A_NewAeron_Work')]
+  L2-seat-016 at (-1.94, -1.285) front 180.0: [(0.74, 'L2-phone-003', 'TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 -'), (1.06, 'L2-computer-006', 'Enscape AssetDefinition - Computer 003 -'), (1.67, 'L2-seat-006', 'HermanMiller_Seating_AER1A_NewAeron_Work'), (2.38, 'L2-printer-003', 'PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Typ'), (2.49, 'L2-printer-004', 'PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Typ')]
+  L2-seat-017 at (-1.94, 0.115) front 180.0: [(0.6, 'L2-phone-004', 'TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 -'), (1.22, 'L2-computer-007', 'Enscape AssetDefinition - Computer 003 -'), (1.29, 'L2-computer-006', 'Enscape AssetDefinition - Computer 003 -'), (1.71, 'L2-seat-007', 'HermanMiller_Seating_AER1A_NewAeron_Work'), (2.08, 'L2-seat-006', 'HermanMiller_Seating_AER1A_NewAeron_Work')]

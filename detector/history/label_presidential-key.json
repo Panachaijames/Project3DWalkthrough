@@ -1,0 +1,790 @@
+{
+ "openings": [
+  {
+   "id": "D1",
+   "kind": "door",
+   "subtype": "double hinged, 2 leaves of 0.77 m (block \"cua 2 canh\")",
+   "a": [
+    207.0627,
+    -3494.3556
+   ],
+   "b": [
+    207.0627,
+    -3495.9556
+   ],
+   "width": 1.6,
+   "wallThickness": 0.18,
+   "host": "drawn wall (jambs on A-4. Dim only)",
+   "evidence": "Jambs 1B245C / 1B245B on A-4. Dim (0.18 x 0.20 m, x 206.973-207.153); door block 1B245A \"cua 2 canh\" on Xr_SDC_DD_ID-PRS-ID wall$0$DA-DOOR-WIND, leaves at x 207.0.",
+   "confidence": "high",
+   "agreement": "audited",
+   "decision": "keep, corrected",
+   "notes": "Hand list ran along the foyer face of the jambs (x 206.973); moved 0.090 m east onto the jambs' centre line x 207.063. Width 1.600 unchanged. This wall exists only as the two jambs, on a dimension layer: the wall layer shows the foyer's east side open, and the 19 Oct build added the short pieces beside the jambs (CORNER_FILL). Leads to the corridor, which is not in the drawing."
+  },
+  {
+   "id": "D2",
+   "kind": "door",
+   "subtype": "double hinged, 2 leaves of 0.77 m (block \"cua 2 canh\")",
+   "a": [
+    201.754,
+    -3494.3556
+   ],
+   "b": [
+    201.754,
+    -3495.9556
+   ],
+   "width": 1.6,
+   "wallThickness": 0.18,
+   "host": "drawn wall",
+   "evidence": "Foyer west wall (0.18 m, x 201.664-201.844) ends 1B2252 (y -3494.356) and 1B90CD (y -3495.956); door block 1B2490.",
+   "confidence": "high",
+   "agreement": "audited",
+   "decision": "keep",
+   "notes": "Hand list within 6 mm (x 201.750 vs centre line 201.754)."
+  },
+  {
+   "id": "D3",
+   "kind": "door",
+   "subtype": "single hinged, 0.80 m leaf (block *U1635), swings into the massage room",
+   "a": [
+    202.044,
+    -3496.2406
+   ],
+   "b": [
+    202.894,
+    -3496.2406
+   ],
+   "width": 0.85,
+   "wallThickness": 0.08,
+   "host": "drawn wall",
+   "evidence": "Foyer south wall (80 mm) ends x 202.044 (1B90CD) and x 202.894 (1B2255); block 1B2476 *U1635 on PCS DA-DOOR-WIND.",
+   "confidence": "high",
+   "agreement": "audited",
+   "decision": "keep",
+   "notes": "Within 4 mm."
+  },
+  {
+   "id": "D4",
+   "kind": "door",
+   "subtype": "single hinged, 0.85 m leaf (block *U1325), swings into the bedroom hall",
+   "a": [
+    196.4136,
+    -3500.4782
+   ],
+   "b": [
+    197.3137,
+    -3500.4781
+   ],
+   "width": 0.9,
+   "wallThickness": 0.08,
+   "host": "drawn wall",
+   "evidence": "Back wall of the living-room alcove (80 mm), ends 1B8E5F (x 196.414) and 1B90CD (x 197.314); block 1B2491 *U1325.",
+   "confidence": "high",
+   "agreement": "audited",
+   "decision": "keep",
+   "notes": "Within 4 mm. The 1.67 m alcove mouth in front of it is part of the living room (one room outline), not a second opening."
+  },
+  {
+   "id": "D5",
+   "kind": "door",
+   "subtype": "single hinged, 0.85 m leaf (block *U1325), swings into the gym",
+   "a": [
+    198.0864,
+    -3490.8328
+   ],
+   "b": [
+    198.9864,
+    -3490.8328
+   ],
+   "width": 0.9,
+   "wallThickness": 0.08,
+   "host": "drawn wall",
+   "evidence": "Living-room north wall (80 mm), ends 1B2339 (x 198.086) and 1B233A (x 198.986); block 1B239F *U1325.",
+   "confidence": "high",
+   "agreement": "audited",
+   "decision": "keep",
+   "notes": "Exact."
+  },
+  {
+   "id": "D6",
+   "kind": "door",
+   "subtype": "single hinged, 0.80 m leaf, swings into the kitchen passage",
+   "a": [
+    205.64,
+    -3494.0706
+   ],
+   "b": [
+    206.44,
+    -3494.0706
+   ],
+   "width": 0.8,
+   "wallThickness": 0.08,
+   "host": "drawn wall",
+   "evidence": "80 mm wall ends 1B2309 (x 205.640) and 1B2308 (x 206.440); arc 1B22EC and leaf 1B22ED on A-1.Netthay; dashed head line 1B22C5.",
+   "confidence": "high",
+   "agreement": "audited",
+   "decision": "keep",
+   "notes": "Exact."
+  },
+  {
+   "id": "D7",
+   "kind": "door",
+   "subtype": "pocket (sliding) door, 0.70 m leaf sliding west into the wall",
+   "a": [
+    203.2009,
+    -3494.0206
+   ],
+   "b": [
+    204.0009,
+    -3494.0206
+   ],
+   "width": 0.8,
+   "wallThickness": 0.18,
+   "host": "drawn wall",
+   "evidence": "180 mm wall (y -3493.931 / -3494.111) ends 1B22CB (x 203.201) and 1B22CC (x 204.001); leaf 1B22CD on A-1.Netthay inside the wall at y -3494.021; dashed head lines 1B22CE / 1B22CF.",
+   "confidence": "high",
+   "agreement": "audited",
+   "decision": "keep",
+   "notes": "Within 1 mm."
+  },
+  {
+   "id": "D8",
+   "kind": "door",
+   "subtype": "single hinged, 0.95 m leaf, swings into the kitchen (drawn dashed)",
+   "a": [
+    201.4014,
+    -3489.7958
+   ],
+   "b": [
+    201.8764,
+    -3490.6185
+   ],
+   "width": 0.95,
+   "wallThickness": 0.08,
+   "host": "drawn wall",
+   "evidence": "Bar / kitchen wall (80 mm, 60 deg), caps 1B2330 and 1B22BC; arc 1B22E9 and leaf lines 1B22E6-E8 on A-1.Netthay - manh with linetype HIDDEN2.",
+   "confidence": "high",
+   "agreement": "audited",
+   "decision": "keep",
+   "notes": "Within 1 mm. Unlike every other swing it is drawn with hidden (dashed) lines: possibly a concealed / flush door. The gap in the wall is real either way."
+  },
+  {
+   "id": "D9",
+   "kind": "door",
+   "subtype": "single hinged, 0.70 m leaf in a 0.75 m opening, swings into the spa passage",
+   "a": [
+    202.1239,
+    -3499.1441
+   ],
+   "b": [
+    201.7489,
+    -3499.7936
+   ],
+   "width": 0.75,
+   "wallThickness": 0.08,
+   "host": "drawn wall",
+   "evidence": "Steam room east wall cap and the north face of the pier between D9 and D10 (both 1B90CD, 80 mm); arc 1B2907, leaves 1B2908 / 1B2909 on A-1.Netthay.",
+   "confidence": "high",
+   "agreement": "audited",
+   "decision": "keep",
+   "notes": "Within 5 mm."
+  },
+  {
+   "id": "D10",
+   "kind": "door",
+   "subtype": "single hinged, 0.70 m leaf in a 0.75 m opening, swings into the spa passage",
+   "a": [
+    201.5327,
+    -3500.168
+   ],
+   "b": [
+    201.1577,
+    -3500.8175
+   ],
+   "width": 0.75,
+   "wallThickness": 0.08,
+   "host": "drawn wall",
+   "evidence": "Pier cap and the shower east wall cap (both 1B90CD, 80 mm); arc 1B679C, leaves 1B2927 / 1B679D on A-1.Netthay.",
+   "confidence": "high",
+   "agreement": "audited",
+   "decision": "keep",
+   "notes": "Within 4 mm. D9, the 0.43 m pier and D10 lie on one 80 mm wall line (the passage's west wall)."
+  },
+  {
+   "id": "D11",
+   "kind": "door",
+   "subtype": "single hinged, 0.70 m leaf in a 0.75 m opening, swings into the spa passage",
+   "a": [
+    203.6259,
+    -3499.1224
+   ],
+   "b": [
+    203.2509,
+    -3499.772
+   ],
+   "width": 0.75,
+   "wallThickness": 0.08,
+   "host": "drawn wall",
+   "evidence": "Sauna west wall (80 mm) end faces in hatch 1B2412 (loops 0 and 1); arc 1B2259, leaves 1B225A / 1B225B.",
+   "confidence": "high",
+   "agreement": "audited",
+   "decision": "keep",
+   "notes": "Within 5 mm."
+  },
+  {
+   "id": "D12",
+   "kind": "door",
+   "subtype": "single hinged, 0.90 m leaf, swings into the toilet",
+   "a": [
+    202.5056,
+    -3501.0628
+   ],
+   "b": [
+    202.0556,
+    -3501.8423
+   ],
+   "width": 0.9,
+   "wallThickness": 0.08,
+   "host": "drawn wall",
+   "evidence": "Bottom cap of the sauna west wall (1B2412 loop 1) and top cap of the toilet west wall (1B2417), 80 mm; arc 1B22D9, leaves 1B22D8 / 1B22DA.",
+   "confidence": "high",
+   "agreement": "audited",
+   "decision": "keep, corrected",
+   "notes": "Hand list ran along the passage face of the 80 mm wall; moved 0.042 m onto the centre line at both ends. Width 0.900 unchanged."
+  },
+  {
+   "id": "D13",
+   "kind": "door",
+   "subtype": "single hinged, 0.80 m leaf, swings into the service room",
+   "a": [
+    204.84,
+    -3496.2406
+   ],
+   "b": [
+    205.64,
+    -3496.2406
+   ],
+   "width": 0.8,
+   "wallThickness": 0.08,
+   "host": "drawn wall",
+   "evidence": "Foyer south wall (80 mm) ends 1B2257 (x 204.840) and 1B2258 (x 205.640); arc 1B2306, leaf 1B2307.",
+   "confidence": "high",
+   "agreement": "audited",
+   "decision": "keep",
+   "notes": "Within 1 mm."
+  },
+  {
+   "id": "D14",
+   "kind": "door",
+   "subtype": "single hinged, 1.00 m leaf, swings into the service room (drawn 53 deg open)",
+   "a": [
+    206.256,
+    -3497.6971
+   ],
+   "b": [
+    206.7581,
+    -3496.8323
+   ],
+   "width": 1,
+   "wallThickness": 0.25,
+   "host": "added wall",
+   "evidence": "Arc 1B224A and leaf 1B224B on A-1.Netthay. The party wall is on no layer (CORE_SIDE in build_model.py, 0.25 m assumed); its room-side line is confirmed by drawn scraps 1B2234 and 1B2264.",
+   "confidence": "medium",
+   "agreement": "audited",
+   "decision": "keep",
+   "notes": "a/b = the closed leaf (hinge to tip), 0.125 m off the room line = the centre of the 0.25 m wall the build added. It matches the hand list exactly. No jamb is drawn on the hinge side. The drawn corner piece 1B2234 stops 0.073 m past the leaf tip and reaches only 0.07 m into the wall, so the structural opening may be 1.07-1.10 m. Leads to the back of house, which is not in the drawing."
+  },
+  {
+   "id": "D15",
+   "kind": "door",
+   "subtype": "single hinged glazed door, 1.10 m leaf, opens out to the terrace (glass transom above)",
+   "a": [
+    187.4856,
+    -3487.4264
+   ],
+   "b": [
+    188.0356,
+    -3486.4738
+   ],
+   "width": 1.1,
+   "wallThickness": 0.18,
+   "host": "drawn glass facade (A-4. Dim band)",
+   "evidence": "Jamb lines 1B24B2 / 1B24B3 on A-4. Dim span the 0.18 m octagon band (1BB40C / 1BB40D); arc 1B24B1 and leaf 1B24B0 on A-1.Netthay, hinge 187.408,-3487.381.",
+   "confidence": "high",
+   "agreement": "audited",
+   "decision": "keep",
+   "notes": "Within 1 mm: the jamb-line midpoints lie on the band's centre line. It is not in a wall-layer wall, so a detector that reads only wall layers will miss it."
+  },
+  {
+   "id": "D16",
+   "kind": "door",
+   "subtype": "movable glass partition: 9 stacking panels (blocks \"Movable panel\") on an overhead track, drawn open",
+   "a": [
+    187.3345,
+    -3487.8681
+   ],
+   "b": [
+    192.4702,
+    -3490.8332
+   ],
+   "width": 5.93,
+   "wallThickness": 0.08,
+   "host": "no wall (movable-partition line)",
+   "evidence": "Track faces 1B239D / 1B239E and centre 1B2337 on A-1.Netthay - manh (dashed, HIDDEN2), 80 mm apart, from the octagon's room face to the wall-end cap 1B234C (A-4. Dim). Panel stacks: 4 at the glass end, 5 at the wall end (PCS DA-LATT-OTLN).",
+   "confidence": "medium",
+   "agreement": "audited",
+   "decision": "keep, widened to the structural opening",
+   "notes": "The hand list's a/b are the clear gap between the two panel stacks (4.862 m). The structural opening, which the closed panels fill, runs from the octagon glass face to the end of the living / study wall. On the same track line a moves 0.506 m and b 0.562 m outward, giving a width of 5.930 m. If the scorer wants the clear walk-through width, use the hand list's 4.86 m. A wall-layer tick (1B226B) crosses the track 0.30 m from the glass; it may be an end post, but it is not used here."
+  },
+  {
+   "id": "O1",
+   "kind": "passage",
+   "subtype": "wide doorless opening: the open side of the bar to the living room",
+   "a": [
+    199.8166,
+    -3490.752
+   ],
+   "b": [
+    201.4809,
+    -3493.4934
+   ],
+   "width": 3.207,
+   "wallThickness": 0.3,
+   "host": "drawn wall ends, open between",
+   "evidence": "Pier end face x 199.8166 (y -3490.631 / -3490.873, part of 1B23BA) and the end of the powder room's 0.30 m west wall (1B05BD). The living and bar outlines (Defpoints 1BBFC5 / 1B4C81) share this line. A dashed overhead line (1B241C, HIDDEN2) runs along the living-room face.",
+   "confidence": "medium",
+   "agreement": "audited",
+   "decision": "keep, corrected",
+   "notes": "The hand list ran along the living-room face from the pier's outer corner. The key uses the midpoints of the two bounding end faces instead: a moves 0.121 m and b 0.150 m, and the width becomes 3.207 m (hand list 3.101 m). The two ends do not share one centre line (pier end 0.24 m, powder wall 0.30 m), so treat +-0.08 m across the line as the same opening. The hand list gives no lintel, but the dashed overhead line suggests a bulkhead or head over it."
+  },
+  {
+   "id": "O2",
+   "kind": "passage",
+   "subtype": "doorless doorway (a curtain is drawn across it on the furniture layer)",
+   "a": [
+    202.6135,
+    -3498.3761
+   ],
+   "b": [
+    203.6614,
+    -3498.9811
+   ],
+   "width": 1.21,
+   "wallThickness": 0.08,
+   "host": "drawn wall",
+   "evidence": "South wall line of the massage room: the steam room's north wall (1B90CD) and the sauna's north wall (1B2412), both 80 mm, with collinear centre lines (0.0 mm apart). Bounded by the steam room's east wall face and the sauna wall's end face.",
+   "confidence": "high",
+   "agreement": "audited",
+   "decision": "keep, corrected",
+   "notes": "The hand list ran along the massage-room face; moved 0.040 m onto the centre line. Width 1.210 m (hand list 1.211 m). This is the entrance from the massage room into the spa passage."
+  },
+  {
+   "id": "O3",
+   "kind": "passage",
+   "subtype": "doorless doorway",
+   "a": [
+    197.78,
+    -3500.5181
+   ],
+   "b": [
+    197.78,
+    -3501.7181
+   ],
+   "width": 1.2,
+   "wallThickness": 0.18,
+   "host": "drawn wall",
+   "evidence": "Gap in the 0.18 m wall at x 197.69-197.87, between the bottom of the alcove's east wall (1B90CD, y -3500.518) and the top of the bath's west wall (1B22D6, y -3501.718).",
+   "confidence": "high",
+   "agreement": "audited",
+   "decision": "keep, corrected",
+   "notes": "The hand list ran along the bath face (x 197.870, on the line of the bedroom outline); moved 0.090 m west onto the centre line x 197.780. Width 1.200 m unchanged. It links the bedroom hall and the master bath. No head line is drawn; the hand list assumes a 2.10 m lintel."
+  },
+  {
+   "id": "O4",
+   "kind": "passage",
+   "subtype": "passage mouth: the end of the spa passage, opening into the master bath",
+   "a": [
+    200.8987,
+    -3501.3492
+   ],
+   "b": [
+    201.9453,
+    -3501.9534
+   ],
+   "width": 1.208,
+   "wallThickness": 0.08,
+   "host": "drawn wall ends, open between",
+   "evidence": "Line of the shower's south wall (1B90CD, 80 mm), from the shower block's SE corner to the face of the toilet's west wall (1B2417).",
+   "confidence": "low",
+   "agreement": "audited",
+   "decision": "optional: not a gap between two wall ends of one wall line and nothing to cut; leave it out of scoring",
+   "notes": "The hand list ran along the bath face; on the centre line it moves 0.040 m. Width 1.208 m. The shower block's wall simply ends where the passage widens into the bath. The far side is the face of a perpendicular wall (the toilet's), so by the shared definition this is open space rather than an opening."
+  },
+  {
+   "id": "O5",
+   "kind": "passage",
+   "subtype": "doorless doorway",
+   "a": [
+    195.91,
+    -3501.7581
+   ],
+   "b": [
+    197.01,
+    -3501.7581
+   ],
+   "width": 1.1,
+   "wallThickness": 0.08,
+   "host": "drawn wall",
+   "evidence": "North wall of the walk-in closet (80 mm), ends x 195.910 (1B22DF) and x 197.010 (1B22E0).",
+   "confidence": "high",
+   "agreement": "audited",
+   "decision": "keep",
+   "notes": "Within 2 mm. It leads from the bedroom hall into the walk-in closet. No head line is drawn."
+  },
+  {
+   "id": "O6",
+   "kind": "passage",
+   "subtype": "doorless doorway",
+   "a": [
+    195.91,
+    -3505.2781
+   ],
+   "b": [
+    197.01,
+    -3505.2781
+   ],
+   "width": 1.1,
+   "wallThickness": 0.08,
+   "host": "drawn wall",
+   "evidence": "South wall of the walk-in closet (80 mm), ends x 195.910 (1B22DF) and x 197.010 (1B22E1).",
+   "confidence": "high",
+   "agreement": "audited",
+   "decision": "keep",
+   "notes": "Within 2 mm. It leads from the closet to the strip of bedroom in front of the bath glass panel. No head line is drawn."
+  },
+  {
+   "id": "X1",
+   "kind": "passage",
+   "subtype": "passage mouth: the kitchen passage opening into the kitchen",
+   "a": [
+    204.3354,
+    -3491.9377
+   ],
+   "b": [
+    205.3747,
+    -3491.3377
+   ],
+   "width": 1.2,
+   "wallThickness": 0.18,
+   "host": "drawn wall end + added wall (CORE_SIDE line B)",
+   "evidence": "Dashed overhead line 1B2310 (A-1.Netthay - manh, HIDDEN2) runs from the corner of the stub on the kitchen's south wall (204.335,-3491.938) to the added east wall of the kitchen. It lies within 1 cm of the centre line of the 0.18 m south wall.",
+   "confidence": "low",
+   "agreement": "added",
+   "decision": "optional: same case as O4 (only one drawn wall end); count it only if O4 is counted",
+   "notes": "Not in the hand list. Behind D6, the 1.20 m passage widens into the kitchen here. The designer marked this threshold with an overhead (bulkhead) line, as at the passage's other end (1B2311, just behind D6). Both lines are inside the kitchen's single room outline (Defpoints 1B50F7)."
+  }
+ ],
+ "glassWalls": [
+  {
+   "a": [
+    191.4766,
+    -3483.3059
+   ],
+   "b": [
+    189.0597,
+    -3484.7
+   ],
+   "notes": "G1 (2.790 m). Octagon facade, NNE face: centre line of the 0.18 m glass band between A-4. Dim polylines 1BB40C / 1BB40D. Its north end (room side 191.52,-3483.38) is free: the link to the north glazing is not drawn (see G9)."
+  },
+  {
+   "a": [
+    189.0597,
+    -3484.7
+   ],
+   "b": [
+    188.0356,
+    -3486.4738
+   ],
+   "notes": "G2 (2.048 m). Octagon facade, NW face (study), from the NNE corner to the north jamb of terrace door D15 (1B24B3)."
+  },
+  {
+   "a": [
+    187.4856,
+    -3487.4264
+   ],
+   "b": [
+    186.1666,
+    -3489.711
+   ],
+   "notes": "G3 (2.638 m). Octagon facade, NW face, from D15's south jamb (1B24B2) to the north solid pier (wall-layer hatch 1BB410, 0.25 m deep). The study / living movable partition D16 meets it at (187.335,-3487.868)."
+  },
+  {
+   "a": [
+    185.6877,
+    -3492.0364
+   ],
+   "b": [
+    185.6877,
+    -3498.2462
+   ],
+   "notes": "G4 (6.210 m). Octagon facade, west face (living / dining), between the two solid piers 1BB410 and 1BB411; glass at x 185.598-185.778."
+  },
+  {
+   "a": [
+    186.1666,
+    -3500.5715
+   ],
+   "b": [
+    189.0587,
+    -3505.5808
+   ],
+   "notes": "G5 (5.784 m). Octagon facade, SW face, from the south pier (1BB411) to the SSW corner. The 80 mm living / bedroom wall (1B8DBD) meets its room face at (187.396,-3502.521): living room to the north of that point, bedroom to the south."
+  },
+  {
+   "a": [
+    189.0587,
+    -3505.5808
+   ],
+   "b": [
+    190.6821,
+    -3506.5181
+   ],
+   "notes": "G6 (1.875 m). Octagon facade, SSW face (bedroom), running down to the south facade line y = -3506.518."
+  },
+  {
+   "a": [
+    190.8621,
+    -3506.5368
+   ],
+   "b": [
+    201.0188,
+    -3506.5368
+   ],
+   "notes": "G7 (10.157 m). South glazing (bedroom, then jacuzzi), NOT drawn. Placed between the room-outline line y -3506.518 (Defpoints 1BBFC4, railing base line) and the beam edge y -3506.556 (KT_BIEN DAM RED 1B1C68); the balustrade (KT-Lancan) is 0.15 m outside. The bath glass panel and its 0.18 m base stub (1B22FF) meet it at x 197.69-197.87. It ends at the added party wall, whose room-side line reaches the facade at x 201.019."
+  },
+  {
+   "a": [
+    191.6796,
+    -3483.7743
+   ],
+   "b": [
+    202.4622,
+    -3483.7743
+   ],
+   "notes": "G8 (10.783 m). North glazing (study, then gym), NOT drawn. Placed between the room-outline line y -3483.793 (Defpoints 1B50FA / 1B50FF, railing base line) and the beam edge y -3483.756. The 80 mm study / gym wall (x 197.325-197.405) meets it. It ends at the drawn gym NE wall (hatch 1B05B6). The balustrade outside it stops at x 200.94."
+  },
+  {
+   "a": [
+    191.4766,
+    -3483.3059
+   ],
+   "b": [
+    191.6796,
+    -3483.7743
+   ],
+   "notes": "G9 (0.510 m). Corner link from the north end of the octagon band to the north glazing: NOT drawn (a 0.5 m gap). Inferred the same way as the 19 Oct build's slanted piece (191.52,-3483.38 to 191.73,-3483.775). Low confidence."
+  },
+  {
+   "a": [
+    197.72,
+    -3505.3181
+   ],
+   "b": [
+    197.72,
+    -3506.4834
+   ],
+   "notes": "G10 (1.165 m). Fixed interior glass panel between the bedroom (the strip south of the walk-in closet) and the jacuzzi: three thin lines at x 197.69 / 197.72 / 197.75 on A-1.Netthay (1B22F1 / F0 / F2), running from the end of the bath's west wall (y -3505.318) to the panel's base stub at the facade (1B22FF). Assumed full height (the build uses 0-3.0 m); no sill is drawn, so it is not a window."
+  }
+ ],
+ "uncertain": [
+  {
+   "where": [
+    199.67,
+    -3503.97
+   ],
+   "what": "The bath / jacuzzi divider is drawn only as kerb lines, with steps at x 198.70-200.64 on layer 0. If it is really a half-height or full wall, the step gap is an opening. It is not keyed."
+  },
+  {
+   "where": [
+    206.51,
+    -3497.26
+   ],
+   "what": "D14 sits in the added party wall, so its a/b come from the 1.00 m leaf. The drawn corner piece 1B2234 ends 0.073 m beyond the leaf tip, so the structural opening may be 1.07-1.10 m. The 0.25 m wall thickness is the build's assumption."
+  },
+  {
+   "where": [
+    189.9,
+    -3489.35
+   ],
+   "what": "D16: the key uses the structural span from the glass face to the wall end (5.93 m). The clear width between the stacked panels is 4.86 m (the hand list's value). A wall-layer tick (1B226B) 0.30 m from the glass could mark an end post."
+  },
+  {
+   "where": [
+    200.65,
+    -3492.12
+   ],
+   "what": "O1 centre line is ambiguous: the pier's end face is vertical (0.24 m) and the powder-room wall is 0.30 m, so the two ends are not on one centre line. The key uses the midpoints of the two end faces, good to about +-0.08 m."
+  },
+  {
+   "where": [
+    201.42,
+    -3501.65
+   ],
+   "what": "O4 is a passage mouth: one wall end facing a perpendicular wall face. Optional for scoring."
+  },
+  {
+   "where": [
+    204.86,
+    -3491.64
+   ],
+   "what": "X1 (added) is a passage mouth into the kitchen, the same case as O4, marked by a dashed overhead line. Optional for scoring."
+  },
+  {
+   "where": [
+    191.58,
+    -3483.54
+   ],
+   "what": "The corner between the octagon glass (ending at 191.52,-3483.38) and the north glazing (starting at 191.68,-3483.79) is not drawn. G9 is inferred, as in the build."
+  },
+  {
+   "where": [
+    197,
+    -3483.77
+   ],
+   "what": "The north glazing is not drawn; it is placed between the room-outline line y -3483.793 and the beam edge y -3483.756. No door onto the Juliet balcony is drawn (the balustrade is 0.15 m outside the glass)."
+  },
+  {
+   "where": [
+    196,
+    -3506.54
+   ],
+   "what": "The south glazing is not drawn; it is placed between y -3506.518 and the beam edge y -3506.556. No door is drawn."
+  },
+  {
+   "where": [
+    202.15,
+    -3503.8
+   ],
+   "what": "A void behind the toilet (x 201.65-202.65, y -3503.12 / -3504.47) opens only toward the added party wall, probably a riser. If there is an access door from the corridor, it is not drawn."
+  },
+  {
+   "where": [
+    201.64,
+    -3490.21
+   ],
+   "what": "D8 is drawn with dashed (HIDDEN2) lines, possibly a concealed door. The wall gap is real."
+  },
+  {
+   "where": [
+    207.06,
+    -3495.16
+   ],
+   "what": "D1's jambs are on A-4. Dim, not the wall layer. A detector that reads only wall layers will see the foyer's east side as a 2.17 m open end (y -3494.031 to -3496.201)."
+  }
+ ],
+ "rejected": [
+  {
+   "id": "R1",
+   "where": [
+    202.09,
+    -3493.19
+   ],
+   "reason": "Bar back niche (0.35 m deep, dashed shelf line 1B22EF): blind recess, does not go through the wall."
+  },
+  {
+   "id": "R2",
+   "where": [
+    204.15,
+    -3496.57
+   ],
+   "reason": "Niche in the massage room's NE wall (0.30 m deep, front on A-4. Dim, dashed line 1B2315): blind, with 0.10-0.12 m of wall behind it."
+  },
+  {
+   "id": "R3",
+   "where": [
+    204.36,
+    -3492.33
+   ],
+   "reason": "Two cupboard niches in the west wall of the kitchen passage (dashed fronts, wall lines 1B22C7 / dashed 1B2319): blind."
+  },
+  {
+   "id": "R4",
+   "where": [
+    201.62,
+    -3504.99
+   ],
+   "reason": "Half-round niche in the jacuzzi's east wall: blind."
+  },
+  {
+   "id": "R5",
+   "where": [
+    196.85,
+    -3499.44
+   ],
+   "reason": "Mouth of the living-room alcove in front of D4: part of the living room (one room outline). D4 at the back of the alcove is the opening."
+  },
+  {
+   "id": "R6",
+   "where": [
+    199.68,
+    -3495.16
+   ],
+   "reason": "Recess in the full-height console panel (built-in DA-WALL-FULL 1B2377): furniture, not a wall."
+  },
+  {
+   "id": "R7",
+   "where": [
+    203.2,
+    -3490.3
+   ],
+   "reason": "Two 0.6 m counter-end stubs in the kitchen galley point at the opposite walls 2.0 m away (found by the wall-end scan). The space between is open floor, not an opening."
+  },
+  {
+   "id": "R8",
+   "where": [
+    196.4,
+    -3501.1
+   ],
+   "reason": "Bedroom hall to bedroom: open plan inside one room outline (1BBFC4), with no wall between."
+  },
+  {
+   "id": "R9",
+   "where": [
+    205.35,
+    -3486.79
+   ],
+   "reason": "Ticks 1B2343 / 1B2344 on the wall layer and A-4. Dim line 1B23BF lie east of the added gym / kitchen wall, outside the suite. No swing or leaf, so not doors."
+  },
+  {
+   "id": "R10",
+   "where": [
+    197.72,
+    -3505.9
+   ],
+   "reason": "Bath glass panel (three thin lines 1B22F0-F2). It spans from a wall end to the facade but has no sill or head line, so it is listed as a full-height glass wall (G10), not a window."
+  }
+ ],
+ "method": "I checked the 22 hand-listed openings (DOORS in presidential_test/src/build_model.py, read only, unchanged since 19 Oct) against plan.dxf, using prims.pkl in drawing metres.\n\n**How positions were found.** For each entry I found the bounding wall ends by DXF handle:\n- walls on the wall layer A-1.Netcat - tuong\n- jambs on A-4. Dim\n- door blocks on the PRS / PCS DA-DOOR-WIND layers\n- swings and leaves on A-1.Netthay\n- dashed (HIDDEN2) overhead lines on A-1.Netthay - manh\n\nkey.py then computes a and b from those exact vertices. Each lookup takes the nearest vertex and asserts it is within 5 mm. An end is either the midpoint of the end face, or, where the end is an L or T corner, the point where the wall's centre line crosses the bounding face. I checked every result by eye on zone overlays (key in magenta, hand list in green).\n\n**Completeness.**\n- All 21 door-sized arcs in the suite are accounted for: 16 door swings, all on listed doors, and 5 furniture arcs.\n- Two scans of the 19 Oct build's wall and glass solids:\n  - scan.py casts a ray from every wall-end cap;\n  - scan2.py finds every wall face line that stops and picks up again on the same line.\n- Together they found every keyed opening. The only other hits were blind niches, kitchen counter stubs, the living-room alcove and scan artefacts (all listed under rejected).\n\n**Glass walls.** The octagon is the centre line of its 0.18 m A-4. Dim band, split at the two solid piers and at D15. The north and south glazing is not drawn; I placed it between the room-outline line and the beam-edge line.\n\n**Results.**\n- Kind: 22 of 22 right.\n- Real openings: 21 of 22. O4 is only a passage mouth and is kept as optional.\n- Position: 15 of 22 within 2 cm. The hand list's widths are right except for D16 and O1.\n- Corrected:\n  - D1 and O3 by 9 cm, and D12, O2 and O4 by 4 cm. In each case the hand list ran along one face of the wall instead of its centre line.\n  - O1 now uses the midpoints of its two end faces; width 3.10 to 3.21 m.\n  - D16 now uses the structural span of 5.93 m instead of the 4.86 m clear gap between the stacked panels.\n- Hosts: D14 is the only opening in an added wall. D1's wall exists only as jambs on A-4. Dim, D15 is in the A-4. Dim glass band, and D16 has no wall.\n- Additions: one optional passage mouth, X1. There are no windows, no other facade doors and no other openings in the added walls.\n\n**Writes.** I wrote only to my output folder. Importing tools/prims.py may have refreshed Python's own bytecode cache in tools/__pycache__.",
+ "files": [
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-presidential/answer_key.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-presidential/compare.txt",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-presidential/scan.txt",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-presidential/scan2.txt",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-presidential/v_all.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-presidential/v_foyer.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-presidential/v_spa.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-presidential/v_bath.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-presidential/v_kitchen.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-presidential/v_study.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-presidential/v_west.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-presidential/key.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-presidential/glass.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-presidential/build_key.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-presidential/scan.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-presidential/scan2.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-presidential/rr.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-presidential/overlay.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-presidential/geom.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-presidential/glass.json"
+ ]
+}

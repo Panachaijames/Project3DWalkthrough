@@ -1,0 +1,15 @@
+{
+  "cache": "bank1",
+  "units": "mm",
+  "floors": {"L1": "bank:L1"},
+  "areas": {"L1": {"wholeFile": true}},
+  "layers": {
+    "wall": ["A-WALL", "A-WALL-PATT"],
+    "column": ["S-COLS"],
+    "glass": ["A-GLAZ-CURT", "A-GLAZ-CWMG"],
+    "door": ["A-DOOR", "A-DOOR-FRAM", "A-DOOR-GLAZ", "A-DOOR-HDLN"],
+    "stair": ["S-STRS", "S-STRS-MBND"],
+    "ignore": ["A-AREA-IDEN", "A-DETL", "A-DETL-GENF", "A-FLOR-HRAL", "A-FLOR-HRAL-MBND", "E-COMM", "E-ELEC-FIXT",
+               "G-ANNO-TEXT", "I-FURN", "L-PLNT", "P-SANR-FIXT", "Q-CASE", "Q-CASE-HDLN", "Q-SPCQ", "S-GRID", "S-GRID-IDEN"]
+  }
+}

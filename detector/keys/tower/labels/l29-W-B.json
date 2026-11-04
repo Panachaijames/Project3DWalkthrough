@@ -1,0 +1,915 @@
+{
+ "openings": [
+  {
+   "id": "L29W-01",
+   "kind": "door",
+   "subtype": "toilet cubicle door 700",
+   "a": [
+    1.15,
+    -32.405
+   ],
+   "b": [
+    1.15,
+    -33.105
+   ],
+   "width": 0.7,
+   "wallThickness": 0.03,
+   "host": "wall",
+   "evidence": "stall block handle 2967 (ins 2.750,-32.755 rot 90): front posts y[-32.405,-32.305] and y[-33.205,-33.105] at x 1.140-1.159; 0.700 leaf line (1.127,-32.418)-(1.622,-32.913)",
+   "confidence": "high",
+   "notes": "toilet cubicle door (Parametric_Toilet_stall 900 w, A-GENM); leaf line 0.700 m drawn open at 45 deg; a/b = the two front posts; the partition itself is not listed",
+   "optional": true
+  },
+  {
+   "id": "L29W-02",
+   "kind": "door",
+   "subtype": "toilet cubicle door 700",
+   "a": [
+    1.15,
+    -33.325
+   ],
+   "b": [
+    1.15,
+    -34.025
+   ],
+   "width": 0.7,
+   "wallThickness": 0.03,
+   "host": "wall",
+   "evidence": "stall block handle 299B (ins 2.750,-33.675 rot 90): front posts y[-33.325,-33.225] and y[-34.125,-34.025] at x 1.140-1.159; 0.700 leaf line (1.127,-33.338)-(1.622,-33.833)",
+   "confidence": "high",
+   "notes": "toilet cubicle door (Parametric_Toilet_stall 900 w, A-GENM); leaf line 0.700 m drawn open at 45 deg; a/b = the two front posts; the partition itself is not listed",
+   "optional": true
+  },
+  {
+   "id": "L29W-03",
+   "kind": "passage",
+   "subtype": "doorless opening 900x2000 (Revit Door-Opening), men WC entrance",
+   "a": [
+    1.781,
+    -35.73
+   ],
+   "b": [
+    2.681,
+    -35.73
+   ],
+   "width": 0.9,
+   "wallThickness": 0.12,
+   "host": "wall",
+   "evidence": "A-DOOR insert Door-Opening - 900 x 2000 (2.222,-35.730) rot 180: family rectangle x 1.781..2.681, y -35.79..-35.67; wall hatch (top-level A-WALL-PATT) ends at x=1.781 (stub 1.64-1.78) and restarts at x=2.681; no leaf drawn",
+   "confidence": "high",
+   "notes": "entrance of the men toilets (WC x -0.2..2.8, y -31.9..-35.7); wall 0.12 thick, centre y=-35.73"
+  },
+  {
+   "id": "L29W-04",
+   "kind": "door",
+   "subtype": "single swing ~1000 (D37; frame 1.000, leaf ~0.92), hinge east, swings south",
+   "a": [
+    3.157,
+    -35.665
+   ],
+   "b": [
+    4.177,
+    -35.665
+   ],
+   "width": 1.02,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "evidence": "D37 insert (3.667,-35.665) rot 180 in link UOBH_BTAR_BIM_001_CENTRAL; wall pieces end at x=3.157 and start at x=4.177 (A-WALL lines/hatch); A-DOOR frame x=3.167/4.167, HDLN 1.000; grey leaf x=4.10 y -35.80..-36.72 and swing arc to (3.20,-35.80)",
+   "confidence": "high",
+   "notes": "frame-to-frame 1.000, wall-end to wall-end 1.020"
+  },
+  {
+   "id": "L29W-05",
+   "kind": "door",
+   "subtype": "single swing ~1000 (D37; frame 1.000, leaf ~0.92), hinge west, swings south",
+   "a": [
+    4.457,
+    -35.665
+   ],
+   "b": [
+    5.477,
+    -35.665
+   ],
+   "width": 1.02,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "evidence": "D37 insert (4.967,-35.665) rot 0 in link UOBH_BTAR_BIM_001_CENTRAL; wall ends x=4.457 (column-like piece 4.177..4.457) and x=5.477; A-DOOR frame x=4.467/5.467; grey leaf x=4.55 y -35.80..-36.72 and swing arc to (5.43,-35.80)",
+   "confidence": "high",
+   "notes": "frame-to-frame 1.000, wall-end to wall-end 1.020"
+  },
+  {
+   "id": "L29W-06",
+   "kind": "door",
+   "subtype": "double swing, unequal leaves 1000 + 500 (D36), swings south",
+   "a": [
+    8.058,
+    -35.665
+   ],
+   "b": [
+    9.678,
+    -35.665
+   ],
+   "width": 1.62,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "evidence": "D36 insert (9.118,-35.665) in link UOBH_BTAR_BIM_001_CENTRAL; wall ends x=8.058 and x=9.678; A-DOOR frames at 8.058..8.068 and 9.668..9.678, HDLN x 8.118..9.518; leaf 1.000 (x=8.113, y -35.80..-36.80) and leaf 0.500 (x=9.623, y -35.75..-36.25) with swing arcs meeting at x=9.118",
+   "confidence": "high"
+  },
+  {
+   "id": "L29W-07",
+   "kind": "door",
+   "subtype": "single swing 900x2000 (DOOR_SWING_1_SOLID), hinge south, swings east",
+   "a": [
+    1.58,
+    -36.21
+   ],
+   "b": [
+    1.58,
+    -37.19
+   ],
+   "width": 0.98,
+   "wallThickness": 0.12,
+   "host": "wall",
+   "evidence": "A-DOOR insert DOOR_SWING_1_SOLID - 900x2000_INT (1.580,-36.700) rot -90: wall x 1.52..1.64 ends at y=-36.21 (north stub) and starts at y=-37.19 (south stub); A-DOOR-FRAM boxes y -36.21..-36.25 and -37.15..-37.19; leaf y=-37.11..-37.15 drawn open, arc to (1.612,-36.250)",
+   "confidence": "high",
+   "notes": "frame-to-frame 0.980; clear leaf 0.900"
+  },
+  {
+   "id": "L29W-08",
+   "kind": "passage",
+   "subtype": "corridor mouth, 1.65 m gap between the NE corner of the core and the SE corner of the north block",
+   "a": [
+    13.18,
+    -35.79
+   ],
+   "b": [
+    13.18,
+    -37.44
+   ],
+   "width": 1.65,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "evidence": "north-block east wall (x 13.07..13.31, central link A-WALL) ends at y=-35.79; stair-core east wall (A-WALL-PATT x 13.017..13.318) starts at y=-37.44; the two walls are collinear (x ~13.2); no door, no glazing",
+   "confidence": "low",
+   "notes": "east end of the E-W vestibule corridor y -35.79..-37.44 between north block and core; two wall ends of the same N-S wall line face each other, but it is a corridor mouth rather than a doorway; flagged optional",
+   "optional": true
+  },
+  {
+   "id": "L29W-09",
+   "kind": "passage",
+   "subtype": "corridor mouth between wall end x=2.517 and thin partition start x=3.414 (1.60 to the thick wall)",
+   "a": [
+    2.517,
+    -37.49
+   ],
+   "b": [
+    3.414,
+    -37.49
+   ],
+   "width": 0.897,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "wall band y -37.74..-37.44 (A-WALL-PATT) ends at x=2.517 and restarts at x=4.118; between them only the 0.1 m A-WALL strip y -37.54..-37.44 exists, starting at x=3.414; no door symbol",
+   "confidence": "low",
+   "notes": "north end of the N-S corridor x 2.52..4.12 that leaves the vestibule; clear gap 0.897 at the north face (2.517..3.414), 1.60 if measured to the thick wall at 4.118; corridor junction, not a doorway of a room; flagged optional",
+   "optional": true
+  },
+  {
+   "id": "L29W-10",
+   "kind": "door",
+   "subtype": "double swing, unequal leaves 1000 + 400, fire exit door with glass panel (Door NO_03)",
+   "a": [
+    1.842,
+    -39.077
+   ],
+   "b": [
+    1.842,
+    -40.597
+   ],
+   "width": 1.52,
+   "wallThickness": 0.15,
+   "host": "wall",
+   "evidence": "Door NO_03 - Door_Swing_Double_Fire_Ex__Glass Panel insert (1.842,-40.137) rot -90 in link UOBH_BTAR_BIM_001_CENTRAL: wall x 1.767..1.917 ends at y=-39.077 and restarts at y=-40.597; A-DOOR frames y=-39.087/-40.587, HDLN 1.400; leaf arcs radius 1.0 and 0.4 meeting at y=-40.137",
+   "confidence": "high",
+   "notes": "frame-to-frame 1.500, wall-end to wall-end 1.520; opening centre y=-39.837 (insert point is the leaf meeting point, not the centre)"
+  },
+  {
+   "id": "L29W-11",
+   "kind": "door",
+   "subtype": "single swing 900x2000 (D_Swing_Single PAN), hinge south, swings west",
+   "a": [
+    4.188,
+    -40.026
+   ],
+   "b": [
+    4.188,
+    -41.046
+   ],
+   "width": 1.02,
+   "wallThickness": 0.15,
+   "host": "wall",
+   "evidence": "D_Swing_Single - 900 x 2000_PAN insert (4.188,-40.532) rot 90 in link UOBH_BTAR_BIM_001_CENTRAL: wall x 4.113..4.263 ends at y=-40.026 and restarts at y=-41.046; A-DOOR frames y=-40.036/-41.036, HDLN 0.900; leaf y=-41.0 drawn open, swing arc to (4.113,-40.074)",
+   "confidence": "high",
+   "notes": "door of the riser cell group (x 4.26..5.27, y -39.5..-41.2)"
+  },
+  {
+   "id": "L29W-12",
+   "kind": "passage",
+   "subtype": "lift opening 1400x2250 (D_Openning_Lift), no leaf",
+   "a": [
+    -0.332,
+    -41.216
+   ],
+   "b": [
+    1.168,
+    -41.216
+   ],
+   "width": 1.5,
+   "wallThickness": 0.3,
+   "host": "wall",
+   "evidence": "D_Openning_Lift - 1400 X 2250mm insert (0.418,-41.215) in link UOBH_BTAR_BIM_001_CENTRAL: wall hatch (A-WALL-PATT) ends at x=-0.332 and restarts at x=1.168; A-DOOR-HDLN 1.400 x -0.282..1.118 plus 0.05 frames each side; only frame lines, no leaf",
+   "confidence": "high",
+   "notes": "lift landing, no door drawn (service lift, grey car symbol behind)",
+   "optional": true
+  },
+  {
+   "id": "L29W-13",
+   "kind": "door",
+   "subtype": "single swing glass door 900 in glass partition (Curtain Wall Door_Swing), hinge west, swings north",
+   "a": [
+    13.518,
+    -41.94
+   ],
+   "b": [
+    14.418,
+    -41.94
+   ],
+   "width": 0.9,
+   "wallThickness": 0.01,
+   "host": "glass",
+   "evidence": "A-DOOR insert Curtain Wall Door_Swing (13.968,-41.940); leaf x 13.518..14.418 with 90 deg swing arc; A-GLAZ-CURT System Panel V39 (x 13.318..13.518) on the west and System Panel 4493830 (x 14.418..14.677) on the east; partition lines y=-41.935/-41.945",
+   "confidence": "high",
+   "notes": "glass partition runs from the core east face (x=13.318) to the wall at x=14.677; leaf = clear opening 0.900"
+  },
+  {
+   "id": "L29W-14",
+   "kind": "door",
+   "subtype": "lift landing door, 2-panel centre-parting slider 900x2100 (DOOR_LIFT_2_SOLID)",
+   "a": [
+    5.109,
+    -44.365
+   ],
+   "b": [
+    6.509,
+    -44.365
+   ],
+   "width": 1.4,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "evidence": "A-DOOR insert DOOR_LIFT_2_SOLID - 900x2100 (5.809,-44.440) rot 180: shaft wall (A-WALL-PATT y -44.49..-44.24) ends at x=5.109 and restarts at x=6.509; A-DOOR-FRAM 1.400 wide, 2 leaves 0.900 clear (x 5.359..6.259) with slide arrows; red car X box behind",
+   "confidence": "high",
+   "notes": "structural shaft opening 1.400 at the wall centre line; the 0.21 x 0.10 jamb nibs on the lobby face (top-level A-WALL x 5.109..5.319 and 6.299..6.509) narrow the face to 0.980 (clear leaves 0.900)"
+  },
+  {
+   "id": "L29W-15",
+   "kind": "door",
+   "subtype": "lift landing door, 2-panel centre-parting slider 900x2100 (DOOR_LIFT_2_SOLID)",
+   "a": [
+    8.018,
+    -44.365
+   ],
+   "b": [
+    9.418,
+    -44.365
+   ],
+   "width": 1.4,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "evidence": "A-DOOR insert DOOR_LIFT_2_SOLID - 900x2100 (8.718,-44.440) rot 180: shaft wall (A-WALL-PATT y -44.49..-44.24) ends at x=8.018 and restarts at x=9.418; A-DOOR-FRAM 1.400 wide, 2 leaves 0.900 clear (x 8.268..9.168) with slide arrows; red car X box behind",
+   "confidence": "high",
+   "notes": "structural shaft opening 1.400 at the wall centre line; the 0.21 x 0.10 jamb nibs on the lobby face (top-level A-WALL x 8.018..8.228 and 9.208..9.418) narrow the face to 0.980 (clear leaves 0.900)"
+  },
+  {
+   "id": "L29W-16",
+   "kind": "door",
+   "subtype": "lift landing door, 2-panel centre-parting slider 900x2100 (DOOR_LIFT_2_SOLID)",
+   "a": [
+    10.927,
+    -44.365
+   ],
+   "b": [
+    12.327,
+    -44.365
+   ],
+   "width": 1.4,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "evidence": "A-DOOR insert DOOR_LIFT_2_SOLID - 900x2100 (11.627,-44.440) rot 180: shaft wall (A-WALL-PATT y -44.49..-44.24) ends at x=10.927 and restarts at x=12.327; A-DOOR-FRAM 1.400 wide, 2 leaves 0.900 clear (x 11.177..12.077) with slide arrows; red car X box behind",
+   "confidence": "high",
+   "notes": "structural shaft opening 1.400 at the wall centre line; the 0.21 x 0.10 jamb nibs on the lobby face (top-level A-WALL x 10.927..11.137 and 12.117..12.327) narrow the face to 0.980 (clear leaves 0.900)"
+  },
+  {
+   "id": "L29W-17",
+   "kind": "door",
+   "subtype": "single swing 1000x2000 shaft door (Door NO_17), hinge south, swings east",
+   "a": [
+    2.471,
+    -44.69
+   ],
+   "b": [
+    2.471,
+    -45.69
+   ],
+   "width": 1.0,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "Door NO_17 - D_Swing_Single_Shaft_1000_2000 insert (2.471,-45.190) rot 90 in link UOBH_BTAR_BIM_001_CENTRAL: wall x 2.421..2.521 ends at y=-44.690 and restarts at y=-45.690; A-DOOR frame boxes at both jambs, HDLN 0.900; leaf drawn at 45 deg with arc to (2.521,-44.690)",
+   "confidence": "high",
+   "notes": "riser room door; unhatched A-WALL face lines x=2.421/2.521 continue through the gap (the wall hatch does not); treated as a drawing artefact of the door family"
+  },
+  {
+   "id": "L29W-18",
+   "kind": "door",
+   "subtype": "single swing 700x2000 (D_Swing_Single), hinge south, swings east",
+   "a": [
+    2.471,
+    -47.121
+   ],
+   "b": [
+    2.471,
+    -47.941
+   ],
+   "width": 0.82,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "D_Swing_Single - 700_2000 insert (2.471,-47.526) rot 90 in link UOBH_BTAR_BIM_001_CENTRAL: wall x 2.421..2.521 ends at y=-47.121 and restarts at y=-47.941; A-DOOR frames y=-47.131/-47.931, HDLN 0.700; leaf y=-47.88 drawn open with arc to (2.521,-47.169)",
+   "confidence": "high",
+   "notes": "frame-to-frame 0.800 (leaf 0.700); riser room door"
+  },
+  {
+   "id": "L29W-19",
+   "kind": "door",
+   "subtype": "sliding glass door, 2 leaves centre-parting (DOOR_CP_SLIDE_2_GLASS_FULL)",
+   "a": [
+    4.612,
+    -46.346
+   ],
+   "b": [
+    4.612,
+    -48.346
+   ],
+   "width": 2.0,
+   "wallThickness": 0.01,
+   "host": "glass",
+   "evidence": "A-DOOR insert DOOR_CP_SLIDE_2_GLASS_FULL - INTERIOR (4.612,-47.346) rot 90: 10 mm thin A-WALL screen x 4.607..4.617 ends at y=-46.346 and restarts at y=-48.346; two 1.0 m leaves drawn at x 4.567..4.587 (y -45.846..-46.846 and -47.846..-48.846) with opposing slide arrows",
+   "confidence": "high",
+   "notes": "lift lobby west door; host screen is a 10 mm A-WALL line (assumed glazed screen); gap 2.000 is the structural opening"
+  },
+  {
+   "id": "L29W-20",
+   "kind": "door",
+   "subtype": "sliding glass door, 2 leaves centre-parting (DOOR_CP_SLIDE_2_GLASS_FULL)",
+   "a": [
+    12.822,
+    -46.346
+   ],
+   "b": [
+    12.822,
+    -48.346
+   ],
+   "width": 2.0,
+   "wallThickness": 0.01,
+   "host": "glass",
+   "evidence": "A-DOOR insert DOOR_CP_SLIDE_2_GLASS_FULL - INTERIOR (12.822,-47.346) rot -90: 10 mm thin A-WALL screen x 12.817..12.827 ends at y=-46.346 and restarts at y=-48.346; two 1.0 m leaves at x 12.842..12.862 with opposing slide arrows",
+   "confidence": "high",
+   "notes": "lift lobby east door; mirror of the west door"
+  },
+  {
+   "id": "L29W-21",
+   "kind": "passage",
+   "subtype": "doorless stair entrance (gap between two wall returns), no leaf",
+   "a": [
+    2.367,
+    -48.44
+   ],
+   "b": [
+    2.367,
+    -49.64
+   ],
+   "width": 1.2,
+   "wallThickness": 0.3,
+   "host": "wall",
+   "evidence": "stair enclosure east wall (A-WALL-PATT x 2.217..2.517) has a return ending at y=-48.440 (notch y -48.266..-48.440) and a return starting at y=-49.640 (notch to y=-49.815); S-STRS boundary line x=2.214 runs across the gap; no door symbol",
+   "confidence": "medium",
+   "notes": "entrance to the west stair from the N-S corridor; wall returns drawn 0.30 thick; no door modelled"
+  },
+  {
+   "id": "L29W-22",
+   "kind": "door",
+   "subtype": "single swing 900x2000 (DOOR_SWING_1_SOLID), hinge north, swings west",
+   "a": [
+    4.612,
+    -49.446
+   ],
+   "b": [
+    4.612,
+    -50.426
+   ],
+   "width": 0.98,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR insert DOOR_SWING_1_SOLID - 900x2000_INT (4.612,-49.936) rot 90: partition x 4.562..4.662 ends at y=-49.446 (stub under the lobby wall) and restarts at y=-50.426; A-DOOR-FRAM boxes y -49.446..-49.486 and -50.386..-50.426; leaf y=-49.5 drawn open, arc to (4.590,-50.386)",
+   "confidence": "high",
+   "notes": "frame-to-frame 0.980; clear leaf 0.900"
+  },
+  {
+   "id": "L29W-23",
+   "kind": "passage",
+   "subtype": "doorless opening 900x2000 (Revit Door-Opening), women WC entrance",
+   "a": [
+    2.449,
+    -50.62
+   ],
+   "b": [
+    2.449,
+    -51.52
+   ],
+   "width": 0.9,
+   "wallThickness": 0.12,
+   "host": "wall",
+   "evidence": "A-DOOR insert Door-Opening - 900 x 2000 (2.449,-51.079) rot -90: family rectangle x 2.389..2.509, y -50.62..-51.52; wall hatch (A-WALL-PATT x 2.389..2.509) ends at y=-50.620 and restarts at y=-51.520; no leaf",
+   "confidence": "high"
+  },
+  {
+   "id": "L29W-24",
+   "kind": "passage",
+   "subtype": "open gap between the two front wall pieces of the cubicle zone",
+   "a": [
+    -0.247,
+    -51.626
+   ],
+   "b": [
+    0.787,
+    -51.626
+   ],
+   "width": 1.034,
+   "wallThickness": 0.14,
+   "host": "wall",
+   "evidence": "wall y -51.556..-51.696 (A-WALL-PATT 0.12 + 0.02 lining): west piece x -1.853..-0.247, east piece x 0.787..2.389; end faces face each other 1.034 apart; no door or glazing",
+   "confidence": "medium",
+   "notes": "central aisle into the cubicle area of the women toilets; gap 1.027 if the 0.02 lining (starts x=0.780) is included"
+  },
+  {
+   "id": "L29W-25",
+   "kind": "door",
+   "subtype": "toilet cubicle door 700",
+   "a": [
+    -0.263,
+    -51.776
+   ],
+   "b": [
+    -0.263,
+    -52.476
+   ],
+   "width": 0.7,
+   "wallThickness": 0.03,
+   "host": "wall",
+   "evidence": "stall block west bank (Parametric_Toilet_stall_14001 900 w, A-GENM): front posts at y=-51.676..-51.776 and -52.476..-52.576; 0.700 leaf line drawn open at 45 deg",
+   "confidence": "high",
+   "notes": "toilet cubicle door (Parametric_Toilet_stall 900 w, A-GENM); leaf line 0.700 m drawn open at 45 deg; a/b = the two front posts; the partition itself is not listed",
+   "optional": true
+  },
+  {
+   "id": "L29W-26",
+   "kind": "door",
+   "subtype": "toilet cubicle door 700",
+   "a": [
+    0.797,
+    -51.776
+   ],
+   "b": [
+    0.797,
+    -52.476
+   ],
+   "width": 0.7,
+   "wallThickness": 0.03,
+   "host": "wall",
+   "evidence": "stall block east bank (Parametric_Toilet_stall_14001 900 w, A-GENM): front posts at y=-51.676..-51.776 and -52.476..-52.576; 0.700 leaf line drawn open at 45 deg",
+   "confidence": "high",
+   "notes": "toilet cubicle door (Parametric_Toilet_stall 900 w, A-GENM); leaf line 0.700 m drawn open at 45 deg; a/b = the two front posts; the partition itself is not listed",
+   "optional": true
+  },
+  {
+   "id": "L29W-27",
+   "kind": "door",
+   "subtype": "toilet cubicle door 700",
+   "a": [
+    -0.263,
+    -52.696
+   ],
+   "b": [
+    -0.263,
+    -53.396
+   ],
+   "width": 0.7,
+   "wallThickness": 0.03,
+   "host": "wall",
+   "evidence": "stall block west bank (Parametric_Toilet_stall_14001 900 w, A-GENM): front posts at y=-52.596..-52.696 and -53.396..-53.496; 0.700 leaf line drawn open at 45 deg",
+   "confidence": "high",
+   "notes": "toilet cubicle door (Parametric_Toilet_stall 900 w, A-GENM); leaf line 0.700 m drawn open at 45 deg; a/b = the two front posts; the partition itself is not listed",
+   "optional": true
+  },
+  {
+   "id": "L29W-28",
+   "kind": "door",
+   "subtype": "toilet cubicle door 700",
+   "a": [
+    0.797,
+    -52.696
+   ],
+   "b": [
+    0.797,
+    -53.396
+   ],
+   "width": 0.7,
+   "wallThickness": 0.03,
+   "host": "wall",
+   "evidence": "stall block east bank (Parametric_Toilet_stall_14001 900 w, A-GENM): front posts at y=-52.596..-52.696 and -53.396..-53.496; 0.700 leaf line drawn open at 45 deg",
+   "confidence": "high",
+   "notes": "toilet cubicle door (Parametric_Toilet_stall 900 w, A-GENM); leaf line 0.700 m drawn open at 45 deg; a/b = the two front posts; the partition itself is not listed",
+   "optional": true
+  },
+  {
+   "id": "L29W-29",
+   "kind": "door",
+   "subtype": "single swing 900x2000 (DOOR_SWING_1_SOLID), hinge east, swings south",
+   "a": [
+    2.837,
+    -53.505
+   ],
+   "b": [
+    3.817,
+    -53.505
+   ],
+   "width": 0.98,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR insert DOOR_SWING_1_SOLID - 900x2000_INT (3.327,-53.505) rot 0: wall y -53.555..-53.455 ends at x=2.837 (stub from the WC east wall) and restarts at x=3.817 (to the partition x=4.562); A-DOOR-FRAM boxes x 2.837..2.877 and 3.777..3.817; leaf x=3.737..3.777 drawn open to y=-54.435, arc to (2.877,-53.527)",
+   "confidence": "high",
+   "notes": "frame-to-frame 0.980; clear leaf 0.900"
+  },
+  {
+   "id": "L29W-30",
+   "kind": "door",
+   "subtype": "toilet cubicle door 700",
+   "a": [
+    -0.263,
+    -53.616
+   ],
+   "b": [
+    -0.263,
+    -54.316
+   ],
+   "width": 0.7,
+   "wallThickness": 0.03,
+   "host": "wall",
+   "evidence": "stall block west bank (Parametric_Toilet_stall_14001 900 w, A-GENM): front posts at y=-53.516..-53.616 and -54.316..-54.416; 0.700 leaf line drawn open at 45 deg",
+   "confidence": "high",
+   "notes": "toilet cubicle door (Parametric_Toilet_stall 900 w, A-GENM); leaf line 0.700 m drawn open at 45 deg; a/b = the two front posts; the partition itself is not listed",
+   "optional": true
+  },
+  {
+   "id": "L29W-31",
+   "kind": "door",
+   "subtype": "toilet cubicle door 700",
+   "a": [
+    0.797,
+    -53.616
+   ],
+   "b": [
+    0.797,
+    -54.316
+   ],
+   "width": 0.7,
+   "wallThickness": 0.03,
+   "host": "wall",
+   "evidence": "stall block east bank (Parametric_Toilet_stall_14001 900 w, A-GENM): front posts at y=-53.516..-53.616 and -54.316..-54.416; 0.700 leaf line drawn open at 45 deg",
+   "confidence": "high",
+   "notes": "toilet cubicle door (Parametric_Toilet_stall 900 w, A-GENM); leaf line 0.700 m drawn open at 45 deg; a/b = the two front posts; the partition itself is not listed",
+   "optional": true
+  },
+  {
+   "id": "L29W-32",
+   "kind": "door",
+   "subtype": "double swing 2 x 900x2000 (DOOR_SWING_2_SOLID), swings west",
+   "a": [
+    12.617,
+    -52.89
+   ],
+   "b": [
+    12.617,
+    -54.77
+   ],
+   "width": 1.88,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR insert DOOR_SWING_2_SOLID - 900x2000_INT (12.617,-53.830) rot 90: partition x 12.567..12.667 ends at y=-52.890 and restarts at y=-54.770; A-DOOR-FRAM boxes at both jambs (0.04 deep); two 0.900 leaves (y=-52.93 and y=-54.73) drawn open with arcs meeting at (12.605,-53.830)",
+   "confidence": "high",
+   "notes": "frame-to-frame 1.880 (2 x 0.900 leaves + frames)"
+  }
+ ],
+ "glassWalls": [
+  {
+   "a": [
+    0.03,
+    -31.27
+   ],
+   "b": [
+    15.5,
+    -31.27
+   ],
+   "notes": "north curtain wall facade (A-GLAZ-CURT, glazing lines y -31.17/-31.37, mullions every ~1.5 m); continues east beyond the box to x~27; continuous, no door in the box"
+  },
+  {
+   "a": [
+    -0.71,
+    -31.62
+   ],
+   "b": [
+    -3.11,
+    -59.2
+   ],
+   "notes": "west curtain wall facade, tilted ~5 deg from the y axis (A-GLAZ-CURT; the stretch y -56.4..-59.3 is drawn on A-WALL but is the same facade); centre line approximate (+-0.1 m); continuous"
+  },
+  {
+   "a": [
+    -3.24,
+    -59.43
+   ],
+   "b": [
+    15.5,
+    -59.43
+   ],
+   "notes": "south curtain wall facade (A-GLAZ-CURT, glazing lines y -59.15/-59.71); continues east to x~20; continuous, no door in the box"
+  },
+  {
+   "a": [
+    13.318,
+    -41.94
+   ],
+   "b": [
+    14.677,
+    -41.94
+   ],
+   "notes": "glass partition (System Panel GLAZED x 13.318..13.518 and 14.418..14.677, 10 mm) from the core east face to the wall at x=14.677; contains the door L29W-13; the panels are part of the partition, not separate openings"
+  },
+  {
+   "a": [
+    4.612,
+    -45.546
+   ],
+   "b": [
+    4.612,
+    -49.146
+   ],
+   "notes": "10 mm A-WALL (assumed glazed) screen closing the west side of the lift lobby between the nib walls and the lobby south wall; contains the sliding door L29W-19 (gap y -46.346..-48.346); the 0.8 m pieces at each end are glass wall"
+  },
+  {
+   "a": [
+    12.822,
+    -45.546
+   ],
+   "b": [
+    12.822,
+    -49.146
+   ],
+   "notes": "10 mm A-WALL (assumed glazed) screen closing the east side of the lift lobby; contains the sliding door L29W-20 (gap y -46.346..-48.346)"
+  }
+ ],
+ "uncertain": [
+  {
+   "where": [
+    13.18,
+    -36.615
+   ],
+   "what": "East end of the E-W vestibule corridor between the north block (SE corner, y=-35.79) and the stair core (NE corner, y=-37.44): 1.65 m between two collinear wall ends of the N-S line x~13.2, nothing drawn. By the written definition a passage, but it reads as an open corridor mouth rather than a doorway, so it is listed as L29W-08 with optional true."
+  },
+  {
+   "where": [
+    2.965,
+    -37.49
+   ],
+   "what": "North end of the N-S corridor x 2.52..4.12: the thick wall band y -37.74..-37.44 ends at x=2.517 and resumes at x=4.118; a 0.1 m A-WALL strip (y -37.54..-37.44) starts at x=3.414, so the clear gap is 0.897 at the north face (1.60 to the thick wall). Corridor junction; listed as L29W-09 with optional true."
+  },
+  {
+   "where": [
+    2.367,
+    -49.04
+   ],
+   "what": "West stair enclosure: 1.20 m gap between two 0.3 m wall returns (y -48.44 and -49.64), no door symbol. Listed as passage L29W-21 (medium); it may be a stair door that was never modelled, but the wall is open there either way."
+  },
+  {
+   "where": [
+    0.27,
+    -51.626
+   ],
+   "what": "Women toilets: 1.034 m gap between the two front wall pieces of the cubicle zone (wall y -51.556..-51.696). Listed as passage L29W-24 (medium); could be read as room layout rather than an opening."
+  },
+  {
+   "where": [
+    5.809,
+    -44.365
+   ],
+   "what": "Lift landing doors (also at 8.718 and 11.627): shaft wall opening is 1.400 at the wall centre line and equals the A-DOOR-FRAM width, but 0.21 x 0.10 jamb nibs (top-level A-WALL) on the lobby face narrow the face opening to 0.980. I used 1.400."
+  },
+  {
+   "where": [
+    4.612,
+    -47.346
+   ],
+   "what": "Lobby sliding glass doors (also at 12.822,-47.346) are hosted in a 10 mm line on layer A-WALL (not A-GLAZ); I assumed a glazed screen (host glass). If it is a wall the host is wall; geometry is unaffected."
+  },
+  {
+   "where": [
+    12.14,
+    -37.64
+   ],
+   "what": "Stair core north wall: the structural wall hatch (y -37.74..-37.54) is missing between x=11.268 and 13.017, but a continuous 0.1 m A-WALL strip (y -37.54..-37.44, x 3.414..13.318) covers the gap and the S-STRS boundary line closes it. Treated as no opening; if the strip were only a finish over a real doorway it would be a 1.75 m passage."
+  },
+  {
+   "where": [
+    2.471,
+    -45.19
+   ],
+   "what": "Door NO_17: unhatched A-WALL lines at x=2.421/2.521 run through the doorway (the other doors do not have them). Door leaf, frame boxes and swing arc are drawn, so it is a door (L29W-17)."
+  },
+  {
+   "where": [
+    15.46,
+    -41.935
+   ],
+   "what": "Printer niche 0.627 m wide (x 15.150..15.777) in the wall y -41.99..-41.89: the hatch is cut from the north face leaving a 10 mm skin at y -41.99..-41.98. Treated as a recess for the printer, not an opening. Its centre x=15.46 is 4 cm inside the box edge, so the east-part labeller may also see it."
+  }
+ ],
+ "rejected": [
+  {
+   "where": [
+    15.46,
+    -41.935
+   ],
+   "reason": "wall recess for the printer (hatch notch 0.627 x 0.09 with a 10 mm skin left), not a through opening; the wall line continues"
+  },
+  {
+   "where": [
+    12.14,
+    -37.64
+   ],
+   "reason": "stair core north wall: thick wall missing x 11.268..13.017 but covered by the continuous 0.1 m A-WALL strip; no passage"
+  },
+  {
+   "where": [
+    12.62,
+    -57.2
+   ],
+   "reason": "column box (x 12.14..13.09, y -56.68..-57.73) sitting in the x=12.62 partition line; wall resumes within 0.07 m on both sides"
+  },
+  {
+   "where": [
+    4.612,
+    -59.05
+   ],
+   "reason": "long partition x=4.612 simply ends 0.2 m short of the curtain wall (free wall end, not passable)"
+  },
+  {
+   "where": [
+    12.617,
+    -59.05
+   ],
+   "reason": "partition x=12.617 ends 0.2 m short of the curtain wall (free wall end)"
+  },
+  {
+   "where": [
+    13.09,
+    -49.2
+   ],
+   "reason": "east end of the lobby south wall (y -49.15..-49.25) ends in open floor: wall end, not a gap between two walls"
+  },
+  {
+   "where": [
+    1.134,
+    -34.2
+   ],
+   "reason": "west end of the men toilet stall-zone wall (x 1.13..2.75, y -34.12..-34.28): wall ending in open room, stall fronts are the cubicle doors"
+  },
+  {
+   "where": [
+    3.3,
+    -42.5
+   ],
+   "reason": "N-S corridor x 2.52..4.12 between the service-lift/stair block and the lift core: open space between two parallel walls, no wall line interrupted"
+  },
+  {
+   "where": [
+    6.6,
+    -34.5
+   ],
+   "reason": "closed riser cells of the north block (x 6.22..6.93, 7.07..7.75, y -31.87..-35.54 and the cell x 4.37..6.93 y -31.87..-33.4): all enclosed by continuous A-WALL lines, no door symbol or gap"
+  },
+  {
+   "where": [
+    5.4,
+    -40.3
+   ],
+   "reason": "riser cell x 5.37..6.47, y -39.49..-41.19 and cells x 4.97..6.47, y -37.74..-39.4: closed, no door drawn"
+  },
+  {
+   "where": [
+    9.9,
+    -39.5
+   ],
+   "reason": "main stair core (x 6.77..13.0, y -37.74..-41.19): enclosed by A-WALL-PATT walls, no door or gap drawn"
+  },
+  {
+   "where": [
+    1.4,
+    -50.3
+   ],
+   "reason": "women toilets closet x 0.37..2.38, y -50.07..-50.58: enclosed on four sides, no door drawn"
+  },
+  {
+   "where": [
+    0.2,
+    -33.7
+   ],
+   "reason": "urinal privacy screens (0.31 m lines at y -33.05, -33.70, -34.35): fittings"
+  },
+  {
+   "where": [
+    0.25,
+    -53.0
+   ],
+   "reason": "toilet cubicle side partitions and front posts (A-GENM): fittings; only their doors are listed (optional)"
+  },
+  {
+   "where": [
+    -3.0,
+    -57.5
+   ],
+   "reason": "west facade stretch y -56.4..-59.3 is drawn on A-WALL instead of A-GLAZ-CURT but is the same continuous facade with mullion fins; not an opening"
+  },
+  {
+   "where": [
+    5.8,
+    -43.4
+   ],
+   "reason": "red crossed boxes behind the lift doors are the lift car/pit symbols (A-DOOR-FRAM lines of the lift door family), not extra openings"
+  },
+  {
+   "where": [
+    4.37,
+    -45.0
+   ],
+   "reason": "U-shaped wall returns at both ends of the lift lobby (x 4.117..4.617 and 12.818..13.318, y -44.49..-45.55): closed pockets"
+  },
+  {
+   "where": [
+    13.07,
+    -49.6
+   ],
+   "reason": "box x 12.14..13.09, y -49.25..-50.9 with an inner pocket: riser/column block, enclosed"
+  }
+ ],
+ "method": "Pictures first: rendered the whole box (part_overview.png, --grid 1 --inserts) and a wall-fill version (fill_overview.png: A-WALL / A-WALL-PATT / S-COLS hatches filled), then walked the part in zoomed tiles of about 6 x 5.5 m at 0.5 m grid with insert names (tA1-A3 y -36.8..-31; tB1, tB1b, tB2, tB3 y -42.5..-34.8; tC1-C3 y -46.5..-41; tD1-D3 y -51.5..-46; tE1-E3 y -56..-50; tF1-F4 y -61..-55), following every wall line. Every candidate was then confirmed from prims.pkl: wall hatch polygons and A-WALL lines at the wall ends on both sides, door block insert point / rotation / frame lines / leaf and swing arcs, Door-Opening family rectangles, stall blocks (posts and 45 deg leaf lines). a/b are the wall-end faces on the wall centre line (verified with a shapely union of the wall hatches: gap free of wall material, both ends on wall faces). Cross-checks: (1) all door inserts at any depth in the box (top-level A-DOOR inserts and the link blocks D36, D37, D_Openning_Lift, D_Swing_Single, Door NO_03, Door NO_17) are listed; (2) all door swing arcs in the box belong to a listed door; (3) an automatic wall-end ray cast over the hatch union found the same end-to-end gaps plus the two corridor mouths; (4) un-hatched A-WALL lines were checked for line-only walls and gaps; (5) final render with a marker at every listed centre (marks_final.png) showed no unmarked swing, leaf, track or gap. Conventions used: lift landing doors with leaves = door, lift opening without leaf = passage (optional), cubicle doors = optional doors, doors in the 10 mm screens/curtain panels = host glass.",
+ "files": [
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/fill_corridor_mouth.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/fill_overview.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/fill_printer.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/fill_stair_top.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/marks_final.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/marks_overview.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/part_overview.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/printer_lines.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/shaft_door17_zoom.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/shaft_doors_zoom.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/tA1.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/tA2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/tA3.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/tB1.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/tB1b.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/tB2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/tB3.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/tC1.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/tC2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/tC3.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/tD1.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/tD2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/tD3.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/tE1.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/tE2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/tE3.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/tF1.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/tF2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/tF3.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-label-l29-W-B/tF4.png"
+ ]
+}

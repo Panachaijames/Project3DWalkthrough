@@ -1,0 +1,820 @@
+[
+ {
+  "id": "V30-01",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   -1.706,
+   -51.941
+  ],
+  "b": [
+   -1.019,
+   -51.941
+  ],
+  "width": 0.687,
+  "encodings": [
+   "toilet stall leaf (A-GENM)"
+  ],
+  "note": "Toilet cubicle door (SW toilets): block 'Parametric_Toilet_stall_14001 - toilet stall 900 w' (A-GENM) draws a 0.70 m leaf open at 45 deg (hinge at (-1.026,-51.922)) in a 0.69 m gap between the front partition ends. Toilet cubicle door, optional by convention; the thin partitions are not walls.",
+  "subtype": "cubicle leaf 700",
+  "host": "partition",
+  "optional": true
+ },
+ {
+  "id": "V30-02",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   -0.786,
+   -51.941
+  ],
+  "b": [
+   -0.098,
+   -51.941
+  ],
+  "width": 0.688,
+  "encodings": [
+   "toilet stall leaf (A-GENM)"
+  ],
+  "note": "Toilet cubicle door (SW toilets): block 'Parametric_Toilet_stall_14001 - toilet stall 900 w' (A-GENM) draws a 0.70 m leaf open at 45 deg (hinge at (-0.106,-51.922)) in a 0.69 m gap between the front partition ends. Toilet cubicle door, optional by convention; the thin partitions are not walls.",
+  "subtype": "cubicle leaf 700",
+  "host": "partition",
+  "optional": true
+ },
+ {
+  "id": "V30-03",
+  "floor": "l30",
+  "kind": "passage",
+  "a": [
+   -0.332,
+   -41.216
+  ],
+  "b": [
+   1.168,
+   -41.216
+  ],
+  "width": 1.5,
+  "encodings": [
+   "leafless opening family (Door-Opening / D_Openning_Lift)",
+   "wall-fill hatch gap",
+   "lift landing gap + lift symbol"
+  ],
+  "note": "Lift landing opening in the 0.30 m lift-shaft wall (y=-41.216): Revit family 'D_Openning_Lift - 1400 X 2250mm' (A-DOOR reveal lines with splayed returns + A-DOOR-HDLN, NO leaf). Wall ends x=-0.332/1.168 (insert +/-0.75 = 1.50 m); clear width between the splays 1.40-1.45. Lift car symbol (A-DETL) behind it. Lift landing, no door drawn. Wall lines of the linked 'ROOF Central' model run straight across the opening (duplicate wall, ignore).",
+  "subtype": "lift landing opening 1400x2250 (no leaf)",
+  "host": "wall",
+  "optional": true
+ },
+ {
+  "id": "V30-04",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   0.135,
+   -51.941
+  ],
+  "b": [
+   0.822,
+   -51.941
+  ],
+  "width": 0.687,
+  "encodings": [
+   "toilet stall leaf (A-GENM)"
+  ],
+  "note": "Toilet cubicle door (SW toilets): block 'Parametric_Toilet_stall_14001 - toilet stall 900 w' (A-GENM) draws a 0.70 m leaf open at 45 deg (hinge at (0.815,-51.922)) in a 0.69 m gap between the front partition ends. Toilet cubicle door, optional by convention; the thin partitions are not walls.",
+  "subtype": "cubicle leaf 700",
+  "host": "partition",
+  "optional": true
+ },
+ {
+  "id": "V30-05",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   1.146,
+   -32.411
+  ],
+  "b": [
+   1.146,
+   -33.098
+  ],
+  "width": 0.687,
+  "encodings": [
+   "toilet stall leaf (A-GENM)"
+  ],
+  "note": "Toilet cubicle door (NW toilets): block 'Parametric_Toilet_stall_14001 - toilet stall 900 w' (A-GENM) draws a 0.70 m leaf open at 45 deg (hinge at (1.127,-32.418)) in a 0.69 m gap between the front partition ends. Toilet cubicle door, optional by convention; the thin partitions are not walls.",
+  "subtype": "cubicle leaf 700",
+  "host": "partition",
+  "optional": true
+ },
+ {
+  "id": "V30-06",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   1.146,
+   -33.331
+  ],
+  "b": [
+   1.146,
+   -34.019
+  ],
+  "width": 0.688,
+  "encodings": [
+   "toilet stall leaf (A-GENM)"
+  ],
+  "note": "Toilet cubicle door (NW toilets): block 'Parametric_Toilet_stall_14001 - toilet stall 900 w' (A-GENM) draws a 0.70 m leaf open at 45 deg (hinge at (1.127,-33.338)) in a 0.69 m gap between the front partition ends. Toilet cubicle door, optional by convention; the thin partitions are not walls.",
+  "subtype": "cubicle leaf 700",
+  "host": "partition",
+  "optional": true
+ },
+ {
+  "id": "V30-07",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   1.471,
+   -36.21
+  ],
+  "b": [
+   1.471,
+   -37.19
+  ],
+  "width": 0.98,
+  "encodings": [
+   "A-DOOR door block with A-DOOR-FRAM frames, leaf and swing arc",
+   "wall-fill hatch gap"
+  ],
+  "note": "DOOR_SWING_1_SOLID - 900x2000_INT-2463669 (handle 2DD8), accessible-WC door in the 0.10 m partition x=1.471. Wall ends = frame outer faces y=-36.210/-37.190 (0.98 m, clear 0.90). Leaf and swing arc on A-DOOR, the arc swings east (out of the WC into the vestibule).",
+  "subtype": "single swing 900x2000",
+  "host": "wall"
+ },
+ {
+  "id": "V30-08",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   1.842,
+   -39.077
+  ],
+  "b": [
+   1.842,
+   -40.597
+  ],
+  "width": 1.52,
+  "encodings": [
+   "nested linked-model door family (A-DOOR + A-DOOR-HDLN, leaf and arc on A-DETL-GENF)",
+   "A-DETL threshold line",
+   "wall-fill hatch gap"
+  ],
+  "note": "Nested BTAR family 'Door NO_03 - Door_Swing_Double_Fire_Ex_ Glass Panel' (A-DOOR jamb lines + hinge arcs, A-DOOR-HDLN heads; two swing arcs R=1.01 and R=0.41 on A-DETL-GENF-HDLN, so unequal leaves). Wall x=1.842 (T=0.15), wall ends y=-39.077/-40.597 = 1.52 m; threshold line 3DE8 at x=1.917.",
+  "subtype": "double swing, unequal leaves (~1000+500), fire door with glass panel",
+  "host": "wall"
+ },
+ {
+  "id": "V30-09",
+  "floor": "l30",
+  "kind": "passage",
+  "a": [
+   1.781,
+   -35.74
+  ],
+  "b": [
+   2.681,
+   -35.74
+  ],
+  "width": 0.9,
+  "encodings": [
+   "leafless opening family (Door-Opening / D_Openning_Lift)",
+   "wall-fill hatch gap"
+  ],
+  "note": "Revit 'Door-Opening - 900 x 2000' (A-DOOR block holding only A-DETL-GENF 'Overhead' lines + A-DETL-MEDM, no leaf and no swing): doorless entrance to the NW toilets in the 0.10 m wall y=-35.740, wall ends x=1.781 (L-return of the toilet wall) and x=2.681 (concrete stack).",
+  "subtype": "doorless opening 900x2000 (Revit Door-Opening)",
+  "host": "wall"
+ },
+ {
+  "id": "V30-10",
+  "floor": "l30",
+  "kind": "passage",
+  "a": [
+   2.367,
+   -48.44
+  ],
+  "b": [
+   2.367,
+   -49.64
+  ],
+  "width": 1.2,
+  "encodings": [
+   "A-DETL threshold line",
+   "wall-fill hatch gap"
+  ],
+  "note": "Doorless gap between two short concrete (A-WALL-PATT) pilaster stubs (0.30 x 0.17 m) on wall line x=2.367 (T=0.30), faces y=-48.440/-49.640 = 1.20 m. No door block, but A-DETL threshold line 3DE3 (x=2.517, L=1.20) closes it exactly like thresholds 3DE2/3DE4/3DE5 of the neighbouring doors; it is the way into the west stair hall (stair flight x -1.5..1.3). The stubs are short, so a reader might call it a wide gap between wall ends.",
+  "subtype": "doorless opening, stair hall entrance",
+  "host": "wall"
+ },
+ {
+  "id": "V30-11",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   2.442,
+   -50.735
+  ],
+  "b": [
+   2.442,
+   -51.535
+  ],
+  "width": 0.8,
+  "encodings": [
+   "A-DOOR door block with A-DOOR-FRAM frames, leaf and swing arc",
+   "A-DETL threshold line",
+   "wall-fill hatch gap"
+  ],
+  "note": "DOOR_GEN_SWING_1 PANEL_FLUSH - 700x2400_INT-4456610 (2D9A), entrance to the SW toilets. Wall x=2.442 (T=0.15); wall ends = frame outer faces y=-50.735/-51.535 (0.80 m, clear 0.70). Leaf drawn open on A-DOOR, arc swings into the toilets; threshold 3DE2.",
+  "subtype": "single swing 700x2400",
+  "host": "wall"
+ },
+ {
+  "id": "V30-12",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   2.471,
+   -44.69
+  ],
+  "b": [
+   2.471,
+   -45.69
+  ],
+  "width": 1.0,
+  "encodings": [
+   "nested linked-model door family (A-DOOR + A-DOOR-HDLN, leaf and arc on A-DETL-GENF)",
+   "A-DETL threshold line",
+   "wall-fill hatch gap"
+  ],
+  "note": "Nested BTAR family 'Door NO_17 - D_Swing_Single_Shaft_1000_2000' (shaft door). Wall x=2.471 (T=0.10), wall ends y=-44.690/-45.690 = 1.00 m; threshold 3DE5; BTAR wall lines at x=2.421/2.521 run across the opening (jamb lines, ignore).",
+  "subtype": "single swing shaft door 1000x2000",
+  "host": "wall"
+ },
+ {
+  "id": "V30-13",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   2.471,
+   -47.121
+  ],
+  "b": [
+   2.471,
+   -47.941
+  ],
+  "width": 0.82,
+  "encodings": [
+   "nested linked-model door family (A-DOOR + A-DOOR-HDLN, leaf and arc on A-DETL-GENF)",
+   "A-DETL threshold line",
+   "wall-fill hatch gap"
+  ],
+  "note": "Nested BTAR family 'D_Swing_Single - 700_2000' (arc R=0.72 on A-DETL-GENF-HDLN). Door in the 0.10 m enclosure wall x=2.471 (south stair-enclosure room); wall ends y=-47.121/-47.941 = 0.82 m; threshold 3DE4 (x=2.517).",
+  "subtype": "single swing 700x2000",
+  "host": "wall"
+ },
+ {
+  "id": "V30-14",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   2.503,
+   -51.792
+  ],
+  "b": [
+   2.503,
+   -52.479
+  ],
+  "width": 0.687,
+  "encodings": [
+   "toilet stall leaf (A-GENM)"
+  ],
+  "note": "Toilet cubicle door (SW toilets): block 'Parametric_Toilet_stall_14001 - toilet stall 900 w' (A-GENM) draws a 0.70 m leaf open at 45 deg (hinge at (2.484,-52.472)) in a 0.69 m gap between the front partition ends. Toilet cubicle door, optional by convention; the thin partitions are not walls.",
+  "subtype": "cubicle leaf 700",
+  "host": "partition",
+  "optional": true
+ },
+ {
+  "id": "V30-15",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   2.503,
+   -52.712
+  ],
+  "b": [
+   2.503,
+   -53.399
+  ],
+  "width": 0.687,
+  "encodings": [
+   "toilet stall leaf (A-GENM)"
+  ],
+  "note": "Toilet cubicle door (SW toilets): block 'Parametric_Toilet_stall_14001 - toilet stall 900 w' (A-GENM) draws a 0.70 m leaf open at 45 deg (hinge at (2.484,-53.392)) in a 0.69 m gap between the front partition ends. Toilet cubicle door, optional by convention; the thin partitions are not walls.",
+  "subtype": "cubicle leaf 700",
+  "host": "partition",
+  "optional": true
+ },
+ {
+  "id": "V30-16",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   3.157,
+   -35.665
+  ],
+  "b": [
+   4.177,
+   -35.665
+  ],
+  "width": 1.02,
+  "encodings": [
+   "nested linked-model door family (A-DOOR + A-DOOR-HDLN, leaf and arc on A-DETL-GENF)",
+   "A-DETL threshold line",
+   "wall-fill hatch gap"
+  ],
+  "note": "Nested BTAR family 'D37 - D37-10479462' (rot 180): leaf on A-DETL-GENF, arc R=0.92 on A-DETL-GENF-HDLN, A-DOOR leaf/jamb lines (14 lines + 4 small arcs) and A-DOOR-HDLN heads. Wall y=-35.665 (T=0.25), wall ends x=3.157/4.177 = 1.02 m; threshold 3DEB. Sits next to D37-b across a 0.28 m pier.",
+  "subtype": "single swing ~1000 (family D37)",
+  "host": "wall"
+ },
+ {
+  "id": "V30-17",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   4.188,
+   -40.026
+  ],
+  "b": [
+   4.188,
+   -41.046
+  ],
+  "width": 1.02,
+  "encodings": [
+   "nested linked-model door family (A-DOOR + A-DOOR-HDLN, leaf and arc on A-DETL-GENF)",
+   "A-DETL threshold line",
+   "wall-fill hatch gap"
+  ],
+  "note": "Nested BTAR family 'D_Swing_Single - 900 x 2000_PAN' (arc R=0.92). Wall x=4.188 (T=0.15), wall ends y=-40.026/-41.046 = 1.02 m; threshold 3DDE (x=4.118). Opens west into the lobby.",
+  "subtype": "single swing 900x2000 (panel)",
+  "host": "wall"
+ },
+ {
+  "id": "V30-18",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   4.192,
+   -54.685
+  ],
+  "b": [
+   4.192,
+   -55.665
+  ],
+  "width": 0.98,
+  "encodings": [
+   "A-DOOR door block with A-DOOR-FRAM frames, leaf and swing arc",
+   "wall-fill hatch gap"
+  ],
+  "note": "DOOR_SWING_1_SOLID - 900x2000_INT-4477547 (3AB2). Wall x=4.192 (T=0.15), wall ends = frame outer faces y=-54.685/-55.665 (0.98 m); leaf+arc on A-DOOR, opens east; a 0.33 m stub continues to the south facade.",
+  "subtype": "single swing 900x2000",
+  "host": "wall"
+ },
+ {
+  "id": "V30-19",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   4.267,
+   -45.505
+  ],
+  "b": [
+   4.267,
+   -47.425
+  ],
+  "width": 1.92,
+  "encodings": [
+   "A-DOOR door block with A-DOOR-FRAM frames, leaf and swing arc",
+   "sliding-panel symbol",
+   "A-DETL dashed wall-opening lines",
+   "wall-fill hatch gap"
+  ],
+  "note": "DOOR_SLIDING_CAVITY_2_SOLID - 920x920x2340_INT-3403708 (3942): bi-parting cavity slider, two 0.92 m panels in pockets (A-DOOR rectangles + arrows). Wall x 4.117..4.417 (T=0.30) is two hatch leaves with a cavity: the thin leaf ends at y=-45.505/-47.425 = frame outer faces (1.92 m, reported); the thick leaf is recessed to y=-45.390/-47.540 (2.15 m, same span as the dashed A-DETL pair 3DEE/3DEF at x=4.118/4.418).",
+  "subtype": "cavity slider 2 x 920 (clear 1.84 between frames)",
+  "host": "wall"
+ },
+ {
+  "id": "V30-20",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   4.457,
+   -35.665
+  ],
+  "b": [
+   5.477,
+   -35.665
+  ],
+  "width": 1.02,
+  "encodings": [
+   "nested linked-model door family (A-DOOR + A-DOOR-HDLN, leaf and arc on A-DETL-GENF)",
+   "A-DETL threshold line",
+   "wall-fill hatch gap"
+  ],
+  "note": "Nested BTAR family 'D37 - D37-10479463' (rot 0), mirror of D37-a: single leaf (arc R=0.92 on A-DETL-GENF-HDLN). Wall y=-35.665 (T=0.25), wall ends x=4.457/5.477 = 1.02 m; threshold 3DEC.",
+  "subtype": "single swing ~1000 (family D37)",
+  "host": "wall"
+ },
+ {
+  "id": "V30-21",
+  "floor": "l30",
+  "kind": "passage",
+  "a": [
+   5.109,
+   -44.365
+  ],
+  "b": [
+   6.509,
+   -44.365
+  ],
+  "width": 1.4,
+  "encodings": [
+   "lift landing gap + lift symbol",
+   "wall-fill hatch gap",
+   "A-DETL threshold line"
+  ],
+  "note": "Lift 1 landing: 1.40 m gap in the 0.25 m shaft wall y=-44.365 (wall ends x=5.109/6.509), no A-DOOR leaf; grey A-DETL lift symbol (car, door frames) behind; threshold 3DDF at y=-44.49. Lift landing, no door drawn.",
+  "subtype": "lift landing (no leaf)",
+  "host": "wall",
+  "optional": true
+ },
+ {
+  "id": "V30-22",
+  "floor": "l30",
+  "kind": "passage",
+  "a": [
+   6.768,
+   -37.59
+  ],
+  "b": [
+   8.518,
+   -37.59
+  ],
+  "width": 1.75,
+  "encodings": [
+   "A-DETL threshold line",
+   "wall-fill hatch gap"
+  ],
+  "note": "Doorless entrance (1.75 m) to the core stair hall (stair flight x 8.4..11.2): gap in the 0.30 m wall y=-37.590 between x=6.768 (east face of the N-S wall x 6.47..6.77) and the free wall end x=8.518. No door block; A-DETL threshold 3DDD (L=1.75, y=-37.440) closes it. The west side is a perpendicular wall, so it is a 'mouth'-type gap.",
+  "subtype": "doorless opening, stair entrance",
+  "host": "wall"
+ },
+ {
+  "id": "V30-23",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   7.717,
+   -48.515
+  ],
+  "b": [
+   9.597,
+   -48.515
+  ],
+  "width": 1.88,
+  "encodings": [
+   "A-DOOR door block with A-DOOR-FRAM frames, leaf and swing arc",
+   "wall-fill hatch gap"
+  ],
+  "note": "DOOR_SWING_2_SOLID - 900x2000_INT-4452092 (3AC8), rot 180: two 0.9 m leaves + arcs on A-DOOR. Wall y=-48.515 (T=0.15), wall ends = frame outer faces x=7.717/9.597 = 1.88 m.",
+  "subtype": "double swing 2 x 900x2000",
+  "host": "wall"
+ },
+ {
+  "id": "V30-24",
+  "floor": "l30",
+  "kind": "passage",
+  "a": [
+   8.018,
+   -44.365
+  ],
+  "b": [
+   9.418,
+   -44.365
+  ],
+  "width": 1.4,
+  "encodings": [
+   "lift landing gap + lift symbol",
+   "wall-fill hatch gap",
+   "A-DETL threshold line"
+  ],
+  "note": "Lift 2 landing: 1.40 m gap in the 0.25 m shaft wall y=-44.365 (wall ends x=8.018/9.418), no A-DOOR leaf; lift symbol behind; threshold 3DE0. Lift landing, no door drawn.",
+  "subtype": "lift landing (no leaf)",
+  "host": "wall",
+  "optional": true
+ },
+ {
+  "id": "V30-25",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   8.058,
+   -35.665
+  ],
+  "b": [
+   9.678,
+   -35.665
+  ],
+  "width": 1.62,
+  "encodings": [
+   "nested linked-model door family (A-DOOR + A-DOOR-HDLN, leaf and arc on A-DETL-GENF)",
+   "A-DETL threshold line",
+   "wall-fill hatch gap"
+  ],
+  "note": "Nested BTAR family 'D36 - D36-10485138': two leaves on A-DETL-GENF with arcs R=1.01 and R=0.51 (unequal double). Wall y=-35.665 (T=0.25), wall ends x=8.058/9.678 = 1.62 m; threshold 3DED.",
+  "subtype": "double swing, unequal leaves (~1000+500)",
+  "host": "wall"
+ },
+ {
+  "id": "V30-26",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   9.927,
+   -52.298
+  ],
+  "b": [
+   9.927,
+   -54.778
+  ],
+  "width": 2.48,
+  "encodings": [
+   "A-DOOR door block with A-DOOR-FRAM frames, leaf and swing arc",
+   "sliding-panel symbol",
+   "wall-fill hatch gap"
+  ],
+  "note": "DOOR_SLIDING_CAVITY_2_SOLID - 920x920x3100_INT 2-4458115 (39B2): bi-parting cavity slider, two 1.2 m panel pockets in the 0.25 m wall (two 0.09 m hatch leaves with a cavity), arrows in the gap. Both leaves end at y=-52.298/-54.778 = frame outer faces, 2.48 m.",
+  "subtype": "cavity slider 2 panels (1.2 m each)",
+  "host": "wall"
+ },
+ {
+  "id": "V30-27",
+  "floor": "l30",
+  "kind": "passage",
+  "a": [
+   10.927,
+   -44.365
+  ],
+  "b": [
+   12.327,
+   -44.365
+  ],
+  "width": 1.4,
+  "encodings": [
+   "lift landing gap + lift symbol",
+   "wall-fill hatch gap",
+   "A-DETL threshold line"
+  ],
+  "note": "Lift 3 landing: 1.40 m gap in the 0.25 m shaft wall y=-44.365 (wall ends x=10.927/12.327), no A-DOOR leaf; lift symbol behind; threshold 3DE1. Lift landing, no door drawn.",
+  "subtype": "lift landing (no leaf)",
+  "host": "wall",
+  "optional": true
+ },
+ {
+  "id": "V30-28",
+  "floor": "l30",
+  "kind": "passage",
+  "a": [
+   13.167,
+   -45.231
+  ],
+  "b": [
+   13.167,
+   -47.699
+  ],
+  "width": 2.468,
+  "encodings": [
+   "A-DETL dashed wall-opening lines",
+   "wall-fill hatch gap"
+  ],
+  "note": "2.47 m gap in the 0.30 m concrete wall line x=13.167 between the core east wall end (y=-45.231) and the next stub (y=-47.699); no wall fill, no door. Two A-DETL 'DASH SMALL' lines (3DF0/3DF1) at x=13.017/13.317 span exactly the gap (opening / bulkhead notation). Wide doorless opening between the lift lobby and the east hall.",
+  "subtype": "wide doorless opening",
+  "host": "wall"
+ },
+ {
+  "id": "V30-29",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   13.242,
+   -49.07
+  ],
+  "b": [
+   13.242,
+   -49.9
+  ],
+  "width": 0.83,
+  "encodings": [
+   "A-DOOR door block with A-DOOR-FRAM frames, leaf and swing arc",
+   "wall-fill hatch gap"
+  ],
+  "note": "DOOR_SWING_1_SOLID - 750x2000_INT-4452096 (3980): single leaf drawn open at 45 deg + arc on A-DOOR. Wall x=13.242 (T=0.15), wall ends = frame outer faces y=-49.070/-49.900 = 0.83 m (clear 0.75).",
+  "subtype": "single swing 750x2000",
+  "host": "wall"
+ },
+ {
+  "id": "V30-30",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   13.368,
+   -43.023
+  ],
+  "b": [
+   14.348,
+   -43.023
+  ],
+  "width": 0.98,
+  "encodings": [
+   "A-DOOR door block with A-DOOR-FRAM frames, leaf and swing arc",
+   "wall-fill hatch gap"
+  ],
+  "note": "DOOR_SWING_1_SOLID - 900x2000_INT-2463670 (3A93), rot 180, in the 0.10 m wall y=-43.023 that starts 0.05 m off the core east wall (x=13.318). Wall ends x=13.368/14.348 = 0.98 m; arc swings north.",
+  "subtype": "single swing 900x2000",
+  "host": "wall"
+ },
+ {
+  "id": "V30-31",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   13.521,
+   -34.415
+  ],
+  "b": [
+   14.501,
+   -34.415
+  ],
+  "width": 0.98,
+  "encodings": [
+   "A-DOOR door block with A-DOOR-FRAM frames, leaf and swing arc",
+   "wall-fill hatch gap"
+  ],
+  "note": "DOOR_SWING_1_SOLID - 900x2000_INT-2463670 (3D9E), rot 180, in the 0.10 m wall y=-34.415 between the core east wall (x=13.32) and the corridor wall x=14.87; wall ends x=13.521/14.501 = 0.98 m; arc swings north into the closet.",
+  "subtype": "single swing 900x2000",
+  "host": "wall"
+ },
+ {
+  "id": "V30-32",
+  "floor": "l30",
+  "kind": "passage",
+  "a": [
+   14.868,
+   -34.465
+  ],
+  "b": [
+   14.868,
+   -35.79
+  ],
+  "width": 1.325,
+  "encodings": [
+   "wall-fill hatch gap"
+  ],
+  "note": "1.325 m gap in the thin wall line x=14.868 (T=0.10): the north piece ends at y=-34.465 (merged with the door-jamb stub of the y=-34.415 door), the south piece starts at y=-35.790. No door block or threshold line, but the Q-CASE casework blocks 'Casework 149' (y -31.47..-34.47) and 'Casework 10' (y -35.79..-39.87), both x 14.92..17.89, stop exactly at both ends, leaving a 1.32 m aisle that runs east to the sliding door V30-35: doorless doorway from the service corridor into the pantry. Slight doubt only because the north end is part of an L.",
+  "subtype": "doorless gap (corridor mouth into pantry aisle)",
+  "host": "wall"
+ },
+ {
+  "id": "V30-33",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   14.868,
+   -39.973
+  ],
+  "b": [
+   14.868,
+   -41.853
+  ],
+  "width": 1.88,
+  "encodings": [
+   "A-DOOR door block with A-DOOR-FRAM frames, leaf and swing arc",
+   "wall-fill hatch gap"
+  ],
+  "note": "DOOR_SWING_2_SOLID - 900x2000_INT-4484608 (3D83), rot 90: two 0.9 m leaves + arcs on A-DOOR, swinging west. Wall x=14.868 (T=0.10), wall ends = frame outer faces y=-39.973/-41.853 = 1.88 m.",
+  "subtype": "double swing 2 x 900x2000",
+  "host": "wall"
+ },
+ {
+  "id": "V30-34",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   14.665,
+   -50.015
+  ],
+  "b": [
+   16.545,
+   -50.015
+  ],
+  "width": 1.88,
+  "encodings": [
+   "A-DOOR door block with A-DOOR-FRAM frames, leaf and swing arc",
+   "wall-fill hatch gap"
+  ],
+  "note": "DOOR_SWING_2_SOLID - 900x2000_INT-4452092 (3AC9), rot 0: two 0.9 m leaves + arcs on A-DOOR, swinging north. Wall y=-50.015 (T=0.15), wall ends = frame outer faces x=14.665/16.545 = 1.88 m.",
+  "subtype": "double swing 2 x 900x2000",
+  "host": "wall"
+ },
+ {
+  "id": "V30-35",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   18.042,
+   -35.073
+  ],
+  "b": [
+   18.042,
+   -39.873
+  ],
+  "width": 4.8,
+  "encodings": [
+   "A-DOOR door block with A-DOOR-FRAM frames, leaf and swing arc",
+   "sliding-panel symbol",
+   "wall-fill hatch gap"
+  ],
+  "note": "DOOR_SLIDING_FACE_2_SOLID - 2400x2400x2400_INT-4484693 (3D9D): two 2.4 m face-mounted sliding panels (A-DOOR rectangles on the east face, arrows). Wall x=18.042 (T=0.30); wall ends = frame outer faces y=-35.073/-39.873 = 4.80 m. Widest opening of the floor (banquet hall to the west service zone).",
+  "subtype": "sliding face-mounted 2 x 2400",
+  "host": "wall"
+ },
+ {
+  "id": "V30-36",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   18.042,
+   -43.881
+  ],
+  "b": [
+   18.042,
+   -45.161
+  ],
+  "width": 1.28,
+  "encodings": [
+   "A-DOOR door block with A-DOOR-FRAM frames, leaf and swing arc",
+   "sliding-panel symbol",
+   "wall-fill hatch gap"
+  ],
+  "note": "DOOR_SLIDING_CAVITY_1_SOLID_VISION PANEL_NARROW - 920x2340_INT-4478173 (3DC6): single 1.2 m vision panel slides into a cavity in the 0.30 m wall (A-DOOR rectangle, arrow). Wall ends = frame outer faces y=-43.881/-45.161 = 1.28 m (the name says 920 but the frames are 1.28 apart).",
+  "subtype": "cavity slider 1 panel with vision glass",
+  "host": "wall"
+ },
+ {
+  "id": "V30-37",
+  "floor": "l30",
+  "kind": "window?",
+  "a": [
+   18.571,
+   -47.465
+  ],
+  "b": [
+   18.571,
+   -51.965
+  ],
+  "width": 4.5,
+  "encodings": [
+   "A-GLAZ-CURT glazing in wall gap",
+   "wall-fill hatch gap"
+  ],
+  "note": "4.50 m of curtain-wall glazing (3 bays of 1.5 m, posts at y=-47.465/-48.965/-50.465/-51.965; WT-01 'North Facade 4' instances) in the gap of the 0.28 m wall line x=18.572 between two wall pieces. Could equally be a long glass partition (glassWall) rather than an opening, so low confidence; optional.",
+  "subtype": "fixed glazing band in wall-line gap",
+  "host": "glass",
+  "optional": true
+ },
+ {
+  "id": "V30-38",
+  "floor": "l30",
+  "kind": "door",
+  "a": [
+   21.109,
+   -45.957
+  ],
+  "b": [
+   23.109,
+   -45.957
+  ],
+  "width": 2.0,
+  "encodings": [
+   "KPF curtain-wall door block in glass line"
+  ],
+  "note": "'2501_Curtain Wall Dbl Glassrfa - TYP-16688592' (rot 180) in the WT-01 'vision' glass line y=-45.96: two 1.0 m glass leaves with arcs swinging south, centre post only (A-DOOR-FRAM). The glass line stops at x=21.15 and restarts at x=23.07; opening 2.00 m.",
+  "subtype": "double swing glass door in glass partition",
+  "host": "glass"
+ }
+]

@@ -1,0 +1,51 @@
+{
+  "_what": "What the presidential-suite builder (build_model.py, section 6) knows about the furniture in 'layout presidential test.dwg': which layers hold it, the office's own words for names the shared vocabulary (furniture/furniture_kit.py) cannot read, skip words, heights and bases. The same shape as the 'furniture' section of bank_project.json plus the layers (this builder has no layer-role file). Per-drawing facts live here; the code names no layer, block or coordinate. Keys that start with an underscore are notes. Decided on 29 Oct 2026 by looking at a picture of every candidate layer's pieces over the walls.",
+  "layers": [
+    "A-2.Noi That",
+    "A-4. Cay",
+    "A-4. Cay (goccay)",
+    "A-4. Dim",
+    "Xr_SDC_DD_ID-PRS-Fur$0$DA-LOOSE-FURN",
+    "Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES",
+    "Xr_SDC_DD_ID-PRS-Fur$0$DA-LEVEL-LIGHT",
+    "Xr_SDC_DD_ID-PCS-Fur$0$DA-SANR-FIXT",
+    "Xr_SDC_DD_ID-PRS-ID wall$0$DA-SANR"
+  ],
+  "_layers": "A block insert is a piece when its layer is one of these (the layer most of what is drawn in it is on). A-2.Noi That ('interior') is the main furniture layer; the two Cay layers hold the 12 tree symbols (a canopy circle and a trunk); the Fur$0$ layers belong to the bound furniture drawing (loose furniture, curtains, lamps) and the SANR layers to its fittings. A-4. Dim is the facade-line layer, yet three blocks on it read as furniture drawn on the wrong layer (two lounge chairs, each with a round side table, and an arched niche feature with a round stool); its loose lines are NOT furniture (looseLayers). Left out on purpose: DA-LATT-OTLN (the nine movable glass panels: already built as glass), the DA-DOOR-WIND layers (door symbols: the doors are cut as openings), KT-Lancan (the balustrade), KT-DIM (dimension blocks), A-1.Netcat - tuong (walls; its terrace daybed block is built as low walls), A-1.Netthay - manh (thin visible lines; its one block, a 0.7 m square with a cross in the shower room, reads as a floor drain) and Defpoints.",
+  "looseLayers": ["A-2.Noi That"],
+  "_looseLayers": "Shapes drawn loose (not as a block) on these layers that touch within 1 cm form clusters; a cluster that fills 70 % of its rectangle is a box (dining tables, chairs and coffee tables of the terrace and the living room, the vanities, the bath tub, the kitchen counters). They carry no names, so they are all kind 'other'. A cluster that lies on a part built as structure (a pergola post) is that part's own drawing and is dropped.",
+  "heights": {
+    "_why": "mm, only where this suite differs from the office defaults. plant: the 12 Cay symbols are tree and shrub canopies 0.5 - 2.2 m wide on the terraces (assumed 2.5 m; the drawing has no heights). curtain: the glass walls are 3.00 m floor to floor with a 0.25 m slab above, so a full-length curtain hangs to about 2.7 m (the 2.4 m default is for low windows).",
+    "plant": 2500,
+    "curtain": 2700
+  },
+  "bases": {
+    "_why": "none. The lamps with nothing under them (the floor lamp by the bedroom sofa and the two lamps at the ends of the window bench) stand on the floor in the plan, so they keep base 0: a base of 1500 mm would hang them in the air. A lamp over a table or bedside table stands on it (the kit's supports)."
+  },
+  "words": {
+    "_why": "The office's own words: names the vocabulary cannot read (anonymous blocks: the drawing's author named them 'sdhsdfhsdfh', '*U1636', 'A$C...'), matched whole against the family name, and they win over the vocabulary. Each is here only because the picture leaves no doubt what the block is; every other anonymous block stays 'other' and is listed in the report.",
+    "plant": ["jdlkasdjkla"],
+    "sofa": ["sdhsdfhsdfh", "TZSUCAI-30", "A$C2b06494e", "A$Cfa141486"],
+    "tall-cabinet": ["*U1636", "*U1637"],
+    "sanitary": ["sdfhsdfhsdfh"],
+    "appliance": ["A$C632aa080"],
+    "curtain": ["A$C86fb51a5"],
+    "seat": ["A$C1919ec32"],
+    "table": ["A$Cf34708b2"],
+    "lamp": ["L_02"]
+  },
+  "_words": {
+    "plant": "jdlkasdjkla: the 12 Cay symbols (layer 'A-4. Cay (goccay)' = tree trunk): a canopy circle with a hatch and a trunk circle, 0.54 - 2.22 m across.",
+    "sofa": "sdhsdfhsdfh: the two curved sectional sofas (3.5 x 1.6 m) round the living room's coffee tables. TZSUCAI-30: an armchair with arms (the name is a Chinese catalogue line 'sofa, tea table, armchair etc.'). A$C2b06494e: a 6 m built-in banquette with an armchair at each end, along the study's east wall. A$Cfa141486: two lounge chairs, each with a round side table (a grey rendered symbol), drawn on the facade layer.",
+    "tall-cabinet": "*U1636: the 3.4 m hanging rail along the walk-in closet's east wall; *U1637: the two wardrobes at the closet's north and south ends. All three draw the zigzag that stands for clothes on a rail.",
+    "sanitary": "sdfhsdfhsdfh: the three oval washbasins with a tap (two in the master bath's vanity, one in the service room's).",
+    "appliance": "A$C632aa080: a hob (three burners and a row of knobs) in the kitchen; drawn on the sanitary-fittings layer, whose words would make it a sanitary fitting.",
+    "curtain": "A$C86fb51a5: the same coil symbol as the 20 'Double Curtain' blocks, across the massage / spa passage.",
+    "seat": "A$C1919ec32: a 1.8 x 0.6 m tufted bench at the foot of the bed.",
+    "table": "A$Cf34708b2: the study's oval meeting table with three chairs, drawn as one block 2.5 m across (the box is the rectangle round all of it).",
+    "lamp": "L_02: a circle with a cross, the symbol of the 'table lamp 01' blocks; a floor lamp beside the bedroom sofa."
+  },
+  "skip": ["áhahsfhsdfh"],
+  "_skip": "áhahsfhsdfh is the whole north-west terrace lounge drawn as ONE block of 1,123 items, 6.7 x 4.2 m: a curved sectional, armchairs, round side tables, a rectangular table and the outline of a rug. One box would wall off the terrace, so it is left out (and reported): the 3D team builds the lounge from the drawing, or the block is split in CAD first.",
+  "minSize": 0.08
+}

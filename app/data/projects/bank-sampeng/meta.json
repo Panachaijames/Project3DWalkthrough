@@ -1,0 +1,15 @@
+{
+  "format": "walkthrough-project/1",
+  "id": "bank-sampeng",
+  "name": "Bangkok Bank, Sampeng Branch",
+  "shortName": "Bank branch",
+  "projectNo": "26-0216",
+  "sourceKind": "cad",
+  "createdAt": "2026-10-27T04:31:57Z",
+  "updatedAt": "2026-10-29T03:24:53Z",
+  "latestVersion": 2,
+  "versions": [
+    1,
+    2
+  ]
+}

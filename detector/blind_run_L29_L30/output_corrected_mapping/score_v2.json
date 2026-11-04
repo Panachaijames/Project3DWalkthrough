@@ -1,0 +1,1509 @@
+{
+ "floors": {
+  "tower:L29": {
+   "keyCount": 27,
+   "detCount": 41,
+   "optionalKeys": 10,
+   "optionalFound": [
+    {
+     "key": "L29W-11",
+     "det": "L29-010"
+    }
+   ],
+   "matched": 23,
+   "width": 16,
+   "ends": 15,
+   "class": 23,
+   "kind": 23,
+   "right": 16,
+   "recall": 0.852,
+   "precision": 0.561,
+   "rightShare": 0.593,
+   "byKind": {
+    "door": {
+     "key": 23,
+     "right": 14,
+     "share": 0.609
+    },
+    "passage": {
+     "key": 4,
+     "right": 2,
+     "share": 0.5
+    }
+   },
+   "missed": [
+    {
+     "key": "L29W-17",
+     "kind": "door",
+     "at": [
+      4.612,
+      -47.346
+     ],
+     "width": 2.0,
+     "subtype": "sliding glass door, 2 leaves 1000 (DOOR_CP_SLIDE_2_GLASS_FULL)"
+    },
+    {
+     "key": "L29W-18",
+     "kind": "door",
+     "at": [
+      12.822,
+      -47.346
+     ],
+     "width": 2.0,
+     "subtype": "sliding glass door, 2 leaves 1000 (DOOR_CP_SLIDE_2_GLASS_FULL)"
+    },
+    {
+     "key": "L29W-20",
+     "kind": "passage",
+     "at": [
+      2.367,
+      -49.04
+     ],
+     "width": 1.2,
+     "subtype": "stair hall entrance between two wall nibs, no door drawn"
+    },
+    {
+     "key": "L29W-22",
+     "kind": "passage",
+     "at": [
+      2.449,
+      -51.07
+     ],
+     "width": 0.9,
+     "subtype": "Door-Opening 900x2000"
+    }
+   ],
+   "extra": [
+    {
+     "det": "L29-015",
+     "kind": "passage",
+     "at": [
+      15.464,
+      -41.94
+     ],
+     "width": 0.627,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L29-017",
+     "kind": "window",
+     "at": [
+      -2.92,
+      -57.026
+     ],
+     "width": 1.16,
+     "why": [
+      "wall gap (cap-end)",
+      "glazing band",
+      "A-GLAZ-CURT",
+      "fixed glazing"
+     ]
+    },
+    {
+     "det": "L29-018",
+     "kind": "passage",
+     "at": [
+      1.7,
+      -34.715
+     ],
+     "width": 0.9,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L29-019",
+     "kind": "passage",
+     "at": [
+      0.596,
+      -34.195
+     ],
+     "width": 1.077,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L29-020",
+     "kind": "passage",
+     "at": [
+      4.317,
+      -36.615
+     ],
+     "width": 1.65,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L29-021",
+     "kind": "passage",
+     "at": [
+      6.518,
+      -32.465
+     ],
+     "width": 0.8,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L29-022",
+     "kind": "passage",
+     "at": [
+      6.168,
+      -32.191
+     ],
+     "width": 0.65,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L29-023",
+     "kind": "passage",
+     "at": [
+      2.966,
+      -37.49
+     ],
+     "width": 0.896,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L29-024",
+     "kind": "window",
+     "at": [
+      20.071,
+      -50.095
+     ],
+     "width": 0.986,
+     "why": [
+      "wall gap (cap-end)",
+      "glazing band",
+      "A-GLAZ-CURT",
+      "sliding sashes (3 lines)",
+      "may be a floor-length sliding door (no sill in plan)"
+     ]
+    },
+    {
+     "det": "L29-025",
+     "kind": "passage",
+     "at": [
+      1.419,
+      -49.04
+     ],
+     "width": 1.55,
+     "why": [
+      "wall gap (L-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L29-026",
+     "kind": "passage",
+     "at": [
+      3.317,
+      -41.214
+     ],
+     "width": 1.592,
+     "why": [
+      "wall gap (L-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L29-027",
+     "kind": "passage",
+     "at": [
+      2.451,
+      -39.837
+     ],
+     "width": 2.45,
+     "why": [
+      "wall gap (L-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L29-030",
+     "kind": "passage",
+     "at": [
+      13.196,
+      -36.615
+     ],
+     "width": 1.65,
+     "why": [
+      "wall gap (L-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L29-031",
+     "kind": "passage",
+     "at": [
+      4.917,
+      -40.338
+     ],
+     "width": 1.696,
+     "why": [
+      "wall gap (L-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L29-039",
+     "kind": "window",
+     "at": [
+      29.774,
+      -52.538
+     ],
+     "width": 1.159,
+     "why": [
+      "glazing between wall ends (bay)",
+      "A-GLAZ-CURT",
+      "fixed glazing"
+     ]
+    },
+    {
+     "det": "L29-040",
+     "kind": "window",
+     "at": [
+      19.177,
+      -59.429
+     ],
+     "width": 0.553,
+     "why": [
+      "glazing between wall ends (bay)",
+      "A-GLAZ-CURT",
+      "sliding sashes (5 lines)",
+      "may be a floor-length sliding door (no sill in plan)"
+     ]
+    },
+    {
+     "det": "L29-041",
+     "kind": "window",
+     "at": [
+      -2.323,
+      -59.429
+     ],
+     "width": 0.553,
+     "why": [
+      "glazing between wall ends (bay)",
+      "A-GLAZ-CURT",
+      "sliding sashes (5 lines)",
+      "may be a floor-length sliding door (no sill in plan)"
+     ]
+    },
+    {
+     "det": "L29-042",
+     "kind": "window",
+     "at": [
+      19.882,
+      -52.59
+     ],
+     "width": 4.75,
+     "why": [
+      "glazing between wall ends (bay)",
+      "A-GLAZ-CURT",
+      "sliding sashes (2 lines)",
+      "may be a floor-length sliding door (no sill in plan)"
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "key": "L29W-07",
+     "det": "L29-011",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.98,
+     "widthDet": 0.98,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L29W-28",
+     "det": "L29-003",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.98,
+     "widthDet": 0.98,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L29W-29",
+     "det": "L29-001",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.88,
+     "widthDet": 1.88,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L29W-05",
+     "det": "L29-013",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.62,
+     "widthDet": 1.62,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L29W-04",
+     "det": "L29-012",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.02,
+     "widthDet": 1.02,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L29W-19",
+     "det": "L29-008",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.82,
+     "widthDet": 0.82,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L29W-09",
+     "det": "L29-009",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.52,
+     "widthDet": 1.52,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L29W-10",
+     "det": "L29-014",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.02,
+     "widthDet": 1.02,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L29E-06",
+     "det": "L29-016",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.001,
+     "widthKey": 1.0,
+     "widthDet": 1.4,
+     "endErr": 0.2,
+     "widthOk": false,
+     "endsOk": false,
+     "classOk": true,
+     "kindOk": true,
+     "right": false
+    },
+    {
+     "key": "L29W-23",
+     "det": "L29-007",
+     "kindKey": "passage",
+     "kindDet": "passage",
+     "centreOff": 0.001,
+     "widthKey": 1.034,
+     "widthDet": 1.034,
+     "endErr": 0.001,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L29W-21",
+     "det": "L29-002",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.001,
+     "widthKey": 0.98,
+     "widthDet": 0.98,
+     "endErr": 0.001,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L29E-01",
+     "det": "L29-038",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.015,
+     "widthKey": 0.9,
+     "widthDet": 0.93,
+     "endErr": 0.03,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L29E-02",
+     "det": "L29-036",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.016,
+     "widthKey": 0.9,
+     "widthDet": 0.93,
+     "endErr": 0.031,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L29E-03",
+     "det": "L29-033",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.029,
+     "widthKey": 0.9,
+     "widthDet": 1.36,
+     "endErr": 0.259,
+     "widthOk": false,
+     "endsOk": false,
+     "classOk": true,
+     "kindOk": true,
+     "right": false
+    },
+    {
+     "key": "L29E-04",
+     "det": "L29-032",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.041,
+     "widthKey": 0.9,
+     "widthDet": 1.381,
+     "endErr": 0.282,
+     "widthOk": false,
+     "endsOk": false,
+     "classOk": true,
+     "kindOk": true,
+     "right": false
+    },
+    {
+     "key": "L29W-16",
+     "det": "L29-035",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.05,
+     "widthKey": 1.0,
+     "widthDet": 1.0,
+     "endErr": 0.05,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L29W-03",
+     "det": "L29-029",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.065,
+     "widthKey": 1.02,
+     "widthDet": 1.02,
+     "endErr": 0.065,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L29W-14",
+     "det": "L29-005",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.075,
+     "widthKey": 1.4,
+     "widthDet": 0.98,
+     "endErr": 0.223,
+     "widthOk": false,
+     "endsOk": false,
+     "classOk": true,
+     "kindOk": true,
+     "right": false
+    },
+    {
+     "key": "L29W-13",
+     "det": "L29-004",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.075,
+     "widthKey": 1.4,
+     "widthDet": 0.98,
+     "endErr": 0.223,
+     "widthOk": false,
+     "endsOk": false,
+     "classOk": true,
+     "kindOk": true,
+     "right": false
+    },
+    {
+     "key": "L29W-15",
+     "det": "L29-006",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.075,
+     "widthKey": 1.4,
+     "widthDet": 0.98,
+     "endErr": 0.223,
+     "widthOk": false,
+     "endsOk": false,
+     "classOk": true,
+     "kindOk": true,
+     "right": false
+    },
+    {
+     "key": "L29E-09",
+     "det": "L29-034",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.082,
+     "widthKey": 2.0,
+     "widthDet": 1.955,
+     "endErr": 0.091,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L29E-07",
+     "det": "L29-037",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.1,
+     "widthKey": 1.0,
+     "widthDet": 1.2,
+     "endErr": 0.2,
+     "widthOk": false,
+     "endsOk": false,
+     "classOk": true,
+     "kindOk": true,
+     "right": false
+    },
+    {
+     "key": "L29W-06",
+     "det": "L29-028",
+     "kindKey": "passage",
+     "kindDet": "passage",
+     "centreOff": 0.133,
+     "widthKey": 0.9,
+     "widthDet": 1.0,
+     "endErr": 0.152,
+     "widthOk": true,
+     "endsOk": false,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    }
+   ]
+  },
+  "tower:L30": {
+   "keyCount": 26,
+   "detCount": 53,
+   "optionalKeys": 12,
+   "optionalFound": [
+    {
+     "key": "L30W-16",
+     "det": "L30-008"
+    },
+    {
+     "key": "L30W-17",
+     "det": "L30-007"
+    },
+    {
+     "key": "L30W-18",
+     "det": "L30-009"
+    },
+    {
+     "key": "L30E-11",
+     "det": "L30-044"
+    }
+   ],
+   "matched": 22,
+   "width": 22,
+   "ends": 21,
+   "class": 22,
+   "kind": 20,
+   "right": 22,
+   "recall": 0.846,
+   "precision": 0.415,
+   "rightShare": 0.846,
+   "byKind": {
+    "door": {
+     "key": 21,
+     "right": 19,
+     "share": 0.905
+    },
+    "passage": {
+     "key": 5,
+     "right": 3,
+     "share": 0.6
+    }
+   },
+   "missed": [
+    {
+     "key": "L30W-05",
+     "kind": "passage",
+     "at": [
+      2.231,
+      -35.74
+     ],
+     "width": 0.899,
+     "subtype": "Door-Opening 900x2000 (Revit door-opening family)"
+    },
+    {
+     "key": "L30W-10",
+     "kind": "passage",
+     "at": [
+      7.643,
+      -37.59
+     ],
+     "width": 1.749,
+     "subtype": "open doorway to stair hall (no door drawn)"
+    },
+    {
+     "key": "L30W-20",
+     "kind": "door",
+     "at": [
+      4.268,
+      -46.465
+     ],
+     "width": 2.15,
+     "subtype": "double cavity slider 920x920x2340 (bi-parting pocket door)"
+    },
+    {
+     "key": "L30E-03",
+     "kind": "door",
+     "at": [
+      18.042,
+      -37.473
+     ],
+     "width": 4.8,
+     "subtype": "sliding face-mounted, 2 panels 2400x2400x2400 (opening 4800)"
+    }
+   ],
+   "extra": [
+    {
+     "det": "L30-019",
+     "kind": "window",
+     "at": [
+      26.402,
+      -31.281
+     ],
+     "width": 1.16,
+     "why": [
+      "wall gap (cap-end)",
+      "glazing band",
+      "A-GLAZ-CURT",
+      "fixed glazing"
+     ]
+    },
+    {
+     "det": "L30-020",
+     "kind": "window",
+     "at": [
+      -2.667,
+      -54.142
+     ],
+     "width": 0.95,
+     "why": [
+      "wall gap (cap-end)",
+      "glazing band",
+      "A-GLAZ-CURT",
+      "fixed glazing"
+     ]
+    },
+    {
+     "det": "L30-021",
+     "kind": "passage",
+     "at": [
+      0.997,
+      -51.303
+     ],
+     "width": 1.264,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L30-022",
+     "kind": "passage",
+     "at": [
+      0.276,
+      -52.2
+     ],
+     "width": 2.37,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L30-024",
+     "kind": "passage",
+     "at": [
+      3.317,
+      -48.19
+     ],
+     "width": 1.6,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L30-025",
+     "kind": "passage",
+     "at": [
+      1.651,
+      -34.65
+     ],
+     "width": 1.01,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L30-026",
+     "kind": "passage",
+     "at": [
+      4.317,
+      -36.615
+     ],
+     "width": 1.65,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L30-027",
+     "kind": "passage",
+     "at": [
+      6.518,
+      -32.465
+     ],
+     "width": 0.8,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L30-028",
+     "kind": "passage",
+     "at": [
+      6.168,
+      -32.19
+     ],
+     "width": 0.65,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L30-031",
+     "kind": "window",
+     "at": [
+      29.216,
+      -51.643
+     ],
+     "width": 0.608,
+     "why": [
+      "wall gap (cap-end)",
+      "glazing band",
+      "A-GLAZ-CURT",
+      "sliding sashes (5 lines)",
+      "may be a floor-length sliding door (no sill in plan)"
+     ]
+    },
+    {
+     "det": "L30-032",
+     "kind": "window",
+     "at": [
+      29.413,
+      -50.563
+     ],
+     "width": 0.895,
+     "why": [
+      "wall gap (cap-end)",
+      "glazing band",
+      "A-GLAZ-CURT",
+      "sliding sashes (4 lines)",
+      "may be a floor-length sliding door (no sill in plan)"
+     ]
+    },
+    {
+     "det": "L30-033",
+     "kind": "window",
+     "at": [
+      28.949,
+      -46.54
+     ],
+     "width": 1.155,
+     "why": [
+      "wall gap (cap-end)",
+      "glazing band",
+      "A-GLAZ-CURT",
+      "on the line of its glazing (outside the block it was measured from)",
+      "sliding sashes (4 lines)",
+      "may be a floor-length sliding door (no sill in plan)"
+     ]
+    },
+    {
+     "det": "L30-035",
+     "kind": "passage",
+     "at": [
+      1.419,
+      -49.04
+     ],
+     "width": 1.55,
+     "why": [
+      "wall gap (L-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L30-036",
+     "kind": "passage",
+     "at": [
+      2.37,
+      -39.838
+     ],
+     "width": 2.453,
+     "why": [
+      "wall gap (L-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L30-037",
+     "kind": "passage",
+     "at": [
+      3.318,
+      -37.59
+     ],
+     "width": 1.6,
+     "why": [
+      "wall gap (L-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L30-039",
+     "kind": "passage",
+     "at": [
+      13.196,
+      -36.615
+     ],
+     "width": 1.65,
+     "why": [
+      "wall gap (L-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L30-040",
+     "kind": "passage",
+     "at": [
+      6.618,
+      -36.615
+     ],
+     "width": 1.65,
+     "why": [
+      "wall gap (L-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L30-041",
+     "kind": "passage",
+     "at": [
+      4.917,
+      -40.338
+     ],
+     "width": 1.696,
+     "why": [
+      "wall gap (L-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L30-042",
+     "kind": "passage",
+     "at": [
+      3.319,
+      -41.388
+     ],
+     "width": 1.596,
+     "why": [
+      "wall gap (L-face), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L30-043",
+     "kind": "passage",
+     "at": [
+      14.068,
+      -39.923
+     ],
+     "width": 1.5,
+     "why": [
+      "wall gap (L-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L30-045",
+     "kind": "passage",
+     "at": [
+      17.957,
+      -48.68
+     ],
+     "width": 2.521,
+     "why": [
+      "wall gap (L-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L30-048",
+     "kind": "window",
+     "at": [
+      29.481,
+      -51.416
+     ],
+     "width": 0.752,
+     "why": [
+      "glazing between wall ends (bay)",
+      "A-GLAZ-CURT",
+      "sliding sashes (8 lines)",
+      "may be a floor-length sliding door (no sill in plan)"
+     ]
+    },
+    {
+     "det": "L30-049",
+     "kind": "window",
+     "at": [
+      29.269,
+      -47.788
+     ],
+     "width": 1.158,
+     "why": [
+      "glazing between wall ends (bay)",
+      "A-GLAZ-CURT",
+      "fixed glazing"
+     ]
+    },
+    {
+     "det": "L30-050",
+     "kind": "window",
+     "at": [
+      29.234,
+      -49.541
+     ],
+     "width": 1.16,
+     "why": [
+      "glazing between wall ends (bay)",
+      "A-GLAZ-CURT",
+      "fixed glazing"
+     ]
+    },
+    {
+     "det": "L30-051",
+     "kind": "window",
+     "at": [
+      29.392,
+      -54.916
+     ],
+     "width": 1.08,
+     "why": [
+      "glazing between wall ends (bay)",
+      "A-GLAZ-CURT",
+      "sliding sashes (3 lines)",
+      "may be a floor-length sliding door (no sill in plan)"
+     ]
+    },
+    {
+     "det": "L30-052",
+     "kind": "window",
+     "at": [
+      17.431,
+      -56.676
+     ],
+     "width": 2.391,
+     "why": [
+      "glazing between wall ends (bay)",
+      "A-GLAZ-CURT",
+      "sliding sashes (3 lines)",
+      "may be a floor-length sliding door (no sill in plan)"
+     ]
+    },
+    {
+     "det": "L30-053",
+     "kind": "window",
+     "at": [
+      -2.323,
+      -56.499
+     ],
+     "width": 0.662,
+     "why": [
+      "glazing between wall ends (bay)",
+      "A-GLAZ-CURT",
+      "sliding sashes (5 lines)",
+      "may be a floor-length sliding door (no sill in plan)"
+     ]
+    },
+    {
+     "det": "L30-054",
+     "kind": "window",
+     "at": [
+      29.474,
+      -45.917
+     ],
+     "width": 0.495,
+     "why": [
+      "glazing between wall ends (bay)",
+      "A-GLAZ-CURT",
+      "sliding sashes (5 lines)",
+      "may be a floor-length sliding door (no sill in plan)"
+     ]
+    },
+    {
+     "det": "L30-055",
+     "kind": "window",
+     "at": [
+      29.629,
+      -48.916
+     ],
+     "width": 0.332,
+     "why": [
+      "glazing between wall ends (bay)",
+      "A-GLAZ-CURT",
+      "sliding sashes (5 lines)",
+      "may be a floor-length sliding door (no sill in plan)"
+     ]
+    },
+    {
+     "det": "L30-056",
+     "kind": "window",
+     "at": [
+      29.617,
+      -48.416
+     ],
+     "width": 0.332,
+     "why": [
+      "glazing between wall ends (bay)",
+      "A-GLAZ-CURT",
+      "sliding sashes (5 lines)",
+      "may be a floor-length sliding door (no sill in plan)"
+     ]
+    },
+    {
+     "det": "L30-057",
+     "kind": "window",
+     "at": [
+      19.365,
+      -54.98
+     ],
+     "width": 1.303,
+     "why": [
+      "glazing between wall ends (bay)",
+      "A-GLAZ-CURT",
+      "sliding sashes (4 lines)",
+      "may be a floor-length sliding door (no sill in plan)"
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "key": "L30W-23",
+     "det": "L30-005",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.879,
+     "widthDet": 1.88,
+     "endErr": 0.001,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L30W-21",
+     "det": "L30-004",
+     "kindKey": "passage",
+     "kindDet": "passage",
+     "centreOff": 0.0,
+     "widthKey": 2.466,
+     "widthDet": 2.468,
+     "endErr": 0.001,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L30W-32",
+     "det": "L30-002",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 2.48,
+     "widthDet": 2.48,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L30W-22",
+     "det": "L30-010",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.819,
+     "widthDet": 0.82,
+     "endErr": 0.001,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L30W-11",
+     "det": "L30-011",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.519,
+     "widthDet": 1.52,
+     "endErr": 0.001,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L30W-12",
+     "det": "L30-016",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.019,
+     "widthDet": 1.02,
+     "endErr": 0.001,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L30W-26",
+     "det": "L30-023",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.8,
+     "widthDet": 0.8,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L30E-01",
+     "det": "L30-015",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.98,
+     "widthDet": 0.98,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L30W-33",
+     "det": "L30-001",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.979,
+     "widthDet": 0.98,
+     "endErr": 0.001,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L30W-25",
+     "det": "L30-003",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.829,
+     "widthDet": 0.83,
+     "endErr": 0.001,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L30W-09",
+     "det": "L30-012",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.979,
+     "widthDet": 0.98,
+     "endErr": 0.001,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L30W-07",
+     "det": "L30-013",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.019,
+     "widthDet": 1.02,
+     "endErr": 0.001,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L30E-05",
+     "det": "L30-017",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.98,
+     "widthDet": 0.98,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L30E-12",
+     "det": "L30-006",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.88,
+     "widthDet": 1.88,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L30E-04",
+     "det": "L30-029",
+     "kindKey": "door",
+     "kindDet": "passage",
+     "centreOff": 0.0,
+     "widthKey": 1.88,
+     "widthDet": 1.88,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": false,
+     "right": true
+    },
+    {
+     "key": "L30W-08",
+     "det": "L30-014",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.619,
+     "widthDet": 1.62,
+     "endErr": 0.001,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L30E-02",
+     "det": "L30-030",
+     "kindKey": "passage",
+     "kindDet": "passage",
+     "centreOff": 0.001,
+     "widthKey": 1.325,
+     "widthDet": 1.325,
+     "endErr": 0.001,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L30E-07",
+     "det": "L30-018",
+     "kindKey": "door",
+     "kindDet": "passage",
+     "centreOff": 0.001,
+     "widthKey": 1.28,
+     "widthDet": 1.28,
+     "endErr": 0.001,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": false,
+     "right": true
+    },
+    {
+     "key": "L30E-08",
+     "det": "L30-046",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.023,
+     "widthKey": 2.0,
+     "widthDet": 1.955,
+     "endErr": 0.045,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L30W-24",
+     "det": "L30-034",
+     "kindKey": "passage",
+     "kindDet": "passage",
+     "centreOff": 0.075,
+     "widthKey": 1.199,
+     "widthDet": 1.2,
+     "endErr": 0.075,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L30W-06",
+     "det": "L30-038",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.075,
+     "widthKey": 1.019,
+     "widthDet": 1.02,
+     "endErr": 0.075,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "L30W-19",
+     "det": "L30-047",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.25,
+     "widthKey": 0.999,
+     "widthDet": 1.0,
+     "endErr": 0.25,
+     "widthOk": true,
+     "endsOk": false,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    }
+   ]
+  }
+ },
+ "total": {
+  "keyCount": 53,
+  "detCount": 94,
+  "matched": 45,
+  "right": 38,
+  "recall": 0.849,
+  "precision": 0.479,
+  "rightShare": 0.717
+ }
+}

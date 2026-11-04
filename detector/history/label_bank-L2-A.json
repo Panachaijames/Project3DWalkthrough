@@ -1,0 +1,711 @@
+{
+ "openings": [
+  {
+   "id": "B2-01",
+   "kind": "door",
+   "subtype": "single swing 720x2400 (WC cubicle door, solid leaf)",
+   "a": [
+    -4.0402,
+    10.823
+   ],
+   "b": [
+    -4.0402,
+    11.603
+   ],
+   "width": 0.78,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_SWING_1_SOLID D00-720X2400 (2215517) ins (-4.0402,11.2130) rot 90, leaf + arc drawn; cubicle front partition (A-WALL-PATT x -4.0902..-3.9902) stub ends at y 10.823; north wall face at y 11.603 (x -4.04); frames inside the 0.78 m gap",
+   "confidence": "high",
+   "notes": "Female toilet, north WC cubicle. Insert point = opening centre on the partition centre line."
+  },
+  {
+   "id": "B2-02",
+   "kind": "door",
+   "subtype": "single swing 720x2400 (WC cubicle door, solid leaf)",
+   "a": [
+    -4.0402,
+    9.882
+   ],
+   "b": [
+    -4.0402,
+    10.662
+   ],
+   "width": 0.78,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "DOOR_SWING_1_SOLID D00-720X2400 (2215541) ins (-4.0402,10.2720) rot -90; partition stubs (x -4.0902..-3.9902) end at y 9.882 and 10.662",
+   "confidence": "high",
+   "notes": "Female toilet, south WC cubicle."
+  },
+  {
+   "id": "B2-03",
+   "kind": "door",
+   "subtype": "single swing 720x2400 (solid leaf)",
+   "a": [
+    -2.5579,
+    9.705
+   ],
+   "b": [
+    -2.5579,
+    10.485
+   ],
+   "width": 0.78,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "DOOR_SWING_1_SOLID D00-720X2400 (V8) ins (-2.5579,10.0950) rot -90; wall line x -2.6079..-2.5079 bounded by the toilet south wall face y 9.705 and the stub 10.485..10.505; frame lines 9.705-9.76 / 10.43-10.485",
+   "confidence": "high",
+   "notes": "Female toilet entrance from the small toilet lobby; leaf opens west into the female toilet."
+  },
+  {
+   "id": "B2-04",
+   "kind": "passage",
+   "subtype": "doorless opening (toilet lobby mouth)",
+   "a": [
+    -2.5079,
+    9.655
+   ],
+   "b": [
+    -1.2783,
+    9.655
+   ],
+   "width": 1.2296,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "Wall line y 9.605..9.705 (A-WALL-PATT): toilet south wall ends at x -2.5079, F/C north wall starts at x -1.2783 on the same line; no door block, leaf, arc or glazing in the 1.23 m gap",
+   "confidence": "medium",
+   "decision": "counted as passage: gap between two wall ends of the same wall line",
+   "notes": "Opens from the north corridor (x -2.995..-1.278) into the toilet lobby (x -2.508..-1.278, y 9.705..10.505) that serves B2-03 and B2-05. The west side is a 0.49 m return of the toilet wall, so it is a real gap in a wall line, not just the corridor end."
+  },
+  {
+   "id": "B2-05",
+   "kind": "door",
+   "subtype": "single swing 720x2400 (solid leaf)",
+   "a": [
+    -1.2283,
+    9.705
+   ],
+   "b": [
+    -1.2282,
+    10.485
+   ],
+   "width": 0.78,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "DOOR_SWING_1_SOLID D00-720X2400 (V9) ins (-1.2283,10.0950) rot -90; wall line x -1.2782..-1.1782 bounded by F/C north wall face y 9.705 and stub 10.485..10.605",
+   "confidence": "high",
+   "notes": "Male toilet entrance from the toilet lobby; leaf opens east."
+  },
+  {
+   "id": "B2-06",
+   "kind": "door",
+   "subtype": "single swing 720x2400 (WC cubicle door, solid leaf)",
+   "a": [
+    0.3696,
+    10.6986
+   ],
+   "b": [
+    0.3696,
+    11.4786
+   ],
+   "width": 0.78,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "DOOR_SWING_1_SOLID D00-720X2400 (V7) ins (0.3696,11.0886) rot 90; wall x 0.3196..0.4196 ends at y 10.6986, stub 11.4786..11.5971",
+   "confidence": "high",
+   "notes": "Male toilet WC cubicle."
+  },
+  {
+   "id": "B2-07",
+   "kind": "door",
+   "subtype": "single swing 1000x2400 (generic family, 900 leaf)",
+   "a": [
+    -3.0447,
+    8.73
+   ],
+   "b": [
+    -3.0447,
+    9.73
+   ],
+   "width": 1,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "SINGLE SWING DOOR-GENERIC 1000X2400 (top-level h F45) ins (-3.0447,9.2300) rot 90; rack east wall A-WALL 298 (x -3.0947..-2.9947) ends at y 8.730 and restarts 9.730..9.780; door frames 8.73-8.78 and 9.68-9.73; 0.9 m leaf hinged at (-3.0947,9.63)",
+   "confidence": "medium",
+   "decision": "frame ends kept (8.73-9.73); clear gap between wall faces would be 8.73-9.605",
+   "notes": "Rack room door. Drawing clash: the female toilet south wall (y 9.605..9.705) crosses the top 0.125 m of this frame and the open leaf is drawn inside that wall (also as an A-WALL-PATT hatch). Alternative b = (-3.0447, 9.605), width 0.875."
+  },
+  {
+   "id": "B2-08",
+   "kind": "door",
+   "subtype": "double swing 800x2000 (2 solid leaves of 800)",
+   "a": [
+    -1.2284,
+    7.5464
+   ],
+   "b": [
+    -1.2283,
+    9.2264
+   ],
+   "width": 1.68,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "DOOR_SWING_2_SOLID 800x2000 (2204928) ins (-1.2284,8.3864) rot 90, two leaves drawn about 35 deg open with 2 arcs; F/C west wall (x -1.2784..-1.1784) ends at y 7.5464 and 9.2264",
+   "confidence": "high",
+   "notes": "F/C room double door from the north corridor."
+  },
+  {
+   "id": "B2-09",
+   "kind": "door",
+   "subtype": "single swing 1000x2400 (generic family, 900 leaf)",
+   "a": [
+    -2.3284,
+    4.9626
+   ],
+   "b": [
+    -1.3284,
+    4.9626
+   ],
+   "width": 1,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "SINGLE SWING DOOR-GENERIC 1000X2400 (top-level h 13D6) ins (-1.8284,4.9626) rot 0; wall A-WALL 260 (y 4.9126..5.0126) ends at x -2.3284 and -1.3284",
+   "confidence": "high",
+   "notes": "CSO space to the north lobby (rack, toilets, F/C)."
+  },
+  {
+   "id": "B2-10",
+   "kind": "door",
+   "subtype": "single swing 900x2400 (solid leaf)",
+   "a": [
+    4.8141,
+    6.9652
+   ],
+   "b": [
+    5.7941,
+    6.9657
+   ],
+   "width": 0.98,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "DOOR_SWING_1_SOLID D00-900X2400 (2215529) ins (5.3041,6.9655) rot 0.027; stair south wall (y 6.914..7.015) ends at x 4.8141; east jamb = 20 mm wall stub 5.7941..5.8141 against column 5.809..6.319; frames 4.814-4.869 / 5.739-5.794",
+   "confidence": "high",
+   "notes": "Stair door from the lounge."
+  },
+  {
+   "id": "B2-11",
+   "kind": "door",
+   "subtype": "double swing louvred 800x2000 (2 leaves of 800)",
+   "a": [
+    6.2311,
+    7.4384
+   ],
+   "b": [
+    6.1978,
+    9.1181
+   ],
+   "width": 1.68,
+   "wallThickness": 0.15,
+   "host": "wall",
+   "evidence": "DOOR_SWING_louver 800x2000 (2263068) ins (6.2145,8.2782) rot -88.865, 2 leaves + 2 arcs swinging out; facade wall pieces (0.15) end caps centred at the a/b points",
+   "confidence": "high",
+   "notes": "East facade, stair landing to the exterior terrace."
+  },
+  {
+   "id": "B2-12",
+   "kind": "door",
+   "subtype": "double swing louvred 650x2000 (2 leaves of 650)",
+   "a": [
+    6.2949,
+    4.4825
+   ],
+   "b": [
+    6.2556,
+    5.8619
+   ],
+   "width": 1.38,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "DOOR_SWING_louver 650x2000 (2263157) ins (6.2752,5.1722) rot -88.369, 2 leaves + arcs; facade pieces (0.10) end at a/b",
+   "confidence": "high",
+   "notes": "East facade, lounge to terrace."
+  },
+  {
+   "id": "B2-13",
+   "kind": "door",
+   "subtype": "double swing louvred 650x2000 (2 leaves of 650)",
+   "a": [
+    6.3965,
+    1.0219
+   ],
+   "b": [
+    6.3525,
+    2.4012
+   ],
+   "width": 1.38,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "DOOR_SWING_louver 650x2000 (2263157) ins (6.3745,1.7116) rot -88.171; facade pieces (0.10) end at a/b (inner lining with return at the south jamb)",
+   "confidence": "high",
+   "notes": "East facade, mini bar / wealth room to terrace."
+  },
+  {
+   "id": "B2-14",
+   "kind": "door",
+   "subtype": "double swing louvred 650x2000 (2 leaves of 650)",
+   "a": [
+    6.4884,
+    -2.2323
+   ],
+   "b": [
+    6.4491,
+    -0.8528
+   ],
+   "width": 1.38,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "DOOR_SWING_louver 650x2000 (2263157) ins (6.4687,-1.5426) rot -88.369; facade pieces (0.10) end at a/b",
+   "confidence": "high",
+   "notes": "East facade, mini bar / wealth room to terrace."
+  },
+  {
+   "id": "B2-15",
+   "kind": "door",
+   "subtype": "double swing louvred 650x2000 (2 leaves of 650)",
+   "a": [
+    6.5704,
+    -5.0666
+   ],
+   "b": [
+    6.5311,
+    -3.6872
+   ],
+   "width": 1.38,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "DOOR_SWING_louver 650x2000 (2263157) ins (6.5507,-4.3769) rot -88.369; facade pieces (0.10) end at a/b",
+   "confidence": "high",
+   "notes": "East facade, waiting area to terrace."
+  },
+  {
+   "id": "B2-16",
+   "kind": "door",
+   "subtype": "single swing louvred 600x2400",
+   "a": [
+    6.6025,
+    -7.2017
+   ],
+   "b": [
+    6.5832,
+    -6.522
+   ],
+   "width": 0.68,
+   "wallThickness": 0.15,
+   "host": "wall",
+   "evidence": "DOOR_SWING_1_louver D00-600X2400 (2262550) ins (6.5929,-6.8619) rot -88.369, 1 leaf + arc; facade pieces (0.15) end at a/b",
+   "confidence": "high",
+   "notes": "East facade, waiting area to terrace."
+  },
+  {
+   "id": "B2-17",
+   "kind": "door",
+   "subtype": "double swing louvred 650x2000 (2 leaves of 650)",
+   "a": [
+    5.6511,
+    -8.9687
+   ],
+   "b": [
+    6.4387,
+    -7.8355
+   ],
+   "width": 1.38,
+   "wallThickness": 0.15,
+   "host": "wall",
+   "evidence": "DOOR_SWING_louver 650x2000 (2263193) ins (6.0449,-8.4021) rot -124.801; chamfer wall pieces (0.15) end caps centred at a/b",
+   "confidence": "high",
+   "notes": "Chamfered south-east corner of the facade, waiting area to terrace."
+  },
+  {
+   "id": "B2-18",
+   "kind": "door",
+   "subtype": "single swing louvred 600x2400",
+   "a": [
+    4.3584,
+    -9.129
+   ],
+   "b": [
+    5.0384,
+    -9.129
+   ],
+   "width": 0.68,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "DOOR_SWING_1_louver D00-600X2400 (2262536) ins (4.6984,-9.1290) rot 180; south wall pieces (y -9.179..-9.079) end at x 4.3584 / 5.0384",
+   "confidence": "high",
+   "notes": "South facade, waiting area to terrace."
+  },
+  {
+   "id": "B2-19",
+   "kind": "door",
+   "subtype": "double swing louvred 900x2000 (2 leaves of 900)",
+   "a": [
+    1.7984,
+    -9.129
+   ],
+   "b": [
+    3.6784,
+    -9.129
+   ],
+   "width": 1.88,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "DOOR_SWING_louver 900x2000 (2263112) ins (2.7384,-9.1290) rot 180, 2 leaves + arcs; wall pieces end at x 1.7984 / 3.6784; frames 40 mm",
+   "confidence": "high",
+   "notes": "South facade, waiting area to terrace."
+  },
+  {
+   "id": "B2-20",
+   "kind": "door",
+   "subtype": "double swing louvred 650x2000 (2 leaves of 650)",
+   "a": [
+    -0.8066,
+    -9.1299
+   ],
+   "b": [
+    0.5734,
+    -9.1299
+   ],
+   "width": 1.38,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "DOOR_SWING_louver 650x2000 (V2) ins (-0.1166,-9.1299) rot 180; south wall ends at x -0.8066; east jamb = west face of column 0.573..1.123",
+   "confidence": "high",
+   "notes": "South facade, lift hall to terrace."
+  },
+  {
+   "id": "B2-21",
+   "kind": "door",
+   "subtype": "double swing 800x2000 (2 solid leaves of 800)",
+   "a": [
+    1.0639,
+    -8.678
+   ],
+   "b": [
+    1.0666,
+    -6.998
+   ],
+   "width": 1.68,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "DOOR_SWING_2_SOLID 800x2000 (2207034) ins (1.0653,-7.8380) rot -90.093, 2 leaves + arcs; lift hall east wall stubs end at y -8.678 and -6.998",
+   "confidence": "high",
+   "notes": "Lift hall to waiting area."
+  },
+  {
+   "id": "B2-22",
+   "kind": "door",
+   "subtype": "lift door 1100x2400",
+   "a": [
+    -1.5554,
+    -8.18
+   ],
+   "b": [
+    -1.5554,
+    -7.08
+   ],
+   "width": 1.1,
+   "wallThickness": 0.15,
+   "host": "wall",
+   "evidence": "_GEN_LIFT_DOOR DOOR1100x2400 (2145865) ins (-1.5554,-7.6300) rot -90; shaft east wall (x -1.6304..-1.4804) ends at y -8.18 / -7.08; frames 50 mm; lift car drawn in the shaft",
+   "confidence": "high",
+   "notes": "Lift car to lift hall."
+  },
+  {
+   "id": "B2-23",
+   "kind": "door",
+   "subtype": "single swing 700x2400 (flush panel)",
+   "a": [
+    -4.3804,
+    -6.7395
+   ],
+   "b": [
+    -3.5804,
+    -6.7395
+   ],
+   "width": 0.8,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "DOOR_GEN_SWING_1 PANEL_FLUSH 700x2400 (2146164) ins (-3.9804,-6.7395) rot 0; pantry north wall (y -6.7895..-6.6895) ends at x -4.3804; east jamb = lift shaft west wall face x -3.5804; frames 50 mm",
+   "confidence": "high",
+   "notes": "Pantry door from the BOH strip."
+  },
+  {
+   "id": "B2-24",
+   "kind": "door",
+   "subtype": "single swing 1000x2400 (generic family, 900 leaf)",
+   "a": [
+    -3.5304,
+    -6.5299
+   ],
+   "b": [
+    -3.5304,
+    -5.5299
+   ],
+   "width": 1,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "SINGLE SWING DOOR-GENERIC 1000X2400 (top-level h 1190) ins (-3.5304,-6.0299) rot 90; BOH east wall A-WALL 269 (x -3.5804..-3.4804) ends at y -6.5299 / -5.5299",
+   "confidence": "high",
+   "notes": "BOH strip to the south corridor (between CSO space and lift hall)."
+  },
+  {
+   "id": "B2-25",
+   "kind": "door",
+   "subtype": "single swing glass door, type 1 (0.9 m; no size or height in name)",
+   "a": [
+    2.656,
+    -2.4686
+   ],
+   "b": [
+    2.656,
+    -1.5686
+   ],
+   "width": 0.9,
+   "wallThickness": 0.1,
+   "host": "glass",
+   "evidence": "SINGLE GLASS SWING DOOR-GENERIC TYPE 1 (2568522) ins (2.6560,-2.0186) rot -90; glass leaf on A-DOOR-GLAZ, arc on A-DOOR-HDLN; glass wall blocks GLASS WALL 2600H 2617706 end at y -1.5686 and 2617708 at y -2.4686",
+   "confidence": "high",
+   "notes": "Door into the mini bar / wealth room, set in its glass west wall."
+  }
+ ],
+ "glassWalls": [
+  {
+   "a": [
+    2.656,
+    1.0989
+   ],
+   "b": [
+    2.656,
+    2.9965
+   ],
+   "notes": "Mini bar / wealth room, west side. Basic Wall GLASS WALL 2600H 20X100 (2617704), 100 mm band x 2.606..2.706, pane hatch x 2.651..2.661. Solid 100 mm pieces either side (y -0.901..1.099 and 2.996..3.706)."
+  },
+  {
+   "a": [
+    2.656,
+    -1.5686
+   ],
+   "b": [
+    2.656,
+    -0.9011
+   ],
+   "notes": "Wealth room west side, GLASS WALL 2600H (2617706), between door B2-25 and the solid piece."
+  },
+  {
+   "a": [
+    2.656,
+    -2.8118
+   ],
+   "b": [
+    2.656,
+    -2.4686
+   ],
+   "notes": "Wealth room west side, GLASS WALL 2600H (2617708), between the solid SW corner and door B2-25."
+  },
+  {
+   "a": [
+    3.106,
+    3.6563
+   ],
+   "b": [
+    5.7459,
+    3.6563
+   ],
+   "notes": "Wealth room north side, GLASS WALL 2600H (2617702), band y 3.606..3.706, pane y 3.651..3.661. Solid corner pieces at both ends, plus 50 mm curved corner bands inside them."
+  },
+  {
+   "a": [
+    3.106,
+    -3.4716
+   ],
+   "b": [
+    5.9505,
+    -3.4716
+   ],
+   "notes": "Wealth room south side, GLASS WALL 2600H (2617710), band y -3.5216..-3.4216, pane y -3.4766..-3.4666. Solid corner pieces at both ends, plus curved corner bands."
+  }
+ ],
+ "uncertain": [
+  {
+   "where": [
+    -3.045,
+    9.67
+   ],
+   "what": "B2-07 rack door: its 1.0 m frame (8.73-9.73) overlaps the female toilet south wall (y 9.605-9.705), and the open leaf is drawn inside that wall. Key uses the frame ends; the clear gap between wall faces is 8.73-9.605 (0.875 m)."
+  },
+  {
+   "where": [
+    -1.893,
+    9.655
+   ],
+   "what": "B2-04 toilet lobby mouth counted as a passage (collinear wall ends on line y=9.655, 1.23 m, 0.49 m return on the west). It could also be read as just the end of the corridor."
+  },
+  {
+   "where": [
+    0.713,
+    4.963
+   ],
+   "what": "'FOR 1 PAX' alcove front: 2.98 m open side between the free end of a 0.45 m wall stub (x -0.778, y 4.963) and the 10 mm laminate partition (x 2.209). No door or leaf drawn and the visitor chairs stand outside it. Treated as the open side of the alcove, not an opening."
+  },
+  {
+   "where": [
+    -2.137,
+    6.85
+   ],
+   "what": "Mouth of the north corridor (x -2.995..-1.278) into the lobby. The rack south wall (y 6.765) and the F/C south wall (y 6.935) are offset 0.17 m, and the east side is a continuous wall, not a wall end. Not counted."
+  },
+  {
+   "where": [
+    0.189,
+    6.935
+   ],
+   "what": "F/C south wall: the middle 1.0 m segment (x -0.311..0.689) is hatched on A-WALL instead of A-WALL-PATT, so it is a different wall type. It is drawn closed and solid with no door, so it is treated as wall."
+  },
+  {
+   "where": [
+    2.79,
+    3.52
+   ],
+   "what": "Wealth room corners (also at about (2.79,-3.34), (6.03,3.53) and (6.21,-3.32)): 50 mm curved bands (r about 0.40-0.45) join the glass panes to the solid L-corners. Possibly curved glass, not listed as glass walls. No openings there."
+  },
+  {
+   "where": [
+    2.656,
+    -2.0186
+   ],
+   "what": "Glass door B2-25: the block name has no height. The surrounding glass walls are 2600H."
+  },
+  {
+   "where": [
+    6.42,
+    0.17
+   ],
+   "what": "The east and south facade louvred doors (B2-11..B2-20) are A-DOOR blocks with leaves and swing arcs, 2000-2400 high, opening out to an exterior terrace, so they are kept as doors. They could be read as louvred shutters, but the drawing shows doors."
+  },
+  {
+   "where": [
+    -2.29,
+    12.18
+   ],
+   "what": "A stair with a railing (S-STRS, x -3.99..-0.59, y 11.75..12.60) is drawn outside the north wall. The north wall (y 11.60..11.75) is continuous, so no opening leads to it."
+  },
+  {
+   "where": [
+    -2.53,
+    -8.905
+   ],
+   "what": "0.35 m slot between the lift shaft south wall and the south facade wall. It is open to the pantry and is part of the pantry room (its 3.9 m2 area includes it). Not an opening."
+  }
+ ],
+ "rejected": [
+  {
+   "id": "R-01",
+   "reason": "IA_J12_CABINET (Q-CASE casework) has cabinet door lines on layer A-DOOR. This is furniture, not a door in a wall.",
+   "where": [
+    -4.163,
+    -4.93
+   ]
+  },
+  {
+   "id": "R-02",
+   "reason": "8 Q-CASE 'PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR' inserts along the FOR 1 PAX west wall. These are cupboard doors (casework).",
+   "where": [
+    -1.16,
+    5.95
+   ]
+  },
+  {
+   "id": "R-03",
+   "reason": "West facade wall pieces stop at 300x300 concrete columns (S-COLS) at y 6.861, 3.304, 0.004, -3.406, -6.516 and -9.034. The 0.30 m gaps are filled by columns, so there are no windows or openings.",
+   "where": [
+    -5.325,
+    0.004
+   ]
+  },
+  {
+   "id": "R-04",
+   "reason": "East facade wall pieces stop at columns at y 9.898, 7.022, 3.453, 0.172, -3.258 and -5.700. The gaps are columns, not openings.",
+   "where": [
+    6.421,
+    0.172
+   ]
+  },
+  {
+   "id": "R-05",
+   "reason": "South facade column (0.573..1.123 x -9.379..-9.079) between B2-20 and the wall to the east. It is a column, not an opening.",
+   "where": [
+    0.848,
+    -9.229
+   ]
+  },
+  {
+   "id": "R-06",
+   "reason": "Curved 150 mm wall in the south-east corner (unhatched A-WALL arcs). It is a free-standing terrace parapet and both ends are free, so it has no opening.",
+   "where": [
+    6.9,
+    -10.4
+   ]
+  },
+  {
+   "id": "R-07",
+   "reason": "A-WALL-PATT hatch at x -3.995..-3.095, y 9.63..9.68 is the open leaf of the rack door B2-07, drawn inside the toilet wall band. It is neither a wall piece nor an opening.",
+   "where": [
+    -3.545,
+    9.655
+   ]
+  },
+  {
+   "id": "R-08",
+   "reason": "These walls end in open space with nothing facing them: the CSO south wall end (-1.04,-5.43), the laminate partition end (2.209,4.913) and the toilet lobby back wall ends (-2.608,10.555) and (-1.178,10.545).",
+   "where": [
+    -1.04,
+    -5.43
+   ]
+  },
+  {
+   "id": "R-09",
+   "reason": "Two closed service shafts (x 0.42..1.19, y 9.705..10.033 behind the male WC, and x 1.35..1.84, y 9.53..10.03 in the stair) have no access opening drawn.",
+   "where": [
+    0.805,
+    9.869
+   ]
+  }
+ ],
+ "method": "Geometry first, on prims 'bank2' (area L2). The wall model is the union of the solid hatches on A-WALL and A-WALL-PATT, the S-COLS column hatches, and the 100 mm bands of the five 'GLASS WALL 2600H' blocks. Every A-WALL outline line is covered by a hatch except the free-standing curved SE parapet and the glass-wall outlines. A dwgread dump of the original DWG gives the same A-WALL*/A-DOOR*/S-COLS entity counts as the DXF, so the 8 LibreDWG errors lost nothing relevant; the missing handles are inside dimension blocks.\n\nFor each of the 24 A-DOOR inserts (20 in the Revit host block, 4 at top level), I intersected the line through the insert point, along the block rotation, with the wall model. The gap around the insert is the structural opening; the frame lines lie inside it. Every insert sits at its opening centre on the wall centre line. The one exception is the rack door: the toilet wall crosses its frame (see uncertain).\n\nI then searched for gaps between collinear wall pieces with no door, which found the toilet lobby mouth (B2-04), and listed free wall-end caps to catch other doorless gaps.\n\nI reviewed 15 tiles of about 5x5 m (--grid 0.5 --inserts --px 2000): x [-6,-1], [-1.5,3.5], [3,8.5] by y [-11.5,-6.5], [-7,-2], [-2.5,2.5], [2,7], [6.5,12.5]. I also zoomed into the wealth room corners. The final checks were a full-level render with a marker at each opening and 5 zoomed marker renders (NW, NE, SE, SW, middle): every door leaf, arc and wall gap has a marker.\n\nThere are no windows on Level 2: no window blocks and no glazing layers. The facades are solid walls with louvred swing doors, and the only glazing is the wealth room's glass walls.",
+ "files": [
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/L2_full.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/tile_-6_-11.5.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/tile_-6_-7.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/tile_-6_-2.5.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/tile_-6_2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/tile_-6_6.5.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/tile_-1.5_-11.5.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/tile_-1.5_-7.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/tile_-1.5_-2.5.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/tile_-1.5_2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/tile_-1.5_6.5.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/tile_3_-11.5.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/tile_3_-7.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/tile_3_-2.5.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/tile_3_2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/tile_3_6.5.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/zoom_wealth_NW.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/zoom_wealth_SE.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/check_L2_marks.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/check_NW.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/check_NE.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/check_SE.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/check_SW.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-bank-L2-A/check_mid.png"
+ ]
+}

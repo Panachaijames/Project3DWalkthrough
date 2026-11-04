@@ -1,0 +1,487 @@
+// The routes and screens (DESIGN.md 15.1 - 15.5) in a memory router over the mock API (test/mock-api), with the fake
+// viewer in place of @walkthrough/viewer: the list's states and cards, the redirects, Not found, the project page's app bar
+// and viewer, version changes (the old viewer disposed first), saving heights, and the error paths.
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { act } from 'react';
+import { createMemoryRouter } from 'react-router';
+import { RouterProvider } from 'react-router/dom';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import '@/api/client';
+import { listProjectsQueryKey } from '@/api/generated/@tanstack/react-query.gen';
+import { createQueryClient } from '@/lib/queryClient';
+import { formatDate } from '@/lib/format';
+import { createRoutes } from '@/router';
+import { fakeViewerLog, resetFakeViewer } from './fake-viewer';
+import { all, click, render, settle, stubWebGL, text, waitFor } from './helpers';
+import { createMockApi, type MockApi } from './mock-api/core';
+import { mockFetch, type MockFetchOptions } from './mock-api/fetch';
+
+vi.mock('@walkthrough/viewer', async () => vi.importActual('./fake-viewer'));
+
+let restoreWebGL: () => void = () => undefined;
+let webglFails = false;
+beforeEach(() => {
+  resetFakeViewer();
+  webglFails = false;
+  restoreWebGL = stubWebGL({ fail: () => webglFails });
+  document.title = '';
+});
+afterEach(async () => {
+  restoreWebGL();
+  vi.unstubAllGlobals();
+  document.body.replaceChildren();
+});
+
+const opened: { unmount(): Promise<void> }[] = [];
+afterEach(async () => {
+  while (opened.length) await opened.pop()!.unmount();
+});
+
+async function openApp(path: string, opts: { mock?: MockApi; fetch?: MockFetchOptions; strict?: boolean } = {}) {
+  const mock = opts.mock ?? createMockApi();
+  vi.stubGlobal('fetch', mockFetch(mock, opts.fetch));
+  // retry off here (errors show at once); the app's own client retries once (checked below)
+  const queryClient = new QueryClient({ defaultOptions: { queries: { staleTime: 30_000, retry: false } } });
+  const router = createMemoryRouter(createRoutes(queryClient), { initialEntries: [path] });
+  const v = await render(
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>,
+    { strict: opts.strict ?? true },
+  );
+  opened.push(v);
+  return { v, router, mock, queryClient, body: document.body };
+}
+
+const cards = () => all(document.body, '[data-testid=project-card]');
+const live = () => window.__fakeViewer!.live();
+
+describe('the app client', () => {
+  it('createQueryClient: staleTime 30 s, one retry', () => {
+    const q = createQueryClient().getDefaultOptions().queries;
+    expect(q?.staleTime).toBe(30_000);
+    expect(q?.retry).toBe(1);
+  });
+});
+
+describe('/ and /projects', () => {
+  it('/ goes to /projects', async () => {
+    const app = await openApp('/');
+    await waitFor(() => app.router.state.location.pathname === '/projects');
+    await waitFor(() => cards().length === 4);
+  });
+
+  it('shows skeleton cards while loading, then one card per project, newest first, with their fields', async () => {
+    let release!: () => void;
+    const gate = new Promise<void>(r => { release = r; });
+    const app = await openApp('/projects', { fetch: { intercept: async (m, p) => { if (p === '/api/projects') await gate; return undefined; } } });
+    expect(all(app.body, '[data-testid=project-card-skeleton]').length).toBeGreaterThan(0);   // the list is held at the gate
+    expect(cards().length).toBe(0);
+    release();
+    await waitFor(() => cards().length === 4);
+    expect(document.title).toBe('Projects · Walkthrough');
+    expect(all(app.body, '[data-testid=project-card-skeleton]').length).toBe(0);
+    expect(cards().map(c => c.getAttribute('data-project-id'))).toEqual(['hotel-lobby', 'sukhumvit-house', 'presidential-suite', 'bank-sampeng']);
+    const field = (id: string, f: string) => text(app.body.querySelector(`[data-project-id=${id}] [data-testid=card-${f}]`));
+    expect(field('bank-sampeng', 'name')).toBe('Bangkok Bank, Sampeng Branch');
+    expect(field('bank-sampeng', 'source')).toBe('CAD');
+    expect(field('bank-sampeng', 'floors')).toBe('2 floors: Level 1, Level 2');
+    expect(field('bank-sampeng', 'furniture')).toBe('185 furniture pieces');
+    expect(field('bank-sampeng', 'openings')).toBe('49 openings');
+    expect(field('bank-sampeng', 'stamp')).toBe('c3a9408304a2');
+    expect(field('bank-sampeng', 'versions')).toBe('2 versions');
+    expect(field('bank-sampeng', 'updated')).toBe(formatDate('2026-10-29T03:24:53Z'));
+    expect(app.body.querySelector('[data-project-id=bank-sampeng] time[data-testid=card-updated]')?.getAttribute('datetime')).toBe('2026-10-29T03:24:53Z');
+    expect(field('hotel-lobby', 'source')).toBe('Pictures');
+    expect(field('hotel-lobby', 'floors')).toBe('2 floors: Floor 1, Floor 2');
+    expect(field('presidential-suite', 'floors')).toBe('1 floor: Suite (FL-01)');
+    expect(field('presidential-suite', 'versions')).toBe('1 version');
+    // thumbnails from thumbnailUrl; the house has none: the placeholder with its short name
+    const img = (id: string) => app.body.querySelector(`[data-project-id=${id}] img[data-testid=card-thumbnail]`);
+    expect(img('bank-sampeng')?.getAttribute('src')).toBe('/api/projects/bank-sampeng/thumbnail');
+    expect(img('hotel-lobby')?.getAttribute('src')).toBe('/api/projects/hotel-lobby/thumbnail');
+    expect(img('sukhumvit-house')).toBeNull();
+    expect(field('sukhumvit-house', 'placeholder-name')).toBe('Sukhumvit house');
+    // each card links to its project
+    expect(app.body.querySelector('[data-project-id=bank-sampeng] a[data-testid=card-link]')?.getAttribute('href')).toBe('/projects/bank-sampeng');
+  });
+
+  it('an error shows an Alert with the reason and Retry', async () => {
+    let fail = true;
+    const app = await openApp('/projects', {
+      fetch: {
+        intercept: (m, p) => (fail && p === '/api/projects'
+          ? new Response(JSON.stringify({ error: { code: 'store_down', message: 'the store is not readable' } }), { status: 500, headers: { 'content-type': 'application/json' } })
+          : undefined),
+      },
+    });
+    const alert = await waitFor(() => app.body.querySelector('[data-testid=projects-error]'));
+    expect(text(alert.querySelector('[data-testid=projects-error-reason]'))).toBe('the store is not readable');
+    fail = false;
+    await click(app.body.querySelector('[data-testid=projects-retry]'));
+    await waitFor(() => cards().length === 4);
+    expect(app.body.querySelector('[data-testid=projects-error]')).toBeNull();
+  });
+
+  it('a dead API: the reason says so', async () => {
+    const app = await openApp('/projects', { fetch: { intercept: () => { throw new TypeError('Failed to fetch'); } } });
+    const alert = await waitFor(() => app.body.querySelector('[data-testid=projects-error]'));
+    expect(text(alert.querySelector('[data-testid=projects-error-reason]'))).toBe('the API did not answer (is it running?)');
+  });
+
+  it('a failed refresh keeps the cards it has and shows the reason above them', async () => {
+    let fail = false;
+    const app = await openApp('/projects', {
+      fetch: {
+        intercept: (m, p) => (fail && p === '/api/projects'
+          ? new Response(JSON.stringify({ error: { code: 'store_down', message: 'the store went away' } }), { status: 500, headers: { 'content-type': 'application/json' } })
+          : undefined),
+      },
+    });
+    await waitFor(() => cards().length === 4);
+    fail = true;
+    await act(async () => { await app.queryClient.refetchQueries({ queryKey: listProjectsQueryKey() }); });
+    const alert = await waitFor(() => app.body.querySelector('[data-testid=projects-error]'));
+    expect(text(alert.querySelector('[data-testid=projects-error-reason]'))).toBe('the store went away');
+    expect(cards().length).toBe(4);
+    fail = false;
+    await click(app.body.querySelector('[data-testid=projects-retry]'));
+    await waitFor(() => !app.body.querySelector('[data-testid=projects-error]'));
+    expect(cards().length).toBe(4);
+  });
+
+  it('no projects: No projects yet: run npm run seed', async () => {
+    const app = await openApp('/projects', {
+      fetch: { intercept: (m, p) => (p === '/api/projects' ? new Response('{"projects":[]}', { headers: { 'content-type': 'application/json' } }) : undefined) },
+    });
+    const empty = await waitFor(() => app.body.querySelector('[data-testid=projects-empty]'));
+    expect(text(empty)).toBe('No projects yet: run npm run seed');
+  });
+
+  it('drawing text in names stays text', async () => {
+    const mock = createMockApi();
+    const evil = '<img src=x onerror="window.__pwned=1">';
+    const app = await openApp('/projects', {
+      mock,
+      fetch: {
+        intercept: (m, p) => {
+          if (p !== '/api/projects') return undefined;
+          const list = { projects: mock.list().map(x => ({ ...x, name: evil, shortName: evil, thumbnailUrl: null })) };
+          return new Response(JSON.stringify(list), { headers: { 'content-type': 'application/json' } });
+        },
+      },
+    });
+    await waitFor(() => cards().length === 4);
+    expect(text(app.body.querySelector('[data-testid=card-name]'))).toBe(evil);
+    expect(app.body.querySelector('[data-testid=project-grid] img')).toBeNull();
+    expect((window as { __pwned?: number }).__pwned).toBeUndefined();
+  });
+});
+
+describe('/projects/:projectId and Not found', () => {
+  it('goes to the latest version, keeping the address options, replacing its own history entry', async () => {
+    const app = await openApp('/projects/bank-sampeng?build=play');
+    await waitFor(() => app.router.state.location.pathname === '/projects/bank-sampeng/v/2');
+    expect(app.router.state.location.search).toBe('?build=play');
+    expect(app.router.state.historyAction).toBe('REPLACE');
+    await waitFor(() => fakeViewerLog.some(r => r.event === 'create'));
+    expect(fakeViewerLog.at(-1)?.options?.build).toBe('play');
+  });
+
+  it('an unknown project, an unknown version, a bad version number, a bad id, an unknown page: Not found', async () => {
+    for (const [path, message] of [
+      ['/projects/no-such-project', 'There is no project no-such-project.'],
+      ['/projects/no-such-project/v/1', 'There is no project no-such-project.'],
+      ['/projects/bank-sampeng/v/9', 'Project bank-sampeng has no version 9.'],
+      ['/projects/bank-sampeng/v/0', 'There is no version "0".'],
+      ['/projects/bank-sampeng/v/2x', 'There is no version "2x".'],
+      ['/projects/Bad_Id', 'There is no project called "Bad_Id".'],
+      ['/nowhere/at/all', 'There is no page at this address.'],
+    ] as const) {
+      const app = await openApp(path);
+      const nf = await waitFor(() => app.body.querySelector('[data-testid=not-found]'));
+      expect(text(nf.querySelector('[data-testid=not-found-message]')), path).toBe(message);
+      expect(document.title).toBe('Not found · Walkthrough');
+      await opened.pop()!.unmount();
+    }
+  });
+
+  it('a server error while opening a project: an Alert with Retry that loads it', async () => {
+    let fail = true;
+    const app = await openApp('/projects/hotel-lobby/v/1', {
+      fetch: { intercept: (m, p) => (fail && p === '/api/projects/hotel-lobby/versions/1' ? new Response('boom', { status: 500 }) : undefined) },
+    });
+    const alert = await waitFor(() => app.body.querySelector('[data-testid=route-error]'));
+    expect(text(alert.querySelector('[data-testid=route-error-reason]'))).toBe('boom');
+    fail = false;
+    await click(app.body.querySelector('[data-testid=route-error-retry]'));
+    await waitFor(() => app.body.querySelector('[data-testid=project-page]'));
+  });
+});
+
+describe('the project page', () => {
+  it('the app bar, the title and one viewer made with the version (StrictMode: made twice, one left)', async () => {
+    const app = await openApp('/projects/bank-sampeng/v/2');
+    await waitFor(() => app.body.querySelector('[data-testid=project-page]'));
+    await waitFor(() => fakeViewerLog.filter(r => r.event === 'create').length === 2);
+    expect(document.title).toBe('Bangkok Bank, Sampeng Branch · v2 · Walkthrough');
+    expect(text(app.body.querySelector('[data-testid=app-bar-title]'))).toBe('Bangkok Bank, Sampeng Branch');
+    expect(app.body.querySelector('[data-testid=back-to-projects]')?.getAttribute('href')).toBe('/projects');
+    expect(text(app.body.querySelector('[data-testid=version-picker]'))).toContain(`v2 · ${formatDate('2026-10-29T03:24:53Z')} · c3a9408304a2`);
+    expect(text(app.body.querySelector('[data-testid=downloads-menu]'))).toBe('Downloads');
+    expect(text(app.body.querySelector('[data-testid=heights-status-text]'))).toBe('Heights saved');
+    expect(fakeViewerLog.map(r => r.event)).toEqual(['create', 'dispose', 'create']);
+    expect(live()).toBe(1);
+    const rec = fakeViewerLog.at(-1)!;
+    expect(rec).toMatchObject({ projectId: 'bank-sampeng', version: 2, stamp: 'c3a9408304a2', heights: {}, pictures: {}, hasStages: true });
+    expect(rec.options).toMatchObject({ build: 'skip', furnitureHeights: 'host', address: {} });
+    // the viewer's root inside the host div, below the 48 px bar
+    const host = app.body.querySelector('[data-testid=viewer-area] [data-testid=viewer-host]');
+    expect(host?.querySelectorAll('[data-wt=root]').length).toBe(1);
+  });
+
+  it('the saved heights are the starting heights; v1 (no furniture) has no heights status', async () => {
+    const mock = createMockApi();
+    mock.setSaved('bank-sampeng', 2, { table: 600 });
+    const app = await openApp('/projects/bank-sampeng/v/2', { mock });
+    await waitFor(() => fakeViewerLog.some(r => r.event === 'create'));
+    expect(fakeViewerLog.at(-1)?.heights).toEqual({ table: 600 });
+    await act(async () => { await app.router.navigate('/projects/bank-sampeng/v/1'); });
+    await waitFor(() => fakeViewerLog.at(-1)?.version === 1);
+    expect(app.body.querySelector('[data-testid=heights-status]')).toBeNull();
+    expect(document.title).toBe('Bangkok Bank, Sampeng Branch · v1 · Walkthrough');
+  });
+
+  it('a version change disposes the old viewer before making the new one, on the same div', async () => {
+    const app = await openApp('/projects/bank-sampeng/v/2');
+    await waitFor(() => fakeViewerLog.filter(r => r.event === 'create').length === 2);
+    const host = app.body.querySelector('[data-testid=viewer-host]');
+    fakeViewerLog.length = 0;
+    await act(async () => { await app.router.navigate('/projects/bank-sampeng/v/1'); });
+    await waitFor(() => fakeViewerLog.length === 2);
+    expect(fakeViewerLog.map(r => [r.event, r.version])).toEqual([['dispose', 2], ['create', 1]]);
+    expect(app.body.querySelector('[data-testid=viewer-host]')).toBe(host);
+    expect(all(app.body, '[data-wt=root]').length).toBe(1);
+    expect(live()).toBe(1);
+    // and back: a fresh viewer for v2 again
+    await act(async () => { await app.router.navigate('/projects/bank-sampeng/v/2'); });
+    await waitFor(() => fakeViewerLog.length === 4);
+    expect(fakeViewerLog.map(r => [r.event, r.version])).toEqual([['dispose', 2], ['create', 1], ['dispose', 1], ['create', 2]]);
+    // leaving the page disposes it
+    await act(async () => { await app.router.navigate('/projects'); });
+    await waitFor(() => cards().length === 4);
+    expect(live()).toBe(0);
+    expect(all(app.body, '[data-wt=root]').length).toBe(0);
+  });
+
+  it('the hotel: its plan pictures go to the viewer as asset URLs, no stages are read', async () => {
+    const app = await openApp('/projects/hotel-lobby/v/1');
+    await waitFor(() => fakeViewerLog.some(r => r.event === 'create'));
+    expect(fakeViewerLog.at(-1)).toMatchObject({
+      pictures: {
+        F1: '/api/projects/hotel-lobby/versions/1/assets/floor1_plan.png',
+        F2: '/api/projects/hotel-lobby/versions/1/assets/floor2_plan.png',
+      },
+      hasStages: false,
+      stamp: '6ab030750886',
+    });
+    expect(app.mock.requests.some(r => r.path.endsWith('/stages'))).toBe(false);
+  });
+
+  it('heights typed in the viewer are saved: Saving…, PUT with the map, Heights saved', async () => {
+    let release!: () => void;
+    const gate = new Promise<void>(r => { release = r; });
+    const app = await openApp('/projects/bank-sampeng/v/2', { fetch: { intercept: async m => { if (m === 'PUT') await gate; return undefined; } } });
+    const input = await waitFor(() => app.body.querySelector<HTMLInputElement>('[data-wt=furniture-row][data-kind=table] [data-wt=kind-height]'));
+    expect(input.value).toBe('750');
+    await act(async () => {
+      input.focus();
+      input.value = '600';
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    expect(text(app.body.querySelector('[data-testid=heights-status-text]'))).toBe('Saving…');   // debouncing, then held at the gate
+    release();
+    await waitFor(() => text(app.body.querySelector('[data-testid=heights-status-text]')) === 'Heights saved');
+    const puts = app.mock.requests.filter(r => r.method === 'PUT');
+    expect(puts.map(r => [r.path, JSON.parse(r.body ?? '')])).toEqual([['/api/projects/bank-sampeng/versions/2/furniture-heights', { heights: { table: 600 } }]]);
+    expect(app.mock.saved('bank-sampeng', 2).heights).toEqual({ table: 600 });
+    // the cached version detail has the saved heights: no new viewer was made for it
+    expect(fakeViewerLog.filter(r => r.event === 'create').length).toBe(2);
+  });
+
+  it('a failed save: Not saved: <reason>, and Retry sends the newest map', async () => {
+    let fail = true;
+    const app = await openApp('/projects/bank-sampeng/v/2', {
+      fetch: {
+        intercept: (m) => (fail && m === 'PUT'
+          ? new Response(JSON.stringify({ error: { code: 'unavailable', message: 'the store is read-only' } }), { status: 503, headers: { 'content-type': 'application/json' } })
+          : undefined),
+      },
+    });
+    await waitFor(() => fakeViewerLog.some(r => r.event === 'create'));
+    const viewers = window.__fakeViewer!.viewers;
+    await act(async () => { viewers.at(-1)!.emit('heightschange', { heights: { seat: 300 }, source: 'typed' }); });
+    await waitFor(() => app.body.querySelector('[data-testid=heights-status]')?.getAttribute('data-state') === 'error');
+    expect(text(app.body.querySelector('[data-testid=heights-status-text]'))).toBe('Not saved: the store is read-only');
+    fail = false;
+    await click(app.body.querySelector('[data-testid=heights-retry]'));
+    await waitFor(() => text(app.body.querySelector('[data-testid=heights-status-text]')) === 'Heights saved');
+    expect(app.mock.saved('bank-sampeng', 2).heights).toEqual({ seat: 300 });
+  });
+
+  it('opening the Downloads menu sends a waiting save at once; the CSV and the offline file wait for it', async () => {
+    let release!: () => void;
+    const gate = new Promise<void>(r => { release = r; });
+    let putAt = 0;
+    const app = await openApp('/projects/bank-sampeng/v/2', {
+      fetch: {
+        onRequest: m => { if (m === 'PUT' && !putAt) putAt = performance.now(); },
+        intercept: async m => { if (m === 'PUT') await gate; return undefined; },
+      },
+    });
+    await waitFor(() => fakeViewerLog.some(r => r.event === 'create'));
+    const item = (key: string) => document.body.querySelector(`[data-testid=downloads-list] [data-download=${key}]`);
+    const t0 = performance.now();
+    await act(async () => { window.__fakeViewer!.viewers.at(-1)!.emit('heightschange', { heights: { table: 600 }, source: 'typed' }); });
+    expect(text(app.body.querySelector('[data-testid=heights-status-text]'))).toBe('Saving…');
+    const trigger = app.body.querySelector('[data-testid=downloads-menu]')!;
+    await act(async () => { trigger.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true })); });
+    const openedAt = performance.now();
+    await waitFor(() => item('offlineHtml'));
+    await waitFor(() => putAt > 0);
+    // sent by the menu, not by the 600 ms debounce (checked when this machine opened the menu well inside the debounce)
+    if (openedAt - t0 < 300) expect(putAt - t0).toBeLessThan(550);
+    for (const key of ['furnitureCsv', 'offlineHtml']) {
+      expect(item(key)?.hasAttribute('data-waiting'), key).toBe(true);
+      expect(item(key)?.getAttribute('href'), key).toBeNull();
+    }
+    expect(item('maxScript')?.getAttribute('href')).toBe('/api/projects/bank-sampeng/versions/2/downloads/max-script');
+    release();
+    await waitFor(() => text(app.body.querySelector('[data-testid=heights-status-text]')) === 'Heights saved');
+    await waitFor(() => item('furnitureCsv')?.getAttribute('href') === '/api/projects/bank-sampeng/versions/2/downloads/furniture-csv');
+    expect(item('offlineHtml')?.getAttribute('href')).toBe('/api/projects/bank-sampeng/versions/2/downloads/offline-html');
+    expect(app.mock.saved('bank-sampeng', 2).heights).toEqual({ table: 600 });
+    expect(app.mock.requests.filter(r => r.method === 'PUT').length).toBe(1);
+  });
+
+  it('a new address query re-creates the viewer, starting from the heights saved since the page opened', async () => {
+    const app = await openApp('/projects/bank-sampeng/v/2');
+    await waitFor(() => fakeViewerLog.filter(r => r.event === 'create').length === 2);
+    await act(async () => { window.__fakeViewer!.viewers.at(-1)!.emit('heightschange', { heights: { table: 600 }, source: 'typed' }); });
+    await waitFor(() => app.mock.saved('bank-sampeng', 2).revision === 1
+      && text(app.body.querySelector('[data-testid=heights-status-text]')) === 'Heights saved');
+    fakeViewerLog.length = 0;
+    await act(async () => { await app.router.navigate('/projects/bank-sampeng/v/2?mode=walk'); });
+    await waitFor(() => fakeViewerLog.some(r => r.event === 'create'));
+    expect(fakeViewerLog.map(r => r.event)).toEqual(['dispose', 'create']);
+    expect(fakeViewerLog.at(-1)).toMatchObject({ heights: { table: 600 }, options: { address: { build: 'skip', mode: 'walk' }, build: 'skip' } });
+    expect(live()).toBe(1);
+  });
+
+  it('a pending save is sent when the user leaves the page', async () => {
+    const app = await openApp('/projects/bank-sampeng/v/2');
+    await waitFor(() => fakeViewerLog.some(r => r.event === 'create'));
+    await act(async () => { window.__fakeViewer!.viewers.at(-1)!.emit('heightschange', { heights: { cabinet: 1000 }, source: 'typed' }); });
+    await act(async () => { await app.router.navigate('/projects'); });
+    await waitFor(() => app.mock.requests.some(r => r.method === 'PUT'));
+    await settle(20);
+    expect(app.mock.saved('bank-sampeng', 2).heights).toEqual({ cabinet: 1000 });
+  });
+
+  it('a model that does not parse: its issues instead of a viewer', async () => {
+    const app = await openApp('/projects/bank-sampeng/v/1', {
+      fetch: { intercept: (m, p) => (p.endsWith('/v/1') || !p.endsWith('/versions/1/model') ? undefined : new Response('"not a model"', { headers: { 'content-type': 'application/json' } })) },
+    });
+    const err = await waitFor(() => app.body.querySelector('[data-testid=model-error]'));
+    expect(text(err)).toContain("This version's model could not be read");
+    expect(text(err.querySelector('[data-testid=model-error-issues]'))).toBe('/: must be an object');
+    expect(app.body.querySelector('[data-testid=viewer-host]')).toBeNull();
+    expect(fakeViewerLog).toEqual([]);
+  });
+
+  it('a viewer that cannot start: the reason and Try again', async () => {
+    webglFails = true;
+    const app = await openApp('/projects/bank-sampeng/v/2');
+    const err = await waitFor(() => app.body.querySelector('[data-testid=viewer-error]'));
+    expect(text(err.querySelector('[data-testid=viewer-error-reason]'))).toContain('WebGL is not available');
+    expect(fakeViewerLog.map(r => r.event)).toEqual(['fail', 'fail']);   // StrictMode: both mounts failed
+    expect(all(app.body, '[data-wt=root]').length).toBe(0);              // nothing left behind
+    webglFails = false;
+    await click(app.body.querySelector('[data-testid=viewer-retry]'));
+    await waitFor(() => app.body.querySelector('[data-wt=root]'));
+    expect(app.body.querySelector('[data-testid=viewer-error]')).toBeNull();
+    expect(live()).toBe(1);
+  });
+});
+
+// ------------------------------------------------------------------------------------------------- fix step (3-4 Nov review)
+describe('fix step: the page keeps what it has, says what it cannot do', () => {
+  const NONE = new Response('', { status: 502 });
+  const down502 = () => NONE.clone();
+
+  it('a version already seen stays on screen when only its refresh fails because the API does not answer (proxy 502)', async () => {
+    let down = false;
+    const app = await openApp('/projects/bank-sampeng/v/2', { fetch: { intercept: (_m, p) => (down && p.startsWith('/api/') ? down502() : undefined) } });
+    await waitFor(() => fakeViewerLog.filter(r => r.event === 'create').length === 2);
+    await act(async () => { await app.router.navigate('/projects/bank-sampeng/v/1'); });
+    await waitFor(() => fakeViewerLog.at(-1)?.version === 1 && fakeViewerLog.at(-1)?.event === 'create');
+    down = true;
+    await act(async () => { await app.queryClient.invalidateQueries(); });   // everything stale: a refresh is due
+    await act(async () => { await app.router.navigate('/projects/bank-sampeng/v/2'); });
+    await waitFor(() => fakeViewerLog.at(-1)?.version === 2 && fakeViewerLog.at(-1)?.event === 'create');
+    expect(app.router.state.location.pathname).toBe('/projects/bank-sampeng/v/2');
+    expect(app.body.querySelector('[data-testid=project-page]')?.getAttribute('data-version')).toBe('2');
+    expect(live()).toBe(1);
+    // a version never loaded has nothing to show: that one is an error page, with the client's own words
+    await act(async () => { await app.router.navigate('/projects/presidential-suite/v/1'); });
+    await waitFor(() => app.body.querySelector('[data-testid=project-page]') === null);
+    expect(text(app.body)).toContain('the API did not answer (is it running?)');
+    expect(text(app.body)).not.toContain('Bad Gateway');
+  });
+
+  it('a project with no version yet: its card says so and links nowhere; its address says so instead of Not found', async () => {
+    const mock = createMockApi();
+    const base = mock.list()[0]!;
+    const empty = { ...base, id: 'new-upload', name: 'New upload', shortName: 'New upload', latestVersion: 0, versionCount: 0, stamp: '', floors: [],
+      furnitureCount: 0, openingsCount: 0, thumbnailUrl: null, url: '/api/projects/new-upload', updatedAt: '2026-11-04T00:00:00Z' };
+    const json = (v: unknown) => new Response(JSON.stringify(v), { status: 200, headers: { 'content-type': 'application/json' } });
+    const app = await openApp('/projects', {
+      mock,
+      fetch: {
+        intercept: (m, p) => {
+          if (m === 'GET' && p === '/api/projects') return json({ projects: [empty, ...mock.list()] });
+          if (m === 'GET' && p === '/api/projects/new-upload') return json({ ...empty, versions: [] });
+          return undefined;
+        },
+      },
+    });
+    await waitFor(() => cards().length === 5);
+    const card = app.body.querySelector('[data-testid=project-card][data-project-id=new-upload]')!;
+    expect(card.hasAttribute('data-no-versions')).toBe(true);
+    expect(text(card)).toContain('No versions yet');
+    expect(card.querySelector('a')).toBeNull();
+    expect(card.closest('a')).toBeNull();
+    await act(async () => { await app.router.navigate('/projects/new-upload'); });
+    await waitFor(() => app.body.querySelector('[data-testid=no-versions]'));
+    expect(app.router.state.location.pathname).toBe('/projects/new-upload');      // not on to /v/0 and Not found
+    expect(text(app.body.querySelector('[data-testid=no-versions]'))).toContain('No versions yet');
+  });
+
+  it('while a save has failed the browser asks before the tab is closed or reloaded; once saved it does not', async () => {
+    let fail = true;
+    const app = await openApp('/projects/bank-sampeng/v/2', {
+      fetch: { intercept: m => (fail && m === 'PUT' ? new Response(JSON.stringify({ error: { code: 'store_error', message: 'busy (test)' } }), { status: 500, headers: { 'content-type': 'application/json' } }) : undefined) },
+    });
+    await waitFor(() => fakeViewerLog.some(r => r.event === 'create'));
+    const leave = () => { const e = new Event('beforeunload', { cancelable: true }); window.dispatchEvent(e); return e.defaultPrevented; };
+    expect(leave()).toBe(false);
+    await act(async () => { window.__fakeViewer!.viewers.at(-1)!.emit('heightschange', { heights: { seat: 300 }, source: 'typed' }); });
+    await waitFor(() => app.body.querySelector('[data-testid=heights-status]')?.getAttribute('data-state') === 'error');
+    expect(leave()).toBe(true);
+    fail = false;
+    await click(app.body.querySelector('[data-testid=heights-retry]'));
+    await waitFor(() => text(app.body.querySelector('[data-testid=heights-status-text]')) === 'Heights saved');
+    expect(leave()).toBe(false);
+    expect(app.mock.saved('bank-sampeng', 2).heights).toEqual({ seat: 300 });
+  });
+});

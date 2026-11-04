@@ -1,0 +1,586 @@
+{
+ "openings": [
+  {
+   "id": "GE-01",
+   "kind": "window",
+   "subtype": "sliding window, 4 panels (2 centre panels slide apart), no glass lines drawn",
+   "a": [
+    33,
+    23.2341
+   ],
+   "b": [
+    36.3983,
+    23.2341
+   ],
+   "width": 3.3983,
+   "wallThickness": 0.25,
+   "host": "north wall of the den/bedroom x32.40-36.40 / y19.26-23.11",
+   "evidence": "D-JAMB jamb/mullion squares at x 33.00-33.10, 33.855-33.905, 34.668-34.768, 35.530-35.580, 36.298-36.398 (frame y 23.109-23.209); WALL-GL slide arrows at y 23.28-23.32 (x 34.39-34.58 pointing west, 34.87-35.06 pointing east); TREE sill line C38A at y 23.359 from x 33.000 to 36.398. The wall stub C322/C558 ends at x 32.9999; the den's east wall inner face is at x 36.398 (C3A0). Same jamb pattern and sill line as the kitchen window at x 27.49-31.54 (outside the box)",
+   "confidence": "medium",
+   "notes": "No WIN/glass lines drawn. Centre line taken mid 0.25 m wall (y 23.109-23.359); the frame itself is y 23.109-23.209 (centre 23.159)"
+  },
+  {
+   "id": "GE-02",
+   "kind": "door",
+   "subtype": "single hinged, 900 leaf (_1D3R90 block, JAMB pair)",
+   "a": [
+    36.5231,
+    21.455
+   ],
+   "b": [
+    36.5231,
+    22.455
+   ],
+   "width": 1,
+   "wallThickness": 0.25,
+   "host": "east wall of the den (onto the covered entrance porch)",
+   "evidence": "_1D3R90 insert C3A1 at (36.398,22.405), rot 180, leaf 0.9 m swinging into the den. JAMB C3A5 (y 22.405-22.455) and C3A6 (y 21.455-21.505). Wall x 36.398-36.648: WALL lines C3A0/C55F/C561/C39F above, C521/C563/C562/C3A9 below; the wall ends at y 22.455 (C2AC) and 21.455 (C30B)",
+   "confidence": "high",
+   "notes": "East elevation tag D3 (hinged). Wall is 0.30 m with the 50 mm D-JAMB cladding (centre 36.548)"
+  },
+  {
+   "id": "GE-03",
+   "kind": "door",
+   "subtype": "single hinged, 1000 leaf",
+   "a": [
+    36.698,
+    20.8585
+   ],
+   "b": [
+    37.848,
+    20.8585
+   ],
+   "width": 1.15,
+   "wallThickness": 0.1,
+   "host": "north side of the glazed hall x36.70-38.75 / y16.86-20.91, entered from the porch",
+   "evidence": "Jamb boxes E110 (x 36.698-36.748) and E0E1 (x 37.798-37.848) at y 20.8085-20.9085. LEAF E13E is 1.0 m, lying open at x 36.748-36.783 / y 19.81-20.81. Its swing ARC is drawn on the WALL layer (block hjkhkk) to (37.798,20.8085). WIN/WALL-GL glazing continues east of x 37.848",
+   "confidence": "high",
+   "notes": "The west end is the jamb's outer face = the den wall's cladding face x 36.698; the WALL-layer face is x 36.648"
+  },
+  {
+   "id": "GE-04",
+   "kind": "passage",
+   "subtype": "doorless opening",
+   "a": [
+    32.2733,
+    14.5585
+   ],
+   "b": [
+    32.2733,
+    16.0585
+   ],
+   "width": 1.5,
+   "wallThickness": 0.25,
+   "host": "wall line x32.15-32.40 between the dining area (west) and the corridor x32.40-34.37 (east)",
+   "evidence": "Wall C378/C361 (x 32.148/32.398) ends at y 16.0585 (C3B6). Column C2BB (x 32.148-32.398, y 14.3085-14.5585) lies below it in the same line. Nothing is drawn between them; bar stools on the dining side",
+   "confidence": "high"
+  },
+  {
+   "id": "GE-05",
+   "kind": "door",
+   "subtype": "single hinged, 900 leaf (_1D3R90 block, JAMB pair)",
+   "a": [
+    34.4234,
+    14.5585
+   ],
+   "b": [
+    34.4234,
+    15.5585
+   ],
+   "width": 1,
+   "wallThickness": 0.1,
+   "host": "west wall of the bathroom x34.47-36.55 / y14.56-16.26",
+   "evidence": "_1D3R90 insert C3AE at (34.473,14.6085), rot 0, leaf 0.9 m swinging into the bathroom. JAMB C3AC (y 15.5085-15.5585) and C3AD (y 14.5585-14.6085). Wall C3B7/C3B4 (x 34.373/34.473) runs from y 15.555; the bathroom's south wall (y 14.4585-14.5585) closes the south side",
+   "confidence": "high"
+  },
+  {
+   "id": "GE-06",
+   "kind": "door",
+   "subtype": "pocket sliding door (one 1080 leaf drawn)",
+   "a": [
+    32.3983,
+    14.4335
+   ],
+   "b": [
+    34.3733,
+    14.4335
+   ],
+   "width": 1.975,
+   "wallThickness": 0.25,
+   "host": "wall line y14.31-14.56 between the corridor (north) and the family room (south)",
+   "evidence": "The gap runs from column C2BB (east face x 32.398) to the wall end x 34.3733 (C364/C3AA). DOOR leaf rectangle C367 (x 34.046-35.127, y 14.389-14.428) is parked in the wall cavity: the cavity's north face line C56A only starts at x 35.127",
+   "confidence": "medium",
+   "notes": "Leaf shorter than the opening; see uncertain"
+  },
+  {
+   "id": "GE-07",
+   "kind": "door",
+   "subtype": "single hinged, 900 leaf (linked-file block XR_L44 Plan$0$D4)",
+   "a": [
+    36.878,
+    14.3585
+   ],
+   "b": [
+    37.848,
+    14.3585
+   ],
+   "width": 0.97,
+   "wallThickness": 0.1,
+   "host": "north wall of the family room, into the small room x36.65-37.95 / y14.41-16.26",
+   "evidence": "Block 1046A at (37.848,14.3085), rot 180. A-WALL frame profiles x 36.878-36.926 and 37.800-37.848 (y 14.3085-14.4085). A-DOOR leaf 0.9 m (x 37.778-37.813, y 14.41-15.31), swing arc to (36.914,14.3735), threshold line y 14.3735",
+   "confidence": "medium",
+   "notes": "The architect's wall lines C4E1/C56A run through uncut. It is the only access to the small room"
+  },
+  {
+   "id": "GE-08",
+   "kind": "window",
+   "subtype": "fixed glazing, single pane",
+   "a": [
+    32.2733,
+    7.6585
+   ],
+   "b": [
+    32.2733,
+    11.355
+   ],
+   "width": 3.6965,
+   "wallThickness": 0.25,
+   "host": "west side of the family room x32.40-37.95 / y7.06-14.31, facing the pool",
+   "evidence": "WIN lines x 32.2983/32.3483/32.3983 run from y 7.7085 to 11.355 with no mullion; end jamb C2C4 (y 7.6585-7.7085). SW column C2C6 (x 32.148-32.398) ends at y 7.6585. TREE outer-face line C3D1 at x 32.148. Pool water lies directly outside (coping TREE lines y 11.355/11.455)",
+   "confidence": "low",
+   "notes": "May be full-height fixed glazing (the matching east glazing GE-10 is full height)"
+  },
+  {
+   "id": "GE-09",
+   "kind": "door",
+   "subtype": "2-panel sliding glazed door",
+   "a": [
+    32.2733,
+    11.355
+   ],
+   "b": [
+    32.2733,
+    14.3085
+   ],
+   "width": 2.9535,
+   "wallThickness": 0.25,
+   "host": "west side of the family room, onto the pool deck",
+   "evidence": "Sliding-unit end frames C348+C346 (y 11.355-11.455) and C344+C349 (y 14.2085-14.3085), mullion C345/C347 (y 12.83-12.88). Panel y 11.455-12.83 sits on the inner track (WIN x 32.2983/32.3233/32.3483); panel y 12.88-14.2585 has 4 lines (x 32.2983-32.3983). Column C2BB starts at y 14.3085. It opens onto the deck y 11.455-14.31",
+   "confidence": "medium",
+   "notes": "Assumed full height like GE-10"
+  },
+  {
+   "id": "GE-10",
+   "kind": "door",
+   "subtype": "2-panel sliding glazed unit, full height (elevation tag AW1)",
+   "a": [
+    38.0733,
+    7.6585
+   ],
+   "b": [
+    38.0733,
+    11.3585
+   ],
+   "width": 3.7,
+   "wallThickness": 0.25,
+   "host": "east side of the family room",
+   "evidence": "WIN (block hjkhkk): panel y 7.7585-9.4285 (x 37.948/37.973/37.998) and panel y 9.4785-11.3085 (4 lines, x 37.948-38.048). Jambs C34D+C34F, mullion C34E/C350, end C351+C34C. SE column C2C5 ends at y 7.6585; the wall stub C3D0/C571 starts at y 11.3585. TREE outer line C30C at x 38.198. East section/elevation: 2-panel AW1 framed from FFL +0.90 to about +3.85, with a slide arrow",
+   "confidence": "low",
+   "notes": "Tagged as window type AW1 but reaches the floor, so listed as a sliding door"
+  },
+  {
+   "id": "GE-11",
+   "kind": "door",
+   "subtype": "pivot door, about 1200 leaf (drawn on layer 0)",
+   "a": [
+    38.0733,
+    12.2585
+   ],
+   "b": [
+    38.0733,
+    13.455
+   ],
+   "width": 1.1965,
+   "wallThickness": 0.25,
+   "host": "east side of the family room (to the side walkway)",
+   "evidence": "Wall x 37.948-38.198 ends at y 12.2585 (C36A/E2A5) and y 13.455 (C369/E2A4). Layer-0 leaf rectangle x 37.093-38.298 / y 13.2375-13.2725, swing arc E2AD (37.093,13.223)->(38.098,12.258) and counter-arc E2B3 to (38.098,13.455): a pivot about 0.2 m from the north jamb. East elevation tag D1 with pivot marks, FFL +0.90",
+   "confidence": "high",
+   "notes": "No DOOR-layer geometry, only layer 0"
+  },
+  {
+   "id": "GE-12",
+   "kind": "door",
+   "subtype": "single hinged, 550 leaf (LEAF + JAMB pair)",
+   "a": [
+    41.5977,
+    18.1585
+   ],
+   "b": [
+    41.5977,
+    18.8585
+   ],
+   "width": 0.7,
+   "wallThickness": 0.1,
+   "host": "east wall of the stair enclosure (under-stair space), from the carport",
+   "evidence": "LEAF E1A0 (0.55 m), hinged at (41.547,18.8085), opens west. JAMB E19F (y 18.1585-18.2085) and E1A1 (y 18.8085-18.8585). Column C2BE ends at y 18.1585; wall E140/C3DA starts at y 18.8585. Layer-0 arc E2EE; TREE threshold C341 at x 41.6475",
+   "confidence": "high"
+  },
+  {
+   "id": "GE-13",
+   "kind": "door",
+   "subtype": "single hinged, 550 leaf (LEAF + JAMB pair)",
+   "a": [
+    52.4479,
+    19.6585
+   ],
+   "b": [
+    52.4479,
+    20.3585
+   ],
+   "width": 0.7,
+   "wallThickness": 0.1,
+   "host": "west wall of the east service block, room y17.21-20.46",
+   "evidence": "LEAF C312 (0.55 m), hinged at (52.498,20.3085), opens east. JAMB C311 (y 19.6585-19.7085) and C313 (y 20.3085-20.3585). Wall ends E153 at y 19.6585 and C340/C4D4 from y 20.3585. Layer-0 arc E2C2; TREE threshold C314",
+   "confidence": "high"
+  },
+  {
+   "id": "GE-14",
+   "kind": "door",
+   "subtype": "single hinged, 550 leaf (LEAF + JAMB pair)",
+   "a": [
+    52.4479,
+    21.5591
+   ],
+   "b": [
+    52.4479,
+    22.2591
+   ],
+   "width": 0.7,
+   "wallThickness": 0.1,
+   "host": "west wall of the east service block, WC/shower y20.56-23.26",
+   "evidence": "LEAF C578 (0.55 m), hinged at (52.498,22.2091), opens east. JAMB C579 (y 21.5591-21.6091) and box C57B (y 22.2091-22.2591). Wall ends E155 at y 21.5591 and C4D5/C4D6 from y 22.2591. Layer-0 arc E2E7; TREE threshold C57A",
+   "confidence": "high"
+  },
+  {
+   "id": "GE-15",
+   "kind": "door",
+   "subtype": "single hinged, 550 leaf (LEAF + JAMB pair)",
+   "a": [
+    51.6983,
+    23.3092
+   ],
+   "b": [
+    52.3983,
+    23.3092
+   ],
+   "width": 0.7,
+   "wallThickness": 0.1,
+   "host": "south wall of the north-east room x50.46-53.76 / y23.36-25.75",
+   "evidence": "LEAF C497 (0.55 m), hinged at (52.348,23.3592), opens north. JAMB C498 (x 51.6983-51.7483) and C496 (x 52.3483-52.3983). The wall stub ends at x 51.6983 (E157); column C2C3's west face is x 52.3983. Layer-0 arc E2DF; TREE threshold C495 at y 23.2592",
+   "confidence": "high"
+  },
+  {
+   "id": "GE-16",
+   "kind": "window",
+   "subtype": "2-panel sliding, no glass lines drawn",
+   "a": [
+    50.4127,
+    23.8341
+   ],
+   "b": [
+    50.4127,
+    25.6091
+   ],
+   "width": 1.775,
+   "wallThickness": 0.1,
+   "host": "west wall of the north-east room (faces the carport)",
+   "evidence": "Jamb/mullion boxes C49D+C49E (y 23.834-23.934), C49B+C49C (y 24.688-24.738) and C49A+C49F (y 25.509-25.609) in wall x 50.3627-50.4627. WALL-GL slide arrow E0FD at x 50.22-50.27 / y 25.04-25.30. Wall ends E14C (y 23.8341) and E14B (y 25.6091)",
+   "confidence": "medium",
+   "notes": "East section tag AW14 probably shows this unit with a sill about 0.5 m above the carport level"
+  },
+  {
+   "id": "GE-17",
+   "kind": "door",
+   "subtype": "sliding vehicle gate in the east site boundary",
+   "a": [
+    53.5943,
+    7.9034
+   ],
+   "b": [
+    53.5943,
+    11.8549
+   ],
+   "width": 3.9515,
+   "wallThickness": 0.12,
+   "host": "east site boundary wall (driveway entrance)",
+   "evidence": "The gate leaf is drawn closed as WALL lines E19A/E19B (x 53.5753/53.6128) from y 7.9034 to 11.9795. South pier (E193/E194) spans y 7.7534-7.9034. North pier E164 and pocket housing E172/E173 (x 53.5345-53.6566, y 11.8549-16.2545) have a slot for the leaf. STAIR-layer entry arrow at y 10.377; driveway TREE edges at y 7.907/11.853",
+   "confidence": "medium",
+   "notes": "Site gate, not part of the house envelope"
+  },
+  {
+   "id": "GE-18",
+   "kind": "door",
+   "subtype": "hinged pedestrian gate, 850 leaf",
+   "a": [
+    53.115,
+    6.8534
+   ],
+   "b": [
+    53.115,
+    7.7534
+   ],
+   "width": 0.9,
+   "wallThickness": 0.3,
+   "host": "east site boundary, between the gate pier and the D-JAMB pillar",
+   "evidence": "DOOR leaf E17D/E19D (0.85 m, open position x 52.2475-53.0975 at y 7.718-7.754). Swing arc E17C runs (52.247,7.719)->(53.097,6.853), so the gate is hinged at the pier's SW corner. It closes along x 53.10-53.13 between the pier face (y 7.7534) and the top of the D-JAMB pillar (y 6.8534; pillar x 53.0975-53.3975, y 5.601-6.853)",
+   "confidence": "low",
+   "notes": "Site gate. Line taken at the closed leaf (x 53.115); the pillar centre would be x 53.248"
+  }
+ ],
+ "glassWalls": [
+  {
+   "a": [
+    38.298,
+    16.9085
+   ],
+   "b": [
+    38.698,
+    16.9085
+   ],
+   "notes": "Glazed hall south return: WALL-GL glass between WIN frame lines, from jamb C3F6 (x 38.248-38.298) to the corner"
+  },
+  {
+   "a": [
+    38.698,
+    16.9085
+   ],
+   "b": [
+    38.698,
+    20.8585
+   ],
+   "notes": "Glazed hall east side: WIN x 38.648/38.748 + WALL-GL x 38.698. No mullions, arrows or leaves in plan. The east section/elevation shows 2 full-height panels tagged AD1 with no operation marks"
+  },
+  {
+   "a": [
+    37.848,
+    20.8585
+   ],
+   "b": [
+    38.698,
+    20.8585
+   ],
+   "notes": "Glazed hall north return, east of door GE-03 (from jamb E0E1)"
+  },
+  {
+   "a": [
+    52.4979,
+    22.2591
+   ],
+   "b": [
+    53.7627,
+    22.2591
+   ],
+   "notes": "Shower screen inside the WC of the east service block (WALL-GL C576/E2E6). Probably not full height"
+  }
+ ],
+ "uncertain": [
+  {
+   "where": [
+    32.273,
+    21.459
+   ],
+   "what": "Den west wall x 32.148-32.398 between column C2BA (y 20.36) and cross line C306 (y 22.56): both faces are drawn only on the TREE layer (C304/C305) while the den's WALL outline E291 runs through. Kitchen base units sit on the dining side. It could be a half-height wall with a pass-through above or a solid wall on the wrong layer. Not listed"
+  },
+  {
+   "where": [
+    37.323,
+    23.234
+   ],
+   "what": "Porch north side: a 1.25 m gap between the den's NE corner (x 36.648, cladding 36.698) and column C2BD with its planter stub (x 37.948-38.798). A TREE line at y 23.409 and a HIDDEN slab/beam line at y 23.359 span exactly the gap. It reads as an open bay of the covered entrance porch, which is also open to the east, so not listed. If scored as a passage: a (36.698,23.234), b (37.948,23.234)"
+  },
+  {
+   "where": [
+    40.293,
+    12.98
+   ],
+   "what": "A 0.4 m WALL-layer plinth (x 40.093-40.493, y 6.858-15.559, H-steel posts of the carport canopy) is crossed at y 12.95 by a STAIR-layer up arrow (steps x 40.09-40.89, y 11.38-14.56, from the carport to the walkway at GE-11). The y 11.80-14.16 stretch is set off by cross lines but no gap is drawn. There is also a 1.55 m gap between the plinth end (y 15.56) and the stair enclosure corner (y 17.11). Probably a low kerb or planter, not a full-height wall. No opening listed"
+  },
+  {
+   "where": [
+    38.698,
+    18.88
+   ],
+   "what": "The glazed hall's east glazing is listed as a glass wall. The elevation tags it AD1 (2 full-height panels, no slide or swing marks). If AD1 is an operable door, this run (y 16.86-20.91, about 3.5-3.95 m) becomes a door"
+  },
+  {
+   "where": [
+    32.273,
+    9.507
+   ],
+   "what": "GE-08 (fixed pane facing the pool): sill height unknown. It may be full-height fixed glass like GE-10, which would make it a glass-wall panel rather than a window"
+  },
+  {
+   "where": [
+    38.073,
+    9.508
+   ],
+   "what": "GE-10 is tagged AW1 (window type) in the east elevation, but its frame runs from FFL +0.90 to about +3.85 with a slide arrow, so it is listed as a sliding door. Its plan pattern is identical to window GE-16"
+  },
+  {
+   "where": [
+    34.699,
+    23.234
+   ],
+   "what": "GE-01: no glass lines drawn and no elevation of this face. Window vs 4-panel sliding door is not certain. Its jamb pattern and TREE sill line match the kitchen window"
+  },
+  {
+   "where": [
+    53.594,
+    9.879
+   ],
+   "what": "GE-17 (vehicle gate) and GE-18 (pedestrian gate at 53.115,7.303) are site boundary gates. They are included because GE-17's leaf is drawn on the WALL layer and GE-18 has a DOOR leaf and arc. Drop both if site gates are out of scope"
+  },
+  {
+   "where": [
+    33.386,
+    14.434
+   ],
+   "what": "GE-06: only one 1.08 m pocket leaf is drawn for a 1.975 m gap, and the pocket is only 0.75 m deep. It might instead be read as a passage with a partial slider"
+  },
+  {
+   "where": [
+    37.363,
+    14.358
+   ],
+   "what": "GE-07 comes from the interior xref (block D4) drawn over untrimmed architect wall lines C4E1/C56A. Kept because the small room behind it has no other access"
+  },
+  {
+   "where": [
+    50.413,
+    24.722
+   ],
+   "what": "GE-16: window vs 2-panel sliding door is not certain (a service room facing the carport, with the 0.6 m door GE-15 next to it)"
+  },
+  {
+   "where": [
+    35.18,
+    7.005
+   ],
+   "what": "The family room's south side is a continuous 94 mm double WALL line (y 6.958-7.052) between the X-boxed corner blocks, under the upper floor's south wall. No opening is drawn and none is listed"
+  },
+  {
+   "where": [
+    36.698,
+    20.859
+   ],
+   "what": "Wall faces vs cladding: GE-03's west end is taken at the cladding face x 36.698; the WALL-layer face is x 36.648, 5 cm away. The GE-02 and GE-11 centre lines use the 0.25 m WALL thickness and exclude the 50 mm D-JAMB/layer-0 cladding"
+  }
+ ],
+ "rejected": [
+  {
+   "id": "R-01",
+   "reason": "Kitchen north window x 27.49-31.54 at y 23.23: its centre (x 29.52) is outside the box",
+   "where": [
+    29.517,
+    23.234
+   ]
+  },
+  {
+   "id": "R-02",
+   "reason": "Dining south glazing x 26.90-32.15 at y 14.51, between columns C2B6 and C2BB: its centre (x 29.52) is outside the box",
+   "where": [
+    29.523,
+    14.509
+   ]
+  },
+  {
+   "id": "R-03",
+   "reason": "Bi-fold fronts on the FUR layer: built-in wardrobes south of the den (y 18.25-18.6) and north of the bath/closet (y 16.96-17.3). Furniture, not wall openings",
+   "where": [
+    34.3,
+    18.4
+   ]
+  },
+  {
+   "id": "R-04",
+   "reason": "Open north end of the stair enclosure (x 40.39-41.55 at y 22.11), and the bay between the stair's east wall end (y 22.108) and carport column C2BF (y 23.109). Stair start / column bay, with no lintel or threshold drawn",
+   "where": [
+    41.6,
+    22.61
+   ]
+  },
+  {
+   "id": "R-05",
+   "reason": "Carport bays between columns at x 41.5/47.0/52.5, y 18.0/23.2: no walls",
+   "where": [
+    44.3,
+    20.6
+   ]
+  },
+  {
+   "id": "R-06",
+   "reason": "Block A$C598F089C>A$C66261919 on the DOOR layer at (53.77,22.73) is a shower fitting, not a door",
+   "where": [
+    53.77,
+    22.73
+   ]
+  },
+  {
+   "id": "R-07",
+   "reason": "Pool glass fence (WALL-GL, y 7.40/7.65) and W_Grill fence (y 5.9-6.0) along the south: site fences whose centres lie outside the box",
+   "where": [
+    25.7,
+    7.5
+   ]
+  }
+ ],
+ "method": "Pictures first, then geometry.\n\n1. Rendered the whole part with the shared render.py. Then rendered 16 tiles of 6.4 x 6.4 m at 0.5 m grid, with inserts and text: A1-D4, x 30.8-37.2 / 36.8-43.2 / 42.8-49.2 / 48.8-55.0 by y 20-26.4 / 14-20.4 / 8-14.4 / 4.8-8.4.\n2. Many long WALL/COL lines are not walls: CENTER2 grid lines, HIDDEN overhead edges (for example x 38.995 and the canopy outline C4B8) and PHANTOM2 property lines. So I wrote a renderer variant (r2.py in my folder) that dashes non-continuous linetypes. With it I zoomed (0.05-0.2 m grid) on every wall group: den and porch, corridor/bath/small room, family room, glazed hall, stair, east service block, NE room, and the east boundary with its gates.\n3. Confirmed every candidate from prims.pkl with a box query (q.py): wall line end points on both sides, JAMB inserts and jamb polylines, LEAF/SWING and door blocks (_1D3R90, XR_L44 Plan$0$D4, hjkhkk), layer-0 leaves and arcs, and window mullion/track patterns.\n4. Completeness checks: clustered every DOOR, D-JAMB, WIN, WALL-GL and xref door/wall entity in the box (sweep.py) and listed every ARC on any layer (arcs.py). Each cluster or arc is either one of GE-01..18, furniture, or outside the box.\n5. Used the elevations only to classify glazing. The right-hand drawing is an east view of this part: the ramp R-01 matches. In it AW1 (GE-10) and AD1 (hall glass) are full height, and D1 (GE-11) is a pivot door.\n6. a and b sit on the middle of the WALL-layer thickness; 50 mm cladding on D-JAMB/layer 0 is excluded. The ends are at wall-end faces, or at the outer faces of jambs and frames.\n7. Final check renders, with a marker and an a-b segment per opening: check1.png, check_zoomA-D.png and final_marks.png. No unmarked gap, swing, leaf, jamb pair or window group remained, apart from the items listed in uncertain and rejected.",
+ "files": [
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/overview.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/overview2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/ground_all_text.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/tile_A1.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/tile_A2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/tile_A3.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/tile_A4.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/tile_B1.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/tile_B2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/tile_B3.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/tile_B4.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/tile_C1.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/tile_C2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/tile_C3.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/tile_C4.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/tile_D1.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/tile_D2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/tile_D3.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/tile_D4.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/z_entry.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/z_foyer.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/z_bednorth.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/z_bedwest.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/z_bath.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/z_passage.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/z_hallsouth.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/z_famsouth.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/z_pool.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/z_ramp.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/z_stair.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/z_stairtop.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/z_eastblock.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/z_ne.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/z_eastbound.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/upper_east.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/elev_overview.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/elev_left.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/elev_right.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/elev_right_zoom1.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/elev_right_zoom2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/check1.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/check_zoomA.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/check_zoomB.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/check_zoomC.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/check_zoomD.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-g-east-B/final_marks.png"
+ ]
+}

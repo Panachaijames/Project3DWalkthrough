@@ -1,0 +1,60 @@
+{
+ "gpu": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x000046A8) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "cells": 256,
+ "models": {
+  "stool": {
+   "seconds": 0.3
+  },
+  "working_table": {
+   "seconds": 0.6
+  },
+  "visitor_chair01": {
+   "seconds": 2.1
+  },
+  "visitor_chair02": {
+   "seconds": 0.5
+  },
+  "sofa": {
+   "seconds": 0.6
+  },
+  "banquet": {
+   "seconds": 1.2
+  },
+  "side_table": {
+   "seconds": 0.3
+  },
+  "monitor": {
+   "seconds": 0.9
+  },
+  "chair_test": {
+   "seconds": 1.5
+  },
+  "visitor_chair02_n": {
+   "seconds": 0.2
+  }
+ },
+ "page": {
+  "three": "186",
+  "screen": {
+   "w": 1920,
+   "h": 1080
+  },
+  "lensMm": 24,
+  "fovDeg": 53.13010235415598,
+  "eye": 1.6,
+  "azimuthDeg": 30,
+  "walkM": 3,
+  "closeGapM": 0.6,
+  "creaseDeg": 40
+ },
+ "cpu": {
+  "cores": 12,
+  "model": "12th Gen Intel(R) Core(TM) i7-1255U",
+  "beforeEdge": 40,
+  "meanDuringRun": 43,
+  "maxDuringRun": 60
+ },
+ "seconds": 10,
+ "made": "2026-11-03T12:38:19.208Z",
+ "note": "pictures only, nothing timed: the CPU load is recorded for the record"
+}

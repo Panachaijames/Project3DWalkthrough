@@ -1,0 +1,37 @@
+bank:L1                  key  16  detected  19  matched  16  right  16  recall 1.0  precision 0.842  RIGHT 1.0  door: 15/15  passage: 1/1  (optional 8/9 found)
+    extra  L1-024 passage at [-3.505, -5.83] w 1.453
+    extra  L1-025 passage at [5.413, 3.208] w 1.229
+    extra  L1-026 passage at [0.623, 6.396] w 1.076
+bank:L2                  key  25  detected  28  matched  25  right  24  recall 1.0  precision 0.893  RIGHT 0.96  door: 23/24  passage: 1/1
+    extra  L2-019 passage at [-2.884, 10.742] w 2.212
+    extra  L2-020 passage at [-0.429, 10.545] w 1.498
+    extra  L2-021 passage at [0.713, 4.962] w 2.983
+    wrong  B2-07~L2-016 kind door/door width 1.0/0.875 ends 0.125
+presidential:suite       key  21  detected  29  matched  20  right  20  recall 0.952  precision 0.69  RIGHT 0.952  door: 15/16  passage: 5/5  (optional 0/2 found)
+    missed D16 door at [189.902, -3489.351] w 5.93 movable glass partition: 9 stacking panels (blocks "Movable panel") on an overhead track, drawn open
+    extra  suite-004 passage at [180.111, -3489.457] w 0.86
+    extra  suite-006 passage at [199.67, -3503.758] w 2.095
+    extra  suite-008 passage at [197.78, -3505.861] w 1.245
+    extra  suite-017 passage at [178.188, -3488.347] w 0.86
+    extra  suite-020 passage at [202.199, -3500.303] w 1.21
+    extra  suite-021 passage at [203.075, -3489.835] w 3.542
+    extra  suite-023 passage at [195.19, -3500.827] w 1.943
+    extra  suite-024 passage at [200.677, -3502.541] w 2.513
+    extra  suite-026 passage at [203.134, -3497.395] w 2.139
+sukhumvit:ground         key  41  detected  43  matched  40  right  39  recall 0.976  precision 0.93  RIGHT 0.951  door: 19/21  window: 13/13  passage: 7/7  (optional 2/3 found)
+    missed GE-17 door at [53.763, 9.879] w 3.952 sliding vehicle gate (leaf drawn closed on WALL), parks in a pocket to the north (site element)
+    extra  ground-023 passage at [34.423, 18.059] w 2.2
+    extra  ground-031 passage at [14.898, 16.208] w 0.8
+    extra  ground-034 passage at [40.293, 16.334] w 1.55
+    wrong  GW-19~ground-043 kind door/window width 2.899/4.146 ends 1.247
+sukhumvit:upper          key  40  detected  48  matched  40  right  40  recall 1.0  precision 0.833  RIGHT 1.0  door: 14/14  window: 20/20  passage: 6/6  (optional 5/13 found)
+    extra  upper-019 passage at [85.22, 17.633] w 1.851
+    extra  upper-025 passage at [121.045, 19.134] w 1.95
+    extra  upper-026 passage at [113.93, 18.058] w 0.771
+    extra  upper-028 passage at [117.159, 21.159] w 1.775
+    extra  upper-029 passage at [116.296, 21.734] w 1.552
+    extra  upper-032 passage at [113.88, 23.309] w 0.671
+    extra  upper-037 passage at [106.983, 14.507] w 1.127
+    extra  upper-039 passage at [99.892, 21.259] w 1.555
+    wrong  UW-01~upper-033 kind door/window width 4.499/4.499 ends 0.075
+TOTAL key 143 detected 167 matched 141 right 139  recall 0.986  precision 0.844  RIGHT 0.972  (gate: >= 0.80)

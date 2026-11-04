@@ -1,0 +1,113 @@
+{
+ "key": "banquet",
+ "name": "banquet",
+ "file": "banquet/banquet.glb",
+ "kind": "sofa",
+ "family": "SOFA_BENCH_DIOR - TYPE 2",
+ "piece": "L1-sofa-002",
+ "furnishes": 4,
+ "turnUndone_deg": 270,
+ "turnFrom": "its real turn in the scene (analysis.json)",
+ "standsAt_m": 0,
+ "size_m": [
+  3.0322,
+  0.4744,
+  0.6927
+ ],
+ "gltfSceneToModelFrame_columnMajor": [
+  0,
+  0,
+  -1,
+  0,
+  0,
+  1,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  -1.7159432,
+  0,
+  5.6735914,
+  1
+ ],
+ "full": {
+  "triangles": 4720,
+  "vertices": 3466,
+  "weldedVertices": 2366,
+  "parts": [
+   {
+    "name": "Rectangle089",
+    "triangles": 12,
+    "vertices": 24,
+    "mirrored": false
+   },
+   {
+    "name": "Rectangle090",
+    "triangles": 4352,
+    "vertices": 2920,
+    "mirrored": false
+   },
+   {
+    "name": "Line2038381558",
+    "triangles": 356,
+    "vertices": 522,
+    "mirrored": false
+   }
+  ],
+  "area_m2": 13.4108
+ },
+ "levels": [
+  {
+   "id": "2500",
+   "label": "2,500 budget",
+   "triangles": 2498,
+   "vertices": 1255,
+   "posOffset": 0,
+   "posCount": 3765,
+   "idxOffset": 15060,
+   "idxCount": 7494
+  },
+  {
+   "id": "50%",
+   "label": "50 %",
+   "triangles": 2360,
+   "vertices": 1186,
+   "posOffset": 45036,
+   "posCount": 3558,
+   "idxOffset": 59268,
+   "idxCount": 7080
+  },
+  {
+   "id": "25%",
+   "label": "25 %",
+   "triangles": 1180,
+   "vertices": 596,
+   "posOffset": 87588,
+   "posCount": 1788,
+   "idxOffset": 94740,
+   "idxCount": 3540
+  },
+  {
+   "id": "12%",
+   "label": "12 %",
+   "triangles": 564,
+   "vertices": 288,
+   "posOffset": 108900,
+   "posCount": 864,
+   "idxOffset": 112356,
+   "idxCount": 1692
+  },
+  {
+   "id": "6%",
+   "label": "6 %",
+   "triangles": 282,
+   "vertices": 147,
+   "posOffset": 119124,
+   "posCount": 441,
+   "idxOffset": 120888,
+   "idxCount": 846
+  }
+ ]
+}

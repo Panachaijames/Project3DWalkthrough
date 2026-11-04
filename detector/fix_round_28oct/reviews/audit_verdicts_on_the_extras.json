@@ -1,0 +1,1488 @@
+[
+ {
+  "floor": "tower:L29",
+  "detectorKind": "window",
+  "a": [
+   -2.869,
+   -56.448
+  ],
+  "b": [
+   -2.9701,
+   -57.6036
+  ],
+  "width": 1.16,
+  "centre": [
+   -2.92,
+   -57.026
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end)",
+   "glazing band",
+   "A-GLAZ-CURT",
+   "fixed glazing"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "West facade bay between two post boxes (y -56.45 and -57.6) of the slanted curtain wall; facade lines (A-WALL double line + A-GLAZ-CURT) continuous through it. Continuous curtain wall.",
+   "South-west facade x~-2.9, y -56.45..-57.60: one bay of the continuous curtain wall between two fin / cap boxes (y=-56.45 and y=-57.60); A-GLAZ-CURT glazing unbroken, no door block."
+  ]
+ },
+ {
+  "floor": "tower:L29",
+  "detectorKind": "window",
+  "a": [
+   -2.3229,
+   -59.1521
+  ],
+  "b": [
+   -2.3229,
+   -59.7055
+  ],
+  "width": 0.553,
+  "centre": [
+   -2.323,
+   -59.429
+  ],
+  "detectorEvidence": [
+   "glazing between wall ends (bay)",
+   "A-GLAZ-CURT",
+   "sliding sashes (5 lines)",
+   "may be a floor-length sliding door (no sill in plan)"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "x=-2.323 is the axis of a facade fin (A-GLAZ-CURT spearhead block) on the continuous south curtain wall, same as C03. Nothing interrupted.",
+   "South facade x=-2.323: A-GLAZ-CURT fin / cap detail (box cap, tapered fin) on the continuous curtain wall between inner line y=-59.15 and outer line y=-59.71, at the transition from the corner wall piece to the curtain wall; same fin as at x=-1.82. Mullion fin"
+  ]
+ },
+ {
+  "floor": "tower:L29",
+  "detectorKind": "passage",
+  "a": [
+   1.134,
+   -34.195
+  ],
+  "b": [
+   0.0573,
+   -34.195
+  ],
+  "width": 1.077,
+  "centre": [
+   0.596,
+   -34.195
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "wall-end-in-open-space",
+   "wall-end-in-open-space"
+  ],
+  "auditorNotes": [
+   "Runs along the line of the stall-block south wall (y -34.125..-34.265) from its free west end at x=1.134 across open WC floor to x=0.057, the back of urinal 3 (fitting, room wall face at x=-0.063). Open urinal aisle, no jamb, leaf or arc.",
+   "Inside the north-west WC: the segment runs from the free west end (x=1.134) of the cubicle-block south partition (y -34.12..-34.26) to the WC west wall face (x~0.06), 1.08 m across the open aisle in front of the urinals and cubicle doors. One wall end facing a"
+  ]
+ },
+ {
+  "floor": "tower:L29",
+  "detectorKind": "passage",
+  "a": [
+   1.4195,
+   -48.2656
+  ],
+  "b": [
+   1.4195,
+   -49.8152
+  ],
+  "width": 1.55,
+  "centre": [
+   1.419,
+   -49.04
+  ],
+  "detectorEvidence": [
+   "wall gap (L-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "wall-end-in-open-space",
+   "wall-end-in-open-space"
+  ],
+  "auditorNotes": [
+   "From the free south end of the thick wall x 1.32-1.52 (y=-48.27) down 1.55 m to the wall at y=-49.81, across the open stair landing. Nothing is interrupted at x=1.42. (The real doorless opening of this landing is 0.95 m further east, between two stubs at x 2.2",
+   "x=1.419 is the centre line of the stair-side wall x 1.318-1.52 which ends at y=-48.266; the segment runs 1.55 m across the open stair landing hall (S-STRS polygon, stair footprint) to the south wall face y=-49.815. Wall end in an open hall, no leaf or jamb. Th"
+  ]
+ },
+ {
+  "floor": "tower:L29",
+  "detectorKind": "passage",
+  "a": [
+   1.7003,
+   -35.165
+  ],
+  "b": [
+   1.7003,
+   -34.265
+  ],
+  "width": 0.9,
+  "centre": [
+   1.7,
+   -34.715
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end), nothing drawn in it"
+  ],
+  "auditVerdict": "split",
+  "auditorReasons": [
+   "n/a",
+   "wall-end-in-open-space"
+  ],
+  "auditorNotes": [
+   "WC entrance baffle: stub wall x 1.64-1.76 (A-WALL-PATT) from the south wall ends at y=-35.165 and faces the side of the stall-block south wall (y=-34.265) 0.90 m away; this is the only way from the entrance lobby into the basin / urinal area. A 'mouth' (wall e",
+   "Free top end (y=-35.165) of the 0.12 m nib wall x 1.64-1.76 beside the WC Door-Opening, facing the underside (y=-34.265) of the cubicle-block partition 0.9 m away. Privacy nib inside the WC room; both sides are the same WC space. At most an optional 'mouth', n"
+  ]
+ },
+ {
+  "floor": "tower:L29",
+  "detectorKind": "passage",
+  "a": [
+   2.4472,
+   -38.6116
+  ],
+  "b": [
+   2.4556,
+   -41.0615
+  ],
+  "width": 2.45,
+  "centre": [
+   2.451,
+   -39.837
+  ],
+  "detectorEvidence": [
+   "wall gap (L-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "wall-end-in-open-space",
+   "wall-end-in-open-space"
+  ],
+  "auditorNotes": [
+   "Joins the end of the stub x 2.37-2.52 (y -38.61) and the corner of the block at y=-41.06 across 2.45 m of open lobby floor; no wall line x=2.45 exists in between (the real wall of this lobby is x 1.77-1.92, with the fire door C14 at y -39.14..-40.54). Room sid",
+   "Segment x~2.45 from the south end (y=-38.612) of the north block wall x 2.37-2.52 to the north face (y=-41.062) of the lobby south wall, 2.45 m across the open lobby that lies east of double door NO_03 (x=1.84). Both sides are the same lobby; no wall, jamb or "
+  ]
+ },
+ {
+  "floor": "tower:L29",
+  "detectorKind": "passage",
+  "a": [
+   3.4135,
+   -37.4902
+  ],
+  "b": [
+   2.5176,
+   -37.4902
+  ],
+  "width": 0.896,
+  "centre": [
+   2.966,
+   -37.49
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end), nothing drawn in it"
+  ],
+  "auditVerdict": "real",
+  "auditorReasons": [
+   "n/a",
+   "n/a"
+  ],
+  "auditorNotes": [
+   "North wall of the vestibule: thick wall (A-WALL-PATT y -37.44..-37.74) ends at x=2.517 and the new thin wall (A-WALL 0.1, y -37.54..-37.44) starts at x=3.414, giving a 0.895 m doorway-width gap into the vestibule / corridor x 2.52-4.11. Wall ends face each oth",
+   "Core north wall y=-37.44: left wall (link 'Project UOBH Level L01 - ROOF Central', y -37.44..-37.74) ends at x=2.517, right wall (A-WALL y -37.44..-37.54) starts at x=3.414. Two collinear wall ends 0.897 m apart separate the north corridor from the west lobby;"
+  ]
+ },
+ {
+  "floor": "tower:L29",
+  "detectorKind": "passage",
+  "a": [
+   2.5216,
+   -41.2136
+  ],
+  "b": [
+   4.1133,
+   -41.2136
+  ],
+  "width": 1.592,
+  "centre": [
+   3.317,
+   -41.214
+  ],
+  "detectorEvidence": [
+   "wall gap (L-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "other",
+   "wall-end-in-open-space"
+  ],
+  "auditorNotes": [
+   "Spans the 1.59 m corridor x 2.52-4.11 where it joins the lobby, between the east end of the block (x=2.52, which turns south as the corridor wall) and the core wall x=4.11 (which also continues south). Both ends are corners of the corridor walls, no door, jamb",
+   "Segment y=-41.2 from x=2.522 (NE corner of the shaft block, wall turns south along x=2.40-2.52) to x=4.113 (NW corner of the core wall, jamb stub of door D_Swing_Single PAN). It spans the mouth where the 1.6 m wide west corridor (side walls continue south on b"
+  ]
+ },
+ {
+  "floor": "tower:L29",
+  "detectorKind": "passage",
+  "a": [
+   4.3173,
+   -35.7904
+  ],
+  "b": [
+   4.3173,
+   -37.4402
+  ],
+  "width": 1.65,
+  "centre": [
+   4.317,
+   -36.615
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "wall-end-in-open-space",
+   "wall-end-in-open-space"
+  ],
+  "auditorNotes": [
+   "x=4.317 is the centre line of the pier between the two D37 doors (x 4.177-4.457); the segment continues the pier 1.65 m south across the corridor to the lift-core wall (y -37.44). Open corridor floor, no wall interrupted. The two real openings are at x 3.217-4",
+   "x=4.317 is the pier (x 4.2-4.45) between the two corridor doors of the north block; the segment runs from the pier south face (y=-35.79) across the 1.65 m corridor, through both door swing arcs, to the core north wall (y=-37.44). Cross-section of a corridor: n"
+  ]
+ },
+ {
+  "floor": "tower:L29",
+  "detectorKind": "passage",
+  "a": [
+   4.9173,
+   -39.4904
+  ],
+  "b": [
+   4.9173,
+   -41.1864
+  ],
+  "width": 1.696,
+  "centre": [
+   4.917,
+   -40.338
+  ],
+  "detectorEvidence": [
+   "wall gap (L-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "wall-end-in-open-space",
+   "other"
+  ],
+  "auditorNotes": [
+   "x=4.917 line from the SW corner of the closet wall (y=-39.49) to the wall at y=-41.186, through the middle of the 1.0 m wide vestibule (x 4.26-5.25) of the PAN door. Open floor, no wall line interrupted.",
+   "Vertical segment x=4.917 across the stair-entry vestibule (x 4.27-5.28), from the south face of the horizontal wall y=-39.49 (wall starts at x=4.88) to the north face of the wall block y=-41.19; no wall exists on this line (the only opening of the vestibule is"
+  ]
+ },
+ {
+  "floor": "tower:L29",
+  "detectorKind": "passage",
+  "a": [
+   6.1678,
+   -32.5154
+  ],
+  "b": [
+   6.1678,
+   -31.8656
+  ],
+  "width": 0.65,
+  "centre": [
+   6.168,
+   -32.191
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "wall-end-in-open-space",
+   "other"
+  ],
+  "auditorNotes": [
+   "Vertical segment x=6.168 from the north end of the wall x 6.12-6.22 (corner at y -32.41/-32.515) to the north wall face y=-31.866: a 0.55-0.65 m gap into a service strip, too narrow for passage, no door or jamb; wall end facing open service space.",
+   "Vertical segment x=6.168 from the inside face of the room top wall (y=-32.515, wall y -32.42..-32.52 continues to the corner at x=6.22) across that wall and a 0.55 m wide closed cavity to the north wall face (y=-31.866). Crosses a solid wall into a dead-end ca"
+  ]
+ },
+ {
+  "floor": "tower:L29",
+  "detectorKind": "passage",
+  "a": [
+   6.1178,
+   -32.4654
+  ],
+  "b": [
+   6.9178,
+   -32.4654
+  ],
+  "width": 0.8,
+  "centre": [
+   6.518,
+   -32.465
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "other",
+   "wall-end-in-open-space"
+  ],
+  "auditorNotes": [
+   "Spans the 0.7-0.8 m service niche between the corner of the y=-32.46 partition (x 6.12-6.22) and the next N-S wall (x 6.92). It is the width of a shaft between two parallel walls, not a gap in a wall line; no door, jamb or leaf.",
+   "Segment from the NE corner of the room (top wall y -32.42..-32.52 turns south at x 6.12-6.22) east to the N-S wall x 6.92-7.07 across a 0.7 m wide cavity that is closed by a cross bar at y=-33.42..-33.52 and by the north wall; a corner (not a wall end) and a d"
+  ]
+ },
+ {
+  "floor": "tower:L29",
+  "detectorKind": "passage",
+  "a": [
+   13.1963,
+   -35.7904
+  ],
+  "b": [
+   13.1963,
+   -37.4402
+  ],
+  "width": 1.65,
+  "centre": [
+   13.196,
+   -36.615
+  ],
+  "detectorEvidence": [
+   "wall gap (L-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "wall-end-in-open-space",
+   "wall-end-in-open-space"
+  ],
+  "auditorNotes": [
+   "Segment hangs from the east end/pier of the core's south wall (x 13.07-13.32, y -35.79) straight down 1.65 m to the north face of the lift-core wall (y -37.44), at the open east end of the corridor. No wall line is interrupted, no door or jamb.",
+   "Corridor y=-35.8..-37.44 (1.65 m wide) running east: the segment joins the SE corner of the north block (13.3,-35.79) and the NE corner of the core (13.3,-37.44). The corridor simply ends open into the open-plan office; no wall line is interrupted, no leaf, ja"
+  ]
+ },
+ {
+  "floor": "tower:L29",
+  "detectorKind": "passage",
+  "a": [
+   15.7773,
+   -41.9402
+  ],
+  "b": [
+   15.1503,
+   -41.9402
+  ],
+  "width": 0.627,
+  "centre": [
+   15.464,
+   -41.94
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "fitting-or-furniture",
+   "fitting-or-furniture"
+  ],
+  "auditorNotes": [
+   "Thin wall (A-WALL hatch x 14.677-20.677, y -41.99..-41.89). Only its upper face line and the hatch have a notch at x 15.15-15.777, exactly the footprint of the Canon printer block (E-DATA). The lower face line y=-41.99 stays continuous; no jamb, leaf or arc. A",
+   "Wall y=-41.99..-41.89 (A-WALL polygon, x 14.68-20.68) has only a 0.09 m deep recess on its north face from x=15.150 to 15.777; the polygon continues as a 1 cm sliver (y=-41.98..-41.99) through the recess and the south face line y=-41.99 is unbroken. PRINTER_CA"
+  ]
+ },
+ {
+  "floor": "tower:L29",
+  "detectorKind": "window",
+  "a": [
+   19.1771,
+   -59.1521
+  ],
+  "b": [
+   19.1771,
+   -59.7055
+  ],
+  "width": 0.553,
+  "centre": [
+   19.177,
+   -59.429
+  ],
+  "detectorEvidence": [
+   "glazing between wall ends (bay)",
+   "A-GLAZ-CURT",
+   "sliding sashes (5 lines)",
+   "may be a floor-length sliding door (no sill in plan)"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "x=19.177 is the axis of a facade fin (spearhead A-GLAZ-CURT / A-WALL fin block, y -59.19..-60.0) standing on the continuous south curtain-wall line y -59.15..-59.71. Nothing is interrupted.",
+   "South facade x=19.177: A-GLAZ-CURT fin / cap detail (box cap y -58.97..-59.15, tapered fin down to y=-60.0) on the continuous curtain wall between the inner line y=-59.15 and the outer line y=-59.71; identical fin repeats at x=18.68. Segment crosses the facade"
+  ]
+ },
+ {
+  "floor": "tower:L29",
+  "detectorKind": "window",
+  "a": [
+   19.8823,
+   -50.2146
+  ],
+  "b": [
+   19.8823,
+   -54.965
+  ],
+  "width": 4.75,
+  "centre": [
+   19.882,
+   -52.59
+  ],
+  "detectorEvidence": [
+   "glazing between wall ends (bay)",
+   "A-GLAZ-CURT",
+   "sliding sashes (2 lines)",
+   "may be a floor-length sliding door (no sill in plan)"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "Long glazed partition x 19.75-20.0 (A-GLAZ-CURT mullion boxes at y -51.95 and -53.45) of the SE glass room, 4.75 m, with no door block, leaf or swing arc along its whole length. Glass wall, not an opening.",
+   "Continuous glass partition (A-GLAZ-CURT, lines x=19.75, 19.78, 20.17) from y=-50.2 to y=-54.97 (4.75 m) with only mullion crossbars at y=-51.95 and y=-53.45; no door block, no gap. Long glass wall."
+  ]
+ },
+ {
+  "floor": "tower:L29",
+  "detectorKind": "window",
+  "a": [
+   20.5637,
+   -50.095
+  ],
+  "b": [
+   19.5773,
+   -50.095
+  ],
+  "width": 0.986,
+  "centre": [
+   20.071,
+   -50.095
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end)",
+   "glazing band",
+   "A-GLAZ-CURT",
+   "sliding sashes (3 lines)",
+   "may be a floor-length sliding door (no sill in plan)"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "Black wall (y -50.11..-50.21) ends at x=19.577 against the corner mullion (A-GLAZ-CURT box 19.574-19.749); from there to the mullion box at x=20.564 is a plain glazed panel of the SE glass room's north partition (glazing lines y=-50.01 and -50.18..-50.21). No ",
+   "Line y=-50.1: thick wall ends at x=19.575, then glazing end cap (A-GLAZ-CURT x 19.57-19.74), thin curtain-wall frame (A-WALL y -50.18..-50.21, x 19.74-20.61) and a glass panel up to mullion x 20.56-20.65 of the glazed partition that continues to the double doo"
+  ]
+ },
+ {
+  "floor": "tower:L29",
+  "detectorKind": "window",
+  "a": [
+   29.7885,
+   -53.1169
+  ],
+  "b": [
+   29.76,
+   -51.9586
+  ],
+  "width": 1.159,
+  "centre": [
+   29.774,
+   -52.538
+  ],
+  "detectorEvidence": [
+   "glazing between wall ends (bay)",
+   "A-GLAZ-CURT",
+   "fixed glazing"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "East facade bay between two post boxes (y -51.96 and -53.12): continuous slanted facade lines (A-WALL double line + A-GLAZ-CURT glazing) run through it unbroken, fins at both posts. Continuous curtain wall.",
+   "East facade x~29.77, y -51.96..-53.12: one bay of the continuous curtain wall between two fin / cap boxes (A-GLAZ-CURT / A-WALL fins at y=-51.96 and y=-53.12); no door block, no gap in the glazing line."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "window",
+  "a": [
+   -2.7087,
+   -54.615
+  ],
+  "b": [
+   -2.6259,
+   -53.669
+  ],
+  "width": 0.95,
+  "centre": [
+   -2.667,
+   -54.142
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end)",
+   "glazing band",
+   "A-GLAZ-CURT",
+   "fixed glazing"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "West facade (slanted, x about -2.7): the segment lies between two black fin / cap blocks (y=-53.4 and y=-54.65) of the continuous curtain wall; glass lines and the wall pair run on unbroken.",
+   "Segment on the sloped west facade between two cap blocks (y -53.43 and -54.65). The double A-WALL facade line and the A-GLAZ-CURT lines run through without a gap, no leaf, no arc. Continuous curtain wall."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "window",
+  "a": [
+   -2.3229,
+   -56.8302
+  ],
+  "b": [
+   -2.3229,
+   -56.1682
+  ],
+  "width": 0.662,
+  "centre": [
+   -2.323,
+   -56.499
+  ],
+  "detectorEvidence": [
+   "glazing between wall ends (bay)",
+   "A-GLAZ-CURT",
+   "sliding sashes (5 lines)",
+   "may be a floor-length sliding door (no sill in plan)"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "SW corner of the facade: line across the south curtain wall depth at x=-2.32, on the centre of a fin (triangle fin symbol, glass lines y=-56.17 and y=-56.83 continuous).",
+   "Vertical line x -2.32 (y -56.83..-56.17) through a fin of the south facade at the SW corner. Fin detail of the continuous curtain wall."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "passage",
+  "a": [
+   0.2761,
+   -51.0152
+  ],
+  "b": [
+   0.2761,
+   -53.3852
+  ],
+  "width": 2.37,
+  "centre": [
+   0.276,
+   -52.2
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "wall-end-in-open-space",
+   "wall-end-in-open-space"
+  ],
+  "auditorNotes": [
+   "Toilet room: the segment prolongs the free south end (y=-51.015) of a short screen wall (x 0.23-0.33) down to the back wall of the cubicles (y=-53.385) over open floor and across the cubicle door zone. No wall line is interrupted.",
+   "Starts at the free end of a vertical wall (x 0.226..0.326, ends at y -51.015) and runs 2.37 m across open washroom floor and through the front of cubicle S3 to the stall back wall (A-WALL y -53.385). No wall line is interrupted along it."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "passage",
+  "a": [
+   0.9972,
+   -51.9352
+  ],
+  "b": [
+   0.9972,
+   -50.6709
+  ],
+  "width": 1.264,
+  "centre": [
+   0.997,
+   -51.303
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "wall-end-in-open-space",
+   "wall-end-in-open-space"
+  ],
+  "auditorNotes": [
+   "Toilet room: free north end (y=-51.935) of the cubicle side wall x 0.94-1.05 against the south face of a closet wall (y=-50.67). The room is open on both sides of the line; a wall end in open floor.",
+   "From the free end of the cubicle-bank end wall (x 0.947..1.047, ends y -51.935) to the washroom north wall (y -50.671): the 1.26 m aisle inside one washroom; no door, jambs or closing line."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "passage",
+  "a": [
+   1.4195,
+   -48.2656
+  ],
+  "b": [
+   1.4195,
+   -49.8152
+  ],
+  "width": 1.55,
+  "centre": [
+   1.419,
+   -49.04
+  ],
+  "detectorEvidence": [
+   "wall gap (L-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "wall-end-in-open-space",
+   "wall-end-in-open-space"
+  ],
+  "auditorNotes": [
+   "Stair hall: free south end (y=-48.27) of the thin wall x 1.32-1.52 against the north face of the wall y=-49.82, mid-room (x=1.42); stair landing is open on both sides. The real doorway of this landing is the 1.2 m gap at x=2.37 (C41).",
+   "From the south end of the stair/riser wall (x 1.32..1.52, ends y -48.27) across the stair landing (S-STRS outline x -1.65..2.21, y -48.27..-49.81) to the horizontal wall y -49.815. Inside one space, nothing interrupted. The stair entrance is the stub gap at x "
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "passage",
+  "a": [
+   1.651,
+   -35.1552
+  ],
+  "b": [
+   1.651,
+   -34.145
+  ],
+  "width": 1.01,
+  "centre": [
+   1.651,
+   -34.65
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "wall-end-in-open-space",
+   "wall-end-in-open-space"
+  ],
+  "auditorNotes": [
+   "NW toilet room: free end (y=-35.155) of a short basin screen wall (x 1.55-1.70) facing the south wall of the WC cubicles 1.0 m away. Both sides are the same open room; the real entrance is the Door-Opening at y=-35.74 (x 1.78-2.68). Closest thing to a mouth, b",
+   "From the free end of a 0.1 m screen stub (x 1.60..1.70, ends y -35.155) to the south partition wall of men cubicle M2 (A-WALL y -34.145): the aisle inside the men toilet. The toilet entrance is the Door-Opening at x 1.78..2.68 (y -35.74), not this gap."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "passage",
+  "a": [
+   2.3696,
+   -41.0646
+  ],
+  "b": [
+   2.3696,
+   -38.6116
+  ],
+  "width": 2.453,
+  "centre": [
+   2.37,
+   -39.838
+  ],
+  "detectorEvidence": [
+   "wall gap (L-end), nothing drawn in it"
+  ],
+  "auditVerdict": "split",
+  "auditorReasons": [
+   "n/a",
+   "other"
+  ],
+  "auditorNotes": [
+   "Candidate lies 0.53 m east of the real opening: it spans the open bay (wall corner y=-38.61 to thick wall y=-41.07 at x 2.4-2.5). The opening there is block Door NO_03 (Door_Swing_Double_Fire_Ex, glass panel) in the thin wall x 1.77-1.92: unequal double door, ",
+   "Vertical line x 2.37 across the 2.45 m mouth of a 0.6 m deep recess (walls y -38.612 and y -41.066 end at x 2.37..2.52 and return west). The recess only leads to the double fire door NO_03 that stands 0.5 m further west in the wall x 1.767..1.917 (y -39.087..-"
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "passage",
+  "a": [
+   2.5173,
+   -48.1904
+  ],
+  "b": [
+   4.1176,
+   -48.1904
+  ],
+  "width": 1.6,
+  "centre": [
+   3.317,
+   -48.19
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "area-or-room-line",
+   "area-or-room-line"
+  ],
+  "auditorNotes": [
+   "Cross-corridor line y=-48.19 from the end of the thick wall (x=2.52) to the side of the sliding-door pocket wall (x=4.118) across the 1.6 m N-S corridor, which continues north and south. Corridor cross-section, not an opening.",
+   "Horizontal line y -48.19 across the N-S corridor (x 2.517..4.118) from the end of the riser-room south wall to the west face of the sliding-door pocket wall. Nothing interrupted; the sliding door D4 is 1.3 m north at x 4.27."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "passage",
+  "a": [
+   2.5178,
+   -37.5902
+  ],
+  "b": [
+   4.1176,
+   -37.5902
+  ],
+  "width": 1.6,
+  "centre": [
+   3.318,
+   -37.59
+  ],
+  "detectorEvidence": [
+   "wall gap (L-end), nothing drawn in it"
+  ],
+  "auditVerdict": "split",
+  "auditorReasons": [
+   "n/a",
+   "area-or-room-line"
+  ],
+  "auditorNotes": [
+   "Thick wall y -37.44..-37.74 is interrupted for 1.6 m between its west piece (ends x=2.52) and east piece (starts x=4.12): two collinear wall ends of the same wall line, no door or glazing, with the vestibule walls turning south on both sides. Doubt: it is also",
+   "Horizontal line y -37.59 between the east end of the pantry beam wall (x 2.518) and the west end of the core wall (x 4.118), both y -37.44..-37.74. It is the 1.6 m N-S corridor crossing the E-W corridor wall line (a corridor junction); no jambs, door or closin"
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "passage",
+  "a": [
+   4.1173,
+   -41.3883
+  ],
+  "b": [
+   2.5216,
+   -41.3883
+  ],
+  "width": 1.596,
+  "centre": [
+   3.319,
+   -41.388
+  ],
+  "detectorEvidence": [
+   "wall gap (L-face), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "area-or-room-line",
+   "area-or-room-line"
+  ],
+  "auditorNotes": [
+   "Cross-corridor line y=-41.39 between the thick wall piece west (y -41.07 to -41.37, ends x=2.52) and the thick wall piece east (y -41.19 to -41.59, starts x=4.12): the pieces are 0.17 m out of line and the 1.6 m corridor runs on north and south of them. Corrid",
+   "Horizontal line y -41.388 across the N-S corridor (x 2.522..4.117) from the east face of the lift-shaft wall to the west face of the core wall. Joins two parallel wall faces over open floor; nothing interrupted."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "passage",
+  "a": [
+   4.3173,
+   -35.7904
+  ],
+  "b": [
+   4.3173,
+   -37.4402
+  ],
+  "width": 1.65,
+  "centre": [
+   4.317,
+   -36.615
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "area-or-room-line",
+   "area-or-room-line"
+  ],
+  "auditorNotes": [
+   "Line from the pier between the two D37 doors (x=4.317) straight across the corridor to the wall at y=-37.44. Not on a wall; the two doors themselves are at x 3.217-4.117 (C20) and 4.517-5.417 (extra find).",
+   "Vertical line x 4.317 = centre line of the wall pier between the two D37 doors, continued 1.65 m south across the corridor to the core wall top (y -37.44). Nothing interrupted."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "passage",
+  "a": [
+   4.9173,
+   -39.4904
+  ],
+  "b": [
+   4.9173,
+   -41.1864
+  ],
+  "width": 1.696,
+  "centre": [
+   4.917,
+   -40.338
+  ],
+  "detectorEvidence": [
+   "wall gap (L-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "wall-end-in-open-space",
+   "area-or-room-line"
+  ],
+  "auditorNotes": [
+   "Inside the small room east of the vestibule: line from the SW corner of a partition (x=4.9, y=-39.49) straight down to the thick wall (y=-41.19). Open floor on both sides, no wall line interrupted; the door of this room is the hinged door in the wall x=4.19 (s",
+   "Vertical line x 4.917 across the small room x 4.27..5.28, y -39.49..-41.19 from its north wall to its south wall; nothing interrupted. The real opening is the single door D_Swing_Single 900x2000 at x 4.19 (extraFinds)."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "passage",
+  "a": [
+   6.1678,
+   -32.5154
+  ],
+  "b": [
+   6.1678,
+   -31.8652
+  ],
+  "width": 0.65,
+  "centre": [
+   6.168,
+   -32.19
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "wall-end-in-open-space",
+   "other"
+  ],
+  "auditorNotes": [
+   "Corner of an L-shaped thin partition (A-WALL lines y=-32.415/-32.515 turning down at x=6.118/6.218). The segment runs from the corner north to the building wall face (y=-31.867) across open floor; no wall gap, no door.",
+   "Vertical segment from the outer corner of a closed L-shaped 0.1 m thin wall (arm y -32.515..-32.415 from x 4.37 to 6.22, vertical arm x 6.118..6.218 running down to y -35.54) up to the south face of the north wall (y -31.865). It crosses a 0.55 m dead-end slot"
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "passage",
+  "a": [
+   6.1178,
+   -32.4654
+  ],
+  "b": [
+   6.9178,
+   -32.4654
+  ],
+  "width": 0.8,
+  "centre": [
+   6.518,
+   -32.465
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "wall-end-in-open-space",
+   "other"
+  ],
+  "auditorNotes": [
+   "Same L-corner as C01: segment runs east from the corner centre to the face of the full-height partition x=6.918 (0.8 m) over open floor. It is the room side of a corner, not an opening.",
+   "Horizontal line y -32.465 from x 6.118 to 6.918: crosses the solid vertical arm of the L wall (x 6.118..6.218), then a 0.7 m dead-end pocket (x 6.218..6.918, closed at y -33.5) to the double wall x 6.918. No wall gap, door or jambs."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "passage",
+  "a": [
+   6.6176,
+   -37.4402
+  ],
+  "b": [
+   6.6176,
+   -35.7904
+  ],
+  "width": 1.65,
+  "centre": [
+   6.618,
+   -36.615
+  ],
+  "detectorEvidence": [
+   "wall gap (L-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "area-or-room-line",
+   "area-or-room-line"
+  ],
+  "auditorNotes": [
+   "Cross-corridor line at x=6.62 (centre of the stair-shaft west wall extended) from y=-35.79 to y=-37.44. Open corridor; the opening that exists nearby is the 1.75 m gap in the stair shaft north wall at x 6.77-8.52 (extra find).",
+   "Vertical line x 6.618 across the E-W corridor (y -35.79..-37.44) between the beam wall face y -35.79 (between doors D37 and D36) and the core wall top y -37.44. Joins two walls over open floor; no gap in any wall."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "passage",
+  "a": [
+   13.1963,
+   -35.7904
+  ],
+  "b": [
+   13.1963,
+   -37.4402
+  ],
+  "width": 1.65,
+  "centre": [
+   13.196,
+   -36.615
+  ],
+  "detectorEvidence": [
+   "wall gap (L-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "area-or-room-line",
+   "other"
+  ],
+  "auditorNotes": [
+   "Cross-corridor line at x=13.2 between the south face of the NW block wall (y=-35.79) and the north face of the core wall (y=-37.44), 1.65 m: the open E-W corridor itself, no wall, no door.",
+   "Vertical line x 13.196 across the east mouth of the E-W corridor (y -35.79..-37.44) where it meets the N-S service corridor: two wall corners (north block SE corner, core NE corner). A corridor junction between open circulation spaces; no door, no jambs, no cl"
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "passage",
+  "a": [
+   14.8176,
+   -39.9232
+  ],
+  "b": [
+   13.3176,
+   -39.9232
+  ],
+  "width": 1.5,
+  "centre": [
+   14.068,
+   -39.923
+  ],
+  "detectorEvidence": [
+   "wall gap (L-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "area-or-room-line",
+   "area-or-room-line"
+  ],
+  "auditorNotes": [
+   "Horizontal line at y=-39.92 across the 1.5 m N-S vestibule from the core wall face (x=13.318) to the wall face x=14.818 at the north jamb of the double door. No wall line there; the opening is the double door in x=14.87 (C25).",
+   "Horizontal line y -39.923 from the north jamb end of the wall x 14.82..14.92 (door D11 wall) across the 1.5 m service corridor to the core east wall x 13.318. Crosses open corridor floor; nothing interrupted."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "window",
+  "a": [
+   18.6271,
+   -56.6763
+  ],
+  "b": [
+   16.2356,
+   -56.6763
+  ],
+  "width": 2.392,
+  "centre": [
+   17.431,
+   -56.676
+  ],
+  "detectorEvidence": [
+   "glazing between wall ends (bay)",
+   "A-GLAZ-CURT",
+   "sliding sashes (3 lines)",
+   "may be a floor-length sliding door (no sill in plan)"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "South facade: horizontal line at y=-56.68 between two fin blocks (x=16.24 and x=18.63) of the curtain wall; the two glass lines at y=-56.17 and y=-56.83 run unbroken on both sides.",
+   "Horizontal line y -56.68 inside the south facade between two fins (x 16.24 and 18.63); the A-GLAZ-CURT facade lines at y -56.83 and the cap row at y -56.2 run through. Continuous curtain wall."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "passage",
+  "a": [
+   17.9573,
+   -49.9402
+  ],
+  "b": [
+   17.9573,
+   -47.4196
+  ],
+  "width": 2.521,
+  "centre": [
+   17.957,
+   -48.68
+  ],
+  "detectorEvidence": [
+   "wall gap (L-end), nothing drawn in it"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "x=17.96 is 0.5 m west of the curtain-wall line. The wall block ending at y=-47.42 and the L-corner of the wall at y=-49.94 do leave a 2.52 m gap, but directly behind it (x 18.43-18.70, y -47.5 to -52) stands an unbroken glazed strip of the facade link (A-GLAZ-",
+   "Vertical line x 17.96 between the south end of the wall block (ends y -47.42) and the top of an L corner (y -49.94). The gap is closed by the long A-GLAZ-CURT glass partition (x 18.40..18.72) that runs unbroken from y -47.45 to -56.2 with mullion stubs; no doo"
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "window",
+  "a": [
+   18.7137,
+   -54.9796
+  ],
+  "b": [
+   20.0162,
+   -54.9796
+  ],
+  "width": 1.303,
+  "centre": [
+   19.365,
+   -54.98
+  ],
+  "detectorEvidence": [
+   "glazing between wall ends (bay)",
+   "A-GLAZ-CURT",
+   "sliding sashes (4 lines)",
+   "may be a floor-length sliding door (no sill in plan)"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "Pavilion SW corner: the line is the bottom edge (y=-54.98) of a closed glass box (A-GLAZ-CURT hatch, x 18.7-20.0, y -52 to -55) attached to the grey wall pier x 18.4-18.7. Glass element edge, no gap, no leaf.",
+   "Bottom edge y -54.98 (and its 0.08 m gap to the glass partition x 18.71) of a free-standing A-GLAZ-CURT glazed box x 18.8..20.0, y -51.95..-54.98 with mullions x 18.97 / y -53.46. Not a gap in a wall, no door; glass screen / display box."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "window",
+  "a": [
+   25.8224,
+   -31.281
+  ],
+  "b": [
+   26.9824,
+   -31.2809
+  ],
+  "width": 1.16,
+  "centre": [
+   26.402,
+   -31.281
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end)",
+   "glazing band",
+   "A-GLAZ-CURT",
+   "fixed glazing"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "North facade (y=-31.28): glass panel between mullion caps at x=25.78 and x=27.03 (A-GLAZ-CURT line 25.822-26.982 at y=-31.366 is the panel glazing; A-WALL frame lines continue across). Curtain-wall panel, not an opening.",
+   "North facade stretch y -31.28 between two cap blocks (x 25.8 and 27.0) where the facade line is A-WALL (opaque panel) instead of glazing; continuous facade, no door or opening."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "window",
+  "a": [
+   28.9496,
+   -45.9628
+  ],
+  "b": [
+   28.9483,
+   -47.1178
+  ],
+  "width": 1.155,
+  "centre": [
+   28.949,
+   -46.54
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end)",
+   "glazing band",
+   "A-GLAZ-CURT",
+   "on the line of its glazing (outside the block it was measured from)",
+   "sliding sashes (4 lines)",
+   "may be a floor-length sliding door (no sill in plan)"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "Pavilion NE corner: vertical line at x=28.95 just inside the east facade, from the end of the glass partition (y=-45.96) to the cap block at y=-47.12. Beside facade fins, not on any wall; nothing opens here.",
+   "Vertical line x 28.95 inside the east facade from the glass-partition end (y -45.96) to the cap box at y -47.12; runs beside the continuous facade glazing (x 29.1..29.3). No gap, no door."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "window",
+  "a": [
+   29.2666,
+   -51.3428
+  ],
+  "b": [
+   29.1655,
+   -51.9428
+  ],
+  "width": 0.608,
+  "centre": [
+   29.216,
+   -51.643
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end)",
+   "glazing band",
+   "A-GLAZ-CURT",
+   "sliding sashes (5 lines)",
+   "may be a floor-length sliding door (no sill in plan)"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "East facade: slanted segment between the fin caps at y=-51.41 and y=-51.93, along the unbroken facade lines (glass hatch between the fins).",
+   "Segment along the facade inner line between the fins at y -51.40 and y -51.90 (east facade kink). Continuous curtain wall."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "window",
+  "a": [
+   29.248,
+   -50.1208
+  ],
+  "b": [
+   29.2194,
+   -48.9607
+  ],
+  "width": 1.16,
+  "centre": [
+   29.234,
+   -49.541
+  ],
+  "detectorEvidence": [
+   "glazing between wall ends (bay)",
+   "A-GLAZ-CURT",
+   "fixed glazing"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "East facade: segment between cap blocks at y=-48.96 and y=-50.12 along the slanted facade lines; the two black facade lines and glazing run on unbroken. Facade panel, not an opening.",
+   "Vertical segment along the inner line of the east facade between fin caps (y -48.92 and the glass-partition end at y -50.15). The A-WALL facade double line and A-GLAZ-CURT lines are continuous; no door or glazing opening."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "window",
+  "a": [
+   29.2834,
+   -48.3668
+  ],
+  "b": [
+   29.2549,
+   -47.2088
+  ],
+  "width": 1.158,
+  "centre": [
+   29.269,
+   -47.788
+  ],
+  "detectorEvidence": [
+   "glazing between wall ends (bay)",
+   "A-GLAZ-CURT",
+   "fixed glazing"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "East facade: segment between cap blocks at y=-47.21 and y=-48.37; continuous slanted facade lines. Facade panel, not an opening.",
+   "Vertical line along the facade inner black line between a fin at y -48.4 and a cap at y -47.15. Continuous curtain wall, nothing interrupted."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "window",
+  "a": [
+   29.9314,
+   -54.9161
+  ],
+  "b": [
+   28.8516,
+   -54.9161
+  ],
+  "width": 1.08,
+  "centre": [
+   29.392,
+   -54.916
+  ],
+  "detectorEvidence": [
+   "glazing between wall ends (bay)",
+   "A-GLAZ-CURT",
+   "sliding sashes (3 lines)",
+   "may be a floor-length sliding door (no sill in plan)"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "East facade (x about 29-30): the segment runs along an A-GLAZ-CURT glazing line through the fin / cap block pair at y=-54.9; the slanted A-WALL pair and the glass hatch beside it are continuous. Facade detail, no gap, no leaf.",
+   "Horizontal line along a fin/cap detail on the sloped east facade at y -54.92 (black cap box + A-WALL/A-GLAZ-CURT tapered fin from x 28.35 to 29.93). The facade is a continuous curtain wall with fins; nothing is interrupted."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "window",
+  "a": [
+   29.4021,
+   -50.116
+  ],
+  "b": [
+   29.4241,
+   -51.0108
+  ],
+  "width": 0.895,
+  "centre": [
+   29.413,
+   -50.563
+  ],
+  "detectorEvidence": [
+   "wall gap (cap-end)",
+   "glazing band",
+   "A-GLAZ-CURT",
+   "sliding sashes (4 lines)",
+   "may be a floor-length sliding door (no sill in plan)"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "East facade: segment from y=-50.12 to y=-51.01 along the slanted facade lines where they converge; unbroken facade, no leaf, no gap.",
+   "Vertical A-WALL facade line from the facade kink (y -50.12) to its end at y -51.01 (x 29.40..29.47). Part of the continuous facade geometry; nothing interrupted."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "window",
+  "a": [
+   29.2264,
+   -45.9166
+  ],
+  "b": [
+   29.7213,
+   -45.9166
+  ],
+  "width": 0.495,
+  "centre": [
+   29.474,
+   -45.917
+  ],
+  "detectorEvidence": [
+   "glazing between wall ends (bay)",
+   "A-GLAZ-CURT",
+   "sliding sashes (5 lines)",
+   "may be a floor-length sliding door (no sill in plan)"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "East facade at the pavilion NE corner: 0.5 m line through the fin arrow at y=-45.92; fin detail.",
+   "Short 0.5 m horizontal line through the facade fin at y -45.92 where the glass partition meets the facade. Fin detail."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "window",
+  "a": [
+   29.1044,
+   -51.416
+  ],
+  "b": [
+   29.8567,
+   -51.416
+  ],
+  "width": 0.752,
+  "centre": [
+   29.481,
+   -51.416
+  ],
+  "detectorEvidence": [
+   "glazing between wall ends (bay)",
+   "A-GLAZ-CURT",
+   "sliding sashes (8 lines)",
+   "may be a floor-length sliding door (no sill in plan)"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "East facade: horizontal line through the fin pair at y=-51.42 (arrow-shaped fin on A-GLAZ-CURT, cap block beside it). Fin detail across the curtain-wall depth.",
+   "Horizontal line through a facade fin at y -51.42 (cap box x 29.0..29.1, tapered A-GLAZ-CURT fin to x 29.86). Fin detail of the continuous curtain wall."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "window",
+  "a": [
+   29.4505,
+   -48.4161
+  ],
+  "b": [
+   29.7829,
+   -48.4161
+  ],
+  "width": 0.332,
+  "centre": [
+   29.617,
+   -48.416
+  ],
+  "detectorEvidence": [
+   "glazing between wall ends (bay)",
+   "A-GLAZ-CURT",
+   "sliding sashes (5 lines)",
+   "may be a floor-length sliding door (no sill in plan)"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "East facade: short line (0.33 m) through the fin arrow at y=-48.42; fin detail (twin of C19).",
+   "Short 0.33 m horizontal line through the tapered facade fin at y -48.42. Fin detail."
+  ]
+ },
+ {
+  "floor": "tower:L30",
+  "detectorKind": "window",
+  "a": [
+   29.4628,
+   -48.9161
+  ],
+  "b": [
+   29.7952,
+   -48.9161
+  ],
+  "width": 0.332,
+  "centre": [
+   29.629,
+   -48.916
+  ],
+  "detectorEvidence": [
+   "glazing between wall ends (bay)",
+   "A-GLAZ-CURT",
+   "sliding sashes (5 lines)",
+   "may be a floor-length sliding door (no sill in plan)"
+  ],
+  "auditVerdict": "false",
+  "auditorReasons": [
+   "curtain-wall-or-glass-wall",
+   "curtain-wall-or-glass-wall"
+  ],
+  "auditorNotes": [
+   "East facade: short line (0.33 m) through the fin arrow at y=-48.92 across the facade depth; fin detail.",
+   "Short 0.33 m horizontal line through the tapered facade fin at y -48.92. Fin detail."
+  ]
+ }
+]

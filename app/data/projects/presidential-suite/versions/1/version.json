@@ -1,0 +1,131 @@
+{
+  "format": "walkthrough-version/1",
+  "projectId": "presidential-suite",
+  "version": 1,
+  "label": "29 Oct 2026: furniture boxes",
+  "createdAt": "2026-10-29T05:24:22Z",
+  "sourceKind": "cad",
+  "sourceFiles": [
+    "layout presidential test.dwg"
+  ],
+  "modelFormat": "built-model/1",
+  "modelSha1": "34a02b1f6a28d8dce7ce660f720ea418f45b8f36",
+  "stamp": "f1b95c53eb3d",
+  "stampSource": "source/pres2_model.json",
+  "counts": {
+    "floors": 1,
+    "parts": 62,
+    "openings": 22,
+    "furniture": 120,
+    "furnitureKinds": 13,
+    "rooms": 16
+  },
+  "floors": [
+    {
+      "key": "suite",
+      "name": "Suite (FL-01)",
+      "level": 0.0
+    }
+  ],
+  "hasStages": true,
+  "assets": [
+    {
+      "name": "topview.png",
+      "role": "thumbnail",
+      "mediaType": "image/png",
+      "bytes": 171218,
+      "sha1": "d398556040d7b29648f23778ecfdef8c495bb383"
+    }
+  ],
+  "downloads": {
+    "maxScript": "Presidential_Suite.ms",
+    "furnitureCsv": true
+  },
+  "presentation": {
+    "documentTitle": "Presidential suite test",
+    "heading": "Presidential suite (test): CAD → 3D",
+    "intro": [
+      {
+        "text": "Built automatically from "
+      },
+      {
+        "text": "layout presidential test.dwg",
+        "bold": true
+      },
+      {
+        "text": ". Walls come from the drawing's wall layer (its solid fills and outlines); the glass facade, doors, balustrade and floor from the rest of the plan. Furniture: 120 coloured boxes in 13 kinds, one per piece; they come in at the end of the replay. Floor to floor 3.00 m, as given for the project. No AI used."
+      }
+    ],
+    "accent": "#8a6d3b",
+    "legend": {
+      "layout": "inline",
+      "items": [
+        {
+          "colour": "#e3ddd3",
+          "text": "Walls and columns (3.00 m)"
+        },
+        {
+          "colour": "#9cc3d5",
+          "text": "Glass"
+        },
+        {
+          "colour": "#d2c6b2",
+          "text": "Low walls, built-in seats, kerbs"
+        },
+        {
+          "colour": "#c9a77f",
+          "text": "Built-ins"
+        },
+        {
+          "colour": "#9cc3d5",
+          "text": "Balustrade (1.10 m)"
+        },
+        {
+          "colour": "#b08a5c",
+          "text": "Terrace decks"
+        },
+        {
+          "colour": "#6f6153",
+          "text": "Pergola posts"
+        },
+        {
+          "colour": "#d4d8d2",
+          "text": "Floor slab"
+        }
+      ]
+    },
+    "labels": {
+      "plates": "Floor slab"
+    },
+    "camera": {
+      "kind": "fixed",
+      "position": [
+        -26,
+        32,
+        30
+      ],
+      "target": [
+        0,
+        1.2,
+        0
+      ],
+      "far": 600
+    },
+    "creaseAngle": 25,
+    "groundPlane": null
+  },
+  "seed": {
+    "from": [
+      "presidential_test/src/pres2_model.json",
+      "presidential_test/src/pres2_stages.json",
+      "presidential_test/presidential_topview.png",
+      "presidential_test/Presidential_Suite.ms",
+      "presidential_test/presidential_furniture_list.csv",
+      "presidential_test/src/furniture.json",
+      "presidential_test/src/floor_spec.json",
+      "presidential_test/README.md"
+    ],
+    "seededAt": "2026-11-04T04:35:50Z",
+    "seedVersion": "1"
+  }
+}

@@ -1,0 +1,402 @@
+{
+ "openings": [
+  {
+   "id": "L30E-01",
+   "kind": "door",
+   "subtype": "single swing 900x2000",
+   "a": [
+    13.521,
+    -34.415
+   ],
+   "b": [
+    14.501,
+    -34.415
+   ],
+   "width": 0.98,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_SWING_1_SOLID - 900x2000 (handle 3D9E) at (14.011,-34.415) rot 180; A-DOOR-FRAM jambs x 13.521-13.561 and 14.461-14.501; wall hatch 67F pieces x 13.321-13.521 and 14.501-14.818 (y -34.465..-34.365, centre line -34.415); leaf drawn open to the north (arc to y -33.485)",
+   "confidence": "high",
+   "notes": "closet door in the thin wall y=-34.415; hinge on west jamb, leaf swings north into the closet (x 13.56-14.46, y to -33.49)",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees. Re-checked from prims.pkl (hatch ends, jambs) and a 0.25 m grid render: nothing contradicts it."
+  },
+  {
+   "id": "L30E-02",
+   "kind": "passage",
+   "subtype": "doorless gap in wall line (no door drawn)",
+   "a": [
+    14.868,
+    -34.465
+   ],
+   "b": [
+    14.868,
+    -35.79
+   ],
+   "width": 1.325,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "wall x=14.868 (0.1 thick): hatch 666 ends at y=-34.465 (closet SE corner), hatch 6A2 starts at y=-35.790 (free end); clear gap 1.325 m with nothing drawn in it (no door, leaf, frame or A-DETL line); Q-CASE counters leave a matching walkway (Casework 149 ends y=-34.465, Casework 41 starts y=-35.790)",
+   "confidence": "medium",
+   "notes": "staff entrance from the service corridor into the pantry/servery room x 14.92-17.89, y -31.4..-39.9; same wall line as double door L30E-04",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees. Re-checked from prims.pkl (hatch ends, jambs) and a 0.25 m grid render: nothing contradicts it. Both ends are wall ends of the same line, so a passage, not an open room side."
+  },
+  {
+   "id": "L30E-03",
+   "kind": "door",
+   "subtype": "sliding face-mounted, 2 panels 2400x2400x2400 (opening 4800)",
+   "a": [
+    18.042,
+    -35.073
+   ],
+   "b": [
+    18.042,
+    -39.873
+   ],
+   "width": 4.8,
+   "wallThickness": 0.3,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_SLIDING_FACE_2_SOLID - 2400x2400x2400 (handle 3D9D) at (18.042,-37.473) rot -90; A-DOOR-FRAM jambs at y -35.073..-35.113 and -39.833..-39.873; wall hatch 622 ends at y=-35.073 and restarts at y=-39.873; two 2.4 m leaves drawn slid open on the east face with slide arrows",
+   "confidence": "high",
+   "notes": "bi-parting sliding doors between the pantry and the banquet hall; one door (two leaves) = one opening",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees. Re-checked from prims.pkl (hatch ends, jambs) and a 0.25 m grid render: nothing contradicts it."
+  },
+  {
+   "id": "L30E-04",
+   "kind": "door",
+   "subtype": "double swing 2x900x2000",
+   "a": [
+    14.868,
+    -39.973
+   ],
+   "b": [
+    14.868,
+    -41.853
+   ],
+   "width": 1.88,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_SWING_2_SOLID - 900x2000 (handle 3D83) at (14.868,-40.913) rot 90; A-DOOR-FRAM jambs y -39.973..-40.013 and -41.813..-41.853; wall hatch 6A2 ends at y=-39.973 (corner with wall 676) and restarts at y=-41.853; two leaves 0.9 m, both swing west to x 13.92",
+   "confidence": "high",
+   "notes": "double door from the service corridor into the small room x 14.92-17.89, y -39.97..-43.02",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees. Re-checked from prims.pkl (hatch ends, jambs) and a 0.25 m grid render: nothing contradicts it."
+  },
+  {
+   "id": "L30E-05",
+   "kind": "door",
+   "subtype": "single swing 900x2000",
+   "a": [
+    13.368,
+    -43.023
+   ],
+   "b": [
+    14.348,
+    -43.023
+   ],
+   "width": 0.98,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_SWING_1_SOLID - 900x2000 (handle 3A93) at (13.858,-43.023) rot 180; A-DOOR-FRAM jambs x 13.368-13.408 and 14.308-14.348; wall hatch 670 stub (x 13.318..13.368, against the core wall) and main piece from x=14.348; leaf hinged at the west jamb swings north into the corridor",
+   "confidence": "high",
+   "notes": "door closing the south end of the service corridor (foyer side)",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees. Re-checked from prims.pkl (hatch ends, jambs) and a 0.25 m grid render: nothing contradicts it."
+  },
+  {
+   "id": "L30E-06",
+   "kind": "passage",
+   "subtype": "lift landing opening (lift 3)",
+   "a": [
+    10.927,
+    -44.365
+   ],
+   "b": [
+    12.327,
+    -44.365
+   ],
+   "width": 1.4,
+   "wallThickness": 0.25,
+   "host": "wall",
+   "evidence": "lift lobby wall y -44.49..-44.24: A-WALL-PATT hatch ends at x=10.927 and restarts at x=12.327; behind it the A-DETL lift car symbol (X box x 10.8-12.5, door ticks at x=11.132 / 12.202); the opening is closed on both wall faces only by A-DETL lines (y=-44.24 handle 3532, y=-44.49 handle 3DE1); no A-DOOR leaf or block",
+   "confidence": "medium",
+   "notes": "lift landing, no door drawn (lift symbol and closing lines on A-DETL only); the two other lift gaps (centres x 5.81 and 8.72) are outside the box",
+   "optional": true,
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees. Re-checked from prims.pkl (hatch ends, jambs) and a 0.25 m grid render: nothing contradicts it. Per the drawing convention a lift landing with no leaf is a passage, optional."
+  },
+  {
+   "id": "L30E-07",
+   "kind": "door",
+   "subtype": "sliding cavity 920x2340 (vision panel narrow)",
+   "a": [
+    18.042,
+    -43.881
+   ],
+   "b": [
+    18.042,
+    -45.161
+   ],
+   "width": 1.28,
+   "wallThickness": 0.3,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_SLIDING_CAVITY_1_SOLID_VISION PANEL_NARROW - 920x2340 (handle 3DC6) at (18.042,-44.521) rot 90; A-DOOR-FRAM jambs y -43.881..-43.921 and -45.121..-45.161; wall hatch 622 ends at y=-43.881 (with cavity pocket x 18.017-18.087, y -42.721..-43.881) and restarts at y=-45.161; slide arrow",
+   "confidence": "high",
+   "notes": "entrance from the foyer into the banquet hall; leaf slides north into the wall pocket",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees. Re-checked from prims.pkl (hatch ends, jambs) and a 0.25 m grid render: nothing contradicts it."
+  },
+  {
+   "id": "L30E-08",
+   "kind": "door",
+   "subtype": "double swing glass door 2 x 0.96 in curtain wall (Curtain Wall Dbl Glass)",
+   "a": [
+    21.109,
+    -45.95
+   ],
+   "b": [
+    23.109,
+    -45.95
+   ],
+   "width": 2.0,
+   "wallThickness": 0.2,
+   "host": "glass",
+   "evidence": "block 2501_Curtain Wall Dbl Glassrfa - TYP (nested in the linked facade model C2) at (22.109,-45.966) rot 180; A-DOOR-FRAM jambs x 21.109..21.147 and 23.071..23.109; glass panels (WT-01-vision) end at x=21.109 and restart at x=23.109; leaf arcs (r 0.962) swing south to y=-46.91",
+   "confidence": "high",
+   "notes": "door from the banquet hall onto the terrace; wallThickness 0.2 = mullion/frame depth (glass pane itself 0.03); centre line y=-45.95",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees. Re-checked from prims.pkl (hatch ends, jambs) and a 0.25 m grid render: nothing contradicts it."
+  },
+  {
+   "id": "L30E-09",
+   "kind": "passage",
+   "subtype": "doorless gap in wall line (lift lobby entrance)",
+   "a": [
+    13.167,
+    -45.231
+   ],
+   "b": [
+    13.167,
+    -47.699
+   ],
+   "width": 2.468,
+   "wallThickness": 0.3,
+   "host": "wall",
+   "evidence": "core east wall x 13.017..13.317: hatch 5F1 ends at y=-45.231 and hatch 5EC starts at y=-47.699, both free closed ends facing each other 2.468 m apart; A-DETL dashed lines (- DASH SMALL, handles 3DF0 / 3DF1) on both wall faces x=13.017 and x=13.317 bridge the gap (head / beam above); no door or leaf",
+   "confidence": "medium",
+   "notes": "wide entrance from the foyer into the lift lobby (x<13)",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees. Re-checked from prims.pkl (hatch ends, jambs) and a 0.25 m grid render: nothing contradicts it. Dashed head lines over the gap show it is a cased opening, not a missing wall."
+  },
+  {
+   "id": "L30E-10",
+   "kind": "door",
+   "subtype": "single swing 750x2000",
+   "a": [
+    13.242,
+    -49.07
+   ],
+   "b": [
+    13.242,
+    -49.9
+   ],
+   "width": 0.83,
+   "wallThickness": 0.15,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_SWING_1_SOLID - 750x2000 (handle 3980) at (13.242,-49.485) rot 90; A-DOOR-FRAM jambs y -49.070..-49.110 and -49.860..-49.900; wall hatch 643 ends at y=-49.070 and a 0.04 stub at y -49.94..-49.90; leaf drawn open 45 deg into the small room to the west",
+   "confidence": "high",
+   "notes": "door into the small room x 10.05-13.17, y -48.59..-49.94",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees. Re-checked from prims.pkl (hatch ends, jambs) and a 0.25 m grid render: nothing contradicts it."
+  },
+  {
+   "id": "L30E-11",
+   "kind": "window",
+   "subtype": "fixed curtain-wall vision glazing, 3 bays x 1.5 m, between opaque facade bays",
+   "a": [
+    18.572,
+    -47.465
+   ],
+   "b": [
+    18.572,
+    -51.965
+   ],
+   "width": 4.5,
+   "wallThickness": 0.285,
+   "host": "wall",
+   "evidence": "line x 18.429..18.714 (centre 18.572, 0.285 deep): opaque bay = A-WALL solid hatch y -45.990..-47.465 (2784) to the north and y -51.965..-56.168 (2786, 2787, 2788) to the south; between them three A-GLAZ-CURT solid-hatch modules of the WT-01-UPDATED-INSTANCE \"North Facade 4\" family (V104 y -47.465..-48.965, 13210840 y -48.965..-50.465, V105 y -50.465..-51.965); no A-DOOR block, leaf, swing or slider on it; inside-face mullion stubs (x 18.22-18.40) sit on every 1.5 m module joint, the opaque bays included (y -45.965, -47.465, -48.965, -50.465, -51.965, -53.465, -54.965)",
+   "confidence": "low",
+   "notes": "foyer / dining side to terrace; ends = the module joints = the ends of the two opaque pieces; the terrace itself is entered by the real door L30E-08",
+   "optional": true,
+   "agreement": "one",
+   "decision": "A and E listed it (window, optional), B did not. Seen in the drawing: black wall - cyan glazing - black wall on one 0.285 m line, fixed (no door block, leaf or slide track; WT-01 vision modules), so kind window, not a door and not eitherKind; ends read off the module joints / wall-hatch ends, 4.500 m. Whether it is an opening at all is the one thing the drawing cannot settle: as drawn it is the definition's window set in a wall gap, but the opaque bays carry the same 1.5 m mullion grid and the same 0.285 m depth, so the whole line also reads as one curtain-wall facade of opaque and vision modules (the definition's continuous curtain-wall facade, i.e. a glass wall). Kept as an optional window, not scored either way; a window here is harmless in 3D (glass in the same place)."
+  },
+  {
+   "id": "L30E-12",
+   "kind": "door",
+   "subtype": "double swing 2x900x2000",
+   "a": [
+    14.665,
+    -50.015
+   ],
+   "b": [
+    16.545,
+    -50.015
+   ],
+   "width": 1.88,
+   "wallThickness": 0.15,
+   "host": "wall",
+   "evidence": "A-DOOR block DOOR_SWING_2_SOLID - 900x2000 (handle 3AC9) at (15.605,-50.015) rot 0; A-DOOR-FRAM jambs x 14.665..14.705 and 16.505..16.545; wall hatch 661 ends at x=14.665 and restarts at x=16.545; both leaves swing north (arcs to y=-49.07) into the foyer",
+   "confidence": "high",
+   "notes": "double door from the foyer into the south dining zone (x 10-18, y -50.1..-56.2)",
+   "agreement": "both",
+   "decision": "A and B agree (kind, ends within 5 cm); inventory agrees. Re-checked from prims.pkl (hatch ends, jambs) and a 0.25 m grid render: nothing contradicts it."
+  }
+ ],
+ "glassWalls": [
+  {
+   "a": [
+    11.0,
+    -31.181
+   ],
+   "b": [
+    25.777,
+    -31.181
+   ],
+   "notes": "north curtain-wall facade (A-GLAZ-CURT pane y -31.196..-31.166, mullions / fins every 1.5 m, no door); continues west of the box; ends at the opaque A-WALL panel x 25.777-27.027"
+  },
+  {
+   "a": [
+    19.109,
+    -45.95
+   ],
+   "b": [
+    21.109,
+    -45.95
+   ],
+   "notes": "terrace north curtain wall, west of the double door L30E-08 (WT-01 vision panels); solid corner piece x 18.4-19.1 to its west"
+  },
+  {
+   "a": [
+    23.109,
+    -45.95
+   ],
+   "b": [
+    28.109,
+    -45.95
+   ],
+   "notes": "terrace north curtain wall, east of the double door L30E-08; solid piece x 28.1-29.2 to its east"
+  },
+  {
+   "a": [
+    18.456,
+    -50.19
+   ],
+   "b": [
+    28.089,
+    -50.19
+   ],
+   "notes": "terrace glass balustrade (WT-05-balustrade, 1.5 m panels, y -50.21..-50.16), south edge of the terrace; butts into the x=18.57 facade glazing"
+  },
+  {
+   "a": [
+    11.0,
+    -56.83
+   ],
+   "b": [
+    18.627,
+    -56.83
+   ],
+   "notes": "south curtain-wall facade (pane line y -56.838..-56.822, 0.63 m deep fins / mullions inboard); continues west of the box; solid corner pieces from x 18.68"
+  },
+  {
+   "a": [
+    29.11,
+    -35.0
+   ],
+   "b": [
+    29.484,
+    -50.2
+   ],
+   "notes": "east curtain-wall facade (WT-01-UPDATED North Facade 2 modules, rotated about 1.4 deg from vertical, paired fins every 3 m); no door"
+  },
+  {
+   "a": [
+    29.484,
+    -50.2
+   ],
+   "b": [
+    29.85,
+    -56.15
+   ],
+   "notes": "south-east sloped / stepped curtain-wall facade (East slope modules); approximate run, no door"
+  },
+  {
+   "a": [
+    27.525,
+    -31.613
+   ],
+   "b": [
+    27.525,
+    -34.75
+   ],
+   "notes": "glass screen (WT-01 vision, pane lines x 27.483 / 27.566) along the north-east stair; not set in a wall gap"
+  },
+  {
+   "a": [
+    20.0,
+    -51.96
+   ],
+   "b": [
+    20.0,
+    -54.97
+   ],
+   "notes": "east face of a 1.2 m x 3.0 m glazed box (WT-01 North Facade 4 modules 13210797 / V103, x 18.78-20.02, y -51.92..-55.01) beside the foyer facade; a glass enclosure, not an opening"
+  }
+ ],
+ "rejected": [
+  {
+   "id": "cand-corridor-mouth",
+   "reason": "Clean 1.65 m gap in the line x=13.17 (closet / wet-wall block ends at y=-35.79, core wall starts at y=-37.44), but it is the open east end of the east-west back hall y -35.79..-37.44 meeting the north-south service corridor: both bounding walls turn 90 deg into the hall walls (corners, not wall ends of one wall line), nothing is drawn in it (no door, frame, dashed head line). A corridor junction needs no cut-out; not an opening.",
+   "where": [
+    13.168,
+    -36.615
+   ]
+  },
+  {
+   "id": "cand-slot-18.2",
+   "reason": "Gap in the line y=-50.015 between the wall end x=18.032 (stub 693) and the facade glazing x=18.399: only 0.37 m, too narrow to walk through; a wall end stopping short of the facade, not a passage.",
+   "where": [
+    18.215,
+    -50.015
+   ]
+  }
+ ],
+ "uncertain": [
+  {
+   "where": [
+    18.572,
+    -49.715
+   ],
+   "what": "L30E-11: 4.5 m of fixed WT-01 curtain-wall glazing between opaque bays of the same 1.5 m-module facade line x=18.572. Window set in a wall gap (opening) or vision run of a continuous curtain-wall facade (glass wall)? Kept as optional window."
+  },
+  {
+   "where": [
+    13.168,
+    -36.615
+   ],
+   "what": "Corridor mouth of the back hall into the service corridor (1.65 m gap in x=13.17): decided not an opening (rejected); a gap detector may well report it as a passage."
+  }
+ ],
+ "method": "Read the comparison packet (11 accepted, 1 dispute). Rebuilt every accepted opening from prims.pkl (wall-hatch ends on the wall centre line, A-DOOR-FRAM jambs, door-block inserts) and 0.25 m-grid zoom renders: all 11 hold, ends match to the mm, nothing contradicts them (kinds follow the conventions: lift gap with no leaf = optional passage; one sliding door = one opening). Adjudicated the single dispute L30E-11 (curtain-wall glazing in the x=18.572 line): geometry, family names (WT-01-UPDATED-INSTANCE North Facade 4 vs opaque A-WALL bays), mullion grid and door blocks examined; decided kind window, ends -47.465 / -51.965, optional because glass-wall vs window-in-wall cannot be settled from the plan. Missed-opening check: listed every A-DOOR* entity in the box (all 8 belong to the known door blocks), fitted every arc in the box for door-swing-like sweeps (only the known doors), listed every wall hatch loop and tested each wall line for collinear gaps and wall ends facing a side, then rendered the part in two halves with a marker at every final opening and looked for unmarked swings, leaves, tracks, door blocks, window bands and clean gaps. Two gaps found and rejected (corridor mouth at x=13.17; 0.37 m slot at x=18.2); no new openings. Ids L30E-01..12 run north to south by centre y.",
+ "files": [
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/keys4/final/parts/l30-E.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-adjudicate-l30-E/l30-E.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-adjudicate-l30-E/final_N.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-adjudicate-l30-E/final_S.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-adjudicate-l30-E/disp_glaz.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/t-adjudicate-l30-E/build_final.py"
+ ]
+}

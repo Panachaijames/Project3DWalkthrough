@@ -1,0 +1,73 @@
+{
+  "documentTitle": "Presidential suite test",
+  "heading": "Presidential suite (test): CAD → 3D",
+  "intro": [
+    {
+      "text": "Built automatically from "
+    },
+    {
+      "text": "layout presidential test.dwg",
+      "bold": true
+    },
+    {
+      "text": ". Walls come from the drawing's wall layer (its solid fills and outlines); the glass facade, doors, balustrade and floor from the rest of the plan. Furniture: 120 coloured boxes in 13 kinds, one per piece; they come in at the end of the replay. Floor to floor 3.00 m, as given for the project. No AI used."
+    }
+  ],
+  "accent": "#8a6d3b",
+  "legend": {
+    "layout": "inline",
+    "items": [
+      {
+        "colour": "#e3ddd3",
+        "text": "Walls and columns (3.00 m)"
+      },
+      {
+        "colour": "#9cc3d5",
+        "text": "Glass"
+      },
+      {
+        "colour": "#d2c6b2",
+        "text": "Low walls, built-in seats, kerbs"
+      },
+      {
+        "colour": "#c9a77f",
+        "text": "Built-ins"
+      },
+      {
+        "colour": "#9cc3d5",
+        "text": "Balustrade (1.10 m)"
+      },
+      {
+        "colour": "#b08a5c",
+        "text": "Terrace decks"
+      },
+      {
+        "colour": "#6f6153",
+        "text": "Pergola posts"
+      },
+      {
+        "colour": "#d4d8d2",
+        "text": "Floor slab"
+      }
+    ]
+  },
+  "labels": {
+    "plates": "Floor slab"
+  },
+  "camera": {
+    "kind": "fixed",
+    "position": [
+      -26,
+      32,
+      30
+    ],
+    "target": [
+      0,
+      1.2,
+      0
+    ],
+    "far": 600
+  },
+  "creaseAngle": 25,
+  "groundPlane": null
+}

@@ -1,0 +1,173 @@
+{
+ "filesChanged": [
+  {
+   "file": "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/src/build_model.py",
+   "what": "New generic builder. It reads the project file and the detector output and writes bank_model.json, bank_stages.json, bank_summary.json and the top view. Rules: walls from wall/column-layer fills, thin outlines, face lines paired 4-45 cm apart (merge_cad.strips/solidify) and concentric arc pairs; glass from the glass layers; doors cut with a lintel from the head (taken from the WxH in the door block name, else the drawing's most common head) to the wall top; windows get a pane from sill to head (full height when the glazing is on a glass layer); passages left as they are; railings 1.10 m; stair panels, with flights above the cut drawn faint; room names; floor plates from a 1.5 m round closing of walls, glass and railings; levels aligned on grid labels; self-check that nothing solid crosses a door or passage; viewer-only collider skins. No coordinates, handles, block names or layer names in the code."
+  },
+  {
+   "file": "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/src/plan_items.py",
+   "what": "New reader for the prims cache (the detector's input). It tags every item with its layer roles (glob patterns allowed), the continuous-linetype flag and dedupe, and applies unit scaling."
+  },
+  {
+   "file": "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/src/bank_project.json",
+   "what": "The only drawing-specific input. Layer roles: those in the detector's mappings, plus stair-above, railing, room-name, grid and other, as in r2a_bank_finish. Also the two levels (0.00 / 3.70 m, walls 3.70 m), defaults (railing 1.10, slab 0.25, window 0.90/2.10 unused, doorHead fallback 2.10), and absolute paths to the prims caches and the detector mappings."
+  },
+  {
+   "file": "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/src/make_html.py",
+   "what": "New viewer generator, following presidential_test/src/make_html.py. It embeds viewer_modes.js and build_replay.js unchanged. Adds Level 1 / Level 2 / Both buttons as in the house viewer, glass and room-name toggles, meshes merged per level and kind, slab polygonOffset against the lower level's wall tops, see-through railings, collider skins, room labels for the top visible level, replay with the two DWGs side by side and then stacked, and the model-data meta stamp."
+  },
+  {
+   "file": "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/src/generate_maxscript.py",
+   "what": "New 3ds Max script generator, following presidential_test/src/generate_maxscript.py, for two levels. Every part is an editable spline + Extrude (mesh output) + Smooth; collapsing gives Editable Mesh, never Poly. Pivots sit at each outline's middle on its base. Layers BB_<level>_<kind>. 'Update levels and heights' moves parts and resets follow-parts' Extrude amounts. Closed-solid / height / position self-check with a BB_Check_Failed layer. Stair lines become open splines. Stamped with the same model data as the page."
+  },
+  {
+   "file": "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/src/bank_model.json",
+   "what": "Generated model: 86 parts, stairs, 18 rooms, 55 openings with test read-outs, glass probes and collider skins. Model data 7bfd8b700cb7. Also generated next to it: bank_stages.json (replay, 454 KB), bank_summary.json (counts, door heads per family) and bank_topview.png."
+  },
+  {
+   "file": "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/src/detector_out/openings_L1.json",
+   "what": "Detector output for Level 1, from openings.py run unchanged with mappings/bank1.json. Byte-identical openings to detector/output/bank1_openings.json. openings_L2.json and the two marked PNGs sit beside it."
+  },
+  {
+   "file": "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/bank_3d_preview.html",
+   "what": "The viewer page (592 KB): Build settings and replay with this drawing's numbers, Orbit / Walk / Ghost / Camera, L1 / L2 / both, glass and room-name toggles, model-data stamp 7bfd8b700cb7."
+  },
+  {
+   "file": "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/Bangkok_Bank_Sampeng.ms",
+   "what": "3ds Max script, 48 KB: 108 objects (86 live parts, 4 stair shapes, 18 room names) plus a hidden datum point. Text-checked: balanced brackets, ASCII only, no hole touching an outline. Not run in 3ds Max."
+  },
+  {
+   "file": "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/test_bank.mjs",
+   "what": "16 browser checks in headless Edge via viewer-modes/cdp.mjs. Default port 9377 and %TEMP% profile; BANK_PORT / BANK_PROFILE / BANK_OUT / BANK_URL override them."
+  },
+  {
+   "file": "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/README.md",
+   "what": "README in the presidential style: what was built (counts and heights), door heads per family, the Max script, how the drawing was read and what is automatic, what the detector output looked like in 3D, questions for the owner, rebuild steps, checks."
+  },
+  {
+   "file": "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/bank_topview.png",
+   "what": "Top view of both levels as built (walls, lintels, glass, railings, stairs, slabs, room names, opening numbers). A copy of src/bank_topview.png."
+  }
+ ],
+ "counts": "Openings from the detector, used as found: Level 1 has 27 (15 doors, 7 windows, 5 passages) and Level 2 has 28 (24 doors, 4 passages), 55 in all. Two doors lead out to the street (L1-019, L1-023); the Level 2 facade doors open onto the terrace, which is built as floor. Door heads come from the block names: 2.40 m on 29 doors and 2.00 m on 10. The 8 glass and pivot doors have no size in their names and get 2.40 m, the most common height (21 of the 31 names that carry a size). Parts on Level 1: 10 wall runs, 4 columns, 15 lintels, 9 glass pieces (7 of them window panes), 2 railings and 1 slab (238.6 m²). Parts on Level 2: 12 wall runs, 3 columns, 24 lintels, 0 glass, 5 railings and 1 slab (302.7 m², terrace included). That makes 86 parts. Walls come from 176 cut fills, 737 line pairings and 5 curved pieces; 0 single-line items are left. There are 18 room names (7 + 11) and 0 sills. Stair lines: 30 below and 76 above the cut on Level 1, 87 and 54 on Level 2. The Max script builds 108 objects. Timings: the detector takes about 1 s per level, the builder 0.5 s. Model data 7bfd8b700cb7 (page, Max script and model JSON all match).",
+ "tests": "test_bank.mjs runs 16 checks in headless Edge through viewer-modes/cdp.mjs, on port 9377 with profile build/bank_test/edge-profile:\n- the replay captions quote this drawing's numbers;\n- the replay plays to the end and hands over (unlocked, both levels in place);\n- room names show on the top level;\n- the Level 1 / Level 2 / Both buttons work in Orbit;\n- Walk starts on Level 1 at eye height with room around you;\n- the Level 2 button in Walk takes you to +3.70 m on the slab;\n- PgDn / PgUp and Both change level;\n- walls stop you at 40 random spots on Level 1, and again on Level 2;\n- all 39 doors and 9 passages can be walked through both ways (the 2 exterior doors from inside);\n- every door is open up to its head with a lintel above (looking up from 1 m reaches the head within 2 cm), and passages have no lintel;\n- the 7 window panes and 1 curtain-glass piece stop you (stopped 0.35 m short);\n- Ghost flies;\n- the Camera photo is named BangkokBank-Sampeng_Orbit_... at 1920 x 1280;\n- the page's model-data stamp equals the Max script's;\n- no page errors.\nFinal run: 16 passed, 0 failed.",
+ "testsPassed": 16,
+ "testsFailed": 0,
+ "detectorIssues": [
+  {
+   "floor": "bank:L1",
+   "what": "L1-023 (curtain-wall door B1-09): the centre line at x 5.931 sits about 0.1 m west of the door slot in the curtain wall (frame lines at x 5.98-6.09). The 0.127 m wallThickness is the adjacent glass-partition stub's, not the facade's. The slot's two long frame lines pair into glass, and a 3 cm cut left a glass strip in the doorway. Built as found: the door cut reaches 0.15 m past the wall faces, only within the opening's width, which clears it. The self-check and the walk test pass.",
+   "at": [
+    5.931,
+    5.428
+   ]
+  },
+  {
+   "floor": "bank:L1",
+   "what": "L1-024, a false passage (wall end facing a wall; one of the scorer's extras). Left as it is: open floor, nothing cut, no lintel, so harmless in 3D.",
+   "at": [
+    -3.505,
+    -5.83
+   ]
+  },
+  {
+   "floor": "bank:L1",
+   "what": "L1-025, a false passage between the meeting room's corner and the east facade. Harmless in 3D (open corridor).",
+   "at": [
+    5.413,
+    3.208
+   ]
+  },
+  {
+   "floor": "bank:L1",
+   "what": "L1-026, a false passage across the corridor north of the meeting room, 0.45 m from door L1-016. Harmless in 3D.",
+   "at": [
+    0.623,
+    6.396
+   ]
+  },
+  {
+   "floor": "bank:L2",
+   "what": "L2-019, a false passage across the female toilet. Its midpoint is 0.28 m from the corner of the toilet T-partition, so a walker cannot pass at its exact middle; the walk check crosses it on a lane 0.3 m off-centre. Otherwise harmless (open floor).",
+   "at": [
+    -2.884,
+    10.742
+   ]
+  },
+  {
+   "floor": "bank:L2",
+   "what": "L2-020, a false passage inside the male toilet. Harmless in 3D.",
+   "at": [
+    -0.429,
+    10.545
+   ]
+  },
+  {
+   "floor": "bank:L2",
+   "what": "L2-021, a false passage: the 2.98 m open front of the FOR 1 PAX nook, ending at a 10 mm screen. Harmless in 3D.",
+   "at": [
+    0.713,
+    4.962
+   ]
+  },
+  {
+   "floor": "bank:L1",
+   "what": "The 7 windows L1-001, 009, 010, 011, 012, 020 and 021 are fixed curtain-wall panels ('System Panel - GLAZED' between mullions) but are typed 'sliding'; 5 are also eitherKind ('may be a floor-length sliding door'). No effect in 3D: all are built as full-height panes, as decided.",
+   "at": [
+    2.226,
+    -9.132
+   ]
+  },
+  {
+   "floor": "bank:L1",
+   "what": "The 0.975 m curtain-wall sidelight beside L1-023 (key B1-98, optional) is not reported. Its drawn glass is kept, so there is no effect in 3D.",
+   "at": [
+    6.054,
+    4.404
+   ]
+  },
+  {
+   "floor": "bank:L2",
+   "what": "L2-016 (B2-07) is 0.875 m wide against the door family's 1.00 m: the cross wall is drawn continuous through the frame (already in the detector report). Built 0.875 m as found.",
+   "at": [
+    -3.045,
+    9.168
+   ]
+  },
+  {
+   "floor": "bank:L2",
+   "what": "L2-028 (female toilet door) comes out with host 'none', though both its ends meet wall ends within 3 cm (the lobby wall and the toilet partition). It looks like the symbol-only door path keeps host 'none'. The builder finds the jambs itself and puts a lintel over it.",
+   "at": [
+    -2.605,
+    10.095
+   ]
+  }
+ ],
+ "sharedCodeNeeds": "Nothing needed; viewer_modes.js and build_replay.js are embedded unchanged.\n\nOne suggestion. hitAhead in viewer_modes.js casts 9 rays 7.5 cm apart at knee and chest height, so the free end of a wall thinner than 7.5 cm can slip between two rays. On the first test run, a random walk on Level 2 ended 0.12 m from the end of the 10 mm screen in the FOR 1 PAX nook (x 2.204-2.214, y 4.91-6.91). The bank page works around this itself: build_model.py writes invisible 8 cm collider skins round the thin regions of colliders (the 10 mm screens, the 20 mm panes, the rail ends), viewer-only and not in the Max script. A shared fix would make the skins unnecessary in every viewer: a capsule or shape cast with three-mesh-bvh, or extra rays at the body's edge.\n\nNoted, not changed: unticking Glass also switches off the glass colliders, because visibleColliders filters m.visible. The other viewers behave the same way.",
+ "assumptions": [
+  "Glass partitions stay walls. The Revit wall type 'GLASS WALL 2600H' sits on A-WALL (manager room, meeting room and lobby screens on L1; mini bar / wealth room on L2), so the layer mapping builds it as solid wall. Making it glass needs a block-level mapping entry. The 10 mm pane fill sits outside the wall-type block, so the rule would have to be 'everything inside a glass wall type's outline is glass'. Not done, to keep the build mapping-only.",
+  "The curved piece at the SE corner of the L2 terrace (A-WALL, no cut fill, railing continuing from both ends) is built full height (3.70 m) by the generic wall rule. A rule 'unfilled wall = low wall' was tried and rejected: the west facade lining and the lift pit are unfilled too.",
+  "Floor plates are a closing of walls, glass and railings with a 1.5 m disc. Round joins are used: mitre joins cut a notch into the L1 entrance lobby and changed the plate by about 80 m². Railings count as floor edges, so the L2 terrace is floor and its louvred doors are walked both ways. Each plate is a 0.25 m slab under its level, its edge 3 cm proud of the outline, and is rounded where the facade steps in.",
+  "Door heads come from '<W>x<H>' in the door block found in the opening (40 blocks for 39 doors, all matched). Without a size the head is 2.40 m, the most common height in the names (21 of 31). Every lintel runs from the head to the 3.70 m wall top. All 39 doors have a wall jamb, so all lintels are opaque; there are no glass transoms.",
+  "Windows: glazing on a glass-role layer in the footprint means curtain wall, built full height (sill 0, head 3.70: no sill wall, no lintel). The pane is 20 mm thick on the drawn glazing's line. The window defaults (0.90 / 2.10) are never used here.",
+  "Every door and window footprint is cut 0.15 m past the wall faces, only within the opening's width, so frames and glazing drawn slightly off the opening's line are removed. The value was set after seeing L1-023. It removed 0.06 m² of extra glass and 0.005 m² of wall in all.",
+  "Columns: an S-COLS run that is at least 90% column geometry is a 'column' (7 of them). Columns touching walls merge into wall runs.",
+  "Room names: a name with an area or Revit 'Not Enclosed' on the line below is a room tag. A free label needs 4+ letters and must not be UP / DN / DOWN. This drops ATM x3, BA and BE (L1) and UP and DOWN (L2). Labels sit at the text insertion point, and the drawing's spelling 'MEEETING 4 PAX' is kept.",
+  "Stairs: S-STRS lines become 0.15 m tread panels and S-STRS-MBND lines faint lines. The L2 stair void is not cut, so you can walk over it, and the stairs cannot be climbed (PgUp / PgDn, as in the other viewers). The north stair outside the building is drawn too.",
+  "Railings: A-FLOR-HRAL lines are paired (2-20 cm) or thickened (5 cm) into bands 1.10 m high. A-FLOR-HRAL-MBND (above the cut) is not built. Railings show half see-through in the viewer.",
+  "The replay lays the two DWGs side by side (a presentation choice), then stacks them. The real shift is 0: the 10 grid labels match to 0.0 mm.",
+  "The detector, tools/prims.py and the prims caches are still in the scratchpad p0 folder. bank_project.json holds their absolute paths; edit them when these move into the project.",
+  "The 3ds Max script follows the presidential pattern the owner ran on 26 Oct. Its new parts (per-level arrays, open-spline stairs, level-aware update) have only been text-checked, not run in Max."
+ ],
+ "drawingSpecificRules": [],
+ "openQuestions": [
+  "Glass partitions (Revit 'GLASS WALL 2600H' on A-WALL: L1 manager room, meeting room and lobby screens; L2 wall around the wealth room) are built as solid walls. Should they be glass via a wall-type (block) entry in the mapping? If so, 2.60 m as named, or full height?",
+  "Curved element at the SE corner of the L2 terrace: probably a solid parapet. It is built at the full 3.70 m. What height should it be?",
+  "Floor to floor 3.70 m (21 risers of about 0.176 m): confirm. With Revit's default stair type it could be 3.80-3.99 m.",
+  "Glass and pivot doors at 2.40 m (no size in their names, so the most common height): confirm.",
+  "Is the L2 terrace (between the facade and the railing) walkable floor, as built?",
+  "The north stair outside the north wall has no door into the bank on either level. Keep it or drop it?"
+ ],
+ "reruns": "There were five runs of test_bank.mjs, all on port 9377 with the given profile.\n\n- **Run 1 (15 checks): 13 passed, 2 failed.** Neither failure was a timing problem.\n  - A random wall walk on L2 ended 0.12 m from the free end of a 10 mm screen: the shared walk rays are 7.5 cm apart. Fixed with page-level collider skins.\n  - L2-007 opens into a closet only 0.65 m deep, so the test found no start spot behind it. And the exact middle of false passage L2-019 clips a partition corner. The test now also starts 0.45 / 0.4 m from an opening and tries lanes 0.3 m apart across wide passages; doors still use their middle only.\n- **Run 2:** 15/15.\n- **Run 3:** 16/16, after adding the door-head and lintel check.\n- **Runs 4 and 5:** 16/16 each, on the final files. They took 49 s and 48 s against 23-33 s before, probably the other agent's load, with no failures.\n\nNo timing check failed in any run.",
+ "notes": "This is the first model built with no drawing-specific code: drawingSpecificRules is empty because no such rule was added. build_model.py, plan_items.py, make_html.py and generate_maxscript.py hold no coordinates, handles, block names or layer names. The drawing enters only through src/bank_project.json (layer roles, levels, heights, short names, paths) and the detector output. Generic vocabulary rules remain, and are documented: door sizes 'WxH' in block names, Revit's room-tag lines ('m²', 'Not Enclosed'), stair words, and a Revit name pattern used only to label door families in reports.\n\nThe detector was run unchanged into src/detector_out, and its output is identical to detector/output. No opening was edited, added or removed. If the levels' grid labels disagreed, the builder would shift the openings in memory only.\n\nVisible gaps in the model: the glass partitions are solid, the SE terrace curve is full height, the stair void is not cut, and the slab edges are scalloped where the facade steps in.\n\nNothing was written to the project folder; a find for newer files there shows none. No deploys. The scratch folders _work and edge-profile were removed, so the build folder holds only the deliverables (2.0 MB).\n\nPage: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/bank_3d_preview.html\nREADME: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/README.md"
+}

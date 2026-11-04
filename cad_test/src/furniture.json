@@ -1,0 +1,51 @@
+{
+  "_what": "Everything build_furniture.py knows about the Sukhumvit house drawing: which layers hold furniture, the office's words for blocks whose names say nothing, and the smallest piece. No coordinates or handles. Written on 29 Oct 2026 from pictures of the two plans (what each layer draws is under _layers, what each cryptic block draws under _names); the staff should confirm it once. The plan regions and the model frame are not here: they come from regions.json and house3d.json.",
+  "layers": ["XR_L44$0$I-FURN", "XR_L44$0$Layer7", "XR_L44$0$PIA1-FUR", "I-FURN-FILE", "FUR", "FIXT"],
+  "_layers": {
+    "XR_L44$0$I-FURN": "the interior designer's furniture, from a linked drawing: blocks with cryptic names (chairs, sofas, beds, toilets, gym equipment) and loose lines (exploded chairs and sofas, plain outlines of tables, benches and wardrobes, rug outlines inside blocks)",
+    "XR_L44$0$Layer7": "the kitchen's cabinets (inside the kitchen block)",
+    "XR_L44$0$PIA1-FUR": "one line inside an armchair block",
+    "I-FURN-FILE": "one dashed line (the V of a TV's viewing angle)",
+    "FUR": "dashed (hidden) lines: folding wardrobe doors drawn open and an L-shaped outline 3.4 x 2.6 m in the ground-floor bedroom (a bed platform or a carpet: the drawing does not say); and three blocks no bigger than 23 cm (WC fitting details)",
+    "FIXT": "sanitary fittings: toilets and wash basins (their lines are on WC-OUTL, WC-DET and WC-DET1)",
+    "not furniture": "TREE (long straight lines and path edges: roof and terrace outlines, stair treads; no tree symbols in the plan areas), PAVING, sand, FLOOR-PATTERN, HATCH, WC-OUTL / WC-DET / WC-DET1 (only inside the FIXT blocks), layer 0 (rugs, hanging rails, the TV, door swings)"
+  },
+  "heights": {},
+  "bases": {},
+  "words": {
+    "_why": "A name is written as the kit reads it: it splits CamelCase and a digit followed by a capital with a space ('TF2092P' is read as 'TF2092 P'), and a space in a word also matches no space at all, so 'TF2092 P' finds both. BASE finds BASE, BASE500 and BASE1000-625.",
+    "cabinet": ["BASE"],
+    "sanitary": ["TF2092 P", "TF0560 P", "klkjlll", "A$C2619574 F"],
+    "counter": ["A$Ce0b21054"],
+    "bed": ["A$C238 E5230"],
+    "sofa": ["kjjkjkkkk", "jkhjhjj", "bvvvv"],
+    "seat": ["jkjllll"],
+    "coffee-table": ["fghfh", "A$C5 BF14633"]
+  },
+  "_names": {
+    "TF2092P": "toilet bowl with cistern",
+    "TF0560P": "round wash basin",
+    "klkjlll": "toilet bowl (upper floor)",
+    "A$C2619574F": "wash basin in a counter (ground-floor toilet room)",
+    "A$Ce0b21054": "kitchen island of base cabinets",
+    "A$C238E5230": "bed with its two bedside tables, the rug outline and the cushions",
+    "kjjkjkkkk": "L-shaped sofa",
+    "jkhjhjj": "armchair",
+    "bvvvv": "D-shaped armchair",
+    "jkjllll": "chair with a round back",
+    "fghfh": "square table (two nested outlines)",
+    "A$C5BF14633": "table (two nested outlines)",
+    "jkllllkk": "the whole kitchen: base cabinets, fridges, sink and the island, with their outlines as loose lines (a room's worth, not one piece)",
+    "kkk": "treadmill (kind: other)",
+    "jhkhkk": "butterfly press (kind: other)",
+    "kjll": "cross trainer (kind: other)",
+    "gjghhh": "treatment unit with a chair (kind: other)",
+    "hjhk": "stadium-shaped pouf or bath, 1.1 x 0.4 m (kind: other)",
+    "jkljlll": "a thin glass panel, 1.1 x 0.05 m, left out by minDepth",
+    "A$C185D7F38": "WC fitting detail, 23 x 6 cm, left out by minSize"
+  },
+  "skip": [],
+  "minSize": 0.25,
+  "minDepth": 0.25,
+  "_minSize": "A piece whose long side is shorter (metres) is left out: the WC fitting details are 23 cm. minDepth: a piece whose short side is thinner is a panel or a strip along a wall, not a piece: the glass panel, and the 20 cm outlines along walls."
+}

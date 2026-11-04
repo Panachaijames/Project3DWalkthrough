@@ -1,0 +1,10 @@
+tower:L29                key  28  detected  30  matched  28  right  28  recall 1.0  precision 0.933  RIGHT 1.0  door: 23/23  passage: 5/5  (optional 1/10 found)
+    extra  L29-020 passage at [2.451, -39.837] w 2.45
+    extra  L29-022 passage at [13.196, -36.615] w 1.65
+tower:L30                key  26  detected  30  matched  26  right  26  recall 1.0  precision 0.867  RIGHT 1.0  door: 21/21  passage: 5/5  (optional 4/12 found)
+    extra  L30-025 window at [29.216, -51.643] w 0.608
+    extra  L30-028 passage at [2.37, -39.838] w 2.453
+    extra  L30-029 passage at [3.318, -37.59] w 1.6
+    extra  L30-031 passage at [13.196, -36.615] w 1.65
+    wrong  L30E-04~L30-023 kind door/passage width 1.88/1.88 ends 0.0
+TOTAL key 54 detected 60 matched 54 right 54  recall 1.0  precision 0.9  RIGHT 1.0  (gate: >= 0.80)

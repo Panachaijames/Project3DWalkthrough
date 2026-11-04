@@ -1,0 +1,16 @@
+{
+  "cache": "presidential",
+  "units": "mm",
+  "floors": {"suite": "presidential:suite"},
+  "layers": {
+    "wall": ["A-1.Netcat - tuong"],
+    "column": ["A.Cot 1"],
+    "door": ["Xr_SDC_DD_ID-PRS-ID wall$0$DA-DOOR-WIND", "Xr_SDC_DD_ID-PCS-ID wall$0$DA-DOOR-WIND"],
+    "ignore": ["A-2.Noi That", "A-2. Noi That - bo", "A-4. Cay", "A-4. Cay (goccay)", "A-Text", "TG_Name",
+               "A-Hatch thiet bi", "A-HatchVatlieu", "1VinaPVC-Hatch", "washbasin$0$HLD - A - Hatch",
+               "Xr_SDC_DD_ID-PCS-Fur$0$DA-SANR-FIXT", "Xr_SDC_DD_ID-PRS-Fur$0$DA-LEVEL-LIGHT",
+               "Xr_SDC_DD_ID-PRS-Fur$0$DA-LOOSE-FURN", "Xr_SDC_DD_ID-PRS-ID wall$0$DA-SANR",
+               "Xr_SDC_DD_ID-PRS-ID wall$0$DA-FLOR-PATT", "Xr_SDC_DD_ID-PRS-ID wall$0$DA-ANNO-DIMS",
+               "KT-Lancan", "KT_BIEN DAM RED", "KT_BIEN PHAO GREEN", "KT_BIEN SAN BLUE", "A-DETL-GENF"]
+  }
+}

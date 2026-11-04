@@ -1,0 +1,14 @@
+{
+  "format": "walkthrough-project/1",
+  "id": "sukhumvit-house",
+  "name": "Test Sukhumvit Residence",
+  "shortName": "Sukhumvit house",
+  "projectNo": null,
+  "sourceKind": "cad",
+  "createdAt": "2026-10-29T05:34:39Z",
+  "updatedAt": "2026-10-29T05:34:39Z",
+  "latestVersion": 1,
+  "versions": [
+    1
+  ]
+}

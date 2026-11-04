@@ -1,0 +1,125 @@
+{
+  "format": "walkthrough-version/1",
+  "projectId": "bank-sampeng",
+  "version": 2,
+  "label": "29 Oct 2026: furniture boxes",
+  "createdAt": "2026-10-29T03:24:53Z",
+  "sourceKind": "cad",
+  "sourceFiles": [
+    "I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg",
+    "I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg"
+  ],
+  "modelFormat": "built-model/1",
+  "modelSha1": "c3a9408304a240b83c36f5c5c53db56b50a72c64",
+  "stamp": "c3a9408304a2",
+  "stampSource": "model.json",
+  "counts": {
+    "floors": 2,
+    "parts": 124,
+    "openings": 49,
+    "furniture": 185,
+    "furnitureKinds": 14,
+    "rooms": 18
+  },
+  "floors": [
+    {
+      "key": "L1",
+      "name": "Level 1",
+      "level": 0.0
+    },
+    {
+      "key": "L2",
+      "name": "Level 2",
+      "level": 3.7
+    }
+  ],
+  "hasStages": true,
+  "assets": [
+    {
+      "name": "topview.png",
+      "role": "thumbnail",
+      "mediaType": "image/png",
+      "bytes": 169701,
+      "sha1": "f084b556503c4d5959e02d1dd55e84c607800775"
+    }
+  ],
+  "downloads": {
+    "maxScript": "Bangkok_Bank_Sampeng.ms",
+    "furnitureCsv": true
+  },
+  "presentation": {
+    "documentTitle": "Bank branch test",
+    "heading": "Bangkok Bank, Sampeng Branch (test): CAD → 3D",
+    "intro": [
+      {
+        "text": "Built automatically from the 2 Revit-exported DWGs of "
+      },
+      {
+        "text": "Bangkok Bank, Sampeng Branch",
+        "bold": true
+      },
+      {
+        "text": ": walls from the wall layers, glass from the curtain-wall layers and from the glass wall types Revit names on its wall blocks, and the 39 doors, 7 windows and 3 passages from the openings detector, used as found. Furniture: 185 coloured boxes in 14 kinds, one per piece; they come in at the end of the replay. Levels +0.00 / +3.70 m. No drawing-specific rules; no AI used."
+      }
+    ],
+    "accent": "#2f6f8f",
+    "legend": {
+      "layout": "inline",
+      "items": [
+        {
+          "colour": "#e3ddd3",
+          "text": "Walls, columns and door lintels (3.70 m per level)"
+        },
+        {
+          "colour": "#9cc3d5",
+          "text": "Glass: curtain wall, window panes, glass partitions (2.60 m, from the Revit wall types)"
+        },
+        {
+          "colour": "#77727c",
+          "text": "Railings (1.10 m) and the parapet"
+        },
+        {
+          "colour": "#b9c7b4",
+          "text": "Stairs: steps where the drawing says UP / DOWN, flat tread lines elsewhere (faint: flights above the cut)"
+        },
+        {
+          "colour": "#d4d8d2",
+          "text": "Floor plate (approximate outline)"
+        }
+      ]
+    },
+    "floorButtons": {
+      "all": "Both levels"
+    },
+    "camera": {
+      "kind": "fixed",
+      "position": [
+        24,
+        27,
+        29
+      ],
+      "target": [
+        0,
+        2.5,
+        0
+      ],
+      "far": 600
+    },
+    "creaseAngle": 25,
+    "groundPlane": null
+  },
+  "seed": {
+    "from": [
+      "bank_test/src/bank_model.json",
+      "bank_test/src/bank_stages.json",
+      "bank_test/bank_topview.png",
+      "bank_test/Bangkok_Bank_Sampeng.ms",
+      "bank_test/bank_furniture_list.csv",
+      "bank_test/src/bank_project.json",
+      "bank_test/src/bank_summary.json",
+      "bank_test/README.md"
+    ],
+    "seededAt": "2026-11-04T04:35:50Z",
+    "seedVersion": "1"
+  }
+}

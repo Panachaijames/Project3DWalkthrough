@@ -1,0 +1,6 @@
+830 wall/core/envelope segments checked numerically.
+Native runtime validates positions, six quad faces and closed edges for each wall.
+L1/L2 core share exact same XY.
+L2 slab: 2 public void loops + 6 core opening loops.
+Horizontal scale calibrated to lift door 1.20m = 19 pixels in x02.
+Native 3ds Max runtime not yet tested.

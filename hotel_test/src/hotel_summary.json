@@ -1,0 +1,1165 @@
+{
+ "scale": {
+  "method": "stair",
+  "axes": "per-axis",
+  "stairWidthM": 2.5,
+  "stairClearPx": 148.19,
+  "floor2ToFloor1Px": {
+   "x": 1.40946,
+   "y": 1.35387,
+   "oneRatio": 1.36734
+  },
+  "pxPerMetre": {
+   "F1": {
+    "x": 59.276,
+    "y": 56.938
+   },
+   "F2": {
+    "x": 42.056,
+    "y": 42.056
+   }
+  },
+  "floor1DrawnWiderThanTall": 1.0411,
+  "liftDoorsPx": {
+   "F1": [
+    63.58,
+    63.56
+   ],
+   "F2": [
+    52.66,
+    53.67
+   ]
+  },
+  "liftDoorsHalfWayPx": {
+   "F1": [
+    57.59,
+    56.28
+   ],
+   "F2": [
+    47.95,
+    49.09
+   ]
+  },
+  "liftDoorsAtThisScaleM": {
+   "F1": [
+    1.117,
+    1.116
+   ],
+   "F2": [
+    1.252,
+    1.276
+   ]
+  },
+  "liftDoorsMeanAtThisScaleM": 1.19,
+  "liftShaftsInsideM": {
+   "F1": [
+    2.297,
+    2.28,
+    2.327
+   ],
+   "F2": [
+    2.317,
+    2.282,
+    2.308
+   ]
+  },
+  "stairs": {
+   "floor1ClearM": 2.5,
+   "floor1OverSideWallsM": 2.934,
+   "floor2BetweenStringersM": 2.739,
+   "floor2OverStringersM": 2.93
+  },
+  "otherMethods": {
+   "cores": {
+    "floor2PxPerM": 50.06,
+    "modelSizeAgainstThisScale": 0.8401
+   },
+   "doors-floor1": {
+    "floor2PxPerM": 46.954,
+    "modelSizeAgainstThisScale": 0.8957
+   }
+  },
+  "coreFitResiduals": [
+   {
+    "face": "core west face",
+    "axis": "x",
+    "floor1Px": 1063.93,
+    "floor2PxOnFloor1": 1062.975,
+    "offM": 0.016
+   },
+   {
+    "face": "shaft west inside face",
+    "axis": "x",
+    "floor1Px": 1081.64,
+    "floor2PxOnFloor1": 1082.44,
+    "offM": -0.013
+   },
+   {
+    "face": "shaft east inside face",
+    "axis": "x",
+    "floor1Px": 1217.78,
+    "floor2PxOnFloor1": 1219.806,
+    "offM": -0.034
+   },
+   {
+    "face": "core east face",
+    "axis": "x",
+    "floor1Px": 1243.03,
+    "floor2PxOnFloor1": 1241.159,
+    "offM": 0.032
+   },
+   {
+    "face": "core north face",
+    "axis": "y",
+    "floor1Px": 259.53,
+    "floor2PxOnFloor1": 258.337,
+    "offM": 0.021
+   },
+   {
+    "face": "lift 1 north inside face",
+    "axis": "y",
+    "floor1Px": 331.02,
+    "floor2PxOnFloor1": 331.919,
+    "offM": -0.016
+   },
+   {
+    "face": "lift 1 south inside face",
+    "axis": "y",
+    "floor1Px": 460.85,
+    "floor2PxOnFloor1": 461.85,
+    "offM": -0.018
+   },
+   {
+    "face": "lift 2 north inside face",
+    "axis": "y",
+    "floor1Px": 474.35,
+    "floor2PxOnFloor1": 474.536,
+    "offM": -0.003
+   },
+   {
+    "face": "lift 2 south inside face",
+    "axis": "y",
+    "floor1Px": 606.86,
+    "floor2PxOnFloor1": 605.969,
+    "offM": 0.016
+   }
+  ],
+  "coreFitResidualMaxPx": {
+   "perAxis": 2.026,
+   "oneRatio": 4.547
+  }
+ },
+ "origin": {
+  "F1": [
+   1063.93,
+   259.53
+  ],
+  "F2": [
+   709.958,
+   479.382
+  ]
+ },
+ "offset": [
+  -5.573,
+  0.039
+ ],
+ "liftShaftsBounds": {
+  "F1": [
+   0.322,
+   -6.05,
+   2.549,
+   -1.29
+  ],
+  "F2": [
+   0.334,
+   -6.031,
+   2.569,
+   -1.299
+  ]
+ },
+ "floor1WallsExtentM": {
+  "x": 18.51,
+  "y": 11.183,
+  "_": "all of floor 1's walls: the stair bay north of the north wall and the RED BOX south of the facade included"
+ },
+ "floor1MainBoxM": {
+  "x": 18.511,
+  "y": 8.262,
+  "_": "west face to the core's east face, and the north wall's outer face to the south wall stubs' outer faces"
+ },
+ "floor2OutlineOnFloor1": {
+  "westLineM": -10.057,
+  "floor2WestFacadeM": -10.153,
+  "southLineM": -11.509,
+  "eastLineM": 10.204,
+  "wrapNorthM": -10.06
+ },
+ "furnitureSizes": {
+  "F1 3-seat sofa": [
+   [
+    1.839,
+    0.808
+   ]
+  ],
+  "F1 armchair": [
+   [
+    0.692,
+    0.685
+   ],
+   [
+    0.703,
+    0.692
+   ],
+   [
+    0.777,
+    0.738
+   ],
+   [
+    0.777,
+    0.748
+   ]
+  ],
+  "F1 built-in bench": [
+   [
+    4.673,
+    0.615
+   ],
+   [
+    4.847,
+    0.59
+   ]
+  ],
+  "F1 check-in sofa": [
+   [
+    1.417,
+    1.036
+   ]
+  ],
+  "F1 round sofa": [
+   [
+    2.494,
+    2.396
+   ]
+  ],
+  "F1 seat back": [
+   [
+    0.793,
+    0.176
+   ],
+   [
+    0.827,
+    0.239
+   ],
+   [
+    0.834,
+    0.226
+   ],
+   [
+    0.835,
+    0.237
+   ],
+   [
+    0.867,
+    0.231
+   ]
+  ],
+  "F2 armchair": [
+   [
+    0.461,
+    0.419
+   ],
+   [
+    0.469,
+    0.396
+   ],
+   [
+    0.47,
+    0.451
+   ],
+   [
+    0.475,
+    0.462
+   ],
+   [
+    0.477,
+    0.463
+   ],
+   [
+    0.523,
+    0.452
+   ],
+   [
+    0.523,
+    0.499
+   ],
+   [
+    0.532,
+    0.5
+   ],
+   [
+    0.541,
+    0.523
+   ],
+   [
+    0.544,
+    0.534
+   ],
+   [
+    0.547,
+    0.465
+   ],
+   [
+    0.55,
+    0.543
+   ],
+   [
+    0.555,
+    0.521
+   ],
+   [
+    0.587,
+    0.534
+   ],
+   [
+    0.624,
+    0.587
+   ],
+   [
+    0.624,
+    0.602
+   ],
+   [
+    0.627,
+    0.606
+   ],
+   [
+    0.69,
+    0.642
+   ],
+   [
+    0.88,
+    0.819
+   ]
+  ],
+  "F2 bar stool": [
+   [
+    0.357,
+    0.333
+   ],
+   [
+    0.357,
+    0.357
+   ],
+   [
+    0.357,
+    0.357
+   ],
+   [
+    0.357,
+    0.357
+   ],
+   [
+    0.357,
+    0.357
+   ],
+   [
+    0.357,
+    0.357
+   ],
+   [
+    0.38,
+    0.357
+   ],
+   [
+    0.38,
+    0.357
+   ],
+   [
+    0.38,
+    0.357
+   ],
+   [
+    0.38,
+    0.357
+   ],
+   [
+    0.38,
+    0.38
+   ],
+   [
+    0.38,
+    0.38
+   ],
+   [
+    0.38,
+    0.38
+   ],
+   [
+    0.38,
+    0.38
+   ]
+  ],
+  "F2 chair": [
+   [
+    0.285,
+    0.285
+   ],
+   [
+    0.309,
+    0.262
+   ],
+   [
+    0.309,
+    0.285
+   ],
+   [
+    0.309,
+    0.309
+   ],
+   [
+    0.333,
+    0.333
+   ],
+   [
+    0.428,
+    0.309
+   ]
+  ],
+  "F2 dining chair": [
+   [
+    0.404,
+    0.333
+   ],
+   [
+    0.404,
+    0.357
+   ],
+   [
+    0.404,
+    0.357
+   ],
+   [
+    0.404,
+    0.357
+   ],
+   [
+    0.404,
+    0.357
+   ],
+   [
+    0.428,
+    0.357
+   ],
+   [
+    0.428,
+    0.357
+   ],
+   [
+    0.428,
+    0.357
+   ],
+   [
+    0.428,
+    0.357
+   ],
+   [
+    0.428,
+    0.357
+   ]
+  ],
+  "F2 sculptural seating": [
+   [
+    1.205,
+    0.488
+   ],
+   [
+    1.855,
+    1.391
+   ],
+   [
+    2.7,
+    2.677
+   ]
+  ],
+  "F2 sofa": [
+   [
+    1.403,
+    0.571
+   ],
+   [
+    1.403,
+    0.571
+   ],
+   [
+    1.974,
+    0.69
+   ]
+  ],
+  "F2 worktop": [
+   [
+    1.831,
+    0.285
+   ]
+  ]
+ },
+ "stairCheck": {
+  "flight": [
+   -4.665,
+   -1.528,
+   -2.165,
+   2.8
+  ],
+  "floor2Void": [
+   -4.665,
+   -1.528,
+   -2.165,
+   2.8
+  ],
+  "flightWidth": 2.5,
+  "stepAreaUnderFloor2Slab": 0.0,
+  "stepsUnderSlab": [],
+  "topStepTop": 2.729,
+  "soffit": 2.7,
+  "slotBesideFlight": {
+   "west": 0.0,
+   "east": 0.001
+  },
+  "slotBesideFlightWidestAtY": {
+   "west": 2.722,
+   "east": 2.722
+  },
+  "slotProbes": 43,
+  "sideWallsCarriedOn": [
+   {
+    "side": "west",
+    "stoppedAtY": 2.161,
+    "carriedToY": 2.839,
+    "carriedOn": 0.678,
+    "thickness": 0.219
+   }
+  ],
+  "bottomRiserMovedNorth": 0.24,
+  "drawnBottomTreadLineY": -1.768
+ },
+ "blocked": [],
+ "floors": {
+  "F1": {
+   "counts": {
+    "wall": 8,
+    "mullion": 8,
+    "glass": 8,
+    "lintel": 5,
+    "step": 16,
+    "slab": 2
+   },
+   "openings": {
+    "door": 5
+   },
+   "doorsWith": {
+    "lintel": 5
+   },
+   "exterior": [
+    "F1-003"
+   ],
+   "oneSided": {
+    "F1-003": [
+     -1
+    ]
+   },
+   "liftDoorsDrawnM": [
+    1.117,
+    1.116
+   ],
+   "liftDoorWallFills": 4,
+   "rooms": [
+    "Lounge area",
+    "Coffee",
+    "Art work",
+    "Check-in / self check-in",
+    "Car park",
+    "Lift lobby",
+    "Red box",
+    "Entrance",
+    "Luggage storage",
+    "Additional space for luggage"
+   ],
+   "stairs": [
+    {
+     "id": "F1-S1",
+     "flights": 1,
+     "withWord": 1,
+     "run": 4.328,
+     "going": 0.27,
+     "riser": 0.171,
+     "width": 2.5,
+     "drawnTreads": 14,
+     "drawnSpacing": 0.404,
+     "bottomMovedNorth": 0.24
+    }
+   ],
+   "voids": [],
+   "plateArea": 158.4,
+   "outdoorSlabArea": 25.3,
+   "terrace": null,
+   "wallArea": 16.5,
+   "glassLength": 12.37,
+   "probes": 8,
+   "furniture": {
+    "plant": 0,
+    "seat": 5,
+    "sofa": 5,
+    "seat-back": 5,
+    "table": 1,
+    "coffee-table": 6,
+    "counter": 1,
+    "cabinet": 0
+   },
+   "furnitureApproach": {
+    "pieces": 0,
+    "openingIds": []
+   },
+   "openingsFromJambs": [
+    {
+     "id": "F1-003",
+     "widthWas": 2.058,
+     "width": 2.083,
+     "jambsMovedOut": [
+      0.015,
+      0.01
+     ],
+     "depthWas": 0.263,
+     "depthAtJambs": [
+      [
+       -0.092,
+       0.092
+      ],
+      [
+       -0.092,
+       0.092
+      ]
+     ],
+     "lineMovedAcross": 0.025,
+     "jambsFound": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": "F1-004",
+     "widthWas": 1.805,
+     "width": 1.829,
+     "jambsMovedOut": [
+      0.012,
+      0.012
+     ],
+     "depthWas": 0.105,
+     "depthAtJambs": [
+      [
+       -0.062,
+       0.041
+      ],
+      [
+       -0.02,
+       0.041
+      ]
+     ],
+     "lineMovedAcross": 0.01,
+     "jambsFound": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": "F1-005",
+     "widthWas": 1.738,
+     "width": 1.756,
+     "jambsMovedOut": [
+      0.012,
+      0.007
+     ],
+     "depthWas": 0.105,
+     "depthAtJambs": [
+      [
+       -0.038,
+       0.038
+      ],
+      [
+       -0.038,
+       0.038
+      ]
+     ],
+     "lineMovedAcross": -0.003,
+     "jambsFound": [
+      true,
+      true
+     ]
+    }
+   ],
+   "hatchSills": {},
+   "lowWalls": [],
+   "pictureEdgeWalls": []
+  },
+  "F2": {
+   "counts": {
+    "wall": 8,
+    "parapet": 1,
+    "glass": 3,
+    "lintel": 13,
+    "sill": 2,
+    "railing": 7,
+    "step": 7,
+    "slab": 1
+   },
+   "openings": {
+    "door": 12,
+    "passage": 1,
+    "window": 2
+   },
+   "doorsWith": {
+    "lintel": 11,
+    "transom": 1
+   },
+   "exterior": [
+    "F2-001",
+    "F2-002",
+    "F2-007",
+    "F2-010"
+   ],
+   "oneSided": {
+    "F2-001": [
+     -1
+    ],
+    "F2-002": [
+     -1
+    ],
+    "F2-007": [
+     -1
+    ],
+    "F2-010": [
+     -1
+    ]
+   },
+   "liftDoorsDrawnM": [
+    1.252,
+    1.276
+   ],
+   "liftDoorWallFills": 4,
+   "rooms": [
+    "Male",
+    "Female",
+    "Iconic staircase",
+    "Door with key access",
+    "Pantry",
+    "Food lift",
+    "Canteen M.",
+    "Mural wall",
+    "Signature cabinets",
+    "Feature carpet",
+    "Bar",
+    "Entry",
+    "Outdoor",
+    "Outside stair"
+   ],
+   "stairs": [
+    {
+     "id": "F2-S1",
+     "flights": 1,
+     "withWord": 1,
+     "run": 2.259,
+     "going": 0.323,
+     "riser": 0.171,
+     "width": 2.763,
+     "steps": 7,
+     "top": 1.194,
+     "drawnTreads": 8,
+     "endsInTheAir": true,
+     "sidesFrom": "the side walls' inner faces (rule 11)",
+     "sidesMovedOntoWallFaces": [
+      0.009,
+      0.0
+     ],
+     "drawnClearWidth": 2.754
+    },
+    {
+     "id": "F2-S2",
+     "flights": 1,
+     "withWord": 1,
+     "drawnTreads": 14,
+     "drawnSpacing": 0.333,
+     "drawnWidth": 2.739
+    },
+    {
+     "id": "F2-S3",
+     "flights": 1,
+     "withWord": 1,
+     "drawnTreads": 7,
+     "drawnSpacing": 0.262
+    }
+   ],
+   "voids": [
+    {
+     "what": "stair",
+     "area": 10.82
+    },
+    {
+     "what": "small shaft (riser)",
+     "area": 2.16
+    },
+    {
+     "what": "lift 1",
+     "area": 4.94
+    },
+    {
+     "what": "lift 2",
+     "area": 5.0
+    },
+    {
+     "what": "small duct beside lift 2",
+     "area": 0.23
+    }
+   ],
+   "plateArea": 408.9,
+   "outdoorSlabArea": 0,
+   "terrace": {
+    "west": -10.153,
+    "east": 10.204,
+    "south": -11.509,
+    "north": -9.755,
+    "eastFacade": 8.563,
+    "wrapNorthFloor1": -10.06,
+    "outlineWest": -10.057
+   },
+   "wallArea": 24.42,
+   "glassLength": 8.2,
+   "probes": 1,
+   "furniture": {
+    "plant": 3,
+    "seat": 45,
+    "sofa": 32,
+    "seat-back": 0,
+    "table": 3,
+    "coffee-table": 18,
+    "counter": 10,
+    "cabinet": 25
+   },
+   "furnitureApproach": {
+    "pieces": 1,
+    "openingIds": [
+     "F2-003"
+    ]
+   },
+   "openingsFromJambs": [
+    {
+     "id": "F2-003",
+     "widthWas": 0.999,
+     "width": 1.013,
+     "jambsMovedOut": [
+      0.012,
+      0.002
+     ],
+     "depthWas": 0.404,
+     "depthAtJambs": [
+      [
+       -0.204,
+       0.2
+      ],
+      [
+       -0.182,
+       0.186
+      ]
+     ],
+     "lineMovedAcross": 0.002,
+     "jambsFound": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": "F2-004",
+     "widthWas": 0.927,
+     "width": 0.927,
+     "jambsMovedOut": [
+      0.0,
+      0.0
+     ],
+     "depthWas": 0.143,
+     "depthAtJambs": [
+      [
+       -0.071,
+       0.071
+      ],
+      [
+       -0.071,
+       0.071
+      ]
+     ],
+     "lineMovedAcross": 0.0,
+     "jambsFound": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": "F2-005",
+     "widthWas": 0.975,
+     "width": 0.975,
+     "jambsMovedOut": [
+      0.0,
+      0.0
+     ],
+     "depthWas": 0.166,
+     "depthAtJambs": [
+      [
+       -0.083,
+       0.083
+      ],
+      [
+       -0.083,
+       0.083
+      ]
+     ],
+     "lineMovedAcross": 0.0,
+     "jambsFound": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": "F2-006",
+     "widthWas": 0.69,
+     "width": 0.725,
+     "jambsMovedOut": [
+      0.021,
+      0.014
+     ],
+     "depthWas": 0.214,
+     "depthAtJambs": [
+      [
+       -0.089,
+       0.089
+      ],
+      [
+       -0.089,
+       0.089
+      ]
+     ],
+     "lineMovedAcross": -0.004,
+     "jambsFound": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": "F2-007",
+     "widthWas": 1.926,
+     "width": 2.009,
+     "jambsMovedOut": [
+      0.083,
+      0.0
+     ],
+     "depthWas": 0.19,
+     "depthAtJambs": [
+      [
+       -0.095,
+       0.095
+      ],
+      [
+       -0.095,
+       0.095
+      ]
+     ],
+     "lineMovedAcross": 0.0,
+     "jambsFound": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": "F2-008",
+     "widthWas": 0.951,
+     "width": 0.951,
+     "jambsMovedOut": [
+      0.0,
+      0.0
+     ],
+     "depthWas": 0.143,
+     "depthAtJambs": [
+      [
+       -0.071,
+       0.071
+      ],
+      [
+       -0.071,
+       0.071
+      ]
+     ],
+     "lineMovedAcross": 0.0,
+     "jambsFound": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": "F2-009",
+     "widthWas": 0.737,
+     "width": 0.737,
+     "jambsMovedOut": [
+      0.0,
+      0.0
+     ],
+     "depthWas": 0.143,
+     "depthAtJambs": [
+      [
+       -0.071,
+       0.071
+      ],
+      [
+       -0.071,
+       0.071
+      ]
+     ],
+     "lineMovedAcross": 0.0,
+     "jambsFound": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": "F2-010",
+     "widthWas": 1.332,
+     "width": 1.332,
+     "jambsMovedOut": [
+      0.0,
+      0.0
+     ],
+     "depthWas": 0.143,
+     "depthAtJambs": [
+      [
+       -0.071,
+       0.071
+      ],
+      [
+       -0.071,
+       0.071
+      ]
+     ],
+     "lineMovedAcross": 0.0,
+     "jambsFound": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": "F2-011",
+     "widthWas": 0.856,
+     "width": 0.856,
+     "jambsMovedOut": [
+      0.0,
+      0.0
+     ],
+     "depthWas": 0.143,
+     "depthAtJambs": [
+      [
+       -0.071,
+       0.071
+      ],
+      [
+       -0.071,
+       0.071
+      ]
+     ],
+     "lineMovedAcross": 0.0,
+     "jambsFound": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": "F2-012",
+     "widthWas": 1.902,
+     "width": 1.902,
+     "jambsMovedOut": [
+      0.0,
+      0.0
+     ],
+     "depthWas": 0.19,
+     "depthAtJambs": [
+      [
+       -0.037,
+       0.013
+      ],
+      [
+       -0.013,
+       0.037
+      ]
+     ],
+     "lineMovedAcross": -0.021,
+     "jambsFound": [
+      true,
+      true
+     ]
+    },
+    {
+     "id": "F2-013",
+     "widthWas": 1.284,
+     "width": 1.322,
+     "jambsMovedOut": [
+      0.021,
+      0.017
+     ],
+     "depthWas": 0.262,
+     "depthAtJambs": [
+      [
+       -0.125,
+       0.113
+      ],
+      [
+       -0.115,
+       0.127
+      ]
+     ],
+     "lineMovedAcross": 0.004,
+     "jambsFound": [
+      true,
+      true
+     ]
+    }
+   ],
+   "hatchSills": {
+    "F2-014": [
+     0.85,
+     "the top of the counter standing in it"
+    ],
+    "F2-016": [
+     0.9,
+     "project default (assumed)"
+    ]
+   },
+   "lowWalls": [
+    [
+     "outside stair spine (low wall)",
+     1.006
+    ]
+   ],
+   "pictureEdgeWalls": [
+    [
+     1.27,
+     "picture edge (the drawing stops here; assumed closed)"
+    ]
+   ]
+  }
+ },
+ "furniture": {
+  "pieces": 159,
+  "kinds": {
+   "plant": 3,
+   "seat": 50,
+   "sofa": 37,
+   "seat-back": 5,
+   "table": 4,
+   "coffee-table": 24,
+   "counter": 11,
+   "cabinet": 25
+  }
+ }
+}

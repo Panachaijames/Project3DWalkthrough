@@ -1,0 +1,18 @@
+{
+  "cache": "sukhumvit",
+  "units": "mm",
+  "floors": {"ground": "sukhumvit:ground", "upper": "sukhumvit:upper"},
+  "areas": {"ground": {"bbox": [7.74826, 5.601038, 53.870897, 25.854851], "pad": 0.5, "match": "all"},
+            "upper": {"bbox": [81.769533, 6.617993, 127.848522, 24.809115], "pad": 0.5, "match": "all"}},
+  "layers": {
+    "wall": ["WALL", "XR_L44 Plan$0$A-WALL", "XR_L55 Plan$0$A-WALL"],
+    "column": ["COL"],
+    "glass": ["WALL-GL"],
+    "window": ["WIN"],
+    "screen": ["W_Grill", "A_Grill"],
+    "door": ["DOOR", "D-JAMB", "DSYM", "XR_L44 Plan$0$A-DOOR", "XR_L44$0$I-DOOR"],
+    "stair": ["STAIR"],
+    "ignore": ["FUR", "FIXT", "XR_L44$0$I-FURN", "XR_L44$0$PIA1-FUR", "I-FURN-FILE", "WC-DET", "WC-DET1", "WC-OUT", "WC-OUTL",
+               "FLOOR-PATTERN", "GRID-01", "DIM25", "TEXT", "Section", "SITE", "drain"]
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "format": "walkthrough-version/1",
+  "projectId": "sukhumvit-house",
+  "version": 1,
+  "label": "29 Oct 2026: openings and furniture boxes",
+  "createdAt": "2026-10-29T05:34:39Z",
+  "sourceKind": "cad",
+  "sourceFiles": [
+    "Test Sukhumvit Residence.dwg"
+  ],
+  "modelFormat": "built-model/1",
+  "modelSha1": "e43270cc0c9be5c00025881f09762325cfc5f92f",
+  "stamp": "e43270cc0c9b",
+  "stampSource": "model.json",
+  "counts": {
+    "floors": 2,
+    "parts": 197,
+    "openings": 86,
+    "furniture": 76,
+    "furnitureKinds": 9,
+    "rooms": 0
+  },
+  "floors": [
+    {
+      "key": "ground",
+      "name": "Ground floor",
+      "level": 0.9
+    },
+    {
+      "key": "upper",
+      "name": "Upper floor",
+      "level": 4.8
+    }
+  ],
+  "hasStages": true,
+  "assets": [],
+  "downloads": {
+    "maxScript": null,
+    "furnitureCsv": true
+  },
+  "presentation": {
+    "documentTitle": "CAD to 3D test",
+    "heading": "Test Sukhumvit Residence: CAD → 3D",
+    "intro": [
+      {
+        "text": "Built automatically from the DWG. Each wall's two face lines are paired, filled and merged into one solid per wall run, so there are no seams. 32 doors and 37 windows found in the plan are cut in (the 17 passages are gaps that are already open). Doors open to 3.00 m (upper floor 2.60 m) under a lintel; windows, and the 3 sliding glass doors that may be windows, are glazed to their heads (3.00 / 3.90 m; upper floor 2.55 / 2.60 m). Heights from the elevations (floors +0.90 m, +4.80 m). Furniture: 76 boxes, one per piece, coloured by kind (9 kinds); 48 are grey because the drawing does not say what they are. They come in at the end of the replay. No AI used."
+      }
+    ],
+    "accent": "#c9773e",
+    "legend": {
+      "layout": "inline",
+      "items": [
+        {
+          "colour": "#e3ddd3",
+          "text": "Walls and lintels"
+        },
+        {
+          "colour": "#8fd0e0",
+          "text": "Glass walls"
+        },
+        {
+          "colour": "#7fb8e8",
+          "text": "Window glass"
+        },
+        {
+          "colour": "#5aa65a",
+          "text": "Stairs"
+        },
+        {
+          "colour": "#e0a458",
+          "text": "Single line: wall, railing or edge?"
+        },
+        {
+          "colour": "#d4d8d2",
+          "text": "Floor plate (approximate outline)"
+        }
+      ]
+    },
+    "floorButtons": {
+      "all": "Both floors",
+      "labels": {
+        "ground": "Ground",
+        "upper": "Upper"
+      }
+    },
+    "camera": {
+      "kind": "fixed",
+      "position": [
+        -28,
+        30,
+        34
+      ],
+      "target": [
+        0,
+        3,
+        0
+      ],
+      "far": 500
+    },
+    "partStyles": {
+      "glass": {
+        "color": "#8fd0e0",
+        "edge": "#4f9fb3",
+        "opacity": 0.35,
+        "roughness": 0.85,
+        "edgeOpacity": 0.6,
+        "renderOrder": 0
+      },
+      "pane": {
+        "color": "#7fb8e8",
+        "edge": "#3f7fb3",
+        "opacity": 0.35,
+        "roughness": 0.85,
+        "edgeOpacity": 0.6,
+        "renderOrder": 0
+      },
+      "single": {
+        "opacity": 0.9
+      }
+    },
+    "creaseAngle": 40,
+    "groundPlane": {
+      "size": [
+        80,
+        50
+      ],
+      "colour": "#dfe3e0"
+    }
+  },
+  "seed": {
+    "from": [
+      "cad_test/src/house3d_merged.json",
+      "cad_test/src/furniture_house.json",
+      "cad_test/src/house3d_stages.json",
+      "cad_test/house_furniture_list.csv",
+      "cad_test/src/heights.json",
+      "cad_test/src/openings.json",
+      "cad_test/OPENINGS_CHANGES.md"
+    ],
+    "seededAt": "2026-11-04T04:35:50Z",
+    "seedVersion": "1"
+  }
+}

@@ -1,0 +1,659 @@
+{
+ "openings": [
+  {
+   "id": "suite-001",
+   "floor": "presidential:suite",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    195.91,
+    -3505.2781
+   ],
+   "b": [
+    197.01,
+    -3505.2781
+   ],
+   "width": 1.1,
+   "wallThickness": 0.08,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-002",
+   "floor": "presidential:suite",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    195.91,
+    -3501.7581
+   ],
+   "b": [
+    197.01,
+    -3501.7581
+   ],
+   "width": 1.1,
+   "wallThickness": 0.08,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-003",
+   "floor": "presidential:suite",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    196.4136,
+    -3500.4782
+   ],
+   "b": [
+    197.3137,
+    -3500.4782
+   ],
+   "width": 0.9,
+   "wallThickness": 0.08,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on Xr_SDC_DD_ID-PCS-ID wall$0$DA-DOOR-WIND"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-004",
+   "floor": "presidential:suite",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    179.8957,
+    -3489.8291
+   ],
+   "b": [
+    180.3257,
+    -3489.0843
+   ],
+   "width": 0.86,
+   "wallThickness": 0.18,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-005",
+   "floor": "presidential:suite",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    198.0864,
+    -3490.8328
+   ],
+   "b": [
+    198.9865,
+    -3490.8328
+   ],
+   "width": 0.9,
+   "wallThickness": 0.08,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on Xr_SDC_DD_ID-PCS-ID wall$0$DA-DOOR-WIND"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-006",
+   "floor": "presidential:suite",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    200.7174,
+    -3503.7581
+   ],
+   "b": [
+    198.6226,
+    -3503.7581
+   ],
+   "width": 2.095,
+   "wallThickness": 0.08,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-007",
+   "floor": "presidential:suite",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    202.0556,
+    -3501.8423
+   ],
+   "b": [
+    202.5056,
+    -3501.0628
+   ],
+   "width": 0.9,
+   "wallThickness": 0.08,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-1.Netthay"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-008",
+   "floor": "presidential:suite",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    197.78,
+    -3505.2381
+   ],
+   "b": [
+    197.78,
+    -3506.4834
+   ],
+   "width": 1.245,
+   "wallThickness": 0.18,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-009",
+   "floor": "presidential:suite",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    203.2509,
+    -3499.772
+   ],
+   "b": [
+    203.6259,
+    -3499.1224
+   ],
+   "width": 0.75,
+   "wallThickness": 0.08,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-1.Netthay"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-010",
+   "floor": "presidential:suite",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    201.5327,
+    -3500.168
+   ],
+   "b": [
+    201.1577,
+    -3500.8175
+   ],
+   "width": 0.75,
+   "wallThickness": 0.08,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-1.Netthay"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-011",
+   "floor": "presidential:suite",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    201.7489,
+    -3499.7936
+   ],
+   "b": [
+    202.1239,
+    -3499.1441
+   ],
+   "width": 0.75,
+   "wallThickness": 0.08,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-1.Netthay"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-012",
+   "floor": "presidential:suite",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    202.044,
+    -3496.2406
+   ],
+   "b": [
+    202.894,
+    -3496.2406
+   ],
+   "width": 0.85,
+   "wallThickness": 0.08,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on Xr_SDC_DD_ID-PCS-ID wall$0$DA-DOOR-WIND"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-013",
+   "floor": "presidential:suite",
+   "kind": "door",
+   "subtype": "hinged double",
+   "a": [
+    201.754,
+    -3495.9556
+   ],
+   "b": [
+    201.754,
+    -3494.3556
+   ],
+   "width": 1.6,
+   "wallThickness": 0.18,
+   "host": "wall",
+   "hinge": null,
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "2 swing arc(s)",
+    "arc on Xr_SDC_DD_ID-PRS-ID wall$0$DA-DOOR-WIND"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-014",
+   "floor": "presidential:suite",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    204.84,
+    -3496.2406
+   ],
+   "b": [
+    205.64,
+    -3496.2406
+   ],
+   "width": 0.8,
+   "wallThickness": 0.08,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-1.Netthay"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-015",
+   "floor": "presidential:suite",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    206.44,
+    -3494.0706
+   ],
+   "b": [
+    205.64,
+    -3494.0706
+   ],
+   "width": 0.8,
+   "wallThickness": 0.08,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-1.Netthay"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-016",
+   "floor": "presidential:suite",
+   "kind": "door",
+   "subtype": "pocket sliding",
+   "a": [
+    203.2009,
+    -3494.0206
+   ],
+   "b": [
+    204.0009,
+    -3494.0206
+   ],
+   "width": 0.8,
+   "wallThickness": 0.18,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.65,
+   "evidence": [
+    "wall gap (cap-end)",
+    "pocket line on A-1.Netthay"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-017",
+   "floor": "presidential:suite",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    178.4031,
+    -3487.9743
+   ],
+   "b": [
+    177.9731,
+    -3488.7191
+   ],
+   "width": 0.86,
+   "wallThickness": 0.18,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-018",
+   "floor": "presidential:suite",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    197.78,
+    -3501.7981
+   ],
+   "b": [
+    197.78,
+    -3500.5181
+   ],
+   "width": 1.28,
+   "wallThickness": 0.18,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-019",
+   "floor": "presidential:suite",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    203.6363,
+    -3499.0244
+   ],
+   "b": [
+    202.5884,
+    -3498.4194
+   ],
+   "width": 1.21,
+   "wallThickness": 0.18,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-020",
+   "floor": "presidential:suite",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    201.4014,
+    -3489.7958
+   ],
+   "b": [
+    201.8764,
+    -3490.6185
+   ],
+   "width": 0.95,
+   "wallThickness": 0.08,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-1.Netthay - manh"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-021",
+   "floor": "presidential:suite",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    195.19,
+    -3501.7981
+   ],
+   "b": [
+    195.19,
+    -3499.8549
+   ],
+   "width": 1.943,
+   "wallThickness": 0.08,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-022",
+   "floor": "presidential:suite",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    201.4809,
+    -3493.4934
+   ],
+   "b": [
+    199.9075,
+    -3490.7683
+   ],
+   "width": 3.147,
+   "wallThickness": 0.3,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-023",
+   "floor": "presidential:suite",
+   "kind": "door",
+   "subtype": "hinged double",
+   "a": [
+    206.8102,
+    -3495.9556
+   ],
+   "b": [
+    206.8102,
+    -3494.3556
+   ],
+   "width": 1.6,
+   "wallThickness": 0.325,
+   "host": "none",
+   "hinge": null,
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (L-end)",
+    "2 swing arc(s)",
+    "arc on Xr_SDC_DD_ID-PRS-ID wall$0$DA-DOOR-WIND",
+    "ends on jambs beside the swings"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-024",
+   "floor": "presidential:suite",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    206.256,
+    -3497.6971
+   ],
+   "b": [
+    206.7581,
+    -3496.8323
+   ],
+   "width": 1.0,
+   "wallThickness": 0.1,
+   "host": "none",
+   "hinge": "a",
+   "swing": "left",
+   "confidence": 0.5,
+   "evidence": [
+    "swing arc + leaf on A-1.Netthay",
+    "ends from the swing"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite-025",
+   "floor": "presidential:suite",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    187.4077,
+    -3487.3814
+   ],
+   "b": [
+    187.9577,
+    -3486.4288
+   ],
+   "width": 1.1,
+   "wallThickness": 0.1,
+   "host": "none",
+   "hinge": "a",
+   "swing": "left",
+   "confidence": 0.5,
+   "evidence": [
+    "swing arc + leaf on A-1.Netthay",
+    "ends from the swing",
+    "line work along the opening on another layer"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  }
+ ],
+ "mapping": "mappings/presidential.json"
+}

@@ -1,0 +1,33 @@
+--- blind_run_L29_L30/frozen_code/geomkit.py	2026-10-27 09:16:29.433029100 +0700
++++ geomkit.py	2026-10-28 14:18:08.630314900 +0700
+@@ -64,12 +64,16 @@
+ 
+ 
+ def circle3(p0, p1, p2):
+-    ax, ay = p0; bx, by = p1; cx, cy = p2
+-    d = 2 * (ax * (by - cy) + bx * (cy - ay) + cx * (ay - by))
++    """Circle through three points -> ((centre x, y), radius). Worked out relative to p0: far from the origin (georeferenced
++    drawings, a million metres out) the absolute formula loses millimetres."""
++    bx, by = p1[0] - p0[0], p1[1] - p0[1]
++    cx, cy = p2[0] - p0[0], p2[1] - p0[1]
++    d = 2 * (bx * cy - by * cx)
+     if abs(d) < 1e-12: return None
+-    ux = ((ax * ax + ay * ay) * (by - cy) + (bx * bx + by * by) * (cy - ay) + (cx * cx + cy * cy) * (ay - by)) / d
+-    uy = ((ax * ax + ay * ay) * (cx - bx) + (bx * bx + by * by) * (ax - cx) + (cx * cx + cy * cy) * (bx - ax)) / d
+-    return (ux, uy), math.dist((ux, uy), p0)
++    b2, c2 = bx * bx + by * by, cx * cx + cy * cy
++    ux = (cy * b2 - by * c2) / d
++    uy = (bx * c2 - cx * b2) / d
++    return (p0[0] + ux, p0[1] + uy), math.hypot(ux, uy)
+ 
+ 
+ def role_matcher(layer_roles):
+@@ -161,7 +165,7 @@
+             if self.closed and len(p) >= 3:
+                 try:
+                     g = Polygon(p).buffer(0)
+-                    if not g.is_empty and g.area > 1e-6: self.poly = g
++                    if not g.is_empty and g.area > 1e-6: self.poly = g       # a MultiPolygon for a self-crossing outline: small_shapes splits it
+                 except Exception:
+                     pass
+             if self.t == 'ARC' and len(p) >= 3:

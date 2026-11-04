@@ -1,0 +1,2 @@
+bank:L1: 24 openings (door 15, window 7, passage 2)  0.3 s
+total 0.8 s -> output\bank1_openings.json

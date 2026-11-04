@@ -1,0 +1,280 @@
+{
+ "dataFlow": "Coordinates: drawing metres (DXF mm / 1000) -> model metres X = x + shift - 30.8095, Y = y - 16.3425 (shift 0 ground, -74.021 upper); three.js uses (X, height, -Y). I re-checked the centre with build3d_centre.py: cx 30.8095, cy 16.3425. It is NOT stored in any JSON. build3d.py recomputes it every run (L62-65) from the extents of the kept wall + glass lines of both floors. Window lines do not count towards it.\n\n1. INPUTS (scratch p0/sukhumvit): plan.dxf (12.3 MB, mm), regions.json {plan_left, plan_right, elev_left, elev_right: [x0,y0,x1,y1] mm}, grid.json. build3d.py, merge_cad.py and build_stages.py read and write the CURRENT folder. make_html_cad_merged.py reads its JSON from the folder it sits in.\n\n2. build3d.py -> house3d.json\n   {levels:{ground:0.9, upper:4.8}, tops:{ground:4.8, upper:8.3}, segments:{\"<floor>:<cat>\": [[x1,y1,x2,y2], ...]}}\n   - cat is wall | glass | window | stair; coordinates are centred model metres, rounded to the mm.\n   - Counts: ground wall 702, glass 64, window 412, stair 251; upper wall 588, glass 24, window 502, stair 119.\n   - Rules: cat_of(layer) L16-23. Door layers get no category (dropped). Only CONTINUOUS linetypes. Non-LINE wall/glass shapes under 150 mm are dropped. The floor comes from the region box (pad 0.5 m). Segments from 5 mm to 25 m.\n   - All blocks are unpacked by virtual_entities(), so door blocks lose their names and insert points here.\n\n3. merge_cad.py -> house3d_merged.json (30.9 KB)\n   {levels, tops, solids:{\"<floor>:wall|glass|single\":[{o:[[x,y],...], h:[[[x,y],...],...]}]}, stairs:{<floor>:[[x1,y1,x2,y2],...]}, plates:{<floor>:[{o, h:[]}]}}\n   - Counts: ground wall 30 (9 holes), glass 23, single 15; upper wall 23 (1 hole), glass 26, single 7. Plates: ground 3 (494 m2), upper 1 (439 m2).\n   - Walls = strips(wall lines, 0.04-0.45) then solidify(0.12). The 0.12 closing only bridges gaps under 0.24 m, so the gaps the drawing leaves at doors and windows survive as gaps.\n   - Glass = strips(glass + window lines, 0.02-0.30), solidify(0.04), minus walls. This covers WALL-GL, WIN and the grilles, plus every door leaf or swing drawn on WIN.\n   - Single = unpaired wall lines over 0.2 m, buffered 3 cm.\n   - Plates = (walls U glass) closed by 1.5 m, outer ring only.\n\n4. build_stages.py -> house3d_stages.json (677 KB). It re-reads plan.dxf with the same rules, imports strips/solidify from merge_cad, and checks its kept lines against house3d.json.\n   {source:{file, layers:55, units:'mm'},\n    floors:{<floor>:{sheet:[dx,dy] (upper [74.021,0]), lines:{wall|glass|window|stair|noise: flat [x1,y1,x2,y2,...]} (noise capped at 9000), pairs:{wall|glass: flat quads [x0,y0..x3,y3,...]}}},\n    stats:{gridLabels:24, planLayers:38, layers:{wall, glass, window, stair, ignored:[names]},\n           floors:{<floor>:{read, texts, kept{}, ignored{furniture, other, 'floor patterns', 'hidden and centre lines', doors, ...}, ignoredLines, noiseShown, pieces{wall,glass}, runs{wall,glass,single} (read from house3d_merged.json), pairedShare, level, height}}}}\n\n5. make_html_cad_merged.py <out.html>\n   - Reads house3d_merged.json and house3d_stages.json NEXT TO THE SCRIPT. Reads viewer_modes.js and build_replay.js from ../shared, then ../../viewer-modes, then ../viewer-modes.\n   - Writes one 613 KB page. D = house3d_merged.json pasted verbatim, so any new top-level key arrives as D.<key>. S = stages with noise cut to 6000 lines per floor, rounded to the cm, plus S.layers (L37-39) and S.source.layersUsed.\n   - Three.js r160, OrbitControls, BufferGeometryUtils and three-mesh-bvh 0.8.3 load from cdn.jsdelivr.net.\n   - How it extrudes (L158-204): one merged ExtrudeGeometry per floor and per D.solids key, with holes; plan (x,y) becomes three (x, -y); each ring gets aDelay from a west-to-east sweep (L122-131).\n     - wall: level to top (3.90 / 3.50 m).\n     - glass: level to top - 0.6 m. Windows therefore start AT THE FLOOR today, and full-height glass has a 0.6 m void above it.\n     - single: 1.0 m.\n     - Every solid gets creased normals and EdgesGeometry at 40 deg plus a BVH. All three kinds go to colliders[floor] and rise[floor] (scales true except single). Glass and single also go to glassObjs / singleObjs for the checkboxes.\n     - Plates: extruded from level - thick up to the level (ground plinth = the full 0.90 m, upper 0.25 m). They go to walkables, late and plateObjs; the ground plate also to plinths.\n     - Stairs: 0.15 m vertical line panels, late only (not walkable, not colliders).\n   - Each floor goes into FLOORS {key, name, level, stack:'house', group, colliders, walkables} for installViewerModes. installBuildReplay gets floors {key, name, level, height, sheet, group, lines, pieces:S.floors[k].pairs, rings:{wall,glass}:D.solids, rise, late}, the 7 step captions from S.stats, applySettings (walk levels, plinth) and restore. Then window.__host = {groups, rise, plinths}.\n\n6. RUNTIME COLLISION (viewer_modes.js)\n   - Walk: hitAhead (L154-169) casts rays from the current floor's level + 0.35 m (knee) and + 1.2 m (chest), 9 rays across +-0.285 m (RADIUS 0.3), against VISIBLE colliders, and slides along the hit normal.\n   - onFloor (L170-174): one ray down from level + 1 m (far 1.6) against walkables.\n   - clearance (L175-189): 8 directions x 2 heights, up to 3 m.\n   - probe (L735-754): open (chest height), clearance, onFloor, crosses (chest height, current floor), walk (5 cm steps), visible, camera.\n   - So anything above about 1.2 m (a lintel) never blocks walking. A sill blocks only if it reaches 0.35 m. A window pane blocks only if it is a collider.\n   - Today every doorway is an empty slot from the floor up to the next floor (no lintel).",
+ "whereOpeningsEnter": "What the drawing already gives\n- I checked each swing arc against the model (scripts/door_gaps.py). Of the 17 swing doors whose closed side was found, 14 doorways are already gaps in the merged walls: the face lines stop at the jambs.\n- So for doors the job is mostly: lintels, clearing things that wrongly fill a doorway, and only a few real cuts.\n- Doorways that are filled today:\n  - ground (36.39, 21.95): a 1 m single-line piece across it;\n  - ground (37.36, 14.39), linked-file door XR_L44 ...$D4: a wall runs through it;\n  - upper (107.53, 23.21): a wall runs through it;\n  - upper north facade, 7 French doors at y 23.21, x 116.3-123.9: the WIN glass band runs straight across them.\n- On the upper floor, door leaves drawn on WIN are paired into 3 cm glass \"fins\" in the room or on the balcony (hinges (119.25,20.21), (122.15,20.21), (123.96,18.20), (116.14,18.18), (107.07,23.21) and the 6 French doors).\n- Windows today are WIN/grille glass strips in wall gaps, from the floor up to top - 0.6 m.\n\nStep by step\nA. NEW find_openings.py (detection). Run it after build3d.py, in the same folder.\n   - It must read plan.dxf itself (ezdxf, or p0/tools/prims.py), because build3d.py flattens away block names, insert points, rotations and mirroring.\n   - Use the same regions.json floor test and the same linetype rule.\n   - Writes openings.json, the source of truth, in DRAWING metres (the gate's definition, like presidential DOORS):\n     {frame:{centre:[30.8095,16.3425], shift:{ground:0, upper:-74.021}}, defaults:{doorHead:2.10, windowSill:0.90, windowHead:2.10, passageHead:2.10|null},\n      openings:[{id:'G-D01', floor, kind:'door'|'window'|'passage', type:'hinged|double|sliding|folding|pocket|garage|fixed...', a:[x,y], b:[x,y] (wall centre line, jamb faces), width, depth:[lo,hi] (wall across the line, from jamb_section), sill, head, lintel:true|false|'glass', hinge:'a'|'b'|null, swing:+1|-1|null, exterior:bool, source:{handles, layers, blocks}, flags:[...]}]}\n   - Heights are plan section 3.2 defaults (the DSYM tags are empty): door 2.10 m; window sill 0.90 m, head 2.10 m. Staff override later.\n\nB. build3d.py: additive only.\n   - Write \"centre\":[cx,cy] and \"shift\":{...} into house3d.json (L66), so later steps and tests stop hard-coding 30.8095 / 16.3425.\n   - Do NOT move door layers into wall or glass. That would shift the centre and the kept counts.\n   - Optional: drop the WIN arcs and leaf rectangles that find_openings assigns to doors from 'window'. That removes the fins at the source; the centre does not move because window lines are not in it.\n\nC. merge_cad.py main(): read openings.json if it exists.\n   - Convert it with centre and shift.\n   - Insert the new step AFTER the plates (L78-81) and BEFORE the solids are written (L82-84), so the plates stay as they are.\n   - Per floor:\n     - footprint = LineString(a,b).buffer(depth/2 + 0.01, cap_style='flat'), width exactly a-b;\n     - walls = wall_polys minus every door, passage and window footprint;\n     - glass = glass_polys minus door/passage footprints, minus window footprints, minus door swing sectors and leaf rectangles (removes the fins and the band across the French doors);\n     - singles = single_polys minus door/passage footprints.\n   - Pieces, built with presidential jamb_section and the lintel loop:\n     - lintel: head to top, for doors, for passages that have a head, and over windows;\n     - sill: 0 to sill, windows;\n     - pane: sill to head, windows. Use the window's own glass polygon clipped to the footprint, or a 2-4 cm band on the centre line.\n   - New keys in house3d_merged.json:\n     - \"pieces\": {floor:[{kind:'lintel'|'sill'|'pane', id, o, h, z0, z1}]}, z above the floor level, z1 = tops - levels meaning \"to the top\";\n     - \"openings\": {floor:[{id, kind, a, b, x, y, nx, ny, width, sill, head, exterior}]} in centred model metres, for the viewer and the tests.\n   - Keep the solids keys exactly wall, glass and single (see viewerChanges).\n   - Leave strips() and solidify() untouched: presidential build_model.py imports them.\n\nD. build_stages.py\n   - stats.floors[f]: openings {door, window, passage}; pieces gains lintel, sill and pane counts.\n   - runs already reads the cut solids. Walls run up; glass goes down if window glass leaves solids.glass.\n   - floors[f].lines.door: door-symbol lines (DOOR, D-JAMB, XR_L44 A-DOOR / I-DOOR, and the WIN arcs and leaves that find_openings claimed), taken out of noise and window.\n   - stats.layers.door = those layers, removed from 'ignored'. planLayers stays 38 (it counts every layer present in the plan areas).\n\nE. make_html_cad_merged.py: see viewerChanges.\n\nOwner decisions\n- Passage heads: lintel at 2.10 m, or full height above some width?\n- Whether full-height glass gets a 0.6 m head piece.\n- Whether door leaves are drawn at all. If they are, never as colliders.",
+ "viewerChanges": "All in make_html_cad_merged.py unless stated. Line numbers are in that file.\n\n1. Data\n   - D.pieces and D.openings arrive with house3d_merged.json, which is pasted verbatim (L16, L297).\n   - Do NOT add keys like 'ground:lintel' to D.solids. The loop at L158-174 looks up STYLE[kind] (L111-115), so an unknown kind throws a TypeError, the page errors, and every check fails.\n   - Either keep pieces under D.pieces, or extend STYLE and every consumer.\n\n2. Meshes (after the solids loop at L174, before the plates)\n   - Per floor, one merged mesh for lintel + sill pieces: wall colour, own MeshStandardMaterial, edges.\n   - Per floor, one merged mesh for panes: glass style (opacity 0.35, transparent, depthWrite false).\n   - extrude() (L134-147) takes one z0/h for all rings. Add a per-piece extrudePart(p, level) like presidential make_html.py L121-129, with z0 = D.levels[f] + p.z0, depth = p.z1 - p.z0, and aDelay = sweep(p) from the existing sweep() L126-131, so a lintel rises with its wall.\n   - Then toCreasedNormals 40 deg, EdgesGeometry 40 deg, computeBoundsTree() (BVH).\n   - Keep it to a few meshes per floor; one mesh per opening multiplies draw calls and raycasts.\n   - Windows: sill + pane + lintel replace today's floor-to-ceiling window glass.\n   - Glass walls stay as they are: glass height (top - level) - 0.6 at L163, unless a head piece is decided.\n\n3. Colliders\n   - Push the lintel/sill mesh and the pane mesh into colliders[floor].\n   - Lintels sit above the 0.35 / 1.2 m rays, so doors and passages stay walkable. As colliders they are also double-click targets.\n   - Sills stop the knee ray. Panes stop the chest ray, and `crosses` sees them, which the Ghost check at L137 needs.\n   - The cut walls, glass and singles must be clear of every door/passage footprint (merge step).\n   - Door leaves, if drawn: NOT colliders and NOT walkables. Put them in late.\n   - Plates (walkables) unchanged.\n\n4. Visibility and legend\n   - Put the pane mesh and its edges in glassObjs, so the #glass checkbox (L72, used by the tests at L126-131) hides window glass too. Sills still block at the knee ray.\n   - No toggle for lintels or sills (hiding a collider would let you walk through sills).\n   - Legend L75: rename \"Windows / glass\" to \"Glass walls\" and add \"Window glass (0.90-2.10 m)\" and \"Lintels and sills (doors 2.10 m)\".\n   - Intro paragraph L66: N doors, M windows, P passages; heights are project defaults because the drawing's door tags are empty.\n   - The checkbox wiring L248 changes only if a new box is added.\n\n5. Build replay (contracts in build_replay.js)\n   - rise: push lintel/sill and pane entries AFTER the wall mesh: {mesh, edges, scales}.\n     - fixes2 L485 takes rise.ground.find(r => r.scales) and needs the wall mesh. The wall comes first because D.solids keys are in the order wall, glass, single.\n     - One material per rise entry. build_replay L59-79 sets material.onBeforeCompile per entry, so a shared material breaks the rise animation.\n     - Every piece geometry needs aDelay. Without it it rises at delay 0 with no error.\n   - Wall-height setting: build_replay L272-283 scales every scales:true mesh about the floor level. Two options:\n     - Lintels scales:true: door heads scale too, e.g. to 1.08 m at a 2.00 m wall height, which is under the 1.2 m chest ray. This is what the presidential page does.\n     - Better: scales:false, then the host applySettings (L281-286, it runs after the shared loop) sets lintel.scale.y = (H' - head)/(H - head) and position.y = (level + head)(1 - scale) on the mesh and its edges; hide lintels when H' <= head. Sills and panes keep scales:false.\n   - late: door leaves, if any.\n   - rings: {wall: cut D.solids walls, glass: D.solids glass}. Optionally add the pane footprints to rings.glass so the merge step shows windows.\n   - lines: add S.floors[k].lines.door and colors.door (L271).\n     - The shared opacity rule (build_replay L401-410) fades every non-stair category as the walls rise. Treating 'door' like 'stair' needs a shared-code change.\n     - Door lines also widen bounds() (L206-214), so the replay framing moves slightly.\n   - Steps: keep the 7 keys. KEYS are hard-coded (L33-34), and L38-42 reads o.steps[k].title, so a missing or extra key breaks all three pages.\n   - Captions (L273-279):\n     - sort: doors no longer \"ignored\", quote the door line count;\n     - merge: wall runs grow after cutting;\n     - raise: \"lintels from 2.10 m over D doors and P passages; W windows get a 0.90 m sill and glass to 2.10 m\";\n     - finish: counts from S.stats.floors.*.openings.\n   - Layers table (L37-39): add ['Doors', layer_list(L['door'])] and drop \"doors\" from the Ignored text. S.source.layersUsed stays 38.\n\n6. Test read-outs\n   - window.__host (L289) = {groups, rise, plinths, openings: D.openings} (plus lintel meshes if needed). A door test can then walk every opening per floor like test_presidential L60-82.\n\n7. Hover / labels\n   - The house page has none: no changes. If door ids are wanted on screen, reuse the presidential placeLabels (make_html.py L209-222).\n\n8. Shared code (viewer_modes.js / build_replay.js)\n   - None of the above needs it.\n   - If it is touched, regenerate all three pages: each embeds the shared code when its page is generated.",
+ "affectedChecks": [
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 71,
+   "check": "house: loads without errors",
+   "impact": "Any exception from new viewer code fails this and stops the section. For example, a new D.solids key with no STYLE entry throws at make_html L161."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 79,
+   "check": "Walk starts with room around you and a view ahead (clearance >= 0.99, open >= 3, onFloor)",
+   "impact": "The start comes from findFree(1.0) around the model origin, drawing (30.81, 16.34). New lintels, sills and panes near the origin can move it. Low risk: openings mostly open space up."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 86,
+   "check": "W walks forward (> 0.4 m in 1.5 s)",
+   "impact": "Depends on frame rate (dt is capped at 0.05 s). It measured 0.44 at 5 fps in the baseline and 0.90 at 20 fps. Extra meshes and colliders lower fps, so merge pieces per floor and kind."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 91,
+   "check": "Walk stops at a wall and does not pass through (no crossing at 1.2 m, end clearance 0.2-0.6)",
+   "impact": "The target is the nearest wall at chest height. A doorway is never picked (open at 1.2 m). A window is picked only if panes are colliders, and then the sill and pane must stop you 0.2-0.6 m from it. Low-medium risk."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 98,
+   "check": "Walk slides along a wall when you walk into it at an angle",
+   "impact": "Continues from the L91 spot. If that spot is now a short jamb stub, the corner rule (both probes < 0.3) still lets it pass."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 114,
+   "check": "sliding works at random spots along walls (40 tries, >= 90%)",
+   "impact": "Baseline 37/40 in both runs; the threshold is 36 of 40. Random spots over x -22..22, z -14..14 (ground). Cutting adds jamb ends, and sills and panes add new contact faces. One or two more corner failures would fail this. Medium risk."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 115,
+   "check": "still on the floor and clear of walls (clearance > 0.15)",
+   "impact": "Follows the L114 position. Low risk."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 118,
+   "check": "PgUp -> upper floor at eye height, on the floor plate",
+   "impact": "Needs the upper plate unchanged. If the plates were recomputed after removing the WIN door-leaf glass fins, the north balcony floor would vanish."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 129,
+   "check": "keys still work after clicking a checkbox (glass hidden, > 0.1 m in 0.8 s)",
+   "impact": "Panes in glassObjs are hidden here, while sills stay. Depends on frame rate: 0.30 at 5 fps."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 131,
+   "check": "Space does not tick the focused checkbox",
+   "impact": "The #glass checkbox id must stay."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 137,
+   "check": "Ghost flies through walls (crosses at 1.2 m && moved > wall distance)",
+   "impact": "Needs a collider at chest height between start and end. If window panes are not colliders but stay visible, a window chosen by nearestWall would give crosses = false. Make panes colliders. Depends on frame rate."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 161,
+   "check": "P in Orbit takes a photo and downloads it",
+   "impact": "Not geometry. A timing check: the download must land within 6 s. It FAILED in the baseline at 5 fps (the file arrived after about 9 s) and passed at 20 fps. A heavier scene makes this flake more likely."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 205,
+   "check": "double-click in Orbit -> Walk at that spot",
+   "impact": "The raycast targets walkables plus visible colliders, so lintels and panes are valid hits. Then findFree(0.5). Low risk."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 221,
+   "check": "stick moves you forward (> 0.3 m in 1.5 s) / second finger (L222, movedMeanwhile > 0.02)",
+   "impact": "Depends on frame rate: 0.54 at 5 fps. Needs free space ahead from faceOpenest."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 325,
+   "check": "fixes: Ghost then Walk from outside lands you on a floor, able to walk (> 0.2 m in 1 s)",
+   "impact": "Landing uses the cached floor box centre plus findFree. Depends on frame rate: 0.38 at 8 fps."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 383,
+   "check": "fixes: typos in the address ... ignored (onFloor after ?mode=walk)",
+   "impact": "The walk start comes from the origin. Low risk."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 431,
+   "check": "replay: settings show each floor's level and wall height [0.90, 3.90, 4.80, 3.50]",
+   "impact": "Read from D.levels / D.tops. Unchanged unless openings work edits levels or tops."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 441,
+   "check": "replay moves through the steps, quoting the real numbers",
+   "impact": "Only checks for a digit in the align caption. Caption edits are safe as long as numbers stay."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 445,
+   "check": "the replay ends in the normal viewer (visible ['ground','upper'])",
+   "impact": "Errors in new rise or late entries (shader patch, missing edges) surface here and at L458."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 448,
+   "check": "walking on the upper floor uses the level set before Generate (5.00 m)",
+   "impact": "Pieces live in the floor group, so they move with it. onFloor needs the upper plate unchanged."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 458,
+   "check": "no page errors during the house replay",
+   "impact": "Any error from the onBeforeCompile patch on new materials, or from a missing piece geometry."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 481,
+   "check": "fixes2: raising the ground level keeps the plinth on the ground (0 to 1.50 m)",
+   "impact": "__host.plinths[0] is the ground plate. Keep the plates as they are now."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 486,
+   "check": "fixes2: a 2.00 m wall height makes the walls themselves 2.00 m",
+   "impact": "Uses __host.rise.ground.find(r => r.scales).mesh, i.e. the FIRST scales:true rise entry, which must stay the wall mesh (level to top). Push lintels, sills and panes after the walls. If lintels are scales:true they scale proportionally (head 2.10 m becomes about 1.08 m here)."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 503,
+   "check": "fixes2: the settings card counts the 38 layers in the plan areas",
+   "impact": "From stats.planLayers, i.e. layers present in the two plan areas. Unchanged unless build_stages changes its area logic. Moving door layers out of 'ignored' does not change it."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 522,
+   "check": "fixes2: walking at the end of a thin partition never brings you closer than the body's edge (> 0.25)",
+   "impact": "Hard-coded model starts (21.80, -5.64) etc., i.e. drawing (52.61, 21.98) in a ground-floor WC beside a door. The wall end is the door jamb at y 21.55, and the drawn leaf lies at y 22.17-22.20, 0.19 m from the start. It breaks if (a) the centre moves, because build3d recentres on changed wall/glass lines, or (b) door leaves become colliders, because the start clearance drops under 0.25. A lintel over that door is harmless. Baseline 0.32."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 536,
+   "check": "fixes2 (hospital): all seven steps are ticked at the end of the replay",
+   "impact": "Breaks only if build_replay.js gets an 8th step such as 'openings'. Every host would also need a title and caption for it."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 237,
+   "check": "phone and landscape sections (also L260, L409) load the house page (?mode=walk / ghost)",
+   "impact": "No geometry numbers, but any page error from the openings code fails them too."
+  },
+  {
+   "file": "presidential_test/test_presidential.mjs",
+   "line": 82,
+   "check": "every door and opening can be walked through, both ways (22) - also L55 (never through a wall) and L89 (glass stops you)",
+   "impact": "Only affected if viewer_modes.js or build_replay.js change AND the presidential page is regenerated. The page embeds the shared code. This file is the model for a house door test."
+  },
+  {
+   "file": "viewer-modes/test_viewers.mjs",
+   "line": 289,
+   "check": "srisawan: walls stop you (and the other srisawan / srisfix checks)",
+   "impact": "Independent of the house. Affected only by shared-code changes, once the Srisawan page is regenerated."
+  }
+ ],
+ "rebuildAndTest": "Verified today. The unchanged copies reproduce the project's house3d.json, house3d_merged.json, house3d_stages.json and house_3d_preview.html byte for byte. The presidential and Srisawan pages also regenerate byte-identical.\n\nGit Bash. Never write into the project; W must be your own output folder.\n  PROJ=\"C:/Users/DWP2/Desktop/Project walkthrough\"\n  P0=\"C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0\"\n  W=\"$P0/out/<your-folder>/build\"\n  mkdir -p \"$W/src\" \"$W/shared\" \"$W/pages\"\n  cp \"$PROJ/cad_test/src/\"{build3d.py,merge_cad.py,build_stages.py,make_html_cad_merged.py} \"$W/src/\"\n  cp \"$PROJ/viewer-modes/\"{viewer_modes.js,build_replay.js} \"$W/shared/\"\n  cp \"$P0/sukhumvit/\"{plan.dxf,regions.json,grid.json} \"$W/src/\"\n  # edit the copies; add find_openings.py and openings.json to $W/src\n  cd \"$W/src\" && python -B build3d.py && python -B merge_cad.py && python -B build_stages.py && python -B make_html_cad_merged.py \"$W/pages/house_3d_preview.html\"\n  HOUSE_URL=$(node -e \"console.log(require('url').pathToFileURL(process.argv[1]).href)\" \"$W/pages/house_3d_preview.html\")\n  cd \"$PROJ\" && HOUSE_URL=\"$HOUSE_URL\" node viewer-modes/test_viewers.mjs house fixes replay fixes2\n  # Leave out the section names for the full suite (adds phone, srisawan, srisfix, landscape).\n  # PowerShell: $env:HOUSE_URL='file:///C:/.../house_3d_preview.html'; node viewer-modes/test_viewers.mjs house fixes replay fixes2\n\nNotes\n- The three Python steps work in the current folder.\n- make_html_cad_merged.py reads the JSON next to itself and takes $W/shared first.\n- Always run with python -B, so no __pycache__ is written. merge_cad is imported by build_stages and by the presidential build.\n- HOUSE_URL must be a file URL with no query string; the tests append ?build=0 and the like.\n- Proven run: HOUSE_URL=file:///C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-integration/rebuild/pages/house_3d_preview.html gave 94 passed, 0 failed in 154 s.\n\nIf viewer_modes.js or build_replay.js change, rebuild the other two pages too. Each page embeds the shared code when it is generated.\n  mkdir -p \"$W/sris_src\" \"$W/pres_src\"\n  cp \"$PROJ/srisawan-viewer/src/\"{make_srisawan_html_merged.py,srisawan3d_merged.json,srisawan3d.json} \"$W/sris_src/\"\n  cp \"$PROJ/presidential_test/src/\"{make_html.py,pres2_model.json,pres2_stages.json} \"$W/pres_src/\"\n  cp \"$PROJ/presidential_test/Presidential_Suite.ms\" \"$W/pages/\"\n  python -B \"$W/sris_src/make_srisawan_html_merged.py\" \"$W/pages/Srisawan_3D_viewer.html\"\n  python -B \"$W/pres_src/make_html.py\" \"$W/pages/presidential_3d_preview.html\"\n  cd \"$PROJ\" && HOUSE_URL=<file URL> SRIS_URL=<file URL of $W/pages/Srisawan_3D_viewer.html> node viewer-modes/test_viewers.mjs\n  cd \"$PROJ\" && PRES_URL=<file URL of $W/pages/presidential_3d_preview.html> node presidential_test/test_presidential.mjs\n- The .ms copy is needed: when the URL is a file, the presidential test compares the page's model-data stamp with Presidential_Suite.ms next to the page.\n- presidential make_html.py looks for shared code in ../../viewer-modes, then ../viewer-modes, then ../shared, then the project. Do not create a viewer-modes folder at $W or its parent.\n\nWhere the tests write, and ports\n- test_viewers.mjs: %TEMP%\\viewer-modes-test (out\\ screenshots, downloads\\ wiped at every start, profile\\), port 9333. Exit code 1 if any check fails.\n- test_presidential.mjs: %TEMP%\\presidential-test, port 9344. It ALWAYS exits 0, so grep for \"N failed\".\n- Never run two at once: they share ports and profiles, and several checks depend on timing.\n- New house door walk-through probe (my script; reuses the test_presidential L60-82 logic per floor; port 9366; profile in its own folder; 6 s):\n  node \"C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-integration/scripts/probe_house_doors.mjs\" <doors.json> <page file URL> <out.json>\n  It needs a list of doors with x, y, nx, ny in centred model metres, as in door_probe_list.json.\n\nDurations measured today\n| Step | Time |\n|---|---|\n| build3d.py | 7 s |\n| merge_cad.py | 1 s |\n| build_stages.py | 13 s |\n| make_html_cad_merged.py | under 1 s |\n| Full viewer suite (baseline) | 267 s (4.5 min) at 5 fps, machine busy |\n| Sections house, fixes, replay, fixes2 | 154 s at 20 fps |\n| Presidential test | 20 s |",
+ "reusable": [
+  {
+   "file": "presidential_test/src/build_model.py",
+   "lines": "180-192",
+   "what": "jamb_section(): the wall's extent across the door line just inside a jamb. A cross line of +-0.6 m is intersected with walls and glass; it keeps the interval that contains the line, or is nearest to it within 0.3 m. Gives the lintel and sill depth [lo, hi]."
+  },
+  {
+   "file": "presidential_test/src/build_model.py",
+   "lines": "175-216",
+   "what": "The lintel loop: door frame u/n vectors; a door_tests record (id, name, x, y, nx, ny, width, exterior); a rectangle from -0.15 to L+0.15 along the line by the common jamb depth across it, minus walls and glass, keeping the piece nearest the door middle. Also LINTEL_DEPTH overrides (L177) and the EXTERIOR set (L178). Reuse for door/passage lintels and for window sill and head pieces."
+  },
+  {
+   "file": "presidential_test/src/build_model.py",
+   "lines": "146-151",
+   "what": "opening(a, b, depth) = LineString(a,b).buffer(depth, cap_style='flat'), and the wall cut walls_raw.difference(opening(...).buffer(0.001)) for a door that sits in a wall."
+  },
+  {
+   "file": "presidential_test/src/build_model.py",
+   "lines": "74-98, 173, 247-263, 278",
+   "what": "Data shapes. DOORS entries are (id, name, a, b, lintel True/False/'glass'), centre-line ends in drawing metres. A glass door gets a transom from DOOR_HEAD up to the ceiling. add(kind, geoms, z0, z1) builds parts with z above the floor level; counts include lintels. Model 'doors' are centred and rounded (L278); they become window.__host.doors for the tests."
+  },
+  {
+   "file": "presidential_test/src/geom.py",
+   "lines": "6-11, 33-35, 38-70",
+   "what": "polys() flattens any geometry to polygons; strip() bands a polyline; clean() makes rounding-safe {o, h} rings with holes, valid after rounding to the mm (fills slivers, repairs self-touching). Use it to write pieces and cut solids."
+  },
+  {
+   "file": "presidential_test/src/make_html.py",
+   "lines": "95-105, 121-129, 130-156, 224",
+   "what": "KIND table with follow flags. extrudePart(p): per-part z0/z1 extrusion with aDelay from the sweep. One merged mesh per group of kinds (walls + columns + lintels share one mesh; glass gets a transparent material, renderOrder 3, depthWrite false), each pushed to colliders, rise {mesh, edges, scales} and glassObjs. window.__host carries doors and the glass probe points."
+  },
+  {
+   "file": "presidential_test/test_presidential.mjs",
+   "lines": "60-82, 85-89, 38-55",
+   "what": "Door test, both ways: start 0.9 / 0.7 / 0.55 m before the line, needing onFloor and clearance >= 0.25; probe.walk(deg, 2*back); metres past the line must be > 0.3 (an exterior door only needs > -0.15 from inside). Glass stops you: stoppedAt between 0.1 and 0.6. Never through a wall at 40 random spots. For the house, run the door loop per floor: Digit2 for ground, PageUp for upper."
+  },
+  {
+   "file": "viewer-modes/viewer_modes.js",
+   "lines": "25, 153-189, 233-257, 735-754",
+   "what": "Collision facts for sizing pieces: RADIUS 0.3; rays at level + 0.35 m and + 1.2 m across +-0.285 m, visible colliders only; onFloor is a ray down onto walkables. The probe API (open, clearance, onFloor, crosses, walk, visible, camera) drives every door and window test."
+  },
+  {
+   "file": "viewer-modes/build_replay.js",
+   "lines": "14-27, 33-42, 59-82, 272-283, 401-410",
+   "what": "Host contract: floors {lines, pieces, rings, rise [{mesh, edges, scales}], late}; seven fixed step keys; a per-material shader patch with aDelay; wall-height scaling about the floor level, then the host's applySettings callback (where the lintel head override goes); the line opacity rule (only noise and stair lines are special)."
+  },
+  {
+   "file": "cad_test/src/merge_cad.py",
+   "lines": "14-52, 54-87",
+   "what": "strips() and solidify(), the pairing and merge. Presidential build_model.py imports them (L23-25), so do not change them; add the openings step to main() after the plates (L78-81)."
+  },
+  {
+   "file": "cad_test/src/build_stages.py",
+   "lines": "114-121, 133-164",
+   "what": "The pattern that re-checks kept lines against house3d.json and recomputes the centre; reuse it to assert a frozen centre and openings counts. The stats block is where opening counts go."
+  },
+  {
+   "file": "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-integration/scripts/probe_house_doors.mjs",
+   "lines": "all",
+   "what": "A working per-floor door walk-through probe for the house page (port 9366, 6 s). On the current page, 11 of 24 swing doors pass both ways; results are in door_probe_result_current_page.json next to it."
+  },
+  {
+   "file": "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-integration/scripts/door_gaps.py",
+   "lines": "all",
+   "what": "For every swing arc: which model solid (wall / glass / single) stands in the doorway and along the open leaf. Writes door_probe_list.json (centred x, y, nx, ny). Output: door_gaps_current_model.txt in the same folder."
+  },
+  {
+   "file": "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-integration/scripts/overlay.py",
+   "lines": "all",
+   "what": "Renders house3d_merged.json solids (with holes) and plates, converted back to drawing metres, over the DXF primitives. Usage: overlay.py ground|upper x0 y0 x1 y1 out.png [--merged path] [--mark x,y,label]. Renders in the same folder: overlay_ground_west/east.png, overlay_upper_west/east.png, overlay_upper_doors_zoom.png, overlay_partition_spot.png."
+  }
+ ],
+ "risks": [
+  "Centre drift. house3d.json does not store the centre (30.8095, 16.3425); build3d.py L62-65 and build_stages.py L114-116 recompute it from the kept wall and glass lines. Adding door or jamb layers to 'wall' or 'glass', or dropping such lines, shifts the whole model. That breaks the hard-coded test spot (fixes2 L517: 21.80, -5.64) and any opening converted with the constants. Store and freeze the centre; window lines are safe because they are not in it.",
+  "Page crash. A new key in D.solids (e.g. 'ground:lintel') makes make_html L158-174 read STYLE[kind] as undefined and throw. The page shows an error, so 'loads without errors' and every later check fail. Keep pieces under a new key.",
+  "Replay contracts. fixes2 L485 needs the first scales:true rise entry to be the wall mesh, so push pieces after the walls. One material per rise entry: a shared material breaks the per-entry onBeforeCompile patch. Every piece needs aDelay. Exactly 7 replay steps are hard-coded in build_replay.js, and the hospital check at L536 counts 7.",
+  "Wall-height setting. It scales every scales:true mesh about the floor level. Lintels that simply follow it get proportional door heads: 2.10 m becomes about 1.08 m at a 2.00 m wall height, under the 1.2 m chest ray, so doors stop being walkable. Either override in the host's applySettings (keep the head absolute) or document the proportional behaviour; the presidential page does the latter.",
+  "Door leaves must never be colliders. The fixes2 thin-partition check starts 0.19 m from a drawn WC door leaf at drawing (52.5-53.05, 22.2), and leaves would also block random spots and doorways. Today's doors have no leaf, as in the presidential page.",
+  "WIN-layer door symbols on the upper floor. 5 doors have their open leaf paired into 3 cm glass 'fins', 3.5 m tall colliders standing in the room (hinges (119.25,20.21), (122.15,20.21), (123.96,18.20), (116.14,18.18), (107.07,23.21)). The 7 north-facade French doors (y 23.21, x 116.3-123.9) are crossed by a continuous glass band and their 6 leaves are fins on the balcony. Removing them is needed, but the fins are also what makes the upper floor plate reach y 24.07 over the balcony (1.5 m closing). If plates are recomputed after the cleanup, the balcony floor vanishes and those doors lead nowhere. Compute the plates as now (before the cut), or add a balcony plate on purpose.",
+  "Most doorways are already gaps. 14 of the 17 swing doors whose closed side was found are open slots in today's model; a rough probe walks 11 of 24 swing doors both ways today. A walk-through test alone would therefore count missed detections as passes. Judge the 80% gate on detection against a hand list, as was done for the presidential suite, not only on walkability. Wall pieces run through 2 doorways (ground 37.36,14.39 = linked-file door XR_L44...$D4; upper 107.53,23.21). A 1 m single-line piece blocks ground 36.39,21.95, so cuts must also clear glass and singles.",
+  "Windows versus glass walls. All WIN, WALL-GL and grille glass is one 'glass' kind from the floor to top - 0.6 m today. WIN is used for windows, glazed doors (north French doors), door swings (upper east block) and long glazed walls (ground living room x 19.4 and y 14.4). Classifying which glass gets a sill is the error-prone part. Windows with sills under 0.35 m rely on the pane collider, because the knee ray passes over the sill.",
+  "Plates. They come from walls U glass closed by 1.5 m. Cutting before the plates, or passages wider than 3 m in outer walls, would notch them (onFloor false). Exterior doors have no floor outside (the plates trace the walls): G04 at drawing (53.12, 7.30) has floor on neither side within 0.9 m. House door tests need the presidential exterior rule.",
+  "Timing flakiness. The baseline ran at 5 fps; the re-run ran at 20 fps. At 5 fps 'W walks forward' scraped through (0.44 vs 0.4) and 'P in Orbit ... downloads it' failed: the file arrived after about 9 s against a 6 s wait. Positions in the walk checks also differ between runs because movement depends on frame rate. Extra draw calls or colliders, or other agents loading the CPU, can turn these red. Merge pieces per floor and kind, run the browser tests alone, and re-run a timing failure before blaming the openings.",
+  "Shared code is embedded in each page when the page is generated. Changing viewer_modes.js or build_replay.js does not reach the Srisawan or presidential pages until they are regenerated. Tests against the project pages would then run old code, so use SRIS_URL and PRES_URL with scratch rebuilds.",
+  "merge_cad.strips/solidify are imported by presidential build_model.py (L23-25, which also hard-codes the project path). Changing them changes the presidential model on its next rebuild. Running project scripts without -B writes cad_test/src/__pycache__, and the project folder is read-only.",
+  "test_presidential.mjs always calls process.exit(0) (L107). An automated gate must parse 'N failed'.",
+  "No heights in the drawing. The DSYM door-tag attributes are all empty, so door heads and window sills and heads are project defaults (plan section 3.2: 2.10 m; 0.90 / 2.10 m) until staff override them. The OPEN-layer rectangle on the upper floor is not a door, so a detector keyed on layer names may mistake it for one.",
+  "Numbers quoted elsewhere will change: wall runs (53 today, plan L149), the 'doors ignored' wording in the sort caption, the glass run counts, and '127 checks'. Per the owner's sync rule, the plan, the product doc and both viewers need updating together.",
+  "Replay cosmetics: door lines fade with the walls unless shared code treats 'door' like 'stair'. The pair step shows uncut glass strips across the French doors while the merge step shows the cut outlines."
+ ],
+ "baseline": {
+  "viewerTests": "node viewer-modes/test_viewers.mjs, all sections, unchanged, against the project's current pages: 125 passed, 1 failed. One further check ('photo is 1920 x 1280 (3:2, HD)') was skipped because it only runs when the download arrived, so the suite has 127 checks. Took 267 s (about 4.5 min). Frame rate was 5 fps for the house and 8 for the hospital (software GPU, busy machine), against 14-21 noted on 19 Oct. Three.js r160 and three-mesh-bvh loaded from cdn.jsdelivr.net in every section, with no load errors. A second run of the house, fixes, replay and fixes2 sections against a byte-identical scratch rebuild via HOUSE_URL, at 20 fps: 94 passed, 0 failed, 154 s; the Orbit download check passed there. Logs: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-integration/baseline_test_viewers.log and .../map-integration/scratch_page_test_viewers.log",
+  "presidentialTests": "node presidential_test/test_presidential.mjs, unchanged: 10 passed, 0 failed, 20 s. All 22 doors and openings were walked both ways, the glass stopped you at 0.35 m, and the model-data stamp matched (7f48db50ff58). Log: C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-integration/baseline_test_presidential.log",
+  "failures": [
+   "house: 'P in Orbit takes a photo and downloads it' FAIL, info null. newDownload() found no new PNG within its 6 s wait. The photo itself was correct: Sukhumvit_Orbit_overview_50mm_2026-10-26_09-29-57.png, 1920 x 1280, reached %TEMP%\\viewer-modes-test\\downloads at 09:30:06.9, about 9-10 s after it was taken. The thumbnail check passed, and the same check passed on the 20 fps re-run. This is a timing flake under load at 5 fps, not a page fault. Its follow-up check 'photo is 1920 x 1280 (3:2, HD)' was skipped because of it."
+  ],
+  "durationMin": 4.8
+ }
+}

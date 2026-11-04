@@ -1,0 +1,273 @@
+{
+ "verdicts": [
+  {
+   "id": "H-01",
+   "verdict": "confirmed",
+   "evidence": "openings.json: ground-004/-006/-018 are kind door, eitherKind true; round-3a cut_floor glazed only kind == 'window', so they got a lintel and no pane (ground panes 16). The decided treatment glazes eitherKind sliding glazing.",
+   "fixed": true,
+   "how": "openings3d.is_glazed(): windows and every eitherKind opening get a pane, whatever the detector's kind. Records carry 'glazed'. Ground panes 16 -> 19. The test now checks the 3 sliders as windows, and the 90 % suite threshold is back."
+  },
+  {
+   "id": "H-02",
+   "verdict": "confirmed",
+   "evidence": "upper-042 came from an L-end gap ('wall gap (L-end)', 4.85 m). The bridge's south side was dropped by glazed_corridor() in the no-gap path, but the gap path never ran that test.",
+   "fixed": true,
+   "how": "General rule: gap glazing that is one side of an all-glass corridor (a parallel band 0.8-3.5 m opposite), in a gap that is not cap-end, is a glass wall. The extra is gone, the pane and lintel along the bridge are gone, and the north glass keeps its height."
+  },
+  {
+   "id": "H-03",
+   "verdict": "confirmed",
+   "evidence": "ground-044 had the 3.00 m default while ground-043 took the 3.90 m row. Panes sat on the lines (x 19.373 / y 14.4335), not on the glazing (x 19.448 / y 14.5085), leaving a diagonal slit. The upper lintels left a notch at the corner.",
+   "fixed": true,
+   "how": "find_openings: glazed openings at right angles with ends within 0.15 m share heights, the leg without an elevation row taking the other's (ground 3.90/3.90, upper 2.60/2.60). openings3d.glass_corners(): panes run on to where they cross plus half a pane; the first leg's cut and lintel cover the corner square and the second runs up to it. Renders work/r3b/o_corner_g.png and o_corner_u.png show it closed."
+  },
+  {
+   "id": "H-04",
+   "verdict": "confirmed",
+   "evidence": "The A_Grill band (y 17.834-17.884) was within GLASS_NEAR of the wall faces and was cut with UE-11/-12. upper-007/-009/-033 were 'fixed glazing' windows on A_Grill only, which gave the service yard panes and lintels.",
+   "fixed": true,
+   "how": "New 'screen' role (geomkit ROLES). The Sukhumvit mapping moves A_Grill and W_Grill to screen. Screen lines along a gap close it (no opening); screen lines are never low-wall faces. The detector outputs 'glazing'. openings3d cuts a glazed opening only through its wall depth and glazing band, so the grille stays along the whole facade (work/r3b/o_staff.png). UE-08/09/10 are optional in the key: no score change."
+  },
+  {
+   "id": "H-05",
+   "verdict": "confirmed",
+   "evidence": "The WIN-layer arc's circle centre is (116.138, 18.182), 0.13 m off the jamb, so the chord ran 8 degrees off. symbol_door then gave t 0.482 and a skewed line west of the doorway.",
+   "fixed": true,
+   "how": "wall_direction(): a symbol door's chord turns about its middle onto the nearest wall-face direction within 0.5 m (at most 10 degrees). upper-048 (now upper-043) is at x 116.205 (key 116.222), t 0.1, with a straight 1.0 x 0.1 lintel and no notches (work/r3b/o_ue18.png). This also straightened ground-037/038/039 and L2-028. Same score."
+  },
+  {
+   "id": "H-06",
+   "verdict": "confirmed",
+   "evidence": "The gap held a TREE line from s 0.507 to 2.857: 1.305 m of it lay past the gap, only 0.1 m of that inside wall material (8 %). The suggested door-layer rule would lose presidential D7 (suite-016, 'pocket line on A-1.Netthay', a real key pocket door), so I used a geometric rule instead.",
+   "fixed": true,
+   "how": "gap_contents: a pocket line counts only if at least 80 % of its part past the gap's end lies inside wall (the pocket). D7 is 100 % and stays. The extra pocket door and its 1.55 m lintel across the stair hall are gone."
+  },
+  {
+   "id": "H-07",
+   "verdict": "confirmed",
+   "evidence": "The gap was measured from a 0.4 m corner block (nlen 0.248 < t 0.4), with the sashes at lateral 0.2-0.3 m, outside that block.",
+   "fixed": true,
+   "how": "General rule: a gap measured from a block shorter than it is thick, with its glazing outside the block, puts the window on the glazing's own line, at the glazing's depth (at least 0.1 m). ground-030 is now x 8.848 (key 8.773; end error 0.33 -> 0.08). The pane is on the sashes and only the sash band is cut (work/r3b/o_g030.png)."
+  },
+  {
+   "id": "H-08",
+   "verdict": "confirmed",
+   "evidence": "ground-043 is one 4.146 m eitherKind unit covering GW-19 (2.90 m) and the fixed corner glass. I tested a general split at full-depth door-layer jambs: GW-19 got the right width but stayed a window (no paving outside), so ground stayed 39/41, and the same rule split UW-16 (one window in the key), dropping upper to 39/40.",
+   "fixed": false,
+   "how": "The split was reverted because the score must not drop. In 3D the unit is glazed like the other three sliders (H-01) and its corner closes (H-03)."
+  },
+  {
+   "id": "H-09",
+   "verdict": "confirmed",
+   "evidence": "ground-021 (GW-10) is blocked by a 1 m single WALL line, before and after the openings: the new test walks fwd -0.3 / back -0.4 on both pages.",
+   "fixed": false,
+   "how": "Not changed, because the decided treatment leaves passages untouched. The test now reports it as 'blocked now and before'. Owner question."
+  },
+  {
+   "id": "H-10",
+   "verdict": "confirmed",
+   "evidence": "work/r3b/lintel_check.py on the round-3a model finds 15 lintel ends sticking out past the wall beside them and 12 leaving a slot over 3 cm (ground-022 slot, ground-035/-026/upper-003 protrusions).",
+   "fixed": true,
+   "how": "openings3d.depth(): the lintel depth comes from the walls beside the jambs (sections 0.05-0.30 m out, walls only, other openings excluded). A 'steady' wall runs on past a nib; jamb returns, blocks and cross walls do not count as steady. It takes the faces both jambs share, or the deeper one when the other lies inside it, and always contains the glazing. Now 4 protrusions (glass outside a thin wall at UE-05/06, the pocket side of GE-09, one 5 cm) and 7 slots (piers and blocks the checker counts). ground-022 is 0.25 m, ground-035 0.25, ground-026 0.10."
+  },
+  {
+   "id": "H-11",
+   "verdict": "confirmed",
+   "evidence": "ground-010 ('opening over a low wall (no glass drawn)', key GE-03 unglazed) has a 0.90 m sill, a pane from 0.90 to 3.00 and a lintel.",
+   "fixed": false,
+   "how": "Left as decided (every window gets a pane). Owner question, together with the 0.90 m sill."
+  },
+  {
+   "id": "H-12",
+   "verdict": "confirmed",
+   "evidence": "Panes were on the detector's line: upper-046/047 at y 23.309 with glazing at 23.11-23.21, UE-12 at 18.059 with the frame at 17.934, UW-01 0.1-0.2 m outboard.",
+   "fixed": true,
+   "how": "The detector outputs 'glazing' [lo, hi] across the line. openings3d puts the pane in the middle of that band, inside the wall depth. The panes are now on the glazing: UE-05/06 at y 23.159, UE-11 and UE-12 on the 17.934 frame line, UW-01 (now upper-033) on its sashes at x 82.869. The test's ray window follows the pane's offset."
+  },
+  {
+   "id": "H-13",
+   "verdict": "confirmed",
+   "evidence": "openings.json: upper-036 eitherKind false (a planter edge outside); the key's UW-01 carries eitherKind.",
+   "fixed": true,
+   "how": "CHANGES.md corrects the round-3a wording. The opening, now upper-033, sits on its sashes and is a pane either way under the decision."
+  },
+  {
+   "id": "H-14",
+   "verdict": "confirmed",
+   "evidence": "upper-050: 'ends from the swing', host none. A WALL LWPOLYLINE runs unbroken through the chord (s -0.7..1.9, lat -0.008). In contrast, suite-029 (key D15) has only Defpoints and A-4. Dim lines through its chord.",
+   "fixed": true,
+   "how": "General rule in symbol_door: with no wall, jamb or glazing bound, a leaf closing against a single wall-layer line drawn unbroken through the whole chord is not an opening. The extra is gone and the screen line is whole again (upper single runs 8 -> 7)."
+  },
+  {
+   "id": "H-15",
+   "verdict": "partly",
+   "evidence": "The misclassification is confirmed: the band runs from the side face of a cross wall (not in line) round a post-less glass corner, and was accepted only because WIN lines were in the band. The harm is small, as the reviewer says.",
+   "fixed": true,
+   "how": "General rule: glass that turns a post-less corner is a window corner only when its other end is a wall end in its own line; otherwise it is a glass enclosure, whatever the layer. All 4 real corner bays keep an in-line end. The extra is gone and the base WALL-GL screen stays."
+  },
+  {
+   "id": "H-16",
+   "verdict": "confirmed",
+   "evidence": "Passages have depth None and no pieces. GE-17's closed leaf and ground-036 are unchanged. The new passage checks pass.",
+   "fixed": false,
+   "how": "No change needed."
+  },
+  {
+   "id": "detector-L1-023-offset-lintel",
+   "verdict": "confirmed",
+   "evidence": "The gap's line is on the centre of the 0.127 m wall block (x 5.931). The curtain-wall frame slot is at x 5.99-6.10. The bands are wide (lat -0.146..0.082), so the block-strip glazing rule does not reach this door.",
+   "fixed": false,
+   "how": "Not fixed: a cosmetic 10 cm recess in a closed facade. A slot-snapping rule for curtain-wall doors is left for the bank round; bank_test was not touched."
+  },
+  {
+   "id": "T1-slide-threshold",
+   "verdict": "confirmed",
+   "evidence": "With the sliders glazed again (H-01), the suite's random-spot check gives 37/40, the same as the page before the openings (the reviewer's probe: the 4 new misses were the piers between the open sliders).",
+   "fixed": true,
+   "how": "Restored 90 % with the procedure unchanged; no exclusion rule was needed. viewer-tests/test_viewers.mjs now differs from the project copy only by the TEST_PORT/TMP/PROFILE env vars. Suite 127/127."
+  },
+  {
+   "id": "T2-house-passage-check",
+   "verdict": "confirmed",
+   "evidence": "The old check failed on ground-021 and three false passages that are blocked the same way on the pre-openings page.",
+   "fixed": true,
+   "how": "Replaced by two checks. (a) Passages left as they were: knee and chest rays across at 1/4, 1/2 and 3/4 plus a ray up hit no lintel, sill or pane; sample points within 0.3 m of another opening are skipped. The merge also stops if anything inside a passage footprint changed. (b) No passage is harder to walk than on the baseline page: the walk is stored in test_house_openings_before.json for the project copy. The blocked passages are printed as information."
+  },
+  {
+   "id": "H1-stale-openings",
+   "verdict": "confirmed",
+   "evidence": "merge_cad only checked os.path.exists('openings.json').",
+   "fixed": true,
+   "how": "merge_cad.openings_for(), also used by build_stages, stops when the plan sha1 or the model frame (centre, shift) differs, or when house3d.json has no frame. All three cases were tested, and the no-openings output is byte-identical to the baseline."
+  },
+  {
+   "id": "H2-detector-path",
+   "verdict": "confirmed",
+   "evidence": "DEFAULT_DETECTOR pointed only at the scratch folder.",
+   "fixed": true,
+   "how": "find_openings looks in OPENINGS_DETECTOR, then <project>/detector (two folders up), ../detector, then the scratch folder, with a clearer message. Copying the detector into the project is the owner's step (the project is read-only)."
+  },
+  {
+   "id": "H3-required-inputs",
+   "verdict": "confirmed",
+   "evidence": "heights.json was required; D['centre'] raised KeyError.",
+   "fixed": true,
+   "how": "With no heights.json, find_openings uses the plan section 3.2 defaults (2.10 / 0.90-2.10) and prints a note (tested). With no centre, merge_cad stops with 're-run build3d.py' (tested)."
+  },
+  {
+   "id": "H4-raise-gap",
+   "verdict": "confirmed",
+   "evidence": "Panes reaching the top had no lintel, and fitPieces capped them at their own top.",
+   "fixed": true,
+   "how": "Panes whose head is the wall top carry top:true, and fitPieces moves their top to the new wall height. The new test raises the ground walls to 4.50 m and finds glass at 4.20 and 4.45 m on ground-042/043/044. The negative control fails it."
+  },
+  {
+   "id": "H5-intro-text",
+   "verdict": "confirmed",
+   "evidence": "The intro said passages were cut and all windows were glazed to 3.00 m.",
+   "fixed": true,
+   "how": "The intro and captions are built from the stats: 32 doors and 37 windows cut in, passages already open, 3 sliding glass doors glazed, window heads 3.00/3.90 and 2.55/2.60."
+  },
+  {
+   "id": "H6-skew-notch",
+   "verdict": "confirmed",
+   "evidence": "Same cause as H-05: the cut followed the skewed chord.",
+   "fixed": true,
+   "how": "Fixed in the detector (chord turned onto the wall direction). The cut spans only 0..L along the now-orthogonal line, so there is no notch, and no extra clipping was needed in openings3d."
+  },
+  {
+   "id": "D1-knife-edge-L-passage",
+   "verdict": "confirmed",
+   "evidence": "UE-23 is 2.500 m against a <= 2.5 limit.",
+   "fixed": true,
+   "how": "Limit raised to 2.75 m. All five floors are unchanged, and the limit is documented with its key case in passage_ok."
+  },
+  {
+   "id": "D2-frame-rows-scaling",
+   "verdict": "confirmed",
+   "evidence": "The old frame_rows was O(n^2) over all small shapes (the reviewer measured 16 s at 1,600).",
+   "fixed": true,
+   "how": "Grid neighbours (1.65 m), rows walked only from pieces within 0.4 m of a wall, memoised wall checks, a 3,000-piece cap with a warning, and a warning naming the slow steps when a floor takes over 60 s. Outputs are identical on all four drawings. Synthetic 1,600 shapes: 0.1 s with no walls, 3 s with walls; 5,000 with walls: 18 s."
+  },
+  {
+   "id": "D3-area-code",
+   "verdict": "confirmed",
+   "evidence": "prims.build has per-drawing branches.",
+   "fixed": false,
+   "how": "Partly done. The detector accepts an optional mapping 'areas' entry (a bbox in drawing metres, or wholeFile) and reproduced the cache tags exactly (0 of 69,854 items differ, identical outputs). The four mappings were kept to layer roles only, per the Phase 0 rule; ready-made versions are in detector/work3b/mappings_with_areas/. Owner question."
+  },
+  {
+   "id": "D4-tight-thresholds",
+   "verdict": "confirmed",
+   "evidence": "The sweep results quoted by the reviewer.",
+   "fixed": true,
+   "how": "Commented the limits that sit near a key case with that case: passage wall 7 cm (O5/O6), stub 0.3 m (O1), wall-end 3.6 m (GW-10), L-corner 2.75 m (UE-23), casement cover 0.8 (UE-05). The sweep was not re-run."
+  },
+  {
+   "id": "D5-in-sample-score",
+   "verdict": "confirmed",
+   "evidence": "139/143 is the development-set score; the blind frozen_v1 bank figure is 39/41.",
+   "fixed": false,
+   "how": "Both figures are quoted in CHANGES.md. Confirming on an unseen drawing is not possible here."
+  },
+  {
+   "id": "D6-units-error",
+   "verdict": "confirmed",
+   "evidence": "An unknown units value raised a bare KeyError.",
+   "fixed": true,
+   "how": "It now stops with 'unknown units ... (allowed: mm, cm, m, in, inch, ft)' (tested)."
+  },
+  {
+   "id": "T4-house-test-gaps",
+   "verdict": "confirmed",
+   "evidence": "The lintel check accepted lintel:false, the ray check accepted any collider, and no test raised the walls above the data height.",
+   "fixed": true,
+   "how": "(1) A door may lack a lintel only where jambGap has a null. (2) Rays must hit the window's own pane or sill mesh at its glazing (at least 60 % of them); a wall meeting the window may stop the rest. (3) A 4.50 m case plus the top-pane check. A negative control (lintel removed, panes removed, a lintel over a passage, top flag dropped) fails exactly these 5 checks."
+  }
+ ],
+ "detectorChanges": "All new rules are general (openings.py, geomkit.py; docstring rules 4-7):\n\n1. Glazing in a gap that is one side of an all-glass corridor, where the gap is not cap-end, is a glass wall (upper-042 removed).\n2. A pocket line counts only if at least 80 % of its part past the gap lies inside wall (upper-045 removed; presidential D7 kept).\n3. A symbol door's chord turns onto the nearest wall-face direction, at most 10 degrees (upper-048, now upper-043, straightened; ground-037/038/039 and L2-028 also straightened).\n4. A symbol door with no wall, jamb or glazing bound, whose leaf closes against a single wall-layer line drawn unbroken through the chord, is dropped (upper-050 removed).\n5. Glass from a cross wall's side round a post-less glass corner is a glass enclosure (upper-058 removed).\n6. A gap measured from a block shorter than it is thick, with glazing outside the block, puts the window on the glazing's line (ground-030 to x 8.848; UW-01 on its sashes).\n7. New layer role 'screen' (Sukhumvit A_Grill and W_Grill moved there; the per-drawing config is still layer roles only). Screen lines close a gap and are never low-wall faces, so the grille-only service-yard windows are gone (optional keys).\n8. New output field 'glazing' [lo, hi].\n9. L-corner passage limit 2.5 -> 2.75 m; tight limits documented.\n10. frame_rows: grid neighbours, rows walked from wall-adjacent pieces, memoised wall checks, a 3,000-piece cap with a warning, and a slow-floor warning. Outputs are identical.\n11. Optional mapping 'areas' (not used by the four mappings).\n12. A clear error for unknown units.\n13. A symbol door bounded by a wall end or jamb takes its host from its ends.\n\nTried and reverted: a door-frame split of glazing units, because it dropped upper 40 -> 39. The backup is in detector/before_round3b/.",
+ "scores": "Per floor before -> after (RIGHT):\n- sukhumvit:ground 39/41 -> 39/41\n- sukhumvit:upper 40/40 -> 40/40\n- presidential 20/21 -> 20/21\n- bank:L1 16/16 -> 16/16\n- bank:L2 24/25 -> 24/25\n\nTotal 139/143 (0.972) -> 139/143 (0.972). No floor dropped.\n\nExtras 30 -> 26: ground 3, upper 12 -> 8, presidential 9, L1 3, L2 3. Precision 0.825 -> 0.844.\n\nOptional finds upstairs 8/13 -> 5/13, because the grille-closed service yard UE-08/09/10 is no longer read as windows.\n\nThese are development-set figures; the blind frozen_v1 bank figure stays 39/41.\n\nOutputs, PNGs and scores are in C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/output/ (score_final.txt, all_openings.json).",
+ "tests": "House rebuild: all five steps in 27 s; the detector step gives the same 98 records as detector/output.\n\ntest_house_openings.mjs on port 9366 with its own profile: 13 passed, 0 failed (work/r3b/test_house_openings_final.log). It also passes in a project-layout copy that has only the stored before-list.\n\nThe negative control page (lintel removed, panes removed, a lintel over a passage, top flag dropped) fails exactly the 5 checks it should and passes the other 8.\n\nFull suite (viewer-tests/test_viewers.mjs, HOUSE_URL set to the new page, port 9366, own profile), with the 90 % threshold restored:\n- run 1: 127/127; random spots 37/40, the same as the page before the openings\n- final_a: 126/127. The failure is the timed 'slides along a wall at an angle' check: slid 0.16 m from a corner start while 18 Edge processes were running (13 fps).\n- final_b: 127/127\n\nmerge_cad checks: the no-openings output is byte-identical to the baseline, and it stops correctly on another plan, another frame, or a missing centre. find_openings falls back to the plan defaults with no heights.json.\n\nDetector outputs are identical after the frame_rows rewrite. Synthetic timing: 1,600 shapes 0.1 s without walls and 3.2 s with walls; 5,000 with walls 17.9 s.",
+ "testsPassed": 140,
+ "testsFailed": 0,
+ "filesChanged": [
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/openings.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/geomkit.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/mappings/sukhumvit.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/output/ (all four *_openings.json, all_openings.json, PNGs, logs, score_final.json/.txt, score_verified.json)",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/detector/work3b/ (run_all.py, diffrun.py, debug scripts, mappings_with_areas/)",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/house/src/openings3d.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/house/src/find_openings.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/house/src/merge_cad.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/house/src/build_stages.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/house/src/make_html_cad_merged.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/house/src/README.md",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/house/src/openings_mapping.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/house/src/house3d.json, house3d_merged.json, house3d_stages.json, openings.json, openings_detected.json (regenerated)",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/house/pages/house_3d_preview.html",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/house/test_house_openings.mjs",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/house/test_house_openings_before.json (new)",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/house/viewer-tests/test_viewers.mjs",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/house/CHANGES.md",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/house/work/r3b/ (logs, lintel_check.py, dbg_depth.py, renders, negctl)"
+ ],
+ "remaining": [
+  "H-08: ground-043 still merges GW-19 with the corner glass (ground 39/41). The general door-frame split cost UW-16 upstairs, so it was reverted. In 3D it is glazed and consistent.",
+  "H-09: ground-021 (GW-10) is still blocked by a 1 m single line in the drawing; passages are left untouched as decided (owner).",
+  "H-11: ground-010, the unglazed kitchen pass-through, still gets a pane and a 0.90 m sill, per the decided window rule (owner).",
+  "Bank L1-023: the curtain-wall door's line is 0.1 m inside its frame slot (cosmetic), left for the bank round; bank_test was not touched and needs rebuilding on this detector, whose L2-028 host is now 'wall' and which has a new glazing field.",
+  "H-10 residue: 4 lintel ends still stick out (glazing outside a thin wall at UE-05/06, the GE-09 pocket side, one 5 cm) and 7 slots remain against piers or blocks at jambs, all above head height.",
+  "D3: floor areas can be set in the mapping but are not used; prims.py keeps its per-drawing branches.",
+  "D5: no unseen-drawing confirmation yet; quote 139/143 (dev) and 39/41 (blind).",
+  "The timed suite check 'Walk slides along a wall ... at an angle' failed once (start at a corner, machine loaded); it passed in 2 of 3 runs.",
+  "The plan section 0 / 2.3 numbers and the product doc need the owner's sync (glass runs now 11, wall runs 59, 39,463 lines ignored). The project folder is read-only, nothing was copied into it, and nothing was deployed."
+ ],
+ "ownerQuestions": [
+  "Should an 'opening over a low wall (no glass drawn)' (ground-010, the kitchen pass-through) lose its pane and keep only the sill wall and lintel? And is the 0.90 m default sill wanted?",
+  "Should a passage clear a 1 m single line that runs along it (ground-021, the gym's open side), even though passages are otherwise untouched?",
+  "Is the TEST_PORT / TEST_TMP / TEST_PROFILE environment change acceptable in the shared viewer-modes/test_viewers.mjs? It is now the only difference (the threshold is back to 90 %).",
+  "May a mapping carry floor 'areas' (where each plan sits on the sheet), so a new drawing needs no code in tools/prims.py? It is input data, not detection tuning, but it is more than layer roles.",
+  "Where should the detector live in the project? find_openings.py now looks in <project>/detector, with tools/prims.py inside it.",
+  "Should grilles (A_Grill / W_Grill) get their own screen look in the viewer instead of the glass look the base model gives them?"
+ ]
+}

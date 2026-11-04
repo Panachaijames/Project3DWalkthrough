@@ -1,0 +1,53 @@
+{
+  "name": "walkthrough-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "CAD-to-3D client walkthrough: the staff app, the viewer package and the API (foundation milestone, 3 Nov 2026).",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=24.14"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n api,web -c blue,green \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "node tools/run-api.mjs --port 8710 --reload",
+    "dev:web": "npm run dev -w @walkthrough/web",
+    "build": "npm run typecheck && npm run build:web && npm run build:offline",
+    "build:web": "npm run build -w @walkthrough/web",
+    "build:offline": "npm run build:offline:template && npm run make:offline",
+    "build:offline:template": "vite build -c packages/viewer/vite.offline.config.ts",
+    "make:offline": "node packages/viewer/scripts/make-offline.mjs --data data --template dist/offline-template/viewer-template.html --out dist/offline",
+    "seed": "node tools/run-py.mjs -m walkthrough_api.seed --prototypes .. --data data --force",
+    "gen:api": "node tools/run-py.mjs -m walkthrough_api.openapi_export apps/web/openapi.json && npm run gen:client -w @walkthrough/web && node tools/check-generated.mjs",
+    "typecheck": "tsc -p packages/viewer && tsc -p packages/viewer/tsconfig.test.json && tsc -p apps/web && tsc -p apps/web/tsconfig.test.json && tsc -p tests/e2e",
+    "test": "npm run typecheck && npm run test:unit && npm run test:api && npm run test:e2e",
+    "test:unit": "vitest run",
+    "test:api": "node tools/run-py.mjs -m pytest services/api/tests -q",
+    "test:e2e": "playwright test -c tests/e2e/playwright.config.ts --project e2e",
+    "harness": "vite -c packages/viewer/vite.harness.config.ts",
+    "preview": "vite preview -c apps/web/vite.config.ts --port 4710 --strictPort",
+    "check:pins": "node tools/check-pins.mjs",
+    "capture:prototype": "node tools/capture-prototype-facts.mjs --port 9700"
+  },
+  "devDependencies": {
+    "@hey-api/openapi-ts": "0.99.0",
+    "@playwright/test": "1.64.1",
+    "@tailwindcss/vite": "4.3.3",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/three": "0.186.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "ajv": "8.20.0",
+    "concurrently": "10.0.6",
+    "happy-dom": "21.0.3",
+    "shadcn": "4.22.1",
+    "typescript": "6.0.3",
+    "vite": "8.3.4",
+    "vite-plugin-singlefile": "2.3.4",
+    "vitest": "5.0.5"
+  }
+}

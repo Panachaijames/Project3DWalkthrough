@@ -1,0 +1,116 @@
+{
+ "parts": [
+  {
+   "file": "keys/final/parts/g-west.json",
+   "floor": "sukhumvit:ground",
+   "box": [
+    7.0,
+    5.0,
+    32.0,
+    26.2
+   ],
+   "own": [
+    7.0,
+    5.0,
+    31.5,
+    26.2
+   ]
+  },
+  {
+   "file": "keys/final/parts/g-east.json",
+   "floor": "sukhumvit:ground",
+   "box": [
+    31.0,
+    5.0,
+    54.5,
+    26.2
+   ],
+   "own": [
+    31.5,
+    5.0,
+    54.5,
+    26.2
+   ]
+  },
+  {
+   "file": "keys/final/parts/u-west.json",
+   "floor": "sukhumvit:upper",
+   "box": [
+    81.0,
+    6.5,
+    105.5,
+    25.5
+   ],
+   "own": [
+    81.0,
+    6.5,
+    105.0,
+    25.5
+   ]
+  },
+  {
+   "file": "keys/final/parts/u-east.json",
+   "floor": "sukhumvit:upper",
+   "box": [
+    104.5,
+    6.5,
+    128.5,
+    25.5
+   ],
+   "own": [
+    105.0,
+    6.5,
+    128.5,
+    25.5
+   ]
+  },
+  {
+   "file": "keys/final/parts/presidential.json",
+   "floor": "presidential:suite",
+   "box": [
+    170,
+    -3510,
+    212,
+    -3478
+   ],
+   "own": [
+    170,
+    -3510,
+    212,
+    -3478
+   ]
+  },
+  {
+   "file": "keys/final/parts/bank-L1.json",
+   "floor": "bank:L1",
+   "box": [
+    -10,
+    -12,
+    10,
+    16
+   ],
+   "own": [
+    -10,
+    -12,
+    10,
+    16
+   ]
+  },
+  {
+   "file": "keys/final/parts/bank-L2.json",
+   "floor": "bank:L2",
+   "box": [
+    -10,
+    -12,
+    10,
+    16
+   ],
+   "own": [
+    -10,
+    -12,
+    10,
+    16
+   ]
+  }
+ ]
+}

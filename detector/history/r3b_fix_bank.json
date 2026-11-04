@@ -1,0 +1,168 @@
+{
+ "verdicts": [
+  {
+   "id": "bank-se-parapet-full-height",
+   "verdict": "confirmed",
+   "evidence": "The piece at L2 bbox (5.70..8.22, -10.85..-7.34), 0.72 m2, is the only Level 2 wall piece with no cut fill (0 % fill). It touches two different railings: the south rail ends at x 5.70 and the east rail starts at y -7.34. The old build had it as a 3.70 m wall (BB_L2_Wall_006). The cache holds no colour or line weight, so the projection-style evidence cannot be used.",
+   "fixed": true,
+   "how": "General parapet rule in build_model.py: an unfilled wall piece (under 25 % fill) whose ends meet railings at two places at least 0.5 m apart is part of the balustrade. It becomes kind 'parapet' at railingHeight 1.10 m with follow=false, on layer BB_L2_Parapets. The test checks the top is 1.10 with nothing above; the negative control (parapet at 3.70) fails that check."
+  },
+  {
+   "id": "bank-glass-partitions-solid",
+   "verdict": "confirmed",
+   "evidence": "There are 11 (L1) and 5 (L2) 'Basic Wall _ GLASS WALL 2600H 20X100' blocks on A-WALL. Each holds only 1-4 face lines. Their 10 mm A-WALL fills are top-level and lie within 10 cm of the block lines: 14 panes on L1 (8.6 m) and 5 on L2 (8.4 m). All were built as 3.70 m wall. Doors L1-005/007/008/022 and L2-010 had opaque lintels. L1-027 stands between two 10 mm screens.",
+   "fixed": true,
+   "how": "General Revit-export rule (documented in the README and the docstring). A block on a wall layer is a wall element, read by its type name. GLASS / GLAZED / GLAZING / CURTAIN makes it glass, and '<n>H' gives its height (2600H = 2.60 m). Its panes are the thin fills (3 cm or less) within 10 cm of its lines, plus any joined to them. Their bands, widened to the type faces, are removed from the wall. The result is 19 glass panes, 0-2.60 m, follow=false, each its own Max object named after the type. There is 1 corner frame post. Doors whose jambs are both glass get glass transoms to the lower glass top: 5 to 2.60 m, and L1-027 to 3.70 m. Thin fills at the jambs of a door whose name says GLASS are frameless screens (2, full height). Tests: the partitions stop you and stand to 2.60 m with nothing above; the doors show a transom at their head. The negative control fails."
+  },
+  {
+   "id": "bank-atm-slot-open",
+   "verdict": "confirmed",
+   "evidence": "The facade wall ends face each other at y 7.619 and 8.201: a 0.58 m gap at x 6.13-6.24, with no detected opening. The hull of the 'ATM Machine - ATM Machine-V26' block covers it and reaches out of both faces. A gap search over all wall ends on both levels finds only this gap with an object in it. The other 0.58 m gap, on L2 at (0.42..1.0, 11.45..11.6), has no object and is left.",
+   "fixed": true,
+   "how": "General rule: two wall ends facing each other along one line, at most 1.2 m apart and of the same thickness, with no opening between them and an object block in the gap that reaches out of both faces, get closed. The object block must sit on a layer that builds nothing and hold no building items, which excludes the Revit link block. The closure is a full-height wall part, BB_L1_Wall_010_closure (ATM Machine ...). The test checks it stands to 3.70 m; removing it fails the test."
+  },
+  {
+   "id": "bank-stair-void-and-fins",
+   "verdict": "confirmed",
+   "evidence": "The L2 slab was one polygon with no holes. Every S-STRS line was a 0.15 m fin, and the lift shaft had floor on L2. The L2 drawing carries the words UP (4.68, 9.52) and DOWN (4.68, 7.65) at the flights' east ends, and its A-FLOR floor-edge line runs at x 4.55.",
+   "fixed": true,
+   "how": "On levels above the first there is now no floor over each stair outline (the hull of its lines, 9.3 m2) or over a lift shaft (3.1 m2). A lift shaft is a room whose only opening is a door whose block name says LIFT/ELEVATOR. Flights are found as 3+ parallel riser lines 0.19-0.37 m apart, sorted into lanes; a riser hidden by the break line is put back. A stair word at a flight's end gives its direction, and the flight becomes solid steps one riser apart (riser = floor height / ceil(H/0.18) = 0.176 m). That gives 16 steps on L2. Flights without a word (all of L1's) are drawn as flat 3 cm tread strips instead of fins. On L2, stair lines and 3 stair rails over no floor are left out. Tests: no floor over the 2 stairs and the lift shaft on L2; the steps sit one riser apart. Both fail in the negative control. Owner question: the L1 and L2 stair drawings do not line up."
+  },
+  {
+   "id": "bank-floor-over-north-stair",
+   "verdict": "confirmed",
+   "evidence": "The old L2 plate reached y 12.71 over the north stair, which has 18 risers and no door. The L1 plate had a bulge at its foot.",
+   "fixed": true,
+   "how": "New plate rule. The plate is the inside of walls, glass and openings, where every detected opening spans its gap. A railing-bounded area from the 1.5 m closing is added only if it has standing room (0.8 m), a detected door or passage opens onto it, and it is not mostly stair. The terrace is kept (52.7 m2). Dropped: 4.67 m2 on L2 and 1.26 m2 on L1, both 'mostly stair'. Covered by the test's no-floor-over-stairs check (the north stair point is off the L2 floor)."
+  },
+  {
+   "id": "bank-room-labels-overlap",
+   "verdict": "confirmed",
+   "evidence": "Per the reviewer's screen boxes, FEMALE TOILET overlapped RACK and MALE TOILET, and MANAGER overlapped MEEETING.",
+   "fixed": true,
+   "how": "make_html.py only (shared code unchanged): labels are placed biggest room first. A label that would overlap moves 1 or 2 rows up or down, and is hidden only when no row is free. After the fix there are 0 overlaps: 10 of 11 L2 names shown in the default view, 7 of 7 on Level 1. The test now checks for no overlap in both views."
+  },
+  {
+   "id": "bank-slab-scallops",
+   "verdict": "confirmed",
+   "evidence": "The old plates were a 1.5 m round closing, which adds fillets at concave facade corners. In my measure, slab more than 10 cm outside the walls+glass+openings envelope was 12.3 m2 on L1 (including the stair hall leaking through the ATM slot) and 44.7 m2 on L2.",
+   "fixed": true,
+   "how": "The plates now follow the walls (fill-holes of the envelope); the closing only supplies railing-bounded areas that pass the floor test. Slab outside the envelope by more than 10 cm is now 0.00 m2 on L1. On L2 the only such area is the 41.3 m2 terrace, which is floor by rule."
+  },
+  {
+   "id": "detector-L1-023-offset-lintel",
+   "verdict": "confirmed",
+   "evidence": "The detector's line is at x 5.931 and the curtain-wall slot frame at x 5.97-6.08. The old lintel spanned x 5.87-5.99, which left a 10 cm recess. The re-run detector output is unchanged for L1-023.",
+   "fixed": true,
+   "how": "The detector was not changed (per the rules). The builder now takes lintel depth from the walls beside the jambs (the house model's rule, sections 0.05-0.30 m beyond each jamb). A column or block at a jamb never makes a lintel deeper than the door's own wall, so only L1-006 moved by 3 cm and L1-023 moved into the facade line. Jamb materials are read in the lintel's line. L1-023 now has lintel band -0.143..-0.043 (x 5.97-6.07), opaque to 3.70 m (jambs: curtain glass and wall). The head check casts its up-ray in the lintel's line."
+  },
+  {
+   "id": "bank-max-parapet-follow-reset",
+   "verdict": "confirmed",
+   "evidence": "The old BB_L2_Wall_006 call passed follow=true, and BB_updateLevels resets the Extrude amount on every follow part.",
+   "fixed": true,
+   "how": "The parapet is now BB_part #parapet 'BB_L2_Parapet_001_parapet' 0.0 to 1.1 with follow false, so Update keeps it. The same applies to glass partitions, transoms below the top and steps. New Max kinds and layers: Parapets, GlassFrames, Steps, with Frame and Step materials."
+  },
+  {
+   "id": "tests-debug-port-collision",
+   "verdict": "confirmed",
+   "evidence": "cdp.mjs launch() attaches to whatever answers on the port and close() sends Browser.close to it.",
+   "fixed": true,
+   "how": "test_bank.mjs (not shared code) fetches /json/version before launching and exits with code 2 and a clear message if the port answers. Tested with a dummy listener on 9399: 'Port 9399 already answers ...', exit code 2."
+  },
+  {
+   "id": "T3-bank-passage-lanes",
+   "verdict": "confirmed",
+   "evidence": "The old test_bank.mjs tried lanes 0.3 m apart across passages (L130-137) so that the false passage L2-019 would pass.",
+   "fixed": true,
+   "how": "The lane search is removed. Doors are walked through their middle both ways (39 pass; L1-019, L1-023 and L2-006 from inside). Passages are walked through their middle as information only: 8 of 9 cross, and L2-019 does not (fwd -0.6). A new check asserts passages are left as they are. At 1/4, 1/2 and 3/4 of each gap, nothing is overhead below 3 m, knee and chest rays across the line meet no glass in the wall band, and no part carries the passage id. In the negative control, a lintel over L1-003 fails it."
+  },
+  {
+   "id": "D1-knife-edge-L-passage",
+   "verdict": "confirmed",
+   "evidence": "The detector agent raised the limit: openings.py L1266 now reads 'g.w <= (3.6 if cap else 2.75)', with a comment naming UE-23 (L1257-1259). The bank outputs are identical to detector/output.",
+   "fixed": true,
+   "how": "Fixed by the detector agent; the detector was not changed in this step."
+  },
+  {
+   "id": "D2-frame-rows-scaling",
+   "verdict": "confirmed",
+   "evidence": "openings.py now has FRAME_ROWS_MAX = 3000 and frame_rows() uses a 1.65 m grid (L958-972).",
+   "fixed": true,
+   "how": "Fixed by the detector agent; not changed here."
+  },
+  {
+   "id": "D3-area-code",
+   "verdict": "confirmed",
+   "evidence": "tools/prims.py build() still branches per drawing (sukhumvit regions, bank1/bank2 whole-file, the presidential layer and y < -3450). The detector accepts an optional mapping 'areas' entry (L1511-1542). Ready-made mappings exist in detector/work3b/mappings_with_areas/.",
+   "fixed": false,
+   "how": "Partly done by the detector agent and left as an owner question. The bank builder uses only the cache's whole-file area tags and has no per-drawing code."
+  },
+  {
+   "id": "D4-tight-thresholds",
+   "verdict": "confirmed",
+   "evidence": "The comments with key cases are in openings.py (L613 UE-05; L1257-1259 O5/O6, O1, GW-10, UE-23).",
+   "fixed": true,
+   "how": "Documented by the detector agent; not changed here."
+  },
+  {
+   "id": "D5-in-sample-score",
+   "verdict": "confirmed",
+   "evidence": "house CHANGES.md L66-67 quotes 139/143 as the development-set score and the blind frozen_v1 bank run as 39/41.",
+   "fixed": true,
+   "how": "The bank README now quotes both as well: L1 16/16 and L2 24/25 are development-set figures; the blind frozen_v1 bank run scored 39/41."
+  },
+  {
+   "id": "D6-units-error",
+   "verdict": "confirmed",
+   "evidence": "The detector part is fixed (openings.py L1536). The bank builder had the same bare KeyError, at UNIT_M[...] in build_model.py and UNITS[units] in plan_items.py.",
+   "fixed": true,
+   "how": "Detector fixed by the detector agent. The same check is added in build_model.py and plan_items.py: a project file with units 'feet' now stops with \"unknown units 'feet' in bad_units.json (allowed: mm, cm, m, in, inch, ft)\" (tested, exit 1)."
+  }
+ ],
+ "detectorChanges": "None. The detector was not changed in this step. I re-ran it unchanged (openings.py with mappings/bank1.json and bank2.json) into build/bank_test/src/detector_out; the output is byte-identical to detector/output/bank1_openings.json and bank2_openings.json. Compared with the round-3a output: same 27 + 28 openings with the same ids and kinds. The 7 L1 windows gained the new 'glazing' [lo, hi] field (the builder now puts their panes on it). L2-028 was straightened, a/b x -2.6083/-2.6015 to -2.6049, and its host changed from 'none' to 'wall'. Everything else is identical.",
+ "scores": "The detector score is unchanged (not re-scored here; output identical to detector/output): bank:L1 16/16, bank:L2 24/25 (development set), 139/143 overall. The blind frozen_v1 bank figure stays 39/41.\n\nThe bank model, before (round 3a) and after:\n- Parts: 86 -> 124. Max objects: 108 -> 146 (124 parts, 4 stair shapes, 18 room names).\n- Glass partitions: 0 -> 19 panes (L1 14, 8.6 m; L2 5, 8.4 m) at 2.60 m, plus 1 frame post, 2 frameless screens and 6 glass transoms.\n- Lintels: 39 -> 33; the 6 doors in glass now have glass transoms.\n- Parapets: 0 -> 1, at 1.10 m. Closures: 0 -> 1 (the ATM slot, 0.58 m). Steps: 0 -> 16.\n- Floor plates: L1 238.6 -> 237.4 m2; L2 302.7 -> 285.0 m2 (terrace 52.7 kept; north stair 4.7 and L1 bulge 1.3 dropped; voids: stair 9.3, lift shaft 3.1).\n- Slab more than 10 cm outside the envelope: L1 12.3 -> 0.0 m2; L2 44.7 -> 41.3 m2 (the terrace only).\n- Self-check (nothing solid across a door or passage): none, before and after.",
+ "tests": "test_bank.mjs ran in headless Edge on port 9377 with my own profile (scratchpad/p0/work_bank3b/edge-profile-test): 22 passed, 0 failed (25 s), on the final files (model data 4b02dc17f286, the same stamp in the page and the .ms).\n\nRun history:\n1. The old 16-check test on the rebuilt page: 15/16. L1-023's up-ray missed its lintel, which had moved into the facade line.\n2. The test was rewritten. Changes:\n   - port guard;\n   - doors walked through the middle only;\n   - a passages-untouched check;\n   - checks for no label overlap, glass partitions stopping you at 2.60 m, the parapet height, the ATM closure, no floor over stairs or the lift shaft on L2, and steps one riser apart;\n   - the head check now looks up in the lintel's line.\n   Result: 22/22.\n3. Negative control: a copy of the model with the parapet at 3.70, the L2 partitions at 3.70, the L1-005 transom raised to 2.60, one step 10 cm off, the closure removed, the L2 slab holes filled and a lintel over passage L1-003. It failed exactly those 7 checks plus the stamp check (no .ms beside it). The parapet and step checks first passed in that control because they compared against the part's own data; I made them independent (railing height; riser from the floor height) and the control then failed them.\n4. Port guard: tested with a dummy listener on 9399, exit 2.\n5. Unknown units in the builder: clear error, exit 1.\n6. Final run: 22/22.\n\nScreenshots of the views the reviewer flagged were taken on a free port (work_bank3b/shots): SE parapet, ATM facade, lobby and meeting glass, stairwell, lift shaft, north side. They show the fixes. Page errors: none.",
+ "testsPassed": 22,
+ "testsFailed": 0,
+ "filesChanged": [
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/src/build_model.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/src/make_html.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/src/generate_maxscript.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/src/plan_items.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/src/detector_out/openings_L1.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/src/detector_out/openings_L2.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/src/detector_out/openings_bank_L1.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/src/detector_out/openings_bank_L2.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/src/bank_model.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/src/bank_stages.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/src/bank_summary.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/src/bank_topview.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/bank_3d_preview.html",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/Bangkok_Bank_Sampeng.ms",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/bank_topview.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/test_bank.mjs",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/build/bank_test/README.md"
+ ],
+ "remaining": [
+  "drawingSpecificRules is empty. The builder holds no coordinates, handles, block names or layer names, only physical sizes and a fixed vocabulary: door 'WxH', type '<n>H', GLASS/GLAZED/GLAZING/CURTAIN, LIFT/ELEVATOR, UP/DN/DOWN.",
+  "The stair drawings disagree between levels. Level 1 has no UP/DN words, so its flights stay flat tread lines. Level 2's two flights are steps, and through the L2 stairwell you see the L1 toilet's walls (owner question in the README).",
+  "Glass partitions are 2.60 m with nothing above (no bulkhead or ceiling drawn), and the lift-hall screens are full height. Both are owner questions.",
+  "The parapet height is the railing height (1.10 m). The ATM itself is not built; only its slot is closed.",
+  "L1-023's centre line is still 0.1 m off in the detector output (the builder compensates for the lintel); L2-016 is 0.875 m against 1.00 m; there are 6 false passages (harmless). All are detector matters, and the detector was left unchanged.",
+  "D3: tools/prims.py still splits floors with per-drawing code. Moving areas into the mappings is the owner's decision.",
+  "The 3ds Max script is checked as text only (balanced, ASCII); it has not been run in 3ds Max. The new kinds are parapet, mullion (GlassFrames) and step; DOWN steps have negative z0.",
+  "Unticking Glass also removes the glass colliders, including the partitions. This is existing shared viewer behaviour and was not changed.",
+  "Nothing was written to the project folder (checked: no newer files) and nothing was deployed. Working files are in scratchpad/p0/work_bank3b: backup of the round-3a build in before/, the negative control in neg/, screenshots in shots/, test output in test-out/, analysis scripts."
+ ],
+ "ownerQuestions": [
+  "Glass partitions (Revit GLASS WALL 2600H): built 2.60 m high with nothing above. Should there be a bulkhead or ceiling from 2.60 m up to the slab?",
+  "The south-east terrace parapet is built at the railing height, 1.10 m. Is that its height?",
+  "The two stair drawings do not line up. Level 2 shows two parallel flights (DOWN south, UP north, 9 risers each, landing west); Level 1 shows a flight north, a quarter landing and a flight west over the Level 1 toilet. Which is right?",
+  "Floor to floor 3.70 m (21 risers of 0.176 m): please confirm.",
+  "Glass and pivot doors at 2.40 m (no size in their names): please confirm.",
+  "The north stair outside the north wall: drawn on Level 1, and no longer floor on Level 2. Keep it or leave it out?",
+  "The frameless glass screens beside the lift-hall door L1-027: full-height glass, as built?",
+  "D3: should floor areas move into the mappings ('areas'), so that tools/prims.py has no per-drawing code?"
+ ]
+}

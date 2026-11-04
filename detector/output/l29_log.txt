@@ -1,0 +1,2 @@
+tower:L29: 31 openings (door 24, window 0, passage 7)  0.9 s
+total 1.6 s -> output\l29_openings.json

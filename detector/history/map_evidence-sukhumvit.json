@@ -1,0 +1,1313 @@
+{
+ "encodings": [
+  {
+   "name": "Door block _1D<q><L|R><cm> with nested LEAF + SWING",
+   "layers": [
+    "DOOR (the _1D insert and its nested LEAF/SWING inserts; their geometry is on layer 0 and inherits DOOR)",
+    "DSYM (attribute definitions D-N and RF)"
+   ],
+   "entities": "INSERT _1D3R90 or _1D0L100 at scale +-1000 (block unit = metre). Inside: INSERT SWING (one ARC) and INSERT LEAF (closed LWPOLYLINE 0.035 x 1.0), both at the block origin, plus 2 ATTDEFs.",
+   "meaning": "'_1D' = one-leaf hinged door. The digit = quarter turns applied to LEAF/SWING inside the block (0 = 0 deg, 3 = 270 deg). L/R = hand (R = LEAF/SWING mirrored inside the block, sx<0). The number = leaf width in cm, which equals the clear width between the jambs (90 -> 0.90 m, 100 -> 1.00 m). In the base door (0, L) the opening runs along local +x from the hinge, the leaf is drawn open along +y, and the arc runs from the closed tip (1,0) to the leaf's outer corner (0.035,1). The INSERT's own rotation and mirroring apply on top (C3C4 is inserted with sy=-1000). LEAF world y-scale = leaf length (900 or 1000 mm); x-scale 1000 = 35 mm thickness. The insert point is the hinge. It lies on the wall face on the swing side, exactly at the inner face of the hinge-side JAMB.",
+   "howToGetEnds": "Hinge H = the insert point (world coordinates). Closed tip C = the SWING arc end that is not at the leaf's free end (exact). H..C is the clear opening. Add the 50 mm JAMB at each end to reach the jamb outer faces, which equal the wall ends to +-1 mm; that is the structural opening. Centre line = H moved half the wall thickness away from the swing side: 0.05 m in 0.10 m walls, 0.125 m in the 0.25 m wall of G-D07, where the 0.10 m jambs sit flush with the swing face. Do not take the arc centre as the hinge: SWING has r = 0.983 x width and is centred (0.018, 0.018) x scale from the hinge, about 23 mm off.",
+   "counts": "Ground 5: 3 x _1D3R90 (G-D04, G-D06, G-D07) and 2 x _1D0L100 (G-D02, G-D03). Upper 1: _1D3R90 (U-D04). Each has 1 nested LEAF and 1 nested SWING. No duplicates. 12 DSYM attributes, all empty.",
+   "reliability": "high",
+   "edgeCases": "The name grammar belongs to this office; for other offices read the geometry inside the block. G-D02 sits in a 0.10 m wall whose face lines run straight through, so there is no wall gap and the merged wall closes it. G-D06 has the face of a perpendicular wall on one side, so the wall end has no collinear partner. G-D07 is in a 0.25 m wall drawn with 4 lines, and a room-outline polyline runs along its face. Some inserts are mirrored (sy<0)."
+  },
+  {
+   "name": "Loose LEAF insert (no door block) with a separate swing arc",
+   "layers": [
+    "DOOR (LEAF insert)",
+    "0 (the arcs on the ground floor)",
+    "WIN (the arcs of the upper toilet doors)",
+    "WALL (the arc of G-D08, inside block hjkhkk)"
+   ],
+   "entities": "INSERT LEAF at sx=1000 (35 mm thick) and sy=+-550 (a 0.55 m leaf; one has sy=-1000, a 1.0 m leaf), drawn open at 90 deg. A separate 3-point ARC runs from the closed tip to the leaf tip. It is not centred on the hinge (fitted r 0.62-0.64 for a 0.60 m clear opening). Usually a JAMB pair as well.",
+   "meaning": "A hinged door leaf. |sy| = leaf length in mm; the sign of sy together with the rotation gives the side the leaf lies on. The leaf is 50 mm shorter than the clear opening (0.55 against 0.60); the JAMB pair defines the opening.",
+   "howToGetEnds": "Hinge = insert point (on the inner face of the hinge JAMB). Closed tip = the arc end away from the leaf tip (0.60 m from the hinge). Structural ends = the JAMB outer faces = the wall ends (0.70 m).",
+   "counts": "Ground: 7 inserts, 5 unique. 4 are top level (G-D11, G-D12, G-D13, G-D14); G-D08's leaf (E13E) is repeated twice inside block hjkhkk. Upper: 2 (U-D16, U-D17, inside the xref block). Neither floor has a loose SWING insert: all 6 SWINGs are inside _1D blocks.",
+   "reliability": "high",
+   "edgeCases": "The leaf length is not the opening width. G-D08's leaf (E13E and its hjkhkk copies) has extrusion (0,0,-1). Its dxf.insert is therefore in OCS, and prims.py stores (-36.748, 20.808) while the geometry is at +36.748; use the full WCS matrix. That door's swing arc is on WALL, so the pipeline treats it as a wall line. G-D14 has only one JAMB."
+  },
+  {
+   "name": "Swing arcs on any layer, with a leaf (including pivot doors)",
+   "layers": [
+    "DOOR",
+    "0",
+    "WALL",
+    "WIN",
+    "XR_L44 Plan$0$A-DOOR",
+    "XR_L44$0$I-DOOR",
+    "false hits: WALL-GL (shower doors), XR_L44$0$I-FURN and XR_L44$0$Layer7 (chairs, fridge), TREE"
+   ],
+   "entities": "ARC, usually a quarter circle (sweep 85-95 deg). 3-point arcs sweep 71-79 deg; one half-open xref leaf sweeps 52 deg. The leaf is a thin rectangle (20-39 mm), a pair of lines, or a single line.",
+   "meaning": "A door swing. One arc end is the leaf tip (open position); the other is the closed position on the wall line. Pivot doors (G-D05 at 1.75 m, G-D10 at 1.20 m) have a leaf drawn across the opening, a pivot 0.2-0.75 m in from one end, and two arcs, all on layer 0.",
+   "howToGetEnds": "Use the arc END POINTS. The closed tip and the hinge (the leaf's far end) bound the clear opening. Snap both outward to the nearest jamb outer face, wall end or perpendicular wall face within 0.15 m. For pivot doors, the ends are the two wall or pier faces the arcs end on.",
+   "counts": "Real door swings. Ground: 15 doors, 17 unique arcs = 5 SWING in _1D blocks, 1 loose DOOR arc (the site gate), 9 unique layer-0 arcs for 7 doors including the 2 pivot doors, 1 WALL arc, 1 A-DOOR arc. Upper: 14 doors, 21 arcs = 1 SWING, 4 I-DOOR, 1 A-DOOR, 14 WIN. False arcs: 1 WALL-GL shower door per floor, chairs and a fridge in the furniture xref, 2 TREE quarter circles of r=1.0 (no wall gap behind them).",
+   "reliability": "high",
+   "edgeCases": "29 of the 32 doors have an arc; the 3 pocket sliding doors do not. 3-point arcs are not centred on the hinge. D4's arc is CENTER2 and A$C83adbef5's is HIDDEN2, so a continuous-lines-only filter would drop them. U-D01 has a half-open leaf (52 deg). Arcs are duplicated (hjkhkk is inserted twice; layer-0 copies). The leaf finder must prefer thin rectangles: a naive one matched TREE lines as leaves at U-D16/U-D17."
+  },
+  {
+   "name": "JAMB block pairs (D-JAMB)",
+   "layers": [
+    "D-JAMB"
+   ],
+   "entities": "INSERT JAMB = a unit-square LWPOLYLINE scaled (+-50, +-100) or (+-100, +-50), giving a rectangle 50 mm along the wall by 100 mm across it. The insert point is one corner of that rectangle.",
+   "meaning": "The door frame or jamb on each side of a door (also around two fixed glass panels). The 100 mm side spans the whole of a 0.10 m wall, or sits flush with the swing face of a thicker wall.",
+   "howToGetEnds": "Pair two rectangles whose 100 mm sides cover the same interval across the wall (+-15 mm) and that face each other 0.3-2.6 m apart. Structural opening = outer face to outer face; clear opening = inner faces = leaf width. Wall face lines end flush with the jamb outer faces to +-1 mm.",
+   "counts": "Ground: 24 inserts, 22 unique, giving 10 pairs (G-D01, D02, D03, D04, D06, D07, D11, D12, D13, W14) and 2 single jambs. Upper: 30 inserts, 14-15 unique (each is repeated inside the xref block), giving 6 pairs (U-D04, D09, D15, D16, D17, W12) and single jambs at U-D13 and U-D14.",
+   "reliability": "high",
+   "edgeCases": "All 16 pairs are real openings, but they find only 14 of the 32 doors. Inserts are duplicated. Some doors have a single jamb. Around fixed glass (G-W14, U-W12) the wall lines run on between the jambs. Window end pieces on D-JAMB have the same 50 x 100 size, so pair by facing distance and by what lies between (arc or leaf -> door; glass line -> window)."
+  },
+  {
+   "name": "Loose D-JAMB pieces: 50x100 end pieces, 50x50 sash stiles, cladding outlines, finish lines",
+   "layers": [
+    "D-JAMB"
+   ],
+   "entities": "LWPOLYLINE rectangles of 50x100 mm and 50x50 mm (often open 5-point polylines), larger outlines, and LINEs. Many are inside blocks hjkhkk, jkljlll and the upper xref.",
+   "meaning": "Frame pieces of windows and sliding units: a 100x50 piece flush against each wall end, one 50x50 stile per sliding track, and two 50x50 squares side by side where the sashes meet. The outlines are cladding around the entrance piers and some walls; the finished face is 50 mm proud of the wall line. Long LINEs are finish lines along wall faces (for example x 36.678 / 36.698).",
+   "howToGetEnds": "Take the outermost 100x50 piece at each end of a window band: its outer face is the opening end, flush with the wall or column face to +-1 mm. At clad piers the glazing stops at the cladding face, 50 mm short of the wall line (9 window ends).",
+   "counts": "Unique pieces. Ground: 50 of 50x100, 76 of 50x50, 8 outlines, 56 lines. Upper: 41, 56, 0, 56. Raw counts are 2-3 times higher because of duplicates.",
+   "reliability": "medium",
+   "edgeCases": "The same layer carries cladding and finish lines. Two sliding units consist only of D-JAMB pieces and slide arrows, with no glass lines (G-W17, G-W20). Duplicates throughout."
+  },
+  {
+   "name": "*U31 linked-file double doors (XR_L44$0$I-DOOR)",
+   "layers": [
+    "XR_L44$0$I-DOOR"
+   ],
+   "entities": "Anonymous (dynamic) block *U31, inserted at scale +-0.8 inside the upper xref block hjhjj: 2 leaf rectangles (800 and 400 mm), 2 arcs (r 0.8 and 0.4), 2 L-shaped frame polylines (38 x 100 mm).",
+   "meaning": "An unequal double door: frame outer width 1.256 m, leaves 1.20 m together.",
+   "howToGetEnds": "The hinges are at the two frame rebates and the leaves' closed tips meet. Snap to the wall ends. In U-D03 the frame equals the wall gap; in U-D02 the frame sits 45-50 mm inside a 1.351 m wall gap.",
+   "counts": "Ground 0. Upper 2 (U-D02 at x 88.30, U-D03 at x 106.37), 12 entities in all.",
+   "reliability": "high",
+   "edgeCases": "Anonymous *U names change between saves. The scale is 0.8 (the block is drawn for 1.5 m). In U-D02 the frame is narrower than the wall gap. The frame polylines are on a door layer, not a wall layer."
+  },
+  {
+   "name": "Linked-file doors on XR_L44 Plan$0$A-DOOR (blocks D4 and A$C83adbef5)",
+   "layers": [
+    "XR_L44 Plan$0$A-DOOR (leaf and arc)",
+    "XR_L44 Plan$0$A-WALL (L-shaped jamb returns)",
+    "0 (a HIDDEN2 head line)"
+   ],
+   "entities": "Ground: INSERT 'XR_L44 Plan$0$D4' (on layer 0, rot 180) containing a 35 x 900 leaf rectangle, an ARC of r 0.90 (linetype CENTER2), two 48 x 100 L-returns on A-WALL, and a hidden head line. Upper: INSERT 'XR_L44 Plan$0$A$C83adbef5' (rot -90, mirrored) containing a leaf drawn as 2 long lines plus end ticks at 52 deg open, and an ARC of r 0.704 (HIDDEN2).",
+   "meaning": "Single hinged doors from the linked architectural file. D4 has a 0.97 m frame and a 0.90 m leaf.",
+   "howToGetEnds": "D4: the A-WALL returns give the ends exactly (x 36.878-37.848 on y 14.3585). A$C83adbef5: from the hinge (83.079, 14.653) to the arc's closed end (83.079, 13.953) = 0.70 m.",
+   "counts": "Ground 1 (D4: 1 arc, 1 leaf, 2 returns). Upper 1 (16 lines, 1 arc).",
+   "reliability": "medium",
+   "edgeCases": "G-D09 (D4) sits in a 0.10 m wall whose face lines run straight through, so the merged wall closes it. The returns are closed shapes under 150 mm on a wall layer, so the tiny-shape filter drops them. U-D01 sits in a single-line partition and becomes a 1 m single piece. Both arcs have non-continuous linetypes. The A$C83adbef5 leaf is not a rectangle."
+  },
+  {
+   "name": "Doors drawn on WIN (upper east block, x 114-127)",
+   "layers": [
+    "WIN",
+    "D-JAMB and JAMB at the ends",
+    "WALL-GL (a threshold line at U-D05)"
+   ],
+   "entities": "14 swing ARCs of r 0.70-0.94. Leaves are thin WIN rectangles (20-35 mm) or pairs of lines. Across each of the 7 north leaves runs a 3-line WIN threshold band (y 23.109 / 23.159 / 23.209, 50 mm apart).",
+   "meaning": "Hinged doors: U-D05 and U-D09 to U-D15, 10 openings with 14 leaves. These include two 3-leaf sets (U-D11, U-D12) with no wall between the leaves.",
+   "howToGetEnds": "As for swing arcs. A multi-leaf set runs from the first to the last D-JAMB end piece (118.147-120.922 and 121.172-123.947).",
+   "counts": "Upper: 14 door arcs on WIN. The washbasin block A$C09C2022F adds 9 small arcs and 4 circles on WIN. Ground: 0.",
+   "reliability": "medium",
+   "edgeCases": "A 'WIN = window' layer rule turns these into glass. The 3 threshold-band door sets become glass strips (U-D10, U-D11, U-D12), and 5 leaves become thin glass slabs. Read WIN by geometry: an arc with a leaf outranks a band."
+  },
+  {
+   "name": "Pocket sliding doors: thin panel rectangles on DOOR",
+   "layers": [
+    "DOOR (inside the upper xref block)"
+   ],
+   "entities": "3 closed LWPOLYLINE rectangles, 39 mm x 1.58 / 3.08 / 1.58 m. Each lies parallel to a wall and partly inside a wall pocket: a 50-80 mm slot between wall lines, with no closing line across the slot.",
+   "meaning": "Pocket sliding doors drawn half open.",
+   "howToGetEnds": "The opening runs from the pocket mouth (the wall end with the slot) to the next wall end, box or corner on the panel's line. U-D06: x 100.935, y 19.457-21.159 (also a wall gap). The ends of U-D07 and U-D08 are only approximate (they meet at a free corner).",
+   "counts": "Upper 3, ground 0. On the ground floor, the orphan 1.08 m DOOR rectangle C367 lying in the wall line at y 14.39-14.43 may be a fourth.",
+   "reliability": "medium",
+   "edgeCases": "They have no arc, so the swing rule misses them. U-D07 and U-D08 have no wall gap either; they are the only openings that no automatic signal found."
+  },
+  {
+   "name": "Window bands on WIN (2-6 parallel lines, 25 or 50 mm apart, 50-125 mm deep)",
+   "layers": [
+    "WIN",
+    "D-JAMB end pieces",
+    "sometimes a WALL-GL glass line or A_Grill"
+   ],
+   "entities": "LINEs and a few LWPOLYLINEs. Ground windows are mostly inside block hjkhkk (inserted twice at the same point on layer WALL) or block jkljlll; upper windows are inside the xref block.",
+   "meaning": "Glazing. Patterns: 5 lines at 25 mm = a 100 mm frame with 2 sliding tracks (most windows); 3 lines at 50 mm = fixed or single-track; 4 lines (mixed 25/50); 3 lines at 25 mm = 50 mm frames in 1.0 m units (block jkljlll, partition G-W13). There are no sill lines anywhere, so the plan cannot tell a window from floor-length glass. The 8 tags AW1/AW12/AW14/AW17/D1/D3/AD1 appear only on the right-hand elevation.",
+   "howToGetEnds": "The lines stop at the end pieces' inner faces, 50 mm short of the opening end. The outer faces of the end D-JAMB pieces are flush with the wall end or column face to +-1 mm, or with the cladding face at clad piers. So the opening is the band plus 50 mm at each end.",
+   "counts": "Ground: 126 unique WIN lines and 7 polylines (219 and 22 raw). Upper: 169 lines and 29 polylines. They form 20 glazed openings on each floor.",
+   "reliability": "high",
+   "edgeCases": "About half the glazed openings are whole bays between columns or perpendicular walls, with no collinear wall ends: G-W03/04/08/10-13/16/19 and U-W03/04/06-09/11/13/14/18-20. For these, window or full-height glass wall cannot be decided from the plan. False WIN bands: door leaves and thresholds (upper east block), the washbasin block, shower screens. All geometry is duplicated on the ground floor."
+  },
+  {
+   "name": "Glazing with frame lines on HATCH and a single glass line on WIN or WALL-GL",
+   "layers": [
+    "HATCH (frame lines)",
+    "WIN (glass line)",
+    "WALL-GL (sliding glass)",
+    "D-JAMB"
+   ],
+   "entities": "Each side of the ground-floor link corridor has 3 HATCH lines 50 mm apart and 1 WIN glass line per panel; the two panels (0.9 m and 3.1 m) are offset 50 mm. The gym's west sliding door (G-W02) has 2 WALL-GL panes offset 50 mm, each about 0.9 m, with HATCH frame lines. The upper link corridor has HATCH frames too: the north side also has 5 WIN lines, the south side only single WIN lines.",
+   "meaning": "Sliding glazing whose frame is drawn on the hatch layer, which the pipeline ignores.",
+   "howToGetEnds": "From the end D-JAMB pieces or the bounding wall faces, as for window bands.",
+   "counts": "Ground 3 (G-W02, G-W06, G-W07). Upper 3 (U-W04, U-W06, U-W07). The HATCH layer also holds the crosses of the grille posts and gate posts: 72 unique HATCH lines on the ground floor, 60 upper.",
+   "reliability": "low",
+   "edgeCases": "The single glass line has no partner and the panels do not overlap, so merge_cad makes no glass. G-W02, G-W06, G-W07 and U-W07 are therefore open gaps in the model."
+  },
+  {
+   "name": "WALL-GL glass lines (several meanings)",
+   "layers": [
+    "WALL-GL"
+   ],
+   "entities": "LINEs, ARCs, small LWPOLYLINE chevrons, long double lines.",
+   "meaning": "(a) A pane inside a window band (G-W10, G-W15, U-W08). (b) A glass line inside a wall whose face lines run straight through: a window hidden in the wall (G-W09, U-W02, U-W10, U-W12, and the threshold of door U-D05). (c) Two offset panes: a sliding glass door (G-W02). (d) Shower screens with glass-door arcs: not openings. (e) Slide-direction chevrons (G-W15, G-W17, G-W20). (f) Pool glass and pool edge (x 19.6-31.7, y 7.4-14.3): not an opening.",
+   "howToGetEnds": "Only for (a)-(c): from the end jamb pieces or the closing lines.",
+   "counts": "Ground: 44 raw / 21 unique lines and polylines, plus 1 arc (duplicated). Upper: 16 / 8, plus 1 arc.",
+   "reliability": "medium",
+   "edgeCases": "Here WALL-GL is mostly not a glass wall. The merge turns the pool lines into 2 glass solids and the shower screens into glass."
+  },
+  {
+   "name": "Grilles: W_Grill (ground front fence) and A_Grill (upper east block)",
+   "layers": [
+    "W_Grill",
+    "A_Grill",
+    "WIN"
+   ],
+   "entities": "W_Grill: 3 lines (y 5.896 / 5.996 / 6.021) along x 19.07-31.57, with posts (HATCH crosses). A_Grill with WIN: 3 lines along the east block's south facade (y 17.83-17.93, 12.5 m long). A_Grill: 3 lines on the east facade (x 126.62-126.75, 5.6 m), and 2 lines just outside the wall line on the east room's north side (y 23.38-23.43).",
+   "meaning": "W_Grill is the site fence or gate, not a house wall. A_Grill marks grille or glazing bays with 'frame' posts.",
+   "howToGetEnds": "A bay's ends are the bounding wall or column faces.",
+   "counts": "Ground: 30 unique W_Grill entities. Upper: 9 A_Grill lines, in 3 openings (U-W18, U-W19, U-W20).",
+   "reliability": "medium",
+   "edgeCases": "The merge turns the fence into a 1.5 m2 glass solid. U-W20's grille lies outside the wall band, so the wall line there is an open gap with a glass strip just outside it."
+  },
+  {
+   "name": "'frame' blocks (grille posts)",
+   "layers": [
+    "FLOOR (the insert)",
+    "COL (a 38 x 75 mm rectangle)",
+    "HATCH (an X)"
+   ],
+   "entities": "INSERT 'frame', unit metre, rot 0 / 180 / -90.",
+   "meaning": "Mullion posts of the upper east block's A_Grill/WIN glazing: 13 on the south facade (y 17.96), 5 on the east facade (x 126.69), 3 on the east room's north side (y 23.38).",
+   "howToGetEnds": "They are not opening ends; they divide a glazed bay.",
+   "counts": "Upper 21, ground 0.",
+   "reliability": "low",
+   "edgeCases": "The geometry is on COL, a wall layer, but under 150 mm, so the tiny-shape filter drops it. Otherwise it would make 21 tiny columns."
+  },
+  {
+   "name": "Jamb-only sliding units (no glass lines)",
+   "layers": [
+    "D-JAMB",
+    "WALL-GL (slide chevrons)"
+   ],
+   "entities": "A 2-track arrangement of D-JAMB 100x50 end pieces and 50x50 stiles, plus slide chevrons. There is no glass line on any layer (checked).",
+   "meaning": "A sliding glazed unit whose glass lines were never drawn.",
+   "howToGetEnds": "The end pieces' outer faces are the wall ends: G-W20 runs 23.834-25.609 with closing lines at both ends; G-W17 runs 33.000-36.398.",
+   "counts": "Ground 2 (G-W17 on the room's north side, 3.40 m; G-W20 in the north building, 1.77 m). Upper 0.",
+   "reliability": "low",
+   "edgeCases": "The room-outline polyline E291 also crosses G-W17, so it becomes a 1 m single piece. G-W20 is an open gap in the model."
+  },
+  {
+   "name": "Wall gap only (doorless passages): collinear wall ends, usually with closing lines",
+   "layers": [
+    "WALL",
+    "COL",
+    "XR_L44 Plan$0$A-WALL"
+   ],
+   "entities": "Two face lines per wall that stop at the same position, usually with a closing LINE across the wall end.",
+   "meaning": "A doorless opening between two wall ends on one wall line.",
+   "howToGetEnds": "The wall ends on the centre line; the width is the gap.",
+   "counts": "Ground 9 passages, upper 11; 6 of them are uncertain (recess or niche mouths, open sides of small rooms). The same kind of gap also marks 19 doors and 10 windows.",
+   "reliability": "high",
+   "edgeCases": "15 of the 65 gap locations are false: 6 junction gaps of 0.25 m; collinear walls of separate buildings (the courtyard, G017, 3.7 m; between the main house and the east block, U104); a column and a wall end outside the envelope (G014, G029); across stair ends (G057, U105); across a column (G043); between carport posts (G055, G056); a wardrobe carcass drawn on a wall layer (U071)."
+  },
+  {
+   "name": "Openings with the wall face lines drawn straight through (bridged)",
+   "layers": [
+    "WALL (face lines)",
+    "plus the opening evidence on DOOR, D-JAMB, WIN, WALL-GL or A-DOOR"
+   ],
+   "entities": "Either continuous wall face LINEs across the opening (G-D02, G-D09, U-D05), or face lines split only at the jamb rectangles and redrawn between them as frame lines (G-W14, U-W12, G-W09, U-W10, and the inner 0.10 m of U-W02).",
+   "meaning": "A door inserted into an untrimmed wall, or a glass panel whose frame or sill lines were drawn on the wall layer.",
+   "howToGetEnds": "Only from the opening evidence: JAMB or D-JAMB outer faces, the door block's geometry, the xref returns.",
+   "counts": "8 openings: ground G-D02, G-D09, G-W09, G-W14; upper U-D05, U-W02, U-W10, U-W12 (3 doors, 5 glass panels). In 3 more, the room-outline polyline E291 crosses the opening (G-D07, G-P06, G-W17), and U-D01 sits in a single-line partition.",
+   "reliability": "medium",
+   "edgeCases": "There is no wall gap, so a gap-only detector misses all 12. The merge closes the 8 with full-height wall solids."
+  },
+  {
+   "name": "A$C598F089C > A$C66261919 chain (a fixture, not a door)",
+   "layers": [
+    "WALL (outer insert)",
+    "DOOR (the A$C66261919 insert)",
+    "FUR",
+    "FIXT",
+    "WC-DET1 and WC-OUTL (the geometry)"
+   ],
+   "entities": "5 levels of nested anonymous blocks ending in A$C3B8D7A43, a 60 x 220 mm wall-mounted sanitary fitting.",
+   "meaning": "A bathroom fitting. DOOR is only the layer of one intermediate INSERT.",
+   "howToGetEnds": "Not applicable.",
+   "counts": "Ground 1 at (53.77, 22.79). Upper 2, at (110.07, 11.96) and (117.67, 23.26).",
+   "reliability": "low",
+   "edgeCases": "The layer of an INSERT proves nothing; classify by the geometry it contains."
+  },
+  {
+   "name": "OPEN rectangle",
+   "layers": [
+    "OPEN"
+   ],
+   "entities": "1 closed LWPOLYLINE, 7.87 x 16.83 m (x 81.61-89.48, y 6.98-23.81), inside the upper xref block.",
+   "meaning": "A zone outline around the upper west wing, not an opening.",
+   "howToGetEnds": "Not applicable.",
+   "counts": "Upper 1, ground 0.",
+   "reliability": "low",
+   "edgeCases": "A naive layer map ('OPEN' = opening) would cut a 17 m hole."
+  },
+  {
+   "name": "DSYM door tags (empty) and the elevation tags",
+   "layers": [
+    "DSYM",
+    "SPEC (on the elevations)"
+   ],
+   "entities": "ATTRIBs D-N and RF in every _1D block, all empty strings. On the right-hand elevation, 8 ATTRIBs with tag DW in block A$C7D82418A: D1, D3, AD1, AW1, AW12, AW14 (twice), AW17.",
+   "meaning": "The plan has no door numbers, sizes or heights. Tags exist only on the elevation, so heights have to come from the elevation drawing or from project defaults. Plan text is only R-01, ST-05 and ST-02.",
+   "howToGetEnds": "Not applicable.",
+   "counts": "DSYM: ground 10, upper 2, all empty. Elevation tags: 8.",
+   "reliability": "low",
+   "edgeCases": "The plan's risk table says RNAME held door tags; in this file RNAME holds only Thai level and roof labels on the elevations."
+  }
+ ],
+ "wallEndsAtOpenings": "Measured on all 92 reviewed openings (184 ends), using the pipeline's own wall lines (house3d.json).\n\n(1) The wall stops at 123 ends: both face lines end within 12 mm of the opening end. At 108 of these 123 (88%) there is also a closing LINE across the wall thickness on the wall layer: 37 of 46 door ends, 34 of 36 passage ends, 37 of 41 window ends. The 15 without a closing line are T-junctions where the wall turns, the pocket mouths of the sliding doors (U-D06 to U-D08, with a slot left open), or stubs.\n\n(2) 12 ends are the face of a perpendicular wall or column. These are openings at L-junctions (G-D06, G-D11 against a column, U-P01) and window bays. A further 27 ends are a glazing end, a clad pier, a column box or a free corner.\n\n(3) Jambs never hide wall ends. At 86 of the 95 jamb ends where a wall line ends, the wall face line ends exactly at the jamb's outer face (+-1 mm, once +4 mm). The other 9 are clad piers, where the glazing stops at the D-JAMB cladding face 50 mm proud of the structural wall line. JAMB blocks sit inside the opening; _1D and LEAF insert points are on the jambs' inner faces.\n\n(4) 12 openings are bridged: wall-layer lines run through at least 90% of the span.\n- 8 by the wall's own face lines. Doors: G-D02 (_1D0L100), G-D09 (xref D4) and U-D05 (WIN door), where the lines are continuous through the door. Glass panels: G-W09, G-W14, U-W02 (only the inner 0.10 m of a 0.25 m wall), U-W10 and U-W12, where the face lines are split at the jambs and redrawn between them as frame lines.\n- 3 by a closed room-outline polyline on WALL (handle E291, tracing the room x 32.398-36.398, y 19.2585-23.109): G-D07 (the wall's own lines stop with closing lines, but the outline runs along the face), G-P06 and G-W17.\n- U-D01 sits in a single-line partition (x 83.08) that runs straight through it.\n\n(5) Thickness: most door walls are 0.10 m, the same as the jamb depth. Some walls are 0.25 m, drawn with 3-4 parallel lines (G-D07, G-D10, G-P04/05, G-P07). Door frames sit flush with the swing face, leaving a reveal on the other side.\n\nSo wall gaps are trustworthy where they exist (88% have closing lines), but 13% of openings have no gap at all, and about a third of glazed openings sit between columns or perpendicular walls rather than collinear wall ends.",
+ "existingMergeAtOpenings": "merge_cad.py closes gaps under 0.24 m. That never touches a real opening here: the narrowest is 0.70 m. What closes openings is line work drawn across them.\n\nMeasured on cad_test/src/house3d_merged.json, converted back to drawing metres. Each opening was sampled every 1 cm along 7 lines spread across the wall band; the solids are classed as wall, glass and single.\n\nDOORS, 32 (15 ground, 17 upper):\n- 24 open (12 ground, 12 upper).\n- 3 closed by a full-height wall solid, because the wall is drawn through: G-D02, G-D09, U-D05.\n- 3 filled by a glass strip, because the 3-line WIN threshold bands paired into glass: U-D10, U-D11, U-D12.\n- 2 blocked by a 1 m 'single' piece: G-D07 (the room-outline line) and U-D01 (single-line partition).\nSo 8 of 32 doors cannot be walked through today: in the viewer, wall, glass and single solids are all colliders.\n\nPASSAGES, 20: 19 open, 1 blocked by a single piece (G-P06).\n\nGLAZED OPENINGS, 40 (20 ground, 20 upper):\n- 28 filled by a glass strip (13 ground, 15 upper). Gaps remain only at the D-JAMB pieces.\n- 5 closed by a wall solid: G-W09, G-W14, U-W02, U-W10, U-W12.\n- 6 open, with no glass:\n  - G-W02: sliding WALL-GL panes that do not overlap.\n  - G-W06 and G-W07: link-corridor glass lines, single, with frames on HATCH.\n  - G-W20: no glass lines at all.\n  - U-W07: single WIN lines.\n  - U-W20: the grille lies outside the wall band.\n- 1 single piece: G-W17.\n\nGlass is extruded from the floor to (top - 0.6 m): 3.30 m on the ground floor, 2.90 m upper. There is no sill, and an open 0.6 m band is left above every window. Doors get no lintel: the gap is full storey height.\n\nStray glass solids not at any opening:\n- Ground 3: pool glass (2) and the front fence W_Grill (1.5 m2).\n- Upper 5: the washbasin block on WIN, a shower screen, and 3 door leaves on WIN.\n- Two more leaf slabs sit beside the east-block facade.\n\nIn short: wherever the drawing has real wall ends the merge already leaves the gap open, and the remaining 26% of openings that are blocked are all caused by lines on wall layers or WIN being used for things other than walls or windows.",
+ "proposedRules": [
+  {
+   "rank": 1,
+   "rule": "Normalise before detecting anything. Dedupe identical geometry (1 mm). Transform every nested entity with the full WCS matrix: one LEAF has extrusion (0,0,-1), so its dxf.insert is in OCS. Classify by geometry, never by an INSERT's layer. Keep non-continuous arcs on any layer as possible door evidence. From the wall lines used for gap tests, remove: closed polylines on wall layers that trace a room interior; HIDDEN/dashed boxes; tiny closed shapes. Clip to the building outline (floor plate) so fence and pool lines drop out.",
+   "covers": "All rules below. Here: duplicates (hjkhkk is inserted twice, so WIN goes from 219 raw lines to 126; JAMB 24 -> 22 on the ground and 30 -> 14 upper), the E291 outline (unblocks G-D07, G-P06, G-W17), the OCS leaf of G-D08, the CENTER2/HIDDEN2 xref door arcs, the W_Grill fence and pool glass.",
+   "failureCases": "Outline removal could delete a real thin wall drawn as one closed polyline. A dedupe tolerance can merge two genuinely adjacent jamb pieces. A drawing with no reliable outline cannot be clipped.",
+   "howToCheck": "Compare entity counts before and after per layer. Rerun the merge on Sukhumvit and confirm G-D07, G-P06 and G-W17 become open while the wall-run count stays the same (30 ground, 23 upper). Overlay the result on renders/final_*.png."
+  },
+  {
+   "rank": 2,
+   "rule": "Swing door. An ARC on any layer (r 0.3-1.7 m, sweep 40-100 deg) plus a leaf: a thin rectangle 15-60 mm thick, or a line or line pair, running from the hinge to one arc end. Closed tip = the other arc end. Accept only if the hinge-to-tip chord lies on a wall band (wall lines, jambs or glazing within 0.15 m). Snap each end outward to the nearest jamb outer face, wall end, or perpendicular wall or column face within 0.15 m. Two arcs whose closed tips meet = a double door. Several leaves between one pair of end pieces = a door set.",
+   "covers": "29 of 32 doors here: 6 _1D blocks, 7 loose LEAFs (layer-0 or WIN arcs), 2 pivot doors, 2 *U31 double doors, 2 A-DOOR xref doors, 10 WIN doors including the two 3-leaf sets, and the site gate. Independent of layer and block name.",
+   "failureCases": "Pivot doors (G-D05, G-D10): the leaf crosses the opening and there are two arcs, so take the arc end points on the wall line as the ends. Half-open leaf (U-D01, 52 deg). 3-point arcs not centred on the hinge: use end points, never the centre. False arcs: WALL-GL shower doors (chord on a glass line inside a room), furniture arcs (chairs, fridge; no wall band), TREE quarter circles r=1.0 at boundary walls (no gap). Pocket sliding doors have no arc. A naive leaf matcher picked TREE lines at U-D16/U-D17 and a WALL line at U-D05, so prefer thin rectangles and lines on the same layer as the arc.",
+   "howToCheck": "Run on Sukhumvit against openings.json (32 doors, ends to +-2 cm) and on the presidential suite against the 22 hand-listed DOORS in build_model.py. Report precision and recall and the end error; review contact sheets (renders/op_*.png)."
+  },
+  {
+   "rank": 3,
+   "rule": "Jamb pair. Two identical small rectangles on any layer (here 50 x 100 mm) whose long sides cover the same interval across the wall (+-15 mm) and face each other 0.3-2.6 m apart. Opening ends = the outer faces; clear width = the inner faces. If an arc or leaf lies between them it is a door; if a glass line does, a window.",
+   "covers": "16 of 92 openings (14 doors, 2 glass panels), with 100% precision. Ends correct to +-1 mm, so it is the best snap target for rules 2, 5 and 6, including where the wall is drawn through (G-D02, G-W14, U-W12).",
+   "failureCases": "Single jambs (G-D14, U-D13, U-D14). Window mullion pieces of the same size: pair only nearest neighbours that have no band line running past them. Offices that draw no jambs. Duplicated jambs.",
+   "howToCheck": "Match pairs to openings.json and count real vs false (16/16 here). Measure the distance from each jamb outer face to the wall end (86 of 95 flush to +-1 mm)."
+  },
+  {
+   "rank": 4,
+   "rule": "Collinear wall-end gap. Two wall strips with the same centre line (+-1 cm) and the same thickness (+-1 cm), whose face lines stop facing each other (a closing line across each end is common but not required), with a gap of 0.5-3.0 m. Require no wall-layer geometry inside the gap (lines on glass, window or door layers are allowed) and building on both sides (inside the floor plate). Then classify by what lies inside: arc or leaf -> door; thin parallel band -> glazing; sliding panel -> sliding door; nothing -> passage.",
+   "covers": "49 of 92 openings: all 20 passages, 19 of 32 doors and 10 of 40 windows. 50 of the 65 gap locations found were real; 60 if gaps of 0.25 m or less are dropped.",
+   "failureCases": "Walls drawn straight through the opening (8, plus 3 crossed by a room outline). Openings at L-junctions, where one end is the face of a perpendicular wall or column (G-D06, G-D08, G-D11, U-D07, U-D08, window bays). False gaps: separate buildings sharing a wall line (G017, U104); column-to-wall gaps outside the envelope (G014, G029); stair ends (G057, U105); a column inside the gap (G043); carport posts (G055, G056); a wardrobe carcass on a wall layer (U071).",
+   "howToCheck": "Score wallgaps.json against openings.json (recall per kind, false gaps by cause). On another office's file, render every gap on a contact sheet (sheet.py) and count."
+  },
+  {
+   "rank": 5,
+   "rule": "Glazing band. 1-6 thin lines parallel to the wall (spacing 17-75 mm, total depth 0.13 m or less) on any non-wall layer, spanning within 0.06 m between two bounding elements: wall ends, columns, perpendicular wall faces or jamb pieces. Ends = the outermost jamb piece's outer face, or the bounding face. Reject: 2-line leaves of 20-40 mm that end at an arc (door leaf); bands inside an opening that has an arc (door threshold); small closed shapes (fixtures); lines outside the floor plate (fence, pool); short glass with a glass-door arc inside a room (shower). Kind: a band in a wall gap with wall ends on both sides -> window (default sill); a band spanning a whole bay between columns -> full-height glazing, flagged for staff or read from the elevations.",
+   "covers": "All 40 glazed openings here, including the HATCH-framed link corridors and the WALL-GL sliding panes, once single lines and offset panels are accepted.",
+   "failureCases": "Window vs glass wall cannot be decided for bays (about 22 here). Jamb-only units with no glass lines (G-W17, G-W20) need rule 3/4 evidence instead. Bands are triple-counted when blocks are duplicated. Grille lines just outside the wall band (U-W20). Glazed partitions inside the house (G-W13).",
+   "howToCheck": "Score winbands.json units against openings.json windows (51 real, 21 false here: 9 WIN door leaves, 5 shower screens, pool, fence, 2 fragments of one screen). Compare kinds against the elevation tags where they exist."
+  },
+  {
+   "rank": 6,
+   "rule": "Window hidden in a drawn-through wall. A line on a glass or window layer, or the middle line of a 3-line group, runs inside a wall's thickness between two cross pieces (jamb rectangles or short closing lines) while the wall face lines continue across. Cut an opening between the cross pieces; if a swing arc is attached, it is a door.",
+   "covers": "G-W09, G-W14, U-W02, U-W10, U-W12 and door U-D05: 6 of the 8 openings that the current merge closes with a wall solid. G-D02 and G-D09 are recovered by rules 2 and 3.",
+   "failureCases": "Long finish or insulation lines inside thick walls on a glass-like layer (none here). Cross pieces missing. Partial bridging (U-W02 bridges only the inner 0.10 m).",
+   "howToCheck": "After cutting, rerun s13_checks.py: these 6 should change from 'closed by wall solid' to 'glass strip' or 'open'."
+  },
+  {
+   "rank": 7,
+   "rule": "Pocket sliding door. A thin rectangle (30-50 mm x 0.6-3.5 m) on any layer, parallel to a wall, with at least 30% of its length inside a slot (two parallel wall lines 40-100 mm apart whose end has no closing line across the slot). The door spans from that pocket mouth to the next wall end, box or corner along the panel's line.",
+   "covers": "U-D06, U-D07, U-D08; possibly the orphan leaf C367 at G-P07.",
+   "failureCases": "Shelves and furniture panels. The opening's far end is ambiguous at a free corner (U-D07, U-D08). A half-open panel does not show the full width, so use wall ends.",
+   "howToCheck": "Visual check on contact sheets; widths against the wall gap (U-D06 = 1.70 m)."
+  },
+  {
+   "rank": 8,
+   "rule": "Block-name decoding, as a cross-check only. '_1D<q><L|R><cm>' = single leaf with clear width in cm and hand; 'JAMB' = a 50x100 jamb; anonymous '*U..' blocks = read the geometry. Use the decoded width to check rule 2's result, never as the primary signal.",
+   "covers": "6 of 6 _1D doors here (the width matches the jamb inner faces exactly).",
+   "failureCases": "Useless for other offices and for anonymous dynamic blocks. Mirrored and rotated inserts change the hand.",
+   "howToCheck": "Compare the decoded width with the measured clear width (0 mm difference on all 6 here)."
+  },
+  {
+   "rank": 9,
+   "rule": "Heights and kinds. The plan has no heights (DSYM tags are empty; the 8 DW tags are on the elevation only). Doors: head at the project default (2.10 m) with a lintel up to the ceiling. Windows in a wall gap: default sill 0.90 m and head 2.10 m. Bays and glass screens: full height, flagged. Optionally read the elevation tags by aligning the elevation's grid labels with the plan.",
+   "covers": "Lintels over all 32 doors and sills under 18 windows that sit in wall gaps; flags for 22 bays.",
+   "failureCases": "Floor-length sliding doors drawn exactly like windows (most of the ground-floor glazing faces the terrace and pool). Elevation alignment is unproven.",
+   "howToCheck": "Walk test in the viewer (all doors passable, no glass strips in doors). Staff review of flagged bays; spot-check against the 8 elevation tags."
+  }
+ ],
+ "surprises": [
+  "Walls are drawn straight through 8 openings: doors G-D02, G-D09 and U-D05, and glass panels G-W09, G-W14, U-W02, U-W10 and U-W12. The merge closes all 8 with full-height wall solids. A gap-only detector cannot see them.",
+  "A closed room-outline polyline on WALL (handle E291, rectangle x 32.398-36.398, y 19.2585-23.109) crosses door G-D07, passage G-P06 and window G-W17. All three become 1 m 'single' colliders.",
+  "Door swings are on many layers: DOOR, layer 0 (9 unique arcs, including 2 pivot doors), WALL (inside hjkhkk), WIN (14 in the upper east block), and xref door layers with dashed linetypes (CENTER2, HIDDEN2).",
+  "WIN is used for doors as well as windows. 3-line WIN threshold bands across the upper north doors turn 3 door sets into glass strips, and 5 WIN door leaves become thin glass slabs.",
+  "Misleading layers: a washbasin block (A$C09C2022F) sits on WIN and becomes a glass solid. A sanitary-fitting chain is wrapped in INSERTs on DOOR and WALL. The OPEN layer is a 7.9 x 16.8 m zone outline. A wardrobe carcass is drawn on a wall layer.",
+  "Duplicates everywhere. Block hjkhkk (213 entities, holding most ground-floor windows and one door leaf) is inserted twice at the same point. The upper xref repeats its JAMB and D-JAMB pieces. A JAMB pair at x 26.65 is duplicated loose.",
+  "One LEAF insert (G-D08, plus its copies) has extrusion (0,0,-1). Its dxf.insert is in OCS, so prims.py stores x = -36.748 while the geometry is at +36.748.",
+  "Link-corridor and sliding-glass frames are drawn on the HATCH layer, with only one glass line on WIN or WALL-GL. These openings (G-W02, G-W06, G-W07, U-W07) are open holes in the merged model.",
+  "Two sliding units have D-JAMB pieces and slide arrows but no glass lines at all (G-W17, G-W20).",
+  "Leaf lengths are not opening widths. Loose LEAFs are 0.55 m in 0.60 m clear / 0.70 m structural openings. The *U31 frame in U-D02 sits 45-50 mm inside the wall gap. The _1D SWING arc is not centred on the hinge (about 23 mm off).",
+  "About half the glazed openings are whole bays between columns or perpendicular walls, with no collinear wall ends. No plan has a sill line, and the only door/window tags (D1, D3, AD1, AW1, AW12, AW14 x2, AW17) are on the right-hand elevation. Window vs floor-length glass cannot be decided from the plan.",
+  "Pocket sliding doors (3, upper floor) are drawn as 39 mm DOOR rectangles half inside wall slots. Two of them (U-D07, U-D08) have no wall gap, no arc and no jamb: the only openings no automatic signal found.",
+  "There are loose entities on top of the upper xref block (for example F960 and F961 at the top level inside the upper plan area), and a HIDDEN2 box on WALL marks an overhead element above passage U-P08.",
+  "Merged-model side effects: the front fence (W_Grill) and the pool glass (WALL-GL) became glass solids. The viewer extrudes glass from the floor to 0.6 m below the next level, so no window has a sill, and every glass solid blocks walking.",
+  "An orphan 1.08 m leaf rectangle on DOOR (handle C367) lies in the wall line at y 14.39-14.43, next to door G-D06 and the 2 m passage G-P07. It may be a sliding door; I left that open."
+ ],
+ "files": [
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-sukhumvit/openings.json (reviewed inventory: 92 openings, a/b on the wall centre line in drawing metres, kind, encodings, notes, sure flag)",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-sukhumvit/checks.json (per opening: bridging lines, wall ends and closing lines, jambs, merged wall/glass/single coverage) and checks.txt (table)",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-sukhumvit/summary.txt and summary.json (end types, jamb vs wall end, merge outcome per kind)",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-sukhumvit/reference_coverage.json (same content as referenceCoverage)",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-sukhumvit/counts.json (per-floor raw and unique counts of every encoding)",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-sukhumvit/candidates.json, doorseeds.json, wallgaps.json, winbands.json, jambpairs.json, arcs.json, inventory.txt (raw automatic signals)",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-sukhumvit/renders/final_ground.png and final_upper.png (all reviewed openings over the merged wall and glass solids)",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-sukhumvit/renders/op_00.png to op_07.png (one crop per opening) and cs_00.png to cs_11.png (all 135 candidates)",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/map-evidence-sukhumvit/scripts/ (common.py, box.py, overlay.py, sheet.py, s01-s15 analysis scripts; rerun order s05, s07, s08, s09, s11, s10, s12, s13, s14, s15)"
+ ],
+ "referenceCoverage": [
+  {
+   "id": "G-D01",
+   "encodings": [
+    "JAMB-pair",
+    "swing arc + leaf rectangle on layer 0",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 1.00 m, a=(12.248,24.759) b=(13.248,24.759); merged: open; north door; no door block"
+  },
+  {
+   "id": "G-D02",
+   "encodings": [
+    "_1D0L100 block",
+    "JAMB-pair"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "door 1.10 m, a=(12.199,19.759) b=(12.199,20.859); merged: closed by wall solid; wall face lines run straight through the door"
+  },
+  {
+   "id": "G-D03",
+   "encodings": [
+    "_1D0L100 block (mirrored insert)",
+    "JAMB-pair",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 1.10 m, a=(12.948,15.809) b=(14.048,15.809); merged: open"
+  },
+  {
+   "id": "G-D04",
+   "encodings": [
+    "_1D3R90 block",
+    "JAMB-pair",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 1.00 m, a=(10.923,13.758) b=(10.923,14.758); merged: open"
+  },
+  {
+   "id": "G-D05",
+   "encodings": [
+    "pivot leaf + 2 arcs on layer 0",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 1.75 m, a=(19.373,19.409) b=(19.373,21.159); merged: open; main entrance pivot door between two clad piers"
+  },
+  {
+   "id": "G-D06",
+   "encodings": [
+    "_1D3R90 block",
+    "JAMB-pair"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 1.00 m, a=(34.423,14.559) b=(34.423,15.559); merged: open; one side is the face of a perpendicular wall: no collinear gap"
+  },
+  {
+   "id": "G-D07",
+   "encodings": [
+    "_1D3R90 block",
+    "JAMB-pair",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "door 1.00 m, a=(36.523,21.455) b=(36.523,22.455); merged: thin single-line piece (1 m collider); 0.25 m wall drawn with 4 lines; the wall's own face lines stop with closing lines, but room-outline polyline E291 on WALL runs along the west face across the door"
+  },
+  {
+   "id": "G-D08",
+   "encodings": [
+    "loose LEAF (block hjkhkk)",
+    "swing arc on WALL (block hjkhkk)",
+    "D-JAMB rect"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 1.15 m, a=(36.698,20.858) b=(37.848,20.858); merged: open; door in an L-shaped glazed screen; ends are a wall face and the glazing end"
+  },
+  {
+   "id": "G-D09",
+   "encodings": [
+    "xref door block XR_L44 Plan$0$D4 (A-DOOR leaf + arc, A-WALL L-returns)"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "door 0.97 m, a=(36.878,14.358) b=(37.848,14.358); merged: closed by wall solid; both wall face lines run straight through"
+  },
+  {
+   "id": "G-D10",
+   "encodings": [
+    "pivot leaf + 2 arcs on layer 0",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 1.20 m, a=(38.073,12.258) b=(38.073,13.455); merged: open; family-room pivot door"
+  },
+  {
+   "id": "G-D11",
+   "encodings": [
+    "loose LEAF (sy=-550)",
+    "JAMB-pair",
+    "arc on layer 0"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 0.70 m, a=(41.597,18.159) b=(41.597,18.858); merged: open; south side is a column face"
+  },
+  {
+   "id": "G-D12",
+   "encodings": [
+    "loose LEAF",
+    "JAMB-pair",
+    "arc on layer 0"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 0.70 m, a=(51.698,23.309) b=(52.398,23.309); merged: open"
+  },
+  {
+   "id": "G-D13",
+   "encodings": [
+    "loose LEAF",
+    "JAMB-pair",
+    "arc on layer 0",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 0.70 m, a=(52.448,19.659) b=(52.448,20.358); merged: open"
+  },
+  {
+   "id": "G-D14",
+   "encodings": [
+    "loose LEAF",
+    "single JAMB",
+    "arc on layer 0",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 0.70 m, a=(52.448,21.559) b=(52.448,22.259); merged: open; only one JAMB block"
+  },
+  {
+   "id": "G-D15",
+   "encodings": [
+    "loose arc + leaf lines on DOOR"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 0.86 m, a=(53.247,6.853) b=(53.247,7.718); merged: open; site gate between a gate post (D-JAMB outline) and a wall face"
+  },
+  {
+   "id": "G-P01",
+   "encodings": [
+    "wall gap"
+   ],
+   "onlyWallGap": true,
+   "wallDrawn": false,
+   "notes": "passage 1.65 m, a=(14.898,19.459) b=(14.898,21.104); merged: open; west wing hall to link corridor"
+  },
+  {
+   "id": "G-P02",
+   "encodings": [
+    "wall gap"
+   ],
+   "onlyWallGap": true,
+   "wallDrawn": false,
+   "notes": "passage 1.20 m, a=(12.948,19.409) b=(14.148,19.409); merged: open"
+  },
+  {
+   "id": "G-P03",
+   "encodings": [
+    "wall gap"
+   ],
+   "onlyWallGap": true,
+   "wallDrawn": false,
+   "notes": "passage 1.40 m, a=(12.898,13.556) b=(12.898,14.954); merged: open"
+  },
+  {
+   "id": "G-P04",
+   "encodings": [
+    "wall gap"
+   ],
+   "onlyWallGap": true,
+   "wallDrawn": false,
+   "notes": "passage 1.20 m, a=(12.948,12.632) b=(14.146,12.632); merged: open"
+  },
+  {
+   "id": "G-P05",
+   "encodings": [
+    "wall gap"
+   ],
+   "onlyWallGap": true,
+   "wallDrawn": false,
+   "notes": "passage 1.50 m, a=(32.273,14.557) b=(32.273,16.058); merged: open"
+  },
+  {
+   "id": "G-P06",
+   "encodings": [
+    "wall gap",
+    "room outline polyline on WALL crosses it"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "passage 2.45 m, a=(32.273,20.110) b=(32.273,22.558); merged: thin single-line piece (1 m collider); closed room-outline polyline (WALL, handle E291) runs across the gap"
+  },
+  {
+   "id": "G-P07",
+   "encodings": [
+    "wall gap",
+    "orphan leaf rectangle on DOOR (handle C367) in the wall line"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "passage 1.98 m, a=(32.398,14.432) b=(34.373,14.432); merged: open; maybe a sliding door; classification uncertain"
+  },
+  {
+   "id": "G-P08",
+   "encodings": [
+    "wall gap (between two column boxes)"
+   ],
+   "onlyWallGap": true,
+   "wallDrawn": false,
+   "notes": "passage 1.62 m, a=(36.423,16.959) b=(36.423,18.582); merged: open; dressing area to corridor; classification uncertain"
+  },
+  {
+   "id": "G-P09",
+   "encodings": [
+    "wall gap"
+   ],
+   "onlyWallGap": true,
+   "wallDrawn": false,
+   "notes": "passage 0.80 m, a=(14.898,15.807) b=(14.898,16.608); merged: open; mouth of a small outdoor recess; may not count; classification uncertain"
+  },
+  {
+   "id": "G-W01",
+   "encodings": [
+    "WIN band 4 lines (block hjkhkk)",
+    "D-JAMB rects",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window 1.80 m, a=(7.948,13.357) b=(7.948,15.158); merged: glass strip; window in a wall: wall ends on both sides"
+  },
+  {
+   "id": "G-W02",
+   "encodings": [
+    "WALL-GL sliding panels (2 offsets)",
+    "frame lines on HATCH",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 2.05 m, a=(7.948,15.858) b=(7.948,17.909); merged: open; sliding glass unit between a wall face and a column"
+  },
+  {
+   "id": "G-W03",
+   "encodings": [
+    "WIN band 5 lines (block hjkhkk)",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 4.50 m, a=(8.848,8.007) b=(8.848,12.507); merged: glass strip; glazed bay between a column and a wall face"
+  },
+  {
+   "id": "G-W04",
+   "encodings": [
+    "WIN band 5 lines (block hjkhkk)",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 2.90 m, a=(14.198,8.006) b=(14.198,10.906); merged: glass strip; glazed bay"
+  },
+  {
+   "id": "G-W05",
+   "encodings": [
+    "WIN band 4 lines",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window 0.75 m, a=(14.199,15.858) b=(14.199,16.608); merged: glass strip; between two perpendicular walls"
+  },
+  {
+   "id": "G-W06",
+   "encodings": [
+    "glass line on WIN",
+    "frame lines on HATCH",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 4.25 m, a=(14.948,19.359) b=(19.198,19.359); merged: open; link corridor south side"
+  },
+  {
+   "id": "G-W07",
+   "encodings": [
+    "glass line on WIN",
+    "frame lines on HATCH",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 4.25 m, a=(14.948,21.209) b=(19.198,21.209); merged: open; link corridor north side"
+  },
+  {
+   "id": "G-W08",
+   "encodings": [
+    "WIN band 5 lines",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 4.15 m, a=(19.448,14.458) b=(19.448,18.604); merged: glass strip; living room west bay"
+  },
+  {
+   "id": "G-W09",
+   "encodings": [
+    "WALL-GL single line",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "window 1.30 m, a=(19.448,23.104) b=(19.448,24.409); merged: closed by wall solid; stair hall west: glass line between wall lines drawn through"
+  },
+  {
+   "id": "G-W10",
+   "encodings": [
+    "WIN + WALL-GL band",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 1.75 m, a=(19.398,14.508) b=(21.148,14.508); merged: glass strip; living room south, corner to column"
+  },
+  {
+   "id": "G-W11",
+   "encodings": [
+    "WIN band 5 lines (block hjkhkk)",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 5.25 m, a=(21.398,14.508) b=(26.648,14.508); merged: glass strip; living room south bay"
+  },
+  {
+   "id": "G-W12",
+   "encodings": [
+    "WIN band 5 lines (block hjkhkk)",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 5.25 m, a=(26.898,14.508) b=(32.148,14.508); merged: glass strip; dining south bay"
+  },
+  {
+   "id": "G-W13",
+   "encodings": [
+    "WIN 3-line units in block jkljlll (6 x 1.0 m)",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 6.60 m, a=(26.775,14.558) b=(26.775,21.159); merged: glass strip; glazed partition living/dining: glass wall or windows"
+  },
+  {
+   "id": "G-W14",
+   "encodings": [
+    "JAMB-pair",
+    "single WIN glass line"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "window 1.10 m, a=(26.698,23.359) b=(26.698,24.459); merged: closed by wall solid; wall face lines drawn through between the jambs"
+  },
+  {
+   "id": "G-W15",
+   "encodings": [
+    "WIN band 5 lines + WALL-GL (block hjkhkk)",
+    "D-JAMB rects",
+    "WALL-GL slide arrows"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window 4.05 m, a=(27.492,23.159) b=(31.543,23.159); merged: glass strip; kitchen north: wall ends on both sides"
+  },
+  {
+   "id": "G-W16",
+   "encodings": [
+    "WIN bands 3-4 lines",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 6.65 m, a=(32.348,7.658) b=(32.348,14.307); merged: glass strip; family room west bay"
+  },
+  {
+   "id": "G-W17",
+   "encodings": [
+    "D-JAMB squares only (no glass lines)",
+    "WALL-GL slide arrows",
+    "room outline polyline on WALL crosses it"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "window? 3.40 m, a=(33.000,23.159) b=(36.398,23.159); merged: thin single-line piece (1 m collider); sliding unit with no glass lines; the room-outline polyline E291 runs across it"
+  },
+  {
+   "id": "G-W18",
+   "encodings": [
+    "WIN bands 3-4 lines (block hjkhkk)",
+    "D-JAMB rects",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 3.70 m, a=(37.998,7.658) b=(37.998,11.358); merged: glass strip; family room east"
+  },
+  {
+   "id": "G-W19",
+   "encodings": [
+    "WIN + WALL-GL band",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 4.05 m, a=(38.698,16.858) b=(38.698,20.909); merged: glass strip; L-shaped glazed screen with door G-D08 (glass wall?)"
+  },
+  {
+   "id": "G-W20",
+   "encodings": [
+    "D-JAMB squares only (no glass lines)",
+    "WALL-GL slide arrow",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 1.77 m, a=(50.413,23.834) b=(50.413,25.609); merged: open; sliding unit with no glass lines"
+  },
+  {
+   "id": "U-D01",
+   "encodings": [
+    "xref door block A$C83adbef5 (leaf lines + hidden arc on A-DOOR)"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "door 0.70 m, a=(83.079,13.953) b=(83.079,14.653); merged: thin single-line piece (1 m collider); in a single-line partition; leaf drawn 52 deg open"
+  },
+  {
+   "id": "U-D02",
+   "encodings": [
+    "*U31 unequal double door on I-DOOR",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 1.35 m, a=(88.296,19.608) b=(88.296,20.959); merged: open; door frame 19.653-20.909 sits about 45 mm inside the wall ends"
+  },
+  {
+   "id": "U-D03",
+   "encodings": [
+    "*U31 unequal double door on I-DOOR",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 1.26 m, a=(106.370,14.880) b=(106.370,16.137); merged: open"
+  },
+  {
+   "id": "U-D04",
+   "encodings": [
+    "_1D3R90 block",
+    "JAMB-pair",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 1.00 m, a=(109.497,13.461) b=(109.497,14.461); merged: open"
+  },
+  {
+   "id": "U-D05",
+   "encodings": [
+    "leaf + arc on WIN",
+    "D-JAMB rects",
+    "WALL-GL line in the opening"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "door 1.03 m, a=(107.021,23.159) b=(108.047,23.159); merged: closed by wall solid; wall face lines run straight through"
+  },
+  {
+   "id": "U-D06",
+   "encodings": [
+    "sliding panel rectangle on DOOR (pocket)",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 1.70 m, a=(100.935,19.457) b=(100.935,21.159); merged: open; pocket sliding door, panel drawn half open"
+  },
+  {
+   "id": "U-D07",
+   "encodings": [
+    "sliding panel rectangle on DOOR (pocket)"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 1.28 m, a=(100.935,16.759) b=(100.935,18.040); merged: open; pocket sliding door below the pocket box; ends approximate; classification uncertain"
+  },
+  {
+   "id": "U-D08",
+   "encodings": [
+    "sliding panel rectangle on DOOR (pocket)"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 1.21 m, a=(100.935,16.609) b=(102.147,16.609); merged: open; pocket sliding door; west end approximate; classification uncertain"
+  },
+  {
+   "id": "U-D09",
+   "encodings": [
+    "leaf + arc on WIN",
+    "JAMB-pair",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 1.00 m, a=(116.222,18.159) b=(116.222,19.158); merged: open"
+  },
+  {
+   "id": "U-D10",
+   "encodings": [
+    "leaf + arc on WIN",
+    "WIN threshold band 3 lines",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 0.80 m, a=(116.272,23.159) b=(117.072,23.159); merged: glass strip (from the WIN threshold band)"
+  },
+  {
+   "id": "U-D11",
+   "encodings": [
+    "3 x (leaf + arc on WIN)",
+    "WIN threshold bands",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 2.77 m, a=(118.147,23.159) b=(120.922,23.159); merged: glass strip; three leaves side by side, no wall between"
+  },
+  {
+   "id": "U-D12",
+   "encodings": [
+    "3 x (leaf + arc on WIN)",
+    "WIN threshold bands",
+    "D-JAMB rects",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 2.77 m, a=(121.172,23.159) b=(123.947,23.159); merged: glass strip; three leaves side by side"
+  },
+  {
+   "id": "U-D13",
+   "encodings": [
+    "leaf + arc on WIN",
+    "single JAMB",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 0.90 m, a=(119.197,20.159) b=(120.097,20.159); merged: open"
+  },
+  {
+   "id": "U-D14",
+   "encodings": [
+    "leaf + arc on WIN",
+    "single JAMB",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 0.90 m, a=(122.097,20.159) b=(122.997,20.159); merged: open"
+  },
+  {
+   "id": "U-D15",
+   "encodings": [
+    "leaf + arc on WIN",
+    "JAMB-pair",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 0.90 m, a=(123.997,18.164) b=(123.997,19.064); merged: open"
+  },
+  {
+   "id": "U-D16",
+   "encodings": [
+    "loose LEAF",
+    "JAMB-pair",
+    "arc on WIN",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 0.70 m, a=(117.122,20.884) b=(117.122,21.584); merged: open"
+  },
+  {
+   "id": "U-D17",
+   "encodings": [
+    "loose LEAF",
+    "JAMB-pair",
+    "arc on WIN",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "door 0.70 m, a=(117.122,21.884) b=(117.122,22.584); merged: open"
+  },
+  {
+   "id": "U-P01",
+   "encodings": [
+    "wall gap"
+   ],
+   "onlyWallGap": true,
+   "wallDrawn": false,
+   "notes": "passage 1.50 m, a=(85.270,21.009) b=(86.769,21.009); merged: open; one end is a perpendicular wall face"
+  },
+  {
+   "id": "U-P02",
+   "encodings": [
+    "wall gap"
+   ],
+   "onlyWallGap": true,
+   "wallDrawn": false,
+   "notes": "passage 1.30 m, a=(86.871,12.632) b=(88.171,12.632); merged: open"
+  },
+  {
+   "id": "U-P03",
+   "encodings": [
+    "wall gap"
+   ],
+   "onlyWallGap": true,
+   "wallDrawn": false,
+   "notes": "passage 1.30 m, a=(86.871,15.808) b=(88.171,15.808); merged: open"
+  },
+  {
+   "id": "U-P04",
+   "encodings": [
+    "wall gap"
+   ],
+   "onlyWallGap": true,
+   "wallDrawn": false,
+   "notes": "passage 1.30 m, a=(86.871,16.658) b=(88.171,16.658); merged: open"
+  },
+  {
+   "id": "U-P05",
+   "encodings": [
+    "wall gap"
+   ],
+   "onlyWallGap": true,
+   "wallDrawn": false,
+   "notes": "passage 1.75 m, a=(93.394,19.409) b=(93.394,21.159); merged: open; same piers as the ground-floor entrance; no door drawn"
+  },
+  {
+   "id": "U-P06",
+   "encodings": [
+    "wall gap"
+   ],
+   "onlyWallGap": true,
+   "wallDrawn": false,
+   "notes": "passage 1.70 m, a=(107.597,12.757) b=(107.597,14.457); merged: open"
+  },
+  {
+   "id": "U-P07",
+   "encodings": [
+    "wall gap"
+   ],
+   "onlyWallGap": true,
+   "wallDrawn": false,
+   "notes": "passage 1.17 m, a=(112.019,10.685) b=(112.019,11.858); merged: open"
+  },
+  {
+   "id": "U-P08",
+   "encodings": [
+    "wall gap"
+   ],
+   "onlyWallGap": true,
+   "wallDrawn": false,
+   "notes": "passage 1.00 m, a=(85.270,15.808) b=(86.270,15.808); merged: open; between two wall stubs; a HIDDEN2 box on WALL marks an overhead element above it"
+  },
+  {
+   "id": "U-P09",
+   "encodings": [
+    "wall gap"
+   ],
+   "onlyWallGap": true,
+   "wallDrawn": false,
+   "notes": "passage 1.85 m, a=(116.222,19.258) b=(116.222,21.110); merged: open; open side of a small room; classification uncertain"
+  },
+  {
+   "id": "U-P10",
+   "encodings": [
+    "wall gap"
+   ],
+   "onlyWallGap": true,
+   "wallDrawn": false,
+   "notes": "passage 1.90 m, a=(116.222,21.209) b=(116.222,23.110); merged: open; open side of a WC; classification uncertain"
+  },
+  {
+   "id": "U-P11",
+   "encodings": [
+    "wall gap"
+   ],
+   "onlyWallGap": true,
+   "wallDrawn": false,
+   "notes": "passage 0.70 m, a=(106.972,23.759) b=(106.972,24.459); merged: open; open side of a small niche next to glass panel U-W12; classification uncertain"
+  },
+  {
+   "id": "U-W01",
+   "encodings": [
+    "WIN band 5 lines",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window 2.60 m, a=(81.820,12.757) b=(81.820,15.359); merged: glass strip"
+  },
+  {
+   "id": "U-W02",
+   "encodings": [
+    "WALL-GL single line",
+    "D-JAMB rects",
+    "wall gap (outer 0.15 m only)"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "window 1.59 m, a=(81.895,19.367) b=(81.895,20.959); merged: closed by wall solid; inner 0.10 m of the wall drawn through as frame lines on WALL"
+  },
+  {
+   "id": "U-W03",
+   "encodings": [
+    "WIN band 5 lines",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 4.50 m, a=(82.869,8.008) b=(82.869,12.507); merged: glass strip; bay"
+  },
+  {
+   "id": "U-W04",
+   "encodings": [
+    "WIN band 4 lines",
+    "frame lines on HATCH",
+    "D-JAMB rects",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 2.90 m, a=(88.220,8.008) b=(88.220,10.905); merged: glass strip; bay"
+  },
+  {
+   "id": "U-W05",
+   "encodings": [
+    "WIN band 3 lines",
+    "D-JAMB rects",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window 0.75 m, a=(88.220,15.857) b=(88.220,16.608); merged: glass strip"
+  },
+  {
+   "id": "U-W06",
+   "encodings": [
+    "WIN band 5 lines",
+    "frame lines on HATCH",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 4.80 m, a=(88.420,21.209) b=(93.220,21.209); merged: glass strip; link corridor north"
+  },
+  {
+   "id": "U-W07",
+   "encodings": [
+    "WIN lines",
+    "frame lines on HATCH",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 4.80 m, a=(88.420,19.359) b=(93.220,19.359); merged: open (single WIN lines); link corridor south"
+  },
+  {
+   "id": "U-W08",
+   "encodings": [
+    "WIN + WALL-GL band",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 1.75 m, a=(93.420,14.509) b=(95.170,14.509); merged: glass strip"
+  },
+  {
+   "id": "U-W09",
+   "encodings": [
+    "WIN band 5 lines",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 4.20 m, a=(93.470,14.459) b=(93.470,18.658); merged: glass strip; bay"
+  },
+  {
+   "id": "U-W10",
+   "encodings": [
+    "WALL-GL single line",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "window 1.35 m, a=(93.470,23.109) b=(93.470,24.459); merged: closed by wall solid; glass line between wall lines drawn through"
+  },
+  {
+   "id": "U-W11",
+   "encodings": [
+    "WIN band 5 lines",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 5.25 m, a=(100.920,14.509) b=(106.170,14.509); merged: glass strip; bay"
+  },
+  {
+   "id": "U-W12",
+   "encodings": [
+    "JAMB-pair",
+    "WALL-GL single line"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": true,
+   "notes": "window 0.70 m, a=(106.220,23.759) b=(106.220,24.459); merged: closed by wall solid; wall face lines drawn between the jambs"
+  },
+  {
+   "id": "U-W13",
+   "encodings": [
+    "WIN band 5 lines",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 2.90 m, a=(106.370,7.658) b=(106.370,10.556); merged: glass strip; bay"
+  },
+  {
+   "id": "U-W14",
+   "encodings": [
+    "WIN band 5 lines",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 2.87 m, a=(112.020,7.658) b=(112.020,10.531); merged: glass strip; bay"
+  },
+  {
+   "id": "U-W15",
+   "encodings": [
+    "WIN band 5 lines",
+    "D-JAMB rects"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window 2.40 m, a=(112.020,11.959) b=(112.020,14.359); merged: glass strip"
+  },
+  {
+   "id": "U-W16",
+   "encodings": [
+    "WIN band 5 lines",
+    "D-JAMB rects",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window 2.40 m, a=(112.020,15.459) b=(112.020,17.860); merged: glass strip"
+  },
+  {
+   "id": "U-W17",
+   "encodings": [
+    "WIN band 5 lines",
+    "D-JAMB rects",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window 2.75 m, a=(112.020,20.360) b=(112.020,23.110); merged: glass strip"
+  },
+  {
+   "id": "U-W18",
+   "encodings": [
+    "A_Grill + WIN band",
+    "frame blocks (posts)",
+    "HATCH crosses"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 12.53 m, a=(114.216,17.884) b=(126.745,17.884); merged: glass strip; east block south facade (grille / glazing)"
+  },
+  {
+   "id": "U-W19",
+   "encodings": [
+    "A_Grill band 3 lines",
+    "frame blocks (posts)"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 5.60 m, a=(126.683,17.834) b=(126.683,23.434); merged: glass strip; east block east facade"
+  },
+  {
+   "id": "U-W20",
+   "encodings": [
+    "A_Grill 2 lines just outside the wall line",
+    "frame blocks (posts)",
+    "wall gap"
+   ],
+   "onlyWallGap": false,
+   "wallDrawn": false,
+   "notes": "window? 2.37 m, a=(124.047,23.235) b=(126.421,23.235); merged: open on the wall line (glass strip just outside); east room north side"
+  }
+ ]
+}

@@ -1,0 +1,627 @@
+{
+ "spec": {
+  "chair": {
+   "far": 5000,
+   "near": 10000
+  },
+  "stool": {
+   "far": 3000,
+   "near": 6000
+  },
+  "sofa": {
+   "far": 5000,
+   "near": 10000
+  },
+  "table": {
+   "far": 2000,
+   "near": 4000
+  },
+  "electronics": {
+   "far": 2500,
+   "near": 5000
+  },
+  "cabinet": {
+   "far": 2000,
+   "near": 4000
+  },
+  "plant": {
+   "far": 5000,
+   "near": 10000
+  },
+  "sanitary": {
+   "far": 2500,
+   "near": 5000
+  },
+  "screen": {
+   "far": 500,
+   "near": 1000
+  },
+  "kiosk": {
+   "far": 5000,
+   "near": 10000
+  }
+ },
+ "classes": [
+  {
+   "class": "chair",
+   "measured": true,
+   "families": 5,
+   "pieces": 52,
+   "atBudget": 260000
+  },
+  {
+   "class": "electronics",
+   "measured": true,
+   "families": 3,
+   "pieces": 32,
+   "atBudget": 80000
+  },
+  {
+   "class": "stool",
+   "measured": true,
+   "families": 3,
+   "pieces": 18,
+   "atBudget": 54000
+  },
+  {
+   "class": "table",
+   "measured": true,
+   "families": 8,
+   "pieces": 25,
+   "atBudget": 50000
+  },
+  {
+   "class": "screen",
+   "measured": false,
+   "families": 3,
+   "pieces": 6,
+   "atBudget": 3000
+  },
+  {
+   "class": "sofa",
+   "measured": true,
+   "families": 6,
+   "pieces": 15,
+   "atBudget": 75000
+  },
+  {
+   "class": "kiosk",
+   "measured": false,
+   "families": 1,
+   "pieces": 3,
+   "atBudget": 15000
+  },
+  {
+   "class": "plant",
+   "measured": false,
+   "families": 5,
+   "pieces": 7,
+   "atBudget": 35000
+  },
+  {
+   "class": "sanitary",
+   "measured": false,
+   "families": 6,
+   "pieces": 10,
+   "atBudget": 25000
+  },
+  {
+   "class": "cabinet",
+   "measured": false,
+   "families": 14,
+   "pieces": 17,
+   "atBudget": 34000
+  }
+ ],
+ "totals": {
+  "pieces": 185,
+  "families": 54,
+  "allAtBudget": 631000,
+  "eightFamilies": {
+   "pieces": 65,
+   "fullDetail": 4893555,
+   "atSpec": 185349
+  },
+  "eightAtSpecPlusRestAtBudget": 591349,
+  "closeUpCopiesWorstPlace": {
+   "pieces": 17,
+   "extraTriangles": 56000,
+   "at": [
+    "L1",
+    -1.9,
+    -3.6
+   ]
+  },
+  "worstCase": 687000
+ },
+ "families": [
+  {
+   "family": "mollie_chair_a685_revit - A685 2",
+   "kind": "Chair / stool",
+   "class": "chair",
+   "pieces": 19,
+   "budgetEach": 5000,
+   "atBudget": 95000,
+   "model": "visitor_chair01",
+   "fullEach": 241326,
+   "keptEach": 4940,
+   "keptHow": "slimmed to 5,000 budget",
+   "copies": 19,
+   "fullDetail": 4585194,
+   "atSpec": 93860
+  },
+  {
+   "family": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range",
+   "kind": "Chair / stool",
+   "class": "chair",
+   "pieces": 16,
+   "budgetEach": 5000,
+   "atBudget": 80000
+  },
+  {
+   "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+   "kind": "Computer / monitor",
+   "class": "electronics",
+   "pieces": 16,
+   "budgetEach": 2500,
+   "atBudget": 40000,
+   "model": "monitor",
+   "fullEach": 15290,
+   "keptEach": 2496,
+   "keptHow": "slimmed to 2,500 budget",
+   "copies": 16,
+   "fullDetail": 244640,
+   "atSpec": 39936
+  },
+  {
+   "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE",
+   "kind": "Chair / stool",
+   "class": "stool",
+   "pieces": 9,
+   "budgetEach": 3000,
+   "atBudget": 27000
+  },
+  {
+   "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H",
+   "kind": "Coffee / side table",
+   "class": "table",
+   "pieces": 9,
+   "budgetEach": 2000,
+   "atBudget": 18000,
+   "model": "side_table",
+   "fullEach": 1564,
+   "keptEach": 1564,
+   "keptHow": "as it is",
+   "copies": 9,
+   "fullDetail": 14076,
+   "atSpec": 14076
+  },
+  {
+   "family": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1",
+   "kind": "Telephone",
+   "class": "electronics",
+   "pieces": 9,
+   "budgetEach": 2500,
+   "atBudget": 22500
+  },
+  {
+   "family": "Fritz-Hansen_SH200 - Default",
+   "kind": "Chair / stool",
+   "class": "chair",
+   "pieces": 8,
+   "budgetEach": 5000,
+   "atBudget": 40000
+  },
+  {
+   "family": "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1",
+   "kind": "Printer / copier",
+   "class": "electronics",
+   "pieces": 7,
+   "budgetEach": 2500,
+   "atBudget": 17500
+  },
+  {
+   "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE",
+   "kind": "Chair / stool",
+   "class": "stool",
+   "pieces": 5,
+   "budgetEach": 3000,
+   "atBudget": 15000,
+   "model": "stool",
+   "fullEach": 2680,
+   "keptEach": 2680,
+   "keptHow": "as it is",
+   "copies": 5,
+   "fullDetail": 13400,
+   "atSpec": 13400
+  },
+  {
+   "family": "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4",
+   "kind": "Chair / stool",
+   "class": "chair",
+   "pieces": 5,
+   "budgetEach": 5000,
+   "atBudget": 25000
+  },
+  {
+   "family": "IA_J15_WORKING TABLE - 1800W 1000D 750H",
+   "kind": "Table / desk",
+   "class": "table",
+   "pieces": 5,
+   "budgetEach": 2000,
+   "atBudget": 10000,
+   "model": "working_table",
+   "fullEach": 104,
+   "keptEach": 104,
+   "keptHow": "as it is",
+   "copies": 5,
+   "fullDetail": 520,
+   "atSpec": 520
+  },
+  {
+   "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY",
+   "kind": "Chair / stool",
+   "class": "stool",
+   "pieces": 4,
+   "budgetEach": 3000,
+   "atBudget": 12000,
+   "model": "visitor_chair02",
+   "fullEach": 6084,
+   "keptEach": 3042,
+   "keptHow": "slimmed to 50 %",
+   "copies": 4,
+   "fullDetail": 24336,
+   "atSpec": 12168
+  },
+  {
+   "family": "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR",
+   "kind": "Chair / stool",
+   "class": "chair",
+   "pieces": 4,
+   "budgetEach": 5000,
+   "atBudget": 20000
+  },
+  {
+   "family": "Steelcase - Height-Adjustable Desk - Privacy Screen - Sarto - 30W x 19_5H",
+   "kind": "Privacy screen / panel",
+   "class": "screen",
+   "pieces": 4,
+   "budgetEach": 500,
+   "atBudget": 2000
+  },
+  {
+   "family": "SOFA_BENCH_DIOR - TYPE 2",
+   "kind": "Sofa / armchair",
+   "class": "sofa",
+   "pieces": 4,
+   "budgetEach": 5000,
+   "atBudget": 20000,
+   "model": "banquet",
+   "fullEach": 4720,
+   "keptEach": 4720,
+   "keptHow": "as it is",
+   "copies": 1,
+   "fullDetail": 4720,
+   "atSpec": 4720
+  },
+  {
+   "family": "ATM Machine - ATM Machine",
+   "kind": "ATM / kiosk",
+   "class": "kiosk",
+   "pieces": 3,
+   "budgetEach": 5000,
+   "atBudget": 15000
+  },
+  {
+   "family": "CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA_VISIONA STOOL",
+   "kind": "Chair / stool",
+   "class": "sofa",
+   "pieces": 3,
+   "budgetEach": 5000,
+   "atBudget": 15000,
+   "model": "sofa",
+   "fullEach": 2223,
+   "keptEach": 2223,
+   "keptHow": "as it is",
+   "copies": 3,
+   "fullDetail": 6669,
+   "atSpec": 6669
+  },
+  {
+   "family": "Enscape AssetDefinition - Vase 003 Heracleum - Enscape AssetDefinition - Vase 003 Heracleum",
+   "kind": "Plant",
+   "class": "plant",
+   "pieces": 3,
+   "budgetEach": 5000,
+   "atBudget": 15000
+  },
+  {
+   "family": "COTTO Two piece toilet Elzra C13920 _1_ - COTTO Two piece toilet Elzra C13920",
+   "kind": "Sanitary fitting",
+   "class": "sanitary",
+   "pieces": 3,
+   "budgetEach": 2500,
+   "atBudget": 7500
+  },
+  {
+   "family": "Wall-hung vitreous china basin-Meridian-327242xx0 - 327242000 White",
+   "kind": "Sanitary fitting",
+   "class": "sanitary",
+   "pieces": 3,
+   "budgetEach": 2500,
+   "atBudget": 7500
+  },
+  {
+   "family": "Etta Armchair1 - TYPE 2",
+   "kind": "Sofa / armchair",
+   "class": "sofa",
+   "pieces": 3,
+   "budgetEach": 5000,
+   "atBudget": 15000
+  },
+  {
+   "family": "TABLE_DINING_RECTANGLE CHAMPAGNE LEG - TA103 380W x 380D x 750H",
+   "kind": "Table / desk",
+   "class": "table",
+   "pieces": 3,
+   "budgetEach": 2000,
+   "atBudget": 6000
+  },
+  {
+   "family": "CONSOLE_CABINET_BAKER - TA13 1800W 400D",
+   "kind": "Cabinet / casework",
+   "class": "cabinet",
+   "pieces": 2,
+   "budgetEach": 2000,
+   "atBudget": 4000
+  },
+  {
+   "family": "IA_J10_WORK CABINET - IA_J10_WORK CABINET",
+   "kind": "Cabinet / casework",
+   "class": "cabinet",
+   "pieces": 2,
+   "budgetEach": 2000,
+   "atBudget": 4000
+  },
+  {
+   "family": "BENCH-INSTANCE GENERIC - TYPE 1",
+   "kind": "Chair / stool",
+   "class": "sofa",
+   "pieces": 2,
+   "budgetEach": 5000,
+   "atBudget": 10000
+  },
+  {
+   "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 700W 400H",
+   "kind": "Coffee / side table",
+   "class": "table",
+   "pieces": 2,
+   "budgetEach": 2000,
+   "atBudget": 4000
+  },
+  {
+   "family": "SOFA_03_1 - 1500W x 400D SE18",
+   "kind": "Sofa / armchair",
+   "class": "sofa",
+   "pieces": 2,
+   "budgetEach": 5000,
+   "atBudget": 10000
+  },
+  {
+   "family": "IA_J15_WORKING TABLE - 1400W 1000D 750H",
+   "kind": "Table / desk",
+   "class": "table",
+   "pieces": 2,
+   "budgetEach": 2000,
+   "atBudget": 4000
+  },
+  {
+   "family": "WORKING TABLE - WORKING TABLE",
+   "kind": "Table / desk",
+   "class": "table",
+   "pieces": 2,
+   "budgetEach": 2000,
+   "atBudget": 4000
+  },
+  {
+   "family": "RACKS_DATA - 1100x600",
+   "kind": "Tall cabinet / wardrobe",
+   "class": "cabinet",
+   "pieces": 2,
+   "budgetEach": 2000,
+   "atBudget": 4000
+  },
+  {
+   "family": "CONSOLE_CABINET_BAKER - TA13 1200W 400D",
+   "kind": "Cabinet / casework",
+   "class": "cabinet",
+   "pieces": 1,
+   "budgetEach": 2000,
+   "atBudget": 2000
+  },
+  {
+   "family": "Casework 1 - Casework 2",
+   "kind": "Cabinet / casework",
+   "class": "cabinet",
+   "pieces": 1,
+   "budgetEach": 2000,
+   "atBudget": 2000
+  },
+  {
+   "family": "Casework 2 - Casework 2",
+   "kind": "Cabinet / casework",
+   "class": "cabinet",
+   "pieces": 1,
+   "budgetEach": 2000,
+   "atBudget": 2000
+  },
+  {
+   "family": "IA_J07_WORK CABINET - IA_J07_WORK CABINET",
+   "kind": "Cabinet / casework",
+   "class": "cabinet",
+   "pieces": 1,
+   "budgetEach": 2000,
+   "atBudget": 2000
+  },
+  {
+   "family": "IA_J11_WORK CABINET - IA_J11_WORK CABINET",
+   "kind": "Cabinet / casework",
+   "class": "cabinet",
+   "pieces": 1,
+   "budgetEach": 2000,
+   "atBudget": 2000
+  },
+  {
+   "family": "IA_J12_CABINET - IA_J12_CABINET",
+   "kind": "Cabinet / casework",
+   "class": "cabinet",
+   "pieces": 1,
+   "budgetEach": 2000,
+   "atBudget": 2000
+  },
+  {
+   "family": "WORK CABINET-1 - WORK CABINET-1",
+   "kind": "Cabinet / casework",
+   "class": "cabinet",
+   "pieces": 1,
+   "budgetEach": 2000,
+   "atBudget": 2000
+  },
+  {
+   "family": "loose shapes on Q-CASE",
+   "kind": "Cabinet / casework",
+   "class": "cabinet",
+   "pieces": 1,
+   "budgetEach": 2000,
+   "atBudget": 2000
+  },
+  {
+   "family": "COFFEE TABLE RETANGLE - VENNATIVE - TYPE 1",
+   "kind": "Coffee / side table",
+   "class": "table",
+   "pieces": 1,
+   "budgetEach": 2000,
+   "atBudget": 2000
+  },
+  {
+   "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 1000W",
+   "kind": "Coffee / side table",
+   "class": "table",
+   "pieces": 1,
+   "budgetEach": 2000,
+   "atBudget": 2000
+  },
+  {
+   "family": "Enscape AssetDefinition - Bush 020 Fern - Enscape AssetDefinition - Bush 020 Fern",
+   "kind": "Plant",
+   "class": "plant",
+   "pieces": 1,
+   "budgetEach": 5000,
+   "atBudget": 5000
+  },
+  {
+   "family": "Enscape AssetDefinition - Potted Plant 011 Epipremnum - Enscape AssetDefinition - Potted Plant 011 Epipremnum",
+   "kind": "Plant",
+   "class": "plant",
+   "pieces": 1,
+   "budgetEach": 5000,
+   "atBudget": 5000
+  },
+  {
+   "family": "Enscape AssetDefinition - Potted Plant 028 Peace Lily - Enscape AssetDefinition - Potted Plant 028 Peace Lily 2",
+   "kind": "Plant",
+   "class": "plant",
+   "pieces": 1,
+   "budgetEach": 5000,
+   "atBudget": 5000
+  },
+  {
+   "family": "POTTED PLANT - STOOL LOW_VITRA_VISIONA STOOL",
+   "kind": "Plant",
+   "class": "plant",
+   "pieces": 1,
+   "budgetEach": 5000,
+   "atBudget": 5000
+  },
+  {
+   "family": "C12377 - C12377",
+   "kind": "Sanitary fitting",
+   "class": "sanitary",
+   "pieces": 1,
+   "budgetEach": 2500,
+   "atBudget": 2500
+  },
+  {
+   "family": "COTTO Wall hung urinal Natasha C313BI _1_ - COTTO Wall hung urinal Natasha C313BI",
+   "kind": "Sanitary fitting",
+   "class": "sanitary",
+   "pieces": 1,
+   "budgetEach": 2500,
+   "atBudget": 2500
+  },
+  {
+   "family": "สุขภัณฑ์แบบนั่งราบ - C1403 - C1403",
+   "kind": "Sanitary fitting",
+   "class": "sanitary",
+   "pieces": 1,
+   "budgetEach": 2500,
+   "atBudget": 2500
+  },
+  {
+   "family": "อ่างล้างหน้าฝั่งครึ่งเคาน์เตอร์ - C0240 - อ่างล้างหน้าฝั่งครึ่งเคาน์เตอร์ - C0240",
+   "kind": "Sanitary fitting",
+   "class": "sanitary",
+   "pieces": 1,
+   "budgetEach": 2500,
+   "atBudget": 2500
+  },
+  {
+   "family": "SOFA_BENCH_DIOR - TYPE 1",
+   "kind": "Sofa / armchair",
+   "class": "sofa",
+   "pieces": 1,
+   "budgetEach": 5000,
+   "atBudget": 5000
+  },
+  {
+   "family": "APPLIANCE_TV_WALL MOUNT WITH BRACKET - 75_",
+   "kind": "TV / wall screen",
+   "class": "screen",
+   "pieces": 1,
+   "budgetEach": 500,
+   "atBudget": 500
+  },
+  {
+   "family": "IF_J04_WALL TV - WALL TV 3800W",
+   "kind": "TV / wall screen",
+   "class": "screen",
+   "pieces": 1,
+   "budgetEach": 500,
+   "atBudget": 500
+  },
+  {
+   "family": "TALL CABINET - TALL CABINET 1875W",
+   "kind": "Tall cabinet / wardrobe",
+   "class": "cabinet",
+   "pieces": 1,
+   "budgetEach": 2000,
+   "atBudget": 2000
+  },
+  {
+   "family": "TALL CABINET - TALL CABINET 2800W",
+   "kind": "Tall cabinet / wardrobe",
+   "class": "cabinet",
+   "pieces": 1,
+   "budgetEach": 2000,
+   "atBudget": 2000
+  },
+  {
+   "family": "TALL CABINET 4200W - TALL CABINET 4200W",
+   "kind": "Tall cabinet / wardrobe",
+   "class": "cabinet",
+   "pieces": 1,
+   "budgetEach": 2000,
+   "atBudget": 2000
+  }
+ ]
+}

@@ -1,0 +1,155 @@
+{
+ "key": "chair_test",
+ "name": "Chair.glb (the chair test)",
+ "file": "Chair.glb",
+ "kind": "seat",
+ "family": "the chair test's round-table chair (not a bank family)",
+ "piece": null,
+ "furnishes": 75,
+ "turnUndone_deg": 60,
+ "turnFrom": "the turn of its root nodes undone, as chair_load.js does",
+ "standsAt_m": 0,
+ "size_m": [
+  0.6093,
+  0.7832,
+  0.604
+ ],
+ "gltfSceneToModelFrame_columnMajor": [
+  0.5,
+  0,
+  0.8660254,
+  0,
+  0,
+  1,
+  0,
+  0,
+  -0.8660254,
+  0,
+  0.5,
+  0,
+  5.3810933,
+  0,
+  25.447896,
+  1
+ ],
+ "full": {
+  "triangles": 41921,
+  "vertices": 41598,
+  "weldedVertices": 21107,
+  "parts": [
+   {
+    "name": "Object2111126973",
+    "triangles": 7972,
+    "vertices": 5713,
+    "mirrored": false
+   },
+   {
+    "name": "Object2111126974",
+    "triangles": 11188,
+    "vertices": 7988,
+    "mirrored": false
+   },
+   {
+    "name": "Object2111126975",
+    "triangles": 6226,
+    "vertices": 4570,
+    "mirrored": false
+   },
+   {
+    "name": "Result006",
+    "triangles": 10933,
+    "vertices": 19652,
+    "mirrored": false
+   },
+   {
+    "name": "Object2111126976",
+    "triangles": 5602,
+    "vertices": 3675,
+    "mirrored": false
+   }
+  ],
+  "area_m2": 2.5163
+ },
+ "levels": [
+  {
+   "id": "50%",
+   "label": "50 %",
+   "triangles": 20956,
+   "vertices": 10612,
+   "posOffset": 0,
+   "posCount": 31836,
+   "idxOffset": 127344,
+   "idxCount": 62868
+  },
+  {
+   "id": "20000",
+   "label": "20,000 budget",
+   "triangles": 19997,
+   "vertices": 10132,
+   "posOffset": 378816,
+   "posCount": 30396,
+   "idxOffset": 500400,
+   "idxCount": 59991
+  },
+  {
+   "id": "25%",
+   "label": "25 %",
+   "triangles": 10473,
+   "vertices": 5343,
+   "posOffset": 740364,
+   "posCount": 16029,
+   "idxOffset": 804480,
+   "idxCount": 31419
+  },
+  {
+   "id": "10000",
+   "label": "10,000 budget",
+   "triangles": 9997,
+   "vertices": 5099,
+   "posOffset": 930156,
+   "posCount": 15297,
+   "idxOffset": 991344,
+   "idxCount": 29991
+  },
+  {
+   "id": "12%",
+   "label": "12 %",
+   "triangles": 5027,
+   "vertices": 2574,
+   "posOffset": 1111308,
+   "posCount": 7722,
+   "idxOffset": 1142196,
+   "idxCount": 15081
+  },
+  {
+   "id": "5000",
+   "label": "5,000 budget",
+   "triangles": 4999,
+   "vertices": 2560,
+   "posOffset": 1202520,
+   "posCount": 7680,
+   "idxOffset": 1233240,
+   "idxCount": 14997
+  },
+  {
+   "id": "6%",
+   "label": "6 %",
+   "triangles": 2513,
+   "vertices": 1303,
+   "posOffset": 1293228,
+   "posCount": 3909,
+   "idxOffset": 1308864,
+   "idxCount": 7539
+  },
+  {
+   "id": "2500",
+   "label": "2,500 budget",
+   "triangles": 2498,
+   "vertices": 1296,
+   "posOffset": 1339020,
+   "posCount": 3888,
+   "idxOffset": 1354572,
+   "idxCount": 7494
+  }
+ ]
+}

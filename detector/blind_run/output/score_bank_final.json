@@ -1,0 +1,845 @@
+{
+ "floors": {
+  "bank:L1": {
+   "keyCount": 16,
+   "detCount": 19,
+   "optionalKeys": 9,
+   "optionalFound": [
+    {
+     "key": "B1-91",
+     "det": "L1-012"
+    },
+    {
+     "key": "B1-93",
+     "det": "L1-011"
+    },
+    {
+     "key": "B1-94",
+     "det": "L1-020"
+    },
+    {
+     "key": "B1-99",
+     "det": "L1-018"
+    },
+    {
+     "key": "B1-95",
+     "det": "L1-021"
+    },
+    {
+     "key": "B1-92",
+     "det": "L1-001"
+    },
+    {
+     "key": "B1-97",
+     "det": "L1-010"
+    },
+    {
+     "key": "B1-96",
+     "det": "L1-009"
+    }
+   ],
+   "matched": 16,
+   "width": 16,
+   "ends": 16,
+   "class": 15,
+   "kind": 15,
+   "right": 15,
+   "recall": 1.0,
+   "precision": 0.842,
+   "rightShare": 0.938,
+   "byKind": {
+    "door": {
+     "key": 15,
+     "right": 14,
+     "share": 0.933
+    },
+    "passage": {
+     "key": 1,
+     "right": 1,
+     "share": 1.0
+    }
+   },
+   "missed": [],
+   "extra": [
+    {
+     "det": "L1-024",
+     "kind": "passage",
+     "at": [
+      -3.505,
+      -5.83
+     ],
+     "width": 1.453,
+     "why": [
+      "wall gap (L-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L1-025",
+     "kind": "passage",
+     "at": [
+      5.413,
+      3.208
+     ],
+     "width": 1.229,
+     "why": [
+      "wall gap (L-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L1-026",
+     "kind": "passage",
+     "at": [
+      0.623,
+      6.396
+     ],
+     "width": 1.076,
+     "why": [
+      "wall gap (L-end), nothing drawn in it"
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "key": "B1-01",
+     "det": "L1-013",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.8,
+     "widthDet": 0.8,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B1-04",
+     "det": "L1-002",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.0,
+     "widthDet": 1.0,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B1-05",
+     "det": "L1-004",
+     "kindKey": "door",
+     "kindDet": "window",
+     "centreOff": 0.0,
+     "widthKey": 1.1,
+     "widthDet": 1.1,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": false,
+     "kindOk": false,
+     "right": false
+    },
+    {
+     "key": "B1-06",
+     "det": "L1-027",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.6,
+     "widthDet": 1.6,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B1-10",
+     "det": "L1-022",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.925,
+     "widthDet": 0.925,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B1-11",
+     "det": "L1-008",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.925,
+     "widthDet": 0.925,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B1-12",
+     "det": "L1-007",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.925,
+     "widthDet": 0.925,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B1-13",
+     "det": "L1-016",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.0,
+     "widthDet": 1.0,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B1-15",
+     "det": "L1-015",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.3,
+     "widthDet": 1.3,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B1-16",
+     "det": "L1-014",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.0,
+     "widthDet": 1.0,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B1-08",
+     "det": "L1-019",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.603,
+     "widthDet": 1.603,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B1-07",
+     "det": "L1-005",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.625,
+     "widthDet": 1.625,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B1-14",
+     "det": "L1-017",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.7,
+     "widthDet": 0.7,
+     "endErr": 0.001,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B1-03",
+     "det": "L1-003",
+     "kindKey": "passage",
+     "kindDet": "passage",
+     "centreOff": 0.007,
+     "widthKey": 1.205,
+     "widthDet": 1.205,
+     "endErr": 0.014,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B1-02",
+     "det": "L1-006",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.014,
+     "widthKey": 1.0,
+     "widthDet": 0.999,
+     "endErr": 0.028,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B1-09",
+     "det": "L1-023",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.106,
+     "widthKey": 1.025,
+     "widthDet": 0.975,
+     "endErr": 0.124,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    }
+   ]
+  },
+  "bank:L2": {
+   "keyCount": 25,
+   "detCount": 32,
+   "optionalKeys": 0,
+   "optionalFound": [],
+   "matched": 25,
+   "width": 24,
+   "ends": 25,
+   "class": 25,
+   "kind": 24,
+   "right": 24,
+   "recall": 1.0,
+   "precision": 0.781,
+   "rightShare": 0.96,
+   "byKind": {
+    "door": {
+     "key": 24,
+     "right": 23,
+     "share": 0.958
+    },
+    "passage": {
+     "key": 1,
+     "right": 1,
+     "share": 1.0
+    }
+   },
+   "missed": [],
+   "extra": [
+    {
+     "det": "L2-016",
+     "kind": "passage",
+     "at": [
+      -4.332,
+      -3.381
+     ],
+     "width": 1.498,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L2-017",
+     "kind": "passage",
+     "at": [
+      -4.38,
+      0.044
+     ],
+     "width": 1.592,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L2-018",
+     "kind": "passage",
+     "at": [
+      -4.425,
+      3.331
+     ],
+     "width": 1.683,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L2-021",
+     "kind": "passage",
+     "at": [
+      -3.045,
+      10.691
+     ],
+     "width": 1.822,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L2-023",
+     "kind": "passage",
+     "at": [
+      -2.884,
+      10.742
+     ],
+     "width": 2.212,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L2-024",
+     "kind": "passage",
+     "at": [
+      -0.429,
+      10.545
+     ],
+     "width": 1.498,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "L2-025",
+     "kind": "passage",
+     "at": [
+      0.713,
+      4.962
+     ],
+     "width": 2.983,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "key": "B2-02",
+     "det": "L2-022",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.78,
+     "widthDet": 0.78,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-04",
+     "det": "L2-020",
+     "kindKey": "passage",
+     "kindDet": "passage",
+     "centreOff": 0.0,
+     "widthKey": 1.23,
+     "widthDet": 1.23,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-05",
+     "det": "L2-030",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.78,
+     "widthDet": 0.78,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-06",
+     "det": "L2-007",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.78,
+     "widthDet": 0.78,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-08",
+     "det": "L2-008",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.68,
+     "widthDet": 1.68,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-09",
+     "det": "L2-004",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.0,
+     "widthDet": 1.0,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-10",
+     "det": "L2-026",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.98,
+     "widthDet": 0.98,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-11",
+     "det": "L2-009",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.68,
+     "widthDet": 1.68,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-12",
+     "det": "L2-011",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.38,
+     "widthDet": 1.38,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-13",
+     "det": "L2-027",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.38,
+     "widthDet": 1.38,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-14",
+     "det": "L2-029",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.38,
+     "widthDet": 1.38,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-16",
+     "det": "L2-013",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.68,
+     "widthDet": 0.68,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-17",
+     "det": "L2-012",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.38,
+     "widthDet": 1.38,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-18",
+     "det": "L2-002",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.68,
+     "widthDet": 0.68,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-19",
+     "det": "L2-001",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.88,
+     "widthDet": 1.88,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-20",
+     "det": "L2-014",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.38,
+     "widthDet": 1.38,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-22",
+     "det": "L2-006",
+     "kindKey": "door",
+     "kindDet": "passage",
+     "centreOff": 0.0,
+     "widthKey": 1.1,
+     "widthDet": 1.1,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": false,
+     "right": true
+    },
+    {
+     "key": "B2-23",
+     "det": "L2-015",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.8,
+     "widthDet": 0.8,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-24",
+     "det": "L2-005",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.0,
+     "widthDet": 1.0,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-25",
+     "det": "L2-010",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.9,
+     "widthDet": 0.9,
+     "endErr": 0.0,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-15",
+     "det": "L2-028",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.001,
+     "widthKey": 1.38,
+     "widthDet": 1.379,
+     "endErr": 0.001,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-21",
+     "det": "L2-003",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.001,
+     "widthKey": 1.68,
+     "widthDet": 1.68,
+     "endErr": 0.003,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-01",
+     "det": "L2-031",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.047,
+     "widthKey": 0.78,
+     "widthDet": 0.78,
+     "endErr": 0.05,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-03",
+     "det": "L2-032",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.047,
+     "widthKey": 0.78,
+     "widthDet": 0.78,
+     "endErr": 0.05,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "B2-07",
+     "det": "L2-019",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.062,
+     "widthKey": 1.0,
+     "widthDet": 0.875,
+     "endErr": 0.125,
+     "widthOk": false,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": false
+    }
+   ]
+  }
+ },
+ "total": {
+  "keyCount": 41,
+  "detCount": 51,
+  "matched": 41,
+  "right": 39,
+  "recall": 1.0,
+  "precision": 0.804,
+  "rightShare": 0.951
+ }
+}

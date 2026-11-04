@@ -1,0 +1,843 @@
+{
+ "openings": [
+  {
+   "id": "UE-01",
+   "kind": "window",
+   "subtype": "fixed narrow full-height glazing (tag AW17)",
+   "a": [
+    106.2196,
+    23.7588
+   ],
+   "b": [
+    106.2196,
+    24.4591
+   ],
+   "width": 0.7003,
+   "wallThickness": 0.1,
+   "host": "upper-hall east wall line x 106.17-106.27, between the duct box (top y 23.759) and the hall north wall (south face y 24.459)",
+   "evidence": "WALL-GL glass line x 106.2196 y 23.809-24.409 between WALL face lines x 106.1696/106.2696; JAMB blocks (D-JAMB) at y 23.759-23.809 and 24.409-24.459; TREE sill line on the outer (east) side x 106.42; the east elevation shows it as AW17, 0.70 m, glass 0.05-2.55",
+   "confidence": "high"
+  },
+  {
+   "id": "UE-02",
+   "kind": "passage",
+   "subtype": "open gap between two outdoor areas",
+   "a": [
+    106.9713,
+    23.7588
+   ],
+   "b": [
+    106.9713,
+    24.4591
+   ],
+   "width": 0.7003,
+   "wallThickness": 0.1,
+   "host": "line x 106.92-107.02: top of the duct box east wall (y 23.759) to the east end of the hall north wall (y 24.459)",
+   "evidence": "no wall, glazing or door between y 23.759 and 24.459; west of it is the outdoor niche in front of AW17 (seen in the east elevation), east of it the ledge north of the living room",
+   "confidence": "low",
+   "optional": true,
+   "decision": "Wall end facing the underside of a perpendicular wall, and outdoors on both sides. Unclear whether it is an opening at all, so optional. It is listed only so that a detector pairing these two wall ends is not penalised."
+  },
+  {
+   "id": "UE-03",
+   "kind": "window",
+   "subtype": "single outward-hinged glazed leaf 0.93 m over fixed glazing (casement; possibly a glazed door)",
+   "a": [
+    107.0213,
+    23.2338
+   ],
+   "b": [
+    108.0468,
+    23.2338
+   ],
+   "width": 1.0255,
+   "wallThickness": 0.25,
+   "host": "living-room north wall (y 23.109-23.359), between the duct box east face x 107.021 and the wall end x 108.047",
+   "evidence": "D-JAMB jambs x 107.021-107.071 and 107.997-108.047; WALL lines y 23.109/23.209 and WALL-GL glass y 23.159 across the opening (same symbol as AW17); 0.926 m leaf on WIN at x 107.071 swinging north to y 24.135 with WIN arc r 0.93; TREE sill line across the outer face y 23.359",
+   "confidence": "medium",
+   "eitherKind": true,
+   "decision": "Drawn as a window: glazing/frame lines run across the whole opening and a full-width TREE sill line lies on the outer face, the same pattern as the confirmed windows. It also has hinged leaves and swing arcs on WIN, opening outward over a 0.3 m ledge (TREE lines y 23.66/23.76). The interior doors of this block have no lines across. I read the leaves as outward casement sashes over the fixed lower pane that the elevations show for upper windows. The plan cannot rule out glazed hinged doors, so eitherKind."
+  },
+  {
+   "id": "UE-04",
+   "kind": "window",
+   "subtype": "unglazed 0.20 m slot",
+   "a": [
+    113.0946,
+    23.2338
+   ],
+   "b": [
+    113.2946,
+    23.2338
+   ],
+   "width": 0.2,
+   "wallThickness": 0.25,
+   "host": "north wall of the court east of the living room (y 23.109-23.359), between its east end x 113.095 and the west face of the screen wall x 113.295",
+   "evidence": "WALL lines of the court north wall stop at x 113.0946 (end lines x 113.0196/113.0946); the screen wall (WALL x 113.2946-113.5446 with a D-JAMB cap) starts at x 113.2946; only TREE lines cross the gap (y 23.109 and 23.359); no glazing",
+   "confidence": "low",
+   "optional": true,
+   "decision": "A 0.2 m gap at the NE corner of an outdoor court, next to a perpendicular wall. Too narrow to walk through, with no glazing. Unclear whether it is an opening or a construction gap, so optional."
+  },
+  {
+   "id": "UE-05",
+   "kind": "window",
+   "subtype": "single outward casement 0.70 m over fixed glazing (possibly a glazed door)",
+   "a": [
+    116.2717,
+    23.2338
+   ],
+   "b": [
+    117.0717,
+    23.2338
+   ],
+   "width": 0.8,
+   "wallThickness": 0.25,
+   "host": "staff-block north wall (y 23.109-23.359) at the north end of the WC corridor, between the wall end x 116.272 and the WC-block west wall x 117.072",
+   "evidence": "D-JAMB jambs x 116.272-116.322 and 117.022-117.072; three WIN lines y 23.109/23.159/23.209 across; 0.70 m leaf on WIN at x 116.322 with WIN arc r 0.70 opening north; TREE sill line y 23.359 across the opening",
+   "confidence": "medium",
+   "eitherKind": true,
+   "decision": "Drawn as a window: glazing/frame lines run across the whole opening and a full-width TREE sill line lies on the outer face, the same pattern as the confirmed windows. It also has hinged leaves and swing arcs on WIN, opening outward over a 0.3 m ledge (TREE lines y 23.66/23.76). The interior doors of this block have no lines across. I read the leaves as outward casement sashes over the fixed lower pane that the elevations show for upper windows. The plan cannot rule out glazed hinged doors, so eitherKind."
+  },
+  {
+   "id": "UE-06",
+   "kind": "window",
+   "subtype": "three outward casement sashes 0.86 m each in one wall gap, 50 mm WIN mullions (possibly glazed doors)",
+   "a": [
+    118.1466,
+    23.2338
+   ],
+   "b": [
+    120.9219,
+    23.2338
+   ],
+   "width": 2.7753,
+   "wallThickness": 0.25,
+   "host": "north wall of staff room A (y 23.109-23.359), between the WC-block east wall x 118.147 and column x 120.922-121.172",
+   "evidence": "D-JAMB jambs x 118.147-118.197 and 120.872-120.922; WIN mullions x 119.055-119.105 and 119.964-120.014 (no wall between the bays); three WIN lines y 23.109/23.159/23.209 in each bay; three 0.86 m leaves on WIN (x 118.197, 119.105, 120.014) with WIN arcs r 0.86 opening north; TREE sill line y 23.359 x 118.147-120.922",
+   "confidence": "medium",
+   "eitherKind": true,
+   "decision": "Drawn as a window: glazing/frame lines run across the whole opening and a full-width TREE sill line lies on the outer face, the same pattern as the confirmed windows. It also has hinged leaves and swing arcs on WIN, opening outward over a 0.3 m ledge (TREE lines y 23.66/23.76). The interior doors of this block have no lines across. I read the leaves as outward casement sashes over the fixed lower pane that the elevations show for upper windows. The plan cannot rule out glazed hinged doors, so eitherKind. One opening, because the wall line is interrupted once and the 50 mm mullions are frame members."
+  },
+  {
+   "id": "UE-07",
+   "kind": "window",
+   "subtype": "three outward casement sashes 0.86 m each in one wall gap, 50 mm WIN mullions (possibly glazed doors)",
+   "a": [
+    121.1719,
+    23.2338
+   ],
+   "b": [
+    123.9466,
+    23.2338
+   ],
+   "width": 2.7747,
+   "wallThickness": 0.25,
+   "host": "north wall of staff room B (y 23.109-23.359), between column x 120.922-121.172 and the yard west wall x 123.947-124.047",
+   "evidence": "D-JAMB jambs x 121.172-121.222 and 123.897-123.947; WIN mullions x 122.080-122.130 and 122.988-123.038; three WIN lines per bay; three 0.86 m leaves on WIN (x 121.222, 122.130, 123.038) with WIN arcs r 0.86 opening north",
+   "confidence": "medium",
+   "eitherKind": true,
+   "decision": "Drawn as a window: glazing/frame lines run across the whole opening and a full-width TREE sill line lies on the outer face, the same pattern as the confirmed windows. It also has hinged leaves and swing arcs on WIN, opening outward over a 0.3 m ledge (TREE lines y 23.66/23.76). The interior doors of this block have no lines across. I read the leaves as outward casement sashes over the fixed lower pane that the elevations show for upper windows. The plan cannot rule out glazed hinged doors, so eitherKind. One opening, because the wall line is interrupted once and the 50 mm mullions are frame members."
+  },
+  {
+   "id": "UE-08",
+   "kind": "window",
+   "subtype": "grille-screened unglazed gap (service yard north side)",
+   "a": [
+    124.047,
+    23.2338
+   ],
+   "b": [
+    126.42,
+    23.2338
+   ],
+   "width": 2.373,
+   "wallThickness": 0.25,
+   "host": "north side of the east service yard, between the yard west wall x 124.047 and the NE corner column x 126.42-126.67",
+   "evidence": "no WALL and no glazing; FLOOR curb lines y 23.109 and 23.309; grille posts (frame blocks) x 124.047, 124.576, 126.383 at y 23.309-23.384; A_Grill grille lines y 23.384 and 23.434 just outside the wall line",
+   "confidence": "low",
+   "optional": true,
+   "decision": "The yard is enclosed only by curbs and an aluminium grille (A_Grill), with no glazing. It may be a window-like opening in the wall line or just a screened side of an open-air yard (a glass wall / screen). Optional."
+  },
+  {
+   "id": "UE-09",
+   "kind": "window",
+   "subtype": "grille-screened unglazed side (service yard east side)",
+   "a": [
+    126.5446,
+    18.1585
+   ],
+   "b": [
+    126.5446,
+    23.1091
+   ],
+   "width": 4.9506,
+   "wallThickness": 0.25,
+   "host": "east side of the service yard, between the SE column (top y 18.159) and the NE column (bottom y 23.109), column line x 126.42-126.67",
+   "evidence": "no WALL and no glazing; TREE edge line x 126.42; A_Grill lines x 126.620, 126.695, 126.745 with grille posts at y 18.16, 18.62, 20.62, 22.62, 23.07; ROOF edge line x 126.22 inside the yard",
+   "confidence": "low",
+   "optional": true,
+   "decision": "The whole east face of the block is a grille between two corner columns. It is either a screen forming the facade (a glass wall) or an opening between columns. Optional. The grille is also listed in glassWalls."
+  },
+  {
+   "id": "UE-10",
+   "kind": "window",
+   "subtype": "grille-screened unglazed gap (service yard south side)",
+   "a": [
+    124.0469,
+    18.0335
+   ],
+   "b": [
+    126.4196,
+    18.0335
+   ],
+   "width": 2.3727,
+   "wallThickness": 0.25,
+   "host": "south side of the service yard, between the south stub of the yard west wall (x 124.047) and the SE corner column x 126.42",
+   "evidence": "no WALL and no glazing; TREE curb lines y 17.959 and 18.159; grille posts x 124.047, 124.576, 126.382; A_Grill lines y 17.834/17.884 outside",
+   "confidence": "low",
+   "optional": true,
+   "decision": "Same as UE-08: an unglazed side of the grille-enclosed yard. Optional."
+  },
+  {
+   "id": "UE-11",
+   "kind": "window",
+   "subtype": "full-height glazing, 2 units with mullions (fixed or sliding)",
+   "a": [
+    121.1696,
+    18.0335
+   ],
+   "b": [
+    123.9467,
+    18.0335
+   ],
+   "width": 2.7771,
+   "wallThickness": 0.25,
+   "host": "staff-corridor south facade, between column x 120.92-121.17 and the south stub of the yard wall x 123.947-124.047",
+   "evidence": "WIN glass line y 17.934 (x 121.257-122.451 and 122.588-123.859) with WIN mullion squares x 121.207, 122.451, 122.538, 123.859; an A_Grill grille outside (y 17.83-17.88) and a gravel roof beyond, so it is not a walk-out",
+   "confidence": "high"
+  },
+  {
+   "id": "UE-12",
+   "kind": "window",
+   "subtype": "full-height glazing, 3 units with double mullions (fixed or sliding)",
+   "a": [
+    116.2719,
+    18.0335
+   ],
+   "b": [
+    120.9196,
+    18.0335
+   ],
+   "width": 4.6477,
+   "wallThickness": 0.25,
+   "host": "staff-corridor south facade, between the end of the stair-lobby south wall x 116.272 and column x 120.92-121.17",
+   "evidence": "WIN glass line y 17.934 in three units (x 116.363-118.301, 118.438-120.376, 120.513-120.832) with WIN mullion squares, and no wall pier between them; an A_Grill grille outside",
+   "confidence": "high",
+   "decision": "One opening, because there is no wall between the units, only mullions and grille posts."
+  },
+  {
+   "id": "UE-13",
+   "kind": "door",
+   "subtype": "single hinged leaf 0.80 m",
+   "a": [
+    123.9969,
+    18.1639
+   ],
+   "b": [
+    123.9969,
+    19.0639
+   ],
+   "width": 0.9,
+   "wallThickness": 0.1,
+   "host": "west wall of the east service yard (x 123.947-124.047), from the corridor",
+   "evidence": "wall ends y 18.164 (south stub) and 19.064; JAMB blocks y 18.164-18.214 and 19.014-19.064; 0.80 m leaf on WIN (x 123.147-123.947, y 18.214-18.249) with WIN arc r 0.80 into the corridor; TREE threshold line x 124.047",
+   "confidence": "high"
+  },
+  {
+   "id": "UE-14",
+   "kind": "door",
+   "subtype": "single hinged leaf 0.80 m",
+   "a": [
+    122.0969,
+    20.159
+   ],
+   "b": [
+    122.9969,
+    20.159
+   ],
+   "width": 0.9,
+   "wallThickness": 0.1,
+   "host": "south wall of staff room B (y 20.109-20.209)",
+   "evidence": "wall ends x 122.097 and 122.997; JAMB block x 122.097-122.147; WIN jamb x 122.947-122.997; 0.80 m leaf on WIN at x 122.147 (y 20.209-21.009) with WIN arc r 0.80 into the room",
+   "confidence": "high"
+  },
+  {
+   "id": "UE-15",
+   "kind": "door",
+   "subtype": "single hinged leaf 0.80 m",
+   "a": [
+    119.1969,
+    20.159
+   ],
+   "b": [
+    120.0969,
+    20.159
+   ],
+   "width": 0.9,
+   "wallThickness": 0.1,
+   "host": "south wall of staff room A (y 20.109-20.209)",
+   "evidence": "wall ends x 119.197 and 120.097; JAMB block x 119.197-119.247; WIN jamb x 120.047-120.097; 0.80 m leaf on WIN at x 119.247 (y 20.209-21.009) with WIN arc r 0.80 into the room",
+   "confidence": "high"
+  },
+  {
+   "id": "UE-16",
+   "kind": "door",
+   "subtype": "single hinged leaf 0.55 m",
+   "a": [
+    117.1217,
+    20.8839
+   ],
+   "b": [
+    117.1217,
+    21.584
+   ],
+   "width": 0.7001,
+   "wallThickness": 0.1,
+   "host": "west wall of the WC block (x 117.072-117.172), lower WC (toilet)",
+   "evidence": "wall ends y 20.884 and 21.584; JAMB blocks y 20.884-20.934 and 21.534-21.584; DOOR-layer LEAF block 0.55 m (x 117.172-117.722, y 21.499-21.534); WIN arc into the WC; TREE threshold line x 117.172",
+   "confidence": "high"
+  },
+  {
+   "id": "UE-17",
+   "kind": "door",
+   "subtype": "single hinged leaf 0.55 m",
+   "a": [
+    117.1217,
+    21.8839
+   ],
+   "b": [
+    117.1217,
+    22.584
+   ],
+   "width": 0.7001,
+   "wallThickness": 0.1,
+   "host": "west wall of the WC block (x 117.072-117.172), upper WC/shower room",
+   "evidence": "wall ends y 21.884 and 22.584; JAMB blocks y 21.884-21.934 and 22.534-22.584; DOOR-layer LEAF block 0.55 m (y 21.934-21.969); WIN arc into the room; TREE threshold line x 117.172",
+   "confidence": "high"
+  },
+  {
+   "id": "UE-18",
+   "kind": "door",
+   "subtype": "single hinged leaf 0.80 m",
+   "a": [
+    116.2217,
+    18.1585
+   ],
+   "b": [
+    116.2217,
+    19.1584
+   ],
+   "width": 0.9999,
+   "wallThickness": 0.1,
+   "host": "between the stair (its east-going bottom steps) and the staff corridor: plane x 116.172-116.272 between the south stub (top y 18.159) and the north stub (bottom y 19.158)",
+   "evidence": "JAMB blocks y 18.159-18.209 and 19.108-19.158; 0.80 m leaf on WIN (x 116.272-117.072, y 18.209-18.244) with WIN arc into the corridor; TREE threshold line x 116.172",
+   "confidence": "high"
+  },
+  {
+   "id": "UE-19",
+   "kind": "passage",
+   "subtype": "stair passing a wall end",
+   "a": [
+    115.4696,
+    18.1585
+   ],
+   "b": [
+    115.4696,
+    19.1584
+   ],
+   "width": 0.9999,
+   "wallThickness": 0.1,
+   "host": "stair east wall x 115.42-115.52, between the top of the south-facade column (y 18.159) and the south end of the wall (y 19.158)",
+   "evidence": "no wall or door; STAIR tread lines x 115.42/115.67/115.92 and the walking line run through the gap from the stair corner landing to door UE-18",
+   "confidence": "low",
+   "optional": true,
+   "decision": "The stair itself turns through this gap. It is the stair passing the end of the wall beside the flight, not a doorway between rooms. The column below belongs to the south facade, so it reads as a passage mouth. Optional."
+  },
+  {
+   "id": "UE-20",
+   "kind": "window",
+   "subtype": "full-height glazing, 2 bays (looks into the court)",
+   "a": [
+    112.0946,
+    20.3591
+   ],
+   "b": [
+    112.0946,
+    23.1088
+   ],
+   "width": 2.7497,
+   "wallThickness": 0.25,
+   "host": "living-room east wall, column line x 111.97-112.22, between columns (top of the lower column y 20.359, bottom of the upper column y 23.109)",
+   "evidence": "WIN lines x 111.971-112.071 in two bays (mullion y 21.709-21.759); D-JAMB jambs y 20.359-20.409 and 23.059-23.109; TREE sill line x 112.221",
+   "confidence": "high"
+  },
+  {
+   "id": "UE-21",
+   "kind": "passage",
+   "subtype": "open side of the gym alcove",
+   "a": [
+    112.0946,
+    18.0088
+   ],
+   "b": [
+    112.0946,
+    20.1091
+   ],
+   "width": 2.1003,
+   "wallThickness": 0.25,
+   "host": "living-room east wall line x 111.97-112.22, between the column (bottom y 20.109) and the top face of the living-room south wall (y 18.009)",
+   "evidence": "no wall in the x 112 line here; a single FUR line at x 111.971 spans the gap; a treadmill (I-FURN) stands in the 1.4 m deep alcove behind",
+   "confidence": "low",
+   "optional": true,
+   "decision": "Alcove of the living room: a wall end (column) facing the side of a perpendicular wall. The FUR line may be a cabinet front or a floor edge. Unclear whether it is an opening at all, so optional."
+  },
+  {
+   "id": "UE-22",
+   "kind": "window",
+   "subtype": "full-height window, fixed lower pane + 2 sliding sashes (tag AW14)",
+   "a": [
+    112.0946,
+    15.4588
+   ],
+   "b": [
+    112.0946,
+    17.8588
+   ],
+   "width": 2.4,
+   "wallThickness": 0.25,
+   "host": "walk-in closet east wall, line x 111.97-112.22, between the bath north wall / stub (y 15.459) and the living-room south wall (y 17.859)",
+   "evidence": "WIN lines in 2 bays (mullion y 16.634-16.684); D-JAMB jambs y 15.459-15.509 and 17.809-17.859; TREE sill line x 112.22; east elevation AW14 at y 15.459-17.859",
+   "confidence": "high"
+  },
+  {
+   "id": "UE-23",
+   "kind": "passage",
+   "subtype": "unglazed full-height bay in the outer screen wall",
+   "a": [
+    113.4696,
+    15.4588
+   ],
+   "b": [
+    113.4696,
+    17.8588
+   ],
+   "width": 2.4,
+   "wallThickness": 0.25,
+   "host": "outer screen wall x 113.345-113.595, between its south part (ends y 15.409, cladding return 15.459) and its north part (starts y 17.909, cladding return 17.859)",
+   "evidence": "screen-wall WALL lines stop at y 15.409 and 17.909; the D-JAMB cladding returns at 15.459 and 17.859; only TREE edge lines x 113.345/113.595 cross the gap; no glazing and no door; the east elevation marks this bay with an X on the OPEN layer from 0.00 to 2.90, labelled open",
+   "confidence": "medium",
+   "decision": "A full-height gap in a wall line with nothing in it, so passage, even though a void/planter strip (an X in hidden lines) behind it means nobody walks through. The ends are at the cladding faces (2.40 m, as in the elevation). The bare WALL-layer gap is 15.409-17.909 (2.50 m)."
+  },
+  {
+   "id": "UE-24",
+   "kind": "window",
+   "subtype": "full-height glazing, 2 bays",
+   "a": [
+    112.0946,
+    11.9588
+   ],
+   "b": [
+    112.0946,
+    14.3088
+   ],
+   "width": 2.35,
+   "wallThickness": 0.25,
+   "host": "master-bathroom east wall, line x 111.97-112.22, between the top face of the bath south wall (y 11.959) and a column (bottom y 14.309)",
+   "evidence": "WIN lines in 2 bays (mullion y 13.109-13.159); D-JAMB jambs y 11.959-12.009 and 14.259-14.309; TREE sill line x 112.22",
+   "confidence": "high"
+  },
+  {
+   "id": "UE-25",
+   "kind": "passage",
+   "subtype": "open side of a nook east of the bedroom",
+   "a": [
+    112.0946,
+    10.6861
+   ],
+   "b": [
+    112.0946,
+    11.8588
+   ],
+   "width": 1.1727,
+   "wallThickness": 0.25,
+   "host": "bedroom east wall line x 111.97-112.22, between the top of the wall piece/court south wall (y 10.686) and the bath south wall (y 11.859)",
+   "evidence": "no wall in the line here; a single FUR line at x 111.970 spans the gap; behind it is an empty 1.3 x 1.2 m nook up to the screen wall",
+   "confidence": "low",
+   "optional": true,
+   "decision": "The FUR line suggests a built-in cabinet front, and the nook could be casework or an open alcove of the bedroom. Unclear whether it is an opening, so optional."
+  },
+  {
+   "id": "UE-26",
+   "kind": "window",
+   "subtype": "full-height window, fixed lower pane + 2 sliding sashes (tag AW12)",
+   "a": [
+    112.0946,
+    7.6585
+   ],
+   "b": [
+    112.0946,
+    10.5559
+   ],
+   "width": 2.8974,
+   "wallThickness": 0.25,
+   "host": "master-bedroom east wall, line x 111.97-112.22, between the SE column (top y 7.659) and the wall end y 10.556",
+   "evidence": "WIN lines in 2 bays (mullion y 9.081-9.131); D-JAMB jambs y 7.659-7.709 and 10.506-10.556; TREE sill line x 112.22; east elevation AW12 at y 7.658-10.556",
+   "confidence": "high"
+  },
+  {
+   "id": "UE-27",
+   "kind": "window",
+   "subtype": "full-height window, 2 sashes",
+   "a": [
+    106.2946,
+    7.6585
+   ],
+   "b": [
+    106.2946,
+    10.5559
+   ],
+   "width": 2.8974,
+   "wallThickness": 0.25,
+   "host": "master-bedroom west wall, line x 106.17-106.42, between the SW column (top y 7.659) and the wall end y 10.556",
+   "evidence": "WIN lines x 106.319-106.419 in 2 bays (mullion y 9.081-9.131); D-JAMB jambs y 7.659-7.709 and 10.506-10.556; TREE sill line x 106.17; the west elevation shows this window at y 7.658-10.556",
+   "confidence": "high"
+  },
+  {
+   "id": "UE-28",
+   "kind": "door",
+   "subtype": "unequal double hinged door 0.80 + 0.40 m (interior block *U31)",
+   "a": [
+    106.3696,
+    14.8808
+   ],
+   "b": [
+    106.3696,
+    16.1368
+   ],
+   "width": 1.256,
+   "wallThickness": 0.1,
+   "host": "lobby/suite wall x 106.32-106.42, between the stub ends y 14.881 and 16.137",
+   "evidence": "XR_L44$0$I-DOOR block *U31: frame pieces at both ends, a 0.40 m leaf (y 14.909) and a 0.80 m leaf (y 16.109) with arcs r 0.40 and 0.80 opening into the suite corridor; WALL stubs x 106.32-106.42 at y 14.559-14.881 and 16.137-16.459",
+   "confidence": "high"
+  },
+  {
+   "id": "UE-29",
+   "kind": "passage",
+   "subtype": "corridor mouth into the living room",
+   "a": [
+    106.4196,
+    17.9588
+   ],
+   "b": [
+    107.5469,
+    17.9588
+   ],
+   "width": 1.1273,
+   "wallThickness": 0.1,
+   "host": "living-room south wall line (y 17.909-18.009), between the west wall inner face x 106.420 and the closet NW corner x 107.547",
+   "evidence": "the living-room south wall ends at the closet NW corner and there is no wall between it and the west wall; the corridor from door UE-28 runs north into the living room",
+   "confidence": "medium",
+   "optional": true,
+   "decision": "A passage mouth (a wall end facing the side of a perpendicular wall), so optional."
+  },
+  {
+   "id": "UE-30",
+   "kind": "passage",
+   "subtype": "doorless opening into the dressing/desk area",
+   "a": [
+    107.5969,
+    12.757
+   ],
+   "b": [
+    107.5969,
+    14.457
+   ],
+   "width": 1.7,
+   "wallThickness": 0.1,
+   "host": "wall line x 107.547-107.647, between the desk-niche stub (top y 12.757) and the closet west wall (bottom y 14.457)",
+   "evidence": "two collinear WALL pieces (stub y 11.859-12.757, closet wall y 14.457-18.009) with nothing between them; corridor on the west, dressing/desk area (chair, desk) on the east",
+   "confidence": "medium",
+   "decision": "A gap between two wall ends of the same wall line, so passage (not optional). Another reading is the open side of the dressing area."
+  },
+  {
+   "id": "UE-31",
+   "kind": "passage",
+   "subtype": "entrance into the bedroom",
+   "a": [
+    106.4196,
+    11.9088
+   ],
+   "b": [
+    107.5469,
+    11.9088
+   ],
+   "width": 1.1273,
+   "wallThickness": 0.1,
+   "host": "bedroom north wall line (y 11.859-11.959), between the west wall inner face x 106.420 and the end of the wall x 107.547",
+   "evidence": "the bedroom north wall stops at x 107.547 (corner with the desk stub); no wall, door or glazing to the west wall",
+   "confidence": "medium",
+   "optional": true,
+   "decision": "A passage mouth (a wall end facing the side of a perpendicular wall), so optional."
+  },
+  {
+   "id": "UE-32",
+   "kind": "passage",
+   "subtype": "entrance into the walk-in closet",
+   "a": [
+    108.2969,
+    14.507
+   ],
+   "b": [
+    109.4469,
+    14.507
+   ],
+   "width": 1.15,
+   "wallThickness": 0.1,
+   "host": "closet south stub line (y 14.457-14.557), between the stub end x 108.297 and the bath west wall face x 109.447",
+   "evidence": "WALL stub x 107.547-108.297 (top-level entity) ends at 108.297; nothing between it and the bath west wall",
+   "confidence": "medium",
+   "optional": true,
+   "decision": "A passage mouth (a wall end facing the side of a perpendicular wall), so optional."
+  },
+  {
+   "id": "UE-33",
+   "kind": "door",
+   "subtype": "single hinged leaf 0.90 m (block _1D3R90)",
+   "a": [
+    109.497,
+    13.4606
+   ],
+   "b": [
+    109.497,
+    14.4606
+   ],
+   "width": 1,
+   "wallThickness": 0.1,
+   "host": "master-bathroom west wall x 109.447-109.547",
+   "evidence": "wall ends y 13.461 and 14.461; JAMB blocks y 13.461-13.511 and 14.411-14.461; DOOR LEAF 0.90 m (x 109.547-110.447, y 13.511-13.546) and SWING arc r 0.88 into the bathroom; empty DSYM tags beside it",
+   "confidence": "high"
+  }
+ ],
+ "glassWalls": [
+  {
+   "a": [
+    109.547,
+    13.4606
+   ],
+   "b": [
+    110.5469,
+    13.4606
+   ],
+   "notes": "master-bathroom shower screen, north side (WALL-GL)"
+  },
+  {
+   "a": [
+    110.5469,
+    11.9588
+   ],
+   "b": [
+    110.5469,
+    13.4606
+   ],
+   "notes": "master-bathroom shower screen, east side (WALL-GL), with a 0.60 m hinged glass shower door (WIN leaf + WALL-GL arc, hinge near y 13.33)"
+  },
+  {
+   "a": [
+    114.2157,
+    17.8586
+   ],
+   "b": [
+    126.7446,
+    17.8586
+   ],
+   "notes": "A_Grill aluminium grille screen (lines y 17.834/17.884 + posts) outside the whole staff-block south facade; not glass, height unknown; stands in front of the stair and lobby walls, windows UE-12/UE-11 and yard side UE-10"
+  },
+  {
+   "a": [
+    126.7198,
+    17.8336
+   ],
+   "b": [
+    126.7198,
+    23.4342
+   ],
+   "notes": "A_Grill grille screen along the service-yard east side (x 126.620-126.745), outside the column line; also listed as optional opening UE-09"
+  },
+  {
+   "a": [
+    123.9466,
+    23.4092
+   ],
+   "b": [
+    126.745,
+    23.4092
+   ],
+   "notes": "A_Grill grille screen along the service-yard north side (y 23.384-23.434), just outside the wall line; UE-08 is the optional opening behind it"
+  }
+ ],
+ "uncertain": [
+  {
+   "where": [
+    119.53,
+    23.23
+   ],
+   "what": "UE-03, UE-05, UE-06, UE-07: hinged glazed leaves on the north facade. Read as outward casement sashes over fixed glazing (window symbol, sill line, three identical leaves per staff room); they could be glazed hinged doors, hence eitherKind. UE-06/UE-07 are one opening per wall gap (50 mm mullions), not one per leaf."
+  },
+  {
+   "where": [
+    125.23,
+    20.63
+   ],
+   "what": "Service yard east of the staff rooms: enclosed only by curbs and an A_Grill grille, no glazing. Its N/E/S sides (UE-08/09/10) are optional windows; they may be judged screens (glass walls) or real window openings."
+  },
+  {
+   "where": [
+    113.47,
+    16.66
+   ],
+   "what": "UE-23 open bay in the screen wall: passage (full-height unglazed gap, open in the elevation) versus an unglazed window, because a void/planter strip lies behind it. Width 2.40 to the cladding returns, 2.50 to the bare WALL ends."
+  },
+  {
+   "where": [
+    112.09,
+    19.06
+   ],
+   "what": "UE-21 gym alcove and UE-25 bedroom NE nook: a FUR line closes each mouth (possibly a cabinet front); they may not be openings at all."
+  },
+  {
+   "where": [
+    107.6,
+    13.61
+   ],
+   "what": "UE-30: a gap between the desk-niche stub and the closet wall in the same wall line. Listed as a non-optional passage; it could also be read as the open side of the dressing area."
+  },
+  {
+   "where": [
+    113.19,
+    23.23
+   ],
+   "what": "UE-04: a 0.20 m unglazed slot at the NE corner of the outdoor court, crossed only by TREE lines; it may be a construction gap."
+  },
+  {
+   "where": [
+    115.47,
+    18.66
+   ],
+   "what": "UE-19: the stair turns through the gap at the end of its east wall; probably not a real opening."
+  },
+  {
+   "where": [
+    106.97,
+    24.11
+   ],
+   "what": "UE-02: a gap between the duct box and the hall north wall end, outdoors on both sides; probably not an opening."
+  }
+ ],
+ "rejected": [
+  {
+   "id": "lobby south window",
+   "where": [
+    103.54,
+    14.51
+   ],
+   "reason": "Glazing x 100.92-106.17 at y 14.46-14.56 between two columns, with mullions only (no wall pier), is one 5.25 m opening. Its centre x 103.54 is outside this box (west part); the panel x 104.86-106.12 is not a separate opening."
+  },
+  {
+   "id": "strip mouths",
+   "where": [
+    113.9,
+    23.31
+   ],
+   "reason": "A 0.62 m gap between the screen-wall top and the stair-block NW corner (and the same at the south end, y about 17.9): an outdoor slot between two volumes where both walls end in open space. Not a gap in a wall line."
+  },
+  {
+   "id": "closet SW corner",
+   "where": [
+    106.98,
+    14.51
+   ],
+   "reason": "The corridor x 106.42-107.55 runs past the closet SW corner at y 14.46-14.56; the west side is the continuous suite west wall (its column face is flush). The corridor simply continues, so this is not an opening."
+  },
+  {
+   "id": "WC corridor stub",
+   "where": [
+    116.67,
+    21.16
+   ],
+   "reason": "The 0.8 m between the end of the alcove stub (x 116.27) and the WC-block wall (x 117.07) is the WC corridor continuing, not an opening."
+  },
+  {
+   "id": "alcoves on WC corridor",
+   "where": [
+    116.22,
+    20.18
+   ],
+   "reason": "The open sides of the cabinet alcove (FUR cabinet front at x 116.27, y 19.26-21.11) and the basin niche (y 21.21-23.11) are the sides of niches formed by perpendicular stubs. No wall line is interrupted."
+  },
+  {
+   "id": "shower door",
+   "where": [
+    110.55,
+    13.03
+   ],
+   "reason": "The 0.60 m hinged glass shower door is part of the shower screen (glassWalls), not a wall-line opening."
+  },
+  {
+   "id": "pergola",
+   "where": [
+    114.3,
+    12
+   ],
+   "reason": "Steel H-columns and TREE/ROOF beam lines of the roof pergola (x 114.2-117.1, y 7-17.8) with no walls, so no openings."
+  },
+  {
+   "id": "yard roof line",
+   "where": [
+    126.22,
+    20.63
+   ],
+   "reason": "The ROOF line x 126.22 inside the yard is a roof edge, not a wall."
+  },
+  {
+   "id": "east landscape element",
+   "where": [
+    127.62,
+    12
+   ],
+   "reason": "TREE lines and a short WALL cap at x 127.55-127.88 (y 7.9-17.2) outside the block are an outdoor landscape element with no walls."
+  },
+  {
+   "id": "lobby east side x 106.17",
+   "where": [
+    106.24,
+    15.51
+   ],
+   "reason": "Between the column top y 14.559 and the lobby north wall y 16.459 the line x 106.17 is open, but the lobby simply extends to the 0.1 m wall x 106.32-106.42 that holds door UE-28. Not a separate opening."
+  }
+ ],
+ "method": "Labelled independently from prims.pkl (area upper) and PNG renders only. I did not read the evidence inventory or other labellers' files; I did read results/map_elevations.json, which the task names. Steps: one render of the whole part (grid 1, inserts); 11 tiles of about 6 x 6.5 m (grid 0.5, inserts, text); then geometry queries of every wall line (WALL/COL plus WIN, WALL-GL, D-JAMB, DOOR, I-DOOR, FLOOR, TREE, FUR, A_Grill). A script then listed every gap between collinear wall-face segments (0.15-6 m), and I reviewed each gap. Swing arcs over 0.3 m radius were fitted to find every door and casement leaf (layer-0 arcs are all pebbles or furniture). Zoom renders of the courts, the strip, the dressing area and the staff block followed, and final renders with markers at each opening and each end checked the result. Ends are at the wall-end faces (frames inside the opening), with cladding (D-JAMB outline) counted as part of the wall. a/b lie on the middle of the wall band: x 112.0946 and 106.2946 for the 0.25 m suite walls, y 23.2338 for the north facade, y 18.0335 for the staff south facade, x 113.4696 for the screen wall, and wall centres for 0.10 m walls. Widths are |b-a|. Decision rules: one opening per wall gap (mullions do not split it); passage mouths and alcove mouths are optional; screened or ambiguous gaps are optional; hinged glazed leaves on the north facade are windows with eitherKind; shower screens and A_Grill grille screens are glassWalls.",
+ "files": [
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-u-east-C/labels.json",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-u-east-C/whole.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-u-east-C/check_all.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-u-east-C/check_final.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-u-east-C/z_staff_ends.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-u-east-C/z_dress.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-u-east-C/z_strip.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-u-east-C/z_ncourt.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-u-east-C/z_ecourt.png",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-u-east-C/gaps.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-u-east-C/q.py",
+  "C:/Users/DWP2/AppData/Local/Temp/claude/c--Users-DWP2-Desktop-Project-walkthrough/e1e2f8a1-5b17-462a-bbe8-01925d989674/scratchpad/p0/out/label-u-east-C/build_labels.py"
+ ]
+}

@@ -1,0 +1,22 @@
+# Project walkthrough: version control set up on 4 Nov 2026, kept on this laptop only (never pushed).
+# app/ has its own .gitignore (node_modules, .venv, dist, caches).
+
+# Client drawings, videos and 3D models: large, they do not change, and they stay on disk as they are.
+*.dwg
+*.dxf
+*.pdf
+*.mp4
+*.glb
+*.bin
+
+# Large test pages that their scripts rebuild (they embed the models above)
+furniture_test/chair_test.html
+furniture_test/chair_compare.html
+furniture_test/bank_furnished/bank_furnished.html
+
+# Caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+node_modules/
+prims.pkl

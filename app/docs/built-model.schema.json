@@ -1,0 +1,237 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://walkthrough.local/schemas/built-model-1.json",
+  "title": "BuiltModel v1",
+  "description": "The one model format the viewer reads (app/docs/DESIGN.md section 5). It is the format of bank_test/src/bank_model.json and hotel_test/src/hotel_model.json, which are valid v1 byte for byte; the suite and the house are converted to it by the seed. Plan coordinates are metres in the model frame (drawing coordinates minus `offset`); three.js maps plan (x, y) to (x, z = -y). Heights z0 / z1 are metres above the level of the part's floor. The format carries no version field: the version lives in the version sidecar (version.json: modelFormat 'built-model/1'). Cross-references (floor keys, furniture kinds, supports, approach ids) are checked by the parsers (parseBuiltModel in the viewer, hand-written TypeScript with no validator library at run time; walkthrough_api.builtmodel in the API), not by this schema: DESIGN.md 5.6. The schema compiles with ajv 8 in strict mode (Ajv2020) and with Python jsonschema (Draft 2020-12).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["project", "shortName", "source", "units", "offset", "photoName", "maxPrefix", "floors", "railingHeight", "singleLineHeight", "doorHeadDefault", "parts", "stairs", "voids", "closures", "stairOutlines", "rooms", "openings", "probes", "colliderSkins"],
+  "dependentRequired": { "furniture": ["furnitureKinds"] },
+  "properties": {
+    "project": { "type": "string", "minLength": 1, "description": "Full project name (display)." },
+    "shortName": { "type": "string", "minLength": 1, "description": "Short project name (display)." },
+    "projectNo": { "type": ["string", "null"], "description": "The office's project number, if any." },
+    "source": { "type": "array", "items": { "type": "string" }, "description": "Names of the drawings or pictures the model was built from (display only)." },
+    "units": { "const": "m" },
+    "offset": { "$ref": "#/$defs/vec2", "description": "Drawing coordinates = model coordinates + offset (plan metres), on the shared grid the floors are lined up on; a floor drawn elsewhere on its sheet adds floors[].sheetShift. Used by the furniture CSV and the 3ds Max script." },
+    "photoName": { "type": "string", "pattern": "^[A-Za-z0-9_.-]{1,64}$", "description": "Names photos (<photoName>_<Mode>_..png), the furniture CSV (<photoName>_furniture_list.csv) and the local storage key." },
+    "maxPrefix": { "type": "string", "pattern": "^[A-Z]{2,4}$", "description": "Prefix of the 3ds Max layer and object names." },
+    "floors": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/floor" }, "description": "In level order, lowest first; keys unique." },
+    "railingHeight": { "type": "number", "exclusiveMinimum": 0 },
+    "singleLineHeight": { "type": "number", "exclusiveMinimum": 0 },
+    "doorHeadDefault": { "type": "number", "exclusiveMinimum": 0 },
+    "pictureFrame": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/floorKey" },
+      "additionalProperties": { "$ref": "#/$defs/pictureFrame" },
+      "description": "Floors read from a picture: where the picture lies under the model ('Plan picture' tick)."
+    },
+    "parts": { "type": "array", "items": { "$ref": "#/$defs/part" } },
+    "stairs": { "type": "object", "$ref": "#/$defs/perFloor", "additionalProperties": { "$ref": "#/$defs/stairLines" } },
+    "voids": { "type": "object", "$ref": "#/$defs/perFloor", "additionalProperties": { "type": "array", "items": { "$ref": "#/$defs/voidMark" } } },
+    "closures": { "type": "object", "$ref": "#/$defs/perFloor", "additionalProperties": { "type": "array", "items": { "$ref": "#/$defs/closure" } } },
+    "stairOutlines": { "type": "object", "$ref": "#/$defs/perFloor", "additionalProperties": { "type": "array", "items": { "$ref": "#/$defs/stairOutline" } } },
+    "rooms": { "type": "array", "items": { "$ref": "#/$defs/room" } },
+    "openings": { "type": "array", "items": { "$ref": "#/$defs/opening" } },
+    "probes": { "type": "array", "items": { "$ref": "#/$defs/probe" } },
+    "colliderSkins": { "type": "object", "$ref": "#/$defs/perFloor", "additionalProperties": { "type": "array", "items": { "$ref": "#/$defs/skin" } } },
+    "furnitureKinds": { "type": "array", "items": { "$ref": "#/$defs/furnitureKind" }, "description": "Only the kinds that occur, in the kinds table's order (furniture/README.md)." },
+    "furniture": { "type": "array", "items": { "$ref": "#/$defs/furniturePiece" } }
+  },
+  "$defs": {
+    "floorKey": { "type": "string", "pattern": "^[A-Za-z0-9_]{1,32}$", "description": "Letters, digits and underscore only: replay captions name floors as {<key>level} / {<key>height}." },
+    "vec2": { "type": "array", "prefixItems": [{ "type": "number" }, { "type": "number" }], "items": false, "minItems": 2 },
+    "ring": { "type": "array", "items": { "$ref": "#/$defs/vec2" }, "minItems": 3, "description": "A closed outline, plan metres; the last point is not repeated (a repeated last point is tolerated)." },
+    "rings": { "type": "array", "items": { "$ref": "#/$defs/ring" } },
+    "colour": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+    "perFloor": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/floorKey" },
+      "description": "Keyed by floor key; a floor without an entry has none (empty)."
+    },
+    "floor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "name", "level", "wallHeight", "slabThickness"],
+      "properties": {
+        "key": { "$ref": "#/$defs/floorKey" },
+        "name": { "type": "string", "minLength": 1 },
+        "level": { "type": "number", "description": "Floor level (m) above the project datum; the slab's top." },
+        "wallHeight": { "type": "number", "exclusiveMinimum": 0, "description": "Height of the walls of this floor (m above its level)." },
+        "slabThickness": { "type": "number", "minimum": 0 },
+        "stack": { "type": "string", "minLength": 1, "description": "v1 extension (optional). Floors of one stack are walked as one building (Walk shows the whole stack, PgUp/PgDn move within it). Default 'main'." },
+        "sheetShift": { "$ref": "#/$defs/vec2", "description": "v1 extension (optional, default [0, 0]). Where this floor's plan sits on its source sheet, relative to the shared grid the model uses: sheet coordinates = model coordinates + offset + sheetShift (plan metres). The house's upper floor: [74.021, 0] (its plan is drawn beside the ground plan on one sheet). Provenance only: the viewer, the CSV and the Max script do not read it (they use the shared grid)." }
+      }
+    },
+    "partKind": {
+      "enum": ["wall", "column", "lintel", "sill", "parapet", "glass", "pane", "mullion", "railing", "balustrade", "single", "step", "low", "builtin", "deck", "post", "slab"],
+      "description": "bank/hotel kinds: wall column lintel sill parapet glass mullion railing single step slab; v1 extensions for the converted models: pane (house window panes), balustrade low builtin deck post (presidential suite). How each kind is drawn: DESIGN.md 5.4."
+    },
+    "part": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["floor", "kind", "z0", "z1", "follow", "o", "h"],
+      "properties": {
+        "floor": { "$ref": "#/$defs/floorKey" },
+        "kind": { "$ref": "#/$defs/partKind" },
+        "z0": { "type": "number", "description": "Bottom, m above the floor level." },
+        "z1": { "type": "number", "description": "Top, m above the floor level; z1 > z0." },
+        "follow": { "type": "boolean", "description": "Its top follows the wall height: when Build settings change the floor's wall height H0 -> H the part scales by H / H0 about the floor level (unless `fit` says otherwise)." },
+        "o": { "$ref": "#/$defs/ring" },
+        "h": { "$ref": "#/$defs/rings" },
+        "label": { "type": "string", "description": "What the builder called it (an opening id, a Revit type name, 'mullion', ...)." },
+        "fit": { "enum": ["top", "clip"], "description": "v1 extension (optional): how the part answers a wall-height change instead of scaling. 'top': z0 stays and z1 becomes the new wall top (the part vanishes when the wall is no higher than z0): the house's lintels and the panes that reach the wall top. 'clip': z0 and z1 stay, cut off at the new wall top: the house's sills and other panes." },
+        "plinth": { "type": "boolean", "description": "v1 extension (optional, slabs only): the slab stands on the ground (z0 = -level): when Build settings change the floor's level it stretches so its foot stays at y = 0 (the house's ground plate)." }
+      }
+    },
+    "stairLines": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["below", "above"],
+      "properties": {
+        "below": { "$ref": "#/$defs/flatSegments", "description": "Tread lines below the cut: drawn as thin strips lying on the floor." },
+        "above": { "$ref": "#/$defs/flatSegments", "description": "Flights above the cut (the next storey's): faint lines." },
+        "panels": { "$ref": "#/$defs/flatSegments", "description": "v1 extension (optional): tread lines drawn as 0.15 m high upright panels standing on the floor (the house's stairs)." }
+      }
+    },
+    "flatSegments": { "type": "array", "items": { "type": "number" }, "description": "x1, y1, x2, y2, ... plan metres; length a multiple of 4 (checked by the parsers)." },
+    "voidMark": {
+      "type": "object",
+      "required": ["what", "x", "y", "area"],
+      "properties": { "what": { "type": "string" }, "x": { "type": "number" }, "y": { "type": "number" }, "area": { "type": "number" } },
+      "description": "A hole in the floor plate (stair, lift shaft ...), for tests and the Max script; the hole itself is in the slab part."
+    },
+    "closure": {
+      "type": "object",
+      "required": ["object", "width", "x", "y"],
+      "properties": { "object": { "type": "string" }, "width": { "type": "number" }, "x": { "type": "number" }, "y": { "type": "number" } },
+      "description": "A wall gap closed because an object stands in it (the bank's ATM)."
+    },
+    "stairOutline": {
+      "type": "object",
+      "required": ["x", "y", "bbox", "flights", "withWord"],
+      "properties": {
+        "id": { "type": "string" },
+        "x": { "type": "number" }, "y": { "type": "number" },
+        "bbox": { "type": "array", "prefixItems": [{ "type": "number" }, { "type": "number" }, { "type": "number" }, { "type": "number" }], "items": false, "minItems": 4 },
+        "flights": { "type": "integer", "minimum": 0 },
+        "withWord": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "room": {
+      "type": "object",
+      "required": ["floor", "name", "label", "area", "x", "y"],
+      "properties": {
+        "floor": { "$ref": "#/$defs/floorKey" },
+        "name": { "type": "string" },
+        "label": { "type": "string", "description": "Shown over the model (as text, never as HTML)." },
+        "area": { "type": ["number", "null"], "description": "m2; bigger rooms keep their label's spot when labels would overlap." },
+        "x": { "type": "number" }, "y": { "type": "number" },
+        "callout": { "type": "boolean" }
+      }
+    },
+    "opening": {
+      "type": "object",
+      "required": ["id", "floor", "kind", "x", "y", "nx", "ny", "width"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "description": "Unique in the model; furniture 'approach' lists name these." },
+        "floor": { "$ref": "#/$defs/floorKey" },
+        "kind": { "enum": ["door", "window", "passage"] },
+        "subtype": { "type": "string" },
+        "label": { "type": "string" },
+        "x": { "type": "number" }, "y": { "type": "number" },
+        "nx": { "type": "number" }, "ny": { "type": "number" },
+        "width": { "type": "number", "exclusiveMinimum": 0 },
+        "wallThickness": { "type": "number" },
+        "exterior": { "type": "boolean", "description": "Only one side has floor: walked from inside only." },
+        "inside": { "type": "array", "items": { "enum": [1, -1] }, "description": "The sides (+n / -n) that have floor." },
+        "sill": { "type": "number" },
+        "head": { "type": "number" },
+        "lintel": { "enum": ["lintel", "transom", null], "description": "What stands above the head; null or absent: nothing (passages, windows to the top)." },
+        "lintelTop": { "type": "number" },
+        "eitherKind": { "type": "boolean" }
+      },
+      "description": "Doors, windows and passages: what was cut is already in `parts`; these records drive tests, the furniture approach rule and the Max script. Builders add their own evidence fields (glazed, jambs, leaves, a, b, floorSide ...): extra properties are allowed."
+    },
+    "probe": {
+      "type": "object",
+      "required": ["floor", "id", "what", "x", "y", "nx", "ny", "inside"],
+      "properties": {
+        "floor": { "$ref": "#/$defs/floorKey" },
+        "id": { "type": "string" },
+        "what": { "type": "string" },
+        "x": { "type": "number" }, "y": { "type": "number" },
+        "nx": { "type": "number" }, "ny": { "type": "number" },
+        "inside": { "type": "array", "items": { "enum": [1, -1] }, "minItems": 1, "description": "The sides to walk at the glass from." },
+        "top": { "type": "number" },
+        "label": { "type": ["string", "null"] }
+      },
+      "description": "A spot on glass that Walk must not pass (tests)."
+    },
+    "skin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["o", "h", "z0", "z1", "glass"],
+      "properties": {
+        "o": { "$ref": "#/$defs/ring" },
+        "h": { "$ref": "#/$defs/rings" },
+        "z0": { "type": "number" },
+        "z1": { "type": "number" },
+        "glass": { "type": "boolean", "description": "Hidden with the Glass tick (it wraps glass)." }
+      },
+      "description": "An invisible Walk collider around a piece thinner than Walk's ray spacing."
+    },
+    "pictureFrame": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["file", "size", "pxPerMetreX", "pxPerMetreY", "originPx", "yDown"],
+      "properties": {
+        "file": { "type": "string", "description": "The picture as the builder saw it (relative to the model file); the store maps it to an asset (version.json assets[].modelRef)." },
+        "size": { "type": "array", "prefixItems": [{ "type": "integer", "minimum": 1 }, { "type": "integer", "minimum": 1 }], "items": false, "minItems": 2 },
+        "pxPerMetreX": { "type": "number", "exclusiveMinimum": 0 },
+        "pxPerMetreY": { "type": "number", "exclusiveMinimum": 0 },
+        "originPx": { "$ref": "#/$defs/vec2" },
+        "yDown": { "const": true },
+        "_": { "type": "string", "description": "A note." }
+      }
+    },
+    "furnitureKind": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "label", "colour", "height", "base", "onTop", "support", "blocks", "count"],
+      "properties": {
+        "key": { "type": "string", "pattern": "^[a-z][a-z0-9-]{0,31}$", "not": { "const": "none" } },
+        "label": { "type": "string", "minLength": 1 },
+        "colour": { "$ref": "#/$defs/colour" },
+        "height": { "type": "integer", "minimum": 1, "description": "mm, the office default the height box starts with." },
+        "base": { "type": "integer", "minimum": 0, "description": "mm, the underside above the floor." },
+        "onTop": { "type": "boolean" },
+        "support": { "type": "boolean" },
+        "blocks": { "type": "boolean", "description": "Walk stops you at it (the 'stops' tick's default)." },
+        "count": { "type": "integer", "minimum": 0, "description": "The number of pieces of this kind (the API refuses a mismatch; the viewer warns and counts the pieces)." }
+      }
+    },
+    "furniturePiece": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "floor", "kind", "family", "block", "layer", "handle", "x", "y", "w", "d", "rot", "on", "approach", "n", "note"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "floor": { "$ref": "#/$defs/floorKey" },
+        "kind": { "type": "string" },
+        "family": { "type": "string" },
+        "block": { "type": "string" },
+        "layer": { "type": "string" },
+        "handle": { "type": "string" },
+        "x": { "type": "number" }, "y": { "type": "number" },
+        "w": { "type": "number", "exclusiveMinimum": 0 },
+        "d": { "type": "number", "exclusiveMinimum": 0 },
+        "rot": { "type": "number", "minimum": 0, "exclusiveMaximum": 180 },
+        "on": { "type": ["string", "null"], "description": "The id of the piece it stands on (its underside is that piece's top), else null." },
+        "approach": { "type": "array", "items": { "type": "string" }, "description": "Ids of the openings (doors, passages) this piece stands in front of; while 'Keep doorways clear' is ticked such a piece does not stop Walk." },
+        "n": { "type": "integer", "minimum": 1 },
+        "note": { "type": "string" }
+      }
+    }
+  }
+}
