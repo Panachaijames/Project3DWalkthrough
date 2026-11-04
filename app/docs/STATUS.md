@@ -162,16 +162,20 @@ ran the whole path again: 21 of 21 passed.
 * **Cloud storage, later.** When the files move to cloud storage (next milestone), the download names have to be passed
   to it. This is noted in the code.
 
-## Decisions waiting for you
+## Decisions
+
+Settled by the owner on 4 Nov:
+
+* **What comes first: the DWG upload**, then the box editing.
+* **Reset in the offline file stays as it is:** it goes back to the heights saved in that file, not to the model's
+  original heights, so a client cannot lose your saved heights.
+* **Version control: yes.** The project folder is a git repository on this laptop only (never pushed). The first commit,
+  `9eb2d58`, is the state on 4 Nov. Drawings, the video, the PDF and the 3D models stay on disk and are not tracked.
+
+Still open:
 
 * **Excel formulas in the CSV.** In a CSV, Excel could read text that starts with = + - or @ as a formula. None of the
-  four projects has such text. Guarding against it would make the CSV differ from the prototypes' CSV. Best decided with
-  the next milestone, which brings drawings from other offices.
-* **Reset in the offline file.** Reset now goes back to the heights saved in that file, not to the model's original
-  heights. This is so a client cannot lose your saved heights. Say if you prefer the old rule.
-* **What comes first.** The plan's next action 12 puts box editing (about 20 h) "right after the foundation". The
-  milestone order puts the DWG upload next. Pick which goes first.
-* **Version control.** The project folder is not under version control yet (plan, next action 7).
+  four projects has such text. It goes in with the box editing, because that is when staff can type names.
 
 ## What comes next
 
