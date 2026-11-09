@@ -180,6 +180,30 @@ The foundation's checks pass with only the changes listed in section 3; the prot
 file outside `app/` changed (a listing before and after, sizes and times); no `__pycache__` in a prototype folder;
 `npm run seed` gives the same 5 stamps; nothing deployed.
 
+### A-12 A new drawing from the 3D team: the presidential suite as a Revit export (should; added 9 Nov 2026)
+
+The owner put `presidential suite_layout.dwg` in the project root on 9 Nov 2026 (2,280,952 bytes, AC1032): the 3D team's
+new drawing of the presidential suite, exported from Revit (REVIT xdata on about 20,600 of its 22,849 model-space
+entities, all at z = 0, AIA layers such as `A-WALL`, `A-DOOR`, `A-GLAZ-CURT`, `S-COLS`, `I-FURN`, `Q-CASE`, `P-SANR-FIXT`,
+`E-LITE-EQPM`, nine room names on `A-ANNO-IDEN`, views named GENERAL ARRANGEMENT PLAN and FURNITURE PLAN - EXECUTIVE
+SUITE). It is not the 19 Oct `layout presidential test.dwg` and was never seen by the builder or the detector. A
+preview by the main session with U2's reader (read-only, scratch folder): the header says inches and the doors say
+millimetres (7 to 0), read in millimetres; nine room names; no level tags and no grid labels (one floor); with the
+`dwp-revit` office mapping every structural and furniture layer is suggested from the office, and only `A-GENM-HDLN`,
+`G-IMPT`, `I-WALL-HATT`, `M-EQPM`, `M_Arredi` (Italian for furnishings) and layer `0` fall to `other`.
+
+* It goes through the app's own upload path as **a new version of the seeded `presidential-suite` project** (and once as
+  a new project), with the office mapping, `M_Arredi` set to furniture, one floor at level 0.00 with 3.00 m walls (the
+  suite's accepted height, 26 Oct), and no fixes.
+* It converts with a verdict (record it and the messages), reads, builds, saves and opens in the viewer; its Max script
+  and furniture CSV download; the walk checks of A-6 run on it (should pass; each failing probe classified).
+* Its openings come from the frozen detector with no tuning on this drawing: list them (kind, width, where) for a
+  later held-out scoring against an answer key made without the detector; do not change the detector for it.
+* Add it to `GAPS.md` against the 19 Oct suite model (`app/data/projects/presidential-suite/versions/1/model.json`): walls,
+  glass, doors, rooms, furniture counts by kind, and anything the new drawing has that the old one did not.
+* It is a **should**: a failure here is reported with its cause and does not block the milestone, unless the cause is a
+  fault that would also hit other Revit exports (then it is a must, like A-5).
+
 ## 2. Test plan
 
 ### 2.1 Builder tests (`npm run test:builder`, pytest in `services/builder/tests`, builder Python)
