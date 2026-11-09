@@ -22,3 +22,16 @@ blob-report/
 
 # the store's cross-process lock (services/api/walkthrough_api/store/filelock.py): an empty file, made on first use
 data/.lock
+
+# The upload milestone (docs/upload/DESIGN.md U-4.1, U-6.1, U-10.1; its scaffold U0, 4 Nov 2026)
+# the builder's pinned venv
+services/builder/.venv/
+# LibreDWG: the release zip and its extraction (vendor/libredwg.manifest.json and vendor/LIBREDWG-LICENCE.txt stay tracked;
+# `npm run vendor:libredwg -- --zip <the release zip>` extracts it again)
+vendor/libredwg-*/
+vendor/*.zip
+# the store's uploads, sources (the drawings: never in git), builds and staging; data/mappings/ and versions stay tracked
+data/projects/*/sources/
+data/projects/*/builds/
+data/.uploads/
+data/.staging/

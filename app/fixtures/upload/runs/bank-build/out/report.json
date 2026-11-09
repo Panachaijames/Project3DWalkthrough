@@ -1,0 +1,730 @@
+{
+  "summary": {
+    "floors": {
+      "L1": {
+        "items": 5877,
+        "layers": 30,
+        "counts": {
+          "wall": 10,
+          "column": 4,
+          "glass": 30,
+          "mullion": 1,
+          "lintel": 10,
+          "railing": 2,
+          "slab": 1
+        },
+        "wallSources": {
+          "fills": 88,
+          "outlines": 0,
+          "pairings": 380,
+          "lines": 337,
+          "curved": 0,
+          "roomOutlinesLeftOut": 0
+        },
+        "openings": {
+          "window": 7,
+          "door": 15,
+          "passage": 2
+        },
+        "doorsWith": {
+          "lintel": 10,
+          "transom": 5
+        },
+        "transoms": {
+          "L1-005": 2.6,
+          "L1-007": 2.6,
+          "L1-008": 2.6,
+          "L1-021": 2.6,
+          "L1-024": 3.7
+        },
+        "exterior": [
+          "L1-018",
+          "L1-022"
+        ],
+        "rooms": [
+          "TOILET",
+          "LIFT HALL",
+          "TOILET",
+          "MO 4 PAX",
+          "MEEETING 4 PAX",
+          "MANAGER",
+          "F/C"
+        ],
+        "notRoomNames": [
+          "ATM",
+          "ATM",
+          "ATM",
+          "BA",
+          "BE"
+        ],
+        "railingsLeftOut": 0,
+        "stairRailsOffTheFloor": 0,
+        "grid": {
+          "labels": 10,
+          "spread": 0.0,
+          "shift": [
+            0.0,
+            0.0
+          ]
+        },
+        "glassWalls": {
+          "elements": 11,
+          "panes": 14,
+          "types": {
+            "GLASS WALL 2600H 20X100": 14
+          },
+          "heights": [
+            2.6
+          ],
+          "length": 8.6,
+          "screens": 2,
+          "posts": 1
+        },
+        "parapets": [],
+        "closures": [
+          {
+            "object": "ATM Machine - ATM Machine",
+            "width": 0.58,
+            "bbox": [
+              6.129,
+              7.619,
+              6.241,
+              8.201
+            ]
+          }
+        ],
+        "voids": [],
+        "plate": {
+          "kept": [],
+          "dropped": [
+            {
+              "area": 1.26,
+              "bbox": [
+                -5.105,
+                11.765,
+                -2.284,
+                12.68
+              ],
+              "why": "mostly stair"
+            }
+          ]
+        },
+        "stairs": {
+          "stairs": 2,
+          "flights": 4,
+          "flightsWithWord": [],
+          "steps": 0,
+          "riser": 0.176,
+          "words": 0
+        },
+        "wallArea": 22.42,
+        "plateArea": 237.4,
+        "stairLines": 30,
+        "stairAboveLines": 76,
+        "stairLinesInDrawing": 30,
+        "stairAboveLinesInDrawing": 76
+      },
+      "L2": {
+        "items": 21379,
+        "layers": 27,
+        "counts": {
+          "wall": 14,
+          "column": 3,
+          "parapet": 1,
+          "glass": 6,
+          "lintel": 23,
+          "railing": 2,
+          "step": 16,
+          "slab": 1
+        },
+        "wallSources": {
+          "fills": 88,
+          "outlines": 0,
+          "pairings": 357,
+          "lines": 373,
+          "curved": 5,
+          "roomOutlinesLeftOut": 0
+        },
+        "openings": {
+          "door": 24,
+          "passage": 1
+        },
+        "doorsWith": {
+          "lintel": 23,
+          "transom": 1
+        },
+        "transoms": {
+          "L2-010": 2.6
+        },
+        "exterior": [
+          "L2-006"
+        ],
+        "rooms": [
+          "LIFT HALL",
+          "PANTRY",
+          "F/C",
+          "MALE TOILET",
+          "FEMALE TOILET",
+          "RACK",
+          "CSO 5PAX",
+          "WAITING AREA",
+          "MINI BAR / WEALTH ROOM",
+          "FOR 1 PAX",
+          "BOH"
+        ],
+        "notRoomNames": [
+          "UP",
+          "DOWN"
+        ],
+        "railingsLeftOut": 0,
+        "stairRailsOffTheFloor": 3,
+        "grid": {
+          "labels": 10,
+          "spread": 0.0,
+          "shift": [
+            0.0,
+            0.0
+          ]
+        },
+        "glassWalls": {
+          "elements": 5,
+          "panes": 5,
+          "types": {
+            "GLASS WALL 2600H 20X100": 5
+          },
+          "heights": [
+            2.6
+          ],
+          "length": 8.4,
+          "screens": 0,
+          "posts": 0
+        },
+        "parapets": [
+          {
+            "length": 5.0,
+            "bbox": [
+              5.697,
+              -10.849,
+              8.224,
+              -7.335
+            ]
+          }
+        ],
+        "closures": [],
+        "voids": [
+          {
+            "what": "stair",
+            "area": 9.3,
+            "bbox": [
+              1.353,
+              7.014,
+              4.539,
+              10.032
+            ]
+          },
+          {
+            "what": "lift shaft",
+            "area": 3.1,
+            "bbox": [
+              -3.43,
+              -8.58,
+              -1.63,
+              -6.83
+            ]
+          }
+        ],
+        "plate": {
+          "kept": [
+            {
+              "area": 52.7,
+              "bbox": [
+                -5.257,
+                -11.06,
+                8.224,
+                10.259
+              ]
+            }
+          ],
+          "dropped": [
+            {
+              "area": 4.67,
+              "bbox": [
+                -5.107,
+                11.756,
+                1.229,
+                12.68
+              ],
+              "why": "mostly stair"
+            }
+          ]
+        },
+        "stairs": {
+          "stairs": 2,
+          "flights": 3,
+          "flightsWithWord": [
+            {
+              "dir": "down",
+              "risers": 9
+            },
+            {
+              "dir": "up",
+              "risers": 9
+            }
+          ],
+          "steps": 16,
+          "riser": 0.176,
+          "words": 2
+        },
+        "wallArea": 17.3,
+        "plateArea": 285.0,
+        "stairLines": 21,
+        "stairAboveLines": 9,
+        "stairLinesInDrawing": 87,
+        "stairAboveLinesInDrawing": 54
+      }
+    },
+    "doorHeads": [
+      {
+        "family": "DOOR-CW_PIVOT_1 PANEL_FLUSH4 - D3 - PL03",
+        "head": 2.4,
+        "from": "most common",
+        "L1": 1
+      },
+      {
+        "family": "DOOR_GEN_SWING_1 PANEL_FLUSH - 1200x2400 _black_",
+        "head": 2.4,
+        "from": "name",
+        "L1": 1
+      },
+      {
+        "family": "DOOR_GEN_SWING_1 PANEL_FLUSH - 700x2400 _black_",
+        "head": 2.4,
+        "from": "name",
+        "L1": 1,
+        "L2": 1
+      },
+      {
+        "family": "DOOR_GEN_SWING_1 PANEL_FLUSH - 900x2400 _black_",
+        "head": 2.4,
+        "from": "name",
+        "L1": 1
+      },
+      {
+        "family": "DOOR_SWING_1_SOLID - D00-720X2400_SW_HD-F_HM-1",
+        "head": 2.4,
+        "from": "name",
+        "L2": 5
+      },
+      {
+        "family": "DOOR_SWING_1_SOLID - D00-900X2400_SW_HD-F_HM-1",
+        "head": 2.4,
+        "from": "name",
+        "L2": 1
+      },
+      {
+        "family": "DOOR_SWING_1_louver - D00-600X2400_SW_HD-F_HM-1",
+        "head": 2.4,
+        "from": "name",
+        "L2": 2
+      },
+      {
+        "family": "DOUBLE GLASS SWING DOOR-GENERIC - TYPE 1",
+        "head": 2.4,
+        "from": "most common",
+        "L1": 2
+      },
+      {
+        "family": "SINGLE GLASS SWING DOOR-GENERIC - TYPE 1",
+        "head": 2.4,
+        "from": "most common",
+        "L1": 4,
+        "L2": 1
+      },
+      {
+        "family": "SINGLE SWING DOOR-GENERIC - 1000X2400",
+        "head": 2.4,
+        "from": "name",
+        "L1": 3,
+        "L2": 3
+      },
+      {
+        "family": "SINGLE SWING DOOR-GENERIC - 700X2400",
+        "head": 2.4,
+        "from": "name",
+        "L1": 1
+      },
+      {
+        "family": "_GEN_LIFT_DOOR - DOOR1100x2400",
+        "head": 2.4,
+        "from": "name",
+        "L1": 1,
+        "L2": 1
+      },
+      {
+        "family": "DOOR_SWING_2_SOLID - 800x2000_INT",
+        "head": 2.0,
+        "from": "name",
+        "L2": 2
+      },
+      {
+        "family": "DOOR_SWING_louver - 650x2000_INT",
+        "head": 2.0,
+        "from": "name",
+        "L2": 6
+      },
+      {
+        "family": "DOOR_SWING_louver - 800x2000_INT",
+        "head": 2.0,
+        "from": "name",
+        "L2": 1
+      },
+      {
+        "family": "DOOR_SWING_louver - 900x2000_INT",
+        "head": 2.0,
+        "from": "name",
+        "L2": 1
+      }
+    ],
+    "offset": [
+      1.212,
+      0.348
+    ],
+    "dominantHead": 2.4,
+    "blocked": [],
+    "namedHeads": {
+      "2.4": 21,
+      "2.0": 10
+    },
+    "furniture": {
+      "pieces": 185,
+      "kinds": {
+        "atm": 3,
+        "computer": 16,
+        "printer": 7,
+        "phone": 9,
+        "tv": 2,
+        "partition": 4,
+        "plant": 7,
+        "sanitary": 10,
+        "seat": 75,
+        "sofa": 10,
+        "table": 12,
+        "coffee-table": 13,
+        "cabinet": 12,
+        "tall-cabinet": 5
+      },
+      "floors": {
+        "L1": {
+          "pieces": 88,
+          "kinds": {
+            "atm": 3,
+            "computer": 7,
+            "printer": 2,
+            "phone": 4,
+            "tv": 2,
+            "partition": 4,
+            "plant": 3,
+            "sanitary": 4,
+            "seat": 37,
+            "sofa": 4,
+            "table": 7,
+            "coffee-table": 7,
+            "cabinet": 2,
+            "tall-cabinet": 2
+          },
+          "approach": {
+            "pieces": 5,
+            "openings": 4,
+            "openingIds": [
+              "L1-003",
+              "L1-007",
+              "L1-017",
+              "L1-024"
+            ]
+          },
+          "insertsRead": 126,
+          "nestedInAnotherBlock": 2,
+          "skipped": {
+            "no geometry drawn inside the block": {
+              "count": 16,
+              "families": {
+                "PANEL_ADJ_GEN - ADJUSTABLE DRAWER": 16
+              }
+            },
+            "name on the skip list": {
+              "count": 2,
+              "families": {
+                "COVER - TYPE 1": 2
+              }
+            }
+          },
+          "looseShapes": {
+            "shapes": 0,
+            "boxes": 0,
+            "leftOut": []
+          },
+          "fronts": {
+            "absorbed": 20,
+            "grown": 1,
+            "runs": 0,
+            "inRuns": 0
+          }
+        },
+        "L2": {
+          "pieces": 97,
+          "kinds": {
+            "computer": 9,
+            "printer": 5,
+            "phone": 5,
+            "plant": 4,
+            "sanitary": 6,
+            "seat": 38,
+            "sofa": 6,
+            "table": 5,
+            "coffee-table": 6,
+            "cabinet": 10,
+            "tall-cabinet": 3
+          },
+          "approach": {
+            "pieces": 8,
+            "openings": 8,
+            "openingIds": [
+              "L2-001",
+              "L2-002",
+              "L2-007",
+              "L2-010",
+              "L2-012",
+              "L2-018",
+              "L2-020",
+              "L2-023"
+            ]
+          },
+          "insertsRead": 141,
+          "nestedInAnotherBlock": 8,
+          "skipped": {
+            "a point or a line (no area)": {
+              "count": 2,
+              "families": {
+                "Generic Models 1 - Generic Models 1": 1,
+                "Generic Models 5 - Generic Models 1": 1
+              }
+            },
+            "no geometry drawn inside the block": {
+              "count": 30,
+              "families": {
+                "PANEL_ADJ_GEN - ADJUSTABLE DRAWER": 30
+              }
+            },
+            "name on the skip list": {
+              "count": 5,
+              "families": {
+                "COVER - TYPE 1": 5
+              }
+            }
+          },
+          "looseShapes": {
+            "shapes": 23,
+            "boxes": 1,
+            "leftOut": []
+          },
+          "fronts": {
+            "absorbed": 8,
+            "grown": 0,
+            "runs": 0,
+            "inRuns": 0
+          }
+        }
+      }
+    }
+  },
+  "floors": {
+    "L1": {
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "area": {
+        "kind": "wholeFile"
+      },
+      "items": 5877,
+      "itemsNoPoints": 0,
+      "subtreesOutside": 0,
+      "alignment": {
+        "method": "none",
+        "shift": [
+          0.0,
+          0.0
+        ],
+        "spread": null,
+        "labels": [],
+        "families": 0
+      },
+      "singles": [],
+      "outlineSuggestions": [],
+      "swingsUnmatched": [],
+      "railsLeftOut": [],
+      "roomLabels": [
+        {
+          "text": "ATM",
+          "at": [
+            6.608,
+            8.017
+          ]
+        },
+        {
+          "text": "ATM",
+          "at": [
+            4.582,
+            -4.172
+          ]
+        },
+        {
+          "text": "ATM",
+          "at": [
+            4.582,
+            -5.016
+          ]
+        },
+        {
+          "text": "BA",
+          "at": [
+            2.443,
+            1.317
+          ]
+        },
+        {
+          "text": "BE",
+          "at": [
+            3.858,
+            1.317
+          ]
+        }
+      ],
+      "platesDropped": [
+        {
+          "area": 1.26,
+          "at": [
+            -3.695,
+            12.223
+          ]
+        }
+      ],
+      "detector": {
+        "seconds": 1.68,
+        "slow": false,
+        "frameRowsSkipped": null,
+        "records": 24
+      },
+      "lost": []
+    },
+    "L2": {
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "area": {
+        "kind": "wholeFile"
+      },
+      "items": 21379,
+      "itemsNoPoints": 0,
+      "subtreesOutside": 0,
+      "alignment": {
+        "method": "grid",
+        "shift": [
+          0.0,
+          0.0
+        ],
+        "spread": 0.0,
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "A",
+          "B",
+          "C"
+        ],
+        "families": 2
+      },
+      "singles": [],
+      "outlineSuggestions": [],
+      "swingsUnmatched": [],
+      "railsLeftOut": [],
+      "roomLabels": [
+        {
+          "text": "UP",
+          "at": [
+            4.679,
+            9.521
+          ]
+        },
+        {
+          "text": "DOWN",
+          "at": [
+            4.679,
+            7.651
+          ]
+        }
+      ],
+      "platesDropped": [
+        {
+          "area": 4.67,
+          "at": [
+            -1.939,
+            12.218
+          ]
+        }
+      ],
+      "detector": {
+        "seconds": 1.88,
+        "slow": false,
+        "frameRowsSkipped": null,
+        "records": 25
+      },
+      "lost": []
+    }
+  },
+  "fixes": {
+    "setAside": [],
+    "openings": [],
+    "outlineEdges": []
+  },
+  "doorHeadsFrom": {
+    "L1-002": "name",
+    "L1-004": "name",
+    "L1-005": "drawing",
+    "L1-006": "name",
+    "L1-007": "drawing",
+    "L1-008": "drawing",
+    "L1-013": "name",
+    "L1-014": "name",
+    "L1-015": "name",
+    "L1-016": "name",
+    "L1-017": "name",
+    "L1-018": "drawing",
+    "L1-021": "drawing",
+    "L1-022": "drawing",
+    "L1-024": "drawing",
+    "L2-001": "name",
+    "L2-002": "name",
+    "L2-003": "name",
+    "L2-004": "name",
+    "L2-005": "name",
+    "L2-006": "name",
+    "L2-007": "name",
+    "L2-008": "name",
+    "L2-009": "name",
+    "L2-010": "drawing",
+    "L2-011": "name",
+    "L2-012": "name",
+    "L2-013": "name",
+    "L2-014": "name",
+    "L2-015": "name",
+    "L2-016": "name",
+    "L2-018": "name",
+    "L2-019": "name",
+    "L2-020": "name",
+    "L2-021": "name",
+    "L2-022": "name",
+    "L2-023": "name",
+    "L2-024": "name",
+    "L2-025": "name"
+  }
+}

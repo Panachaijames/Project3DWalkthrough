@@ -10,17 +10,26 @@ inputs (9.5); LocalStore implements them now, nothing routes them yet.
 One method beyond the designed shape: `read_file_bytes` hands out the raw bytes of meta.json / version.json /
 overrides.json, which the offline download needs because its payload is the stored files' text (DESIGN.md 16; recorded in
 docs/contract-issues/E.md). A SupabaseR2Store gives the same text from its rows or objects.
+
+The upload milestone (docs/upload/DESIGN.md U-4.1, U-13.4; step U5) adds the store records of upload-contracts.ts section 2
+(ProjectSettingsFile, SourceRecord, UploadSessionFile, BuildRecord, BuildSettingsFile; OfficeMapping is
+models_upload's, since the worker's JobSpec carries it), `VersionDraft.project_data`, and the methods for uploads,
+sources, builds and their runs, settings files, offices and project settings (LocalStore: store/drafts.py). Run folders
+are handed out as paths: the job runner and the worker meet only through a run folder's files (U-3.2).
 """
 from __future__ import annotations
 
 import re
-from collections.abc import Iterable
+from collections.abc import Iterable, Iterator
+from contextlib import AbstractContextManager
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, ClassVar, Literal, Protocol
+from typing import Annotated, Any, ClassVar, Literal, Protocol
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 from pydantic.alias_generators import to_camel
+
+from ..models_upload import BuildSettings, OfficeMapping
 
 SourceKind = Literal['cad', 'pictures']
 PROJECT_ID_PATTERN = r'^[a-z0-9][a-z0-9-]{1,62}$'
@@ -30,6 +39,11 @@ PROJECT_FORMAT = 'walkthrough-project/1'
 VERSION_FORMAT = 'walkthrough-version/1'
 OVERRIDES_FORMAT = 'walkthrough-overrides/1'
 MODEL_FORMAT = 'built-model/1'
+PROJECT_SETTINGS_FORMAT = 'walkthrough-project-settings/1'
+SOURCE_FORMAT = 'walkthrough-source/1'
+UPLOAD_FORMAT = 'walkthrough-upload/1'
+BUILD_FORMAT = 'walkthrough-build/1'
+BUILD_SETTINGS_FORMAT = 'walkthrough-build-settings/1'
 
 
 class NotFound(Exception):
@@ -47,6 +61,17 @@ class StoreError(Exception):
 
 class StoreConflict(StoreError):
     """A project or version that already exists."""
+
+
+class PathTooLong(StoreError):
+    """A store or worker path would pass Windows' 260 characters (long paths are off on this laptop, U-4.1): the write
+    is refused with a plain message before anything is written."""
+
+    MESSAGE = 'the project folder is too deep for Windows: move it or shorten its path'
+
+    def __init__(self, length: int) -> None:
+        super().__init__(f'{self.MESSAGE} (a path of {length} characters would be needed; at most 259 work)')
+        self.length = length
 
 
 class RevisionConflict(StoreConflict):
@@ -224,6 +249,96 @@ class VersionDraft:
     downloads: dict[str, BlobSource] = field(default_factory=dict)
     source: dict[str, BlobSource] = field(default_factory=dict)
     carry_overrides_from: int | None = None
+    #: The BuildSettings the version was built with (docs/upload/DESIGN.md U-11.1): versions/<n>/project-data.json.
+    project_data: BlobSource | None = None
+
+
+# ----------------------------------------------------------------------- the upload milestone's records (U-4.1, U-13.4)
+class Naming(Record):
+    """ProjectNaming (upload-contracts.ts section 1)."""
+
+    photo_name: str
+    max_prefix: str
+    max_file_name: str
+
+
+class ProjectSettingsFile(Record):
+    """projects/<id>/project-settings.json: office, naming, the pinned offset (U-9.6)."""
+
+    format: Literal['walkthrough-project-settings/1'] = PROJECT_SETTINGS_FORMAT
+    office: str | None
+    naming: Naming
+    offset: tuple[float, float] | None
+    updated_at: str
+
+
+class SourceRecord(Record):
+    """projects/<id>/sources/<sha1>/source.json."""
+
+    format: Literal['walkthrough-source/1'] = SOURCE_FORMAT
+    sha1: str
+    name: str
+    bytes: int
+    kind: Literal['dwg', 'dxf']
+    format_version: str | None
+    uploaded_at: str
+    file: Literal['original.dwg', 'original.dxf']
+
+
+class UploadSessionFile(Record):
+    """data/.uploads/<uploadId>/session.json."""
+
+    format: Literal['walkthrough-upload/1'] = UPLOAD_FORMAT
+    id: str
+    project_id: str
+    file_name: str
+    bytes: int
+    part_bytes: int
+    parts: int
+    received: list[int]
+    created_at: str
+    expires_at: str
+
+
+class FromNone(Record):
+    kind: Literal['none']
+
+
+class FromVersion(Record):
+    kind: Literal['version']
+    version: int
+
+
+class FromBuild(Record):
+    kind: Literal['build']
+    build: str
+
+
+BuildFromRecord = Annotated[FromNone | FromVersion | FromBuild, Field(discriminator='kind')]
+
+
+class BuildRecord(Record):
+    """projects/<id>/builds/<buildId>/build.json, written by the API only."""
+
+    format: Literal['walkthrough-build/1'] = BUILD_FORMAT
+    id: str
+    project_id: str
+    created_at: str
+    updated_at: str
+    status: Literal['open', 'saved']
+    sources: list[str]
+    from_: BuildFromRecord = Field(alias='from')
+    saved_version: int | None
+    layers_reviewed_at: str | None
+
+
+class BuildSettingsFile(Record):
+    """projects/<id>/builds/<buildId>/settings.json: revision 0 until the prepare's proposal is adopted (U-3.3)."""
+
+    format: Literal['walkthrough-build-settings/1'] = BUILD_SETTINGS_FORMAT
+    revision: int
+    updated_at: str
+    settings: BuildSettings
 
 
 StoreFileName = Literal['meta.json', 'version.json', 'overrides.json', 'model.json', 'stages.json']
@@ -250,3 +365,43 @@ class Store(Protocol):
     def create_project(self, meta: NewProject) -> ProjectMeta: ...
     def stage(self, name: str, chunks: Iterable[bytes]) -> StagedRef: ...           # writes data/.staging/<key>, streamed
     def create_version(self, project_id: str, draft: VersionDraft) -> VersionMeta: ...
+
+    # ---- the upload milestone (docs/upload/DESIGN.md U-4.1, U-13.4; LocalStore: store/drafts.py)
+    def check_path(self, path: Path) -> Path: ...                                   # PathTooLong past 259 characters
+    def deepest_run_path(self, project_id: str) -> Path: ...                        # the longest path a prepare writes
+    # project settings, a version's recipe
+    def project_settings(self, project_id: str) -> ProjectSettingsFile | None: ...
+    def write_project_settings(self, project_id: str, record: ProjectSettingsFile) -> None: ...
+    def version_project_data(self, project_id: str, n: int) -> bytes | None: ...    # versions/<n>/project-data.json
+    def version_file_path(self, project_id: str, n: int, name: str) -> Path: ...
+    # offices (data/mappings/<officeId>.json)
+    def list_offices(self) -> list[OfficeMapping]: ...
+    def get_office(self, office_id: str) -> OfficeMapping | None: ...
+    def write_office(self, mapping: OfficeMapping) -> None: ...
+    # upload sessions (data/.uploads/<uploadId>/)
+    def create_upload(self, record: UploadSessionFile) -> UploadSessionFile: ...
+    def get_upload(self, upload_id: str) -> UploadSessionFile: ...                   # NotFound('upload_not_found')
+    def upload_received(self, upload_id: str) -> list[int]: ...
+    def put_upload_part(self, upload_id: str, part: int, data: bytes) -> None: ...
+    def join_upload(self, upload_id: str) -> tuple[Path, str, int]: ...             # (temp file, sha1, bytes)
+    def delete_upload(self, upload_id: str) -> None: ...
+    def clean_uploads(self, now: str) -> list[str]: ...
+    # sources (projects/<id>/sources/<sha1>/)
+    def store_source(self, project_id: str, temp: Path, record: SourceRecord) -> SourceRecord: ...
+    def get_source(self, project_id: str, sha1: str) -> SourceRecord: ...            # NotFound('source_not_found')
+    def source_path(self, project_id: str, sha1: str) -> Path: ...
+    # builds and their runs (projects/<id>/builds/<buildId>/)
+    def create_build(self, record: BuildRecord, settings: BuildSettingsFile) -> None: ...
+    def get_build(self, project_id: str, build_id: str) -> BuildRecord: ...         # NotFound('build_not_found')
+    def list_builds(self, project_id: str) -> list[BuildRecord]: ...
+    def write_build(self, record: BuildRecord) -> None: ...
+    def get_build_settings(self, project_id: str, build_id: str) -> BuildSettingsFile: ...
+    def write_build_settings(self, project_id: str, build_id: str, record: BuildSettingsFile) -> None: ...
+    def delete_build(self, project_id: str, build_id: str) -> None: ...
+    def build_lock(self, project_id: str, build_id: str) -> AbstractContextManager[None]: ...   # builds/<id>/.api.lock
+    def build_dir(self, project_id: str, build_id: str) -> Path: ...
+    def run_ids(self, project_id: str, build_id: str) -> list[str]: ...             # oldest first
+    def run_dir(self, project_id: str, build_id: str, run_id: str) -> Path: ...
+    def new_run_dir(self, project_id: str, build_id: str, kind: str) -> tuple[str, Path]: ...
+    def remove_run(self, project_id: str, build_id: str, run_id: str) -> None: ...
+    def iter_builds(self) -> Iterator[BuildRecord]: ...                             # every project's

@@ -1,7 +1,8 @@
 // The mock API over HTTP on 127.0.0.1:<port> (builder F's 8726, DESIGN.md 3): the web app's Vite proxy sends /api to it
 // exactly as it would to the real API, so fetches, images and downloads all reach it (Edge makes an <a download> request
 // in the browser process, which page.route does not see). The web specs start it in beforeAll when no API server runs
-// (WT_SERVE without `api`); the port is checked first and a taken port stops the run with a message.
+// (WT_SERVE without `api`); the port is checked first and a taken port stops the run with a message. The request's query,
+// headers and body bytes reach the mock (the upload milestone's routes: If-Match, withSettings, raw upload parts).
 import http from 'node:http';
 import net from 'node:net';
 import { createMockApi, type MockApi } from './core';
@@ -37,7 +38,13 @@ export async function startMockServer(port: number, mock: MockApi = createMockAp
       try {
         const url = new URL(req.url ?? '/', 'http://127.0.0.1');
         const method = (req.method ?? 'GET').toUpperCase();
-        const r = mock.handle({ method: method === 'HEAD' ? 'GET' : method, path: url.pathname, body: Buffer.concat(chunks).toString('utf8') });
+        const bytes = Buffer.concat(chunks);
+        const headers: Record<string, string> = {};
+        for (const [k, v] of Object.entries(req.headers)) if (typeof v === 'string') headers[k.toLowerCase()] = v;
+        const r = mock.handle({
+          method: method === 'HEAD' ? 'GET' : method, path: url.pathname, query: url.search.replace(/^\?/, ''), headers,
+          body: bytes.toString('utf8'), bytes,
+        });
         res.writeHead(r.status, { ...r.headers, 'content-length': String(r.body.length) });
         res.end(method === 'HEAD' ? undefined : r.body);
       } catch (err) {

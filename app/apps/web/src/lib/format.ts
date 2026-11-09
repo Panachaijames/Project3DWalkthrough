@@ -75,8 +75,8 @@ export const DOWNLOAD_ITEMS = [
   { key: 'offlineHtml', text: 'Offline viewer (HTML)' },
 ] as const;
 
-/** The empty project list (DESIGN.md 15.2). */
-export const NO_PROJECTS = 'No projects yet: run npm run seed';
+/** The empty project list (DESIGN.md 15.2; docs/upload/DESIGN.md U-14.1 changed it: projects are made in the app now). */
+export const NO_PROJECTS = 'No projects yet: make one with New project';
 
 /** A short reason for an error, for 'Not saved: <reason>' and the error alerts. */
 export function errorReason(err: unknown): string {
@@ -92,3 +92,17 @@ export function errorReason(err: unknown): string {
 
 /** A project with no version yet (its card, its page). */
 export const NO_VERSIONS = 'No versions yet';
+
+/** A draft's run status in the drafts lists (docs/upload/DESIGN.md U-14.1). */
+export function draftStatusText(status: string | null): string {
+  switch (status) {
+    case null: return 'not started';
+    case 'queued': return 'waiting to run';
+    case 'running': return 'running';
+    case 'done': return 'ready';
+    case 'failed': return 'failed';
+    case 'cancelled': return 'cancelled';
+    case 'interrupted': return 'interrupted';
+    default: return status;
+  }
+}

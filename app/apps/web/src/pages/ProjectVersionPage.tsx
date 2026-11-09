@@ -1,5 +1,6 @@
-// /projects/:projectId/v/:n (DESIGN.md 15.1, 15.3): the 48 px app bar (back to the projects, the project's name, the
-// version picker, the Downloads menu, the heights status) and the viewer filling the window below it.
+// /projects/:projectId/v/:n (DESIGN.md 15.1, 15.3): the 48 px app bar (back to the projects, the project's name, New version
+// and the Drafts menu of docs/upload/DESIGN.md U-2 screen 3, the version picker, the Downloads menu, the heights status) and
+// the viewer filling the window below it.
 // The loader reads the project (its versions for the picker), the version detail, then the model and (with a replay) the
 // stages. The ViewerProject is memoised on (projectId, version, stamp), the options on the address: a heights save (which
 // updates the cached version detail) never re-creates the viewer; a version change does, disposing the old one first.
@@ -10,6 +11,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLoaderData, useLocation, type LoaderFunctionArgs } from 'react-router';
 import { AppBar } from '@/components/AppBar';
 import { DownloadsMenu } from '@/components/DownloadsMenu';
+import { DraftsMenu, NewVersionButton } from '@/components/DraftsMenu';
 import { HeightsStatus } from '@/components/HeightsStatus';
 import { VersionPicker } from '@/components/VersionPicker';
 import { ViewerHost } from '@/components/ViewerHost';
@@ -157,6 +159,8 @@ export function ProjectVersionPage() {
   return (
     <div className="h-svh overflow-hidden bg-[#eef0f2]" data-testid="project-page" data-project-id={detail.projectId} data-version={detail.version}>
       <AppBar back title={project.name} className="fixed inset-x-0 top-0">
+        <NewVersionButton projectId={detail.projectId} />
+        <DraftsMenu projectId={detail.projectId} />
         <VersionPicker projectId={detail.projectId} versions={project.versions} current={detail.version} />
         <DownloadsMenu downloads={detail.downloads} heights={detail.hasFurniture ? saver.state : null} onOpen={saver.flush} />
         {detail.hasFurniture && <HeightsStatus state={saver.state} onRetry={saver.retry} />}

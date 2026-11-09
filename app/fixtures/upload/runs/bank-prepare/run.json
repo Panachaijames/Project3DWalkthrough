@@ -1,0 +1,31 @@
+{
+  "format": "fake-run/1",
+  "kind": "prepare",
+  "runId": "0001-prepare",
+  "outputs": {
+    "sources/459d40fc230607ffe35e2ee9d443cd2b0105dc36/conversion.json": {
+      "fixture": "fixtures/upload/conversion/bank1.conversion.json"
+    },
+    "sources/459d40fc230607ffe35e2ee9d443cd2b0105dc36/drawing.json": {
+      "fixture": "fixtures/upload/drawing/bank1.drawing.json"
+    },
+    "sources/459d40fc230607ffe35e2ee9d443cd2b0105dc36/plan.json.gz": {
+      "fixture": "fixtures/upload/plan/bank1.plan.json.gz"
+    },
+    "sources/6551bdc6f0cff4e31e83b68a55d22cf42703029a/conversion.json": {
+      "file": "out/sources/6551bdc6f0cff4e31e83b68a55d22cf42703029a/conversion.json"
+    },
+    "sources/6551bdc6f0cff4e31e83b68a55d22cf42703029a/drawing.json": {
+      "file": "out/sources/6551bdc6f0cff4e31e83b68a55d22cf42703029a/drawing.json"
+    },
+    "sources/6551bdc6f0cff4e31e83b68a55d22cf42703029a/plan.json.gz": {
+      "file": "out/sources/6551bdc6f0cff4e31e83b68a55d22cf42703029a/plan.json.gz"
+    },
+    "suggestions.json": {
+      "file": "out/suggestions.json"
+    },
+    "proposed-settings.json": {
+      "file": "out/proposed-settings.json"
+    }
+  }
+}

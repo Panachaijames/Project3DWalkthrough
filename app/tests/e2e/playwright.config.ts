@@ -9,7 +9,13 @@
 // Installed Edge (channel msedge), never a downloaded browser; never hasTouch / isMobile (touch goes through CDP:
 // lib/page.ts). One worker. A check tagged @timed retries once (lib/fps.ts timedDescribe); nothing else retries.
 // globalSetup takes the machine-wide Edge lock and globalTeardown releases it. Playwright starts the web servers BEFORE
-// globalSetup, so the API's server command makes the temp data copy itself (DESIGN.md 18.42).
+// globalSetup, so the API's server command makes its store itself (DESIGN.md 18.42).
+// The upload milestone (docs/upload/DESIGN.md U-15.1, U-15.3; its scaffold U0): the API serves a FRESHLY SEEDED store in
+// WT_TMP/data (`run-api.mjs --seed-fresh`, from the prototype folders; 180 s for the seed), so every run starts from the
+// four seeded projects (specs that add projects use ids e2e-*); the builder's settings and WALKTHROUGH_CACHE_DIR =
+// WT_TMP/cache go to the API and its worker; WT_UPLOAD_OFFLINE_DIR (the uploaded versions' offline files for
+// upload-walk.spec.ts) passes through; globalTeardown cancels every open run through the API (U-3.4) before it lets go
+// of the Edge lock.
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -43,13 +49,19 @@ const serve = new Set((process.env.WT_SERVE ?? defaultServe).split(',').map(s =>
 const childEnv = (extra: Record<string, string>) => ({ ...process.env, WT_TMP: TMP, ...extra }) as Record<string, string>;
 const webServer: NonNullable<PlaywrightTestConfig['webServer']> = [];
 if (serve.has('api')) {
+  process.env.WT_E2E_API = `http://127.0.0.1:${API_PORT}`;   // read by global-teardown.ts (same process): cancel open runs
   webServer.push({
-    command: `node tools/run-api.mjs --port ${API_PORT} --data "${TMP}/data" --copy-data-from data`,
+    command: `node tools/run-api.mjs --port ${API_PORT} --data "${TMP}/data" --seed-fresh`,
     cwd: APP,
     url: `http://127.0.0.1:${API_PORT}/api/health`,
     reuseExistingServer: false,
-    timeout: 60_000,
-    env: childEnv({}),
+    timeout: 180_000,
+    env: childEnv({
+      WALKTHROUGH_CACHE_DIR: `${TMP}/cache`,
+      WALKTHROUGH_BUILDER_PYTHON: process.env.WALKTHROUGH_BUILDER_PYTHON ?? 'services/builder/.venv/Scripts/python.exe',
+      WALKTHROUGH_LIBREDWG_DIR: process.env.WALKTHROUGH_LIBREDWG_DIR ?? 'vendor/libredwg-0.14-win64',
+      ...(process.env.WT_UPLOAD_OFFLINE_DIR ? { WT_UPLOAD_OFFLINE_DIR: process.env.WT_UPLOAD_OFFLINE_DIR } : {}),
+    }),
   });
 }
 if (serve.has('web')) {

@@ -1,0 +1,87 @@
+{
+  "format": "build-settings/1",
+  "office": null,
+  "project": {
+    "name": "Small test drawing",
+    "shortName": "Small",
+    "projectNo": null,
+    "photoName": "Small-test",
+    "maxPrefix": "SM",
+    "maxFileName": "Small_Test.ms",
+    "exportedFrom": null
+  },
+  "sources": [
+    {
+      "sha1": "fb8e7283ab205c8e49ecc057f6019c1e9fd2f6d0",
+      "name": "small.dxf",
+      "kind": "dxf",
+      "units": "mm",
+      "unitsConfirmed": true
+    }
+  ],
+  "layers": {
+    "0": "other",
+    "A-AREA-IDEN": "room-name",
+    "A-DOOR": "door",
+    "A-FLOR-HRAL": "railing",
+    "A-GLAZ": "window",
+    "A-WALL": "wall",
+    "A-WALL-PATT": "wall",
+    "I-FURN": "furniture",
+    "S-GRID": "grid",
+    "S-GRID-IDEN": "grid",
+    "S-STRS": "stair"
+  },
+  "floors": [
+    {
+      "key": "L1",
+      "name": "Level 1",
+      "source": "fb8e7283ab205c8e49ecc057f6019c1e9fd2f6d0",
+      "area": {
+        "kind": "wholeFile"
+      },
+      "level": 0.0,
+      "wallHeight": 3.0,
+      "slabThickness": null,
+      "doorHead": null,
+      "windowSill": null,
+      "windowHead": null,
+      "align": {
+        "method": "auto"
+      }
+    }
+  ],
+  "defaults": {
+    "doorHead": 2.1,
+    "windowSill": 0.9,
+    "windowHead": 2.1,
+    "railingHeight": 1.1,
+    "slabThickness": 0.25,
+    "singleLineHeight": 1.0
+  },
+  "furniture": {
+    "heights": {},
+    "bases": {},
+    "words": {},
+    "skip": [],
+    "minSize": 0.08,
+    "minDepth": null,
+    "looseLayers": [],
+    "pieceLayer": "insert"
+  },
+  "vocabulary": {},
+  "options": {
+    "revitWallTypes": "auto",
+    "parapets": "auto",
+    "objectClosures": true,
+    "liftShafts": true,
+    "plinth": "auto",
+    "outlineWalls": "off",
+    "offset": "auto"
+  },
+  "fixes": {
+    "setAside": [],
+    "openings": [],
+    "outlineEdges": []
+  }
+}

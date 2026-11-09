@@ -55,17 +55,19 @@ class StoreBusy(StoreError):
 
 
 @contextmanager
-def store_file_lock(root: Path, timeout: float = DEFAULT_TIMEOUT_S) -> Iterator[None]:
-    """Holds the store's cross-process lock for the `with` block. Not re-entrant: LocalStore.exclusive() nests it."""
-    root = Path(root)
-    root.mkdir(parents=True, exist_ok=True)
-    fd = os.open(root / LOCK_NAME, os.O_RDWR | os.O_CREAT | getattr(os, 'O_BINARY', 0), 0o644)
+def file_lock(path: Path, timeout: float, busy: str) -> Iterator[None]:
+    """Holds an OS lock on one byte of `path` (created when missing) for the `with` block; StoreBusy(busy) after `timeout`
+    seconds of waiting. Each call opens its own handle, so two threads of one process exclude each other too; not
+    re-entrant. The handle is not inherited by child processes (a worker started under the lock never holds it)."""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd = os.open(path, os.O_RDWR | os.O_CREAT | getattr(os, 'O_BINARY', 0) | getattr(os, 'O_NOINHERIT', 0), 0o644)
     try:
         deadline = time.monotonic() + timeout
         delay = 0.005
         while not _try_lock(fd):
             if time.monotonic() >= deadline:
-                raise StoreBusy(f'the store is busy: another process (the seed?) held its lock for over {timeout:.0f} s')
+                raise StoreBusy(busy)
             time.sleep(delay)
             delay = min(delay * 2, 0.2)
         try:
@@ -74,3 +76,11 @@ def store_file_lock(root: Path, timeout: float = DEFAULT_TIMEOUT_S) -> Iterator[
             _unlock(fd)
     finally:
         os.close(fd)
+
+
+@contextmanager
+def store_file_lock(root: Path, timeout: float = DEFAULT_TIMEOUT_S) -> Iterator[None]:
+    """Holds the store's cross-process lock for the `with` block. Not re-entrant: LocalStore.exclusive() nests it."""
+    with file_lock(Path(root) / LOCK_NAME, timeout,
+                   f'the store is busy: another process (the seed?) held its lock for over {timeout:.0f} s'):
+        yield

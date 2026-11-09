@@ -148,7 +148,9 @@ def test_create_project_stage_and_versions(tmp_path) -> None:
     pics = {name: (FIXTURES / 'pictures' / name).read_bytes() for name in ('floor1_plan.png', 'floor2_plan.png')}
     v1 = store.create_version('new-project', VersionDraft(
         label='first', source_kind='pictures', source_files=model['source'], model_json=staged, stages_json=None,
-        presentation=pres, assets=pics, downloads={'notes.ms': b'-- line 1\n-- (model data 000000000000)\n'},
+        presentation=pres, assets=pics,
+        # the real stamp: create_version refuses a .ms whose line 2 does not pair with the model (docs/upload U-11.1)
+        downloads={'notes.ms': b'-- line 1\n-- (model data ' + sha1_hex(raw)[:12].encode() + b')\n'},
         source={'readme.md': b'# hi\n'}))
     assert v1.version == 1 and v1.stamp == sha1_hex(raw)[:12] and v1.stamp_source == 'model.json'
     assert not (store.staging_dir / staged.key).exists()                    # moved, not copied

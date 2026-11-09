@@ -121,3 +121,63 @@ nowhere. Compare after filling the defaults (parsePresentation / resolvePresenta
 | `presidential-suite.json` | `5ddad039482b03490b48a2f2966f68d1224eabb6` |
 | `sukhumvit-house.json` | `6bf06b3bad9007c8776c0594c3086be5f55fa17e` |
 | `hotel-lobby.json` | `310a24a0e24d9c48292e4f9ec23607fe5a5633d5` |
+
+## upload/ (the upload milestone; made by its scaffold U0 on 4 Nov 2026, ACCEPTANCE 2.5)
+
+`node tools/run-builder-py.mjs tools/upload/make-fixtures.py [--only settings mapping drawing conversion result runs
+maxtexts]` (the builder Python; reads `WT_REF`, the `make:reference` output, read only; deterministic). Every file passes
+the API's record check (`node tools/run-py.mjs -m walkthrough_api.check_file <kind> <file>`) and its type
+(`apps/web/test/upload-fixtures.test-d.ts`; `services/builder/tests/test_contracts.py` for the builder's own types).
+Owners after the scaffold: `settings/**` U3, `max-texts/**` U4; the provisional drawing, plan and conversion fixtures are
+re-made by U2 / U1, who list any difference in their contract-issues file. Each settings fixture's derived detector
+mapping reproduces `detector/output/<name>_openings.json` record for record, `floor` aside
+(`tools/upload/check-derived-mapping.py`: 24, 25, 86, 25, 31, 34 records, all equal). The synthetic drawings
+(`tools/upload/make-test-dxf.py small|hostile <out.dxf>`) are made at test time (the root `.gitignore` ignores `*.dxf`):
+small `fb8e7283ab205c8e49ecc057f6019c1e9fd2f6d0`, hostile `7d2193d20052ac4171e42d8887270551cfa1d0b8`.
+
+| File | Source | sha1 |
+|---|---|---|
+| `build-result.bank.json` | contracts.BuildResult of the bank (compact JSON): the v2 model, bank_summary.json, the detector outputs, the stages regrouped, placements found by block and handle in the reference DXFs | `d566a7bea98f069a8591015ca0cf89ff619a1ba0` |
+| `conversion/bank1.conversion.json` | **provisional** ConversionReport of I1201 (dwgread -O JSON streamed against the DXF, nothing_lost_stream.py; the converter log by class): ok | `20f2b322d74dffe32535121beb1b0eb89181461b` |
+| `conversion/presidential.conversion.json` | **provisional** ConversionReport of the suite: loss, 8,254 of 142,182 missing; U1 makes the real one | `308a6d64167ab14b9486d1feacb223778b083e06` |
+| `drawing/bank1.drawing.json` | **provisional** DrawingRead of I1201 (`tools/upload/fixture_reader.py`: the prims walk with U-7.2 keys + read_drawing.py / areas_propose.py); U2 makes the real one | `c4c9d4857c37f1e1ddfb40cab81006b0f6bb1f10` |
+| `drawing/sukhumvit.drawing.json` | **provisional** DrawingRead of the house (same); 26 level tags where U-7.3 measured 28 (U2 settles) | `ed8d68e9ee410b3a3db26c443ab18e3e4004b864` |
+| `mappings/dwp-revit.json` | OfficeMapping after the bank is saved for office dwp-revit (every bank layer by normalised name) | `484a50a4b84e8d2dfed5ded65081503e771c8a00` |
+| `max-texts/bank-27oct.json` | **provisional** MaxTexts profile: the verbatim header, tooltip and datum lines of `bank_test/Bangkok_Bank_Sampeng.ms`; U4 owns and completes it | `9db380a335ace16dc352d3ef3a2f40b649fd5dfd` |
+| `max-texts/hotel-2nov.json` | **provisional** MaxTexts profile from `hotel_test/Hotel_Lobby.ms` (same) | `12ecd5391ab8fd4c6109cb66d473d5fdd4bebe91` |
+| `max-texts/upload.json` | **provisional** the upload profile of U-11.5 in outline (placeholders); U4 owns it | `17c736a47a47c5b558230f856121146876a2640b` |
+| `overlay/bank.overlay.json` | BuildOverlay of the bank from the v2 model and the detector records (sheet m = model + offset), with the opening, room-label and plate flags the data raise | `01893517d1be77a958ef1cf7bd843084731fcf1c` |
+| `plan/bank1.plan.json.gz` | **provisional** PlanGeometry of I1201 with nested keys, sig / rsig / eid per entry (gzip, mtime 0) | `9c7c8ef6a338ebe1ada0913f143750861599e9a3` |
+| `plan/sukhumvit.plan.json.gz` | **provisional** PlanGeometry of the house (same) | `e5688ac600f80c4b4f70a14ff1d9fc4184d3ddee` |
+| `replay-input.bank.json` | contracts.ReplayInput: build-result.bank.json's `replay` (compact JSON) | `9ad979ad33bfb9f71bcbfb097b21813df3c090ed` |
+| `settings/bank.json` | BuildSettings: `bank_test/src/bank_project.json` (roles, names, furniture word Fritz-Hansen) + A-1 (keys L1 / L2, levels 0 / 3.70, wall heights 3.70, whole files) | `c7e09054b4271dec5316eda634d622ee8f2abd46` |
+| `settings/house.json` | BuildSettings: `detector/mappings_with_areas/sukhumvit.json` (roles, the two area boxes, pad 0.5, match all) + `cad_test/src/{build3d.py, furniture.json, heights.json}` + A-5 (ground / upper, levels 0.90 / 4.80, wall heights 3.90 / 3.50, door / window 3.00 / 0.00 / 3.00 and 2.60 / 0.00 / 2.60) | `4ddf3bc30096016cae821c6a864241bd93be2940` |
+| `settings/small.json` | BuildSettings for the synthetic `make-test-dxf.py small` drawing (its sha1 `fb8e7283ab20...`) | `808dbb4cb919ef55e51fade57bfc2776a83318d2` |
+| `settings/suite.json` | BuildSettings: `detector/mappings_with_areas/presidential.json` (roles, area, match any) + `presidential_test/src/furniture.json` + A-5 (suite, level 0, wall height 3.00, door head 2.10, pieceLayer drawn; Defpoints room-outline) | `cc0399ca88b4eddb54b76890e4bf0f72668bd82c` |
+| `settings/tower.json` | BuildSettings: `detector/mappings/{l29,l30}.json` + A-5 (L29 / L30 whole files, levels 0 / 4.00, wall heights 4.00, align origin); A-GENM furniture, A-AREA room-outline | `aff02e71d8526dfca2f5f50d6d2c6e4b4592f54f` |
+
+### upload/runs/ (what a FakeJobRunner copies: a prepare and a build of the bank)
+
+`runs/<run>/run.json` lists each output of the run and where its bytes are: `{"fixture": <path under app/>}`,
+`{"prototype": <path under the project folder>}` or `{"file": <path under the run folder>}`; `runs/<run>/job.json` is the
+JobRecord of the finished run, its `outputs` the sizes and sha1s of exactly those bytes (a test checks it). The build's
+model and stages are `fixtures/models/bank-v2.model.json` and `fixtures/stages/bank-v2.stages.json`, its top view and
+`.ms` the prototype's (`bank_test/src/bank_topview.png`, `bank_test/Bangkok_Bank_Sampeng.ms`).
+
+| File | sha1 |
+|---|---|
+| `runs/bank-build/job.json` | `934b5f4ec5b35ff318a77ed1562f60ffd91bbbab` |
+| `runs/bank-build/out/diff.json` | `f1443890213a4d7c3d05da0329a75efd93635750` |
+| `runs/bank-build/out/inputs.json` | `a9908f5a1bb69e8262630101d8963620c000ebbf` |
+| `runs/bank-build/out/openings.json` | `f030b1c1457c1d3a6eefb8a236808f6b107d18a5` |
+| `runs/bank-build/out/pieces.json` | `2b596b8ca7c52bf5620a131b98bc513f11c2d4e5` |
+| `runs/bank-build/out/presentation.json` | `c994c446162ed528af73461edfe441e4dc3d6bde` |
+| `runs/bank-build/out/report.json` | `520bd8081b0a19ec4e84065c49a36a190d66a3bb` |
+| `runs/bank-build/run.json` | `0b10ae5d2de760ea92a5c49dc25d3376f434f2fb` |
+| `runs/bank-prepare/job.json` | `daa3360b877ce2e34e083672ab61708d21542731` |
+| `runs/bank-prepare/out/proposed-settings.json` | `523360a3855d60a6362214dcfa62b60f79a375c4` |
+| `runs/bank-prepare/out/sources/6551bdc6f0cff4e31e83b68a55d22cf42703029a/conversion.json` | `269d79ae7ccd48700bc864935fb594cd9f5c82f5` |
+| `runs/bank-prepare/out/sources/6551bdc6f0cff4e31e83b68a55d22cf42703029a/drawing.json` | `30e28f37eca6c1e773768feaa3315c44667e6736` |
+| `runs/bank-prepare/out/sources/6551bdc6f0cff4e31e83b68a55d22cf42703029a/plan.json.gz` | `0c81727c9c9c512ab757190269bfe8aefb2cec33` |
+| `runs/bank-prepare/out/suggestions.json` | `e79eab9027aaf098c91e77d1d56f070c7655ffcc` |
+| `runs/bank-prepare/run.json` | `9480f399ec17f146d309056b4e352fcb55243f1f` |

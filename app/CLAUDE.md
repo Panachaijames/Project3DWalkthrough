@@ -156,3 +156,111 @@ follows the project and target). `WT_SKIP_STORE_CHECK=1` skips globalSetup's see
   tap through CDP), `walks.ts` (doorWalks, glassWalks, wallWalks, walkThrough, installPageHelpers), `fps.ts`.
 * `fixtures/` (see its README): models (incl. `broken/` with `expected.json`), stages, pictures, CSVs and goldens,
   presentation, prototype facts.
+
+---
+
+# The upload milestone (4 Nov 2026): upload a DWG and build it in the app
+
+Design: `docs/upload/DESIGN.md` (cited U-n), `docs/upload/ACCEPTANCE.md` (A-1 ... A-11), `docs/upload/WORK_BREAKDOWN.md`
+(owners, ports; its section 0 binds every step), `docs/upload/upload-contracts.ts` (shapes; copied verbatim to
+`apps/web/src/upload/contracts.ts`). Contract issues: `docs/upload/contract-issues/<U0 ... U7, UI, UR>.md`, each step its
+own. Everything above still holds; this adds:
+
+* **The builder** is its own process in its own pinned Python, `services/builder/.venv` (Python 3.14.3; approved by the
+  owner on 4 Nov). It never imports `walkthrough_api` and the API never imports it: they meet only through a run folder's
+  JSON files. Run it with `node tools/run-builder-py.mjs ...` (`-B -P`, cwd `app/`, `PYTHONPATH=services/builder`,
+  UTF-8, no bytecode, one OpenBLAS / OpenMP thread, `MPLBACKEND=Agg`, pytest's cache under `WT_TMP`; never `-I`, `-E`,
+  `-s`). The venv is the only supported path; `WALKTHROUGH_BUILDER_PYTHON=C:\Python314\python.exe` (user-site
+  libraries, no pytest) stands in for a diagnosis only. **No installs after the scaffold.**
+* **LibreDWG** lives in `vendor/libredwg-0.14-win64/`, extracted unchanged from `vendor/libredwg-0.14-win64.zip` (the
+  release zip, sha1 `edb5c011...`; both gitignored) by `npm run vendor:libredwg -- --zip <zip>`; the tracked
+  `vendor/libredwg.manifest.json` lists every file's size and sha1 and `npm run check:pins` verifies them. GPL-3.0-or-later
+  (`vendor/LIBREDWG-LICENCE.txt`): it runs ONLY as a separate program (`dwg2dxf.exe`, `dwgread.exe`), never linked or
+  loaded, and never ships in the web app or the offline files. The full licence text is the owner's to fetch.
+* **Drawings and DXFs are never served to clients and never put in git** (the root `.gitignore` ignores `*.dwg`,
+  `*.dxf`; `app/.gitignore` ignores the store's `sources/`, `builds/`, `.uploads/`). Drawing text is untrusted.
+* **The machine run lock** `%TEMP%\walkthrough-run.lock` (`WALKTHROUGH_RUN_LOCK`): one run at a time on the machine. A
+  builder test that converts, reads or builds a real drawing in the test process is marked `heavy` (its fixture takes the
+  lock); a test that spawns the worker is marked `worker` (never takes the lock: the worker does). Never both.
+* **The reference** `WT_REF` (default `%TEMP%\wt-u0\ref`) is the scaffold's `npm run make:reference` output: the
+  prototype chain run in a scratch copy with the vendored LibreDWG and the builder Python (the six drawings' DXFs and
+  `prims.pkl` caches under `proj/detector/<name>/`, their detector outputs under `proj/detector/output/`, the bank's v2
+  outputs under `proj/bank_test/`; `manifest.json`). Shared and read-only: a builder that needs a fresh copy of one
+  drawing runs `npm run make:reference -- --only <bank|house|suite|tower> --out <WT_TMP>\ref`.
+* Set for every run: `WT_TMP=%TEMP%\wt-u<n>`, `WALKTHROUGH_DATA_DIR=<WT_TMP>\data`, `WALKTHROUGH_CACHE_DIR=<WT_TMP>\cache`
+  and your ports. Never `app/data` or the default cache in a test. The API's pytest wants `<WT_TMP>\api-tests` to exist
+  (`mkdir` it once).
+
+## Builder library list (`services/builder/requirements.lock.txt`, 19 pins; `npm run check:pins` imports each)
+
+| Package | Version | | Package | Version |
+|---|---|---|---|---|
+| ezdxf | 1.4.4 | | contourpy | 1.4.0 |
+| shapely | 2.1.2 (GEOS 3.13.1) | | cycler | 0.12.1 |
+| numpy | 2.4.4 | | fonttools | 4.62.1 |
+| matplotlib | 3.11.2 (freetype 2.14.3) | | kiwisolver | 1.5.1 |
+| pillow | 12.2.0 | | packaging, pyparsing | 26.3, 3.3.3 |
+| pytest | 9.1.1 | | python-dateutil, six | 2.9.0.post0, 1.17.0 |
+| iniconfig, pluggy | 2.3.1, 1.7.0 | | typing_extensions | 4.15.0 |
+| pygments, colorama | 2.21.0, 0.4.6 | | | |
+
+The prototypes' own versions: the byte-identical goldens (the bank's model `c3a9408304a2`, stages, CSV, top view, `.ms`)
+depend on them. Builder tests do NOT turn warnings into errors (that would change the vendored detector's control flow).
+
+## Ports and temp folders (docs/upload/WORK_BREAKDOWN.md section 1)
+
+Nothing of the foundation's 57x0 - 5726, 87x0 - 8726, 47x0 - 4726, 97x0 - 9726, nothing of the prototypes' 93xx - 94xx.
+
+| Step | Web dev / harness | API | Preview | CDP | `WT_TMP` |
+|---|---|---|---|---|---|
+| U0 scaffold | 5730 | 8730 | 4730 | 9730 | `%TEMP%\wt-u0` |
+| U1 intake and jobs | 5731 | 8731 | 4731 | 9731 | `%TEMP%\wt-u1` |
+| U2 reader and suggestions | 5732 | 8732 | 4732 | 9732 | `%TEMP%\wt-u2` |
+| U3 model builder | 5733 | 8733 | 4733 | 9733 | `%TEMP%\wt-u3` |
+| U4 outputs | 5734 | 8734 | 4734 | 9734 | `%TEMP%\wt-u4` |
+| U5 API | 5735 | 8735 | 4735 | 9735 | `%TEMP%\wt-u5` |
+| U6 web screens | 5736 | 8736 (mock) | 4736 | 9736 | `%TEMP%\wt-u6` |
+| U7 plan canvas | 5737 | 8737 | 4737 | 9737 | `%TEMP%\wt-u7` |
+| UI integration | 5711 (e2e), 5710 (dev) | 8711 (e2e), 8710 (dev) | 4711 / 4710 | 9738 | `%TEMP%\wt-ui` |
+| UR review and fix | 5739 | 8739 | 4739 | 9739 | `%TEMP%\wt-ur` |
+
+## Who owns what in this milestone (docs/upload/WORK_BREAKDOWN.md; read anything, write only what you own)
+
+* **U0 scaffold (frozen after it; nobody edits):** `services/builder/{pyproject.toml, requirements.lock.txt}`,
+  `walkthrough_builder/{__init__, roles, names, keys, contracts}.py`, `walkthrough_builder/vendor/**`,
+  `services/builder/tests/{conftest, kit, test_vendor, test_roles, test_names, test_keys, test_jsonfile, test_oslock,
+  test_contracts}.py`; `services/api/walkthrough_api/models_upload.py` and the route decorators of
+  `routes/{uploads, builds, offices}.py` and `createProject`; `apps/web/src/upload/contracts.ts`,
+  `apps/web/src/plan/index.ts`'s signatures, `apps/web/test/upload-{contracts-copy.test.ts, fixtures.test-d.ts,
+  generated-types.test-d.ts}`; `tools/{vendor-libredwg.py, run-builder-py.mjs, check-openapi-additive.mjs}`,
+  `tools/upload/**` (except `gap-report.py`, U4's), `vendor/{libredwg.manifest.json, LIBREDWG-LICENCE.txt}`, the
+  configs, `package.json` and `fixtures/upload/**` (except as below).
+* **U1** `walkthrough_builder/{job, step, isolate, convert, losscheck, cache, runio}.py` and, after the scaffold,
+  `jsonfile.py`, `oslock.py`; `services/builder/tests/test_u1_*.py`.
+* **U2** `walkthrough_builder/{read, drawing, plangeom, units, levels, grid, areas, suggest, propose}.py`;
+  `tests/test_u2_*.py`.
+* **U3** `walkthrough_builder/build/**`, `tests/test_u3_*.py`, `fixtures/upload/settings/**` (after the scaffold).
+* **U4** `walkthrough_builder/out/**`, `tests/test_u4_*.py`, `fixtures/upload/max-texts/**` (after the scaffold),
+  `tools/upload/gap-report.py`.
+* **U5** `services/api/walkthrough_api/**` except `models.py`, `models_upload.py` and the route decorators (bodies only:
+  the 24 new routes answer 501 until then; `settings_check.py`, `jobs/**`, `bodyguard.py`, `check_file.py` are U5's
+  after the scaffold), and `services/api/tests/**`.
+* **U6** `apps/web/src/**` except `src/plan/**`, `src/api/generated/**`, `src/upload/contracts.ts`; `apps/web/test/**`
+  except `test/plan/**` and the scaffold's three contract tests; `tests/e2e/upload.spec.ts`; the count lines of
+  `web.spec.ts` / `web-leak.spec.ts`.
+* **U7** `apps/web/src/plan/**` (bodies behind the scaffold's signatures), `apps/web/test/plan/**`,
+  `tests/e2e/{plan-canvas, upload-walk}.spec.ts`, the viewer's CSV function in `furniture/logic.ts` and its test.
+
+## Commands added (from `app/`)
+
+| Command | Does |
+|---|---|
+| `npm run test:builder` | the builder's pytest (`services/builder/tests`) in the builder Python |
+| `npm run make:reference -- --out <dir> [--only bank house suite tower]` | the prototype chain in a scratch copy (see above); exit 1 when a check fails |
+| `npm run vendor:libredwg -- --zip <zip>` | copy, check, extract and (the first time) write the LibreDWG manifest; `-- --verify` checks the extraction; `-- --add-licence <file>` records the GPL text |
+| `node tools/check-openapi-additive.mjs` | the API change is additive against the last commit (paths, schemas; the generated client by exported symbol) and the two contract copies are equal |
+| `node tools/run-py.mjs -m walkthrough_api.check_file <kind> <file> [--model <model.json>]` | the API's record checks on one worker file (model, stages, presentation, drawing, plan, overlay, conversion, suggestions, settings, job, spec, launch, diff, pieces, openings, api, office, inputs) |
+| `node tools/run-builder-py.mjs tools/upload/make-test-dxf.py small` or `hostile <out.dxf>` | the synthetic test drawings (deterministic) |
+| `node tools/run-builder-py.mjs tools/upload/check-derived-mapping.py` | each settings fixture's derived detector mapping against `detector/output/` |
+| `node tools/run-builder-py.mjs tools/upload/make-fixtures.py [--only <part>]` | re-makes `fixtures/upload/` (scaffold tool) |
+| `node tools/run-api.mjs --port <p> --data <dir> --seed-fresh` | serves a freshly seeded store (the e2e config does this; refuses `app/data`) |

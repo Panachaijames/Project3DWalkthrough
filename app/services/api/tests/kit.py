@@ -70,7 +70,15 @@ def tree(root: Path, skip_seeded_at: bool = False) -> dict[str, bytes]:
 BASE_URL = 'http://127.0.0.1'
 
 
-def make_client(data: Path, template: Path, raise_server_exceptions: bool = True) -> TestClient:
-    return TestClient(create_app(Settings(data_dir=data, offline_template=template,
-                                          cors_origins=('http://127.0.0.1:5710', 'http://localhost:5710'))),
+def api_settings(data: Path, template: Path, **extra: object) -> Settings:
+    """The API's settings in a test: the store given, the cache under WT_TMP (never the default one, WORK_BREAKDOWN 0)."""
+    return Settings(data_dir=data, offline_template=template,
+                    cors_origins=('http://127.0.0.1:5710', 'http://localhost:5710'),
+                    cache_dir=RUN / 'cache', **extra)  # type: ignore[arg-type]
+
+
+def make_client(data: Path, template: Path, raise_server_exceptions: bool = True, jobs: object = None,
+                **settings: object) -> TestClient:
+    """A client of a fresh app over `data`; `jobs` = the job runner (default: the LocalJobRunner)."""
+    return TestClient(create_app(api_settings(data, template, **settings), jobs=jobs),  # type: ignore[arg-type]
                       base_url=BASE_URL, raise_server_exceptions=raise_server_exceptions)

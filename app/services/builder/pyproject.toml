@@ -1,0 +1,35 @@
+[project]
+name = "walkthrough-builder"
+version = "0.1.0"
+description = "Walkthrough builder: converts, reads and builds uploaded drawings as a separate worker process (docs/upload/DESIGN.md U-3, U-10)."
+requires-python = ">=3.14,<3.15"
+# The package is NOT installed into the venv (U-10.1): tools/run-builder-py.mjs runs services/builder/.venv's Python with
+# -B -P and PYTHONPATH=services/builder. Every package, direct and indirect, is pinned in requirements.lock.txt; install
+# (once, the scaffold; approved by the owner on 4 Nov) with
+#   services/builder/.venv/Scripts/python -m pip install -r services/builder/requirements.lock.txt
+# It never imports walkthrough_api (pydantic) and the API never imports it (U-18.1). The direct dependencies, for the
+# record (the lock is what gets installed): the prototypes' own versions, on which byte-identity depends (U-10.1).
+dependencies = [
+  "ezdxf==1.4.4",
+  "shapely==2.1.2",
+  "numpy==2.4.4",
+  "matplotlib==3.11.2",
+  "pillow==12.2.0",
+]
+
+[dependency-groups]
+test = ["pytest==9.1.1"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+# heavy: a real drawing converted, read or built in the test process (its fixture takes the machine run lock, U-3.5).
+# worker: a test that spawns job.py (never takes the lock itself: the worker does; ACCEPTANCE 2.1).
+markers = [
+  "heavy: a real drawing converted, read or built in the test process; takes the machine run lock (U-3.5)",
+  "worker: spawns the worker (job.py); never takes the run lock itself; long timeout, a queue wait is reported",
+]
+# Warnings are NOT turned into errors here (unlike services/api): inside the vendored detector and builder an error
+# raised for a numpy or shapely warning would be caught by their `except Exception` blocks and change what they do, so a
+# test would no longer run the code production runs. A test that wants one as an error says so itself
+# (@pytest.mark.filterwarnings('error::...')).

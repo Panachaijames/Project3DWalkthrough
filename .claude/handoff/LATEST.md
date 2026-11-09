@@ -1,1 +1,1 @@
-You've hit your weekly limit · resets Nov 2, 11am (Asia/Bangkok)
+API Error: 400 Claude Code 2.1.220 does not support this model; version 2.1.280 or newer is required. Run 'claude update', or update the Claude desktop app, then try again.

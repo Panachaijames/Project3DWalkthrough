@@ -43,6 +43,10 @@ export interface MockVersionSource {
   pictures: (MockFile & { floor: string })[];
   /** The furniture CSV with no saved heights and the typed golden with its heights (fixtures/csv). */
   csv: { plain: string; typed: string; typedHeights: HeightMap } | null;
+  /** A version saved from a build of a project made by createProject (builds.ts): the project's own names. */
+  projectName?: string;
+  shortName?: string;
+  projectNo?: string | null;
 }
 
 const F = (...p: string[]) => path.join(FIXTURES_DIR, ...p);

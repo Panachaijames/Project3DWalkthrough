@@ -109,8 +109,21 @@ export function csvOrder(model: BuiltModel, data: FurnitureData): FurniturePiece
 }
 
 /**
+ * The formula guard of a text column (docs/upload/DESIGN.md U-11.6, the same rule as the API's furniture_csv.py): a value
+ * starting with =, +, -, @, TAB or CR gets a leading ' so that a spreadsheet reads it as text, never as a formula (uploads
+ * bring other offices' block, family and layer names). Applied before the RFC 4180 quoting; null / undefined stay empty.
+ */
+const csvText = (v: unknown): unknown => {
+  if (v === null || v === undefined) return v;
+  const s = String(v);
+  return /^[=+\-@\t\r]/.test(s) ? `'${s}` : s;
+};
+
+/**
  * The family list (furniture/README.md): CSV_COLUMNS, CRLF after every row (the last too), no byte-order mark (the download
- * adds it). `heights` = {kind: mm} replaces the kinds' heights (what the legend has typed in).
+ * adds it). `heights` = {kind: mm} replaces the kinds' heights (what the legend has typed in). The text columns (id, level,
+ * kind, kind_label, family, block, layer, dxf_handle, on_top_of, note) pass the formula guard (csvText); the number
+ * columns never change.
  */
 export const furnitureCsv: FurnitureCsv = (model, heights) => {
   const data = furnitureData(model), off = model.offset ?? [0, 0];
@@ -118,9 +131,10 @@ export const furnitureCsv: FurnitureCsv = (model, heights) => {
   const lines = csvOrder(model, data).map(d => {
     const k = data.kindOf.get(d.kind)!;
     const z0 = undersideOf(d, data.byId, height, base);
-    return [d.id, d.floor, d.kind, k.label, d.family, d.block, d.layer, d.handle, fixedDecimals(d.x + off[0], 3),
-      fixedDecimals(d.y + off[1], 3), wholeMm(d.w * 1000), wholeMm(d.d * 1000), height(d.kind), z0, fixedDecimals(d.rot, 1), d.on,
-      d.n === undefined ? 1 : d.n, d.note].map(csvField).join(',');
+    return [csvText(d.id), csvText(d.floor), csvText(d.kind), csvText(k.label), csvText(d.family), csvText(d.block),
+      csvText(d.layer), csvText(d.handle), fixedDecimals(d.x + off[0], 3), fixedDecimals(d.y + off[1], 3), wholeMm(d.w * 1000),
+      wholeMm(d.d * 1000), height(d.kind), z0, fixedDecimals(d.rot, 1), csvText(d.on), d.n === undefined ? 1 : d.n,
+      csvText(d.note)].map(csvField).join(',');
   });
   return [CSV_COLUMNS.join(','), ...lines].join('\r\n') + '\r\n';
 };

@@ -6,9 +6,10 @@
 // HTML is a stand-in page that carries the offline payload (DESIGN.md 16: format, project, version, model, stages,
 // pictures, overrides; `<` escaped) but no viewer.
 // Adapters: server.ts (HTTP, behind the Vite proxy: the Playwright specs) and fetch.ts (vitest's fetch).
+// The upload milestone (docs/upload/DESIGN.md U-13.1, WORK_BREAKDOWN U6) adds createProject, listOffices, the uploads and
+// the builds (builds.ts): projects made in memory (no version until a build is saved) and versions saved from builds.
 import type {
   AssetInfo,
-  ErrorResponse,
   HeightOverrides,
   ProjectDetail,
   ProjectList,
@@ -18,20 +19,11 @@ import type {
   VersionSummary,
 } from '../../src/api/generated/types.gen';
 import type { BuiltModel, HeightMap } from '../../../../packages/viewer/src/contracts';
+import { createUploadMock, type UploadMock } from './builds';
 import { MOCK_VERSIONS, readBytes, readJson, sha1, type MockVersionSource } from './fixtures';
+import { error, file, json, JSON_TYPE, type MockRequest, type MockResponse } from './http';
 
-export interface MockRequest {
-  method: string;
-  /** The URL's pathname (/api/...). */
-  path: string;
-  /** The request body as text (PUT). */
-  body?: string | null;
-}
-export interface MockResponse {
-  status: number;
-  headers: Record<string, string>;
-  body: Buffer;
-}
+export type { MockRequest, MockResponse } from './http';
 
 interface SavedHeights { heights: HeightMap; revision: number; updatedAt: string | null }
 
@@ -49,35 +41,18 @@ export interface MockApi {
   version(projectId: string, version: number): VersionDetail | null;
   /** The source of a version (its fixture files). */
   source(projectId: string, version: number): MockVersionSource | null;
+  /** The upload milestone's routes and their state (uploads, sources, builds, offices). */
+  readonly uploads: UploadMock;
 }
 
-const JSON_TYPE = 'application/json';
+interface CreatedProject { id: string; name: string; shortName: string; projectNo: string | null; createdAt: string }
+
 /** The Max script's attachment name, as the API gives it: the stored name with the version (Bangkok_Bank_Sampeng_v2.ms). */
 const maxScriptName = (stored: string, version: number) => {
   const dot = stored.lastIndexOf('.');                    // Python's Path stem + suffix (views.max_script_file_name)
   return dot > 0 ? `${stored.slice(0, dot)}_v${version}${stored.slice(dot)}` : `${stored}_v${version}`;
 };
 const enc = (s: string) => Buffer.from(s, 'utf8');
-
-function json(status: number, value: unknown, headers: Record<string, string> = {}): MockResponse {
-  return { status, headers: { 'content-type': JSON_TYPE, 'cache-control': 'no-cache', ...headers }, body: enc(JSON.stringify(value)) };
-}
-function error(status: number, code: string, message: string, details?: Record<string, unknown>): MockResponse {
-  const body: ErrorResponse = { error: { code, message, details: details ?? null } };
-  return json(status, body);
-}
-function file(bytes: Buffer, mediaType: string, attachment?: string): MockResponse {
-  const headers: Record<string, string> = {
-    'content-type': mediaType,
-    'cache-control': 'no-cache',
-    etag: `"${sha1(bytes)}"`,
-  };
-  if (attachment) {
-    const ascii = attachment.replace(/[^\x20-\x7e]|["\\]/g, '_');
-    headers['content-disposition'] = `attachment; filename="${ascii}"; filename*=UTF-8''${encodeURIComponent(attachment)}`;
-  }
-  return { status: 200, headers, body: bytes };
-}
 
 const countsOf = (m: BuiltModel): VersionCounts => ({
   floors: m.floors.length,
@@ -95,8 +70,11 @@ export function createMockApi(): MockApi {
   const keyOf = (id: string, n: number) => `${id}/${n}`;
   const modelOf = (s: MockVersionSource) => readJson(s.model) as BuiltModel;
   const stampOf = (s: MockVersionSource) => s.stamp ?? sha1(readBytes(s.model)).slice(0, 12);
-  const source = (id: string, n: number) => MOCK_VERSIONS.find(v => v.projectId === id && v.version === n) ?? null;
-  const versionsOf = (id: string) => MOCK_VERSIONS.filter(v => v.projectId === id).sort((a, b) => a.version - b.version);
+  const added: MockVersionSource[] = [];
+  const created = new Map<string, CreatedProject>();
+  const allVersions = () => [...MOCK_VERSIONS, ...added];
+  const source = (id: string, n: number) => allVersions().find(v => v.projectId === id && v.version === n) ?? null;
+  const versionsOf = (id: string) => allVersions().filter(v => v.projectId === id).sort((a, b) => a.version - b.version);
   const savedOf = (id: string, n: number): SavedHeights => saved.get(keyOf(id, n)) ?? { heights: {}, revision: 0, updatedAt: null };
   const overridesOf = (id: string, n: number): HeightOverrides => {
     const s = savedOf(id, n);
@@ -155,14 +133,23 @@ export function createMockApi(): MockApi {
     const vs = versionsOf(id);
     const first = vs[0];
     const latest = vs[vs.length - 1];
-    if (!first || !latest) return null;
+    const made = created.get(id);
+    if (!first || !latest) {
+      if (!made) return null;
+      // a project made by createProject, before its first version (U-14.1)
+      return {
+        id, name: made.name, shortName: made.shortName, projectNo: made.projectNo, sourceKind: 'cad', floors: [],
+        furnitureCount: 0, openingsCount: 0, stamp: '', latestVersion: 0, versionCount: 0,
+        createdAt: made.createdAt, updatedAt: updated.get(id) ?? made.createdAt, thumbnailUrl: null, url: `/api/projects/${id}`,
+      };
+    }
     const m = modelOf(latest);
     const later = updated.get(id);
     return {
       id,
-      name: m.project,
-      shortName: m.shortName,
-      projectNo: m.projectNo ?? null,
+      name: made?.name ?? latest.projectName ?? m.project,
+      shortName: made?.shortName ?? latest.shortName ?? m.shortName,
+      projectNo: made ? made.projectNo : latest.projectNo !== undefined ? latest.projectNo : m.projectNo ?? null,
       sourceKind: latest.sourceKind,
       floors: m.floors.map(f => ({ key: f.key, name: f.name, level: f.level })),
       furnitureCount: (m.furniture ?? []).length,
@@ -170,14 +157,14 @@ export function createMockApi(): MockApi {
       stamp: stampOf(latest),
       latestVersion: latest.version,
       versionCount: vs.length,
-      createdAt: first.createdAt,
+      createdAt: made?.createdAt ?? first.createdAt,
       updatedAt: later && later > latest.createdAt ? later : latest.createdAt,
       thumbnailUrl: latest.thumbnail ? `/api/projects/${id}/thumbnail` : null,
       url: `/api/projects/${id}`,
     };
   }
 
-  const projectIds = () => [...new Set(MOCK_VERSIONS.map(v => v.projectId))];
+  const projectIds = () => [...new Set([...allVersions().map(v => v.projectId), ...created.keys()])];
   const list = () => projectIds().map(projectSummary).filter((p): p is ProjectSummary => !!p)
     .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : a.updatedAt > b.updatedAt ? -1 : 0));
   const project = (id: string): ProjectDetail | null => {
@@ -253,11 +240,32 @@ export function createMockApi(): MockApi {
     return file(enc(html), 'text/html; charset=utf-8', `${s.projectId}-v${s.version}.html`);
   }
 
+  const uploads: UploadMock = createUploadMock({
+    hasProject: id => !!project(id),
+    createProject: p => {
+      const t = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
+      created.set(p.id, { id: p.id, name: p.name, shortName: p.shortName, projectNo: p.projectNo, createdAt: t });
+    },
+    latestVersion: id => versionsOf(id).at(-1)?.version ?? 0,
+    addVersion: v => {
+      added.push(v);
+      updated.set(v.projectId, v.createdAt);
+    },
+    versionDetail: (id, n) => { const s = source(id, n); return s ? versionDetail(s) : null; },
+    projectDetail: id => project(id),
+    projectName: id => {
+      const p = projectSummary(id);
+      return p ? { name: p.name, shortName: p.shortName, projectNo: p.projectNo } : null;
+    },
+  });
+
   function handle(req: MockRequest): MockResponse {
     requests.push(req);
     const method = req.method.toUpperCase();
     const parts = req.path.replace(/\/+$/, '').split('/').slice(1).map(decodeURIComponent);   // ['api', ...]
     if (parts[0] !== 'api') return error(404, 'not_found', `No route ${req.path}.`);
+    const upload = uploads.handle(req, method, parts);
+    if (upload) return upload;
     const [, a, id, b, n, c, d] = parts;
     const heightsRoute = parts.length === 6 && b === 'versions' && c === 'furniture-heights';
     if (method !== 'GET' && !(method === 'PUT' && heightsRoute)) return error(405, 'method_not_allowed', `${method} is not allowed here.`);
@@ -316,5 +324,6 @@ export function createMockApi(): MockApi {
     project,
     version: (id, n) => { const s = source(id, n); return s ? versionDetail(s) : null; },
     source,
+    uploads,
   };
 }

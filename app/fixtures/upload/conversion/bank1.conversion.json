@@ -1,0 +1,69 @@
+{
+  "format": "conversion-report/1",
+  "source": {
+    "sha1": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+    "name": "I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg",
+    "bytes": 500287,
+    "kind": "dwg",
+    "formatVersion": "AC1024"
+  },
+  "converter": {
+    "name": "libredwg",
+    "version": "0.14",
+    "exeSha1": "07f9c8d95dc0209675c6d8dece4beaab8494d2c1"
+  },
+  "dxf": {
+    "sha1": "9167d084f7e311b59e7c2cdb2bae8506d96a4cfa",
+    "bytes": 2817940,
+    "acadVersion": "AC1024",
+    "insUnits": 4,
+    "auditErrors": 0,
+    "auditFixes": 24
+  },
+  "seconds": 0.27,
+  "peakMemoryMB": null,
+  "exitCode": 0,
+  "messages": [
+    {
+      "class": "unstable-class",
+      "count": 9,
+      "example": "Warning: Unstable Class object 501 MATERIAL (0x481) 14/0"
+    },
+    {
+      "class": "other",
+      "count": 1,
+      "example": "Warning: TODO TABLESTYLE r2010+ missing fields"
+    },
+    {
+      "class": "hatch-short-handles",
+      "count": 148,
+      "example": "Warning: Skip HATCH common handles due to short handle stream"
+    },
+    {
+      "class": "handle-not-found",
+      "count": 28,
+      "example": "Warning: Object handle not found 7326/0x1C9E in 5244 objects of max 0x1EBF handles"
+    },
+    {
+      "class": "unhandled-class",
+      "count": 1,
+      "example": "Warning: Unhandled Object TABLESTYLE in out_dxf 98/65"
+    }
+  ],
+  "totals": {
+    "dwgEntities": 4473,
+    "dxfEntities": 4473,
+    "missing": 0,
+    "extra": 0,
+    "layerChanged": 0,
+    "emptyLayer": 0
+  },
+  "byLayer": [],
+  "lostBlocks": [],
+  "renamedBlocks": [],
+  "unknownObjects": 0,
+  "verdict": "ok",
+  "notes": [
+    "the converter reported 1 message(s) of the class other; nothing is missing"
+  ]
+}

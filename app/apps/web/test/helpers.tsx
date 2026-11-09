@@ -75,3 +75,34 @@ export function stubWebGL(opts: { fail?: () => boolean } = {}): () => void {
 
 export const text = (el: Element | null | undefined) => (el?.textContent ?? '').replace(/\s+/g, ' ').trim();
 export const all = (root: ParentNode, selector: string) => [...root.querySelectorAll(selector)];
+
+/** Types a value into an input or textarea as React sees it (the native value setter, then an input event). */
+export async function typeInto(el: Element | null | undefined, value: string): Promise<void> {
+  if (!el) throw new Error('typeInto: no element');
+  await act(async () => {
+    const proto = el instanceof HTMLTextAreaElement ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype;
+    Object.getOwnPropertyDescriptor(proto, 'value')!.set!.call(el, value);
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+}
+
+/** A key pressed on an element (keydown, bubbling): Enter commits a field, Escape and Delete reach the Check step. */
+export async function press(el: Element | null | undefined, key: string): Promise<void> {
+  if (!el) throw new Error('press: no element');
+  await act(async () => { el.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true })); });
+}
+
+/** Types a value and presses Enter (a NumberField or TextField commit). */
+export async function enter(el: Element | null | undefined, value: string): Promise<void> {
+  await typeInto(el, value);
+  await press(el, 'Enter');
+}
+
+/** Chooses an option of a native <select> as React sees it. */
+export async function choose(el: Element | null | undefined, value: string): Promise<void> {
+  if (!el) throw new Error('choose: no element');
+  await act(async () => {
+    Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, 'value')!.set!.call(el, value);
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+}

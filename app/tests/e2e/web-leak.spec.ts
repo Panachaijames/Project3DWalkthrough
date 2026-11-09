@@ -168,7 +168,7 @@ async function openLeakPage(page: Page): Promise<{ base: Baseline; warnings: str
   page.on('console', m => { if (m.text().includes('[viewer] dispose left')) warnings.push(m.text()); });
   await page.addInitScript(installLeakProbe);
   await page.goto('/projects');
-  await expect(page.getByTestId('project-card')).toHaveCount(4);
+  await expect(page.locator(['bank-sampeng', 'hotel-lobby', 'presidential-suite', 'sukhumvit-house'].map(id => `[data-testid=project-card][data-project-id="${id}"]`).join(', '))).toHaveCount(4);   // the four seeded projects' cards (U-15.3: e2e-* projects may be listed too)
   // Playwright's own helper script in the page's main world (made by the first page.waitForFunction, which viewerReady
   // uses) puts capture listeners and `__playwright_global_listeners_check__` on window for the life of the page: make it
   // now, so they are part of the baseline and not counted as the app's.
@@ -196,7 +196,7 @@ async function expectGpuFreed(page: Page): Promise<void> {
 async function backToList(page: Page): Promise<void> {
   await page.getByTestId('back-to-projects').click();
   await expect(page).toHaveURL(/\/projects$/);
-  await expect(page.getByTestId('project-card')).toHaveCount(4);
+  await expect(page.locator(['bank-sampeng', 'hotel-lobby', 'presidential-suite', 'sukhumvit-house'].map(id => `[data-testid=project-card][data-project-id="${id}"]`).join(', '))).toHaveCount(4);   // the four seeded projects' cards (U-15.3: e2e-* projects may be listed too)
 }
 
 test('20 mounts through route changes (list and project pages in turn) leave nothing behind', async ({ page }) => {

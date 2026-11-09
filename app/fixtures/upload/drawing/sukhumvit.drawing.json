@@ -1,0 +1,6263 @@
+{
+  "format": "drawing-read/1",
+  "source": {
+    "sha1": "93e7d27525c43664264271c04a6dd0b5c41ea7d0",
+    "name": "Test Sukhumvit Residence.dwg"
+  },
+  "reader": {
+    "version": "1",
+    "seconds": 10.7,
+    "peakMemoryMB": null
+  },
+  "dxf": {
+    "acadVersion": "AC1032",
+    "insUnits": 1,
+    "auditErrors": 0,
+    "auditFixes": 20
+  },
+  "units": {
+    "declared": "in",
+    "votes": {
+      "mm": 22,
+      "cm": 0,
+      "m": 4,
+      "in": 0,
+      "ft": 0
+    },
+    "dimensionMedian": 7099.999999694526,
+    "used": "mm",
+    "verdict": "votes-win",
+    "note": "the file says inches, its doors say millimetres"
+  },
+  "extents": [
+    8.338,
+    7.151,
+    127.284,
+    55.04
+  ],
+  "counts": {
+    "items": 33051,
+    "byType": {
+      "ARC": 3624,
+      "ATTRIB": 81,
+      "CIRCLE": 421,
+      "ELLIPSE": 30,
+      "HATCH": 49,
+      "INSERT": 399,
+      "LINE": 16611,
+      "LWPOLYLINE": 10654,
+      "POLYLINE": 526,
+      "SPLINE": 568,
+      "TEXT": 88
+    },
+    "dimensions": 22
+  },
+  "layers": [
+    {
+      "name": "0",
+      "normalised": "0",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 7,
+      "items": 5101,
+      "byType": {
+        "ARC": 2165,
+        "ATTRIB": 10,
+        "CIRCLE": 301,
+        "ELLIPSE": 1,
+        "INSERT": 2,
+        "LINE": 2554,
+        "LWPOLYLINE": 65,
+        "SPLINE": 3
+      },
+      "inBlocks": 1,
+      "closedShapes": 310,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 397.65,
+      "doorArcs": 11,
+      "doorArcsWithLeaf": 1,
+      "texts": 10,
+      "inserts": 2,
+      "topBlocks": [
+        {
+          "family": "A$C83adbef5",
+          "count": 1
+        },
+        {
+          "family": "D4",
+          "count": 1
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 458,
+        "Continuous": 8,
+        "XR_L44 Plan$0$HIDDEN2": 4486,
+        "XR_L55 Plan$0$HIDDEN2": 137
+      },
+      "pairs": {
+        "glassLike": 26,
+        "wallLike": 9
+      },
+      "extents": [
+        53.69,
+        12.861,
+        111.523,
+        24.429
+      ]
+    },
+    {
+      "name": "A_Grill",
+      "normalised": "A_GRILL",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 8,
+      "items": 9,
+      "byType": {
+        "LINE": 9
+      },
+      "inBlocks": 9,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 46.8,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 9
+      },
+      "pairs": {
+        "glassLike": 3,
+        "wallLike": 2
+      },
+      "extents": [
+        114.216,
+        17.834,
+        126.745,
+        23.434
+      ]
+    },
+    {
+      "name": "CEILING",
+      "normalised": "CEILING",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 1,
+      "items": 34,
+      "byType": {
+        "INSERT": 8,
+        "LINE": 18,
+        "LWPOLYLINE": 8
+      },
+      "inBlocks": 24,
+      "closedShapes": 8,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 18.09,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 8,
+      "topBlocks": [
+        {
+          "family": "A$C68820FA8",
+          "count": 8
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 26
+      },
+      "pairs": {
+        "glassLike": 1,
+        "wallLike": 0
+      },
+      "extents": [
+        14.222,
+        44.723,
+        33.836,
+        58.49
+      ]
+    },
+    {
+      "name": "COL",
+      "normalised": "COL",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 3,
+      "items": 157,
+      "byType": {
+        "CIRCLE": 3,
+        "LINE": 60,
+        "LWPOLYLINE": 94
+      },
+      "inBlocks": 65,
+      "closedShapes": 90,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 606.11,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 143,
+        "CENTER": 1,
+        "HIDDEN2": 5,
+        "PHANTOM2": 8
+      },
+      "pairs": {
+        "glassLike": 6,
+        "wallLike": 42
+      },
+      "extents": [
+        7.748,
+        5.288,
+        126.798,
+        58.893
+      ]
+    },
+    {
+      "name": "COLCL",
+      "normalised": "COLCL",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "CENTER",
+      "colour": 8,
+      "items": 13,
+      "byType": {
+        "LINE": 13
+      },
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 331.05,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 7,
+        "CENTER2": 6
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        7.182,
+        40.113,
+        127.248,
+        67.174
+      ]
+    },
+    {
+      "name": "D-JAMB",
+      "normalised": "D-JAMB",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 7,
+      "items": 868,
+      "byType": {
+        "INSERT": 62,
+        "LINE": 174,
+        "LWPOLYLINE": 632
+      },
+      "inBlocks": 632,
+      "closedShapes": 382,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 378.36,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 62,
+      "topBlocks": [
+        {
+          "family": "JAMB",
+          "count": 62
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 806
+      },
+      "pairs": {
+        "glassLike": 115,
+        "wallLike": 48
+      },
+      "extents": [
+        7.998,
+        6.978,
+        122.147,
+        44.893
+      ]
+    },
+    {
+      "name": "DEFPOINTS",
+      "normalised": "DEFPOINTS",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": false
+      },
+      "linetype": "Continuous",
+      "colour": 7,
+      "items": 0,
+      "byType": {},
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.0,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {},
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": null
+    },
+    {
+      "name": "DIM100",
+      "normalised": "DIM100",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 6,
+      "items": 10,
+      "byType": {
+        "INSERT": 1,
+        "LINE": 9
+      },
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 95.04,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 1,
+      "topBlocks": [
+        {
+          "family": "A$C5A6A483C",
+          "count": 1
+        }
+      ],
+      "linetypes": {
+        "PHANTOM2": 9
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        -0.747,
+        42.468,
+        91.797,
+        59.594
+      ]
+    },
+    {
+      "name": "DIM25",
+      "normalised": "DIM25",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 6,
+      "items": 4,
+      "byType": {
+        "LINE": 4
+      },
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 16.7,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 4
+      },
+      "pairs": {
+        "glassLike": 4,
+        "wallLike": 0
+      },
+      "extents": [
+        53.584,
+        12.055,
+        53.606,
+        16.254
+      ]
+    },
+    {
+      "name": "DOOR",
+      "normalised": "DOOR",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 7,
+      "items": 59,
+      "byType": {
+        "ARC": 7,
+        "INSERT": 30,
+        "LINE": 3,
+        "LWPOLYLINE": 19
+      },
+      "inBlocks": 44,
+      "closedShapes": 19,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 51.51,
+      "doorArcs": 7,
+      "doorArcsWithLeaf": 2,
+      "texts": 0,
+      "inserts": 30,
+      "topBlocks": [
+        {
+          "family": "LEAF",
+          "count": 15
+        },
+        {
+          "family": "SWING",
+          "count": 6
+        },
+        {
+          "family": "_1D3R90",
+          "count": 4
+        },
+        {
+          "family": "A$C66261919",
+          "count": 3
+        },
+        {
+          "family": "_1D0L100",
+          "count": 2
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 29
+      },
+      "pairs": {
+        "glassLike": 1,
+        "wallLike": 0
+      },
+      "extents": [
+        -36.748,
+        6.879,
+        117.722,
+        23.449
+      ]
+    },
+    {
+      "name": "DSYM",
+      "normalised": "DSYM",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 2,
+      "items": 12,
+      "byType": {
+        "ATTRIB": 12
+      },
+      "inBlocks": 2,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.0,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 12,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {},
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        10.673,
+        13.961,
+        109.347,
+        21.955
+      ]
+    },
+    {
+      "name": "ELEV",
+      "normalised": "ELEV",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 1,
+      "items": 7,
+      "byType": {
+        "LINE": 7
+      },
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 32.26,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 7
+      },
+      "pairs": {
+        "glassLike": 2,
+        "wallLike": 2
+      },
+      "extents": [
+        14.222,
+        43.468,
+        100.59,
+        58.415
+      ]
+    },
+    {
+      "name": "FIXT",
+      "normalised": "FIXT",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 5,
+      "items": 10,
+      "byType": {
+        "INSERT": 10
+      },
+      "inBlocks": 6,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.0,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 10,
+      "topBlocks": [
+        {
+          "family": "TF2092P",
+          "count": 5
+        },
+        {
+          "family": "A$C3B8D7A43",
+          "count": 3
+        },
+        {
+          "family": "TF0560P",
+          "count": 2
+        }
+      ],
+      "linetypes": {},
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        8.68,
+        11.959,
+        117.609,
+        22.789
+      ]
+    },
+    {
+      "name": "FLOOR",
+      "normalised": "FLOOR",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 1,
+      "items": 91,
+      "byType": {
+        "INSERT": 21,
+        "LINE": 70
+      },
+      "inBlocks": 66,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 99.21,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 21,
+      "topBlocks": [
+        {
+          "family": "frame",
+          "count": 21
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 70
+      },
+      "pairs": {
+        "glassLike": 12,
+        "wallLike": 16
+      },
+      "extents": [
+        6.932,
+        5.501,
+        126.695,
+        60.895
+      ]
+    },
+    {
+      "name": "FLOOR-PATTERN",
+      "normalised": "FLOOR-PATTERN",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 15,
+      "items": 346,
+      "byType": {
+        "POLYLINE": 346
+      },
+      "inBlocks": 209,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 236.21,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 346
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        19.269,
+        7.109,
+        127.713,
+        25.481
+      ]
+    },
+    {
+      "name": "FUR",
+      "normalised": "FUR",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 5,
+      "items": 71,
+      "byType": {
+        "ARC": 10,
+        "INSERT": 3,
+        "LINE": 40,
+        "LWPOLYLINE": 18
+      },
+      "inBlocks": 10,
+      "closedShapes": 18,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 60.76,
+      "doorArcs": 8,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 3,
+      "topBlocks": [
+        {
+          "family": "A$C185D7F38",
+          "count": 3
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 6,
+        "HIDDEN2": 62
+      },
+      "pairs": {
+        "glassLike": 6,
+        "wallLike": 0
+      },
+      "extents": [
+        12.948,
+        12.186,
+        115.674,
+        22.859
+      ]
+    },
+    {
+      "name": "GRID-01",
+      "normalised": "GRID-01",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 6,
+      "items": 253,
+      "byType": {
+        "CIRCLE": 47,
+        "INSERT": 47,
+        "LINE": 96,
+        "TEXT": 63
+      },
+      "inBlocks": 181,
+      "closedShapes": 47,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 279.99,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 63,
+      "inserts": 47,
+      "topBlocks": [
+        {
+          "family": "_GRID",
+          "count": 47
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 143
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        0.148,
+        7.058,
+        127.248,
+        39.132
+      ]
+    },
+    {
+      "name": "HATCH",
+      "normalised": "HATCH",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 8,
+      "items": 221,
+      "byType": {
+        "HATCH": 19,
+        "LINE": 198,
+        "LWPOLYLINE": 4
+      },
+      "inBlocks": 82,
+      "closedShapes": 1,
+      "solidHatches": 0,
+      "hatchPatterns": {
+        "ANSI31": 4,
+        "AR-B88": 2,
+        "_USER": 13
+      },
+      "length": 436.95,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 195,
+        "HIDDEN2": 7
+      },
+      "pairs": {
+        "glassLike": 84,
+        "wallLike": 51
+      },
+      "extents": [
+        7.948,
+        5.457,
+        126.695,
+        59.594
+      ]
+    },
+    {
+      "name": "I-FURN-FILE",
+      "normalised": "I-FURN-FILE",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 7,
+      "items": 1,
+      "byType": {
+        "LWPOLYLINE": 1
+      },
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 4.21,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "HIDDEN2": 1
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        108.331,
+        18.249,
+        109.521,
+        19.984
+      ]
+    },
+    {
+      "name": "NORTH",
+      "normalised": "NORTH",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 7,
+      "items": 3,
+      "byType": {
+        "LINE": 3
+      },
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 5.43,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 3
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        27.933,
+        44.393,
+        33.536,
+        57.793
+      ]
+    },
+    {
+      "name": "OPEN",
+      "normalised": "OPEN",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "HIDDEN2",
+      "colour": 8,
+      "items": 3,
+      "byType": {
+        "LINE": 2,
+        "LWPOLYLINE": 1
+      },
+      "inBlocks": 1,
+      "closedShapes": 1,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 64.42,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 3
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        81.61,
+        6.981,
+        113.547,
+        57.068
+      ]
+    },
+    {
+      "name": "OUTLINE",
+      "normalised": "OUTLINE",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 4,
+      "items": 81,
+      "byType": {
+        "LINE": 81
+      },
+      "inBlocks": 81,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 27.64,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 81
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 54
+      },
+      "extents": [
+        8.698,
+        46.251,
+        125.998,
+        55.474
+      ]
+    },
+    {
+      "name": "PAVING",
+      "normalised": "PAVING",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 8,
+      "items": 130,
+      "byType": {
+        "LINE": 130
+      },
+      "inBlocks": 130,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 360.27,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 130
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 104
+      },
+      "extents": [
+        4.717,
+        41.193,
+        46.389,
+        43.593
+      ]
+    },
+    {
+      "name": "RNAME",
+      "normalised": "RNAME",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 2,
+      "items": 17,
+      "byType": {
+        "INSERT": 8,
+        "TEXT": 9
+      },
+      "inBlocks": 3,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.0,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 9,
+      "inserts": 8,
+      "topBlocks": [
+        {
+          "family": "A$C7D82418A",
+          "count": 8
+        }
+      ],
+      "linetypes": {},
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        -0.918,
+        44.179,
+        125.051,
+        60.74
+      ]
+    },
+    {
+      "name": "ROOF",
+      "normalised": "ROOF",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 1,
+      "items": 11,
+      "byType": {
+        "HATCH": 1,
+        "LINE": 4,
+        "LWPOLYLINE": 6
+      },
+      "inBlocks": 7,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {
+        "AR-B816": 1
+      },
+      "length": 29.33,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 3,
+        "HIDDEN2": 1,
+        "PHANTOM2": 6
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        89.897,
+        7.158,
+        126.22,
+        61.769
+      ]
+    },
+    {
+      "name": "SITE",
+      "normalised": "SITE",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 5,
+      "items": 1,
+      "byType": {
+        "LINE": 1
+      },
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.02,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 1
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        53.586,
+        16.254,
+        53.586,
+        16.254
+      ]
+    },
+    {
+      "name": "SPEC",
+      "normalised": "SPEC",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 6,
+      "items": 967,
+      "byType": {
+        "ARC": 9,
+        "ATTRIB": 28,
+        "CIRCLE": 5,
+        "INSERT": 96,
+        "LINE": 761,
+        "LWPOLYLINE": 65,
+        "TEXT": 3
+      },
+      "inBlocks": 862,
+      "closedShapes": 68,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 328.46,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 31,
+      "inserts": 96,
+      "topBlocks": [
+        {
+          "family": "*X49",
+          "count": 27
+        },
+        {
+          "family": "EXT-FIN1",
+          "count": 27
+        },
+        {
+          "family": "TAG-LEV",
+          "count": 27
+        },
+        {
+          "family": "SYM-GRD",
+          "count": 13
+        },
+        {
+          "family": "*X52",
+          "count": 1
+        },
+        {
+          "family": "TAG-SEC",
+          "count": 1
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 840
+      },
+      "pairs": {
+        "glassLike": 992,
+        "wallLike": 716
+      },
+      "extents": [
+        -0.891,
+        29.141,
+        128.539,
+        61.058
+      ]
+    },
+    {
+      "name": "STAIR",
+      "normalised": "STAIR",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 6,
+      "items": 109,
+      "byType": {
+        "LINE": 75,
+        "LWPOLYLINE": 34
+      },
+      "inBlocks": 46,
+      "closedShapes": 15,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 104.52,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 109
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 46
+      },
+      "extents": [
+        8.266,
+        6.668,
+        127.816,
+        24.258
+      ]
+    },
+    {
+      "name": "STRUCTURE",
+      "normalised": "STRUCTURE",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 3,
+      "items": 1,
+      "byType": {
+        "LINE": 1
+      },
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 3.9,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 1
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        14.022,
+        58.893,
+        14.022,
+        58.893
+      ]
+    },
+    {
+      "name": "Section",
+      "normalised": "SECTION",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 3,
+      "items": 11,
+      "byType": {
+        "LINE": 8,
+        "LWPOLYLINE": 3
+      },
+      "inBlocks": 0,
+      "closedShapes": 1,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 68.67,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 6,
+        "HIDDEN": 4,
+        "HIDDEN2": 1
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 1
+      },
+      "extents": [
+        4.389,
+        6.982,
+        32.183,
+        51.393
+      ]
+    },
+    {
+      "name": "Steel Plate",
+      "normalised": "STEEL PLATE",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 1,
+      "items": 56,
+      "byType": {
+        "LINE": 24,
+        "LWPOLYLINE": 32
+      },
+      "inBlocks": 0,
+      "closedShapes": 32,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 26.18,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 56
+      },
+      "pairs": {
+        "glassLike": 12,
+        "wallLike": 0
+      },
+      "extents": [
+        19.08,
+        5.896,
+        31.404,
+        5.946
+      ]
+    },
+    {
+      "name": "TEXT",
+      "normalised": "TEXT",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 2,
+      "items": 9,
+      "byType": {
+        "TEXT": 9
+      },
+      "inBlocks": 3,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.0,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 9,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {},
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        14.185,
+        8.628,
+        94.984,
+        59.472
+      ]
+    },
+    {
+      "name": "TEXT100",
+      "normalised": "TEXT100",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 2,
+      "items": 35,
+      "byType": {
+        "ATTRIB": 31,
+        "TEXT": 4
+      },
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.0,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 35,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {},
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        10.545,
+        41.493,
+        124.905,
+        57.462
+      ]
+    },
+    {
+      "name": "TREE",
+      "normalised": "TREE",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 5,
+      "items": 365,
+      "byType": {
+        "ARC": 4,
+        "HATCH": 1,
+        "LINE": 315,
+        "LWPOLYLINE": 44,
+        "POLYLINE": 1
+      },
+      "inBlocks": 169,
+      "closedShapes": 7,
+      "solidHatches": 0,
+      "hatchPatterns": {
+        "LINE": 1
+      },
+      "length": 1447.02,
+      "doorArcs": 4,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 318,
+        "HIDDEN": 31,
+        "HIDDEN2": 15
+      },
+      "pairs": {
+        "glassLike": 14,
+        "wallLike": 122
+      },
+      "extents": [
+        7.748,
+        5.401,
+        127.884,
+        63.021
+      ]
+    },
+    {
+      "name": "WALL",
+      "normalised": "WALL",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 2,
+      "items": 1275,
+      "byType": {
+        "ARC": 5,
+        "CIRCLE": 9,
+        "HATCH": 9,
+        "INSERT": 73,
+        "LINE": 967,
+        "LWPOLYLINE": 41,
+        "POLYLINE": 171
+      },
+      "inBlocks": 615,
+      "closedShapes": 43,
+      "solidHatches": 0,
+      "hatchPatterns": {
+        "_USER": 9
+      },
+      "length": 3259.74,
+      "doorArcs": 5,
+      "doorArcsWithLeaf": 2,
+      "texts": 0,
+      "inserts": 73,
+      "topBlocks": [
+        {
+          "family": "A$C75896535",
+          "count": 27
+        },
+        {
+          "family": "A$C02E95B23",
+          "count": 23
+        },
+        {
+          "family": "jkljlll",
+          "count": 5
+        },
+        {
+          "family": "A$C3B04013F",
+          "count": 4
+        },
+        {
+          "family": "A$C27F82021",
+          "count": 3
+        },
+        {
+          "family": "A$C598F089C",
+          "count": 3
+        },
+        {
+          "family": "A$C6FD65263",
+          "count": 3
+        },
+        {
+          "family": "A$C7AC363DA",
+          "count": 2
+        },
+        {
+          "family": "hjkhkk",
+          "count": 2
+        },
+        {
+          "family": "TF910P-Americana",
+          "count": 1
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 1107,
+        "CENTER2": 50,
+        "HIDDEN": 25,
+        "HIDDEN2": 11
+      },
+      "pairs": {
+        "glassLike": 118,
+        "wallLike": 364
+      },
+      "extents": [
+        7.748,
+        6.958,
+        124.047,
+        58.393
+      ]
+    },
+    {
+      "name": "WALL-GL",
+      "normalised": "WALL-GL",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 4,
+      "items": 74,
+      "byType": {
+        "ARC": 4,
+        "LINE": 58,
+        "LWPOLYLINE": 12
+      },
+      "inBlocks": 30,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 186.29,
+      "doorArcs": 4,
+      "doorArcsWithLeaf": 4,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 74
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 8
+      },
+      "extents": [
+        7.923,
+        7.402,
+        110.547,
+        56.468
+      ]
+    },
+    {
+      "name": "WC-DET",
+      "normalised": "WC-DET",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 8,
+      "items": 28,
+      "byType": {
+        "CIRCLE": 8,
+        "LWPOLYLINE": 20
+      },
+      "inBlocks": 28,
+      "closedShapes": 8,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 4.47,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 28
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        9.514,
+        12.817,
+        115.897,
+        22.131
+      ]
+    },
+    {
+      "name": "WC-DET1",
+      "normalised": "WC-DET1",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 8,
+      "items": 173,
+      "byType": {
+        "ARC": 20,
+        "CIRCLE": 6,
+        "LINE": 67,
+        "LWPOLYLINE": 80
+      },
+      "inBlocks": 173,
+      "closedShapes": 6,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 25.04,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 143,
+        "Continuous": 30
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        8.505,
+        11.977,
+        117.783,
+        23.218
+      ]
+    },
+    {
+      "name": "WC-OUT",
+      "normalised": "WC-OUT",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 7,
+      "items": 1,
+      "byType": {
+        "LWPOLYLINE": 1
+      },
+      "inBlocks": 1,
+      "closedShapes": 1,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 1.75,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 1
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        53.356,
+        21.537,
+        53.763,
+        22.046
+      ]
+    },
+    {
+      "name": "WC-OUTL",
+      "normalised": "WC-OUTL",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 7,
+      "items": 178,
+      "byType": {
+        "ARC": 27,
+        "LINE": 99,
+        "LWPOLYLINE": 52
+      },
+      "inBlocks": 178,
+      "closedShapes": 2,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 15.35,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 152,
+        "Continuous": 26
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        8.462,
+        11.959,
+        117.827,
+        23.259
+      ]
+    },
+    {
+      "name": "WC-SERIAL",
+      "normalised": "WC-SERIAL",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 4,
+      "items": 0,
+      "byType": {},
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.0,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {},
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": null
+    },
+    {
+      "name": "WIN",
+      "normalised": "WIN",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 4,
+      "items": 560,
+      "byType": {
+        "ARC": 23,
+        "CIRCLE": 4,
+        "INSERT": 4,
+        "LINE": 455,
+        "LWPOLYLINE": 74
+      },
+      "inBlocks": 456,
+      "closedShapes": 44,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 882.23,
+      "doorArcs": 14,
+      "doorArcsWithLeaf": 11,
+      "texts": 0,
+      "inserts": 4,
+      "topBlocks": [
+        {
+          "family": "jkjljl",
+          "count": 2
+        },
+        {
+          "family": "A$C09C2022F",
+          "count": 1
+        },
+        {
+          "family": "hjhjj",
+          "count": 1
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 539,
+        "HIDDEN2": 17
+      },
+      "pairs": {
+        "glassLike": 331,
+        "wallLike": 183
+      },
+      "extents": [
+        7.898,
+        7.758,
+        123.859,
+        57.693
+      ]
+    },
+    {
+      "name": "W_Grill",
+      "normalised": "W_GRILL",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 1,
+      "items": 34,
+      "byType": {
+        "LINE": 10,
+        "LWPOLYLINE": 24
+      },
+      "inBlocks": 0,
+      "closedShapes": 24,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 42.68,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 33,
+        "HIDDEN2": 1
+      },
+      "pairs": {
+        "glassLike": 1,
+        "wallLike": 12
+      },
+      "extents": [
+        17.694,
+        5.896,
+        31.567,
+        6.021
+      ]
+    },
+    {
+      "name": "XR_L44 Plan$0$A-DOOR",
+      "normalised": "A-DOOR",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 7,
+      "items": 19,
+      "byType": {
+        "ARC": 2,
+        "LINE": 16,
+        "LWPOLYLINE": 1
+      },
+      "inBlocks": 19,
+      "closedShapes": 1,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 8.04,
+      "doorArcs": 2,
+      "doorArcsWithLeaf": 1,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 17,
+        "XR_L44 Plan$0$CENTER2": 1,
+        "XR_L44 Plan$0$HIDDEN2": 1
+      },
+      "pairs": {
+        "glassLike": 11,
+        "wallLike": 4
+      },
+      "extents": [
+        36.914,
+        13.953,
+        83.082,
+        15.308
+      ]
+    },
+    {
+      "name": "XR_L44 Plan$0$A-WALL",
+      "normalised": "A-WALL",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 7,
+      "items": 2,
+      "byType": {
+        "LWPOLYLINE": 2
+      },
+      "inBlocks": 2,
+      "closedShapes": 2,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.59,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 2
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        36.878,
+        14.308,
+        37.848,
+        14.408
+      ]
+    },
+    {
+      "name": "XR_L44$0$Boffi_04",
+      "normalised": "BOFFI_04",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 8,
+      "items": 0,
+      "byType": {},
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.0,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {},
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": null
+    },
+    {
+      "name": "XR_L44$0$I-DOOR",
+      "normalised": "I-DOOR",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 2,
+      "items": 14,
+      "byType": {
+        "ARC": 4,
+        "INSERT": 2,
+        "LWPOLYLINE": 8
+      },
+      "inBlocks": 14,
+      "closedShapes": 8,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 9.89,
+      "doorArcs": 4,
+      "doorArcsWithLeaf": 2,
+      "texts": 0,
+      "inserts": 2,
+      "topBlocks": [
+        {
+          "family": "*U31",
+          "count": 2
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 12
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        87.52,
+        14.881,
+        107.22,
+        20.909
+      ]
+    },
+    {
+      "name": "XR_L44$0$I-FURN",
+      "normalised": "I-FURN",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 155,
+      "items": 21495,
+      "byType": {
+        "ARC": 1336,
+        "CIRCLE": 34,
+        "ELLIPSE": 29,
+        "HATCH": 2,
+        "INSERT": 32,
+        "LINE": 10249,
+        "LWPOLYLINE": 9248,
+        "SPLINE": 565
+      },
+      "inBlocks": 17361,
+      "closedShapes": 635,
+      "solidHatches": 2,
+      "hatchPatterns": {},
+      "length": 1402.78,
+      "doorArcs": 85,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 32,
+      "topBlocks": [
+        {
+          "family": "kjjkjkkkk",
+          "count": 3
+        },
+        {
+          "family": "A$C238E5230",
+          "count": 2
+        },
+        {
+          "family": "BASE",
+          "count": 2
+        },
+        {
+          "family": "BASE500",
+          "count": 2
+        },
+        {
+          "family": "FRIDGE-600",
+          "count": 2
+        },
+        {
+          "family": "bvvvv",
+          "count": 2
+        },
+        {
+          "family": "jkhjhjj",
+          "count": 2
+        },
+        {
+          "family": "jkjllll",
+          "count": 2
+        },
+        {
+          "family": "kkk",
+          "count": 2
+        },
+        {
+          "family": "A$C2619574F",
+          "count": 1
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 21341,
+        "XR_L44 Plan$0$HIDDEN2": 16,
+        "XR_L44 Plan$0$IMPORT-Hidden _2_": 84,
+        "XR_L44$0$DASHED2": 20
+      },
+      "pairs": {
+        "glassLike": 133,
+        "wallLike": 221
+      },
+      "extents": [
+        8.343,
+        8.144,
+        113.149,
+        22.298
+      ]
+    },
+    {
+      "name": "XR_L44$0$Layer1",
+      "normalised": "LAYER1",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 2,
+      "items": 3,
+      "byType": {
+        "CIRCLE": 2,
+        "LWPOLYLINE": 1
+      },
+      "inBlocks": 3,
+      "closedShapes": 3,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 2.62,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 3
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        28.263,
+        22.559,
+        28.963,
+        22.909
+      ]
+    },
+    {
+      "name": "XR_L44$0$Layer4",
+      "normalised": "LAYER4",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 142,
+      "items": 7,
+      "byType": {
+        "CIRCLE": 2,
+        "LWPOLYLINE": 5
+      },
+      "inBlocks": 7,
+      "closedShapes": 3,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 2.83,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 6,
+        "XR_L44$0$DASH2": 1
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        28.243,
+        22.539,
+        28.983,
+        23.033
+      ]
+    },
+    {
+      "name": "XR_L44$0$Layer7",
+      "normalised": "LAYER7",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 142,
+      "items": 106,
+      "byType": {
+        "ARC": 8,
+        "HATCH": 8,
+        "LINE": 24,
+        "LWPOLYLINE": 58,
+        "POLYLINE": 8
+      },
+      "inBlocks": 106,
+      "closedShapes": 46,
+      "solidHatches": 8,
+      "hatchPatterns": {},
+      "length": 117.32,
+      "doorArcs": 8,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 16,
+        "ByBlock": 30,
+        "XR_L44$0$DOT2": 8,
+        "XR_L44$0$Hidden": 44
+      },
+      "pairs": {
+        "glassLike": 16,
+        "wallLike": 0
+      },
+      "extents": [
+        26.944,
+        19.979,
+        32.099,
+        23.084
+      ]
+    },
+    {
+      "name": "XR_L44$0$PIA1-FUR",
+      "normalised": "PIA1-FUR",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 7,
+      "items": 2,
+      "byType": {
+        "LINE": 2
+      },
+      "inBlocks": 2,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.01,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 2
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        9.824,
+        9.777,
+        36.79,
+        11.544
+      ]
+    },
+    {
+      "name": "XR_L55 Plan$0$A-WALL",
+      "normalised": "A-WALL",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 7,
+      "items": 1,
+      "byType": {
+        "LINE": 1
+      },
+      "inBlocks": 1,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.07,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 1
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        35.406,
+        16.287,
+        35.406,
+        16.287
+      ]
+    },
+    {
+      "name": "drain",
+      "normalised": "DRAIN",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 5,
+      "items": 3,
+      "byType": {
+        "LINE": 2,
+        "LWPOLYLINE": 1
+      },
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 28.44,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "HIDDEN2": 3
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        38.247,
+        6.958,
+        39.572,
+        23.359
+      ]
+    },
+    {
+      "name": "sand",
+      "normalised": "SAND",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 30,
+      "items": 10,
+      "byType": {
+        "HATCH": 9,
+        "LINE": 1
+      },
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {
+        "AR-SAND": 9
+      },
+      "length": 2.15,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "Continuous": 1
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        6.932,
+        42.468,
+        127.498,
+        43.993
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "JAMB",
+      "family": "JAMB",
+      "inserts": 62,
+      "byLayer": {
+        "D-JAMB": 62
+      },
+      "mirrored": 25,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "_GRID",
+      "family": "_GRID",
+      "inserts": 47,
+      "byLayer": {
+        "GRID-01": 47
+      },
+      "mirrored": 31,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "*X49",
+      "family": "*X49",
+      "inserts": 27,
+      "byLayer": {
+        "SPEC": 27
+      },
+      "mirrored": 2,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "A$C75896535",
+      "family": "A$C75896535",
+      "inserts": 27,
+      "byLayer": {
+        "WALL": 27
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "EXT-FIN1",
+      "family": "EXT-FIN1",
+      "inserts": 27,
+      "byLayer": {
+        "SPEC": 27
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": [
+        "NUM"
+      ]
+    },
+    {
+      "name": "TAG-LEV",
+      "family": "TAG-LEV",
+      "inserts": 27,
+      "byLayer": {
+        "SPEC": 27
+      },
+      "mirrored": 2,
+      "maxDepth": 0,
+      "attribTags": [
+        "LEVEL"
+      ]
+    },
+    {
+      "name": "A$C02E95B23",
+      "family": "A$C02E95B23",
+      "inserts": 23,
+      "byLayer": {
+        "WALL": 23
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "frame",
+      "family": "frame",
+      "inserts": 21,
+      "byLayer": {
+        "FLOOR": 21
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "LEAF",
+      "family": "LEAF",
+      "inserts": 15,
+      "byLayer": {
+        "DOOR": 15
+      },
+      "mirrored": 11,
+      "maxDepth": 2,
+      "attribTags": []
+    },
+    {
+      "name": "SYM-GRD",
+      "family": "SYM-GRD",
+      "inserts": 13,
+      "byLayer": {
+        "SPEC": 13
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "A$C68820FA8",
+      "family": "A$C68820FA8",
+      "inserts": 8,
+      "byLayer": {
+        "CEILING": 8
+      },
+      "mirrored": 8,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "A$C7D82418A",
+      "family": "A$C7D82418A",
+      "inserts": 8,
+      "byLayer": {
+        "RNAME": 8
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": [
+        "DW"
+      ]
+    },
+    {
+      "name": "SWING",
+      "family": "SWING",
+      "inserts": 6,
+      "byLayer": {
+        "DOOR": 6
+      },
+      "mirrored": 5,
+      "maxDepth": 2,
+      "attribTags": []
+    },
+    {
+      "name": "jkljlll",
+      "family": "jkljlll",
+      "inserts": 6,
+      "byLayer": {
+        "WALL": 5,
+        "XR_L44$0$I-FURN": 1
+      },
+      "mirrored": 3,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "TF2092P",
+      "family": "TF2092P",
+      "inserts": 5,
+      "byLayer": {
+        "FIXT": 5
+      },
+      "mirrored": 2,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "A$C3B04013F",
+      "family": "A$C3B04013F",
+      "inserts": 4,
+      "byLayer": {
+        "WALL": 4
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": [
+        "1"
+      ]
+    },
+    {
+      "name": "_1D3R90",
+      "family": "_1D3R90",
+      "inserts": 4,
+      "byLayer": {
+        "DOOR": 4
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": [
+        "D-N",
+        "RF"
+      ]
+    },
+    {
+      "name": "A$C185D7F38",
+      "family": "A$C185D7F38",
+      "inserts": 3,
+      "byLayer": {
+        "FUR": 3
+      },
+      "mirrored": 2,
+      "maxDepth": 4,
+      "attribTags": []
+    },
+    {
+      "name": "A$C27F82021",
+      "family": "A$C27F82021",
+      "inserts": 3,
+      "byLayer": {
+        "WALL": 3
+      },
+      "mirrored": 1,
+      "maxDepth": 3,
+      "attribTags": []
+    },
+    {
+      "name": "A$C3B8D7A43",
+      "family": "A$C3B8D7A43",
+      "inserts": 3,
+      "byLayer": {
+        "FIXT": 3
+      },
+      "mirrored": 2,
+      "maxDepth": 5,
+      "attribTags": []
+    },
+    {
+      "name": "A$C598F089C",
+      "family": "A$C598F089C",
+      "inserts": 3,
+      "byLayer": {
+        "WALL": 3
+      },
+      "mirrored": 1,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "A$C66261919",
+      "family": "A$C66261919",
+      "inserts": 3,
+      "byLayer": {
+        "DOOR": 3
+      },
+      "mirrored": 1,
+      "maxDepth": 2,
+      "attribTags": []
+    },
+    {
+      "name": "A$C6FD65263",
+      "family": "A$C6FD65263",
+      "inserts": 3,
+      "byLayer": {
+        "WALL": 3
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "kjjkjkkkk",
+      "family": "kjjkjkkkk",
+      "inserts": 3,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 3
+      },
+      "mirrored": 1,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "*U31",
+      "family": "*U31",
+      "inserts": 2,
+      "byLayer": {
+        "XR_L44$0$I-DOOR": 2
+      },
+      "mirrored": 1,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "A$C238E5230",
+      "family": "A$C238E5230",
+      "inserts": 2,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 2
+      },
+      "mirrored": 2,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "A$C7AC363DA",
+      "family": "A$C7AC363DA",
+      "inserts": 2,
+      "byLayer": {
+        "WALL": 2
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "TF0560P",
+      "family": "TF0560P",
+      "inserts": 2,
+      "byLayer": {
+        "FIXT": 2
+      },
+      "mirrored": 2,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "XR_L44$0$BASE",
+      "family": "BASE",
+      "inserts": 2,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 2
+      },
+      "mirrored": 1,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "XR_L44$0$BASE500",
+      "family": "BASE500",
+      "inserts": 2,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 2
+      },
+      "mirrored": 1,
+      "maxDepth": 2,
+      "attribTags": []
+    },
+    {
+      "name": "XR_L44$0$FRIDGE-600",
+      "family": "FRIDGE-600",
+      "inserts": 2,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 2
+      },
+      "mirrored": 1,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "_1D0L100",
+      "family": "_1D0L100",
+      "inserts": 2,
+      "byLayer": {
+        "DOOR": 2
+      },
+      "mirrored": 1,
+      "maxDepth": 0,
+      "attribTags": [
+        "D-N",
+        "RF"
+      ]
+    },
+    {
+      "name": "bvvvv",
+      "family": "bvvvv",
+      "inserts": 2,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 2
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "hjkhkk",
+      "family": "hjkhkk",
+      "inserts": 2,
+      "byLayer": {
+        "WALL": 2
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "jkhjhjj",
+      "family": "jkhjhjj",
+      "inserts": 2,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 2
+      },
+      "mirrored": 1,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "jkjljl",
+      "family": "jkjljl",
+      "inserts": 2,
+      "byLayer": {
+        "WIN": 2
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "jkjllll",
+      "family": "jkjllll",
+      "inserts": 2,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 2
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "kkk",
+      "family": "kkk",
+      "inserts": 2,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 2
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "*X52",
+      "family": "*X52",
+      "inserts": 1,
+      "byLayer": {
+        "SPEC": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "A$C09C2022F",
+      "family": "A$C09C2022F",
+      "inserts": 1,
+      "byLayer": {
+        "WIN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "A$C2619574F",
+      "family": "A$C2619574F",
+      "inserts": 1,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 1
+      },
+      "mirrored": 1,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "A$C5A6A483C",
+      "family": "A$C5A6A483C",
+      "inserts": 1,
+      "byLayer": {
+        "DIM100": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "A$C5BF14633",
+      "family": "A$C5BF14633",
+      "inserts": 1,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "TAG-SEC",
+      "family": "TAG-SEC",
+      "inserts": 1,
+      "byLayer": {
+        "SPEC": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": [
+        "NUM",
+        "NUMBER",
+        "RPG"
+      ]
+    },
+    {
+      "name": "TF910P-Americana",
+      "family": "TF910P-Americana",
+      "inserts": 1,
+      "byLayer": {
+        "WALL": 1
+      },
+      "mirrored": 1,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "XR_L44 Plan$0$A$C83adbef5",
+      "family": "A$C83adbef5",
+      "inserts": 1,
+      "byLayer": {
+        "0": 1
+      },
+      "mirrored": 1,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "XR_L44 Plan$0$D4",
+      "family": "D4",
+      "inserts": 1,
+      "byLayer": {
+        "0": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "XR_L44$0$A$Ce0b21054",
+      "family": "A$Ce0b21054",
+      "inserts": 1,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 1
+      },
+      "mirrored": 1,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "XR_L44$0$BASE1000-625",
+      "family": "BASE1000-625",
+      "inserts": 1,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 1
+      },
+      "mirrored": 1,
+      "maxDepth": 2,
+      "attribTags": []
+    },
+    {
+      "name": "XR_L44$0$SINK-720-400",
+      "family": "SINK-720-400",
+      "inserts": 1,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "fghfh",
+      "family": "fghfh",
+      "inserts": 1,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "gjghhh",
+      "family": "gjghhh",
+      "inserts": 1,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "hjhjj",
+      "family": "hjhjj",
+      "inserts": 1,
+      "byLayer": {
+        "WIN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "hjhk",
+      "family": "hjhk",
+      "inserts": 1,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "jhkhkk",
+      "family": "jhkhkk",
+      "inserts": 1,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "jkllllkk",
+      "family": "jkllllkk",
+      "inserts": 1,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "kjll",
+      "family": "kjll",
+      "inserts": 1,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "klkjlll",
+      "family": "klkjlll",
+      "inserts": 1,
+      "byLayer": {
+        "XR_L44$0$I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    }
+  ],
+  "texts": [
+    {
+      "layer": "RNAME",
+      "x": 18.448,
+      "y": 60.74,
+      "height": 0.4,
+      "text": "หลังคากระเบื้อง NEUSTILE",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "A$C6FD65263"
+    },
+    {
+      "layer": "RNAME",
+      "x": 28.967,
+      "y": 60.74,
+      "height": 0.4,
+      "text": "หลังคากระเบื้อง NEUSTILE",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "A$C6FD65263"
+    },
+    {
+      "layer": "RNAME",
+      "x": 105.071,
+      "y": 60.007,
+      "height": 0.4,
+      "text": "หลังคากระเบื้อง NEUSTILE",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "A$C6FD65263"
+    },
+    {
+      "layer": "RNAME",
+      "x": -0.918,
+      "y": 53.306,
+      "height": 0.4,
+      "text": "ระดับพื้นชั้นที่ 2.",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "RNAME",
+      "x": -0.918,
+      "y": 60.306,
+      "height": 0.4,
+      "text": "ระดับหลังคาน ค.ศ.ล.",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "RNAME",
+      "x": 78.543,
+      "y": 51.979,
+      "height": 0.4,
+      "text": "ระดับพื้นชั้นที่ 2.",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "RNAME",
+      "x": 78.543,
+      "y": 58.979,
+      "height": 0.4,
+      "text": "ระดับหลังคาน ค.ศ.ล.",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "RNAME",
+      "x": -0.918,
+      "y": 45.506,
+      "height": 0.4,
+      "text": "ระดับพื้นชั้นที่ 1",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "RNAME",
+      "x": 78.543,
+      "y": 44.179,
+      "height": 0.4,
+      "text": "ระดับพื้นชั้นที่ 1",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "TEXT",
+      "x": 14.185,
+      "y": 57.773,
+      "height": 0.3,
+      "text": "ระดับแนวฝ้าเพดาน",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "TEXT",
+      "x": 14.19,
+      "y": 51.003,
+      "height": 0.3,
+      "text": "ระดับแนวฝ้าเพดาน",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "TEXT100",
+      "x": 13.872,
+      "y": 45.497,
+      "height": 0.4,
+      "text": "สะพานทางเชื่อม",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "TEXT100",
+      "x": 13.911,
+      "y": 53.297,
+      "height": 0.4,
+      "text": "สะพานทางเชื่อม",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "SPEC",
+      "x": 56.018,
+      "y": 28.15,
+      "height": 0.36,
+      "text": "มาตราส่วน",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "TAG-SEC"
+    },
+    {
+      "layer": "SPEC",
+      "x": 60.203,
+      "y": 28.156,
+      "height": null,
+      "text": "1 : 100",
+      "kind": "ATTRIB",
+      "tag": "NUMBER",
+      "block": "TAG-SEC"
+    },
+    {
+      "layer": "SPEC",
+      "x": 58.777,
+      "y": 29.87,
+      "height": 1.0,
+      "text": "รูปตัด",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "TAG-SEC"
+    },
+    {
+      "layer": "0",
+      "x": -0.354,
+      "y": 59.698,
+      "height": null,
+      "text": "+8.30",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "0",
+      "x": -0.348,
+      "y": 43.698,
+      "height": null,
+      "text": "+0.30",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "0",
+      "x": -0.348,
+      "y": 44.898,
+      "height": null,
+      "text": "+0.90",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "0",
+      "x": -0.348,
+      "y": 52.698,
+      "height": null,
+      "text": "+4.80",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "0",
+      "x": 79.107,
+      "y": 58.371,
+      "height": null,
+      "text": "+8.30",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "0",
+      "x": 79.113,
+      "y": 42.571,
+      "height": null,
+      "text": "+0.40",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "0",
+      "x": 79.113,
+      "y": 43.571,
+      "height": null,
+      "text": "+0.90",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "0",
+      "x": 79.113,
+      "y": 51.371,
+      "height": null,
+      "text": "+4.80",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "SPEC",
+      "x": 8.325,
+      "y": 61.025,
+      "height": null,
+      "text": "+9.05",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "SPEC",
+      "x": 8.357,
+      "y": 59.024,
+      "height": null,
+      "text": "+7.95",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "SPEC",
+      "x": 14.905,
+      "y": 58.924,
+      "height": null,
+      "text": "+7.90",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "SPEC",
+      "x": 15.564,
+      "y": 44.924,
+      "height": null,
+      "text": "+0.90",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "SPEC",
+      "x": 15.564,
+      "y": 52.724,
+      "height": null,
+      "text": "+4.80",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "SPEC",
+      "x": 29.523,
+      "y": 59.024,
+      "height": null,
+      "text": "+7.95",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "SPEC",
+      "x": 29.729,
+      "y": 44.924,
+      "height": null,
+      "text": "+0.90",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "SPEC",
+      "x": 35.172,
+      "y": 44.524,
+      "height": null,
+      "text": "+0.70",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "SPEC",
+      "x": 43.381,
+      "y": 59.024,
+      "height": null,
+      "text": "+7.95",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "SPEC",
+      "x": 90.419,
+      "y": 57.629,
+      "height": null,
+      "text": "+7.95",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "SPEC",
+      "x": 103.15,
+      "y": 43.598,
+      "height": null,
+      "text": "+0.90",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "SPEC",
+      "x": 108.154,
+      "y": 58.098,
+      "height": null,
+      "text": "+8.15",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "SPEC",
+      "x": 122.253,
+      "y": 42.798,
+      "height": null,
+      "text": "+0.50",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "SPEC",
+      "x": 122.253,
+      "y": 43.598,
+      "height": null,
+      "text": "+0.90",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "SPEC",
+      "x": 123.831,
+      "y": 48.398,
+      "height": null,
+      "text": "+3.30",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "SPEC",
+      "x": 124.872,
+      "y": 59.898,
+      "height": null,
+      "text": "+9.05",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "SPEC",
+      "x": 128.832,
+      "y": 42.598,
+      "height": null,
+      "text": "+0.40",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "TEXT",
+      "x": 19.828,
+      "y": 12.354,
+      "height": 0.3,
+      "text": "ST-05",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "TEXT",
+      "x": 114.336,
+      "y": 19.838,
+      "height": 0.3,
+      "text": "ST-02",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "SPEC",
+      "x": 50.557,
+      "y": 28.343,
+      "height": null,
+      "text": "1.03",
+      "kind": "ATTRIB",
+      "tag": "RPG",
+      "block": "TAG-SEC"
+    },
+    {
+      "layer": "SPEC",
+      "x": 95.338,
+      "y": 53.803,
+      "height": null,
+      "text": "AW12",
+      "kind": "ATTRIB",
+      "tag": "DW",
+      "block": "A$C7D82418A"
+    },
+    {
+      "layer": "SPEC",
+      "x": 110.49,
+      "y": 54.301,
+      "height": null,
+      "text": "AW14",
+      "kind": "ATTRIB",
+      "tag": "DW",
+      "block": "A$C7D82418A"
+    },
+    {
+      "layer": "SPEC",
+      "x": 125.093,
+      "y": 47.023,
+      "height": null,
+      "text": "AW14",
+      "kind": "ATTRIB",
+      "tag": "DW",
+      "block": "A$C7D82418A"
+    },
+    {
+      "layer": "SPEC",
+      "x": 125.428,
+      "y": 54.172,
+      "height": null,
+      "text": "AW17",
+      "kind": "ATTRIB",
+      "tag": "DW",
+      "block": "A$C7D82418A"
+    },
+    {
+      "layer": "TEXT",
+      "x": 39.234,
+      "y": 8.628,
+      "height": 0.3,
+      "text": "R-01",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "TEXT100",
+      "x": 29.54,
+      "y": 47.9,
+      "height": 0.4,
+      "text": "โล่ง",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "TEXT100",
+      "x": 110.811,
+      "y": 53.361,
+      "height": 0.4,
+      "text": "โล่ง",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "SPEC",
+      "x": 49.987,
+      "y": 29.479,
+      "height": null,
+      "text": "D-D",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "TAG-SEC"
+    },
+    {
+      "layer": "SPEC",
+      "x": 96.326,
+      "y": 46.518,
+      "height": null,
+      "text": "AW1",
+      "kind": "ATTRIB",
+      "tag": "DW",
+      "block": "A$C7D82418A"
+    },
+    {
+      "layer": "SPEC",
+      "x": 114.501,
+      "y": 46.321,
+      "height": null,
+      "text": "AD1",
+      "kind": "ATTRIB",
+      "tag": "DW",
+      "block": "A$C7D82418A"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 41.293,
+      "y": 30.389,
+      "height": 0.292,
+      "text": "10",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 46.793,
+      "y": 30.386,
+      "height": 0.292,
+      "text": "11",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 48.918,
+      "y": 11.323,
+      "height": 0.292,
+      "text": "H1",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 48.933,
+      "y": 6.898,
+      "height": 0.292,
+      "text": "H2",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 52.293,
+      "y": 30.386,
+      "height": 0.292,
+      "text": "12",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 115.314,
+      "y": 30.389,
+      "height": 0.292,
+      "text": "10",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 120.814,
+      "y": 30.386,
+      "height": 0.292,
+      "text": "11",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 126.314,
+      "y": 30.386,
+      "height": 0.292,
+      "text": "12",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "SPEC",
+      "x": 103.203,
+      "y": 46.295,
+      "height": null,
+      "text": "D1",
+      "kind": "ATTRIB",
+      "tag": "DW",
+      "block": "A$C7D82418A"
+    },
+    {
+      "layer": "SPEC",
+      "x": 121.516,
+      "y": 46.245,
+      "height": null,
+      "text": "D3",
+      "kind": "ATTRIB",
+      "tag": "DW",
+      "block": "A$C7D82418A"
+    },
+    {
+      "layer": "TEXT",
+      "x": 16.347,
+      "y": 59.472,
+      "height": 0.5,
+      "text": "27",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "A$C5A6A483C"
+    },
+    {
+      "layer": "TEXT",
+      "x": 94.015,
+      "y": 58.644,
+      "height": 0.5,
+      "text": "27",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 0.328,
+      "y": 6.626,
+      "height": 0.292,
+      "text": "M",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 0.339,
+      "y": 17.139,
+      "height": 0.292,
+      "text": "G",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 0.351,
+      "y": 14.274,
+      "height": 0.292,
+      "text": "H",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 0.351,
+      "y": 21.125,
+      "height": 0.292,
+      "text": "D",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 0.351,
+      "y": 22.285,
+      "height": 0.292,
+      "text": "C",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 0.362,
+      "y": 11.0,
+      "height": 0.292,
+      "text": "K",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 0.362,
+      "y": 20.074,
+      "height": 0.292,
+      "text": "E",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 0.362,
+      "y": 24.634,
+      "height": 0.292,
+      "text": "B",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 0.362,
+      "y": 25.993,
+      "height": 0.292,
+      "text": "A",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 0.373,
+      "y": 19.124,
+      "height": 0.292,
+      "text": "F",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 0.384,
+      "y": 7.722,
+      "height": 0.292,
+      "text": "L",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 0.396,
+      "y": 12.475,
+      "height": 0.292,
+      "text": "J",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 6.896,
+      "y": 30.371,
+      "height": 0.292,
+      "text": "1",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 6.938,
+      "y": 34.311,
+      "height": 0.583,
+      "text": "A",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 8.656,
+      "y": 30.386,
+      "height": 0.292,
+      "text": "2",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 13.715,
+      "y": 34.311,
+      "height": 0.583,
+      "text": "D",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 14.156,
+      "y": 30.389,
+      "height": 0.292,
+      "text": "3",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 17.762,
+      "y": 34.311,
+      "height": 0.583,
+      "text": "F",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 19.256,
+      "y": 30.387,
+      "height": 0.292,
+      "text": "4",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 21.156,
+      "y": 30.392,
+      "height": 0.292,
+      "text": "5",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 26.658,
+      "y": 30.389,
+      "height": 0.292,
+      "text": "6",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 27.416,
+      "y": 34.311,
+      "height": 0.583,
+      "text": "H",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 32.158,
+      "y": 30.387,
+      "height": 0.292,
+      "text": "7",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 32.489,
+      "y": 34.311,
+      "height": 0.583,
+      "text": "K",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 37.956,
+      "y": 30.389,
+      "height": 0.292,
+      "text": "8",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 40.176,
+      "y": 30.389,
+      "height": 0.292,
+      "text": "9",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 41.171,
+      "y": 34.311,
+      "height": 0.583,
+      "text": "M",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 49.031,
+      "y": 14.274,
+      "height": 0.292,
+      "text": "H",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 73.74,
+      "y": 6.626,
+      "height": 0.292,
+      "text": "M",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 73.751,
+      "y": 17.139,
+      "height": 0.292,
+      "text": "G",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 73.763,
+      "y": 14.274,
+      "height": 0.292,
+      "text": "H",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 73.763,
+      "y": 21.125,
+      "height": 0.292,
+      "text": "D",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 73.763,
+      "y": 22.285,
+      "height": 0.292,
+      "text": "C",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 73.774,
+      "y": 11.0,
+      "height": 0.292,
+      "text": "K",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 73.774,
+      "y": 20.074,
+      "height": 0.292,
+      "text": "E",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 73.774,
+      "y": 24.634,
+      "height": 0.292,
+      "text": "B",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 73.774,
+      "y": 25.993,
+      "height": 0.292,
+      "text": "A",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 73.785,
+      "y": 19.124,
+      "height": 0.292,
+      "text": "F",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 73.797,
+      "y": 7.722,
+      "height": 0.292,
+      "text": "L",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 73.808,
+      "y": 12.475,
+      "height": 0.292,
+      "text": "J",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 80.917,
+      "y": 30.371,
+      "height": 0.292,
+      "text": "1",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 82.678,
+      "y": 30.386,
+      "height": 0.292,
+      "text": "2",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 88.178,
+      "y": 30.389,
+      "height": 0.292,
+      "text": "3",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 92.58,
+      "y": 34.566,
+      "height": 0.583,
+      "text": "M",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 93.278,
+      "y": 30.387,
+      "height": 0.292,
+      "text": "4",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 95.178,
+      "y": 30.392,
+      "height": 0.292,
+      "text": "5",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 100.679,
+      "y": 30.389,
+      "height": 0.292,
+      "text": "6",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 102.913,
+      "y": 34.671,
+      "height": 0.583,
+      "text": "J",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 106.179,
+      "y": 30.387,
+      "height": 0.292,
+      "text": "7",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 106.425,
+      "y": 34.666,
+      "height": 0.583,
+      "text": "H",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 111.978,
+      "y": 30.389,
+      "height": 0.292,
+      "text": "8",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 113.603,
+      "y": 34.666,
+      "height": 0.583,
+      "text": "G",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 114.199,
+      "y": 30.389,
+      "height": 0.292,
+      "text": "9",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "hjhjj"
+    },
+    {
+      "layer": "GRID-01",
+      "x": 124.026,
+      "y": 34.666,
+      "height": 0.583,
+      "text": "C",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "GRID-01",
+      "x": 126.949,
+      "y": 34.666,
+      "height": 0.583,
+      "text": "A",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "SPEC",
+      "x": 50.076,
+      "y": 28.343,
+      "height": 0.36,
+      "text": "A",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "TAG-SEC"
+    },
+    {
+      "layer": "TEXT",
+      "x": 17.315,
+      "y": 59.92,
+      "height": 0.25,
+      "text": "o",
+      "kind": "TEXT",
+      "tag": null,
+      "block": "A$C5A6A483C"
+    },
+    {
+      "layer": "TEXT",
+      "x": 94.984,
+      "y": 59.091,
+      "height": 0.25,
+      "text": "o",
+      "kind": "TEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "TEXT100",
+      "x": 10.545,
+      "y": 44.229,
+      "height": null,
+      "text": "1",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 11.972,
+      "y": 51.626,
+      "height": null,
+      "text": "3",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 18.653,
+      "y": 51.573,
+      "height": null,
+      "text": "3",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 92.347,
+      "y": 54.418,
+      "height": null,
+      "text": "3",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 92.36,
+      "y": 46.562,
+      "height": null,
+      "text": "1",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 92.36,
+      "y": 57.418,
+      "height": null,
+      "text": "1",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 92.768,
+      "y": 50.255,
+      "height": null,
+      "text": "1",
+      "kind": "ATTRIB",
+      "tag": "1",
+      "block": "A$C3B04013F"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 95.521,
+      "y": 57.506,
+      "height": null,
+      "text": "1",
+      "kind": "ATTRIB",
+      "tag": "1",
+      "block": "A$C3B04013F"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 95.859,
+      "y": 50.518,
+      "height": null,
+      "text": "1",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 95.859,
+      "y": 56.587,
+      "height": null,
+      "text": "1",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 97.106,
+      "y": 49.565,
+      "height": null,
+      "text": "1",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 98.499,
+      "y": 41.493,
+      "height": null,
+      "text": "8",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 101.346,
+      "y": 46.411,
+      "height": null,
+      "text": "2",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 104.456,
+      "y": 50.518,
+      "height": null,
+      "text": "1",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 104.456,
+      "y": 54.048,
+      "height": null,
+      "text": "3",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 105.206,
+      "y": 57.462,
+      "height": null,
+      "text": "1",
+      "kind": "ATTRIB",
+      "tag": "1",
+      "block": "A$C3B04013F"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 107.893,
+      "y": 46.411,
+      "height": null,
+      "text": "2",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 109.098,
+      "y": 43.047,
+      "height": null,
+      "text": "1",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 109.87,
+      "y": 41.493,
+      "height": null,
+      "text": "8",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 114.653,
+      "y": 49.657,
+      "height": null,
+      "text": "1",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 116.305,
+      "y": 43.029,
+      "height": null,
+      "text": "1",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 116.751,
+      "y": 57.462,
+      "height": null,
+      "text": "1",
+      "kind": "ATTRIB",
+      "tag": "1",
+      "block": "A$C3B04013F"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 117.557,
+      "y": 41.493,
+      "height": null,
+      "text": "8",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 118.508,
+      "y": 50.518,
+      "height": null,
+      "text": "1",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 118.508,
+      "y": 54.048,
+      "height": null,
+      "text": "3",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 118.508,
+      "y": 57.37,
+      "height": null,
+      "text": "1",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 119.488,
+      "y": 46.382,
+      "height": null,
+      "text": "3",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 123.305,
+      "y": 46.399,
+      "height": null,
+      "text": "3",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 123.391,
+      "y": 41.493,
+      "height": null,
+      "text": "8",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 124.905,
+      "y": 54.048,
+      "height": null,
+      "text": "1",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "TEXT100",
+      "x": 126.701,
+      "y": 41.493,
+      "height": null,
+      "text": "8",
+      "kind": "ATTRIB",
+      "tag": "NUM",
+      "block": "EXT-FIN1"
+    },
+    {
+      "layer": "0",
+      "x": 14.913,
+      "y": 58.277,
+      "height": null,
+      "text": "",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "0",
+      "x": 14.918,
+      "y": 50.677,
+      "height": null,
+      "text": "",
+      "kind": "ATTRIB",
+      "tag": "LEVEL",
+      "block": "TAG-LEV"
+    },
+    {
+      "layer": "DSYM",
+      "x": 10.673,
+      "y": 14.258,
+      "height": null,
+      "text": "",
+      "kind": "ATTRIB",
+      "tag": "RF",
+      "block": "_1D3R90"
+    },
+    {
+      "layer": "DSYM",
+      "x": 11.073,
+      "y": 14.258,
+      "height": null,
+      "text": "",
+      "kind": "ATTRIB",
+      "tag": "D-N",
+      "block": "_1D3R90"
+    },
+    {
+      "layer": "DSYM",
+      "x": 11.949,
+      "y": 20.309,
+      "height": null,
+      "text": "",
+      "kind": "ATTRIB",
+      "tag": "RF",
+      "block": "_1D0L100"
+    },
+    {
+      "layer": "DSYM",
+      "x": 12.349,
+      "y": 20.309,
+      "height": null,
+      "text": "",
+      "kind": "ATTRIB",
+      "tag": "D-N",
+      "block": "_1D0L100"
+    },
+    {
+      "layer": "DSYM",
+      "x": 13.498,
+      "y": 15.558,
+      "height": null,
+      "text": "",
+      "kind": "ATTRIB",
+      "tag": "RF",
+      "block": "_1D0L100"
+    },
+    {
+      "layer": "DSYM",
+      "x": 13.498,
+      "y": 15.958,
+      "height": null,
+      "text": "",
+      "kind": "ATTRIB",
+      "tag": "D-N",
+      "block": "_1D0L100"
+    },
+    {
+      "layer": "DSYM",
+      "x": 34.273,
+      "y": 15.058,
+      "height": null,
+      "text": "",
+      "kind": "ATTRIB",
+      "tag": "D-N",
+      "block": "_1D3R90"
+    },
+    {
+      "layer": "DSYM",
+      "x": 34.673,
+      "y": 15.058,
+      "height": null,
+      "text": "",
+      "kind": "ATTRIB",
+      "tag": "RF",
+      "block": "_1D3R90"
+    },
+    {
+      "layer": "DSYM",
+      "x": 36.198,
+      "y": 21.955,
+      "height": null,
+      "text": "",
+      "kind": "ATTRIB",
+      "tag": "RF",
+      "block": "_1D3R90"
+    },
+    {
+      "layer": "DSYM",
+      "x": 36.598,
+      "y": 21.955,
+      "height": null,
+      "text": "",
+      "kind": "ATTRIB",
+      "tag": "D-N",
+      "block": "_1D3R90"
+    },
+    {
+      "layer": "DSYM",
+      "x": 109.347,
+      "y": 13.961,
+      "height": null,
+      "text": "",
+      "kind": "ATTRIB",
+      "tag": "D-N",
+      "block": "_1D3R90"
+    },
+    {
+      "layer": "DSYM",
+      "x": 109.747,
+      "y": 13.961,
+      "height": null,
+      "text": "",
+      "kind": "ATTRIB",
+      "tag": "RF",
+      "block": "_1D3R90"
+    }
+  ],
+  "levelTags": [
+    {
+      "x": 35.172,
+      "y": 44.524,
+      "value": 0.7,
+      "text": "+0.70",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": null
+    },
+    {
+      "x": 8.325,
+      "y": 61.025,
+      "value": 9.05,
+      "text": "+9.05",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": null
+    },
+    {
+      "x": 43.381,
+      "y": 59.024,
+      "value": 7.95,
+      "text": "+7.95",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": null
+    },
+    {
+      "x": 29.523,
+      "y": 59.024,
+      "value": 7.95,
+      "text": "+7.95",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "หลังคากระเบื้อง NEUSTILE"
+    },
+    {
+      "x": 29.729,
+      "y": 44.924,
+      "value": 0.9,
+      "text": "+0.90",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "โล่ง"
+    },
+    {
+      "x": 15.564,
+      "y": 52.724,
+      "value": 4.8,
+      "text": "+4.80",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "สะพานทางเชื่อม"
+    },
+    {
+      "x": 15.564,
+      "y": 44.924,
+      "value": 0.9,
+      "text": "+0.90",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "สะพานทางเชื่อม"
+    },
+    {
+      "x": 14.905,
+      "y": 58.924,
+      "value": 7.9,
+      "text": "+7.90",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": ""
+    },
+    {
+      "x": 8.357,
+      "y": 59.024,
+      "value": 7.95,
+      "text": "+7.95",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": null
+    },
+    {
+      "x": 50.557,
+      "y": 28.343,
+      "value": 1.03,
+      "text": "1.03",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "A"
+    },
+    {
+      "x": -0.354,
+      "y": 59.698,
+      "value": 8.3,
+      "text": "+8.30",
+      "layer": "0",
+      "source": "attrib",
+      "label": "ระดับหลังคาน ค.ศ.ล."
+    },
+    {
+      "x": -0.348,
+      "y": 44.898,
+      "value": 0.9,
+      "text": "+0.90",
+      "layer": "0",
+      "source": "attrib",
+      "label": "ระดับพื้นชั้นที่ 1"
+    },
+    {
+      "x": -0.348,
+      "y": 52.698,
+      "value": 4.8,
+      "text": "+4.80",
+      "layer": "0",
+      "source": "attrib",
+      "label": "ระดับพื้นชั้นที่ 2."
+    },
+    {
+      "x": -0.348,
+      "y": 43.698,
+      "value": 0.3,
+      "text": "+0.30",
+      "layer": "0",
+      "source": "attrib",
+      "label": "ระดับพื้นชั้นที่ 1"
+    },
+    {
+      "x": 123.831,
+      "y": 48.398,
+      "value": 3.3,
+      "text": "+3.30",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "AW14"
+    },
+    {
+      "x": 124.872,
+      "y": 59.898,
+      "value": 9.05,
+      "text": "+9.05",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": null
+    },
+    {
+      "x": 90.419,
+      "y": 57.629,
+      "value": 7.95,
+      "text": "+7.95",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "1"
+    },
+    {
+      "x": 79.107,
+      "y": 58.371,
+      "value": 8.3,
+      "text": "+8.30",
+      "layer": "0",
+      "source": "attrib",
+      "label": "ระดับหลังคาน ค.ศ.ล."
+    },
+    {
+      "x": 79.113,
+      "y": 43.571,
+      "value": 0.9,
+      "text": "+0.90",
+      "layer": "0",
+      "source": "attrib",
+      "label": "ระดับพื้นชั้นที่ 1"
+    },
+    {
+      "x": 79.113,
+      "y": 51.371,
+      "value": 4.8,
+      "text": "+4.80",
+      "layer": "0",
+      "source": "attrib",
+      "label": "ระดับพื้นชั้นที่ 2."
+    },
+    {
+      "x": 79.113,
+      "y": 42.571,
+      "value": 0.4,
+      "text": "+0.40",
+      "layer": "0",
+      "source": "attrib",
+      "label": "ระดับพื้นชั้นที่ 1"
+    },
+    {
+      "x": 108.154,
+      "y": 58.098,
+      "value": 8.15,
+      "text": "+8.15",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": null
+    },
+    {
+      "x": 103.15,
+      "y": 43.598,
+      "value": 0.9,
+      "text": "+0.90",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "D1"
+    },
+    {
+      "x": 128.832,
+      "y": 42.598,
+      "value": 0.4,
+      "text": "+0.40",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "8"
+    },
+    {
+      "x": 122.253,
+      "y": 43.598,
+      "value": 0.9,
+      "text": "+0.90",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "8"
+    },
+    {
+      "x": 122.253,
+      "y": 42.798,
+      "value": 0.5,
+      "text": "+0.50",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "8"
+    }
+  ],
+  "gridLabels": [
+    {
+      "text": "7",
+      "x": 32.158,
+      "y": 30.387,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          32.275,
+          30.044
+        ],
+        [
+          32.275,
+          28.544
+        ]
+      ]
+    },
+    {
+      "text": "8",
+      "x": 37.956,
+      "y": 30.389,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          38.073,
+          30.047
+        ],
+        [
+          38.073,
+          28.547
+        ]
+      ]
+    },
+    {
+      "text": "10",
+      "x": 41.293,
+      "y": 30.389,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          41.523,
+          30.047
+        ],
+        [
+          41.523,
+          28.547
+        ]
+      ]
+    },
+    {
+      "text": "11",
+      "x": 46.793,
+      "y": 30.386,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          47.023,
+          30.047
+        ],
+        [
+          47.023,
+          28.547
+        ]
+      ]
+    },
+    {
+      "text": "12",
+      "x": 52.293,
+      "y": 30.386,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          52.523,
+          30.047
+        ],
+        [
+          52.523,
+          28.547
+        ]
+      ]
+    },
+    {
+      "text": "1",
+      "x": 6.896,
+      "y": 30.371,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": [
+        1.0,
+        0.0
+      ],
+      "line": [
+        [
+          7.013,
+          29.445
+        ],
+        [
+          7.873,
+          29.445
+        ]
+      ]
+    },
+    {
+      "text": "2",
+      "x": 8.656,
+      "y": 30.386,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          8.773,
+          30.047
+        ],
+        [
+          8.773,
+          28.547
+        ]
+      ]
+    },
+    {
+      "text": "3",
+      "x": 14.156,
+      "y": 30.389,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          14.273,
+          30.047
+        ],
+        [
+          14.273,
+          28.547
+        ]
+      ]
+    },
+    {
+      "text": "4",
+      "x": 19.256,
+      "y": 30.387,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          19.373,
+          30.047
+        ],
+        [
+          19.373,
+          28.547
+        ]
+      ]
+    },
+    {
+      "text": "5",
+      "x": 21.156,
+      "y": 30.392,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          21.273,
+          30.047
+        ],
+        [
+          21.273,
+          28.547
+        ]
+      ]
+    },
+    {
+      "text": "6",
+      "x": 26.658,
+      "y": 30.389,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          26.775,
+          30.047
+        ],
+        [
+          26.775,
+          28.547
+        ]
+      ]
+    },
+    {
+      "text": "L",
+      "x": 0.384,
+      "y": 7.722,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "A",
+      "x": 0.362,
+      "y": 25.993,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "B",
+      "x": 0.362,
+      "y": 24.634,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "C",
+      "x": 0.351,
+      "y": 22.285,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "D",
+      "x": 0.351,
+      "y": 21.125,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": [
+        1.0,
+        -0.0
+      ],
+      "line": [
+        [
+          1.002,
+          21.284
+        ],
+        [
+          2.502,
+          21.284
+        ]
+      ]
+    },
+    {
+      "text": "E",
+      "x": 0.362,
+      "y": 20.074,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": [
+        1.0,
+        -0.0
+      ],
+      "line": [
+        [
+          1.002,
+          20.233
+        ],
+        [
+          2.502,
+          20.233
+        ]
+      ]
+    },
+    {
+      "text": "F",
+      "x": 0.373,
+      "y": 19.124,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": [
+        1.0,
+        -0.0
+      ],
+      "line": [
+        [
+          1.002,
+          19.283
+        ],
+        [
+          2.502,
+          19.283
+        ]
+      ]
+    },
+    {
+      "text": "G",
+      "x": 0.339,
+      "y": 17.139,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "J",
+      "x": 0.396,
+      "y": 12.475,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": [
+        1.0,
+        -0.0
+      ],
+      "line": [
+        [
+          1.002,
+          12.632
+        ],
+        [
+          2.502,
+          12.632
+        ]
+      ]
+    },
+    {
+      "text": "M",
+      "x": 0.328,
+      "y": 6.626,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "H",
+      "x": 0.351,
+      "y": 14.274,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": [
+        1.0,
+        -0.0
+      ],
+      "line": [
+        [
+          1.002,
+          14.433
+        ],
+        [
+          2.502,
+          14.433
+        ]
+      ]
+    },
+    {
+      "text": "K",
+      "x": 0.362,
+      "y": 11.0,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "H",
+      "x": 49.031,
+      "y": 14.274,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": [
+        -1.0,
+        -0.0
+      ],
+      "line": [
+        [
+          48.674,
+          14.433
+        ],
+        [
+          47.174,
+          14.433
+        ]
+      ]
+    },
+    {
+      "text": "H1",
+      "x": 48.918,
+      "y": 11.323,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": [
+        -1.0,
+        -0.0
+      ],
+      "line": [
+        [
+          48.674,
+          11.483
+        ],
+        [
+          47.174,
+          11.483
+        ]
+      ]
+    },
+    {
+      "text": "H2",
+      "x": 48.933,
+      "y": 6.898,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": [
+        -1.0,
+        -0.0
+      ],
+      "line": [
+        [
+          48.69,
+          7.058
+        ],
+        [
+          47.19,
+          7.058
+        ]
+      ]
+    },
+    {
+      "text": "9",
+      "x": 40.176,
+      "y": 30.389,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          40.293,
+          30.047
+        ],
+        [
+          40.293,
+          28.547
+        ]
+      ]
+    },
+    {
+      "text": "8",
+      "x": 111.978,
+      "y": 30.389,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          112.095,
+          30.047
+        ],
+        [
+          112.095,
+          28.547
+        ]
+      ]
+    },
+    {
+      "text": "7",
+      "x": 106.179,
+      "y": 30.387,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          106.297,
+          30.044
+        ],
+        [
+          106.297,
+          28.544
+        ]
+      ]
+    },
+    {
+      "text": "6",
+      "x": 100.679,
+      "y": 30.389,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          100.797,
+          30.047
+        ],
+        [
+          100.797,
+          28.547
+        ]
+      ]
+    },
+    {
+      "text": "5",
+      "x": 95.178,
+      "y": 30.392,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          95.295,
+          30.047
+        ],
+        [
+          95.295,
+          28.547
+        ]
+      ]
+    },
+    {
+      "text": "4",
+      "x": 93.278,
+      "y": 30.387,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          93.395,
+          30.047
+        ],
+        [
+          93.395,
+          28.547
+        ]
+      ]
+    },
+    {
+      "text": "3",
+      "x": 88.178,
+      "y": 30.389,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          88.295,
+          30.047
+        ],
+        [
+          88.295,
+          28.547
+        ]
+      ]
+    },
+    {
+      "text": "2",
+      "x": 82.678,
+      "y": 30.386,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          82.795,
+          30.047
+        ],
+        [
+          82.795,
+          28.547
+        ]
+      ]
+    },
+    {
+      "text": "1",
+      "x": 80.917,
+      "y": 30.371,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "K",
+      "x": 73.774,
+      "y": 11.0,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "H",
+      "x": 73.763,
+      "y": 14.274,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": [
+        1.0,
+        -0.0
+      ],
+      "line": [
+        [
+          74.414,
+          14.433
+        ],
+        [
+          75.914,
+          14.433
+        ]
+      ]
+    },
+    {
+      "text": "M",
+      "x": 73.74,
+      "y": 6.626,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "J",
+      "x": 73.808,
+      "y": 12.475,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": [
+        1.0,
+        -0.0
+      ],
+      "line": [
+        [
+          74.414,
+          12.632
+        ],
+        [
+          75.914,
+          12.632
+        ]
+      ]
+    },
+    {
+      "text": "G",
+      "x": 73.751,
+      "y": 17.139,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "F",
+      "x": 73.785,
+      "y": 19.124,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": [
+        1.0,
+        -0.0
+      ],
+      "line": [
+        [
+          74.414,
+          19.283
+        ],
+        [
+          75.914,
+          19.283
+        ]
+      ]
+    },
+    {
+      "text": "E",
+      "x": 73.774,
+      "y": 20.074,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": [
+        1.0,
+        -0.0
+      ],
+      "line": [
+        [
+          74.414,
+          20.233
+        ],
+        [
+          75.914,
+          20.233
+        ]
+      ]
+    },
+    {
+      "text": "D",
+      "x": 73.763,
+      "y": 21.125,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": [
+        1.0,
+        -0.0
+      ],
+      "line": [
+        [
+          74.414,
+          21.284
+        ],
+        [
+          75.914,
+          21.284
+        ]
+      ]
+    },
+    {
+      "text": "C",
+      "x": 73.763,
+      "y": 22.285,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "B",
+      "x": 73.774,
+      "y": 24.634,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "A",
+      "x": 73.774,
+      "y": 25.993,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "L",
+      "x": 73.797,
+      "y": 7.722,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "9",
+      "x": 114.199,
+      "y": 30.389,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          114.316,
+          30.047
+        ],
+        [
+          114.316,
+          28.547
+        ]
+      ]
+    },
+    {
+      "text": "12",
+      "x": 126.314,
+      "y": 30.386,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          126.545,
+          30.047
+        ],
+        [
+          126.545,
+          28.547
+        ]
+      ]
+    },
+    {
+      "text": "11",
+      "x": 120.814,
+      "y": 30.386,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          121.045,
+          30.047
+        ],
+        [
+          121.045,
+          28.547
+        ]
+      ]
+    },
+    {
+      "text": "10",
+      "x": 115.314,
+      "y": 30.389,
+      "layer": "GRID-01",
+      "block": "hjhjj",
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          115.545,
+          30.047
+        ],
+        [
+          115.545,
+          28.547
+        ]
+      ]
+    },
+    {
+      "text": "K",
+      "x": 32.489,
+      "y": 34.311,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "A",
+      "x": 6.938,
+      "y": 34.311,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "M",
+      "x": 41.171,
+      "y": 34.311,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "H",
+      "x": 27.416,
+      "y": 34.311,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "F",
+      "x": 17.762,
+      "y": 34.311,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "D",
+      "x": 13.715,
+      "y": 34.311,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "H",
+      "x": 106.425,
+      "y": 34.666,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "J",
+      "x": 102.913,
+      "y": 34.671,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "M",
+      "x": 92.58,
+      "y": 34.566,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "A",
+      "x": 126.949,
+      "y": 34.666,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "C",
+      "x": 124.026,
+      "y": 34.666,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": null,
+      "line": null
+    },
+    {
+      "text": "G",
+      "x": 113.603,
+      "y": 34.666,
+      "layer": "GRID-01",
+      "block": null,
+      "direction": null,
+      "line": null
+    }
+  ],
+  "areas": [
+    {
+      "id": "a1",
+      "bbox": [
+        3.0,
+        38.0,
+        48.0,
+        62.0
+      ],
+      "items": 729,
+      "wallItems": 667,
+      "looks": "elevation"
+    },
+    {
+      "id": "a2",
+      "bbox": [
+        89.0,
+        38.0,
+        129.0,
+        61.0
+      ],
+      "items": 524,
+      "wallItems": 504,
+      "looks": "elevation"
+    },
+    {
+      "id": "a3",
+      "bbox": [
+        35.0,
+        55.0,
+        45.0,
+        60.0
+      ],
+      "items": 45,
+      "wallItems": 45,
+      "looks": "other"
+    },
+    {
+      "id": "a4",
+      "bbox": [
+        0.0,
+        5.0,
+        50.0,
+        36.0
+      ],
+      "items": 11995,
+      "wallItems": 11610,
+      "looks": "plan"
+    },
+    {
+      "id": "a5",
+      "bbox": [
+        6.0,
+        23.0,
+        10.0,
+        36.0
+      ],
+      "items": 14,
+      "wallItems": 7,
+      "looks": "other"
+    },
+    {
+      "id": "a6",
+      "bbox": [
+        26.0,
+        27.0,
+        29.0,
+        36.0
+      ],
+      "items": 6,
+      "wallItems": 1,
+      "looks": "other"
+    },
+    {
+      "id": "a7",
+      "bbox": [
+        31.0,
+        27.0,
+        34.0,
+        36.0
+      ],
+      "items": 6,
+      "wallItems": 1,
+      "looks": "other"
+    },
+    {
+      "id": "a8",
+      "bbox": [
+        37.0,
+        27.0,
+        43.0,
+        36.0
+      ],
+      "items": 14,
+      "wallItems": 3,
+      "looks": "other"
+    },
+    {
+      "id": "a9",
+      "bbox": [
+        77.0,
+        5.0,
+        129.0,
+        36.0
+      ],
+      "items": 18446,
+      "wallItems": 17964,
+      "looks": "plan"
+    },
+    {
+      "id": "a10",
+      "bbox": [
+        91.0,
+        27.0,
+        96.0,
+        36.0
+      ],
+      "items": 10,
+      "wallItems": 2,
+      "looks": "other"
+    },
+    {
+      "id": "a11",
+      "bbox": [
+        100.0,
+        27.0,
+        108.0,
+        36.0
+      ],
+      "items": 12,
+      "wallItems": 2,
+      "looks": "other"
+    },
+    {
+      "id": "a12",
+      "bbox": [
+        111.0,
+        27.0,
+        117.0,
+        36.0
+      ],
+      "items": 14,
+      "wallItems": 3,
+      "looks": "other"
+    },
+    {
+      "id": "a13",
+      "bbox": [
+        46.0,
+        10.0,
+        57.0,
+        33.0
+      ],
+      "items": 334,
+      "wallItems": 210,
+      "looks": "plan"
+    },
+    {
+      "id": "a14",
+      "bbox": [
+        73.0,
+        18.0,
+        78.0,
+        25.0
+      ],
+      "items": 16,
+      "wallItems": 7,
+      "looks": "other"
+    },
+    {
+      "id": "a15",
+      "bbox": [
+        46.0,
+        10.0,
+        50.0,
+        19.0
+      ],
+      "items": 7,
+      "wallItems": 1,
+      "looks": "other"
+    }
+  ]
+}

@@ -1,0 +1,320 @@
+{
+  "format": "office-mapping/1",
+  "id": "dwp-revit",
+  "name": "DWP (Revit)",
+  "createdAt": "2026-11-04T00:00:00Z",
+  "updatedAt": "2026-11-04T00:00:00Z",
+  "layers": {
+    "A-ANNO-DIMS": {
+      "role": "ignore",
+      "names": [
+        "A-ANNO-DIMS"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "A-ANNO-DIMS-100": {
+      "role": "ignore",
+      "names": [
+        "A-ANNO-DIMS-100"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "A-AREA-IDEN": {
+      "role": "room-name",
+      "names": [
+        "A-AREA-IDEN"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "A-DETL": {
+      "role": "other",
+      "names": [
+        "A-DETL"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "A-DETL-GENF": {
+      "role": "other",
+      "names": [
+        "A-DETL-GENF"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "A-DOOR": {
+      "role": "door",
+      "names": [
+        "A-DOOR"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "A-DOOR-FRAM": {
+      "role": "door",
+      "names": [
+        "A-DOOR-FRAM"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "A-DOOR-GLAZ": {
+      "role": "door",
+      "names": [
+        "A-DOOR-GLAZ"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "A-DOOR-HDLN": {
+      "role": "door",
+      "names": [
+        "A-DOOR-HDLN"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "A-FLOR": {
+      "role": "other",
+      "names": [
+        "A-FLOR"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "A-FLOR-HRAL": {
+      "role": "railing",
+      "names": [
+        "A-FLOR-HRAL"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "A-FLOR-HRAL-MBND": {
+      "role": "other",
+      "names": [
+        "A-FLOR-HRAL-MBND"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "A-GENM": {
+      "role": "furniture",
+      "names": [
+        "A-GENM"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "A-GLAZ-CURT": {
+      "role": "glass",
+      "names": [
+        "A-GLAZ-CURT"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "A-GLAZ-CWMG": {
+      "role": "glass",
+      "names": [
+        "A-GLAZ-CWMG"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "A-WALL": {
+      "role": "wall",
+      "names": [
+        "A-WALL"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "A-WALL-PATT": {
+      "role": "wall",
+      "names": [
+        "A-WALL-PATT"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "E-COMM": {
+      "role": "furniture",
+      "names": [
+        "E-COMM"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "E-ELEC-FIXT": {
+      "role": "ignore",
+      "names": [
+        "E-ELEC-FIXT"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "G-ANNO-TEXT": {
+      "role": "room-name",
+      "names": [
+        "G-ANNO-TEXT"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "I-FURN": {
+      "role": "furniture",
+      "names": [
+        "I-FURN"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "L-PLNT": {
+      "role": "furniture",
+      "names": [
+        "L-PLNT"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "P-SANR-FIXT": {
+      "role": "furniture",
+      "names": [
+        "P-SANR-FIXT"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "Q-CASE": {
+      "role": "furniture",
+      "names": [
+        "Q-CASE"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "Q-CASE-HDLN": {
+      "role": "furniture",
+      "names": [
+        "Q-CASE-HDLN"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "Q-SPCQ": {
+      "role": "furniture",
+      "names": [
+        "Q-SPCQ"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "S-COLS": {
+      "role": "column",
+      "names": [
+        "S-COLS"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "S-GRID": {
+      "role": "grid",
+      "names": [
+        "S-GRID"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "S-GRID-IDEN": {
+      "role": "grid",
+      "names": [
+        "S-GRID-IDEN"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "S-STRS": {
+      "role": "stair",
+      "names": [
+        "S-STRS"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    },
+    "S-STRS-MBND": {
+      "role": "stair-above",
+      "names": [
+        "S-STRS-MBND"
+      ],
+      "uses": 1,
+      "lastProject": "bank-sampeng",
+      "lastUsedAt": "2026-11-04T00:00:00Z",
+      "was": null
+    }
+  },
+  "furnitureWords": {}
+}

@@ -1,6 +1,7 @@
 """Scaffold smoke test: the stub app answers /api/health and its OpenAPI document has the 13 operationIds of DESIGN.md 10.2."""
 from fastapi.testclient import TestClient
 
+from test_openapi import UPLOAD_OPERATION_IDS
 from walkthrough_api.main import create_app
 
 OPERATION_IDS = {
@@ -21,8 +22,9 @@ def test_health() -> None:
 def test_openapi_operation_ids() -> None:
     doc = create_app().openapi()
     ids = [op['operationId'] for path in doc['paths'].values() for op in path.values()]
-    assert sorted(ids) == sorted(OPERATION_IDS)
+    assert sorted(ids) == sorted(OPERATION_IDS | UPLOAD_OPERATION_IDS)       # + the upload milestone's 24 (U-15.1)
     for path in doc['paths'].values():
         for op in path.values():
             assert op.get('summary') and op.get('description'), op['operationId']
-            assert op['responses']['200']['description'], op['operationId']
+            ok = [s for s in op['responses'] if s.startswith('2')]           # 200, or 201 / 202 / 204 (U-13.1)
+            assert len(ok) == 1 and op['responses'][ok[0]]['description'], op['operationId']

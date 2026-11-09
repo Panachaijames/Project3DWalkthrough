@@ -1,4 +1,5 @@
-"""Health, the project list, one project, its thumbnail (DESIGN.md 10.2). Bodies: builder E."""
+"""Health, the project list, one project, its thumbnail (DESIGN.md 10.2), and createProject (docs/upload/DESIGN.md U-13.3;
+its decorator written by the scaffold U0, its body by U5). Bodies: builder E, U5."""
 from __future__ import annotations
 
 import logging
@@ -8,10 +9,12 @@ from fastapi.responses import Response
 
 from .. import API_VERSION, views
 from ..deps import get_store
+from ..drafts import projects as drafts_projects
 from ..errors import ApiError
 from ..models import Health, ProjectDetail, ProjectList
+from ..models_upload import NewProjectRequest
 from ..store.base import Store, StoreError
-from .params import NOT_MODIFIED, RAW_HEADERS, IfNoneMatch, ProjectId, error
+from .params import NOT_MODIFIED, RAW_HEADERS, IfNoneMatch, ProjectId, error, error_or_validation
 
 router = APIRouter()
 log = logging.getLogger('walkthrough_api.routes')
@@ -88,3 +91,24 @@ def get_thumbnail(project_id: ProjectId, if_none_match: IfNoneMatch = None, stor
     if latest is None or thumb is None:
         raise ApiError(404, 'no_thumbnail', f'{project_id} has no top view')
     return views.raw_blob(store.asset(project_id, latest.version, thumb.name), if_none_match)
+
+
+@router.post(
+    '/api/projects',
+    operation_id='createProject',
+    tags=['projects'],
+    status_code=201,
+    response_model=ProjectDetail,
+    responses={
+        409: error('project_exists: the id is taken (details.suggested: the next free id)'),
+        422: error_or_validation('bad_project: a name, short name or id that cannot be used (a new id is 2 - 40 '
+                                 'characters, not reserved)'),
+    },
+    summary='Create a project',
+    description='A new project with no version yet: its id (given, or a slug of the name), meta.json and '
+                'project-settings.json (office and naming derived from the names, U-13.3); newOfficeName creates the '
+                'office. Its first version comes from an upload and a build.',
+    response_description='The new project.',
+)
+def create_project(body: NewProjectRequest, store: Store = Depends(get_store)) -> ProjectDetail:
+    return drafts_projects.create_project(store, body)

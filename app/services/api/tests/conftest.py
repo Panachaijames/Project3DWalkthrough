@@ -19,7 +19,11 @@ from walkthrough_api.seed.build import seed
 
 def pytest_configure(config: pytest.Config) -> None:
     if not config.option.basetemp:
+        RUN.mkdir(parents=True, exist_ok=True)           # pytest makes basetemp, not its parent (U0.md item 2)
         config.option.basetemp = str(RUN / 'pytest')
+    # the upload milestone's integration tests: the real worker (docs/upload/ACCEPTANCE.md 2.2). They skip while the
+    # builder is not built or missing, and fail instead under WT_INTEGRATION=1 (tests/builderkit.py).
+    config.addinivalue_line('markers', 'builder: runs the real builder worker (never holds the machine run lock)')
 
 
 @pytest.fixture(scope='session')

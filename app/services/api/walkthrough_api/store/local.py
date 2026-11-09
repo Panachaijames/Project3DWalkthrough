@@ -3,7 +3,9 @@
     <root>/projects/<projectId>/meta.json
     <root>/projects/<projectId>/versions/<n>/{version.json, model.json, stages.json?, overrides.json?, assets/,
                                              downloads/, source/}
-    reserved and left alone: versions/<n>/project-data.json, <root>/mappings/, <root>/.staging/ (stage() writes there)
+    versions/<n>/project-data.json (the BuildSettings an uploaded version was built with), <root>/.staging/
+    (stage() writes there); <root>/mappings/, <root>/.uploads/, projects/<id>/{project-settings.json, sources/,
+    builds/}: the upload milestone's files (store/drafts.py, docs/upload/DESIGN.md U-4.1)
     <root>/.lock: the cross-process lock (store/filelock.py), an empty file
 
 meta.json and version.json are parsed into the records of store/base.py and cached by the file's mtime, size and id;
@@ -39,6 +41,7 @@ from ..jsonio import (RASTER_MEDIA_TYPES, JsonError, atomic_write_bytes, dumps_p
 from .base import (FILE_NAME_PATTERN, OVERRIDES_FORMAT, PROJECT_FORMAT, PROJECT_ID_PATTERN, BlobRef, BlobSource,
                    HeightOverridesFile, NewProject, NotFound, ProjectMeta, RevisionConflict, StagedRef, StoreConflict,
                    StoreError, StoreFileName, VersionDraft, VersionMeta)
+from .drafts import DraftFiles
 from .filelock import store_file_lock
 
 log = logging.getLogger('walkthrough_api.store')
@@ -85,12 +88,13 @@ def _rename_dir(src: Path, dst: Path, tries: int = 25) -> None:
             time.sleep(0.2)
 
 
-class LocalStore:
+class LocalStore(DraftFiles):
     def __init__(self, root: Path) -> None:
         self.root = Path(root)
         self._lock = threading.RLock()
         self._exclusive_depth = 0                  # exclusive() nesting in the thread that holds self._lock
         self._cache: dict[Path, tuple[tuple[int, int, int], Any]] = {}
+        self._uploads_lock = threading.Lock()      # session.json rewrites after a part (two parts may arrive at once)
 
     # ------------------------------------------------------------------------------------------------ locking
     @contextmanager
@@ -408,9 +412,13 @@ class LocalStore:
         into versions/.staging-<uuid>/, renames it to versions/<n>/ (atomic), carries the previous saved heights for the
         kinds the new model still has (when asked), then updates meta.json last. The stamp is sha1(model.json)[:12].
         Assets are raster pictures only (PNG, JPEG, WebP, GIF by their bytes): an SVG or anything else is refused, so an
-        asset URL can never serve a document that runs script in the staff app's origin."""
+        asset URL can never serve a document that runs script in the staff app's origin.
+
+        The upload milestone (docs/upload/DESIGN.md U-11.1): a `.ms` download whose line-2 stamp is not
+        sha1(model.json)[:12] (seed.build.ms_stamp) is refused, checked AFTER the file-name checks; `project_data` (the
+        BuildSettings the version was built with) is written as versions/<n>/project-data.json."""
         from ..checks import validate_presentation, validate_replay   # noqa: PLC0415 (checks imports the seed's helpers)
-        from ..seed.build import version_record                       # noqa: PLC0415
+        from ..seed.build import ms_stamp, version_record             # noqa: PLC0415
 
         model_raw = self._blob_bytes(draft.model_json)
         model = builtmodel.validate_bytes(model_raw)
@@ -422,6 +430,12 @@ class LocalStore:
             for name in group:
                 if not safe_name(name):
                     raise ValueError(f'file name {name!r} does not match {FILE_NAME_PATTERN} (or is only dots / ends in a dot)')
+        stamp = sha1_hex(model_raw)[:12]
+        for name, src in draft.downloads.items():
+            if name.lower().endswith('.ms'):
+                found = ms_stamp(self._blob_bytes(src))
+                if found != stamp:
+                    raise ValueError(f'{name}: line 2 says model data {found}, the model is {stamp} (U-11.1)')
         roles = asset_roles(model, draft.assets)
         with self.exclusive():
             meta = self.get_project(project_id)
@@ -447,12 +461,14 @@ class LocalStore:
                 for folder, group in (('downloads', draft.downloads), ('source', draft.source)):
                     for name, src in group.items():
                         self._place(src, staging / folder / name)
+                if draft.project_data is not None:
+                    self._place(draft.project_data, staging / 'project-data.json')
                 max_script = next((name for name in sorted(draft.downloads) if name.lower().endswith('.ms')), None)
                 now = iso_utc()
                 record = version_record(
                     project_id=project_id, n=n, label=draft.label, created_at=now, source_kind=draft.source_kind,
                     source_files=list(draft.source_files), model=model, model_sha1=sha1_hex(model_raw),
-                    stamp=sha1_hex(model_raw)[:12], stamp_source='model.json', has_stages=stages_raw is not None,
+                    stamp=stamp, stamp_source='model.json', has_stages=stages_raw is not None,
                     assets=assets, max_script=max_script, presentation=draft.presentation, seed=None)
                 (staging / 'version.json').write_bytes(dumps_pretty(record))
                 if draft.carry_overrides_from is not None:

@@ -1,0 +1,3960 @@
+{
+  "format": "drawing-read/1",
+  "source": {
+    "sha1": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+    "name": "I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg"
+  },
+  "reader": {
+    "version": "1",
+    "seconds": 1.7,
+    "peakMemoryMB": null
+  },
+  "dxf": {
+    "acadVersion": "AC1024",
+    "insUnits": 4,
+    "auditErrors": 0,
+    "auditFixes": 24
+  },
+  "units": {
+    "declared": "mm",
+    "votes": {
+      "mm": 16,
+      "cm": 0,
+      "m": 0,
+      "in": 0,
+      "ft": 0
+    },
+    "dimensionMedian": 3487.500000000005,
+    "used": "mm",
+    "verdict": "agree",
+    "note": ""
+  },
+  "extents": [
+    -5.33,
+    -9.04,
+    6.294,
+    11.455
+  ],
+  "counts": {
+    "items": 6106,
+    "byType": {
+      "ARC": 1071,
+      "CIRCLE": 15,
+      "ELLIPSE": 216,
+      "HATCH": 169,
+      "INSERT": 239,
+      "LINE": 3795,
+      "LWPOLYLINE": 208,
+      "MTEXT": 28,
+      "SPLINE": 365
+    },
+    "dimensions": 14
+  },
+  "layers": [
+    {
+      "name": "0",
+      "normalised": "0",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 7,
+      "items": 1,
+      "byType": {
+        "INSERT": 1
+      },
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.0,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 1,
+      "topBlocks": [
+        {
+          "family": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT",
+          "count": 1
+        }
+      ],
+      "linetypes": {},
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "A-ANNO-DIMS",
+      "normalised": "A-ANNO-DIMS",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 211,
+      "items": 0,
+      "byType": {},
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.0,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {},
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": null
+    },
+    {
+      "name": "A-ANNO-DIMS-100",
+      "normalised": "A-ANNO-DIMS-100",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 211,
+      "items": 0,
+      "byType": {},
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.0,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {},
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": null
+    },
+    {
+      "name": "A-ANNO-NOTE",
+      "normalised": "A-ANNO-NOTE",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 131,
+      "items": 0,
+      "byType": {},
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.0,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {},
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": null
+    },
+    {
+      "name": "A-AREA-IDEN",
+      "normalised": "A-AREA-IDEN",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 2,
+      "items": 12,
+      "byType": {
+        "MTEXT": 12
+      },
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.0,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 12,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {},
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        -4.523,
+        -8.058,
+        1.9,
+        8.101
+      ]
+    },
+    {
+      "name": "A-DETL",
+      "normalised": "A-DETL",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 90,
+      "items": 12,
+      "byType": {
+        "CIRCLE": 1,
+        "LINE": 11
+      },
+      "inBlocks": 0,
+      "closedShapes": 1,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 43.55,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "- DASH SMALL": 5,
+        "- GRIDLINE": 3,
+        "BYLAYER": 4
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        -7.216,
+        -9.757,
+        4.856,
+        11.455
+      ]
+    },
+    {
+      "name": "A-DETL-GENF",
+      "normalised": "A-DETL-GENF",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 92,
+      "items": 1,
+      "byType": {
+        "HATCH": 1
+      },
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 1,
+      "hatchPatterns": {},
+      "length": 0.0,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {},
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        -5.49,
+        7.234,
+        0.999,
+        11.455
+      ]
+    },
+    {
+      "name": "A-DOOR",
+      "normalised": "A-DOOR",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 31,
+      "items": 123,
+      "byType": {
+        "ARC": 17,
+        "INSERT": 16,
+        "LINE": 90
+      },
+      "inBlocks": 113,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 53.43,
+      "doorArcs": 11,
+      "doorArcsWithLeaf": 10,
+      "texts": 0,
+      "inserts": 16,
+      "topBlocks": [
+        {
+          "family": "SINGLE GLASS SWING DOOR-GENERIC - TYPE 1",
+          "count": 4
+        },
+        {
+          "family": "SINGLE SWING DOOR-GENERIC - 1000X2400",
+          "count": 3
+        },
+        {
+          "family": "DOOR-CW_PIVOT_1 PANEL_FLUSH4 - D3 - PL03",
+          "count": 2
+        },
+        {
+          "family": "DOUBLE GLASS SWING DOOR-GENERIC - TYPE 1",
+          "count": 2
+        },
+        {
+          "family": "DOOR_GEN_SWING_1 PANEL_FLUSH - 1200x2400 _black_",
+          "count": 1
+        },
+        {
+          "family": "DOOR_GEN_SWING_1 PANEL_FLUSH - 700x2400 _black_",
+          "count": 1
+        },
+        {
+          "family": "DOOR_GEN_SWING_1 PANEL_FLUSH - 900x2400 _black_",
+          "count": 1
+        },
+        {
+          "family": "SINGLE SWING DOOR-GENERIC - 700X2400",
+          "count": 1
+        },
+        {
+          "family": "_GEN_LIFT_DOOR - DOOR1100x2400",
+          "count": 1
+        }
+      ],
+      "linetypes": {
+        "- DASH SMALL": 7,
+        "BYLAYER": 100
+      },
+      "pairs": {
+        "glassLike": 17,
+        "wallLike": 3
+      },
+      "extents": [
+        -4.88,
+        -8.668,
+        6.06,
+        7.633
+      ]
+    },
+    {
+      "name": "A-DOOR-FRAM",
+      "normalised": "A-DOOR-FRAM",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 31,
+      "items": 54,
+      "byType": {
+        "HATCH": 4,
+        "LINE": 50
+      },
+      "inBlocks": 54,
+      "closedShapes": 0,
+      "solidHatches": 4,
+      "hatchPatterns": {},
+      "length": 3.71,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 50
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        -4.93,
+        -8.18,
+        3.12,
+        7.234
+      ]
+    },
+    {
+      "name": "A-DOOR-GLAZ",
+      "normalised": "A-DOOR-GLAZ",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 31,
+      "items": 24,
+      "byType": {
+        "LINE": 24
+      },
+      "inBlocks": 24,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 10.39,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 24
+      },
+      "pairs": {
+        "glassLike": 6,
+        "wallLike": 0
+      },
+      "extents": [
+        0.431,
+        -8.495,
+        6.076,
+        5.827
+      ]
+    },
+    {
+      "name": "A-DOOR-HDLN",
+      "normalised": "A-DOOR-HDLN",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 31,
+      "items": 6,
+      "byType": {
+        "ARC": 6
+      },
+      "inBlocks": 6,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 7.45,
+      "doorArcs": 6,
+      "doorArcsWithLeaf": 6,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "- DASH SMALL": 6
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        -0.394,
+        -8.021,
+        5.872,
+        5.628
+      ]
+    },
+    {
+      "name": "A-FLOR",
+      "normalised": "A-FLOR",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 192,
+      "items": 57,
+      "byType": {
+        "ARC": 4,
+        "LINE": 53
+      },
+      "inBlocks": 29,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 92.96,
+      "doorArcs": 1,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 57
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 7
+      },
+      "extents": [
+        -5.798,
+        -11.036,
+        8.158,
+        13.605
+      ]
+    },
+    {
+      "name": "A-FLOR-HRAL",
+      "normalised": "A-FLOR-HRAL",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 11,
+      "items": 28,
+      "byType": {
+        "INSERT": 4,
+        "LINE": 24
+      },
+      "inBlocks": 28,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 7.95,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 4,
+      "topBlocks": [
+        {
+          "family": "Railing - 50 x 5",
+          "count": 2
+        },
+        {
+          "family": "Railing - Railing",
+          "count": 2
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 24
+      },
+      "pairs": {
+        "glassLike": 6,
+        "wallLike": 0
+      },
+      "extents": [
+        -3.993,
+        0.0,
+        4.263,
+        12.655
+      ]
+    },
+    {
+      "name": "A-FLOR-HRAL-MBND",
+      "normalised": "A-FLOR-HRAL-MBND",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 5,
+      "items": 24,
+      "byType": {
+        "LINE": 24
+      },
+      "inBlocks": 24,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 23.07,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 24
+      },
+      "pairs": {
+        "glassLike": 20,
+        "wallLike": 0
+      },
+      "extents": [
+        -3.4,
+        9.571,
+        2.811,
+        12.655
+      ]
+    },
+    {
+      "name": "A-GENM",
+      "normalised": "A-GENM",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 13,
+      "items": 370,
+      "byType": {
+        "ARC": 9,
+        "CIRCLE": 4,
+        "INSERT": 5,
+        "LINE": 352
+      },
+      "inBlocks": 365,
+      "closedShapes": 4,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 36.38,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 5,
+      "topBlocks": [
+        {
+          "family": "ATM Machine - ATM Machine",
+          "count": 3
+        },
+        {
+          "family": "COVER - TYPE 1",
+          "count": 2
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 365
+      },
+      "pairs": {
+        "glassLike": 48,
+        "wallLike": 15
+      },
+      "extents": [
+        -4.933,
+        -7.836,
+        6.507,
+        8.35
+      ]
+    },
+    {
+      "name": "A-GLAZ-CURT",
+      "normalised": "A-GLAZ-CURT",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 52,
+      "items": 48,
+      "byType": {
+        "HATCH": 8,
+        "INSERT": 8,
+        "LINE": 32
+      },
+      "inBlocks": 47,
+      "closedShapes": 0,
+      "solidHatches": 8,
+      "hatchPatterns": {},
+      "length": 20.25,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 8,
+      "topBlocks": [
+        {
+          "family": "System Panel - GLAZED",
+          "count": 8
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 32
+      },
+      "pairs": {
+        "glassLike": 8,
+        "wallLike": 0
+      },
+      "extents": [
+        -0.577,
+        -9.135,
+        6.254,
+        4.892
+      ]
+    },
+    {
+      "name": "A-GLAZ-CWMG",
+      "normalised": "A-GLAZ-CWMG",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 51,
+      "items": 199,
+      "byType": {
+        "HATCH": 29,
+        "INSERT": 38,
+        "LINE": 132
+      },
+      "inBlocks": 184,
+      "closedShapes": 0,
+      "solidHatches": 29,
+      "hatchPatterns": {},
+      "length": 30.88,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 38,
+      "topBlocks": [
+        {
+          "family": "Rectangular Mullion - 100X50",
+          "count": 16
+        },
+        {
+          "family": "Rectangular Mullion - 100X160",
+          "count": 12
+        },
+        {
+          "family": "Rectangular Mullion - 100X25",
+          "count": 10
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 132
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 9
+      },
+      "extents": [
+        -6.024,
+        -9.18,
+        6.299,
+        5.915
+      ]
+    },
+    {
+      "name": "A-WALL",
+      "normalised": "A-WALL",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 113,
+      "items": 343,
+      "byType": {
+        "HATCH": 36,
+        "INSERT": 11,
+        "LINE": 296
+      },
+      "inBlocks": 163,
+      "closedShapes": 0,
+      "solidHatches": 36,
+      "hatchPatterns": {},
+      "length": 262.4,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 11,
+      "topBlocks": [
+        {
+          "family": "Basic Wall _ GLASS WALL 2600H 20X100 - ___",
+          "count": 11
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 296
+      },
+      "pairs": {
+        "glassLike": 44,
+        "wallLike": 104
+      },
+      "extents": [
+        -5.498,
+        -9.18,
+        6.229,
+        11.455
+      ]
+    },
+    {
+      "name": "A-WALL-PATT",
+      "normalised": "A-WALL-PATT",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 111,
+      "items": 35,
+      "byType": {
+        "HATCH": 35
+      },
+      "inBlocks": 35,
+      "closedShapes": 0,
+      "solidHatches": 35,
+      "hatchPatterns": {},
+      "length": 0.0,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {},
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        -5.666,
+        -9.18,
+        6.303,
+        11.755
+      ]
+    },
+    {
+      "name": "Defpoints",
+      "normalised": "DEFPOINTS",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": false
+      },
+      "linetype": "Continuous",
+      "colour": 7,
+      "items": 0,
+      "byType": {},
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.0,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {},
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": null
+    },
+    {
+      "name": "E-COMM",
+      "normalised": "E-COMM",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 2,
+      "items": 88,
+      "byType": {
+        "INSERT": 4,
+        "LINE": 84
+      },
+      "inBlocks": 84,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 9.46,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 4,
+      "topBlocks": [
+        {
+          "family": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1",
+          "count": 4
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 84
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        -1.604,
+        -4.886,
+        -1.278,
+        0.791
+      ]
+    },
+    {
+      "name": "E-ELEC-FIXT",
+      "normalised": "E-ELEC-FIXT",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 91,
+      "items": 14,
+      "byType": {
+        "INSERT": 2,
+        "LINE": 12
+      },
+      "inBlocks": 12,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.19,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 2,
+      "topBlocks": [
+        {
+          "family": "SAVING POINT OUTLET - DUPLEX",
+          "count": 1
+        },
+        {
+          "family": "TV OUTLET - TYPE 1",
+          "count": 1
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 12
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        0.683,
+        4.605,
+        0.686,
+        4.769
+      ]
+    },
+    {
+      "name": "G-ANNO-NPLT",
+      "normalised": "G-ANNO-NPLT",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": false
+      },
+      "linetype": "Continuous",
+      "colour": 191,
+      "items": 0,
+      "byType": {},
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.0,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {},
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": null
+    },
+    {
+      "name": "G-ANNO-TEXT",
+      "normalised": "G-ANNO-TEXT",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 231,
+      "items": 6,
+      "byType": {
+        "MTEXT": 6
+      },
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.0,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 6,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {},
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        -0.499,
+        -5.016,
+        4.582,
+        1.317
+      ]
+    },
+    {
+      "name": "G-ANNO-TTLB",
+      "normalised": "G-ANNO-TTLB",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 6,
+      "items": 0,
+      "byType": {},
+      "inBlocks": 0,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.0,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {},
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": null
+    },
+    {
+      "name": "I-FURN",
+      "normalised": "I-FURN",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 30,
+      "items": 3257,
+      "byType": {
+        "ARC": 740,
+        "ELLIPSE": 216,
+        "HATCH": 7,
+        "INSERT": 68,
+        "LINE": 1743,
+        "LWPOLYLINE": 175,
+        "SPLINE": 308
+      },
+      "inBlocks": 3189,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {
+        "FP_17": 7
+      },
+      "length": 265.27,
+      "doorArcs": 68,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 68,
+      "topBlocks": [
+        {
+          "family": "mollie_chair_a685_revit - A685 2",
+          "count": 11
+        },
+        {
+          "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+          "count": 7
+        },
+        {
+          "family": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range",
+          "count": 7
+        },
+        {
+          "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H",
+          "count": 6
+        },
+        {
+          "family": "IA_J15_WORKING TABLE - 1800W 1000D 750H",
+          "count": 5
+        },
+        {
+          "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY",
+          "count": 4
+        },
+        {
+          "family": "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4",
+          "count": 4
+        },
+        {
+          "family": "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR",
+          "count": 4
+        },
+        {
+          "family": "SOFA_BENCH_DIOR - TYPE 2",
+          "count": 4
+        },
+        {
+          "family": "Steelcase - Height-Adjustable Desk - Privacy Screen - Sarto - 30W x 19_5H",
+          "count": 4
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 3182
+      },
+      "pairs": {
+        "glassLike": 11,
+        "wallLike": 49
+      },
+      "extents": [
+        -2.369,
+        -4.427,
+        5.982,
+        5.326
+      ]
+    },
+    {
+      "name": "L-PLNT",
+      "normalised": "L-PLNT",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 71,
+      "items": 185,
+      "byType": {
+        "INSERT": 2,
+        "LINE": 183
+      },
+      "inBlocks": 183,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 23.3,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 2,
+      "topBlocks": [
+        {
+          "family": "Enscape AssetDefinition - Bush 020 Fern - Enscape AssetDefinition - Bush 020 Fern",
+          "count": 1
+        },
+        {
+          "family": "Enscape AssetDefinition - Potted Plant 028 Peace Lily - Enscape AssetDefinition - Potted Plant 028 Peace Lily 2",
+          "count": 1
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 183
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        0.4,
+        -6.324,
+        1.176,
+        -5.207
+      ]
+    },
+    {
+      "name": "P-SANR-FIXT",
+      "normalised": "P-SANR-FIXT",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 6,
+      "items": 454,
+      "byType": {
+        "ARC": 170,
+        "INSERT": 4,
+        "LINE": 190,
+        "LWPOLYLINE": 33,
+        "SPLINE": 57
+      },
+      "inBlocks": 452,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 26.0,
+      "doorArcs": 10,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 4,
+      "topBlocks": [
+        {
+          "family": "C12377 - C12377",
+          "count": 1
+        },
+        {
+          "family": "Wall-hung vitreous china basin-Meridian-327242xx0 - 327242000 White",
+          "count": 1
+        },
+        {
+          "family": "สุขภัณฑ์แบบนั่งราบ - C1403 - C1403",
+          "count": 1
+        },
+        {
+          "family": "อ่างล้างหน้าฝั่งครึ่งเคาน์เตอร์ - C0240 - อ่างล้างหน้าฝั่งครึ่งเคาน์เตอร์ - C0240",
+          "count": 1
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 450
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 6
+      },
+      "extents": [
+        -4.476,
+        -9.044,
+        3.085,
+        8.359
+      ]
+    },
+    {
+      "name": "Q-CASE",
+      "normalised": "Q-CASE",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 31,
+      "items": 363,
+      "byType": {
+        "ARC": 105,
+        "HATCH": 32,
+        "INSERT": 46,
+        "LINE": 180
+      },
+      "inBlocks": 323,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {
+        "FP_1": 3,
+        "FP_10": 1,
+        "FP_11": 1,
+        "FP_12": 1,
+        "FP_13": 1,
+        "FP_14": 1,
+        "FP_15": 1,
+        "FP_16": 1,
+        "FP_18": 1,
+        "FP_19": 1,
+        "FP_2": 1,
+        "FP_20": 1,
+        "FP_21": 1,
+        "FP_22": 1,
+        "FP_23": 1,
+        "FP_24": 1,
+        "FP_25": 5,
+        "FP_3": 1,
+        "FP_4": 1,
+        "FP_5": 1,
+        "FP_6": 1,
+        "FP_7": 1,
+        "FP_8": 3,
+        "FP_9": 1
+      },
+      "length": 36.98,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 46,
+      "topBlocks": [
+        {
+          "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+          "count": 20
+        },
+        {
+          "family": "PANEL_ADJ_GEN - ADJUSTABLE DRAWER",
+          "count": 16
+        },
+        {
+          "family": "FP_10-LEVEL 1 GENERAL ARRANGEMENT",
+          "count": 1
+        },
+        {
+          "family": "FP_15-LEVEL 1 GENERAL ARRANGEMENT",
+          "count": 1
+        },
+        {
+          "family": "FP_16-LEVEL 1 GENERAL ARRANGEMENT",
+          "count": 1
+        },
+        {
+          "family": "FP_17-LEVEL 1 GENERAL ARRANGEMENT",
+          "count": 1
+        },
+        {
+          "family": "FP_8-LEVEL 1 GENERAL ARRANGEMENT",
+          "count": 1
+        },
+        {
+          "family": "FP_9-LEVEL 1 GENERAL ARRANGEMENT",
+          "count": 1
+        },
+        {
+          "family": "IF_J04_WALL TV - WALL TV 3800W",
+          "count": 1
+        },
+        {
+          "family": "POTTED PLANT - STOOL LOW_VITRA_VISIONA STOOL",
+          "count": 1
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 285
+      },
+      "pairs": {
+        "glassLike": 24,
+        "wallLike": 26
+      },
+      "extents": [
+        -3.48,
+        -6.316,
+        0.813,
+        5.603
+      ]
+    },
+    {
+      "name": "Q-CASE-HDLN",
+      "normalised": "Q-CASE-HDLN",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "- DASH SMALL",
+      "colour": 31,
+      "items": 78,
+      "byType": {
+        "LINE": 78
+      },
+      "inBlocks": 78,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 0.39,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 78
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        -3.08,
+        -4.681,
+        -3.062,
+        5.114
+      ]
+    },
+    {
+      "name": "Q-SPCQ",
+      "normalised": "Q-SPCQ",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 91,
+      "items": 54,
+      "byType": {
+        "ARC": 20,
+        "INSERT": 3,
+        "LINE": 31
+      },
+      "inBlocks": 51,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 9.0,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 3,
+      "topBlocks": [
+        {
+          "family": "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1",
+          "count": 2
+        },
+        {
+          "family": "APPLIANCE_TV_WALL MOUNT WITH BRACKET - 75_",
+          "count": 1
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 51
+      },
+      "pairs": {
+        "glassLike": 6,
+        "wallLike": 0
+      },
+      "extents": [
+        -3.196,
+        -3.869,
+        0.803,
+        5.453
+      ]
+    },
+    {
+      "name": "S-COLS",
+      "normalised": "S-COLS",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 52,
+      "items": 102,
+      "byType": {
+        "HATCH": 17,
+        "INSERT": 17,
+        "LINE": 68
+      },
+      "inBlocks": 102,
+      "closedShapes": 0,
+      "solidHatches": 17,
+      "hatchPatterns": {},
+      "length": 29.95,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 17,
+      "topBlocks": [
+        {
+          "family": "M_Concrete-Rectangular-Column - 300x300",
+          "count": 5
+        },
+        {
+          "family": "M_Concrete-Rectangular-Column - 300x550",
+          "count": 4
+        },
+        {
+          "family": "M_Concrete-Rectangular-Column - 300x800",
+          "count": 4
+        },
+        {
+          "family": "M_Concrete-Rectangular-Column - 280x550",
+          "count": 1
+        },
+        {
+          "family": "M_Concrete-Rectangular-Column - 400x900",
+          "count": 1
+        },
+        {
+          "family": "M_Concrete-Rectangular-Column - 600x355",
+          "count": 1
+        },
+        {
+          "family": "M_Concrete-Rectangular-Column - 700x390",
+          "count": 1
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 68
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 22
+      },
+      "extents": [
+        -5.57,
+        -9.359,
+        6.712,
+        9.622
+      ]
+    },
+    {
+      "name": "S-GRID",
+      "normalised": "S-GRID",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 1,
+      "items": 30,
+      "byType": {
+        "LINE": 30
+      },
+      "inBlocks": 30,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 196.21,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "- GRIDLINE": 10,
+        "BYLAYER": 20
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        -8.728,
+        -10.812,
+        8.499,
+        14.397
+      ]
+    },
+    {
+      "name": "S-GRID-IDEN",
+      "normalised": "S-GRID-IDEN",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 1,
+      "items": 30,
+      "byType": {
+        "CIRCLE": 10,
+        "INSERT": 10,
+        "MTEXT": 10
+      },
+      "inBlocks": 30,
+      "closedShapes": 10,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 19.98,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 10,
+      "inserts": 10,
+      "topBlocks": [
+        {
+          "family": "Grid - CIRCLE_A3 ONLY",
+          "count": 10
+        }
+      ],
+      "linetypes": {
+        "BYLAYER": 10
+      },
+      "pairs": {
+        "glassLike": 0,
+        "wallLike": 0
+      },
+      "extents": [
+        -9.368,
+        -9.256,
+        6.961,
+        15.037
+      ]
+    },
+    {
+      "name": "S-STRS",
+      "normalised": "S-STRS",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 31,
+      "items": 31,
+      "byType": {
+        "LINE": 31
+      },
+      "inBlocks": 31,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 18.78,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 31
+      },
+      "pairs": {
+        "glassLike": 11,
+        "wallLike": 44
+      },
+      "extents": [
+        -3.99,
+        7.877,
+        4.213,
+        12.605
+      ]
+    },
+    {
+      "name": "S-STRS-MBND",
+      "normalised": "S-STRS-MBND",
+      "state": {
+        "on": true,
+        "frozen": false,
+        "locked": false,
+        "plot": true
+      },
+      "linetype": "Continuous",
+      "colour": 31,
+      "items": 77,
+      "byType": {
+        "LINE": 77
+      },
+      "inBlocks": 77,
+      "closedShapes": 0,
+      "solidHatches": 0,
+      "hatchPatterns": {},
+      "length": 56.17,
+      "doorArcs": 0,
+      "doorArcsWithLeaf": 0,
+      "texts": 0,
+      "inserts": 0,
+      "topBlocks": [],
+      "linetypes": {
+        "BYLAYER": 77
+      },
+      "pairs": {
+        "glassLike": 22,
+        "wallLike": 124
+      },
+      "extents": [
+        -3.4,
+        7.032,
+        3.162,
+        12.655
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Grid - CIRCLE_A3 ONLY-1810919-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Grid - CIRCLE_A3 ONLY",
+      "inserts": 10,
+      "byLayer": {
+        "S-GRID-IDEN": 10
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "mollie_chair_a685_revit - A685 2-2278197-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "inserts": 9,
+      "byLayer": {
+        "I-FURN": 9
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range",
+      "inserts": 7,
+      "byLayer": {
+        "I-FURN": 7
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+      "inserts": 6,
+      "byLayer": {
+        "I-FURN": 6
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "M_Concrete-Rectangular-Column - 300x300-2202804-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "M_Concrete-Rectangular-Column - 300x300",
+      "inserts": 5,
+      "byLayer": {
+        "S-COLS": 5
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY-2278169-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY",
+      "inserts": 4,
+      "byLayer": {
+        "I-FURN": 4
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4-2403364-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4",
+      "inserts": 4,
+      "byLayer": {
+        "I-FURN": 4
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "M_Concrete-Rectangular-Column - 300x550-2202782-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "M_Concrete-Rectangular-Column - 300x550",
+      "inserts": 4,
+      "byLayer": {
+        "S-COLS": 4
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "M_Concrete-Rectangular-Column - 300x800-2202805-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "M_Concrete-Rectangular-Column - 300x800",
+      "inserts": 4,
+      "byLayer": {
+        "S-COLS": 4
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X25-V41-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X25",
+      "inserts": 4,
+      "byLayer": {
+        "A-GLAZ-CWMG": 4
+      },
+      "mirrored": 4,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Steelcase - Height-Adjustable Desk - Privacy Screen - Sarto - 30W x 19_5H-2316532-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Steelcase - Height-Adjustable Desk - Privacy Screen - Sarto - 30W x 19_5H",
+      "inserts": 4,
+      "byLayer": {
+        "I-FURN": 4
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H-2385305-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H",
+      "inserts": 4,
+      "byLayer": {
+        "I-FURN": 4
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1-2278177-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1",
+      "inserts": 4,
+      "byLayer": {
+        "E-COMM": 4
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE-2337390-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE",
+      "inserts": 3,
+      "byLayer": {
+        "I-FURN": 3
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE DRAWER-2350933-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE DRAWER",
+      "inserts": 3,
+      "byLayer": {
+        "Q-CASE": 3
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE DRAWER-2350935-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE DRAWER",
+      "inserts": 3,
+      "byLayer": {
+        "Q-CASE": 3
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE DRAWER-2628453-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE DRAWER",
+      "inserts": 3,
+      "byLayer": {
+        "Q-CASE": 3
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE DRAWER-2628455-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE DRAWER",
+      "inserts": 3,
+      "byLayer": {
+        "Q-CASE": 3
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X25-2613216-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X25",
+      "inserts": 3,
+      "byLayer": {
+        "A-GLAZ-CWMG": 3
+      },
+      "mirrored": 3,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "ATM Machine - ATM Machine-2371857-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "ATM Machine - ATM Machine",
+      "inserts": 2,
+      "byLayer": {
+        "A-GENM": 2
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE-2471981-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE",
+      "inserts": 2,
+      "byLayer": {
+        "I-FURN": 2
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X160-2572103-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X160",
+      "inserts": 2,
+      "byLayer": {
+        "A-GLAZ-CWMG": 2
+      },
+      "mirrored": 2,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X160-2572104-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X160",
+      "inserts": 2,
+      "byLayer": {
+        "A-GLAZ-CWMG": 2
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X25-2613213-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X25",
+      "inserts": 2,
+      "byLayer": {
+        "A-GLAZ-CWMG": 2
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X50-2168598-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X50",
+      "inserts": 2,
+      "byLayer": {
+        "A-GLAZ-CWMG": 2
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X50-2168599-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X50",
+      "inserts": 2,
+      "byLayer": {
+        "A-GLAZ-CWMG": 2
+      },
+      "mirrored": 2,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X50-2567161-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X50",
+      "inserts": 2,
+      "byLayer": {
+        "A-GLAZ-CWMG": 2
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "SINGLE GLASS SWING DOOR-GENERIC - TYPE 1-2613220-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "SINGLE GLASS SWING DOOR-GENERIC - TYPE 1",
+      "inserts": 2,
+      "byLayer": {
+        "A-DOOR": 2
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "SINGLE SWING DOOR-GENERIC - 1000X2400-2369985-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "SINGLE SWING DOOR-GENERIC - 1000X2400",
+      "inserts": 2,
+      "byLayer": {
+        "A-DOOR": 2
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "System Panel - GLAZED-2567163-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "System Panel - GLAZED",
+      "inserts": 2,
+      "byLayer": {
+        "A-GLAZ-CURT": 2
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H-2395479-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H",
+      "inserts": 2,
+      "byLayer": {
+        "I-FURN": 2
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "mollie_chair_a685_revit - A685 2-2437554-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "inserts": 2,
+      "byLayer": {
+        "I-FURN": 2
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT",
+      "inserts": 1,
+      "byLayer": {
+        "0": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "APPLIANCE_TV_WALL MOUNT WITH BRACKET - 75_-2364407-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "APPLIANCE_TV_WALL MOUNT WITH BRACKET - 75_",
+      "inserts": 1,
+      "byLayer": {
+        "Q-SPCQ": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "ATM Machine - ATM Machine-V26-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "ATM Machine - ATM Machine",
+      "inserts": 1,
+      "byLayer": {
+        "A-GENM": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Basic Wall _ GLASS WALL 2600H 20X100 - ___-2612400-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Basic Wall _ GLASS WALL 2600H 20X100 - ___",
+      "inserts": 1,
+      "byLayer": {
+        "A-WALL": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Basic Wall _ GLASS WALL 2600H 20X100 - ___-2612402-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Basic Wall _ GLASS WALL 2600H 20X100 - ___",
+      "inserts": 1,
+      "byLayer": {
+        "A-WALL": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Basic Wall _ GLASS WALL 2600H 20X100 - ___-2612404-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Basic Wall _ GLASS WALL 2600H 20X100 - ___",
+      "inserts": 1,
+      "byLayer": {
+        "A-WALL": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Basic Wall _ GLASS WALL 2600H 20X100 - ___-2612406-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Basic Wall _ GLASS WALL 2600H 20X100 - ___",
+      "inserts": 1,
+      "byLayer": {
+        "A-WALL": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Basic Wall _ GLASS WALL 2600H 20X100 - ___-2613106-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Basic Wall _ GLASS WALL 2600H 20X100 - ___",
+      "inserts": 1,
+      "byLayer": {
+        "A-WALL": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Basic Wall _ GLASS WALL 2600H 20X100 - ___-2613108-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Basic Wall _ GLASS WALL 2600H 20X100 - ___",
+      "inserts": 1,
+      "byLayer": {
+        "A-WALL": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Basic Wall _ GLASS WALL 2600H 20X100 - ___-2613110-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Basic Wall _ GLASS WALL 2600H 20X100 - ___",
+      "inserts": 1,
+      "byLayer": {
+        "A-WALL": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Basic Wall _ GLASS WALL 2600H 20X100 - ___-2613112-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Basic Wall _ GLASS WALL 2600H 20X100 - ___",
+      "inserts": 1,
+      "byLayer": {
+        "A-WALL": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Basic Wall _ GLASS WALL 2600H 20X100 - ___-2613114-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Basic Wall _ GLASS WALL 2600H 20X100 - ___",
+      "inserts": 1,
+      "byLayer": {
+        "A-WALL": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Basic Wall _ GLASS WALL 2600H 20X100 - ___-2613116-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Basic Wall _ GLASS WALL 2600H 20X100 - ___",
+      "inserts": 1,
+      "byLayer": {
+        "A-WALL": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Basic Wall _ GLASS WALL 2600H 20X100 - ___-2613120-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Basic Wall _ GLASS WALL 2600H 20X100 - ___",
+      "inserts": 1,
+      "byLayer": {
+        "A-WALL": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "C12377 - C12377-2316655-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "C12377 - C12377",
+      "inserts": 1,
+      "byLayer": {
+        "P-SANR-FIXT": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA_VISIONA STOOL-2475694-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA_VISIONA STOOL",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE-2572387-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "CONSOLE_CABINET_BAKER - TA13 1200W 400D-2383324-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "CONSOLE_CABINET_BAKER - TA13 1200W 400D",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "CONSOLE_CABINET_BAKER - TA13 1800W 400D-2569772-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "CONSOLE_CABINET_BAKER - TA13 1800W 400D",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "COVER - TYPE 1-2366482-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "COVER - TYPE 1",
+      "inserts": 1,
+      "byLayer": {
+        "A-GENM": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "COVER - TYPE 1-V32-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "COVER - TYPE 1",
+      "inserts": 1,
+      "byLayer": {
+        "A-GENM": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "DOOR-CW_PIVOT_1 PANEL_FLUSH4 - D3 - PL03-2568134-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "DOOR-CW_PIVOT_1 PANEL_FLUSH4 - D3 - PL03",
+      "inserts": 1,
+      "byLayer": {
+        "A-DOOR": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "DOOR-CW_PIVOT_1 PANEL_FLUSH4 - D3 - PL03-2568539-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "DOOR-CW_PIVOT_1 PANEL_FLUSH4 - D3 - PL03",
+      "inserts": 1,
+      "byLayer": {
+        "A-DOOR": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "DOOR_GEN_SWING_1 PANEL_FLUSH - 1200x2400 _black_-2135044-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "DOOR_GEN_SWING_1 PANEL_FLUSH - 1200x2400 _black_",
+      "inserts": 1,
+      "byLayer": {
+        "A-DOOR": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "DOOR_GEN_SWING_1 PANEL_FLUSH - 700x2400 _black_-2146164-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "DOOR_GEN_SWING_1 PANEL_FLUSH - 700x2400 _black_",
+      "inserts": 1,
+      "byLayer": {
+        "A-DOOR": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "DOOR_GEN_SWING_1 PANEL_FLUSH - 900x2400 _black_-2135364-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "DOOR_GEN_SWING_1 PANEL_FLUSH - 900x2400 _black_",
+      "inserts": 1,
+      "byLayer": {
+        "A-DOOR": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "DOUBLE GLASS SWING DOOR-GENERIC - TYPE 1-2419761-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "DOUBLE GLASS SWING DOOR-GENERIC - TYPE 1",
+      "inserts": 1,
+      "byLayer": {
+        "A-DOOR": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "DOUBLE GLASS SWING DOOR-GENERIC - TYPE 1-2613250-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "DOUBLE GLASS SWING DOOR-GENERIC - TYPE 1",
+      "inserts": 1,
+      "byLayer": {
+        "A-DOOR": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Enscape AssetDefinition - Bush 020 Fern - Enscape AssetDefinition - Bush 020 Fern-2422934-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Bush 020 Fern - Enscape AssetDefinition - Bush 020 Fern",
+      "inserts": 1,
+      "byLayer": {
+        "L-PLNT": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-V34-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Enscape AssetDefinition - Potted Plant 028 Peace Lily - Enscape AssetDefinition - Potted Plant 028 Peace Lily 2-2422935-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Potted Plant 028 Peace Lily - Enscape AssetDefinition - Potted Plant 028 Peace Lily 2",
+      "inserts": 1,
+      "byLayer": {
+        "L-PLNT": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "FP_10-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "FP_10-LEVEL 1 GENERAL ARRANGEMENT",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "FP_15-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "FP_15-LEVEL 1 GENERAL ARRANGEMENT",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "FP_16-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "FP_16-LEVEL 1 GENERAL ARRANGEMENT",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "FP_17-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "FP_17-LEVEL 1 GENERAL ARRANGEMENT",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "FP_8-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "FP_8-LEVEL 1 GENERAL ARRANGEMENT",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "FP_9-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "FP_9-LEVEL 1 GENERAL ARRANGEMENT",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "IA_J15_WORKING TABLE - 1400W 1000D 750H-2278198-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "IA_J15_WORKING TABLE - 1400W 1000D 750H",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "IA_J15_WORKING TABLE - 1400W 1000D 750H-V40-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "IA_J15_WORKING TABLE - 1400W 1000D 750H",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "IA_J15_WORKING TABLE - 1800W 1000D 750H-2337398-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "IA_J15_WORKING TABLE - 1800W 1000D 750H",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "IA_J15_WORKING TABLE - 1800W 1000D 750H-V33-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "IA_J15_WORKING TABLE - 1800W 1000D 750H",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "IA_J15_WORKING TABLE - 1800W 1000D 750H-V35-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "IA_J15_WORKING TABLE - 1800W 1000D 750H",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "IA_J15_WORKING TABLE - 1800W 1000D 750H-V42-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "IA_J15_WORKING TABLE - 1800W 1000D 750H",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "IA_J15_WORKING TABLE - 1800W 1000D 750H-V43-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "IA_J15_WORKING TABLE - 1800W 1000D 750H",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "IF_J04_WALL TV - WALL TV 3800W-2364417-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "IF_J04_WALL TV - WALL TV 3800W",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "M_Concrete-Rectangular-Column - 280x550-2202803-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "M_Concrete-Rectangular-Column - 280x550",
+      "inserts": 1,
+      "byLayer": {
+        "S-COLS": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "M_Concrete-Rectangular-Column - 400x900-2202807-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "M_Concrete-Rectangular-Column - 400x900",
+      "inserts": 1,
+      "byLayer": {
+        "S-COLS": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "M_Concrete-Rectangular-Column - 600x355-2202806-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "M_Concrete-Rectangular-Column - 600x355",
+      "inserts": 1,
+      "byLayer": {
+        "S-COLS": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "M_Concrete-Rectangular-Column - 700x390-2202808-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "M_Concrete-Rectangular-Column - 700x390",
+      "inserts": 1,
+      "byLayer": {
+        "S-COLS": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR-2352777-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR-2362416-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR-V31-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR-V36-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR-2558870-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR-2558871-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR-2558872-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR-2558873-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR-2561383-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR-2561384-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR-V11-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR-V12-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR-V13-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR-V14-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR-V18-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR-V19-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR-V20-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR-V21-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR-V22-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR-V23-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR-V27-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR-V28-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR-V29-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR-V30-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE CUPBOARD DOOR",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE DRAWER-2350932-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE DRAWER",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE DRAWER-2350934-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE DRAWER",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE DRAWER-2628452-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE DRAWER",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PANEL_ADJ_GEN - ADJUSTABLE DRAWER-2628454-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PANEL_ADJ_GEN - ADJUSTABLE DRAWER",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "POTTED PLANT - STOOL LOW_VITRA_VISIONA STOOL-2422933-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "POTTED PLANT - STOOL LOW_VITRA_VISIONA STOOL",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1-2331658-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1",
+      "inserts": 1,
+      "byLayer": {
+        "Q-SPCQ": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1-V24-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1",
+      "inserts": 1,
+      "byLayer": {
+        "Q-SPCQ": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Railing - 50 x 5-2188790-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Railing - 50 x 5",
+      "inserts": 1,
+      "byLayer": {
+        "A-FLOR-HRAL": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 2,
+      "attribTags": []
+    },
+    {
+      "name": "Railing - 50 x 5-V7-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Railing - 50 x 5",
+      "inserts": 1,
+      "byLayer": {
+        "A-FLOR-HRAL": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 2,
+      "attribTags": []
+    },
+    {
+      "name": "Railing - Railing-2265767-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Railing - Railing",
+      "inserts": 1,
+      "byLayer": {
+        "A-FLOR-HRAL": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Railing - Railing-2292665-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Railing - Railing",
+      "inserts": 1,
+      "byLayer": {
+        "A-FLOR-HRAL": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X160-2572730-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X160",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CWMG": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X160-2575507-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X160",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CWMG": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X160-2575551-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X160",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CWMG": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X160-2578882-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X160",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CWMG": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X160-V3-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X160",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CWMG": 1
+      },
+      "mirrored": 1,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X160-V4-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X160",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CWMG": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X160-V5-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X160",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CWMG": 1
+      },
+      "mirrored": 1,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X160-V6-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X160",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CWMG": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X25-V44-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X25",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CWMG": 1
+      },
+      "mirrored": 1,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X50-2185588-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X50",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CWMG": 1
+      },
+      "mirrored": 1,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X50-2185589-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X50",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CWMG": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X50-2369210-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X50",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CWMG": 1
+      },
+      "mirrored": 1,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X50-2369214-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X50",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CWMG": 1
+      },
+      "mirrored": 1,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X50-2369215-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X50",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CWMG": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X50-2369547-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X50",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CWMG": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X50-2570894-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X50",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CWMG": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X50-V1-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X50",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CWMG": 1
+      },
+      "mirrored": 1,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X50-V2-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X50",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CWMG": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "Rectangular Mullion - 100X50-V25-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Rectangular Mullion - 100X50",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CWMG": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "SAVING POINT OUTLET - DUPLEX-2366484-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "SAVING POINT OUTLET - DUPLEX",
+      "inserts": 1,
+      "byLayer": {
+        "E-ELEC-FIXT": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "SINGLE GLASS SWING DOOR-GENERIC - TYPE 1-2369549-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "SINGLE GLASS SWING DOOR-GENERIC - TYPE 1",
+      "inserts": 1,
+      "byLayer": {
+        "A-DOOR": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "SINGLE GLASS SWING DOOR-GENERIC - TYPE 1-2628564-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "SINGLE GLASS SWING DOOR-GENERIC - TYPE 1",
+      "inserts": 1,
+      "byLayer": {
+        "A-DOOR": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "SINGLE SWING DOOR-GENERIC - 1000X2400-2330559-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "SINGLE SWING DOOR-GENERIC - 1000X2400",
+      "inserts": 1,
+      "byLayer": {
+        "A-DOOR": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "SINGLE SWING DOOR-GENERIC - 700X2400-2275644-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "SINGLE SWING DOOR-GENERIC - 700X2400",
+      "inserts": 1,
+      "byLayer": {
+        "A-DOOR": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "SOFA_BENCH_DIOR - TYPE 2-2572508-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "SOFA_BENCH_DIOR - TYPE 2",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "SOFA_BENCH_DIOR - TYPE 2-V37-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "SOFA_BENCH_DIOR - TYPE 2",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "SOFA_BENCH_DIOR - TYPE 2-V38-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "SOFA_BENCH_DIOR - TYPE 2",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "SOFA_BENCH_DIOR - TYPE 2-V39-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "SOFA_BENCH_DIOR - TYPE 2",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "System Panel - GLAZED-2369548-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "System Panel - GLAZED",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CURT": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "System Panel - GLAZED-2570895-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "System Panel - GLAZED",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CURT": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "System Panel - GLAZED-2572731-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "System Panel - GLAZED",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CURT": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "System Panel - GLAZED-2575508-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "System Panel - GLAZED",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CURT": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "System Panel - GLAZED-2575552-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "System Panel - GLAZED",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CURT": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "System Panel - GLAZED-2578883-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "System Panel - GLAZED",
+      "inserts": 1,
+      "byLayer": {
+        "A-GLAZ-CURT": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 1000W-2566611-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 1000W",
+      "inserts": 1,
+      "byLayer": {
+        "I-FURN": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "TALL CABINET - TALL CABINET 2800W-2337389-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "TALL CABINET - TALL CABINET 2800W",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "TALL CABINET 4200W - TALL CABINET 4200W-2331846-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "TALL CABINET 4200W - TALL CABINET 4200W",
+      "inserts": 1,
+      "byLayer": {
+        "Q-CASE": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "TV OUTLET - TYPE 1-2366483-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "TV OUTLET - TYPE 1",
+      "inserts": 1,
+      "byLayer": {
+        "E-ELEC-FIXT": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    },
+    {
+      "name": "Wall-hung vitreous china basin-Meridian-327242xx0 - 327242000 White-2274270-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Wall-hung vitreous china basin-Meridian-327242xx0 - 327242000 White",
+      "inserts": 1,
+      "byLayer": {
+        "P-SANR-FIXT": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "_GEN_LIFT_DOOR - DOOR1100x2400-2145865-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "_GEN_LIFT_DOOR - DOOR1100x2400",
+      "inserts": 1,
+      "byLayer": {
+        "A-DOOR": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "สุขภัณฑ์แบบนั่งราบ - C1403 - C1403-2281794-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "สุขภัณฑ์แบบนั่งราบ - C1403 - C1403",
+      "inserts": 1,
+      "byLayer": {
+        "P-SANR-FIXT": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 1,
+      "attribTags": []
+    },
+    {
+      "name": "อ่างล้างหน้าฝั่งครึ่งเคาน์เตอร์ - C0240 - อ่างล้างหน้าฝั่งครึ่งเคาน์เตอร์ - C0240-2329847-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "อ่างล้างหน้าฝั่งครึ่งเคาน์เตอร์ - C0240 - อ่างล้างหน้าฝั่งครึ่งเคาน์เตอร์ - C0240",
+      "inserts": 1,
+      "byLayer": {
+        "P-SANR-FIXT": 1
+      },
+      "mirrored": 0,
+      "maxDepth": 0,
+      "attribTags": []
+    }
+  ],
+  "texts": [
+    {
+      "layer": "A-AREA-IDEN",
+      "x": 1.9,
+      "y": 5.669,
+      "height": 0.15,
+      "text": "MEEETING 4 PAX",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "A-AREA-IDEN",
+      "x": -0.886,
+      "y": -7.771,
+      "height": 0.15,
+      "text": "LIFT HALL",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "G-ANNO-TEXT",
+      "x": -0.499,
+      "y": -1.462,
+      "height": 0.15,
+      "text": "MO 4 PAX",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "A-AREA-IDEN",
+      "x": -1.835,
+      "y": 3.002,
+      "height": 0.15,
+      "text": "MANAGER",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "A-AREA-IDEN",
+      "x": -1.834,
+      "y": 2.839,
+      "height": 0.12,
+      "text": "11.4 m²",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "A-AREA-IDEN",
+      "x": -4.523,
+      "y": -7.895,
+      "height": 0.15,
+      "text": "TOILET",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "A-AREA-IDEN",
+      "x": -4.522,
+      "y": -8.058,
+      "height": 0.12,
+      "text": "3.2 m²",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "A-AREA-IDEN",
+      "x": -4.401,
+      "y": 6.112,
+      "height": 0.12,
+      "text": "3.9 m²",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "A-AREA-IDEN",
+      "x": -0.885,
+      "y": -7.934,
+      "height": 0.12,
+      "text": "6.1 m²",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "A-AREA-IDEN",
+      "x": 1.787,
+      "y": 8.264,
+      "height": 0.15,
+      "text": "TOILET",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "A-AREA-IDEN",
+      "x": 1.788,
+      "y": 8.101,
+      "height": 0.12,
+      "text": "2.6 m²",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "A-AREA-IDEN",
+      "x": 1.901,
+      "y": 5.507,
+      "height": 0.12,
+      "text": "8.2 m²",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "A-AREA-IDEN",
+      "x": -4.402,
+      "y": 6.275,
+      "height": 0.15,
+      "text": "F/C",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "G-ANNO-TEXT",
+      "x": 4.582,
+      "y": -5.016,
+      "height": 0.15,
+      "text": "ATM",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "G-ANNO-TEXT",
+      "x": 4.582,
+      "y": -4.172,
+      "height": 0.15,
+      "text": "ATM",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "G-ANNO-TEXT",
+      "x": 6.608,
+      "y": 8.017,
+      "height": 0.15,
+      "text": "ATM",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "G-ANNO-TEXT",
+      "x": 2.443,
+      "y": 1.317,
+      "height": 0.15,
+      "text": "BA",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "G-ANNO-TEXT",
+      "x": 3.858,
+      "y": 1.317,
+      "height": 0.15,
+      "text": "BE",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": null
+    },
+    {
+      "layer": "S-GRID-IDEN",
+      "x": -9.145,
+      "y": -8.919,
+      "height": 0.25,
+      "text": "1",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT"
+    },
+    {
+      "layer": "S-GRID-IDEN",
+      "x": -9.145,
+      "y": -6.409,
+      "height": 0.25,
+      "text": "2",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT"
+    },
+    {
+      "layer": "S-GRID-IDEN",
+      "x": -9.145,
+      "y": -3.299,
+      "height": 0.25,
+      "text": "3",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT"
+    },
+    {
+      "layer": "S-GRID-IDEN",
+      "x": -9.145,
+      "y": 0.111,
+      "height": 0.25,
+      "text": "4",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT"
+    },
+    {
+      "layer": "S-GRID-IDEN",
+      "x": -9.145,
+      "y": 3.411,
+      "height": 0.25,
+      "text": "5",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT"
+    },
+    {
+      "layer": "S-GRID-IDEN",
+      "x": -9.145,
+      "y": 6.976,
+      "height": 0.25,
+      "text": "6",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT"
+    },
+    {
+      "layer": "S-GRID-IDEN",
+      "x": -9.145,
+      "y": 11.716,
+      "height": 0.25,
+      "text": "7",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT"
+    },
+    {
+      "layer": "S-GRID-IDEN",
+      "x": -5.189,
+      "y": 14.831,
+      "height": 0.25,
+      "text": "A",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT"
+    },
+    {
+      "layer": "S-GRID-IDEN",
+      "x": 0.749,
+      "y": 14.831,
+      "height": 0.25,
+      "text": "B",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT"
+    },
+    {
+      "layer": "S-GRID-IDEN",
+      "x": 6.626,
+      "y": 14.831,
+      "height": 0.25,
+      "text": "C",
+      "kind": "MTEXT",
+      "tag": null,
+      "block": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT"
+    }
+  ],
+  "levelTags": [],
+  "gridLabels": [
+    {
+      "text": "1",
+      "x": -9.145,
+      "y": -8.919,
+      "layer": "S-GRID-IDEN",
+      "block": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT",
+      "direction": [
+        1.0,
+        0.0
+      ],
+      "line": [
+        [
+          -8.228,
+          -9.03
+        ],
+        [
+          7.999,
+          -9.03
+        ]
+      ]
+    },
+    {
+      "text": "2",
+      "x": -9.145,
+      "y": -6.409,
+      "layer": "S-GRID-IDEN",
+      "block": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT",
+      "direction": [
+        1.0,
+        0.0
+      ],
+      "line": [
+        [
+          -8.228,
+          -6.52
+        ],
+        [
+          7.999,
+          -6.52
+        ]
+      ]
+    },
+    {
+      "text": "3",
+      "x": -9.145,
+      "y": -3.299,
+      "layer": "S-GRID-IDEN",
+      "block": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT",
+      "direction": [
+        1.0,
+        0.0
+      ],
+      "line": [
+        [
+          -8.228,
+          -3.41
+        ],
+        [
+          7.999,
+          -3.41
+        ]
+      ]
+    },
+    {
+      "text": "4",
+      "x": -9.145,
+      "y": 0.111,
+      "layer": "S-GRID-IDEN",
+      "block": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT",
+      "direction": [
+        1.0,
+        0.0
+      ],
+      "line": [
+        [
+          -8.228,
+          -0.0
+        ],
+        [
+          7.999,
+          -0.0
+        ]
+      ]
+    },
+    {
+      "text": "5",
+      "x": -9.145,
+      "y": 3.411,
+      "layer": "S-GRID-IDEN",
+      "block": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT",
+      "direction": [
+        1.0,
+        0.0
+      ],
+      "line": [
+        [
+          -8.228,
+          3.3
+        ],
+        [
+          7.999,
+          3.3
+        ]
+      ]
+    },
+    {
+      "text": "6",
+      "x": -9.145,
+      "y": 6.976,
+      "layer": "S-GRID-IDEN",
+      "block": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT",
+      "direction": [
+        1.0,
+        0.0
+      ],
+      "line": [
+        [
+          -8.228,
+          6.865
+        ],
+        [
+          7.999,
+          6.865
+        ]
+      ]
+    },
+    {
+      "text": "7",
+      "x": -9.145,
+      "y": 11.716,
+      "layer": "S-GRID-IDEN",
+      "block": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT",
+      "direction": [
+        1.0,
+        0.0
+      ],
+      "line": [
+        [
+          -8.228,
+          11.605
+        ],
+        [
+          7.999,
+          11.605
+        ]
+      ]
+    },
+    {
+      "text": "A",
+      "x": -5.189,
+      "y": 14.831,
+      "layer": "S-GRID-IDEN",
+      "block": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT",
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          -5.08,
+          13.897
+        ],
+        [
+          -5.08,
+          -10.312
+        ]
+      ]
+    },
+    {
+      "text": "B",
+      "x": 0.749,
+      "y": 14.831,
+      "layer": "S-GRID-IDEN",
+      "block": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT",
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          0.855,
+          13.897
+        ],
+        [
+          0.855,
+          -10.312
+        ]
+      ]
+    },
+    {
+      "text": "C",
+      "x": 6.626,
+      "y": 14.831,
+      "layer": "S-GRID-IDEN",
+      "block": "26-0216-AR-Bangkok_Bank_ Sampeng Branch-R25_rvt-1-LEVEL 1 GENERAL ARRANGEMENT",
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "line": [
+        [
+          6.735,
+          13.897
+        ],
+        [
+          6.735,
+          -10.312
+        ]
+      ]
+    }
+  ],
+  "areas": [
+    {
+      "id": "a1",
+      "bbox": [
+        -10.0,
+        -12.0,
+        9.0,
+        16.0
+      ],
+      "items": 5831,
+      "wallItems": 5194,
+      "looks": "plan"
+    }
+  ]
+}

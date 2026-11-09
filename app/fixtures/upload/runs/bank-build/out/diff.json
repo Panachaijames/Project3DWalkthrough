@@ -1,0 +1,23 @@
+{
+  "format": "build-diff/1",
+  "against": [
+    {
+      "kind": "version",
+      "ref": "v2",
+      "diff": {
+        "counts": {
+          "L1": {},
+          "L2": {}
+        },
+        "partsAdded": [],
+        "partsRemoved": [],
+        "openingsAdded": [],
+        "openingsRemoved": [],
+        "openingsChanged": [],
+        "furnitureByKind": {},
+        "roomsAdded": [],
+        "roomsRemoved": []
+      }
+    }
+  ]
+}

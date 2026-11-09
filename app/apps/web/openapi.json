@@ -57,6 +57,1025 @@
         "title": "AssetInfo",
         "type": "object"
       },
+      "BuildDefaults": {
+        "additionalProperties": false,
+        "properties": {
+          "doorHead": {
+            "title": "Doorhead",
+            "type": "number"
+          },
+          "railingHeight": {
+            "title": "Railingheight",
+            "type": "number"
+          },
+          "singleLineHeight": {
+            "title": "Singlelineheight",
+            "type": "number"
+          },
+          "slabThickness": {
+            "title": "Slabthickness",
+            "type": "number"
+          },
+          "windowHead": {
+            "title": "Windowhead",
+            "type": "number"
+          },
+          "windowSill": {
+            "title": "Windowsill",
+            "type": "number"
+          }
+        },
+        "required": [
+          "doorHead",
+          "windowSill",
+          "windowHead",
+          "railingHeight",
+          "slabThickness",
+          "singleLineHeight"
+        ],
+        "title": "BuildDefaults",
+        "type": "object"
+      },
+      "BuildDetail": {
+        "properties": {
+          "createdAt": {
+            "title": "Createdat",
+            "type": "string"
+          },
+          "id": {
+            "description": "^[0-9]{8}T[0-9]{6}-[0-9a-f]{6}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "layersReviewedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "BuildRecord.layersReviewedAt.",
+            "title": "Layersreviewedat"
+          },
+          "projectId": {
+            "title": "Projectid",
+            "type": "string"
+          },
+          "result": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BuildResultInfo"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The last finished build run, or null."
+          },
+          "run": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunInfo"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The run going now, else the last one."
+          },
+          "runStatus": {
+            "anyOf": [
+              {
+                "enum": [
+                  "queued",
+                  "running",
+                  "done",
+                  "failed",
+                  "cancelled",
+                  "interrupted"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runstatus"
+          },
+          "savedVersion": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Savedversion"
+          },
+          "settings": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BuildSettings"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "null only when asked with withSettings=false (the 1 s poll)."
+          },
+          "settingsRevision": {
+            "title": "Settingsrevision",
+            "type": "integer"
+          },
+          "sourceNames": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Sourcenames",
+            "type": "array"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/BuildSourceInfo"
+            },
+            "title": "Sources",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "open",
+              "saved"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "suggestions": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/LayerSuggestion"
+            },
+            "description": "Empty until the prepare run is done.",
+            "title": "Suggestions",
+            "type": "object"
+          },
+          "updatedAt": {
+            "title": "Updatedat",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          },
+          "urls": {
+            "$ref": "#/components/schemas/BuildUrls"
+          }
+        },
+        "required": [
+          "id",
+          "projectId",
+          "createdAt",
+          "updatedAt",
+          "status",
+          "savedVersion",
+          "sourceNames",
+          "runStatus",
+          "url",
+          "sources",
+          "settings",
+          "settingsRevision",
+          "layersReviewedAt",
+          "suggestions",
+          "run",
+          "result",
+          "urls"
+        ],
+        "title": "BuildDetail",
+        "type": "object"
+      },
+      "BuildFlagCounts": {
+        "properties": {
+          "byKind": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Bykind",
+            "type": "object"
+          },
+          "check": {
+            "title": "Check",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "total",
+          "check",
+          "byKind"
+        ],
+        "title": "BuildFlagCounts",
+        "type": "object"
+      },
+      "BuildFloorResult": {
+        "properties": {
+          "furniture": {
+            "title": "Furniture",
+            "type": "integer"
+          },
+          "key": {
+            "description": "Floor key, ^[A-Za-z0-9_]{1,32}$.",
+            "title": "Key",
+            "type": "string"
+          },
+          "level": {
+            "title": "Level",
+            "type": "number"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "openings": {
+            "$ref": "#/components/schemas/OpeningCounts"
+          },
+          "parts": {
+            "title": "Parts",
+            "type": "integer"
+          },
+          "rooms": {
+            "title": "Rooms",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "key",
+          "name",
+          "level",
+          "parts",
+          "openings",
+          "furniture",
+          "rooms"
+        ],
+        "title": "BuildFloorResult",
+        "type": "object"
+      },
+      "BuildFromBuild": {
+        "additionalProperties": false,
+        "properties": {
+          "build": {
+            "title": "Build",
+            "type": "string"
+          },
+          "kind": {
+            "const": "build",
+            "title": "Kind",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "build"
+        ],
+        "title": "BuildFromBuild",
+        "type": "object"
+      },
+      "BuildFromLatest": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "const": "latest",
+            "title": "Kind",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind"
+        ],
+        "title": "BuildFromLatest",
+        "type": "object"
+      },
+      "BuildFromNone": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "const": "none",
+            "title": "Kind",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind"
+        ],
+        "title": "BuildFromNone",
+        "type": "object"
+      },
+      "BuildFromVersion": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "const": "version",
+            "title": "Kind",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "kind",
+          "version"
+        ],
+        "title": "BuildFromVersion",
+        "type": "object"
+      },
+      "BuildList": {
+        "properties": {
+          "builds": {
+            "description": "Newest first.",
+            "items": {
+              "$ref": "#/components/schemas/BuildSummary"
+            },
+            "title": "Builds",
+            "type": "array"
+          }
+        },
+        "required": [
+          "builds"
+        ],
+        "title": "BuildList",
+        "type": "object"
+      },
+      "BuildProject": {
+        "additionalProperties": false,
+        "description": "BuildSettings.project: ProjectNaming & { name, shortName, projectNo, exportedFrom }.",
+        "properties": {
+          "exportedFrom": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "e.g. \"Revit\"; null when unknown. Only ever quoted in texts.",
+            "title": "Exportedfrom"
+          },
+          "maxFileName": {
+            "description": "^[A-Za-z0-9_.-]{1,60}\\.ms$ (the stored Max script; the download adds _v<n>).",
+            "title": "Maxfilename",
+            "type": "string"
+          },
+          "maxPrefix": {
+            "description": "^[A-Z]{2,4}$ (BuiltModel maxPrefix).",
+            "title": "Maxprefix",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "photoName": {
+            "description": "^[A-Za-z0-9_.-]{1,64}$ (BuiltModel photoName).",
+            "title": "Photoname",
+            "type": "string"
+          },
+          "projectNo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Projectno"
+          },
+          "shortName": {
+            "title": "Shortname",
+            "type": "string"
+          }
+        },
+        "required": [
+          "photoName",
+          "maxPrefix",
+          "maxFileName",
+          "name",
+          "shortName",
+          "projectNo",
+          "exportedFrom"
+        ],
+        "title": "BuildProject",
+        "type": "object"
+      },
+      "BuildResultInfo": {
+        "properties": {
+          "counts": {
+            "$ref": "#/components/schemas/VersionCounts"
+          },
+          "finishedAt": {
+            "title": "Finishedat",
+            "type": "string"
+          },
+          "flags": {
+            "$ref": "#/components/schemas/BuildFlagCounts"
+          },
+          "floors": {
+            "items": {
+              "$ref": "#/components/schemas/BuildFloorResult"
+            },
+            "title": "Floors",
+            "type": "array"
+          },
+          "presentation": {
+            "additionalProperties": true,
+            "title": "Presentation",
+            "type": "object"
+          },
+          "runId": {
+            "title": "Runid",
+            "type": "string"
+          },
+          "seconds": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "title": "Seconds",
+            "type": "object"
+          },
+          "settingsRevision": {
+            "title": "Settingsrevision",
+            "type": "integer"
+          },
+          "stale": {
+            "description": "The settings changed since this run: Save is refused until it runs again.",
+            "title": "Stale",
+            "type": "boolean"
+          },
+          "stamp": {
+            "title": "Stamp",
+            "type": "string"
+          },
+          "urls": {
+            "$ref": "#/components/schemas/BuildResultUrls"
+          }
+        },
+        "required": [
+          "runId",
+          "finishedAt",
+          "stale",
+          "settingsRevision",
+          "counts",
+          "floors",
+          "flags",
+          "stamp",
+          "presentation",
+          "urls",
+          "seconds"
+        ],
+        "title": "BuildResultInfo",
+        "type": "object"
+      },
+      "BuildResultUrls": {
+        "properties": {
+          "diff": {
+            "title": "Diff",
+            "type": "string"
+          },
+          "maxScript": {
+            "title": "Maxscript",
+            "type": "string"
+          },
+          "model": {
+            "title": "Model",
+            "type": "string"
+          },
+          "overlay": {
+            "title": "Overlay",
+            "type": "string"
+          },
+          "stages": {
+            "title": "Stages",
+            "type": "string"
+          },
+          "topview": {
+            "title": "Topview",
+            "type": "string"
+          }
+        },
+        "required": [
+          "model",
+          "stages",
+          "overlay",
+          "diff",
+          "topview",
+          "maxScript"
+        ],
+        "title": "BuildResultUrls",
+        "type": "object"
+      },
+      "BuildSettings": {
+        "additionalProperties": false,
+        "description": "The build's whole recipe (builds/<id>/settings.json; versions/<n>/project-data.json).",
+        "properties": {
+          "defaults": {
+            "$ref": "#/components/schemas/BuildDefaults"
+          },
+          "fixes": {
+            "$ref": "#/components/schemas/Fixes"
+          },
+          "floors": {
+            "items": {
+              "$ref": "#/components/schemas/FloorSetup"
+            },
+            "title": "Floors",
+            "type": "array"
+          },
+          "format": {
+            "const": "build-settings/1",
+            "title": "Format",
+            "type": "string"
+          },
+          "furniture": {
+            "$ref": "#/components/schemas/FurnitureSettings"
+          },
+          "layers": {
+            "additionalProperties": {
+              "enum": [
+                "wall",
+                "column",
+                "glass",
+                "window",
+                "door",
+                "screen",
+                "stair",
+                "stair-above",
+                "railing",
+                "furniture",
+                "room-name",
+                "room-outline",
+                "level",
+                "grid",
+                "light",
+                "other",
+                "ignore"
+              ],
+              "type": "string"
+            },
+            "description": "Exact layer name -> role; a layer not listed is 'other'.",
+            "title": "Layers",
+            "type": "object"
+          },
+          "office": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Office id (^[a-z0-9][a-z0-9-]{1,62}$), or null.",
+            "title": "Office"
+          },
+          "options": {
+            "$ref": "#/components/schemas/BuilderOptions"
+          },
+          "project": {
+            "$ref": "#/components/schemas/BuildProject"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/SourceSetting"
+            },
+            "title": "Sources",
+            "type": "array"
+          },
+          "vocabulary": {
+            "$ref": "#/components/schemas/Vocabulary"
+          }
+        },
+        "required": [
+          "format",
+          "office",
+          "project",
+          "sources",
+          "layers",
+          "floors",
+          "defaults",
+          "furniture",
+          "vocabulary",
+          "options",
+          "fixes"
+        ],
+        "title": "BuildSettings",
+        "type": "object"
+      },
+      "BuildSettingsUpdate": {
+        "properties": {
+          "layersReviewed": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "true from the Layers step's saves: sets BuildRecord.layersReviewedAt once (U-8.3).",
+            "title": "Layersreviewed"
+          },
+          "settings": {
+            "$ref": "#/components/schemas/BuildSettings"
+          }
+        },
+        "required": [
+          "settings"
+        ],
+        "title": "BuildSettingsUpdate",
+        "type": "object"
+      },
+      "BuildSourceConversion": {
+        "properties": {
+          "lostInModelSpace": {
+            "title": "Lostinmodelspace",
+            "type": "integer"
+          },
+          "notes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Notes",
+            "type": "array"
+          },
+          "verdict": {
+            "enum": [
+              "ok",
+              "minor",
+              "loss",
+              "failed",
+              "not-converted"
+            ],
+            "title": "Verdict",
+            "type": "string"
+          }
+        },
+        "required": [
+          "verdict",
+          "notes",
+          "lostInModelSpace"
+        ],
+        "title": "BuildSourceConversion",
+        "type": "object"
+      },
+      "BuildSourceInfo": {
+        "properties": {
+          "bytes": {
+            "title": "Bytes",
+            "type": "integer"
+          },
+          "conversion": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BuildSourceConversion"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "null until the prepare run has read it."
+          },
+          "kind": {
+            "enum": [
+              "dwg",
+              "dxf"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "sha1": {
+            "description": "40 hex, lower case.",
+            "title": "Sha1",
+            "type": "string"
+          },
+          "units": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BuildSourceUnits"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "urls": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BuildSourceUrls"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "sha1",
+          "name",
+          "bytes",
+          "kind",
+          "conversion",
+          "units",
+          "urls"
+        ],
+        "title": "BuildSourceInfo",
+        "type": "object"
+      },
+      "BuildSourceUnits": {
+        "properties": {
+          "declared": {
+            "anyOf": [
+              {
+                "enum": [
+                  "mm",
+                  "cm",
+                  "m",
+                  "in",
+                  "ft"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Declared"
+          },
+          "note": {
+            "title": "Note",
+            "type": "string"
+          },
+          "used": {
+            "enum": [
+              "mm",
+              "cm",
+              "m",
+              "in",
+              "ft"
+            ],
+            "title": "Used",
+            "type": "string"
+          },
+          "verdict": {
+            "title": "Verdict",
+            "type": "string"
+          }
+        },
+        "required": [
+          "declared",
+          "used",
+          "verdict",
+          "note"
+        ],
+        "title": "BuildSourceUnits",
+        "type": "object"
+      },
+      "BuildSourceUrls": {
+        "properties": {
+          "conversion": {
+            "title": "Conversion",
+            "type": "string"
+          },
+          "drawing": {
+            "title": "Drawing",
+            "type": "string"
+          },
+          "plan": {
+            "title": "Plan",
+            "type": "string"
+          }
+        },
+        "required": [
+          "conversion",
+          "drawing",
+          "plan"
+        ],
+        "title": "BuildSourceUrls",
+        "type": "object"
+      },
+      "BuildSummary": {
+        "properties": {
+          "createdAt": {
+            "title": "Createdat",
+            "type": "string"
+          },
+          "id": {
+            "description": "^[0-9]{8}T[0-9]{6}-[0-9a-f]{6}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "projectId": {
+            "title": "Projectid",
+            "type": "string"
+          },
+          "runStatus": {
+            "anyOf": [
+              {
+                "enum": [
+                  "queued",
+                  "running",
+                  "done",
+                  "failed",
+                  "cancelled",
+                  "interrupted"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runstatus"
+          },
+          "savedVersion": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Savedversion"
+          },
+          "sourceNames": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Sourcenames",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "open",
+              "saved"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "updatedAt": {
+            "title": "Updatedat",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "projectId",
+          "createdAt",
+          "updatedAt",
+          "status",
+          "savedVersion",
+          "sourceNames",
+          "runStatus",
+          "url"
+        ],
+        "title": "BuildSummary",
+        "type": "object"
+      },
+      "BuildUrls": {
+        "properties": {
+          "cancel": {
+            "title": "Cancel",
+            "type": "string"
+          },
+          "run": {
+            "title": "Run",
+            "type": "string"
+          },
+          "save": {
+            "title": "Save",
+            "type": "string"
+          },
+          "settings": {
+            "title": "Settings",
+            "type": "string"
+          }
+        },
+        "required": [
+          "settings",
+          "run",
+          "cancel",
+          "save"
+        ],
+        "title": "BuildUrls",
+        "type": "object"
+      },
+      "BuilderOptions": {
+        "additionalProperties": false,
+        "properties": {
+          "liftShafts": {
+            "title": "Liftshafts",
+            "type": "boolean"
+          },
+          "objectClosures": {
+            "title": "Objectclosures",
+            "type": "boolean"
+          },
+          "offset": {
+            "anyOf": [
+              {
+                "const": "auto",
+                "type": "string"
+              },
+              {
+                "maxItems": 2,
+                "minItems": 2,
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "type": "array"
+              }
+            ],
+            "description": "auto: the bank rule (centre of all slabs, 3 decimals), unless project-settings.json pins one (U-9.6).",
+            "title": "Offset"
+          },
+          "outlineWalls": {
+            "enum": [
+              "off",
+              "suggest"
+            ],
+            "title": "Outlinewalls",
+            "type": "string"
+          },
+          "parapets": {
+            "enum": [
+              "auto",
+              "off"
+            ],
+            "title": "Parapets",
+            "type": "string"
+          },
+          "plinth": {
+            "enum": [
+              "auto",
+              "off"
+            ],
+            "title": "Plinth",
+            "type": "string"
+          },
+          "revitWallTypes": {
+            "enum": [
+              "auto",
+              "off"
+            ],
+            "title": "Revitwalltypes",
+            "type": "string"
+          }
+        },
+        "required": [
+          "revitWallTypes",
+          "parapets",
+          "objectClosures",
+          "liftShafts",
+          "plinth",
+          "outlineWalls",
+          "offset"
+        ],
+        "title": "BuilderOptions",
+        "type": "object"
+      },
+      "CancelBuildRequest": {
+        "additionalProperties": false,
+        "description": "An empty JSON object (U-5.2).",
+        "properties": {},
+        "title": "CancelBuildRequest",
+        "type": "object"
+      },
+      "CompleteUploadRequest": {
+        "additionalProperties": false,
+        "description": "An empty JSON object (U-5.2).",
+        "properties": {},
+        "title": "CompleteUploadRequest",
+        "type": "object"
+      },
       "DownloadInfo": {
         "properties": {
           "fileName": {
@@ -123,6 +1142,217 @@
         "title": "ErrorResponse",
         "type": "object"
       },
+      "Fixes": {
+        "additionalProperties": false,
+        "properties": {
+          "openings": {
+            "items": {
+              "$ref": "#/components/schemas/OpeningFix"
+            },
+            "title": "Openings",
+            "type": "array"
+          },
+          "outlineEdges": {
+            "items": {
+              "$ref": "#/components/schemas/OutlineEdgeFix"
+            },
+            "title": "Outlineedges",
+            "type": "array"
+          },
+          "setAside": {
+            "items": {
+              "$ref": "#/components/schemas/SetAside"
+            },
+            "title": "Setaside",
+            "type": "array"
+          }
+        },
+        "required": [
+          "setAside",
+          "openings",
+          "outlineEdges"
+        ],
+        "title": "Fixes",
+        "type": "object"
+      },
+      "FloorAlignAuto": {
+        "additionalProperties": false,
+        "properties": {
+          "method": {
+            "description": "auto: grid when at least two grid lines are shared with floor 0, else origin (U-9.4).",
+            "enum": [
+              "auto",
+              "grid",
+              "origin"
+            ],
+            "title": "Method",
+            "type": "string"
+          }
+        },
+        "required": [
+          "method"
+        ],
+        "title": "FloorAlignAuto",
+        "type": "object"
+      },
+      "FloorAlignPoints": {
+        "additionalProperties": false,
+        "properties": {
+          "method": {
+            "const": "points",
+            "title": "Method",
+            "type": "string"
+          },
+          "pairs": {
+            "description": "pairs[i] = [a point on floor 0's sheet, the same point on this floor's sheet] (sheet m).",
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "maxItems": 2,
+                "minItems": 2,
+                "prefixItems": [
+                  {
+                    "maxItems": 2,
+                    "minItems": 2,
+                    "prefixItems": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "number"
+                      }
+                    ],
+                    "type": "array"
+                  },
+                  {
+                    "maxItems": 2,
+                    "minItems": 2,
+                    "prefixItems": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "number"
+                      }
+                    ],
+                    "type": "array"
+                  }
+                ],
+                "type": "array"
+              },
+              {
+                "maxItems": 2,
+                "minItems": 2,
+                "prefixItems": [
+                  {
+                    "maxItems": 2,
+                    "minItems": 2,
+                    "prefixItems": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "number"
+                      }
+                    ],
+                    "type": "array"
+                  },
+                  {
+                    "maxItems": 2,
+                    "minItems": 2,
+                    "prefixItems": [
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "type": "number"
+                      }
+                    ],
+                    "type": "array"
+                  }
+                ],
+                "type": "array"
+              }
+            ],
+            "title": "Pairs",
+            "type": "array"
+          }
+        },
+        "required": [
+          "method",
+          "pairs"
+        ],
+        "title": "FloorAlignPoints",
+        "type": "object"
+      },
+      "FloorAreaBox": {
+        "additionalProperties": false,
+        "properties": {
+          "bbox": {
+            "description": "Sheet metres.",
+            "maxItems": 4,
+            "minItems": 4,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "Bbox",
+            "type": "array"
+          },
+          "kind": {
+            "const": "box",
+            "title": "Kind",
+            "type": "string"
+          },
+          "match": {
+            "description": "'all': every point of an item inside bbox +- pad; 'any': one point is enough (U-9.1).",
+            "enum": [
+              "all",
+              "any"
+            ],
+            "title": "Match",
+            "type": "string"
+          },
+          "pad": {
+            "title": "Pad",
+            "type": "number"
+          }
+        },
+        "required": [
+          "kind",
+          "bbox",
+          "pad",
+          "match"
+        ],
+        "title": "FloorAreaBox",
+        "type": "object"
+      },
+      "FloorAreaWholeFile": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "const": "wholeFile",
+            "title": "Kind",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind"
+        ],
+        "title": "FloorAreaWholeFile",
+        "type": "object"
+      },
       "FloorInfo": {
         "properties": {
           "key": {
@@ -146,6 +1376,219 @@
           "level"
         ],
         "title": "FloorInfo",
+        "type": "object"
+      },
+      "FloorSetup": {
+        "additionalProperties": false,
+        "properties": {
+          "align": {
+            "description": "Ignored on floors[0] (the reference).",
+            "discriminator": {
+              "mapping": {
+                "auto": "#/components/schemas/FloorAlignAuto",
+                "grid": "#/components/schemas/FloorAlignAuto",
+                "origin": "#/components/schemas/FloorAlignAuto",
+                "points": "#/components/schemas/FloorAlignPoints"
+              },
+              "propertyName": "method"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/FloorAlignAuto"
+              },
+              {
+                "$ref": "#/components/schemas/FloorAlignPoints"
+              }
+            ],
+            "title": "Align"
+          },
+          "area": {
+            "discriminator": {
+              "mapping": {
+                "box": "#/components/schemas/FloorAreaBox",
+                "wholeFile": "#/components/schemas/FloorAreaWholeFile"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/FloorAreaWholeFile"
+              },
+              {
+                "$ref": "#/components/schemas/FloorAreaBox"
+              }
+            ],
+            "title": "Area"
+          },
+          "doorHead": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "null: the project defaults. Order per door: its own name, then this, then the drawing's most common named height, then defaults.doorHead.",
+            "title": "Doorhead"
+          },
+          "key": {
+            "description": "Floor key, ^[A-Za-z0-9_]{1,32}$.",
+            "title": "Key",
+            "type": "string"
+          },
+          "level": {
+            "description": "m above the datum; floors are listed lowest first, levels strictly increasing.",
+            "title": "Level",
+            "type": "number"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "slabThickness": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "null: defaults.slabThickness (a plinth floor ignores it).",
+            "title": "Slabthickness"
+          },
+          "source": {
+            "description": "sha1 of one of settings.sources.",
+            "title": "Source",
+            "type": "string"
+          },
+          "wallHeight": {
+            "description": "m, > 0.",
+            "title": "Wallheight",
+            "type": "number"
+          },
+          "windowHead": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Windowhead"
+          },
+          "windowSill": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Windowsill"
+          }
+        },
+        "required": [
+          "key",
+          "name",
+          "source",
+          "area",
+          "level",
+          "wallHeight",
+          "slabThickness",
+          "doorHead",
+          "windowSill",
+          "windowHead",
+          "align"
+        ],
+        "title": "FloorSetup",
+        "type": "object"
+      },
+      "FurnitureSettings": {
+        "additionalProperties": false,
+        "properties": {
+          "bases": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "title": "Bases",
+            "type": "object"
+          },
+          "heights": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "description": "kind -> mm, only kinds this project wants different from furniture_kit.py's office defaults.",
+            "title": "Heights",
+            "type": "object"
+          },
+          "looseLayers": {
+            "description": "Layers whose loose lines become boxes (suite); empty: the furniture layers themselves (bank rule).",
+            "items": {
+              "type": "string"
+            },
+            "title": "Looselayers",
+            "type": "array"
+          },
+          "minDepth": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "m or null (house 0.25).",
+            "title": "Mindepth"
+          },
+          "minSize": {
+            "description": "m: a piece whose long side is shorter is left out (bank 0.08).",
+            "title": "Minsize",
+            "type": "number"
+          },
+          "pieceLayer": {
+            "description": "'insert' (default, the bank) or 'drawn' (the suite), U-10.5.",
+            "enum": [
+              "insert",
+              "drawn"
+            ],
+            "title": "Piecelayer",
+            "type": "string"
+          },
+          "skip": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Skip",
+            "type": "array"
+          },
+          "words": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "description": "kind -> extra words (block / family names) that win over the kit's vocabulary.",
+            "title": "Words",
+            "type": "object"
+          }
+        },
+        "required": [
+          "heights",
+          "bases",
+          "words",
+          "skip",
+          "minSize",
+          "minDepth",
+          "looseLayers",
+          "pieceLayer"
+        ],
+        "title": "FurnitureSettings",
         "type": "object"
       },
       "HTTPValidationError": {
@@ -237,6 +1680,400 @@
           "heights"
         ],
         "title": "HeightsUpdate",
+        "type": "object"
+      },
+      "LayerSuggestion": {
+        "additionalProperties": false,
+        "properties": {
+          "evidence": {
+            "description": "Plain sentences (they quote layer and block names: untrusted).",
+            "items": {
+              "type": "string"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "from": {
+            "enum": [
+              "office",
+              "office-similar",
+              "name",
+              "contents",
+              "default"
+            ],
+            "title": "From",
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "wall",
+              "column",
+              "glass",
+              "window",
+              "door",
+              "screen",
+              "stair",
+              "stair-above",
+              "railing",
+              "furniture",
+              "room-name",
+              "room-outline",
+              "level",
+              "grid",
+              "light",
+              "other",
+              "ignore"
+            ],
+            "title": "Role",
+            "type": "string"
+          }
+        },
+        "required": [
+          "role",
+          "from",
+          "evidence"
+        ],
+        "title": "LayerSuggestion",
+        "type": "object"
+      },
+      "NewBuildRequest": {
+        "properties": {
+          "from": {
+            "anyOf": [
+              {
+                "discriminator": {
+                  "mapping": {
+                    "build": "#/components/schemas/BuildFromBuild",
+                    "latest": "#/components/schemas/BuildFromLatest",
+                    "none": "#/components/schemas/BuildFromNone",
+                    "version": "#/components/schemas/BuildFromVersion"
+                  },
+                  "propertyName": "kind"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/BuildFromNone"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuildFromLatest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuildFromVersion"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BuildFromBuild"
+                  }
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Where the starting settings come from; default: the latest version (when it has project-data.json), else none.",
+            "title": "From"
+          },
+          "sources": {
+            "anyOf": [
+              {
+                "items": {
+                  "description": "40 hex, lower case.",
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "null: the sources of the version or build named by `from` (a rebuild of the same files).",
+            "title": "Sources"
+          }
+        },
+        "required": [
+          "sources"
+        ],
+        "title": "NewBuildRequest",
+        "type": "object"
+      },
+      "NewProjectRequest": {
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Wanted id, 2 - 40 characters (Windows path length, U-4.1); derived from the name when absent (U-13.3).",
+            "title": "Id"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "newOfficeName": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "A new office's name (creates it); ignored when office is given.",
+            "title": "Newofficename"
+          },
+          "office": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "An existing office id, or null.",
+            "title": "Office"
+          },
+          "projectNo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Projectno"
+          },
+          "shortName": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Shortname"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "NewProjectRequest",
+        "type": "object"
+      },
+      "OfficeInfo": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "layers": {
+            "title": "Layers",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "updatedAt": {
+            "title": "Updatedat",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "layers",
+          "updatedAt"
+        ],
+        "title": "OfficeInfo",
+        "type": "object"
+      },
+      "OfficeList": {
+        "properties": {
+          "offices": {
+            "items": {
+              "$ref": "#/components/schemas/OfficeInfo"
+            },
+            "title": "Offices",
+            "type": "array"
+          }
+        },
+        "required": [
+          "offices"
+        ],
+        "title": "OfficeList",
+        "type": "object"
+      },
+      "OpeningCounts": {
+        "properties": {
+          "door": {
+            "title": "Door",
+            "type": "integer"
+          },
+          "passage": {
+            "title": "Passage",
+            "type": "integer"
+          },
+          "window": {
+            "title": "Window",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "door",
+          "window",
+          "passage"
+        ],
+        "title": "OpeningCounts",
+        "type": "object"
+      },
+      "OpeningFix": {
+        "additionalProperties": false,
+        "properties": {
+          "a": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "A",
+            "type": "array"
+          },
+          "b": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "B",
+            "type": "array"
+          },
+          "floor": {
+            "description": "Floor key, ^[A-Za-z0-9_]{1,32}$.",
+            "title": "Floor",
+            "type": "string"
+          },
+          "head": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Head"
+          },
+          "kind": {
+            "anyOf": [
+              {
+                "enum": [
+                  "door",
+                  "window",
+                  "passage",
+                  "none"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "null: keep the detector's; 'none': not an opening (nothing cut).",
+            "title": "Kind"
+          },
+          "sill": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sill"
+          }
+        },
+        "required": [
+          "floor",
+          "a",
+          "b",
+          "kind",
+          "head",
+          "sill"
+        ],
+        "title": "OpeningFix",
+        "type": "object"
+      },
+      "OutlineEdgeFix": {
+        "additionalProperties": false,
+        "properties": {
+          "a": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "A",
+            "type": "array"
+          },
+          "as": {
+            "enum": [
+              "wall",
+              "glass",
+              "none"
+            ],
+            "title": "As",
+            "type": "string"
+          },
+          "b": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "B",
+            "type": "array"
+          },
+          "floor": {
+            "description": "Floor key, ^[A-Za-z0-9_]{1,32}$.",
+            "title": "Floor",
+            "type": "string"
+          }
+        },
+        "required": [
+          "floor",
+          "a",
+          "b",
+          "as"
+        ],
+        "title": "OutlineEdgeFix",
         "type": "object"
       },
       "ProjectDetail": {
@@ -489,6 +2326,556 @@
           "url"
         ],
         "title": "ProjectSummary",
+        "type": "object"
+      },
+      "RunBuildRequest": {
+        "additionalProperties": false,
+        "description": "An empty JSON object: a state change is never a simple cross-site request (U-5.2).",
+        "properties": {},
+        "title": "RunBuildRequest",
+        "type": "object"
+      },
+      "RunError": {
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "step": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Step"
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "step"
+        ],
+        "title": "RunError",
+        "type": "object"
+      },
+      "RunInfo": {
+        "properties": {
+          "cancelRequested": {
+            "description": "Cancel was asked and the run has not stopped yet: the UI shows \"Stopping...\" (U-3.4).",
+            "title": "Cancelrequested",
+            "type": "boolean"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunError"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "finishedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finishedat"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "prepare",
+              "build"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "messages": {
+            "description": "The last 50.",
+            "items": {
+              "$ref": "#/components/schemas/RunMessage"
+            },
+            "title": "Messages",
+            "type": "array"
+          },
+          "only": {
+            "anyOf": [
+              {
+                "items": {
+                  "description": "40 hex, lower case.",
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "prepare only: the sources it reads (null: all).",
+            "title": "Only"
+          },
+          "progress": {
+            "title": "Progress",
+            "type": "number"
+          },
+          "queuedAt": {
+            "title": "Queuedat",
+            "type": "string"
+          },
+          "startedAt": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Startedat"
+          },
+          "status": {
+            "enum": [
+              "queued",
+              "running",
+              "done",
+              "failed",
+              "cancelled",
+              "interrupted"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "step": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Step"
+          },
+          "steps": {
+            "items": {
+              "$ref": "#/components/schemas/RunStepInfo"
+            },
+            "title": "Steps",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "status",
+          "step",
+          "progress",
+          "steps",
+          "messages",
+          "error",
+          "queuedAt",
+          "startedAt",
+          "finishedAt",
+          "cancelRequested",
+          "only"
+        ],
+        "title": "RunInfo",
+        "type": "object"
+      },
+      "RunMessage": {
+        "properties": {
+          "at": {
+            "title": "At",
+            "type": "string"
+          },
+          "level": {
+            "enum": [
+              "info",
+              "warn",
+              "error"
+            ],
+            "title": "Level",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "at",
+          "level",
+          "text"
+        ],
+        "title": "RunMessage",
+        "type": "object"
+      },
+      "RunStepInfo": {
+        "properties": {
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "note": {
+            "title": "Note",
+            "type": "string"
+          },
+          "seconds": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seconds"
+          },
+          "status": {
+            "enum": [
+              "waiting",
+              "running",
+              "done",
+              "failed",
+              "skipped"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "label",
+          "status",
+          "seconds",
+          "note"
+        ],
+        "title": "RunStepInfo",
+        "type": "object"
+      },
+      "SaveBuildRequest": {
+        "properties": {
+          "carryHeights": {
+            "description": "Copy the latest version's saved furniture heights for the kinds that still exist (the web app sends true by default).",
+            "title": "Carryheights",
+            "type": "boolean"
+          },
+          "label": {
+            "description": "1 - 200 characters.",
+            "title": "Label",
+            "type": "string"
+          },
+          "rememberMapping": {
+            "description": "Remember the layer roles for the build's office (the web app sends true by default).",
+            "title": "Remembermapping",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "label",
+          "carryHeights",
+          "rememberMapping"
+        ],
+        "title": "SaveBuildRequest",
+        "type": "object"
+      },
+      "SetAside": {
+        "additionalProperties": false,
+        "properties": {
+          "elementId": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Elementid"
+          },
+          "floor": {
+            "description": "Floor key, ^[A-Za-z0-9_]{1,32}$.",
+            "title": "Floor",
+            "type": "string"
+          },
+          "key": {
+            "description": "Nested handle key, e.g. \"BA/2C4/1F3\"; an INSERT key covers its whole subtree.",
+            "title": "Key",
+            "type": "string"
+          },
+          "layer": {
+            "title": "Layer",
+            "type": "string"
+          },
+          "note": {
+            "title": "Note",
+            "type": "string"
+          },
+          "rsig": {
+            "description": "12 hex, or '' when elementId is null.",
+            "title": "Rsig",
+            "type": "string"
+          },
+          "sig": {
+            "description": "12 hex: the item's geometry signature.",
+            "title": "Sig",
+            "type": "string"
+          },
+          "source": {
+            "description": "40 hex, lower case.",
+            "title": "Source",
+            "type": "string"
+          }
+        },
+        "required": [
+          "floor",
+          "source",
+          "key",
+          "sig",
+          "rsig",
+          "elementId",
+          "layer",
+          "note"
+        ],
+        "title": "SetAside",
+        "type": "object"
+      },
+      "SourceFile": {
+        "properties": {
+          "bytes": {
+            "title": "Bytes",
+            "type": "integer"
+          },
+          "formatVersion": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Formatversion"
+          },
+          "kind": {
+            "enum": [
+              "dwg",
+              "dxf"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "sha1": {
+            "description": "40 hex, lower case.",
+            "title": "Sha1",
+            "type": "string"
+          },
+          "uploadedAt": {
+            "title": "Uploadedat",
+            "type": "string"
+          }
+        },
+        "required": [
+          "sha1",
+          "name",
+          "bytes",
+          "kind",
+          "formatVersion",
+          "uploadedAt"
+        ],
+        "title": "SourceFile",
+        "type": "object"
+      },
+      "SourceSetting": {
+        "additionalProperties": false,
+        "properties": {
+          "kind": {
+            "enum": [
+              "dwg",
+              "dxf"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "name": {
+            "description": "The uploaded file's own name (untrusted; goes into model.source as it is).",
+            "title": "Name",
+            "type": "string"
+          },
+          "sha1": {
+            "description": "40 hex, lower case.",
+            "title": "Sha1",
+            "type": "string"
+          },
+          "units": {
+            "anyOf": [
+              {
+                "enum": [
+                  "mm",
+                  "cm",
+                  "m",
+                  "in",
+                  "ft"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The reader's used units, confirmed or changed by staff (U-7.4); null only in revision-0 settings, before the proposal is adopted (U-3.3).",
+            "title": "Units"
+          },
+          "unitsConfirmed": {
+            "description": "false while the reader's verdict was 'votes-win' or 'unknown' and staff have not confirmed: runBuild refuses.",
+            "title": "Unitsconfirmed",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "sha1",
+          "name",
+          "kind",
+          "units",
+          "unitsConfirmed"
+        ],
+        "title": "SourceSetting",
+        "type": "object"
+      },
+      "UploadPartResult": {
+        "properties": {
+          "bytes": {
+            "title": "Bytes",
+            "type": "integer"
+          },
+          "part": {
+            "title": "Part",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "part",
+          "bytes"
+        ],
+        "title": "UploadPartResult",
+        "type": "object"
+      },
+      "UploadRequest": {
+        "properties": {
+          "bytes": {
+            "title": "Bytes",
+            "type": "integer"
+          },
+          "fileName": {
+            "title": "Filename",
+            "type": "string"
+          },
+          "projectId": {
+            "title": "Projectid",
+            "type": "string"
+          }
+        },
+        "required": [
+          "projectId",
+          "fileName",
+          "bytes"
+        ],
+        "title": "UploadRequest",
+        "type": "object"
+      },
+      "UploadSession": {
+        "properties": {
+          "bytes": {
+            "title": "Bytes",
+            "type": "integer"
+          },
+          "completeUrl": {
+            "title": "Completeurl",
+            "type": "string"
+          },
+          "expiresAt": {
+            "title": "Expiresat",
+            "type": "string"
+          },
+          "fileName": {
+            "title": "Filename",
+            "type": "string"
+          },
+          "id": {
+            "description": "^u[0-9a-f]{24}$",
+            "title": "Id",
+            "type": "string"
+          },
+          "partBytes": {
+            "title": "Partbytes",
+            "type": "integer"
+          },
+          "partUrls": {
+            "description": "partUrls[i] is part i + 1.",
+            "items": {
+              "type": "string"
+            },
+            "title": "Parturls",
+            "type": "array"
+          },
+          "parts": {
+            "title": "Parts",
+            "type": "integer"
+          },
+          "projectId": {
+            "title": "Projectid",
+            "type": "string"
+          },
+          "received": {
+            "description": "1-based part numbers received, ascending.",
+            "items": {
+              "type": "integer"
+            },
+            "title": "Received",
+            "type": "array"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "projectId",
+          "fileName",
+          "bytes",
+          "partBytes",
+          "parts",
+          "received",
+          "expiresAt",
+          "partUrls",
+          "completeUrl",
+          "url"
+        ],
+        "title": "UploadSession",
         "type": "object"
       },
       "ValidationError": {
@@ -811,6 +3198,42 @@
         ],
         "title": "VersionUrls",
         "type": "object"
+      },
+      "Vocabulary": {
+        "additionalProperties": false,
+        "description": "Regular expressions (Python `re`, case-insensitive) as strings; a missing key = the builder's default (the bank\nbuilder's own pattern, U-10.3).",
+        "properties": {
+          "glassWord": {
+            "title": "Glassword",
+            "type": "string"
+          },
+          "liftWord": {
+            "title": "Liftword",
+            "type": "string"
+          },
+          "roomTagLine": {
+            "title": "Roomtagline",
+            "type": "string"
+          },
+          "sizeInName": {
+            "title": "Sizeinname",
+            "type": "string"
+          },
+          "stairDown": {
+            "title": "Stairdown",
+            "type": "string"
+          },
+          "stairUp": {
+            "title": "Stairup",
+            "type": "string"
+          },
+          "typeHeight": {
+            "title": "Typeheight",
+            "type": "string"
+          }
+        },
+        "title": "Vocabulary",
+        "type": "object"
       }
     }
   },
@@ -843,6 +3266,28 @@
         ]
       }
     },
+    "/api/offices": {
+      "get": {
+        "description": "Every office with remembered layer roles (data/mappings/<officeId>.json): id, name, how many layers it remembers and when it last changed.",
+        "operationId": "listOffices",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OfficeList"
+                }
+              }
+            },
+            "description": "The offices."
+          }
+        },
+        "summary": "List offices",
+        "tags": [
+          "offices"
+        ]
+      }
+    },
     "/api/projects": {
       "get": {
         "description": "Every project with its latest version's counts and stamp, sorted by updatedAt, newest first.",
@@ -860,6 +3305,63 @@
           }
         },
         "summary": "List projects",
+        "tags": [
+          "projects"
+        ]
+      },
+      "post": {
+        "description": "A new project with no version yet: its id (given, or a slug of the name), meta.json and project-settings.json (office and naming derived from the names, U-13.3); newOfficeName creates the office. Its first version comes from an upload and a build.",
+        "operationId": "createProject",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewProjectRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectDetail"
+                }
+              }
+            },
+            "description": "The new project."
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_exists: the id is taken (details.suggested: the next free id)"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/HTTPValidationError"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "bad_project: a name, short name or id that cannot be used (a new id is 2 - 40 characters, not reserved) (ErrorResponse), or a malformed request (FastAPI's HTTPValidationError)."
+          }
+        },
+        "summary": "Create a project",
         "tags": [
           "projects"
         ]
@@ -918,6 +3420,1644 @@
         "summary": "Get a project",
         "tags": [
           "projects"
+        ]
+      }
+    },
+    "/api/projects/{projectId}/builds": {
+      "get": {
+        "description": "Every build (draft) of the project, open and saved, newest first.",
+        "operationId": "listBuilds",
+        "parameters": [
+          {
+            "description": "Project id (kebab-case slug).",
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "description": "Project id (kebab-case slug).",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,62}$",
+              "title": "Projectid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildList"
+                }
+              }
+            },
+            "description": "The builds."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_not_found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List a project's builds",
+        "tags": [
+          "builds"
+        ]
+      },
+      "post": {
+        "description": "A new draft of the project from uploaded sources (or the sources of a version or build named by `from`), with its starting settings, and its first run: a prepare (convert, check and read each source; suggest layer roles). The settings proposal is adopted as revision 1 when the prepare is done (U-3.3).",
+        "operationId": "createBuild",
+        "parameters": [
+          {
+            "description": "Project id (kebab-case slug).",
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "description": "Project id (kebab-case slug).",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,62}$",
+              "title": "Projectid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewBuildRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildDetail"
+                }
+              }
+            },
+            "description": "The new build."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_not_found, source_not_found, version_not_found, build_not_found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/HTTPValidationError"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "bad_sources: no source, or a source twice (ErrorResponse), or a malformed request (FastAPI's HTTPValidationError)."
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "builder_missing: the builder Python or LibreDWG is not where the settings say"
+          }
+        },
+        "summary": "Start a build",
+        "tags": [
+          "builds"
+        ]
+      }
+    },
+    "/api/projects/{projectId}/builds/{buildId}": {
+      "delete": {
+        "description": "Removes an open draft with its runs and outputs (never a saved one; never while a run is going).",
+        "operationId": "deleteBuild",
+        "parameters": [
+          {
+            "description": "Project id (kebab-case slug).",
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "description": "Project id (kebab-case slug).",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,62}$",
+              "title": "Projectid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+            "in": "path",
+            "name": "buildId",
+            "required": true,
+            "schema": {
+              "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+              "pattern": "^[0-9]{8}T[0-9]{6}-[0-9a-f]{6}$",
+              "title": "Buildid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The build is gone."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_not_found, build_not_found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "run_in_progress, build_saved"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Delete a build",
+        "tags": [
+          "builds"
+        ]
+      },
+      "get": {
+        "description": "A build's sources with their conversion verdicts and units, its settings (null with withSettings=false), the layer suggestions, the run going now or the last one, and the last build run's result. A run found done is validated here once (U-3.2).",
+        "operationId": "getBuild",
+        "parameters": [
+          {
+            "description": "Project id (kebab-case slug).",
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "description": "Project id (kebab-case slug).",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,62}$",
+              "title": "Projectid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+            "in": "path",
+            "name": "buildId",
+            "required": true,
+            "schema": {
+              "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+              "pattern": "^[0-9]{8}T[0-9]{6}-[0-9a-f]{6}$",
+              "title": "Buildid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "false: settings is null in the answer (the 1 s poll asks without them, U-14.2).",
+            "in": "query",
+            "name": "withSettings",
+            "required": false,
+            "schema": {
+              "default": true,
+              "description": "false: settings is null in the answer (the 1 s poll asks without them, U-14.2).",
+              "title": "Withsettings",
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildDetail"
+                }
+              }
+            },
+            "description": "The build."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_not_found, build_not_found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get a build",
+        "tags": [
+          "builds"
+        ]
+      }
+    },
+    "/api/projects/{projectId}/builds/{buildId}/cancel": {
+      "post": {
+        "description": "Asks the queued or running run to stop (run.cancelRequested turns true: \"Stopping...\"); it ends cancelled within 15 s (U-3.4).",
+        "operationId": "cancelBuildRun",
+        "parameters": [
+          {
+            "description": "Project id (kebab-case slug).",
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "description": "Project id (kebab-case slug).",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,62}$",
+              "title": "Projectid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+            "in": "path",
+            "name": "buildId",
+            "required": true,
+            "schema": {
+              "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+              "pattern": "^[0-9]{8}T[0-9]{6}-[0-9a-f]{6}$",
+              "title": "Buildid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelBuildRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildDetail"
+                }
+              }
+            },
+            "description": "The build."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_not_found, build_not_found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "no_run: nothing is queued or running"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Cancel the run",
+        "tags": [
+          "builds"
+        ]
+      }
+    },
+    "/api/projects/{projectId}/builds/{buildId}/diff": {
+      "get": {
+        "description": "The last build against the previous build run of the draft and against the latest version, compared in sheet coordinates (BuildDiff).",
+        "operationId": "getBuildDiff",
+        "parameters": [
+          {
+            "description": "Project id (kebab-case slug).",
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "description": "Project id (kebab-case slug).",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,62}$",
+              "title": "Projectid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+            "in": "path",
+            "name": "buildId",
+            "required": true,
+            "schema": {
+              "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+              "pattern": "^[0-9]{8}T[0-9]{6}-[0-9a-f]{6}$",
+              "title": "Buildid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "An ETag from an earlier answer: 304 when it still matches.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "An ETag from an earlier answer: 304 when it still matches.",
+              "title": "If-None-Match"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The diff (application/json).",
+            "headers": {
+              "Cache-Control": {
+                "description": "no-cache",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "The quoted sha1 of the bytes.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Not modified: If-None-Match matched the ETag."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_not_found, build_not_found, not_built"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get the last build's diff",
+        "tags": [
+          "builds"
+        ]
+      }
+    },
+    "/api/projects/{projectId}/builds/{buildId}/max-script": {
+      "get": {
+        "description": "The last build's .ms script as built (text/plain; charset=utf-8), as an attachment <stem>_draft.ms.",
+        "operationId": "downloadBuildMaxScript",
+        "parameters": [
+          {
+            "description": "Project id (kebab-case slug).",
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "description": "Project id (kebab-case slug).",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,62}$",
+              "title": "Projectid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+            "in": "path",
+            "name": "buildId",
+            "required": true,
+            "schema": {
+              "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+              "pattern": "^[0-9]{8}T[0-9]{6}-[0-9a-f]{6}$",
+              "title": "Buildid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The draft 3ds Max script.",
+            "headers": {
+              "Content-Disposition": {
+                "description": "attachment; filename=\"<ascii>\"; filename*=UTF-8''<encoded>",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_not_found, build_not_found, not_built"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Download the draft's 3ds Max script",
+        "tags": [
+          "builds"
+        ]
+      }
+    },
+    "/api/projects/{projectId}/builds/{buildId}/model": {
+      "get": {
+        "description": "The draft's model.json as built: BuiltModel v1 (built-model.schema.json).",
+        "operationId": "getBuildModel",
+        "parameters": [
+          {
+            "description": "Project id (kebab-case slug).",
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "description": "Project id (kebab-case slug).",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,62}$",
+              "title": "Projectid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+            "in": "path",
+            "name": "buildId",
+            "required": true,
+            "schema": {
+              "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+              "pattern": "^[0-9]{8}T[0-9]{6}-[0-9a-f]{6}$",
+              "title": "Buildid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "An ETag from an earlier answer: 304 when it still matches.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "An ETag from an earlier answer: 304 when it still matches.",
+              "title": "If-None-Match"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The model (application/json).",
+            "headers": {
+              "Cache-Control": {
+                "description": "no-cache",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "The quoted sha1 of the bytes.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Model-Stamp": {
+                "description": "The 12-hex model-data stamp.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Not modified: If-None-Match matched the ETag."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_not_found, build_not_found, not_built"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get the last build's model",
+        "tags": [
+          "builds"
+        ]
+      }
+    },
+    "/api/projects/{projectId}/builds/{buildId}/overlay": {
+      "get": {
+        "description": "What the check screen draws over each floor's plan: the built parts, slabs, openings, furniture, rooms and set-aside items in sheet coordinates, and the flags (BuildOverlay).",
+        "operationId": "getBuildOverlay",
+        "parameters": [
+          {
+            "description": "Project id (kebab-case slug).",
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "description": "Project id (kebab-case slug).",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,62}$",
+              "title": "Projectid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+            "in": "path",
+            "name": "buildId",
+            "required": true,
+            "schema": {
+              "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+              "pattern": "^[0-9]{8}T[0-9]{6}-[0-9a-f]{6}$",
+              "title": "Buildid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "An ETag from an earlier answer: 304 when it still matches.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "An ETag from an earlier answer: 304 when it still matches.",
+              "title": "If-None-Match"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The overlay (application/json).",
+            "headers": {
+              "Cache-Control": {
+                "description": "no-cache",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "The quoted sha1 of the bytes.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Not modified: If-None-Match matched the ETag."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_not_found, build_not_found, not_built"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get the last build's overlay",
+        "tags": [
+          "builds"
+        ]
+      }
+    },
+    "/api/projects/{projectId}/builds/{buildId}/run": {
+      "post": {
+        "description": "Starts a build run with the saved settings: detect openings, build the model and write every output. Poll getBuild for its progress.",
+        "operationId": "runBuild",
+        "parameters": [
+          {
+            "description": "Project id (kebab-case slug).",
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "description": "Project id (kebab-case slug).",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,62}$",
+              "title": "Projectid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+            "in": "path",
+            "name": "buildId",
+            "required": true,
+            "schema": {
+              "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+              "pattern": "^[0-9]{8}T[0-9]{6}-[0-9a-f]{6}$",
+              "title": "Buildid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunBuildRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildDetail"
+                }
+              }
+            },
+            "description": "The build with its new run."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_not_found, build_not_found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "run_in_progress, not_prepared, build_saved, units_unconfirmed, layers_not_reviewed"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "builder_missing: the builder Python or LibreDWG is not where the settings say"
+          }
+        },
+        "summary": "Build",
+        "tags": [
+          "builds"
+        ]
+      }
+    },
+    "/api/projects/{projectId}/builds/{buildId}/save": {
+      "post": {
+        "description": "Makes the last build run's outputs the project's next version (create_version), writes the project settings and, when asked, the office memory, and marks the build saved. Idempotent: a second save of the same build gets 409 build_saved with the version.",
+        "operationId": "saveBuild",
+        "parameters": [
+          {
+            "description": "Project id (kebab-case slug).",
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "description": "Project id (kebab-case slug).",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,62}$",
+              "title": "Projectid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+            "in": "path",
+            "name": "buildId",
+            "required": true,
+            "schema": {
+              "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+              "pattern": "^[0-9]{8}T[0-9]{6}-[0-9a-f]{6}$",
+              "title": "Buildid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveBuildRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VersionDetail"
+                }
+              }
+            },
+            "description": "The new version."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_not_found, build_not_found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "not_built, stale (the settings changed since the last build), run_in_progress, build_saved (details.version)"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/HTTPValidationError"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "invalid_output: the outputs failed their checks (ErrorResponse), or a malformed request (FastAPI's HTTPValidationError)."
+          }
+        },
+        "summary": "Save the build as a version",
+        "tags": [
+          "builds"
+        ]
+      }
+    },
+    "/api/projects/{projectId}/builds/{buildId}/settings": {
+      "put": {
+        "description": "Replaces the settings (send `If-Match: \"<revision>\"`; revision + 1). A change of a source's units rescales that source's boxes and points and starts a prepare that reads it again (U-7.4). layersReviewed: true from the Layers step marks the build reviewed (U-8.3).",
+        "operationId": "putBuildSettings",
+        "parameters": [
+          {
+            "description": "Project id (kebab-case slug).",
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "description": "Project id (kebab-case slug).",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,62}$",
+              "title": "Projectid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+            "in": "path",
+            "name": "buildId",
+            "required": true,
+            "schema": {
+              "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+              "pattern": "^[0-9]{8}T[0-9]{6}-[0-9a-f]{6}$",
+              "title": "Buildid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildSettingsUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BuildDetail"
+                }
+              }
+            },
+            "description": "The build after the change."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_not_found, build_not_found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "build_saved, not_prepared (the proposal is not in yet), run_in_progress (a one-source prepare after a units change is running)"
+          },
+          "412": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "revision_conflict: If-Match does not name the saved revision (details: revision, settings)"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "body_too_large: above 8 MiB (the body guard)"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/HTTPValidationError"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "invalid_settings (details.issues: [{path, message}]) (ErrorResponse), or a malformed request (FastAPI's HTTPValidationError)."
+          }
+        },
+        "summary": "Save a build's settings",
+        "tags": [
+          "builds"
+        ]
+      }
+    },
+    "/api/projects/{projectId}/builds/{buildId}/sources/{sha1}/conversion": {
+      "get": {
+        "description": "The ConversionReport of one source of the build as the prepare run wrote it (upload-contracts.ts section 4): the verdict, the converter's messages by class, what was lost.",
+        "operationId": "getBuildConversion",
+        "parameters": [
+          {
+            "description": "Project id (kebab-case slug).",
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "description": "Project id (kebab-case slug).",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,62}$",
+              "title": "Projectid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+            "in": "path",
+            "name": "buildId",
+            "required": true,
+            "schema": {
+              "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+              "pattern": "^[0-9]{8}T[0-9]{6}-[0-9a-f]{6}$",
+              "title": "Buildid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The source's sha1 (40 hex).",
+            "in": "path",
+            "name": "sha1",
+            "required": true,
+            "schema": {
+              "description": "The source's sha1 (40 hex).",
+              "pattern": "^[0-9a-f]{40}$",
+              "title": "Sha1",
+              "type": "string"
+            }
+          },
+          {
+            "description": "An ETag from an earlier answer: 304 when it still matches.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "An ETag from an earlier answer: 304 when it still matches.",
+              "title": "If-None-Match"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The conversion report (application/json).",
+            "headers": {
+              "Cache-Control": {
+                "description": "no-cache",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "The quoted sha1 of the bytes.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Not modified: If-None-Match matched the ETag."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_not_found, build_not_found, not_ready"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get a source's conversion report",
+        "tags": [
+          "builds"
+        ]
+      }
+    },
+    "/api/projects/{projectId}/builds/{buildId}/sources/{sha1}/drawing": {
+      "get": {
+        "description": "The DrawingRead of one source (upload-contracts.ts section 4): units, layers with their statistics, blocks, texts, level tags, grid labels and area proposals.",
+        "operationId": "getBuildDrawing",
+        "parameters": [
+          {
+            "description": "Project id (kebab-case slug).",
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "description": "Project id (kebab-case slug).",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,62}$",
+              "title": "Projectid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+            "in": "path",
+            "name": "buildId",
+            "required": true,
+            "schema": {
+              "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+              "pattern": "^[0-9]{8}T[0-9]{6}-[0-9a-f]{6}$",
+              "title": "Buildid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The source's sha1 (40 hex).",
+            "in": "path",
+            "name": "sha1",
+            "required": true,
+            "schema": {
+              "description": "The source's sha1 (40 hex).",
+              "pattern": "^[0-9a-f]{40}$",
+              "title": "Sha1",
+              "type": "string"
+            }
+          },
+          {
+            "description": "An ETag from an earlier answer: 304 when it still matches.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "An ETag from an earlier answer: 304 when it still matches.",
+              "title": "If-None-Match"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The drawing read (application/json).",
+            "headers": {
+              "Cache-Control": {
+                "description": "no-cache",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "The quoted sha1 of the bytes.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Not modified: If-None-Match matched the ETag."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_not_found, build_not_found, not_ready"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get a source's drawing read",
+        "tags": [
+          "builds"
+        ]
+      }
+    },
+    "/api/projects/{projectId}/builds/{buildId}/sources/{sha1}/plan": {
+      "get": {
+        "description": "The PlanGeometry of one source (upload-contracts.ts section 4) for the plan canvas: every item of the sheet in centimetre quanta, with its key and signatures. Sent gzipped when the request accepts it.",
+        "operationId": "getBuildPlan",
+        "parameters": [
+          {
+            "description": "Project id (kebab-case slug).",
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "description": "Project id (kebab-case slug).",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,62}$",
+              "title": "Projectid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+            "in": "path",
+            "name": "buildId",
+            "required": true,
+            "schema": {
+              "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+              "pattern": "^[0-9]{8}T[0-9]{6}-[0-9a-f]{6}$",
+              "title": "Buildid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "The source's sha1 (40 hex).",
+            "in": "path",
+            "name": "sha1",
+            "required": true,
+            "schema": {
+              "description": "The source's sha1 (40 hex).",
+              "pattern": "^[0-9a-f]{40}$",
+              "title": "Sha1",
+              "type": "string"
+            }
+          },
+          {
+            "description": "An ETag from an earlier answer: 304 when it still matches.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "An ETag from an earlier answer: 304 when it still matches.",
+              "title": "If-None-Match"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The plan geometry (application/json).",
+            "headers": {
+              "Cache-Control": {
+                "description": "no-cache",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Content-Encoding": {
+                "description": "gzip when the request accepts it (the file is stored gzipped), else absent.",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "The quoted sha1 of the bytes.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Not modified: If-None-Match matched the ETag."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_not_found, build_not_found, not_ready"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get a source's plan geometry",
+        "tags": [
+          "builds"
+        ]
+      }
+    },
+    "/api/projects/{projectId}/builds/{buildId}/stages": {
+      "get": {
+        "description": "The draft's stages.json as built: ReplayData v1, recorded from the build.",
+        "operationId": "getBuildStages",
+        "parameters": [
+          {
+            "description": "Project id (kebab-case slug).",
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "description": "Project id (kebab-case slug).",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,62}$",
+              "title": "Projectid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+            "in": "path",
+            "name": "buildId",
+            "required": true,
+            "schema": {
+              "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+              "pattern": "^[0-9]{8}T[0-9]{6}-[0-9a-f]{6}$",
+              "title": "Buildid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "An ETag from an earlier answer: 304 when it still matches.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "An ETag from an earlier answer: 304 when it still matches.",
+              "title": "If-None-Match"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object"
+                }
+              }
+            },
+            "description": "The replay data (application/json).",
+            "headers": {
+              "Cache-Control": {
+                "description": "no-cache",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "The quoted sha1 of the bytes.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Not modified: If-None-Match matched the ETag."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_not_found, build_not_found, not_built"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get the last build's replay data",
+        "tags": [
+          "builds"
+        ]
+      }
+    },
+    "/api/projects/{projectId}/builds/{buildId}/topview": {
+      "get": {
+        "description": "The draft's topview.png as built.",
+        "operationId": "getBuildTopview",
+        "parameters": [
+          {
+            "description": "Project id (kebab-case slug).",
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "description": "Project id (kebab-case slug).",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,62}$",
+              "title": "Projectid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+            "in": "path",
+            "name": "buildId",
+            "required": true,
+            "schema": {
+              "description": "Build id, <yyyymmdd>T<hhmmss>-<6 hex>.",
+              "pattern": "^[0-9]{8}T[0-9]{6}-[0-9a-f]{6}$",
+              "title": "Buildid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "An ETag from an earlier answer: 304 when it still matches.",
+            "in": "header",
+            "name": "If-None-Match",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "An ETag from an earlier answer: 304 when it still matches.",
+              "title": "If-None-Match"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "image/png": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The top view (image/png).",
+            "headers": {
+              "Cache-Control": {
+                "description": "no-cache",
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "ETag": {
+                "description": "The quoted sha1 of the bytes.",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "304": {
+            "description": "Not modified: If-None-Match matched the ETag."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_not_found, build_not_found, not_built"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get the last build's top view",
+        "tags": [
+          "builds"
         ]
       }
     },
@@ -1803,6 +5943,370 @@
         "summary": "Get a version's build replay data",
         "tags": [
           "versions"
+        ]
+      }
+    },
+    "/api/uploads": {
+      "post": {
+        "description": "Opens an upload session for one DWG or DXF file of a project: the file goes up in parts of partBytes (8 MiB) to partUrls, then completeUrl makes it a source. A session not completed within 24 h is removed.",
+        "operationId": "createUpload",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadSession"
+                }
+              }
+            },
+            "description": "The upload session."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_not_found"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "too_large: above WALKTHROUGH_UPLOAD_MAX_BYTES (300 MiB)"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/HTTPValidationError"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "bad_kind: the name must end in .dwg or .dxf, be 1 - 255 characters and hold no control character (ErrorResponse), or a malformed request (FastAPI's HTTPValidationError)."
+          }
+        },
+        "summary": "Start an upload",
+        "tags": [
+          "uploads"
+        ]
+      }
+    },
+    "/api/uploads/{uploadId}": {
+      "delete": {
+        "description": "Removes an upload session and the parts received.",
+        "operationId": "cancelUpload",
+        "parameters": [
+          {
+            "description": "Upload session id, u + 24 hex.",
+            "in": "path",
+            "name": "uploadId",
+            "required": true,
+            "schema": {
+              "description": "Upload session id, u + 24 hex.",
+              "pattern": "^u[0-9a-f]{24}$",
+              "title": "Uploadid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The session is gone."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "upload_not_found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Cancel an upload",
+        "tags": [
+          "uploads"
+        ]
+      },
+      "get": {
+        "description": "An upload session with the parts received so far (to resume an upload after a page reload).",
+        "operationId": "getUpload",
+        "parameters": [
+          {
+            "description": "Upload session id, u + 24 hex.",
+            "in": "path",
+            "name": "uploadId",
+            "required": true,
+            "schema": {
+              "description": "Upload session id, u + 24 hex.",
+              "pattern": "^u[0-9a-f]{24}$",
+              "title": "Uploadid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadSession"
+                }
+              }
+            },
+            "description": "The upload session."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "upload_not_found"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get an upload",
+        "tags": [
+          "uploads"
+        ]
+      }
+    },
+    "/api/uploads/{uploadId}/complete": {
+      "post": {
+        "description": "Joins the parts, checks the first bytes (a DWG of R13 or newer, an ASCII or binary DXF) and stores the file as a source of the project, named by its sha1 (the same file uploaded twice is one source).",
+        "operationId": "completeUpload",
+        "parameters": [
+          {
+            "description": "Upload session id, u + 24 hex.",
+            "in": "path",
+            "name": "uploadId",
+            "required": true,
+            "schema": {
+              "description": "Upload session id, u + 24 hex.",
+              "pattern": "^u[0-9a-f]{24}$",
+              "title": "Uploadid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompleteUploadRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SourceFile"
+                }
+              }
+            },
+            "description": "The stored source."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "upload_not_found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "incomplete: parts are missing (details.missing)"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/HTTPValidationError"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "bad_kind (not a DWG or DXF), unsupported_version (a DWG older than R13: save it as a newer DWG, or export a DXF) (ErrorResponse), or a malformed request (FastAPI's HTTPValidationError)."
+          }
+        },
+        "summary": "Complete an upload",
+        "tags": [
+          "uploads"
+        ]
+      }
+    },
+    "/api/uploads/{uploadId}/parts/{part}": {
+      "put": {
+        "description": "The bytes of part <part> (application/octet-stream). Idempotent: a part sent again replaces itself.",
+        "operationId": "putUploadPart",
+        "parameters": [
+          {
+            "description": "Upload session id, u + 24 hex.",
+            "in": "path",
+            "name": "uploadId",
+            "required": true,
+            "schema": {
+              "description": "Upload session id, u + 24 hex.",
+              "pattern": "^u[0-9a-f]{24}$",
+              "title": "Uploadid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Part number, from 1 (partUrls[i] is part i + 1).",
+            "in": "path",
+            "name": "part",
+            "required": true,
+            "schema": {
+              "description": "Part number, from 1 (partUrls[i] is part i + 1).",
+              "maximum": 10000,
+              "minimum": 1,
+              "title": "Part",
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "contentMediaType": "application/octet-stream",
+                "description": "The bytes of the part: every part but the last exactly partBytes, the last the rest.",
+                "title": "Body",
+                "type": "string"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadPartResult"
+                }
+              }
+            },
+            "description": "The part as stored."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "upload_not_found"
+          },
+          "411": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "length_required: a part needs Content-Length (the body guard)"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "part_too_large: above partBytes (the body guard)"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/HTTPValidationError"
+                    }
+                  ]
+                }
+              }
+            },
+            "description": "bad_part: a part number past the last, or a size other than the part's (ErrorResponse), or a malformed request (FastAPI's HTTPValidationError)."
+          }
+        },
+        "summary": "Send one part of an upload",
+        "tags": [
+          "uploads"
         ]
       }
     }

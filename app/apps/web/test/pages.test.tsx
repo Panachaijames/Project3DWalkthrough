@@ -150,12 +150,13 @@ describe('/ and /projects', () => {
     expect(cards().length).toBe(4);
   });
 
-  it('no projects: No projects yet: run npm run seed', async () => {
+  it('no projects: No projects yet: make one with New project (changed on purpose, docs/upload/DESIGN.md U-14.1)', async () => {
     const app = await openApp('/projects', {
       fetch: { intercept: (m, p) => (p === '/api/projects' ? new Response('{"projects":[]}', { headers: { 'content-type': 'application/json' } }) : undefined) },
     });
     const empty = await waitFor(() => app.body.querySelector('[data-testid=projects-empty]'));
-    expect(text(empty)).toBe('No projects yet: run npm run seed');
+    expect(text(empty)).toBe('No projects yet: make one with New project');
+    expect(app.body.querySelector('a[data-testid=new-project]')?.getAttribute('href')).toBe('/projects/new');
   });
 
   it('drawing text in names stays text', async () => {
@@ -439,32 +440,36 @@ describe('fix step: the page keeps what it has, says what it cannot do', () => {
     expect(text(app.body)).not.toContain('Bad Gateway');
   });
 
-  it('a project with no version yet: its card says so and links nowhere; its address says so instead of Not found', async () => {
+  it('a project with no version yet: its card leads to its Upload screen, then to its newest draft; its page lists the drafts (U-14.1)', async () => {
     const mock = createMockApi();
-    const base = mock.list()[0]!;
-    const empty = { ...base, id: 'new-upload', name: 'New upload', shortName: 'New upload', latestVersion: 0, versionCount: 0, stamp: '', floors: [],
-      furnitureCount: 0, openingsCount: 0, thumbnailUrl: null, url: '/api/projects/new-upload', updatedAt: '2026-11-04T00:00:00Z' };
-    const json = (v: unknown) => new Response(JSON.stringify(v), { status: 200, headers: { 'content-type': 'application/json' } });
-    const app = await openApp('/projects', {
-      mock,
-      fetch: {
-        intercept: (m, p) => {
-          if (m === 'GET' && p === '/api/projects') return json({ projects: [empty, ...mock.list()] });
-          if (m === 'GET' && p === '/api/projects/new-upload') return json({ ...empty, versions: [] });
-          return undefined;
-        },
-      },
-    });
+    const made = mock.handle({ method: 'POST', path: '/api/projects', body: JSON.stringify({ name: 'New upload', id: 'new-upload' }) });
+    expect(made.status).toBe(201);
+    const app = await openApp('/projects', { mock });
     await waitFor(() => cards().length === 5);
-    const card = app.body.querySelector('[data-testid=project-card][data-project-id=new-upload]')!;
-    expect(card.hasAttribute('data-no-versions')).toBe(true);
-    expect(text(card)).toContain('No versions yet');
-    expect(card.querySelector('a')).toBeNull();
-    expect(card.closest('a')).toBeNull();
+    const card = () => app.body.querySelector('[data-testid=project-card][data-project-id=new-upload]')!;
+    expect(card().hasAttribute('data-no-versions')).toBe(true);
+    expect(text(card())).toContain('No versions yet');
+    await waitFor(() => card().querySelector('a[data-testid=card-link]')?.getAttribute('href') === '/projects/new-upload/builds/new');
+    // a draft: the card leads to it
+    const src = mock.uploads.addSource('new-upload', { name: 'plan.dwg', bytes: Buffer.from('AC1032 a drawing') });
+    const b = mock.uploads.createBuildNow('new-upload', [src.sha1], { finish: true });
+    await act(async () => { await app.queryClient.invalidateQueries(); });
+    await waitFor(() => card().querySelector('a[data-testid=card-link]')?.getAttribute('href') === `/projects/new-upload/builds/${b.id}`);
+    expect(card().querySelector('a[data-testid=card-link]')?.hasAttribute('data-draft')).toBe(true);
+    // its address: the drafts with Continue, and Upload drawings (not on to /v/0 and Not found)
     await act(async () => { await app.router.navigate('/projects/new-upload'); });
     await waitFor(() => app.body.querySelector('[data-testid=no-versions]'));
-    expect(app.router.state.location.pathname).toBe('/projects/new-upload');      // not on to /v/0 and Not found
+    expect(app.router.state.location.pathname).toBe('/projects/new-upload');
     expect(text(app.body.querySelector('[data-testid=no-versions]'))).toContain('No versions yet');
+    const row = await waitFor(() => app.body.querySelector(`[data-testid=draft-row][data-build-id="${b.id}"]`));
+    expect(text(row.querySelector('[data-testid=draft-files]'))).toBe('plan.dwg');
+    expect(row.querySelector('a[data-testid=draft-continue]')?.getAttribute('href')).toBe(`/projects/new-upload/builds/${b.id}`);
+    expect(app.body.querySelector('a[data-testid=upload-drawings]')?.getAttribute('href')).toBe('/projects/new-upload/builds/new');
+    // Delete (confirmed): the draft goes
+    vi.stubGlobal('confirm', () => true);
+    await click(row.querySelector('[data-testid=draft-delete]'));
+    await waitFor(() => app.body.querySelector('[data-testid=no-drafts]'));
+    expect(mock.uploads.builds('new-upload')).toEqual([]);
   });
 
   it('while a save has failed the browser asks before the tab is closed or reloaded; once saved it does not', async () => {

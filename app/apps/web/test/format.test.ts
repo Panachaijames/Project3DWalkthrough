@@ -75,7 +75,7 @@ describe('the version picker, titles and statuses', () => {
     expect(HEIGHTS_SAVED).toBe('Heights saved');
     expect(HEIGHTS_SAVING).toBe('Saving…');
     expect(heightsNotSaved('the API did not answer')).toBe('Not saved: the API did not answer');
-    expect(NO_PROJECTS).toBe('No projects yet: run npm run seed');
+    expect(NO_PROJECTS).toBe('No projects yet: make one with New project');   // changed on purpose (docs/upload/DESIGN.md U-14.1)
   });
 });
 

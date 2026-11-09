@@ -3,8 +3,8 @@
 import { type DefaultError, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { downloadFurnitureCsv, downloadMaxScript, downloadOfflineHtml, getAsset, getFurnitureHeights, getModel, getProject, getStages, getThumbnail, getVersion, health, listProjects, type Options, putFurnitureHeights } from '../sdk.gen';
-import type { DownloadFurnitureCsvData, DownloadFurnitureCsvError, DownloadFurnitureCsvResponse, DownloadMaxScriptData, DownloadMaxScriptError, DownloadMaxScriptResponse, DownloadOfflineHtmlData, DownloadOfflineHtmlError, DownloadOfflineHtmlResponse, GetAssetData, GetAssetError, GetAssetResponse, GetFurnitureHeightsData, GetFurnitureHeightsError, GetFurnitureHeightsResponse, GetModelData, GetModelError, GetModelResponse, GetProjectData, GetProjectError, GetProjectResponse, GetStagesData, GetStagesError, GetStagesResponse, GetThumbnailData, GetThumbnailError, GetThumbnailResponse, GetVersionData, GetVersionError, GetVersionResponse, HealthData, HealthResponse, ListProjectsData, ListProjectsResponse, PutFurnitureHeightsData, PutFurnitureHeightsError, PutFurnitureHeightsResponse } from '../types.gen';
+import { cancelBuildRun, cancelUpload, completeUpload, createBuild, createProject, createUpload, deleteBuild, downloadBuildMaxScript, downloadFurnitureCsv, downloadMaxScript, downloadOfflineHtml, getAsset, getBuild, getBuildConversion, getBuildDiff, getBuildDrawing, getBuildModel, getBuildOverlay, getBuildPlan, getBuildStages, getBuildTopview, getFurnitureHeights, getModel, getProject, getStages, getThumbnail, getUpload, getVersion, health, listBuilds, listOffices, listProjects, type Options, putBuildSettings, putFurnitureHeights, putUploadPart, runBuild, saveBuild } from '../sdk.gen';
+import type { CancelBuildRunData, CancelBuildRunError, CancelBuildRunResponse, CancelUploadData, CancelUploadError, CancelUploadResponse, CompleteUploadData, CompleteUploadError, CompleteUploadResponse, CreateBuildData, CreateBuildError, CreateBuildResponse, CreateProjectData, CreateProjectError, CreateProjectResponse, CreateUploadData, CreateUploadError, CreateUploadResponse, DeleteBuildData, DeleteBuildError, DeleteBuildResponse, DownloadBuildMaxScriptData, DownloadBuildMaxScriptError, DownloadBuildMaxScriptResponse, DownloadFurnitureCsvData, DownloadFurnitureCsvError, DownloadFurnitureCsvResponse, DownloadMaxScriptData, DownloadMaxScriptError, DownloadMaxScriptResponse, DownloadOfflineHtmlData, DownloadOfflineHtmlError, DownloadOfflineHtmlResponse, GetAssetData, GetAssetError, GetAssetResponse, GetBuildConversionData, GetBuildConversionError, GetBuildConversionResponse, GetBuildData, GetBuildDiffData, GetBuildDiffError, GetBuildDiffResponse, GetBuildDrawingData, GetBuildDrawingError, GetBuildDrawingResponse, GetBuildError, GetBuildModelData, GetBuildModelError, GetBuildModelResponse, GetBuildOverlayData, GetBuildOverlayError, GetBuildOverlayResponse, GetBuildPlanData, GetBuildPlanError, GetBuildPlanResponse, GetBuildResponse, GetBuildStagesData, GetBuildStagesError, GetBuildStagesResponse, GetBuildTopviewData, GetBuildTopviewError, GetBuildTopviewResponse, GetFurnitureHeightsData, GetFurnitureHeightsError, GetFurnitureHeightsResponse, GetModelData, GetModelError, GetModelResponse, GetProjectData, GetProjectError, GetProjectResponse, GetStagesData, GetStagesError, GetStagesResponse, GetThumbnailData, GetThumbnailError, GetThumbnailResponse, GetUploadData, GetUploadError, GetUploadResponse, GetVersionData, GetVersionError, GetVersionResponse, HealthData, HealthResponse, ListBuildsData, ListBuildsError, ListBuildsResponse, ListOfficesData, ListOfficesResponse, ListProjectsData, ListProjectsResponse, PutBuildSettingsData, PutBuildSettingsError, PutBuildSettingsResponse, PutFurnitureHeightsData, PutFurnitureHeightsError, PutFurnitureHeightsResponse, PutUploadPartData, PutUploadPartError, PutUploadPartResponse, RunBuildData, RunBuildError, RunBuildResponse, SaveBuildData, SaveBuildError, SaveBuildResponse } from '../types.gen';
 
 export type QueryKey<TOptions extends Options> = [
     Pick<TOptions, 'baseUrl' | 'body' | 'headers' | 'path' | 'query'> & {
@@ -59,6 +59,26 @@ export const healthOptions = (options?: Options<HealthData>) => queryOptions<Hea
     queryKey: healthQueryKey(options)
 });
 
+export const listOfficesQueryKey = (options?: Options<ListOfficesData>) => createQueryKey('listOffices', options);
+
+/**
+ * List offices
+ *
+ * Every office with remembered layer roles (data/mappings/<officeId>.json): id, name, how many layers it remembers and when it last changed.
+ */
+export const listOfficesOptions = (options?: Options<ListOfficesData>) => queryOptions<ListOfficesResponse, DefaultError, ListOfficesResponse, ReturnType<typeof listOfficesQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await listOffices({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: listOfficesQueryKey(options)
+});
+
 export const listProjectsQueryKey = (options?: Options<ListProjectsData>) => createQueryKey('listProjects', options);
 
 /**
@@ -79,6 +99,25 @@ export const listProjectsOptions = (options?: Options<ListProjectsData>) => quer
     queryKey: listProjectsQueryKey(options)
 });
 
+/**
+ * Create a project
+ *
+ * A new project with no version yet: its id (given, or a slug of the name), meta.json and project-settings.json (office and naming derived from the names, U-13.3); newOfficeName creates the office. Its first version comes from an upload and a build.
+ */
+export const createProjectMutation = (options?: Partial<Options<CreateProjectData>>): UseMutationOptions<CreateProjectResponse, CreateProjectError, Options<CreateProjectData>> => {
+    const mutationOptions: UseMutationOptions<CreateProjectResponse, CreateProjectError, Options<CreateProjectData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await createProject({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
 export const getProjectQueryKey = (options: Options<GetProjectData>) => createQueryKey('getProject', options);
 
 /**
@@ -97,6 +136,340 @@ export const getProjectOptions = (options: Options<GetProjectData>) => queryOpti
         return data;
     },
     queryKey: getProjectQueryKey(options)
+});
+
+export const listBuildsQueryKey = (options: Options<ListBuildsData>) => createQueryKey('listBuilds', options);
+
+/**
+ * List a project's builds
+ *
+ * Every build (draft) of the project, open and saved, newest first.
+ */
+export const listBuildsOptions = (options: Options<ListBuildsData>) => queryOptions<ListBuildsResponse, ListBuildsError, ListBuildsResponse, ReturnType<typeof listBuildsQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await listBuilds({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: listBuildsQueryKey(options)
+});
+
+/**
+ * Start a build
+ *
+ * A new draft of the project from uploaded sources (or the sources of a version or build named by `from`), with its starting settings, and its first run: a prepare (convert, check and read each source; suggest layer roles). The settings proposal is adopted as revision 1 when the prepare is done (U-3.3).
+ */
+export const createBuildMutation = (options?: Partial<Options<CreateBuildData>>): UseMutationOptions<CreateBuildResponse, CreateBuildError, Options<CreateBuildData>> => {
+    const mutationOptions: UseMutationOptions<CreateBuildResponse, CreateBuildError, Options<CreateBuildData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await createBuild({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Delete a build
+ *
+ * Removes an open draft with its runs and outputs (never a saved one; never while a run is going).
+ */
+export const deleteBuildMutation = (options?: Partial<Options<DeleteBuildData>>): UseMutationOptions<DeleteBuildResponse, DeleteBuildError, Options<DeleteBuildData>> => {
+    const mutationOptions: UseMutationOptions<DeleteBuildResponse, DeleteBuildError, Options<DeleteBuildData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await deleteBuild({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const getBuildQueryKey = (options: Options<GetBuildData>) => createQueryKey('getBuild', options);
+
+/**
+ * Get a build
+ *
+ * A build's sources with their conversion verdicts and units, its settings (null with withSettings=false), the layer suggestions, the run going now or the last one, and the last build run's result. A run found done is validated here once (U-3.2).
+ */
+export const getBuildOptions = (options: Options<GetBuildData>) => queryOptions<GetBuildResponse, GetBuildError, GetBuildResponse, ReturnType<typeof getBuildQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getBuild({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getBuildQueryKey(options)
+});
+
+/**
+ * Cancel the run
+ *
+ * Asks the queued or running run to stop (run.cancelRequested turns true: "Stopping..."); it ends cancelled within 15 s (U-3.4).
+ */
+export const cancelBuildRunMutation = (options?: Partial<Options<CancelBuildRunData>>): UseMutationOptions<CancelBuildRunResponse, CancelBuildRunError, Options<CancelBuildRunData>> => {
+    const mutationOptions: UseMutationOptions<CancelBuildRunResponse, CancelBuildRunError, Options<CancelBuildRunData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await cancelBuildRun({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const getBuildDiffQueryKey = (options: Options<GetBuildDiffData>) => createQueryKey('getBuildDiff', options);
+
+/**
+ * Get the last build's diff
+ *
+ * The last build against the previous build run of the draft and against the latest version, compared in sheet coordinates (BuildDiff).
+ */
+export const getBuildDiffOptions = (options: Options<GetBuildDiffData>) => queryOptions<GetBuildDiffResponse, GetBuildDiffError, GetBuildDiffResponse, ReturnType<typeof getBuildDiffQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getBuildDiff({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getBuildDiffQueryKey(options)
+});
+
+export const downloadBuildMaxScriptQueryKey = (options: Options<DownloadBuildMaxScriptData>) => createQueryKey('downloadBuildMaxScript', options);
+
+/**
+ * Download the draft's 3ds Max script
+ *
+ * The last build's .ms script as built (text/plain; charset=utf-8), as an attachment <stem>_draft.ms.
+ */
+export const downloadBuildMaxScriptOptions = (options: Options<DownloadBuildMaxScriptData>) => queryOptions<DownloadBuildMaxScriptResponse, DownloadBuildMaxScriptError, DownloadBuildMaxScriptResponse, ReturnType<typeof downloadBuildMaxScriptQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await downloadBuildMaxScript({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: downloadBuildMaxScriptQueryKey(options)
+});
+
+export const getBuildModelQueryKey = (options: Options<GetBuildModelData>) => createQueryKey('getBuildModel', options);
+
+/**
+ * Get the last build's model
+ *
+ * The draft's model.json as built: BuiltModel v1 (built-model.schema.json).
+ */
+export const getBuildModelOptions = (options: Options<GetBuildModelData>) => queryOptions<GetBuildModelResponse, GetBuildModelError, GetBuildModelResponse, ReturnType<typeof getBuildModelQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getBuildModel({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getBuildModelQueryKey(options)
+});
+
+export const getBuildOverlayQueryKey = (options: Options<GetBuildOverlayData>) => createQueryKey('getBuildOverlay', options);
+
+/**
+ * Get the last build's overlay
+ *
+ * What the check screen draws over each floor's plan: the built parts, slabs, openings, furniture, rooms and set-aside items in sheet coordinates, and the flags (BuildOverlay).
+ */
+export const getBuildOverlayOptions = (options: Options<GetBuildOverlayData>) => queryOptions<GetBuildOverlayResponse, GetBuildOverlayError, GetBuildOverlayResponse, ReturnType<typeof getBuildOverlayQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getBuildOverlay({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getBuildOverlayQueryKey(options)
+});
+
+/**
+ * Build
+ *
+ * Starts a build run with the saved settings: detect openings, build the model and write every output. Poll getBuild for its progress.
+ */
+export const runBuildMutation = (options?: Partial<Options<RunBuildData>>): UseMutationOptions<RunBuildResponse, RunBuildError, Options<RunBuildData>> => {
+    const mutationOptions: UseMutationOptions<RunBuildResponse, RunBuildError, Options<RunBuildData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await runBuild({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Save the build as a version
+ *
+ * Makes the last build run's outputs the project's next version (create_version), writes the project settings and, when asked, the office memory, and marks the build saved. Idempotent: a second save of the same build gets 409 build_saved with the version.
+ */
+export const saveBuildMutation = (options?: Partial<Options<SaveBuildData>>): UseMutationOptions<SaveBuildResponse, SaveBuildError, Options<SaveBuildData>> => {
+    const mutationOptions: UseMutationOptions<SaveBuildResponse, SaveBuildError, Options<SaveBuildData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await saveBuild({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Save a build's settings
+ *
+ * Replaces the settings (send `If-Match: "<revision>"`; revision + 1). A change of a source's units rescales that source's boxes and points and starts a prepare that reads it again (U-7.4). layersReviewed: true from the Layers step marks the build reviewed (U-8.3).
+ */
+export const putBuildSettingsMutation = (options?: Partial<Options<PutBuildSettingsData>>): UseMutationOptions<PutBuildSettingsResponse, PutBuildSettingsError, Options<PutBuildSettingsData>> => {
+    const mutationOptions: UseMutationOptions<PutBuildSettingsResponse, PutBuildSettingsError, Options<PutBuildSettingsData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await putBuildSettings({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const getBuildConversionQueryKey = (options: Options<GetBuildConversionData>) => createQueryKey('getBuildConversion', options);
+
+/**
+ * Get a source's conversion report
+ *
+ * The ConversionReport of one source of the build as the prepare run wrote it (upload-contracts.ts section 4): the verdict, the converter's messages by class, what was lost.
+ */
+export const getBuildConversionOptions = (options: Options<GetBuildConversionData>) => queryOptions<GetBuildConversionResponse, GetBuildConversionError, GetBuildConversionResponse, ReturnType<typeof getBuildConversionQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getBuildConversion({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getBuildConversionQueryKey(options)
+});
+
+export const getBuildDrawingQueryKey = (options: Options<GetBuildDrawingData>) => createQueryKey('getBuildDrawing', options);
+
+/**
+ * Get a source's drawing read
+ *
+ * The DrawingRead of one source (upload-contracts.ts section 4): units, layers with their statistics, blocks, texts, level tags, grid labels and area proposals.
+ */
+export const getBuildDrawingOptions = (options: Options<GetBuildDrawingData>) => queryOptions<GetBuildDrawingResponse, GetBuildDrawingError, GetBuildDrawingResponse, ReturnType<typeof getBuildDrawingQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getBuildDrawing({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getBuildDrawingQueryKey(options)
+});
+
+export const getBuildPlanQueryKey = (options: Options<GetBuildPlanData>) => createQueryKey('getBuildPlan', options);
+
+/**
+ * Get a source's plan geometry
+ *
+ * The PlanGeometry of one source (upload-contracts.ts section 4) for the plan canvas: every item of the sheet in centimetre quanta, with its key and signatures. Sent gzipped when the request accepts it.
+ */
+export const getBuildPlanOptions = (options: Options<GetBuildPlanData>) => queryOptions<GetBuildPlanResponse, GetBuildPlanError, GetBuildPlanResponse, ReturnType<typeof getBuildPlanQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getBuildPlan({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getBuildPlanQueryKey(options)
+});
+
+export const getBuildStagesQueryKey = (options: Options<GetBuildStagesData>) => createQueryKey('getBuildStages', options);
+
+/**
+ * Get the last build's replay data
+ *
+ * The draft's stages.json as built: ReplayData v1, recorded from the build.
+ */
+export const getBuildStagesOptions = (options: Options<GetBuildStagesData>) => queryOptions<GetBuildStagesResponse, GetBuildStagesError, GetBuildStagesResponse, ReturnType<typeof getBuildStagesQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getBuildStages({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getBuildStagesQueryKey(options)
+});
+
+export const getBuildTopviewQueryKey = (options: Options<GetBuildTopviewData>) => createQueryKey('getBuildTopview', options);
+
+/**
+ * Get the last build's top view
+ *
+ * The draft's topview.png as built.
+ */
+export const getBuildTopviewOptions = (options: Options<GetBuildTopviewData>) => queryOptions<GetBuildTopviewResponse, GetBuildTopviewError, GetBuildTopviewResponse, ReturnType<typeof getBuildTopviewQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getBuildTopview({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getBuildTopviewQueryKey(options)
 });
 
 export const getThumbnailQueryKey = (options: Options<GetThumbnailData>) => createQueryKey('getThumbnail', options);
@@ -297,3 +670,99 @@ export const getStagesOptions = (options: Options<GetStagesData>) => queryOption
     },
     queryKey: getStagesQueryKey(options)
 });
+
+/**
+ * Start an upload
+ *
+ * Opens an upload session for one DWG or DXF file of a project: the file goes up in parts of partBytes (8 MiB) to partUrls, then completeUrl makes it a source. A session not completed within 24 h is removed.
+ */
+export const createUploadMutation = (options?: Partial<Options<CreateUploadData>>): UseMutationOptions<CreateUploadResponse, CreateUploadError, Options<CreateUploadData>> => {
+    const mutationOptions: UseMutationOptions<CreateUploadResponse, CreateUploadError, Options<CreateUploadData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await createUpload({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Cancel an upload
+ *
+ * Removes an upload session and the parts received.
+ */
+export const cancelUploadMutation = (options?: Partial<Options<CancelUploadData>>): UseMutationOptions<CancelUploadResponse, CancelUploadError, Options<CancelUploadData>> => {
+    const mutationOptions: UseMutationOptions<CancelUploadResponse, CancelUploadError, Options<CancelUploadData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await cancelUpload({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+export const getUploadQueryKey = (options: Options<GetUploadData>) => createQueryKey('getUpload', options);
+
+/**
+ * Get an upload
+ *
+ * An upload session with the parts received so far (to resume an upload after a page reload).
+ */
+export const getUploadOptions = (options: Options<GetUploadData>) => queryOptions<GetUploadResponse, GetUploadError, GetUploadResponse, ReturnType<typeof getUploadQueryKey>>({
+    queryFn: async ({ queryKey, signal }) => {
+        const { data } = await getUpload({
+            ...options,
+            ...queryKey[0],
+            signal,
+            throwOnError: true
+        });
+        return data;
+    },
+    queryKey: getUploadQueryKey(options)
+});
+
+/**
+ * Complete an upload
+ *
+ * Joins the parts, checks the first bytes (a DWG of R13 or newer, an ASCII or binary DXF) and stores the file as a source of the project, named by its sha1 (the same file uploaded twice is one source).
+ */
+export const completeUploadMutation = (options?: Partial<Options<CompleteUploadData>>): UseMutationOptions<CompleteUploadResponse, CompleteUploadError, Options<CompleteUploadData>> => {
+    const mutationOptions: UseMutationOptions<CompleteUploadResponse, CompleteUploadError, Options<CompleteUploadData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await completeUpload({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Send one part of an upload
+ *
+ * The bytes of part <part> (application/octet-stream). Idempotent: a part sent again replaces itself.
+ */
+export const putUploadPartMutation = (options?: Partial<Options<PutUploadPartData>>): UseMutationOptions<PutUploadPartResponse, PutUploadPartError, Options<PutUploadPartData>> => {
+    const mutationOptions: UseMutationOptions<PutUploadPartResponse, PutUploadPartError, Options<PutUploadPartData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await putUploadPart({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};

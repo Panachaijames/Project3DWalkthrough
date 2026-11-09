@@ -1,0 +1,47 @@
+{
+  "format": "max-texts/1",
+  "profile": "upload",
+  "_what": "A MaxTexts profile of the one 3ds Max generator (services/builder/walkthrough_builder/out/maxscript.py; docs/upload/DESIGN.md U-11.5). Owner U4. Fields: date (null: the build's date), titleSuffix (after the upper-case project name, __TITLE__), builtBy, page, frame (__BUILTBY__, __PAGE__, __FRAME__), header (the leading comment block; a line __PLACEDAT__ is replaced by placedAt, a line __NOTES__ by the notes whose condition holds: always | revitGlass | pictures | furniture | steps), tooltip (the placement tick box's), datumSource (the datum's Source property), datumExtra (whole MAXScript lines after the datum's Levels property), rolloutSuffix (after the short name in the window's title), pictures (one datum Picture line per floor from model.pictureFrame). Placeholders the generator computes for every profile: __TITLE__ __PROJECT__ __SHORT__ __SOURCE__ __SHA__ __LEVELTXT__ __HEIGHTTXT__ __PX__ __FLOOR1__ __DATE__ __BUILTBY__ __PAGE__ __FRAME__ __FOLLOWTXT__ __KEEPTXT__ __STAIRTXT__ __AXISTXT__ __DOORTXT__ __SCALETXT__ __CONVERTED__. This one is the default for every uploaded version: the date is the build's, no \"(test)\".",
+  "date": null,
+  "titleSuffix": "",
+  "builtBy": "the walkthrough app",
+  "page": "the walkthrough app",
+  "frame": "",
+  "header": [
+    "-- __TITLE__ / built by __BUILTBY__ from \"__SOURCE__\", __DATE__",
+    "-- Same model as the version in __PAGE__ (model data __SHA__). Floor levels __LEVELTXT__ m, wall heights __HEIGHTTXT__ m.",
+    "-- The drawings were __CONVERTED__.",
+    "__PLACEDAT__",
+    "-- Every part stays LIVE (no Editable Poly): an editable spline outline + an Extrude modifier (output: Mesh) + Smooth.",
+    "--   * Change a height: the Extrude amount on that object, or \"Update levels and heights\" in this script's window.",
+    "--   * Change an outline: select the spline level under the modifiers and move vertices.",
+    "--   * Editable Mesh: tick \"Collapse to Editable Mesh\" before Build, or press \"Collapse all now\" later.",
+    "-- Each object's pivot is at the middle of its own outline, on its base. Layers per level and kind (__PX_____FLOOR1___Walls ...).",
+    "-- \"Update levels and heights\" sets the tops of the __FOLLOWTXT__ to their level's wall height and keeps",
+    "-- __KEEPTXT__ at their own heights (only parts marked to follow the wall height change).",
+    "__NOTES__",
+    "-- Each part is checked as it is built (closed solid, height, position). A part that fails is kept on layer",
+    "-- __PX___Check_Failed and listed in the MAXScript Listener; the rest is still built.",
+    "-- Build sets System Units to metres. Nothing in an existing scene is changed: run it in a NEW EMPTY scene."
+  ],
+  "placedAt": [
+    "-- Placed at the drawing's own coordinates in metres (to line up with the drawings imported in metres), or centred on",
+    "-- the origin if you untick that box in the script's window."
+  ],
+  "notes": [
+    {
+      "when": "revitGlass",
+      "lines": [
+        "-- Glass partitions (Revit glass wall types) are their own objects on __PX___<level>_Glass, at the height their type",
+        "-- name gives (2600H = 2.60 m)."
+      ]
+    }
+  ],
+  "tooltip": "Untick to centre the model on the origin",
+  "datumSource": "__SOURCE__, __CONVERTED__, model in metres",
+  "datumExtra": [
+    "    setUserProp origin \"Built\" \"by __BUILTBY__, __DATE__ (model data __SHA__)\""
+  ],
+  "rolloutSuffix": "",
+  "pictures": false
+}

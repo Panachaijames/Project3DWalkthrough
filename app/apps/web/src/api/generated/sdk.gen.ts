@@ -2,7 +2,7 @@
 
 import type { Client, ClientMeta, Options as Options2, RequestResult, TDataShape } from './client';
 import { client } from './client.gen';
-import type { DownloadFurnitureCsvData, DownloadFurnitureCsvErrors, DownloadFurnitureCsvResponses, DownloadMaxScriptData, DownloadMaxScriptErrors, DownloadMaxScriptResponses, DownloadOfflineHtmlData, DownloadOfflineHtmlErrors, DownloadOfflineHtmlResponses, GetAssetData, GetAssetErrors, GetAssetResponses, GetFurnitureHeightsData, GetFurnitureHeightsErrors, GetFurnitureHeightsResponses, GetModelData, GetModelErrors, GetModelResponses, GetProjectData, GetProjectErrors, GetProjectResponses, GetStagesData, GetStagesErrors, GetStagesResponses, GetThumbnailData, GetThumbnailErrors, GetThumbnailResponses, GetVersionData, GetVersionErrors, GetVersionResponses, HealthData, HealthResponses, ListProjectsData, ListProjectsResponses, PutFurnitureHeightsData, PutFurnitureHeightsErrors, PutFurnitureHeightsResponses } from './types.gen';
+import type { CancelBuildRunData, CancelBuildRunErrors, CancelBuildRunResponses, CancelUploadData, CancelUploadErrors, CancelUploadResponses, CompleteUploadData, CompleteUploadErrors, CompleteUploadResponses, CreateBuildData, CreateBuildErrors, CreateBuildResponses, CreateProjectData, CreateProjectErrors, CreateProjectResponses, CreateUploadData, CreateUploadErrors, CreateUploadResponses, DeleteBuildData, DeleteBuildErrors, DeleteBuildResponses, DownloadBuildMaxScriptData, DownloadBuildMaxScriptErrors, DownloadBuildMaxScriptResponses, DownloadFurnitureCsvData, DownloadFurnitureCsvErrors, DownloadFurnitureCsvResponses, DownloadMaxScriptData, DownloadMaxScriptErrors, DownloadMaxScriptResponses, DownloadOfflineHtmlData, DownloadOfflineHtmlErrors, DownloadOfflineHtmlResponses, GetAssetData, GetAssetErrors, GetAssetResponses, GetBuildConversionData, GetBuildConversionErrors, GetBuildConversionResponses, GetBuildData, GetBuildDiffData, GetBuildDiffErrors, GetBuildDiffResponses, GetBuildDrawingData, GetBuildDrawingErrors, GetBuildDrawingResponses, GetBuildErrors, GetBuildModelData, GetBuildModelErrors, GetBuildModelResponses, GetBuildOverlayData, GetBuildOverlayErrors, GetBuildOverlayResponses, GetBuildPlanData, GetBuildPlanErrors, GetBuildPlanResponses, GetBuildResponses, GetBuildStagesData, GetBuildStagesErrors, GetBuildStagesResponses, GetBuildTopviewData, GetBuildTopviewErrors, GetBuildTopviewResponses, GetFurnitureHeightsData, GetFurnitureHeightsErrors, GetFurnitureHeightsResponses, GetModelData, GetModelErrors, GetModelResponses, GetProjectData, GetProjectErrors, GetProjectResponses, GetStagesData, GetStagesErrors, GetStagesResponses, GetThumbnailData, GetThumbnailErrors, GetThumbnailResponses, GetUploadData, GetUploadErrors, GetUploadResponses, GetVersionData, GetVersionErrors, GetVersionResponses, HealthData, HealthResponses, ListBuildsData, ListBuildsErrors, ListBuildsResponses, ListOfficesData, ListOfficesResponses, ListProjectsData, ListProjectsResponses, PutBuildSettingsData, PutBuildSettingsErrors, PutBuildSettingsResponses, PutFurnitureHeightsData, PutFurnitureHeightsErrors, PutFurnitureHeightsResponses, PutUploadPartData, PutUploadPartErrors, PutUploadPartResponses, RunBuildData, RunBuildErrors, RunBuildResponses, SaveBuildData, SaveBuildErrors, SaveBuildResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -26,6 +26,13 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 export const health = <ThrowOnError extends boolean = false>(options?: Options<HealthData, ThrowOnError>): RequestResult<HealthResponses, unknown, ThrowOnError> => (options?.client ?? client).get<HealthResponses, unknown, ThrowOnError>({ url: '/api/health', ...options });
 
 /**
+ * List offices
+ *
+ * Every office with remembered layer roles (data/mappings/<officeId>.json): id, name, how many layers it remembers and when it last changed.
+ */
+export const listOffices = <ThrowOnError extends boolean = false>(options?: Options<ListOfficesData, ThrowOnError>): RequestResult<ListOfficesResponses, unknown, ThrowOnError> => (options?.client ?? client).get<ListOfficesResponses, unknown, ThrowOnError>({ url: '/api/offices', ...options });
+
+/**
  * List projects
  *
  * Every project with its latest version's counts and stamp, sorted by updatedAt, newest first.
@@ -33,11 +40,179 @@ export const health = <ThrowOnError extends boolean = false>(options?: Options<H
 export const listProjects = <ThrowOnError extends boolean = false>(options?: Options<ListProjectsData, ThrowOnError>): RequestResult<ListProjectsResponses, unknown, ThrowOnError> => (options?.client ?? client).get<ListProjectsResponses, unknown, ThrowOnError>({ url: '/api/projects', ...options });
 
 /**
+ * Create a project
+ *
+ * A new project with no version yet: its id (given, or a slug of the name), meta.json and project-settings.json (office and naming derived from the names, U-13.3); newOfficeName creates the office. Its first version comes from an upload and a build.
+ */
+export const createProject = <ThrowOnError extends boolean = false>(options: Options<CreateProjectData, ThrowOnError>): RequestResult<CreateProjectResponses, CreateProjectErrors, ThrowOnError> => (options.client ?? client).post<CreateProjectResponses, CreateProjectErrors, ThrowOnError>({
+    url: '/api/projects',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
  * Get a project
  *
  * One project with every version, oldest first.
  */
 export const getProject = <ThrowOnError extends boolean = false>(options: Options<GetProjectData, ThrowOnError>): RequestResult<GetProjectResponses, GetProjectErrors, ThrowOnError> => (options.client ?? client).get<GetProjectResponses, GetProjectErrors, ThrowOnError>({ url: '/api/projects/{projectId}', ...options });
+
+/**
+ * List a project's builds
+ *
+ * Every build (draft) of the project, open and saved, newest first.
+ */
+export const listBuilds = <ThrowOnError extends boolean = false>(options: Options<ListBuildsData, ThrowOnError>): RequestResult<ListBuildsResponses, ListBuildsErrors, ThrowOnError> => (options.client ?? client).get<ListBuildsResponses, ListBuildsErrors, ThrowOnError>({ url: '/api/projects/{projectId}/builds', ...options });
+
+/**
+ * Start a build
+ *
+ * A new draft of the project from uploaded sources (or the sources of a version or build named by `from`), with its starting settings, and its first run: a prepare (convert, check and read each source; suggest layer roles). The settings proposal is adopted as revision 1 when the prepare is done (U-3.3).
+ */
+export const createBuild = <ThrowOnError extends boolean = false>(options: Options<CreateBuildData, ThrowOnError>): RequestResult<CreateBuildResponses, CreateBuildErrors, ThrowOnError> => (options.client ?? client).post<CreateBuildResponses, CreateBuildErrors, ThrowOnError>({
+    url: '/api/projects/{projectId}/builds',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Delete a build
+ *
+ * Removes an open draft with its runs and outputs (never a saved one; never while a run is going).
+ */
+export const deleteBuild = <ThrowOnError extends boolean = false>(options: Options<DeleteBuildData, ThrowOnError>): RequestResult<DeleteBuildResponses, DeleteBuildErrors, ThrowOnError> => (options.client ?? client).delete<DeleteBuildResponses, DeleteBuildErrors, ThrowOnError>({ url: '/api/projects/{projectId}/builds/{buildId}', ...options });
+
+/**
+ * Get a build
+ *
+ * A build's sources with their conversion verdicts and units, its settings (null with withSettings=false), the layer suggestions, the run going now or the last one, and the last build run's result. A run found done is validated here once (U-3.2).
+ */
+export const getBuild = <ThrowOnError extends boolean = false>(options: Options<GetBuildData, ThrowOnError>): RequestResult<GetBuildResponses, GetBuildErrors, ThrowOnError> => (options.client ?? client).get<GetBuildResponses, GetBuildErrors, ThrowOnError>({ url: '/api/projects/{projectId}/builds/{buildId}', ...options });
+
+/**
+ * Cancel the run
+ *
+ * Asks the queued or running run to stop (run.cancelRequested turns true: "Stopping..."); it ends cancelled within 15 s (U-3.4).
+ */
+export const cancelBuildRun = <ThrowOnError extends boolean = false>(options: Options<CancelBuildRunData, ThrowOnError>): RequestResult<CancelBuildRunResponses, CancelBuildRunErrors, ThrowOnError> => (options.client ?? client).post<CancelBuildRunResponses, CancelBuildRunErrors, ThrowOnError>({
+    url: '/api/projects/{projectId}/builds/{buildId}/cancel',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get the last build's diff
+ *
+ * The last build against the previous build run of the draft and against the latest version, compared in sheet coordinates (BuildDiff).
+ */
+export const getBuildDiff = <ThrowOnError extends boolean = false>(options: Options<GetBuildDiffData, ThrowOnError>): RequestResult<GetBuildDiffResponses, GetBuildDiffErrors, ThrowOnError> => (options.client ?? client).get<GetBuildDiffResponses, GetBuildDiffErrors, ThrowOnError>({ url: '/api/projects/{projectId}/builds/{buildId}/diff', ...options });
+
+/**
+ * Download the draft's 3ds Max script
+ *
+ * The last build's .ms script as built (text/plain; charset=utf-8), as an attachment <stem>_draft.ms.
+ */
+export const downloadBuildMaxScript = <ThrowOnError extends boolean = false>(options: Options<DownloadBuildMaxScriptData, ThrowOnError>): RequestResult<DownloadBuildMaxScriptResponses, DownloadBuildMaxScriptErrors, ThrowOnError> => (options.client ?? client).get<DownloadBuildMaxScriptResponses, DownloadBuildMaxScriptErrors, ThrowOnError>({ url: '/api/projects/{projectId}/builds/{buildId}/max-script', ...options });
+
+/**
+ * Get the last build's model
+ *
+ * The draft's model.json as built: BuiltModel v1 (built-model.schema.json).
+ */
+export const getBuildModel = <ThrowOnError extends boolean = false>(options: Options<GetBuildModelData, ThrowOnError>): RequestResult<GetBuildModelResponses, GetBuildModelErrors, ThrowOnError> => (options.client ?? client).get<GetBuildModelResponses, GetBuildModelErrors, ThrowOnError>({ url: '/api/projects/{projectId}/builds/{buildId}/model', ...options });
+
+/**
+ * Get the last build's overlay
+ *
+ * What the check screen draws over each floor's plan: the built parts, slabs, openings, furniture, rooms and set-aside items in sheet coordinates, and the flags (BuildOverlay).
+ */
+export const getBuildOverlay = <ThrowOnError extends boolean = false>(options: Options<GetBuildOverlayData, ThrowOnError>): RequestResult<GetBuildOverlayResponses, GetBuildOverlayErrors, ThrowOnError> => (options.client ?? client).get<GetBuildOverlayResponses, GetBuildOverlayErrors, ThrowOnError>({ url: '/api/projects/{projectId}/builds/{buildId}/overlay', ...options });
+
+/**
+ * Build
+ *
+ * Starts a build run with the saved settings: detect openings, build the model and write every output. Poll getBuild for its progress.
+ */
+export const runBuild = <ThrowOnError extends boolean = false>(options: Options<RunBuildData, ThrowOnError>): RequestResult<RunBuildResponses, RunBuildErrors, ThrowOnError> => (options.client ?? client).post<RunBuildResponses, RunBuildErrors, ThrowOnError>({
+    url: '/api/projects/{projectId}/builds/{buildId}/run',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Save the build as a version
+ *
+ * Makes the last build run's outputs the project's next version (create_version), writes the project settings and, when asked, the office memory, and marks the build saved. Idempotent: a second save of the same build gets 409 build_saved with the version.
+ */
+export const saveBuild = <ThrowOnError extends boolean = false>(options: Options<SaveBuildData, ThrowOnError>): RequestResult<SaveBuildResponses, SaveBuildErrors, ThrowOnError> => (options.client ?? client).post<SaveBuildResponses, SaveBuildErrors, ThrowOnError>({
+    url: '/api/projects/{projectId}/builds/{buildId}/save',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Save a build's settings
+ *
+ * Replaces the settings (send `If-Match: "<revision>"`; revision + 1). A change of a source's units rescales that source's boxes and points and starts a prepare that reads it again (U-7.4). layersReviewed: true from the Layers step marks the build reviewed (U-8.3).
+ */
+export const putBuildSettings = <ThrowOnError extends boolean = false>(options: Options<PutBuildSettingsData, ThrowOnError>): RequestResult<PutBuildSettingsResponses, PutBuildSettingsErrors, ThrowOnError> => (options.client ?? client).put<PutBuildSettingsResponses, PutBuildSettingsErrors, ThrowOnError>({
+    url: '/api/projects/{projectId}/builds/{buildId}/settings',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get a source's conversion report
+ *
+ * The ConversionReport of one source of the build as the prepare run wrote it (upload-contracts.ts section 4): the verdict, the converter's messages by class, what was lost.
+ */
+export const getBuildConversion = <ThrowOnError extends boolean = false>(options: Options<GetBuildConversionData, ThrowOnError>): RequestResult<GetBuildConversionResponses, GetBuildConversionErrors, ThrowOnError> => (options.client ?? client).get<GetBuildConversionResponses, GetBuildConversionErrors, ThrowOnError>({ url: '/api/projects/{projectId}/builds/{buildId}/sources/{sha1}/conversion', ...options });
+
+/**
+ * Get a source's drawing read
+ *
+ * The DrawingRead of one source (upload-contracts.ts section 4): units, layers with their statistics, blocks, texts, level tags, grid labels and area proposals.
+ */
+export const getBuildDrawing = <ThrowOnError extends boolean = false>(options: Options<GetBuildDrawingData, ThrowOnError>): RequestResult<GetBuildDrawingResponses, GetBuildDrawingErrors, ThrowOnError> => (options.client ?? client).get<GetBuildDrawingResponses, GetBuildDrawingErrors, ThrowOnError>({ url: '/api/projects/{projectId}/builds/{buildId}/sources/{sha1}/drawing', ...options });
+
+/**
+ * Get a source's plan geometry
+ *
+ * The PlanGeometry of one source (upload-contracts.ts section 4) for the plan canvas: every item of the sheet in centimetre quanta, with its key and signatures. Sent gzipped when the request accepts it.
+ */
+export const getBuildPlan = <ThrowOnError extends boolean = false>(options: Options<GetBuildPlanData, ThrowOnError>): RequestResult<GetBuildPlanResponses, GetBuildPlanErrors, ThrowOnError> => (options.client ?? client).get<GetBuildPlanResponses, GetBuildPlanErrors, ThrowOnError>({ url: '/api/projects/{projectId}/builds/{buildId}/sources/{sha1}/plan', ...options });
+
+/**
+ * Get the last build's replay data
+ *
+ * The draft's stages.json as built: ReplayData v1, recorded from the build.
+ */
+export const getBuildStages = <ThrowOnError extends boolean = false>(options: Options<GetBuildStagesData, ThrowOnError>): RequestResult<GetBuildStagesResponses, GetBuildStagesErrors, ThrowOnError> => (options.client ?? client).get<GetBuildStagesResponses, GetBuildStagesErrors, ThrowOnError>({ url: '/api/projects/{projectId}/builds/{buildId}/stages', ...options });
+
+/**
+ * Get the last build's top view
+ *
+ * The draft's topview.png as built.
+ */
+export const getBuildTopview = <ThrowOnError extends boolean = false>(options: Options<GetBuildTopviewData, ThrowOnError>): RequestResult<GetBuildTopviewResponses, GetBuildTopviewErrors, ThrowOnError> => (options.client ?? client).get<GetBuildTopviewResponses, GetBuildTopviewErrors, ThrowOnError>({ url: '/api/projects/{projectId}/builds/{buildId}/topview', ...options });
 
 /**
  * Get a project's thumbnail
@@ -115,3 +290,60 @@ export const getModel = <ThrowOnError extends boolean = false>(options: Options<
  * stages.json as stored: ReplayData v1. Versions without a build replay answer 404 no_stages.
  */
 export const getStages = <ThrowOnError extends boolean = false>(options: Options<GetStagesData, ThrowOnError>): RequestResult<GetStagesResponses, GetStagesErrors, ThrowOnError> => (options.client ?? client).get<GetStagesResponses, GetStagesErrors, ThrowOnError>({ url: '/api/projects/{projectId}/versions/{version}/stages', ...options });
+
+/**
+ * Start an upload
+ *
+ * Opens an upload session for one DWG or DXF file of a project: the file goes up in parts of partBytes (8 MiB) to partUrls, then completeUrl makes it a source. A session not completed within 24 h is removed.
+ */
+export const createUpload = <ThrowOnError extends boolean = false>(options: Options<CreateUploadData, ThrowOnError>): RequestResult<CreateUploadResponses, CreateUploadErrors, ThrowOnError> => (options.client ?? client).post<CreateUploadResponses, CreateUploadErrors, ThrowOnError>({
+    url: '/api/uploads',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Cancel an upload
+ *
+ * Removes an upload session and the parts received.
+ */
+export const cancelUpload = <ThrowOnError extends boolean = false>(options: Options<CancelUploadData, ThrowOnError>): RequestResult<CancelUploadResponses, CancelUploadErrors, ThrowOnError> => (options.client ?? client).delete<CancelUploadResponses, CancelUploadErrors, ThrowOnError>({ url: '/api/uploads/{uploadId}', ...options });
+
+/**
+ * Get an upload
+ *
+ * An upload session with the parts received so far (to resume an upload after a page reload).
+ */
+export const getUpload = <ThrowOnError extends boolean = false>(options: Options<GetUploadData, ThrowOnError>): RequestResult<GetUploadResponses, GetUploadErrors, ThrowOnError> => (options.client ?? client).get<GetUploadResponses, GetUploadErrors, ThrowOnError>({ url: '/api/uploads/{uploadId}', ...options });
+
+/**
+ * Complete an upload
+ *
+ * Joins the parts, checks the first bytes (a DWG of R13 or newer, an ASCII or binary DXF) and stores the file as a source of the project, named by its sha1 (the same file uploaded twice is one source).
+ */
+export const completeUpload = <ThrowOnError extends boolean = false>(options: Options<CompleteUploadData, ThrowOnError>): RequestResult<CompleteUploadResponses, CompleteUploadErrors, ThrowOnError> => (options.client ?? client).post<CompleteUploadResponses, CompleteUploadErrors, ThrowOnError>({
+    url: '/api/uploads/{uploadId}/complete',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Send one part of an upload
+ *
+ * The bytes of part <part> (application/octet-stream). Idempotent: a part sent again replaces itself.
+ */
+export const putUploadPart = <ThrowOnError extends boolean = false>(options: Options<PutUploadPartData, ThrowOnError>): RequestResult<PutUploadPartResponses, PutUploadPartErrors, ThrowOnError> => (options.client ?? client).put<PutUploadPartResponses, PutUploadPartErrors, ThrowOnError>({
+    bodySerializer: null,
+    url: '/api/uploads/{uploadId}/parts/{part}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/octet-stream',
+        ...options.headers
+    }
+});

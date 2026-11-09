@@ -1,9 +1,13 @@
 // One card of the project list (DESIGN.md 15.2): thumbnail (else a neutral placeholder with the short name), name, a
 // CAD / Pictures badge, floors, furniture and openings counts, the stamp, last updated, versions; links to the project.
+// A project with no version yet (made in the app, its upload or build unfinished; docs/upload/DESIGN.md U-14.1) links to
+// its newest open draft, or to its Upload screen when it has none (listBuilds, read for such cards only).
 // Names come from drawings: React renders them as text, never as HTML.
+import { useQuery } from '@tanstack/react-query';
 import { ImageOff } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router';
+import { listBuildsOptions } from '@/api/generated/@tanstack/react-query.gen';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -48,27 +52,43 @@ function Thumbnail({ project }: { project: ProjectSummary }) {
 
 const Dot = () => <span aria-hidden="true" className="text-muted-foreground/50">·</span>;
 
-/** A project made before its first version (the next milestone's upload, while it is built): nothing to open yet. */
+/** A project made before its first version (made in the app, while its first version is built). */
 export const hasVersions = (project: Pick<ProjectSummary, 'latestVersion' | 'versionCount'>) => project.latestVersion >= 1 && project.versionCount > 0;
 
+/** Where a project with no version leads: its newest open draft, else its Upload screen (U-14.1). */
+export function draftTarget(projectId: string, builds: readonly { id: string; status: string; createdAt: string }[] | undefined): string {
+  const open = (builds ?? []).filter(b => b.status === 'open').sort((a, b) => (a.createdAt < b.createdAt ? 1 : a.createdAt > b.createdAt ? -1 : 0));
+  return open[0] ? `/projects/${projectId}/builds/${open[0].id}` : `/projects/${projectId}/builds/new`;
+}
+
+function NoVersionCard({ project }: { project: ProjectSummary }) {
+  const builds = useQuery({ ...listBuildsOptions({ path: { projectId: project.id } }), staleTime: 5_000 });
+  const to = builds.data ? draftTarget(project.id, builds.data.builds) : `/projects/${project.id}`;
+  const hasDraft = !!builds.data?.builds.some(b => b.status === 'open');
+  return (
+    <Card
+      data-testid="project-card"
+      data-project-id={project.id}
+      data-no-versions=""
+      className="gap-0 overflow-hidden py-0 transition-shadow focus-within:ring-2 focus-within:ring-ring/50 hover:shadow-md"
+    >
+      <Link to={to} className="flex h-full flex-col outline-none" aria-label={`Continue ${project.name}`} data-testid="card-link" data-draft={hasDraft ? '' : undefined}>
+        <Thumbnail project={project} />
+        <CardHeader className="gap-1.5 px-4 pt-4 pb-4">
+          <div className="flex items-start justify-between gap-2">
+            <CardTitle className="leading-snug" data-testid="card-name">{project.name}</CardTitle>
+            <Badge variant="secondary" className="shrink-0" data-testid="card-source">{sourceKindLabel(project.sourceKind)}</Badge>
+          </div>
+          <CardDescription data-testid="card-no-versions">{NO_VERSIONS}</CardDescription>
+          <p className="text-sm text-muted-foreground" data-testid="card-next">{hasDraft ? 'A draft is open: continue it' : 'Upload its drawings'}</p>
+        </CardHeader>
+      </Link>
+    </Card>
+  );
+}
+
 export function ProjectCard({ project }: { project: ProjectSummary }) {
-  if (!hasVersions(project)) {
-    // fix step (review finding "code" 10): its card linked to /projects/<id>, which went on to v/0 and Not found
-    return (
-      <Card data-testid="project-card" data-project-id={project.id} data-no-versions="" className="gap-0 overflow-hidden py-0">
-        <div className="flex h-full flex-col">
-          <Thumbnail project={project} />
-          <CardHeader className="gap-1.5 px-4 pt-4">
-            <div className="flex items-start justify-between gap-2">
-              <CardTitle className="leading-snug" data-testid="card-name">{project.name}</CardTitle>
-              <Badge variant="secondary" className="shrink-0" data-testid="card-source">{sourceKindLabel(project.sourceKind)}</Badge>
-            </div>
-            <CardDescription data-testid="card-no-versions">{NO_VERSIONS}</CardDescription>
-          </CardHeader>
-        </div>
-      </Card>
-    );
-  }
+  if (!hasVersions(project)) return <NoVersionCard project={project} />;
   return (
     <Card
       data-testid="project-card"

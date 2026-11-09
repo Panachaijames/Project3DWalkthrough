@@ -1,0 +1,40 @@
+{
+  "format": "fake-run/1",
+  "kind": "build",
+  "runId": "0002-build",
+  "outputs": {
+    "model.json": {
+      "fixture": "fixtures/models/bank-v2.model.json"
+    },
+    "stages.json": {
+      "fixture": "fixtures/stages/bank-v2.stages.json"
+    },
+    "presentation.json": {
+      "file": "out/presentation.json"
+    },
+    "report.json": {
+      "file": "out/report.json"
+    },
+    "overlay.json": {
+      "fixture": "fixtures/upload/overlay/bank.overlay.json"
+    },
+    "diff.json": {
+      "file": "out/diff.json"
+    },
+    "openings.json": {
+      "file": "out/openings.json"
+    },
+    "pieces.json": {
+      "file": "out/pieces.json"
+    },
+    "topview.png": {
+      "prototype": "bank_test/src/bank_topview.png"
+    },
+    "Bangkok_Bank_Sampeng.ms": {
+      "prototype": "bank_test/Bangkok_Bank_Sampeng.ms"
+    },
+    "inputs.json": {
+      "file": "out/inputs.json"
+    }
+  }
+}

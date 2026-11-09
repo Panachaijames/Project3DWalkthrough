@@ -1,9 +1,11 @@
 // /projects (DESIGN.md 15.1, 15.2): a grid of project cards, newest first. Loading: skeleton cards; error: an Alert with
-// Retry; empty: `No projects yet: run npm run seed`. The loader starts the list query (ensureQueryData) without waiting for
-// it, so the page itself shows the loading and error states.
+// Retry; empty: `No projects yet: make one with New project` (docs/upload/DESIGN.md U-14.1, with the New project button).
+// The loader starts the list query (ensureQueryData) without waiting for it, so the page itself shows the loading and
+// error states.
 import { useQuery, type QueryClient } from '@tanstack/react-query';
-import { CircleAlert, RotateCw } from 'lucide-react';
+import { CircleAlert, Plus, RotateCw } from 'lucide-react';
 import type { ReactNode } from 'react';
+import { Link } from 'react-router';
 import { AppBar } from '@/components/AppBar';
 import { ProjectCard, ProjectCardSkeleton } from '@/components/ProjectCard';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -40,6 +42,12 @@ function Shell({ children, count }: { children: ReactNode; count?: number }) {
         <div className="mb-4 flex items-baseline gap-3">
           <h1 className="text-xl font-semibold tracking-tight">Projects</h1>
           {count !== undefined && <span className="text-sm text-muted-foreground" data-testid="project-count">{formatNumber(count)}</span>}
+          <Button asChild size="sm" className="ml-auto self-center">
+            <Link to="/projects/new" data-testid="new-project">
+              <Plus aria-hidden="true" />
+              New project
+            </Link>
+          </Button>
         </div>
         {children}
       </main>

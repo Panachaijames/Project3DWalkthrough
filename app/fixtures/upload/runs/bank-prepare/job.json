@@ -1,0 +1,136 @@
+{
+  "format": "job/1",
+  "kind": "prepare",
+  "runId": "0001-prepare",
+  "status": "done",
+  "pid": null,
+  "procStart": null,
+  "queuedAt": "2026-11-04T00:00:00Z",
+  "startedAt": "2026-11-04T00:00:00Z",
+  "finishedAt": "2026-11-04T00:00:00Z",
+  "step": "suggest",
+  "progress": 1.0,
+  "steps": [
+    {
+      "name": "convert:0",
+      "label": "Converting I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg",
+      "status": "done",
+      "seconds": 0.27,
+      "note": ""
+    },
+    {
+      "name": "check:0",
+      "label": "Checking I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg",
+      "status": "done",
+      "seconds": 1.0,
+      "note": ""
+    },
+    {
+      "name": "read:0",
+      "label": "Reading I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg",
+      "status": "done",
+      "seconds": 3.06,
+      "note": ""
+    },
+    {
+      "name": "convert:1",
+      "label": "Converting I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg",
+      "status": "done",
+      "seconds": 0.43,
+      "note": ""
+    },
+    {
+      "name": "check:1",
+      "label": "Checking I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg",
+      "status": "done",
+      "seconds": 1.0,
+      "note": ""
+    },
+    {
+      "name": "read:1",
+      "label": "Reading I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg",
+      "status": "done",
+      "seconds": 8.28,
+      "note": ""
+    },
+    {
+      "name": "suggest",
+      "label": "Suggesting layer roles",
+      "status": "done",
+      "seconds": 0.5,
+      "note": ""
+    }
+  ],
+  "messages": [
+    {
+      "at": "2026-11-04T00:00:00Z",
+      "level": "info",
+      "text": "Converting I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg: done"
+    },
+    {
+      "at": "2026-11-04T00:00:00Z",
+      "level": "info",
+      "text": "Checking I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg: done"
+    },
+    {
+      "at": "2026-11-04T00:00:00Z",
+      "level": "info",
+      "text": "Reading I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg: done"
+    },
+    {
+      "at": "2026-11-04T00:00:00Z",
+      "level": "info",
+      "text": "Converting I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg: done"
+    },
+    {
+      "at": "2026-11-04T00:00:00Z",
+      "level": "info",
+      "text": "Checking I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg: done"
+    },
+    {
+      "at": "2026-11-04T00:00:00Z",
+      "level": "info",
+      "text": "Reading I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg: done"
+    },
+    {
+      "at": "2026-11-04T00:00:00Z",
+      "level": "info",
+      "text": "Suggesting layer roles: done"
+    }
+  ],
+  "error": null,
+  "outputs": {
+    "sources/459d40fc230607ffe35e2ee9d443cd2b0105dc36/conversion.json": {
+      "bytes": 1697,
+      "sha1": "20f2b322d74dffe32535121beb1b0eb89181461b"
+    },
+    "sources/459d40fc230607ffe35e2ee9d443cd2b0105dc36/drawing.json": {
+      "bytes": 91853,
+      "sha1": "c4c9d4857c37f1e1ddfb40cab81006b0f6bb1f10"
+    },
+    "sources/459d40fc230607ffe35e2ee9d443cd2b0105dc36/plan.json.gz": {
+      "bytes": 129010,
+      "sha1": "9c7c8ef6a338ebe1ada0913f143750861599e9a3"
+    },
+    "sources/6551bdc6f0cff4e31e83b68a55d22cf42703029a/conversion.json": {
+      "bytes": 2389,
+      "sha1": "269d79ae7ccd48700bc864935fb594cd9f5c82f5"
+    },
+    "sources/6551bdc6f0cff4e31e83b68a55d22cf42703029a/drawing.json": {
+      "bytes": 99338,
+      "sha1": "30e28f37eca6c1e773768feaa3315c44667e6736"
+    },
+    "sources/6551bdc6f0cff4e31e83b68a55d22cf42703029a/plan.json.gz": {
+      "bytes": 458515,
+      "sha1": "0c81727c9c9c512ab757190269bfe8aefb2cec33"
+    },
+    "suggestions.json": {
+      "bytes": 5456,
+      "sha1": "e79eab9027aaf098c91e77d1d56f070c7655ffcc"
+    },
+    "proposed-settings.json": {
+      "bytes": 3013,
+      "sha1": "523360a3855d60a6362214dcfa62b60f79a375c4"
+    }
+  }
+}

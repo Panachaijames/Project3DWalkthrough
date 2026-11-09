@@ -1,0 +1,43 @@
+{
+  "format": "max-texts/1",
+  "profile": "bank-27oct",
+  "_what": "A MaxTexts profile of the one 3ds Max generator (services/builder/walkthrough_builder/out/maxscript.py; docs/upload/DESIGN.md U-11.5). Owner U4. Fields: date (null: the build's date), titleSuffix (after the upper-case project name, __TITLE__), builtBy, page, frame (__BUILTBY__, __PAGE__, __FRAME__), header (the leading comment block; a line __PLACEDAT__ is replaced by placedAt, a line __NOTES__ by the notes whose condition holds: always | revitGlass | pictures | furniture | steps), tooltip (the placement tick box's), datumSource (the datum's Source property), datumExtra (whole MAXScript lines after the datum's Levels property), rolloutSuffix (after the short name in the window's title), pictures (one datum Picture line per floor from model.pictureFrame). Placeholders the generator computes for every profile: __TITLE__ __PROJECT__ __SHORT__ __SOURCE__ __SHA__ __LEVELTXT__ __HEIGHTTXT__ __PX__ __FLOOR1__ __DATE__ __BUILTBY__ __PAGE__ __FRAME__ __FOLLOWTXT__ __KEEPTXT__ __STAIRTXT__ __AXISTXT__ __DOORTXT__ __SCALETXT__ __CONVERTED__. This one reproduces bank_test/Bangkok_Bank_Sampeng.ms byte for byte (sha1 615d50137bdb; the goldens only).",
+  "date": "27 Oct 2026",
+  "titleSuffix": " (TEST)",
+  "builtBy": "the CAD-to-3D test pipeline",
+  "page": "bank_3d_preview.html",
+  "frame": "",
+  "header": [
+    "-- __TITLE__ / from \"__SOURCE__\" / built by __BUILTBY__, __DATE__",
+    "-- Same model as __PAGE__ (model data __SHA__). Floor levels __LEVELTXT__ m, wall heights __HEIGHTTXT__ m.",
+    "__PLACEDAT__",
+    "-- Every part stays LIVE (no Editable Poly): an editable spline outline + an Extrude modifier (output: Mesh) + Smooth.",
+    "--   * Change a height: the Extrude amount on that object, or \"Update levels and heights\" in this script's window.",
+    "--   * Change an outline: select the spline level under the modifiers and move vertices.",
+    "--   * Editable Mesh: tick \"Collapse to Editable Mesh\" before Build, or press \"Collapse all now\" later.",
+    "-- Each object's pivot is at the middle of its own outline, on its base. Layers per level and kind (__PX_____FLOOR1___Walls ...).",
+    "__NOTES__",
+    "-- Each part is checked as it is built (closed solid, height, position). A part that fails is kept on layer",
+    "-- __PX___Check_Failed and listed in the MAXScript Listener; the rest is still built.",
+    "-- Build sets System Units to metres. Nothing in an existing scene is changed: run it in a NEW EMPTY scene."
+  ],
+  "placedAt": [
+    "-- Placed at the DWG's own coordinates in metres (to line up with the DWGs imported in metres), or centred on the origin",
+    "-- if you untick that box in the script's window."
+  ],
+  "notes": [
+    {
+      "when": "revitGlass",
+      "lines": [
+        "-- Glass partitions (Revit glass wall types) are their own objects on __PX___<level>_Glass, at the height their type",
+        "-- name gives (2600H = 2.60 m); \"Update levels and heights\" keeps them, the parapet and the stair steps at their own",
+        "-- heights (only parts marked to follow the wall height change)."
+      ]
+    }
+  ],
+  "tooltip": "Untick to centre the model on the origin",
+  "datumSource": "__SOURCE__, converted with LibreDWG; drawing units mm, model in metres",
+  "datumExtra": [],
+  "rolloutSuffix": " (test)",
+  "pictures": false
+}

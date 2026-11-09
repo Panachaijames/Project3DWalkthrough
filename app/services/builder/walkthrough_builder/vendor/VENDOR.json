@@ -1,0 +1,49 @@
+{
+  "format": "vendor/1",
+  "_what": "Byte-identical copies of prototype code the builder imports by path (docs/upload/DESIGN.md U-10.2). from = the prototype file, relative to the project folder (app/..). A change to a prototype after this milestone is copied in on purpose, with the goldens re-run; tests/test_vendor.py checks every copy.",
+  "copiedAt": "2026-11-04",
+  "files": [
+    {
+      "path": "openings.py",
+      "from": "detector/openings.py",
+      "sha1": "14a570251f6d0af4e92037db2db69322b31cc065",
+      "bytes": 125139
+    },
+    {
+      "path": "geomkit.py",
+      "from": "detector/geomkit.py",
+      "sha1": "6d4f8178794ea90821632b945c36d2b4cc25625e",
+      "bytes": 10709
+    },
+    {
+      "path": "tools/prims.py",
+      "from": "detector/tools/prims.py",
+      "sha1": "0e5566a0cf5bf0767cf7c76845aae47316fcbc7a",
+      "bytes": 7402
+    },
+    {
+      "path": "merge_cad.py",
+      "from": "cad_test/src/merge_cad.py",
+      "sha1": "9bc684cc0efd48a18b87d404c6c4ae3faee2768f",
+      "bytes": 8571
+    },
+    {
+      "path": "geom.py",
+      "from": "presidential_test/src/geom.py",
+      "sha1": "e0cc10922e169695daf5970f04ee5b2bcc177d65",
+      "bytes": 2921
+    },
+    {
+      "path": "furniture_kit.py",
+      "from": "furniture/furniture_kit.py",
+      "sha1": "8b28cc66f05b4b5fb559e960f8b3b936b5fbb252",
+      "bytes": 31301
+    },
+    {
+      "path": "furniture_max.py",
+      "from": "furniture/furniture_max.py",
+      "sha1": "53481725317480cf545d62e94379c4dfd358ddbd",
+      "bytes": 31210
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+# services/builder: every package of the closure pinned exactly (docs/upload/DESIGN.md U-10.1). Python 3.14.3, Windows x64.
+# The prototypes' own versions (ezdxf, shapely with GEOS 3.13.1, numpy, matplotlib with its freetype, pillow): the
+# byte-identical goldens depend on them. Approved by the owner on 4 Nov 2026 (plan decision row of that day).
+# Install (from app/):  services/builder/.venv/Scripts/python -m pip install -r services/builder/requirements.lock.txt
+# Nothing is added, removed or upgraded without the owner (app/CLAUDE.md). `npm run check:pins` compares pip freeze with
+# this file and imports each module in the builder Python.
+
+# direct
+ezdxf==1.4.4
+shapely==2.1.2
+numpy==2.4.4
+matplotlib==3.11.2
+pillow==12.2.0
+pytest==9.1.1
+
+# closure
+contourpy==1.4.0
+cycler==0.12.1
+fonttools==4.62.1
+kiwisolver==1.5.1
+packaging==26.3
+pyparsing==3.3.3
+python-dateutil==2.9.0.post0
+six==1.17.0
+typing-extensions==4.15.0
+iniconfig==2.3.1
+pluggy==1.7.0
+pygments==2.21.0
+colorama==0.4.6

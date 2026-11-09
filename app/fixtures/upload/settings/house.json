@@ -1,0 +1,189 @@
+{
+  "format": "build-settings/1",
+  "office": null,
+  "project": {
+    "name": "Test Sukhumvit Residence",
+    "shortName": "Sukhumvit house",
+    "projectNo": null,
+    "photoName": "Sukhumvit",
+    "maxPrefix": "SK",
+    "maxFileName": "Sukhumvit_House.ms",
+    "exportedFrom": null
+  },
+  "sources": [
+    {
+      "sha1": "93e7d27525c43664264271c04a6dd0b5c41ea7d0",
+      "name": "Test Sukhumvit Residence.dwg",
+      "kind": "dwg",
+      "units": "mm",
+      "unitsConfirmed": true
+    }
+  ],
+  "layers": {
+    "0": "other",
+    "A_Grill": "screen",
+    "CEILING": "other",
+    "COL": "column",
+    "COLCL": "other",
+    "D-JAMB": "door",
+    "DIM100": "ignore",
+    "DIM25": "ignore",
+    "DOOR": "door",
+    "DSYM": "door",
+    "ELEV": "other",
+    "FIXT": "furniture",
+    "FLOOR": "other",
+    "FLOOR-PATTERN": "ignore",
+    "FUR": "furniture",
+    "GRID-01": "grid",
+    "HATCH": "other",
+    "I-FURN-FILE": "furniture",
+    "NORTH": "other",
+    "OPEN": "other",
+    "OUTLINE": "other",
+    "PAVING": "other",
+    "RNAME": "room-name",
+    "ROOF": "other",
+    "SITE": "ignore",
+    "SPEC": "level",
+    "STAIR": "stair",
+    "STRUCTURE": "wall",
+    "Section": "ignore",
+    "Steel Plate": "other",
+    "TEXT": "room-name",
+    "TEXT100": "other",
+    "TREE": "other",
+    "WALL": "wall",
+    "WALL-GL": "glass",
+    "WC-DET": "ignore",
+    "WC-DET1": "ignore",
+    "WC-OUT": "ignore",
+    "WC-OUTL": "ignore",
+    "WIN": "window",
+    "W_Grill": "screen",
+    "XR_L44 Plan$0$A-DOOR": "door",
+    "XR_L44 Plan$0$A-WALL": "wall",
+    "XR_L44$0$I-DOOR": "door",
+    "XR_L44$0$I-FURN": "furniture",
+    "XR_L44$0$Layer1": "other",
+    "XR_L44$0$Layer4": "other",
+    "XR_L44$0$Layer7": "furniture",
+    "XR_L44$0$PIA1-FUR": "furniture",
+    "XR_L55 Plan$0$A-WALL": "wall",
+    "drain": "ignore",
+    "sand": "other"
+  },
+  "floors": [
+    {
+      "key": "ground",
+      "name": "Ground floor",
+      "source": "93e7d27525c43664264271c04a6dd0b5c41ea7d0",
+      "area": {
+        "kind": "box",
+        "bbox": [
+          7.74826,
+          5.601038,
+          53.870897,
+          25.854851
+        ],
+        "pad": 0.5,
+        "match": "all"
+      },
+      "level": 0.9,
+      "wallHeight": 3.9,
+      "slabThickness": null,
+      "doorHead": 3.0,
+      "windowSill": 0.0,
+      "windowHead": 3.0,
+      "align": {
+        "method": "auto"
+      }
+    },
+    {
+      "key": "upper",
+      "name": "Upper floor",
+      "source": "93e7d27525c43664264271c04a6dd0b5c41ea7d0",
+      "area": {
+        "kind": "box",
+        "bbox": [
+          81.769533,
+          6.617993,
+          127.848522,
+          24.809115
+        ],
+        "pad": 0.5,
+        "match": "all"
+      },
+      "level": 4.8,
+      "wallHeight": 3.5,
+      "slabThickness": null,
+      "doorHead": 2.6,
+      "windowSill": 0.0,
+      "windowHead": 2.6,
+      "align": {
+        "method": "auto"
+      }
+    }
+  ],
+  "defaults": {
+    "doorHead": 2.1,
+    "windowSill": 0.9,
+    "windowHead": 2.1,
+    "railingHeight": 1.1,
+    "slabThickness": 0.25,
+    "singleLineHeight": 1.0
+  },
+  "furniture": {
+    "heights": {},
+    "bases": {},
+    "words": {
+      "cabinet": [
+        "BASE"
+      ],
+      "sanitary": [
+        "TF2092 P",
+        "TF0560 P",
+        "klkjlll",
+        "A$C2619574 F"
+      ],
+      "counter": [
+        "A$Ce0b21054"
+      ],
+      "bed": [
+        "A$C238 E5230"
+      ],
+      "sofa": [
+        "kjjkjkkkk",
+        "jkhjhjj",
+        "bvvvv"
+      ],
+      "seat": [
+        "jkjllll"
+      ],
+      "coffee-table": [
+        "fghfh",
+        "A$C5 BF14633"
+      ]
+    },
+    "skip": [],
+    "minSize": 0.25,
+    "minDepth": 0.25,
+    "looseLayers": [],
+    "pieceLayer": "insert"
+  },
+  "vocabulary": {},
+  "options": {
+    "revitWallTypes": "auto",
+    "parapets": "auto",
+    "objectClosures": true,
+    "liftShafts": true,
+    "plinth": "auto",
+    "outlineWalls": "off",
+    "offset": "auto"
+  },
+  "fixes": {
+    "setAside": [],
+    "openings": [],
+    "outlineEdges": []
+  }
+}

@@ -234,6 +234,19 @@ def project_meta(store: LocalStore, project_id: str, source_kind: str) -> Projec
 
 
 # ---------------------------------------------------------------------------------------------------- the whole seed
+def uploaded_version(store: LocalStore, project_id: str, n: int) -> bool:
+    """True when versions/<n>/version.json exists and has no `seed` record: a version saved from an upload (U-15.3), which
+    the seed never replaces. A version.json that does not parse is not the seed's either: it is left for a person."""
+    path = store.version_dir(project_id, n) / 'version.json'
+    try:
+        record = loads_strict(path.read_bytes())
+    except FileNotFoundError:
+        return False
+    except ValueError:
+        return True
+    return not (isinstance(record, dict) and isinstance(record.get('seed'), dict))
+
+
 @dataclass
 class SeedResult:
     built: list[Built]
@@ -251,6 +264,12 @@ def seed(protos: Path, data: Path, *, force: bool = False, reset_overrides: bool
     store = LocalStore(data)
     seeded_at = iso_utc()
     table = list(table)
+    if force:
+        uploaded = [v for v in table if uploaded_version(store, v.project_id, v.version)]
+        if uploaded:
+            names = ', '.join(f'{v.project_id} v{v.version}' for v in uploaded)
+            raise SeedError(f'{names}: an uploaded version (its version.json has no seed record) is never replaced by '
+                            f'the seed, even with --force (docs/upload/DESIGN.md U-15.3)')
     built: list[Built] = []
     left_alone: list[VersionSource] = []
     try:

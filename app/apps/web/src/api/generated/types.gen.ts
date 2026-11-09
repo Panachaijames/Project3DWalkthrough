@@ -43,6 +43,613 @@ export type AssetInfo = {
 };
 
 /**
+ * BuildDefaults
+ */
+export type BuildDefaults = {
+    /**
+     * Doorhead
+     */
+    doorHead: number;
+    /**
+     * Railingheight
+     */
+    railingHeight: number;
+    /**
+     * Singlelineheight
+     */
+    singleLineHeight: number;
+    /**
+     * Slabthickness
+     */
+    slabThickness: number;
+    /**
+     * Windowhead
+     */
+    windowHead: number;
+    /**
+     * Windowsill
+     */
+    windowSill: number;
+};
+
+/**
+ * BuildDetail
+ */
+export type BuildDetail = {
+    /**
+     * Createdat
+     */
+    createdAt: string;
+    /**
+     * Id
+     *
+     * ^[0-9]{8}T[0-9]{6}-[0-9a-f]{6}$
+     */
+    id: string;
+    /**
+     * Layersreviewedat
+     *
+     * BuildRecord.layersReviewedAt.
+     */
+    layersReviewedAt: string | null;
+    /**
+     * Projectid
+     */
+    projectId: string;
+    /**
+     * The last finished build run, or null.
+     */
+    result: BuildResultInfo | null;
+    /**
+     * The run going now, else the last one.
+     */
+    run: RunInfo | null;
+    /**
+     * Runstatus
+     */
+    runStatus: 'queued' | 'running' | 'done' | 'failed' | 'cancelled' | 'interrupted' | null;
+    /**
+     * Savedversion
+     */
+    savedVersion: number | null;
+    /**
+     * null only when asked with withSettings=false (the 1 s poll).
+     */
+    settings: BuildSettings | null;
+    /**
+     * Settingsrevision
+     */
+    settingsRevision: number;
+    /**
+     * Sourcenames
+     */
+    sourceNames: Array<string>;
+    /**
+     * Sources
+     */
+    sources: Array<BuildSourceInfo>;
+    /**
+     * Status
+     */
+    status: 'open' | 'saved';
+    /**
+     * Suggestions
+     *
+     * Empty until the prepare run is done.
+     */
+    suggestions: {
+        [key: string]: LayerSuggestion;
+    };
+    /**
+     * Updatedat
+     */
+    updatedAt: string;
+    /**
+     * Url
+     */
+    url: string;
+    urls: BuildUrls;
+};
+
+/**
+ * BuildFlagCounts
+ */
+export type BuildFlagCounts = {
+    /**
+     * Bykind
+     */
+    byKind: {
+        [key: string]: number;
+    };
+    /**
+     * Check
+     */
+    check: number;
+    /**
+     * Total
+     */
+    total: number;
+};
+
+/**
+ * BuildFloorResult
+ */
+export type BuildFloorResult = {
+    /**
+     * Furniture
+     */
+    furniture: number;
+    /**
+     * Key
+     *
+     * Floor key, ^[A-Za-z0-9_]{1,32}$.
+     */
+    key: string;
+    /**
+     * Level
+     */
+    level: number;
+    /**
+     * Name
+     */
+    name: string;
+    openings: OpeningCounts;
+    /**
+     * Parts
+     */
+    parts: number;
+    /**
+     * Rooms
+     */
+    rooms: number;
+};
+
+/**
+ * BuildFromBuild
+ */
+export type BuildFromBuild = {
+    /**
+     * Build
+     */
+    build: string;
+    /**
+     * Kind
+     */
+    kind: 'build';
+};
+
+/**
+ * BuildFromLatest
+ */
+export type BuildFromLatest = {
+    /**
+     * Kind
+     */
+    kind: 'latest';
+};
+
+/**
+ * BuildFromNone
+ */
+export type BuildFromNone = {
+    /**
+     * Kind
+     */
+    kind: 'none';
+};
+
+/**
+ * BuildFromVersion
+ */
+export type BuildFromVersion = {
+    /**
+     * Kind
+     */
+    kind: 'version';
+    /**
+     * Version
+     */
+    version: number;
+};
+
+/**
+ * BuildList
+ */
+export type BuildList = {
+    /**
+     * Builds
+     *
+     * Newest first.
+     */
+    builds: Array<BuildSummary>;
+};
+
+/**
+ * BuildProject
+ *
+ * BuildSettings.project: ProjectNaming & { name, shortName, projectNo, exportedFrom }.
+ */
+export type BuildProject = {
+    /**
+     * Exportedfrom
+     *
+     * e.g. "Revit"; null when unknown. Only ever quoted in texts.
+     */
+    exportedFrom: string | null;
+    /**
+     * Maxfilename
+     *
+     * ^[A-Za-z0-9_.-]{1,60}\.ms$ (the stored Max script; the download adds _v<n>).
+     */
+    maxFileName: string;
+    /**
+     * Maxprefix
+     *
+     * ^[A-Z]{2,4}$ (BuiltModel maxPrefix).
+     */
+    maxPrefix: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Photoname
+     *
+     * ^[A-Za-z0-9_.-]{1,64}$ (BuiltModel photoName).
+     */
+    photoName: string;
+    /**
+     * Projectno
+     */
+    projectNo: string | null;
+    /**
+     * Shortname
+     */
+    shortName: string;
+};
+
+/**
+ * BuildResultInfo
+ */
+export type BuildResultInfo = {
+    counts: VersionCounts;
+    /**
+     * Finishedat
+     */
+    finishedAt: string;
+    flags: BuildFlagCounts;
+    /**
+     * Floors
+     */
+    floors: Array<BuildFloorResult>;
+    /**
+     * Presentation
+     */
+    presentation: {
+        [key: string]: unknown;
+    };
+    /**
+     * Runid
+     */
+    runId: string;
+    /**
+     * Seconds
+     */
+    seconds: {
+        [key: string]: number;
+    };
+    /**
+     * Settingsrevision
+     */
+    settingsRevision: number;
+    /**
+     * Stale
+     *
+     * The settings changed since this run: Save is refused until it runs again.
+     */
+    stale: boolean;
+    /**
+     * Stamp
+     */
+    stamp: string;
+    urls: BuildResultUrls;
+};
+
+/**
+ * BuildResultUrls
+ */
+export type BuildResultUrls = {
+    /**
+     * Diff
+     */
+    diff: string;
+    /**
+     * Maxscript
+     */
+    maxScript: string;
+    /**
+     * Model
+     */
+    model: string;
+    /**
+     * Overlay
+     */
+    overlay: string;
+    /**
+     * Stages
+     */
+    stages: string;
+    /**
+     * Topview
+     */
+    topview: string;
+};
+
+/**
+ * BuildSettings
+ *
+ * The build's whole recipe (builds/<id>/settings.json; versions/<n>/project-data.json).
+ */
+export type BuildSettings = {
+    defaults: BuildDefaults;
+    fixes: Fixes;
+    /**
+     * Floors
+     */
+    floors: Array<FloorSetup>;
+    /**
+     * Format
+     */
+    format: 'build-settings/1';
+    furniture: FurnitureSettings;
+    /**
+     * Layers
+     *
+     * Exact layer name -> role; a layer not listed is 'other'.
+     */
+    layers: {
+        [key: string]: 'wall' | 'column' | 'glass' | 'window' | 'door' | 'screen' | 'stair' | 'stair-above' | 'railing' | 'furniture' | 'room-name' | 'room-outline' | 'level' | 'grid' | 'light' | 'other' | 'ignore';
+    };
+    /**
+     * Office
+     *
+     * Office id (^[a-z0-9][a-z0-9-]{1,62}$), or null.
+     */
+    office: string | null;
+    options: BuilderOptions;
+    project: BuildProject;
+    /**
+     * Sources
+     */
+    sources: Array<SourceSetting>;
+    vocabulary: Vocabulary;
+};
+
+/**
+ * BuildSettingsUpdate
+ */
+export type BuildSettingsUpdate = {
+    /**
+     * Layersreviewed
+     *
+     * true from the Layers step's saves: sets BuildRecord.layersReviewedAt once (U-8.3).
+     */
+    layersReviewed?: boolean | null;
+    settings: BuildSettings;
+};
+
+/**
+ * BuildSourceConversion
+ */
+export type BuildSourceConversion = {
+    /**
+     * Lostinmodelspace
+     */
+    lostInModelSpace: number;
+    /**
+     * Notes
+     */
+    notes: Array<string>;
+    /**
+     * Verdict
+     */
+    verdict: 'ok' | 'minor' | 'loss' | 'failed' | 'not-converted';
+};
+
+/**
+ * BuildSourceInfo
+ */
+export type BuildSourceInfo = {
+    /**
+     * Bytes
+     */
+    bytes: number;
+    /**
+     * null until the prepare run has read it.
+     */
+    conversion: BuildSourceConversion | null;
+    /**
+     * Kind
+     */
+    kind: 'dwg' | 'dxf';
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Sha1
+     *
+     * 40 hex, lower case.
+     */
+    sha1: string;
+    units: BuildSourceUnits | null;
+    urls: BuildSourceUrls | null;
+};
+
+/**
+ * BuildSourceUnits
+ */
+export type BuildSourceUnits = {
+    /**
+     * Declared
+     */
+    declared: 'mm' | 'cm' | 'm' | 'in' | 'ft' | null;
+    /**
+     * Note
+     */
+    note: string;
+    /**
+     * Used
+     */
+    used: 'mm' | 'cm' | 'm' | 'in' | 'ft';
+    /**
+     * Verdict
+     */
+    verdict: string;
+};
+
+/**
+ * BuildSourceUrls
+ */
+export type BuildSourceUrls = {
+    /**
+     * Conversion
+     */
+    conversion: string;
+    /**
+     * Drawing
+     */
+    drawing: string;
+    /**
+     * Plan
+     */
+    plan: string;
+};
+
+/**
+ * BuildSummary
+ */
+export type BuildSummary = {
+    /**
+     * Createdat
+     */
+    createdAt: string;
+    /**
+     * Id
+     *
+     * ^[0-9]{8}T[0-9]{6}-[0-9a-f]{6}$
+     */
+    id: string;
+    /**
+     * Projectid
+     */
+    projectId: string;
+    /**
+     * Runstatus
+     */
+    runStatus: 'queued' | 'running' | 'done' | 'failed' | 'cancelled' | 'interrupted' | null;
+    /**
+     * Savedversion
+     */
+    savedVersion: number | null;
+    /**
+     * Sourcenames
+     */
+    sourceNames: Array<string>;
+    /**
+     * Status
+     */
+    status: 'open' | 'saved';
+    /**
+     * Updatedat
+     */
+    updatedAt: string;
+    /**
+     * Url
+     */
+    url: string;
+};
+
+/**
+ * BuildUrls
+ */
+export type BuildUrls = {
+    /**
+     * Cancel
+     */
+    cancel: string;
+    /**
+     * Run
+     */
+    run: string;
+    /**
+     * Save
+     */
+    save: string;
+    /**
+     * Settings
+     */
+    settings: string;
+};
+
+/**
+ * BuilderOptions
+ */
+export type BuilderOptions = {
+    /**
+     * Liftshafts
+     */
+    liftShafts: boolean;
+    /**
+     * Objectclosures
+     */
+    objectClosures: boolean;
+    /**
+     * Offset
+     *
+     * auto: the bank rule (centre of all slabs, 3 decimals), unless project-settings.json pins one (U-9.6).
+     */
+    offset: 'auto' | [
+        number,
+        number
+    ];
+    /**
+     * Outlinewalls
+     */
+    outlineWalls: 'off' | 'suggest';
+    /**
+     * Parapets
+     */
+    parapets: 'auto' | 'off';
+    /**
+     * Plinth
+     */
+    plinth: 'auto' | 'off';
+    /**
+     * Revitwalltypes
+     */
+    revitWallTypes: 'auto' | 'off';
+};
+
+/**
+ * CancelBuildRequest
+ *
+ * An empty JSON object (U-5.2).
+ */
+export type CancelBuildRequest = {
+    [key: string]: never;
+};
+
+/**
+ * CompleteUploadRequest
+ *
+ * An empty JSON object (U-5.2).
+ */
+export type CompleteUploadRequest = {
+    [key: string]: never;
+};
+
+/**
  * DownloadInfo
  */
 export type DownloadInfo = {
@@ -90,6 +697,114 @@ export type ErrorResponse = {
 };
 
 /**
+ * Fixes
+ */
+export type Fixes = {
+    /**
+     * Openings
+     */
+    openings: Array<OpeningFix>;
+    /**
+     * Outlineedges
+     */
+    outlineEdges: Array<OutlineEdgeFix>;
+    /**
+     * Setaside
+     */
+    setAside: Array<SetAside>;
+};
+
+/**
+ * FloorAlignAuto
+ */
+export type FloorAlignAuto = {
+    /**
+     * Method
+     *
+     * auto: grid when at least two grid lines are shared with floor 0, else origin (U-9.4).
+     */
+    method: 'auto' | 'grid' | 'origin';
+};
+
+/**
+ * FloorAlignPoints
+ */
+export type FloorAlignPoints = {
+    /**
+     * Method
+     */
+    method: 'points';
+    /**
+     * Pairs
+     *
+     * pairs[i] = [a point on floor 0's sheet, the same point on this floor's sheet] (sheet m).
+     */
+    pairs: [
+        [
+            [
+                number,
+                number
+            ],
+            [
+                number,
+                number
+            ]
+        ],
+        [
+            [
+                number,
+                number
+            ],
+            [
+                number,
+                number
+            ]
+        ]
+    ];
+};
+
+/**
+ * FloorAreaBox
+ */
+export type FloorAreaBox = {
+    /**
+     * Bbox
+     *
+     * Sheet metres.
+     */
+    bbox: [
+        number,
+        number,
+        number,
+        number
+    ];
+    /**
+     * Kind
+     */
+    kind: 'box';
+    /**
+     * Match
+     *
+     * 'all': every point of an item inside bbox +- pad; 'any': one point is enough (U-9.1).
+     */
+    match: 'all' | 'any';
+    /**
+     * Pad
+     */
+    pad: number;
+};
+
+/**
+ * FloorAreaWholeFile
+ */
+export type FloorAreaWholeFile = {
+    /**
+     * Kind
+     */
+    kind: 'wholeFile';
+};
+
+/**
  * FloorInfo
  */
 export type FloorInfo = {
@@ -109,6 +824,134 @@ export type FloorInfo = {
      * Name
      */
     name: string;
+};
+
+/**
+ * FloorSetup
+ */
+export type FloorSetup = {
+    /**
+     * Align
+     *
+     * Ignored on floors[0] (the reference).
+     */
+    align: ({
+        method: 'auto' | 'grid' | 'origin';
+    } & FloorAlignAuto) | ({
+        method: 'points';
+    } & FloorAlignPoints);
+    /**
+     * Area
+     */
+    area: ({
+        kind: 'wholeFile';
+    } & FloorAreaWholeFile) | ({
+        kind: 'box';
+    } & FloorAreaBox);
+    /**
+     * Doorhead
+     *
+     * null: the project defaults. Order per door: its own name, then this, then the drawing's most common named height, then defaults.doorHead.
+     */
+    doorHead: number | null;
+    /**
+     * Key
+     *
+     * Floor key, ^[A-Za-z0-9_]{1,32}$.
+     */
+    key: string;
+    /**
+     * Level
+     *
+     * m above the datum; floors are listed lowest first, levels strictly increasing.
+     */
+    level: number;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Slabthickness
+     *
+     * null: defaults.slabThickness (a plinth floor ignores it).
+     */
+    slabThickness: number | null;
+    /**
+     * Source
+     *
+     * sha1 of one of settings.sources.
+     */
+    source: string;
+    /**
+     * Wallheight
+     *
+     * m, > 0.
+     */
+    wallHeight: number;
+    /**
+     * Windowhead
+     */
+    windowHead: number | null;
+    /**
+     * Windowsill
+     */
+    windowSill: number | null;
+};
+
+/**
+ * FurnitureSettings
+ */
+export type FurnitureSettings = {
+    /**
+     * Bases
+     */
+    bases: {
+        [key: string]: number;
+    };
+    /**
+     * Heights
+     *
+     * kind -> mm, only kinds this project wants different from furniture_kit.py's office defaults.
+     */
+    heights: {
+        [key: string]: number;
+    };
+    /**
+     * Looselayers
+     *
+     * Layers whose loose lines become boxes (suite); empty: the furniture layers themselves (bank rule).
+     */
+    looseLayers: Array<string>;
+    /**
+     * Mindepth
+     *
+     * m or null (house 0.25).
+     */
+    minDepth: number | null;
+    /**
+     * Minsize
+     *
+     * m: a piece whose long side is shorter is left out (bank 0.08).
+     */
+    minSize: number;
+    /**
+     * Piecelayer
+     *
+     * 'insert' (default, the bank) or 'drawn' (the suite), U-10.5.
+     */
+    pieceLayer: 'insert' | 'drawn';
+    /**
+     * Skip
+     */
+    skip: Array<string>;
+    /**
+     * Words
+     *
+     * kind -> extra words (block / family names) that win over the kit's vocabulary.
+     */
+    words: {
+        [key: string]: Array<string>;
+    };
 };
 
 /**
@@ -179,6 +1022,208 @@ export type HeightsUpdate = {
     heights: {
         [key: string]: number;
     };
+};
+
+/**
+ * LayerSuggestion
+ */
+export type LayerSuggestion = {
+    /**
+     * Evidence
+     *
+     * Plain sentences (they quote layer and block names: untrusted).
+     */
+    evidence: Array<string>;
+    /**
+     * From
+     */
+    from: 'office' | 'office-similar' | 'name' | 'contents' | 'default';
+    /**
+     * Role
+     */
+    role: 'wall' | 'column' | 'glass' | 'window' | 'door' | 'screen' | 'stair' | 'stair-above' | 'railing' | 'furniture' | 'room-name' | 'room-outline' | 'level' | 'grid' | 'light' | 'other' | 'ignore';
+};
+
+/**
+ * NewBuildRequest
+ */
+export type NewBuildRequest = {
+    /**
+     * From
+     *
+     * Where the starting settings come from; default: the latest version (when it has project-data.json), else none.
+     */
+    from?: ({
+        kind: 'none';
+    } & BuildFromNone) | ({
+        kind: 'latest';
+    } & BuildFromLatest) | ({
+        kind: 'version';
+    } & BuildFromVersion) | ({
+        kind: 'build';
+    } & BuildFromBuild) | null;
+    /**
+     * Sources
+     *
+     * null: the sources of the version or build named by `from` (a rebuild of the same files).
+     */
+    sources: Array<string> | null;
+};
+
+/**
+ * NewProjectRequest
+ */
+export type NewProjectRequest = {
+    /**
+     * Id
+     *
+     * Wanted id, 2 - 40 characters (Windows path length, U-4.1); derived from the name when absent (U-13.3).
+     */
+    id?: string | null;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Newofficename
+     *
+     * A new office's name (creates it); ignored when office is given.
+     */
+    newOfficeName?: string | null;
+    /**
+     * Office
+     *
+     * An existing office id, or null.
+     */
+    office?: string | null;
+    /**
+     * Projectno
+     */
+    projectNo?: string | null;
+    /**
+     * Shortname
+     */
+    shortName?: string | null;
+};
+
+/**
+ * OfficeInfo
+ */
+export type OfficeInfo = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Layers
+     */
+    layers: number;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Updatedat
+     */
+    updatedAt: string;
+};
+
+/**
+ * OfficeList
+ */
+export type OfficeList = {
+    /**
+     * Offices
+     */
+    offices: Array<OfficeInfo>;
+};
+
+/**
+ * OpeningCounts
+ */
+export type OpeningCounts = {
+    /**
+     * Door
+     */
+    door: number;
+    /**
+     * Passage
+     */
+    passage: number;
+    /**
+     * Window
+     */
+    window: number;
+};
+
+/**
+ * OpeningFix
+ */
+export type OpeningFix = {
+    /**
+     * A
+     */
+    a: [
+        number,
+        number
+    ];
+    /**
+     * B
+     */
+    b: [
+        number,
+        number
+    ];
+    /**
+     * Floor
+     *
+     * Floor key, ^[A-Za-z0-9_]{1,32}$.
+     */
+    floor: string;
+    /**
+     * Head
+     */
+    head: number | null;
+    /**
+     * Kind
+     *
+     * null: keep the detector's; 'none': not an opening (nothing cut).
+     */
+    kind: 'door' | 'window' | 'passage' | 'none' | null;
+    /**
+     * Sill
+     */
+    sill: number | null;
+};
+
+/**
+ * OutlineEdgeFix
+ */
+export type OutlineEdgeFix = {
+    /**
+     * A
+     */
+    a: [
+        number,
+        number
+    ];
+    /**
+     * As
+     */
+    as: 'wall' | 'glass' | 'none';
+    /**
+     * B
+     */
+    b: [
+        number,
+        number
+    ];
+    /**
+     * Floor
+     *
+     * Floor key, ^[A-Za-z0-9_]{1,32}$.
+     */
+    floor: string;
 };
 
 /**
@@ -365,6 +1410,364 @@ export type ProjectSummary = {
      * Versioncount
      */
     versionCount: number;
+};
+
+/**
+ * RunBuildRequest
+ *
+ * An empty JSON object: a state change is never a simple cross-site request (U-5.2).
+ */
+export type RunBuildRequest = {
+    [key: string]: never;
+};
+
+/**
+ * RunError
+ */
+export type RunError = {
+    /**
+     * Code
+     */
+    code: string;
+    /**
+     * Message
+     */
+    message: string;
+    /**
+     * Step
+     */
+    step: string | null;
+};
+
+/**
+ * RunInfo
+ */
+export type RunInfo = {
+    /**
+     * Cancelrequested
+     *
+     * Cancel was asked and the run has not stopped yet: the UI shows "Stopping..." (U-3.4).
+     */
+    cancelRequested: boolean;
+    error: RunError | null;
+    /**
+     * Finishedat
+     */
+    finishedAt: string | null;
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Kind
+     */
+    kind: 'prepare' | 'build';
+    /**
+     * Messages
+     *
+     * The last 50.
+     */
+    messages: Array<RunMessage>;
+    /**
+     * Only
+     *
+     * prepare only: the sources it reads (null: all).
+     */
+    only: Array<string> | null;
+    /**
+     * Progress
+     */
+    progress: number;
+    /**
+     * Queuedat
+     */
+    queuedAt: string;
+    /**
+     * Startedat
+     */
+    startedAt: string | null;
+    /**
+     * Status
+     */
+    status: 'queued' | 'running' | 'done' | 'failed' | 'cancelled' | 'interrupted';
+    /**
+     * Step
+     */
+    step: string | null;
+    /**
+     * Steps
+     */
+    steps: Array<RunStepInfo>;
+};
+
+/**
+ * RunMessage
+ */
+export type RunMessage = {
+    /**
+     * At
+     */
+    at: string;
+    /**
+     * Level
+     */
+    level: 'info' | 'warn' | 'error';
+    /**
+     * Text
+     */
+    text: string;
+};
+
+/**
+ * RunStepInfo
+ */
+export type RunStepInfo = {
+    /**
+     * Label
+     */
+    label: string;
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Note
+     */
+    note: string;
+    /**
+     * Seconds
+     */
+    seconds: number | null;
+    /**
+     * Status
+     */
+    status: 'waiting' | 'running' | 'done' | 'failed' | 'skipped';
+};
+
+/**
+ * SaveBuildRequest
+ */
+export type SaveBuildRequest = {
+    /**
+     * Carryheights
+     *
+     * Copy the latest version's saved furniture heights for the kinds that still exist (the web app sends true by default).
+     */
+    carryHeights: boolean;
+    /**
+     * Label
+     *
+     * 1 - 200 characters.
+     */
+    label: string;
+    /**
+     * Remembermapping
+     *
+     * Remember the layer roles for the build's office (the web app sends true by default).
+     */
+    rememberMapping: boolean;
+};
+
+/**
+ * SetAside
+ */
+export type SetAside = {
+    /**
+     * Elementid
+     */
+    elementId: string | null;
+    /**
+     * Floor
+     *
+     * Floor key, ^[A-Za-z0-9_]{1,32}$.
+     */
+    floor: string;
+    /**
+     * Key
+     *
+     * Nested handle key, e.g. "BA/2C4/1F3"; an INSERT key covers its whole subtree.
+     */
+    key: string;
+    /**
+     * Layer
+     */
+    layer: string;
+    /**
+     * Note
+     */
+    note: string;
+    /**
+     * Rsig
+     *
+     * 12 hex, or '' when elementId is null.
+     */
+    rsig: string;
+    /**
+     * Sig
+     *
+     * 12 hex: the item's geometry signature.
+     */
+    sig: string;
+    /**
+     * Source
+     *
+     * 40 hex, lower case.
+     */
+    source: string;
+};
+
+/**
+ * SourceFile
+ */
+export type SourceFile = {
+    /**
+     * Bytes
+     */
+    bytes: number;
+    /**
+     * Formatversion
+     */
+    formatVersion: string | null;
+    /**
+     * Kind
+     */
+    kind: 'dwg' | 'dxf';
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Sha1
+     *
+     * 40 hex, lower case.
+     */
+    sha1: string;
+    /**
+     * Uploadedat
+     */
+    uploadedAt: string;
+};
+
+/**
+ * SourceSetting
+ */
+export type SourceSetting = {
+    /**
+     * Kind
+     */
+    kind: 'dwg' | 'dxf';
+    /**
+     * Name
+     *
+     * The uploaded file's own name (untrusted; goes into model.source as it is).
+     */
+    name: string;
+    /**
+     * Sha1
+     *
+     * 40 hex, lower case.
+     */
+    sha1: string;
+    /**
+     * Units
+     *
+     * The reader's used units, confirmed or changed by staff (U-7.4); null only in revision-0 settings, before the proposal is adopted (U-3.3).
+     */
+    units: 'mm' | 'cm' | 'm' | 'in' | 'ft' | null;
+    /**
+     * Unitsconfirmed
+     *
+     * false while the reader's verdict was 'votes-win' or 'unknown' and staff have not confirmed: runBuild refuses.
+     */
+    unitsConfirmed: boolean;
+};
+
+/**
+ * UploadPartResult
+ */
+export type UploadPartResult = {
+    /**
+     * Bytes
+     */
+    bytes: number;
+    /**
+     * Part
+     */
+    part: number;
+};
+
+/**
+ * UploadRequest
+ */
+export type UploadRequest = {
+    /**
+     * Bytes
+     */
+    bytes: number;
+    /**
+     * Filename
+     */
+    fileName: string;
+    /**
+     * Projectid
+     */
+    projectId: string;
+};
+
+/**
+ * UploadSession
+ */
+export type UploadSession = {
+    /**
+     * Bytes
+     */
+    bytes: number;
+    /**
+     * Completeurl
+     */
+    completeUrl: string;
+    /**
+     * Expiresat
+     */
+    expiresAt: string;
+    /**
+     * Filename
+     */
+    fileName: string;
+    /**
+     * Id
+     *
+     * ^u[0-9a-f]{24}$
+     */
+    id: string;
+    /**
+     * Partbytes
+     */
+    partBytes: number;
+    /**
+     * Parturls
+     *
+     * partUrls[i] is part i + 1.
+     */
+    partUrls: Array<string>;
+    /**
+     * Parts
+     */
+    parts: number;
+    /**
+     * Projectid
+     */
+    projectId: string;
+    /**
+     * Received
+     *
+     * 1-based part numbers received, ascending.
+     */
+    received: Array<number>;
+    /**
+     * Url
+     */
+    url: string;
 };
 
 /**
@@ -589,6 +1992,43 @@ export type VersionUrls = {
     stages: string | null;
 };
 
+/**
+ * Vocabulary
+ *
+ * Regular expressions (Python `re`, case-insensitive) as strings; a missing key = the builder's default (the bank
+ * builder's own pattern, U-10.3).
+ */
+export type Vocabulary = {
+    /**
+     * Glassword
+     */
+    glassWord?: string;
+    /**
+     * Liftword
+     */
+    liftWord?: string;
+    /**
+     * Roomtagline
+     */
+    roomTagLine?: string;
+    /**
+     * Sizeinname
+     */
+    sizeInName?: string;
+    /**
+     * Stairdown
+     */
+    stairDown?: string;
+    /**
+     * Stairup
+     */
+    stairUp?: string;
+    /**
+     * Typeheight
+     */
+    typeHeight?: string;
+};
+
 export type HealthData = {
     body?: never;
     path?: never;
@@ -605,6 +2045,22 @@ export type HealthResponses = {
 
 export type HealthResponse = HealthResponses[keyof HealthResponses];
 
+export type ListOfficesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/offices';
+};
+
+export type ListOfficesResponses = {
+    /**
+     * The offices.
+     */
+    200: OfficeList;
+};
+
+export type ListOfficesResponse = ListOfficesResponses[keyof ListOfficesResponses];
+
 export type ListProjectsData = {
     body?: never;
     path?: never;
@@ -620,6 +2076,35 @@ export type ListProjectsResponses = {
 };
 
 export type ListProjectsResponse = ListProjectsResponses[keyof ListProjectsResponses];
+
+export type CreateProjectData = {
+    body: NewProjectRequest;
+    path?: never;
+    query?: never;
+    url: '/api/projects';
+};
+
+export type CreateProjectErrors = {
+    /**
+     * project_exists: the id is taken (details.suggested: the next free id)
+     */
+    409: ErrorResponse;
+    /**
+     * bad_project: a name, short name or id that cannot be used (a new id is 2 - 40 characters, not reserved) (ErrorResponse), or a malformed request (FastAPI's HTTPValidationError).
+     */
+    422: ErrorResponse | HttpValidationError;
+};
+
+export type CreateProjectError = CreateProjectErrors[keyof CreateProjectErrors];
+
+export type CreateProjectResponses = {
+    /**
+     * The new project.
+     */
+    201: ProjectDetail;
+};
+
+export type CreateProjectResponse = CreateProjectResponses[keyof CreateProjectResponses];
 
 export type GetProjectData = {
     body?: never;
@@ -656,6 +2141,847 @@ export type GetProjectResponses = {
 };
 
 export type GetProjectResponse = GetProjectResponses[keyof GetProjectResponses];
+
+export type ListBuildsData = {
+    body?: never;
+    path: {
+        /**
+         * Projectid
+         *
+         * Project id (kebab-case slug).
+         */
+        projectId: string;
+    };
+    query?: never;
+    url: '/api/projects/{projectId}/builds';
+};
+
+export type ListBuildsErrors = {
+    /**
+     * project_not_found
+     */
+    404: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type ListBuildsError = ListBuildsErrors[keyof ListBuildsErrors];
+
+export type ListBuildsResponses = {
+    /**
+     * The builds.
+     */
+    200: BuildList;
+};
+
+export type ListBuildsResponse = ListBuildsResponses[keyof ListBuildsResponses];
+
+export type CreateBuildData = {
+    body: NewBuildRequest;
+    path: {
+        /**
+         * Projectid
+         *
+         * Project id (kebab-case slug).
+         */
+        projectId: string;
+    };
+    query?: never;
+    url: '/api/projects/{projectId}/builds';
+};
+
+export type CreateBuildErrors = {
+    /**
+     * project_not_found, source_not_found, version_not_found, build_not_found
+     */
+    404: ErrorResponse;
+    /**
+     * bad_sources: no source, or a source twice (ErrorResponse), or a malformed request (FastAPI's HTTPValidationError).
+     */
+    422: ErrorResponse | HttpValidationError;
+    /**
+     * builder_missing: the builder Python or LibreDWG is not where the settings say
+     */
+    503: ErrorResponse;
+};
+
+export type CreateBuildError = CreateBuildErrors[keyof CreateBuildErrors];
+
+export type CreateBuildResponses = {
+    /**
+     * The new build.
+     */
+    201: BuildDetail;
+};
+
+export type CreateBuildResponse = CreateBuildResponses[keyof CreateBuildResponses];
+
+export type DeleteBuildData = {
+    body?: never;
+    path: {
+        /**
+         * Projectid
+         *
+         * Project id (kebab-case slug).
+         */
+        projectId: string;
+        /**
+         * Buildid
+         *
+         * Build id, <yyyymmdd>T<hhmmss>-<6 hex>.
+         */
+        buildId: string;
+    };
+    query?: never;
+    url: '/api/projects/{projectId}/builds/{buildId}';
+};
+
+export type DeleteBuildErrors = {
+    /**
+     * project_not_found, build_not_found
+     */
+    404: ErrorResponse;
+    /**
+     * run_in_progress, build_saved
+     */
+    409: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type DeleteBuildError = DeleteBuildErrors[keyof DeleteBuildErrors];
+
+export type DeleteBuildResponses = {
+    /**
+     * The build is gone.
+     */
+    204: void;
+};
+
+export type DeleteBuildResponse = DeleteBuildResponses[keyof DeleteBuildResponses];
+
+export type GetBuildData = {
+    body?: never;
+    path: {
+        /**
+         * Projectid
+         *
+         * Project id (kebab-case slug).
+         */
+        projectId: string;
+        /**
+         * Buildid
+         *
+         * Build id, <yyyymmdd>T<hhmmss>-<6 hex>.
+         */
+        buildId: string;
+    };
+    query?: {
+        /**
+         * Withsettings
+         *
+         * false: settings is null in the answer (the 1 s poll asks without them, U-14.2).
+         */
+        withSettings?: boolean;
+    };
+    url: '/api/projects/{projectId}/builds/{buildId}';
+};
+
+export type GetBuildErrors = {
+    /**
+     * project_not_found, build_not_found
+     */
+    404: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetBuildError = GetBuildErrors[keyof GetBuildErrors];
+
+export type GetBuildResponses = {
+    /**
+     * The build.
+     */
+    200: BuildDetail;
+};
+
+export type GetBuildResponse = GetBuildResponses[keyof GetBuildResponses];
+
+export type CancelBuildRunData = {
+    body: CancelBuildRequest;
+    path: {
+        /**
+         * Projectid
+         *
+         * Project id (kebab-case slug).
+         */
+        projectId: string;
+        /**
+         * Buildid
+         *
+         * Build id, <yyyymmdd>T<hhmmss>-<6 hex>.
+         */
+        buildId: string;
+    };
+    query?: never;
+    url: '/api/projects/{projectId}/builds/{buildId}/cancel';
+};
+
+export type CancelBuildRunErrors = {
+    /**
+     * project_not_found, build_not_found
+     */
+    404: ErrorResponse;
+    /**
+     * no_run: nothing is queued or running
+     */
+    409: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type CancelBuildRunError = CancelBuildRunErrors[keyof CancelBuildRunErrors];
+
+export type CancelBuildRunResponses = {
+    /**
+     * The build.
+     */
+    200: BuildDetail;
+};
+
+export type CancelBuildRunResponse = CancelBuildRunResponses[keyof CancelBuildRunResponses];
+
+export type GetBuildDiffData = {
+    body?: never;
+    headers?: {
+        /**
+         * If-None-Match
+         *
+         * An ETag from an earlier answer: 304 when it still matches.
+         */
+        'If-None-Match'?: string | null;
+    };
+    path: {
+        /**
+         * Projectid
+         *
+         * Project id (kebab-case slug).
+         */
+        projectId: string;
+        /**
+         * Buildid
+         *
+         * Build id, <yyyymmdd>T<hhmmss>-<6 hex>.
+         */
+        buildId: string;
+    };
+    query?: never;
+    url: '/api/projects/{projectId}/builds/{buildId}/diff';
+};
+
+export type GetBuildDiffErrors = {
+    /**
+     * project_not_found, build_not_found, not_built
+     */
+    404: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetBuildDiffError = GetBuildDiffErrors[keyof GetBuildDiffErrors];
+
+export type GetBuildDiffResponses = {
+    /**
+     * The diff (application/json).
+     */
+    200: {
+        [key: string]: unknown;
+    };
+};
+
+export type GetBuildDiffResponse = GetBuildDiffResponses[keyof GetBuildDiffResponses];
+
+export type DownloadBuildMaxScriptData = {
+    body?: never;
+    path: {
+        /**
+         * Projectid
+         *
+         * Project id (kebab-case slug).
+         */
+        projectId: string;
+        /**
+         * Buildid
+         *
+         * Build id, <yyyymmdd>T<hhmmss>-<6 hex>.
+         */
+        buildId: string;
+    };
+    query?: never;
+    url: '/api/projects/{projectId}/builds/{buildId}/max-script';
+};
+
+export type DownloadBuildMaxScriptErrors = {
+    /**
+     * project_not_found, build_not_found, not_built
+     */
+    404: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type DownloadBuildMaxScriptError = DownloadBuildMaxScriptErrors[keyof DownloadBuildMaxScriptErrors];
+
+export type DownloadBuildMaxScriptResponses = {
+    /**
+     * The draft 3ds Max script.
+     */
+    200: string;
+};
+
+export type DownloadBuildMaxScriptResponse = DownloadBuildMaxScriptResponses[keyof DownloadBuildMaxScriptResponses];
+
+export type GetBuildModelData = {
+    body?: never;
+    headers?: {
+        /**
+         * If-None-Match
+         *
+         * An ETag from an earlier answer: 304 when it still matches.
+         */
+        'If-None-Match'?: string | null;
+    };
+    path: {
+        /**
+         * Projectid
+         *
+         * Project id (kebab-case slug).
+         */
+        projectId: string;
+        /**
+         * Buildid
+         *
+         * Build id, <yyyymmdd>T<hhmmss>-<6 hex>.
+         */
+        buildId: string;
+    };
+    query?: never;
+    url: '/api/projects/{projectId}/builds/{buildId}/model';
+};
+
+export type GetBuildModelErrors = {
+    /**
+     * project_not_found, build_not_found, not_built
+     */
+    404: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetBuildModelError = GetBuildModelErrors[keyof GetBuildModelErrors];
+
+export type GetBuildModelResponses = {
+    /**
+     * The model (application/json).
+     */
+    200: {
+        [key: string]: unknown;
+    };
+};
+
+export type GetBuildModelResponse = GetBuildModelResponses[keyof GetBuildModelResponses];
+
+export type GetBuildOverlayData = {
+    body?: never;
+    headers?: {
+        /**
+         * If-None-Match
+         *
+         * An ETag from an earlier answer: 304 when it still matches.
+         */
+        'If-None-Match'?: string | null;
+    };
+    path: {
+        /**
+         * Projectid
+         *
+         * Project id (kebab-case slug).
+         */
+        projectId: string;
+        /**
+         * Buildid
+         *
+         * Build id, <yyyymmdd>T<hhmmss>-<6 hex>.
+         */
+        buildId: string;
+    };
+    query?: never;
+    url: '/api/projects/{projectId}/builds/{buildId}/overlay';
+};
+
+export type GetBuildOverlayErrors = {
+    /**
+     * project_not_found, build_not_found, not_built
+     */
+    404: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetBuildOverlayError = GetBuildOverlayErrors[keyof GetBuildOverlayErrors];
+
+export type GetBuildOverlayResponses = {
+    /**
+     * The overlay (application/json).
+     */
+    200: {
+        [key: string]: unknown;
+    };
+};
+
+export type GetBuildOverlayResponse = GetBuildOverlayResponses[keyof GetBuildOverlayResponses];
+
+export type RunBuildData = {
+    body: RunBuildRequest;
+    path: {
+        /**
+         * Projectid
+         *
+         * Project id (kebab-case slug).
+         */
+        projectId: string;
+        /**
+         * Buildid
+         *
+         * Build id, <yyyymmdd>T<hhmmss>-<6 hex>.
+         */
+        buildId: string;
+    };
+    query?: never;
+    url: '/api/projects/{projectId}/builds/{buildId}/run';
+};
+
+export type RunBuildErrors = {
+    /**
+     * project_not_found, build_not_found
+     */
+    404: ErrorResponse;
+    /**
+     * run_in_progress, not_prepared, build_saved, units_unconfirmed, layers_not_reviewed
+     */
+    409: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+    /**
+     * builder_missing: the builder Python or LibreDWG is not where the settings say
+     */
+    503: ErrorResponse;
+};
+
+export type RunBuildError = RunBuildErrors[keyof RunBuildErrors];
+
+export type RunBuildResponses = {
+    /**
+     * The build with its new run.
+     */
+    202: BuildDetail;
+};
+
+export type RunBuildResponse = RunBuildResponses[keyof RunBuildResponses];
+
+export type SaveBuildData = {
+    body: SaveBuildRequest;
+    path: {
+        /**
+         * Projectid
+         *
+         * Project id (kebab-case slug).
+         */
+        projectId: string;
+        /**
+         * Buildid
+         *
+         * Build id, <yyyymmdd>T<hhmmss>-<6 hex>.
+         */
+        buildId: string;
+    };
+    query?: never;
+    url: '/api/projects/{projectId}/builds/{buildId}/save';
+};
+
+export type SaveBuildErrors = {
+    /**
+     * project_not_found, build_not_found
+     */
+    404: ErrorResponse;
+    /**
+     * not_built, stale (the settings changed since the last build), run_in_progress, build_saved (details.version)
+     */
+    409: ErrorResponse;
+    /**
+     * invalid_output: the outputs failed their checks (ErrorResponse), or a malformed request (FastAPI's HTTPValidationError).
+     */
+    422: ErrorResponse | HttpValidationError;
+};
+
+export type SaveBuildError = SaveBuildErrors[keyof SaveBuildErrors];
+
+export type SaveBuildResponses = {
+    /**
+     * The new version.
+     */
+    201: VersionDetail;
+};
+
+export type SaveBuildResponse = SaveBuildResponses[keyof SaveBuildResponses];
+
+export type PutBuildSettingsData = {
+    body: BuildSettingsUpdate;
+    path: {
+        /**
+         * Projectid
+         *
+         * Project id (kebab-case slug).
+         */
+        projectId: string;
+        /**
+         * Buildid
+         *
+         * Build id, <yyyymmdd>T<hhmmss>-<6 hex>.
+         */
+        buildId: string;
+    };
+    query?: never;
+    url: '/api/projects/{projectId}/builds/{buildId}/settings';
+};
+
+export type PutBuildSettingsErrors = {
+    /**
+     * project_not_found, build_not_found
+     */
+    404: ErrorResponse;
+    /**
+     * build_saved, not_prepared (the proposal is not in yet), run_in_progress (a one-source prepare after a units change is running)
+     */
+    409: ErrorResponse;
+    /**
+     * revision_conflict: If-Match does not name the saved revision (details: revision, settings)
+     */
+    412: ErrorResponse;
+    /**
+     * body_too_large: above 8 MiB (the body guard)
+     */
+    413: ErrorResponse;
+    /**
+     * invalid_settings (details.issues: [{path, message}]) (ErrorResponse), or a malformed request (FastAPI's HTTPValidationError).
+     */
+    422: ErrorResponse | HttpValidationError;
+};
+
+export type PutBuildSettingsError = PutBuildSettingsErrors[keyof PutBuildSettingsErrors];
+
+export type PutBuildSettingsResponses = {
+    /**
+     * The build after the change.
+     */
+    200: BuildDetail;
+};
+
+export type PutBuildSettingsResponse = PutBuildSettingsResponses[keyof PutBuildSettingsResponses];
+
+export type GetBuildConversionData = {
+    body?: never;
+    headers?: {
+        /**
+         * If-None-Match
+         *
+         * An ETag from an earlier answer: 304 when it still matches.
+         */
+        'If-None-Match'?: string | null;
+    };
+    path: {
+        /**
+         * Projectid
+         *
+         * Project id (kebab-case slug).
+         */
+        projectId: string;
+        /**
+         * Buildid
+         *
+         * Build id, <yyyymmdd>T<hhmmss>-<6 hex>.
+         */
+        buildId: string;
+        /**
+         * Sha1
+         *
+         * The source's sha1 (40 hex).
+         */
+        sha1: string;
+    };
+    query?: never;
+    url: '/api/projects/{projectId}/builds/{buildId}/sources/{sha1}/conversion';
+};
+
+export type GetBuildConversionErrors = {
+    /**
+     * project_not_found, build_not_found, not_ready
+     */
+    404: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetBuildConversionError = GetBuildConversionErrors[keyof GetBuildConversionErrors];
+
+export type GetBuildConversionResponses = {
+    /**
+     * The conversion report (application/json).
+     */
+    200: {
+        [key: string]: unknown;
+    };
+};
+
+export type GetBuildConversionResponse = GetBuildConversionResponses[keyof GetBuildConversionResponses];
+
+export type GetBuildDrawingData = {
+    body?: never;
+    headers?: {
+        /**
+         * If-None-Match
+         *
+         * An ETag from an earlier answer: 304 when it still matches.
+         */
+        'If-None-Match'?: string | null;
+    };
+    path: {
+        /**
+         * Projectid
+         *
+         * Project id (kebab-case slug).
+         */
+        projectId: string;
+        /**
+         * Buildid
+         *
+         * Build id, <yyyymmdd>T<hhmmss>-<6 hex>.
+         */
+        buildId: string;
+        /**
+         * Sha1
+         *
+         * The source's sha1 (40 hex).
+         */
+        sha1: string;
+    };
+    query?: never;
+    url: '/api/projects/{projectId}/builds/{buildId}/sources/{sha1}/drawing';
+};
+
+export type GetBuildDrawingErrors = {
+    /**
+     * project_not_found, build_not_found, not_ready
+     */
+    404: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetBuildDrawingError = GetBuildDrawingErrors[keyof GetBuildDrawingErrors];
+
+export type GetBuildDrawingResponses = {
+    /**
+     * The drawing read (application/json).
+     */
+    200: {
+        [key: string]: unknown;
+    };
+};
+
+export type GetBuildDrawingResponse = GetBuildDrawingResponses[keyof GetBuildDrawingResponses];
+
+export type GetBuildPlanData = {
+    body?: never;
+    headers?: {
+        /**
+         * If-None-Match
+         *
+         * An ETag from an earlier answer: 304 when it still matches.
+         */
+        'If-None-Match'?: string | null;
+    };
+    path: {
+        /**
+         * Projectid
+         *
+         * Project id (kebab-case slug).
+         */
+        projectId: string;
+        /**
+         * Buildid
+         *
+         * Build id, <yyyymmdd>T<hhmmss>-<6 hex>.
+         */
+        buildId: string;
+        /**
+         * Sha1
+         *
+         * The source's sha1 (40 hex).
+         */
+        sha1: string;
+    };
+    query?: never;
+    url: '/api/projects/{projectId}/builds/{buildId}/sources/{sha1}/plan';
+};
+
+export type GetBuildPlanErrors = {
+    /**
+     * project_not_found, build_not_found, not_ready
+     */
+    404: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetBuildPlanError = GetBuildPlanErrors[keyof GetBuildPlanErrors];
+
+export type GetBuildPlanResponses = {
+    /**
+     * The plan geometry (application/json).
+     */
+    200: {
+        [key: string]: unknown;
+    };
+};
+
+export type GetBuildPlanResponse = GetBuildPlanResponses[keyof GetBuildPlanResponses];
+
+export type GetBuildStagesData = {
+    body?: never;
+    headers?: {
+        /**
+         * If-None-Match
+         *
+         * An ETag from an earlier answer: 304 when it still matches.
+         */
+        'If-None-Match'?: string | null;
+    };
+    path: {
+        /**
+         * Projectid
+         *
+         * Project id (kebab-case slug).
+         */
+        projectId: string;
+        /**
+         * Buildid
+         *
+         * Build id, <yyyymmdd>T<hhmmss>-<6 hex>.
+         */
+        buildId: string;
+    };
+    query?: never;
+    url: '/api/projects/{projectId}/builds/{buildId}/stages';
+};
+
+export type GetBuildStagesErrors = {
+    /**
+     * project_not_found, build_not_found, not_built
+     */
+    404: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetBuildStagesError = GetBuildStagesErrors[keyof GetBuildStagesErrors];
+
+export type GetBuildStagesResponses = {
+    /**
+     * The replay data (application/json).
+     */
+    200: {
+        [key: string]: unknown;
+    };
+};
+
+export type GetBuildStagesResponse = GetBuildStagesResponses[keyof GetBuildStagesResponses];
+
+export type GetBuildTopviewData = {
+    body?: never;
+    headers?: {
+        /**
+         * If-None-Match
+         *
+         * An ETag from an earlier answer: 304 when it still matches.
+         */
+        'If-None-Match'?: string | null;
+    };
+    path: {
+        /**
+         * Projectid
+         *
+         * Project id (kebab-case slug).
+         */
+        projectId: string;
+        /**
+         * Buildid
+         *
+         * Build id, <yyyymmdd>T<hhmmss>-<6 hex>.
+         */
+        buildId: string;
+    };
+    query?: never;
+    url: '/api/projects/{projectId}/builds/{buildId}/topview';
+};
+
+export type GetBuildTopviewErrors = {
+    /**
+     * project_not_found, build_not_found, not_built
+     */
+    404: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetBuildTopviewError = GetBuildTopviewErrors[keyof GetBuildTopviewErrors];
+
+export type GetBuildTopviewResponses = {
+    /**
+     * The top view (image/png).
+     */
+    200: Blob | File;
+};
+
+export type GetBuildTopviewResponse = GetBuildTopviewResponses[keyof GetBuildTopviewResponses];
 
 export type GetThumbnailData = {
     body?: never;
@@ -1116,3 +3442,203 @@ export type GetStagesResponses = {
 };
 
 export type GetStagesResponse = GetStagesResponses[keyof GetStagesResponses];
+
+export type CreateUploadData = {
+    body: UploadRequest;
+    path?: never;
+    query?: never;
+    url: '/api/uploads';
+};
+
+export type CreateUploadErrors = {
+    /**
+     * project_not_found
+     */
+    404: ErrorResponse;
+    /**
+     * too_large: above WALKTHROUGH_UPLOAD_MAX_BYTES (300 MiB)
+     */
+    413: ErrorResponse;
+    /**
+     * bad_kind: the name must end in .dwg or .dxf, be 1 - 255 characters and hold no control character (ErrorResponse), or a malformed request (FastAPI's HTTPValidationError).
+     */
+    422: ErrorResponse | HttpValidationError;
+};
+
+export type CreateUploadError = CreateUploadErrors[keyof CreateUploadErrors];
+
+export type CreateUploadResponses = {
+    /**
+     * The upload session.
+     */
+    201: UploadSession;
+};
+
+export type CreateUploadResponse = CreateUploadResponses[keyof CreateUploadResponses];
+
+export type CancelUploadData = {
+    body?: never;
+    path: {
+        /**
+         * Uploadid
+         *
+         * Upload session id, u + 24 hex.
+         */
+        uploadId: string;
+    };
+    query?: never;
+    url: '/api/uploads/{uploadId}';
+};
+
+export type CancelUploadErrors = {
+    /**
+     * upload_not_found
+     */
+    404: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type CancelUploadError = CancelUploadErrors[keyof CancelUploadErrors];
+
+export type CancelUploadResponses = {
+    /**
+     * The session is gone.
+     */
+    204: void;
+};
+
+export type CancelUploadResponse = CancelUploadResponses[keyof CancelUploadResponses];
+
+export type GetUploadData = {
+    body?: never;
+    path: {
+        /**
+         * Uploadid
+         *
+         * Upload session id, u + 24 hex.
+         */
+        uploadId: string;
+    };
+    query?: never;
+    url: '/api/uploads/{uploadId}';
+};
+
+export type GetUploadErrors = {
+    /**
+     * upload_not_found
+     */
+    404: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type GetUploadError = GetUploadErrors[keyof GetUploadErrors];
+
+export type GetUploadResponses = {
+    /**
+     * The upload session.
+     */
+    200: UploadSession;
+};
+
+export type GetUploadResponse = GetUploadResponses[keyof GetUploadResponses];
+
+export type CompleteUploadData = {
+    body: CompleteUploadRequest;
+    path: {
+        /**
+         * Uploadid
+         *
+         * Upload session id, u + 24 hex.
+         */
+        uploadId: string;
+    };
+    query?: never;
+    url: '/api/uploads/{uploadId}/complete';
+};
+
+export type CompleteUploadErrors = {
+    /**
+     * upload_not_found
+     */
+    404: ErrorResponse;
+    /**
+     * incomplete: parts are missing (details.missing)
+     */
+    409: ErrorResponse;
+    /**
+     * bad_kind (not a DWG or DXF), unsupported_version (a DWG older than R13: save it as a newer DWG, or export a DXF) (ErrorResponse), or a malformed request (FastAPI's HTTPValidationError).
+     */
+    422: ErrorResponse | HttpValidationError;
+};
+
+export type CompleteUploadError = CompleteUploadErrors[keyof CompleteUploadErrors];
+
+export type CompleteUploadResponses = {
+    /**
+     * The stored source.
+     */
+    201: SourceFile;
+};
+
+export type CompleteUploadResponse = CompleteUploadResponses[keyof CompleteUploadResponses];
+
+export type PutUploadPartData = {
+    /**
+     * Body
+     *
+     * The bytes of the part: every part but the last exactly partBytes, the last the rest.
+     */
+    body: Blob | File;
+    path: {
+        /**
+         * Uploadid
+         *
+         * Upload session id, u + 24 hex.
+         */
+        uploadId: string;
+        /**
+         * Part
+         *
+         * Part number, from 1 (partUrls[i] is part i + 1).
+         */
+        part: number;
+    };
+    query?: never;
+    url: '/api/uploads/{uploadId}/parts/{part}';
+};
+
+export type PutUploadPartErrors = {
+    /**
+     * upload_not_found
+     */
+    404: ErrorResponse;
+    /**
+     * length_required: a part needs Content-Length (the body guard)
+     */
+    411: ErrorResponse;
+    /**
+     * part_too_large: above partBytes (the body guard)
+     */
+    413: ErrorResponse;
+    /**
+     * bad_part: a part number past the last, or a size other than the part's (ErrorResponse), or a malformed request (FastAPI's HTTPValidationError).
+     */
+    422: ErrorResponse | HttpValidationError;
+};
+
+export type PutUploadPartError = PutUploadPartErrors[keyof PutUploadPartErrors];
+
+export type PutUploadPartResponses = {
+    /**
+     * The part as stored.
+     */
+    200: UploadPartResult;
+};
+
+export type PutUploadPartResponse = PutUploadPartResponses[keyof PutUploadPartResponses];

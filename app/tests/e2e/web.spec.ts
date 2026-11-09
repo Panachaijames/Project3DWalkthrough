@@ -59,10 +59,10 @@ test('the project list: four cards with their fields, thumbnails, and the house 
   const be = backend(request);
   await page.goto('/projects');
   const cards = page.getByTestId('project-card');
-  await expect(cards).toHaveCount(4);
+  await expect(page.locator(PROJECT_IDS.map(id => `[data-testid=project-card][data-project-id="${id}"]`).join(', '))).toHaveCount(4);   // the four seeded projects' cards (U-15.3: e2e-* projects may be listed too)
   await expect(page).toHaveTitle('Projects · Walkthrough');
   const list = await be.list();
-  expect(list.map(p => p.id).sort()).toEqual(PROJECT_IDS);
+  expect(list.map(p => p.id).filter(id => !id.startsWith('e2e-')).sort()).toEqual(PROJECT_IDS);   // U-15.3: e2e-* projects aside
   expect(await cards.evaluateAll(cs => cs.map(c => c.getAttribute('data-project-id')))).toEqual(list.map(p => p.id));   // newest first
   for (const p of list) {
     const card = page.locator(`[data-testid=project-card][data-project-id="${p.id}"]`);
@@ -118,7 +118,7 @@ test('the project page: the latest version, one viewer under StrictMode (created
   // Back (the redirect replaced its own history entry) and the app bar's link both lead to the list; the viewer goes
   await page.goBack();
   await expect(page).toHaveURL(/\/projects$/);
-  await expect(page.getByTestId('project-card')).toHaveCount(4);
+  await expect(page.locator(PROJECT_IDS.map(id => `[data-testid=project-card][data-project-id="${id}"]`).join(', '))).toHaveCount(4);   // the four seeded projects' cards (U-15.3: e2e-* projects may be listed too)
   expect(await page.evaluate(() => [document.querySelectorAll('[data-wt=root]').length, typeof window.__walkthrough])).toEqual([0, 'undefined']);
   await page.goForward();
   await viewerReady(page, 2);
@@ -126,7 +126,7 @@ test('the project page: the latest version, one viewer under StrictMode (created
   await expect(page).toHaveURL(/\/projects$/);
   // the URL changes when the navigation commits, React's render of the list a moment later (integration: seen once under
   // load), so wait for the list as the Back check above does, then the canvas must be gone
-  await expect(page.getByTestId('project-card')).toHaveCount(4);
+  await expect(page.locator(PROJECT_IDS.map(id => `[data-testid=project-card][data-project-id="${id}"]`).join(', '))).toHaveCount(4);   // the four seeded projects' cards (U-15.3: e2e-* projects may be listed too)
   await expect.poll(() => page.evaluate(() => document.querySelectorAll('canvas').length)).toBe(0);
 });
 
@@ -304,7 +304,7 @@ test('Not found and errors: an unknown project or version, a bad address; a fail
   await expect(page.getByTestId('projects-error-reason')).toHaveText('the list is broken (test)', { timeout: 20_000 });
   failing = false;
   await page.getByTestId('projects-retry').click();
-  await expect(page.getByTestId('project-card')).toHaveCount(4);
+  await expect(page.locator(PROJECT_IDS.map(id => `[data-testid=project-card][data-project-id="${id}"]`).join(', '))).toHaveCount(4);   // the four seeded projects' cards (U-15.3: e2e-* projects may be listed too)
 });
 
 test('a model the viewer cannot read shows its issues instead of a viewer', async ({ page }) => {
@@ -366,7 +366,7 @@ test('a clean console: an icon in the page (no /favicon.ico), no errors while sw
   page.on('pageerror', e => errors.push(`[pageerror] ${e.message}`));
   page.on('request', r => { if (new URL(r.url()).pathname === '/favicon.ico') favicon.push(r.url()); });
   await page.goto('/projects');
-  await expect(page.getByTestId('project-card')).toHaveCount(4);
+  await expect(page.locator(PROJECT_IDS.map(id => `[data-testid=project-card][data-project-id="${id}"]`).join(', '))).toHaveCount(4);   // the four seeded projects' cards (U-15.3: e2e-* projects may be listed too)
   expect(await page.locator('link[rel=icon]').count()).toBe(1);
   await page.goto('/projects/bank-sampeng/v/2');
   await viewerReady(page, 2);
@@ -381,7 +381,7 @@ test('a clean console: an icon in the page (no /favicon.ico), no errors while sw
 
 test('the browser\'s ResizeObserver-loop notification reaches no other error listener (Vite\'s forwarded it to the terminal); other errors do', async ({ page }) => {
   await page.goto('/projects');
-  await expect(page.getByTestId('project-card')).toHaveCount(4);
+  await expect(page.locator(PROJECT_IDS.map(id => `[data-testid=project-card][data-project-id="${id}"]`).join(', '))).toHaveCount(4);   // the four seeded projects' cards (U-15.3: e2e-* projects may be listed too)
   const seen = await page.evaluate(() => {
     // a window error listener added by a module script, as Vite's dev client's is (index.html's inline filter runs first)
     const w = window as unknown as { __seenErrors: string[] };

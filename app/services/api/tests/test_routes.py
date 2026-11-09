@@ -14,7 +14,7 @@ from fastapi.testclient import TestClient
 from kit import BASE_URL, FIXTURES, PROTOTYPES, VERSION_IDS, VERSIONS, make_client, read_json
 from walkthrough_api import routes as routes_pkg
 from walkthrough_api.deps import get_store
-from walkthrough_api.routes import downloads, furniture, projects, versions
+from walkthrough_api.routes import builds, downloads, furniture, offices, projects, uploads, versions
 from walkthrough_api.jsonio import sha1_hex
 from walkthrough_api.main import create_app
 from walkthrough_api.seed.sources import SEED_TABLE
@@ -306,8 +306,12 @@ def test_heights_validation(client: TestClient) -> None:
 
 # ---------------------------------------------------------------------------------------------------- the seams
 def test_routes_are_plain_def_and_take_the_store_from_the_dependency() -> None:
-    routes = [r for m in (projects, versions, downloads, furniture) for r in m.router.routes if isinstance(r, APIRoute)]
-    assert len(routes) == 13
+    # 13 of the foundation + 24 of the upload milestone over 7 modules (docs/upload/DESIGN.md U-13.1, U-15.1)
+    modules = (projects, versions, downloads, furniture, uploads, builds, offices)
+    routes = [r for m in modules for r in m.router.routes if isinstance(r, APIRoute)]
+    assert len(routes) == 37 and len(modules) == 7
+    on_disk = {p.stem for p in Path(routes_pkg.__file__).parent.glob('*.py')} - {'__init__', 'params'}
+    assert {Path(m.__file__).stem for m in modules} == on_disk
     assert {r.operation_id for r in routes} == {op['operationId'] for p in create_app().openapi()['paths'].values()
                                                 for op in p.values()}
     for r in routes:

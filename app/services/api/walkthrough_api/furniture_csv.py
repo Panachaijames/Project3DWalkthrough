@@ -7,6 +7,12 @@ floor (the model's order), kind (the kinds table's order), id. x_m, y_m are draw
 the resolved underside (a piece on a table stands at the table's top: the support's base + its height, one level, as the
 kit); rotation_deg has 1 decimal; RFC 4180 quoting; never '-0.000'. `csv_text` has no byte-order mark: the download
 (`csv_bytes`) puts EF BB BF in front, as furniture_kit.write_csv does.
+
+The formula guard (docs/upload/DESIGN.md U-11.6, step U5; uploads bring other offices' block names): in the text
+columns (id, level, kind, kind_label, family, block, layer, dxf_handle, on_top_of, note) a value starting with `=`, `+`,
+`-`, `@`, TAB or CR gets a leading `'` before the RFC 4180 quoting, so a spreadsheet never reads it as a formula; the
+number columns never change. The viewer's CSV (packages/viewer/src/furniture/logic.ts) applies the same rule. No text
+field of the four seeded projects starts that way: their CSVs are byte for byte as before.
 """
 from __future__ import annotations
 
@@ -17,6 +23,16 @@ from typing import Any
 BOM = b'\xef\xbb\xbf'
 CSV_COLUMNS = ('id', 'level', 'kind', 'kind_label', 'family', 'block', 'layer', 'dxf_handle', 'x_m', 'y_m', 'width_mm',
                'depth_mm', 'height_mm', 'base_mm', 'rotation_deg', 'on_top_of', 'merged', 'note')
+TEXT_COLUMNS = frozenset({'id', 'level', 'kind', 'kind_label', 'family', 'block', 'layer', 'dxf_handle', 'on_top_of',
+                          'note'})
+_TEXT_AT = tuple(c in TEXT_COLUMNS for c in CSV_COLUMNS)
+FORMULA_START = ('=', '+', '-', '@', '\t', '\r')
+
+
+def guard(v: Any) -> str:
+    """A text value a spreadsheet would take for a formula gets a leading ' (U-11.6)."""
+    s = str(v)
+    return "'" + s if s.startswith(FORMULA_START) else s
 
 
 def field(v: Any) -> str:
@@ -51,7 +67,7 @@ def csv_text(furniture: list[dict[str, Any]], kinds: list[dict[str, Any]], floor
         row = [p['id'], p['floor'], p['kind'], k['label'], p['family'], p['block'], p['layer'], p['handle'],
                fixed(p['x'] + offset[0], 3), fixed(p['y'] + offset[1], 3), whole(p['w'] * 1000), whole(p['d'] * 1000),
                height(p['kind']), whole(base), fixed(p['rot'], 1), p['on'] or '', p['n'], p['note'] or '']
-        lines.append(','.join(field(v) for v in row))
+        lines.append(','.join(field(guard(v) if text else v) for v, text in zip(row, _TEXT_AT, strict=True)))
     return '\r\n'.join(lines) + '\r\n'
 
 

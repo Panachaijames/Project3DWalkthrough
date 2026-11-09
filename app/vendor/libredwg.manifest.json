@@ -1,0 +1,335 @@
+{
+  "format": "vendor-manifest/1",
+  "name": "LibreDWG",
+  "release": "0.14 (win64 build, GitHub release libredwg-0.14-win64.zip)",
+  "licence": {
+    "path": "COPYING",
+    "bytes": null,
+    "sha1": null,
+    "note": "GPL-3.0-or-later (README.txt); the zip has no COPYING: the owner fetches the text from gnu.org and runs --add-licence"
+  },
+  "zip": {
+    "path": "vendor/libredwg-0.14-win64.zip",
+    "bytes": 12084779,
+    "sha1": "edb5c01152c3ea9bcb46175aa3403fd18b941ff3",
+    "entries": 75
+  },
+  "folder": "vendor/libredwg-0.14-win64",
+  "files": [
+    {
+      "path": "README.txt",
+      "bytes": 9791,
+      "sha1": "e6b03d1cb60413ca135b29b8e2dd448e5710b355"
+    },
+    {
+      "path": "dwg2SVG.exe",
+      "bytes": 352996,
+      "sha1": "52019094074be977c7bbdfaabc6f021ec0cde0c9"
+    },
+    {
+      "path": "dwg2dxf.exe",
+      "bytes": 335290,
+      "sha1": "07f9c8d95dc0209675c6d8dece4beaab8494d2c1"
+    },
+    {
+      "path": "dwgbmp.exe",
+      "bytes": 323283,
+      "sha1": "360f72e42964f20812edd40a992a3e76aae05d99"
+    },
+    {
+      "path": "dwgfilter",
+      "bytes": 1919,
+      "sha1": "540f5e35492509919ebfcbe520c71dfcf67c4870"
+    },
+    {
+      "path": "dwggrep.exe",
+      "bytes": 396162,
+      "sha1": "5146d9ea93810ea3529715eb3f1144c62c7216d6"
+    },
+    {
+      "path": "dwglayers.exe",
+      "bytes": 308646,
+      "sha1": "2d78fda387c1b89d17f13108dc67b4f090cc5c2b"
+    },
+    {
+      "path": "dwgread.exe",
+      "bytes": 311651,
+      "sha1": "bd2a2745827ab3bccb6b5027dbdc5cfb42e01f8a"
+    },
+    {
+      "path": "dwgrewrite.exe",
+      "bytes": 334192,
+      "sha1": "9a8554391dc14c09741a87497bb3c6f444eca9ee"
+    },
+    {
+      "path": "dwgwrite.exe",
+      "bytes": 337593,
+      "sha1": "9ba6bebaf5ec6d271a256fa1b28f6d31989b2f2e"
+    },
+    {
+      "path": "dxf2dwg.exe",
+      "bytes": 334094,
+      "sha1": "9595b2483e6386dc06124d2b4953aa6bcceb7899"
+    },
+    {
+      "path": "dxfwrite.exe",
+      "bytes": 338085,
+      "sha1": "dbfff3d3cf350b029d0d970178dedaf6d5228e60"
+    },
+    {
+      "path": "examples/bd.c",
+      "bytes": 4493,
+      "sha1": "5fc57d1a377053ea272527b711139be99bf5725a"
+    },
+    {
+      "path": "examples/bits.c",
+      "bytes": 6200,
+      "sha1": "5c048d0d72967c1e5379115423e8bb77cd5d4339"
+    },
+    {
+      "path": "examples/dwg2svg2.c",
+      "bytes": 15685,
+      "sha1": "f45ad5aff69fe9808ca1314c1e9b522a1b47d3c8"
+    },
+    {
+      "path": "examples/dwg2svg2.exe",
+      "bytes": 317750,
+      "sha1": "312b81d732ee9dcad899209c8245c40926b057b1"
+    },
+    {
+      "path": "examples/dwgadd.c",
+      "bytes": 82167,
+      "sha1": "861a690fa2c528cd6afbf4a425cb2c13ba4bdc06"
+    },
+    {
+      "path": "examples/dwgadd.exe",
+      "bytes": 510016,
+      "sha1": "1d34a5c08dd60feb7ed0358474e71f898d5c9d96"
+    },
+    {
+      "path": "examples/dwgfuzz.c",
+      "bytes": 27952,
+      "sha1": "73d02802de2285b89935224ca10834ab97c2fa19"
+    },
+    {
+      "path": "examples/dwgfuzz.exe",
+      "bytes": 492655,
+      "sha1": "18f019560e6e33ae8e1b251cb5698a6f23306b8b"
+    },
+    {
+      "path": "examples/llvmfuzz.c",
+      "bytes": 9620,
+      "sha1": "9a012488b7b2de26fb99f519f82234c5d9f9d8c8"
+    },
+    {
+      "path": "examples/load_dwg.c",
+      "bytes": 6094,
+      "sha1": "eb198fdb504f120e9e2edc9a657d3a68caaeb91d"
+    },
+    {
+      "path": "examples/load_dwg.exe",
+      "bytes": 312543,
+      "sha1": "04721d320a556f0d181cdbb390cbaef7236edb73"
+    },
+    {
+      "path": "examples/odaversion.c",
+      "bytes": 2205,
+      "sha1": "09657c07c527c1812ee6bd695a77893b3f9d5b06"
+    },
+    {
+      "path": "examples/rsdecode.c",
+      "bytes": 251,
+      "sha1": "07e1ef7aaf7fd5800c7481c70e925dc3448ac822"
+    },
+    {
+      "path": "examples/rsencode.c",
+      "bytes": 499,
+      "sha1": "c2c37be5a41080f12d77176917c730a9e2048caf"
+    },
+    {
+      "path": "examples/unknown.c",
+      "bytes": 55263,
+      "sha1": "6f3fb84cb59b0b3d44f3367db24a3652e234a0eb"
+    },
+    {
+      "path": "include/dwg.h",
+      "bytes": 481036,
+      "sha1": "796b18720800fb881ed0d9abc2d7ba9925d50510"
+    },
+    {
+      "path": "include/dwg_api.h",
+      "bytes": 599561,
+      "sha1": "161ec27663c5f79d9b07300363cdaa6051a8c343"
+    },
+    {
+      "path": "lib/libredwg.dll.a",
+      "bytes": 1148946,
+      "sha1": "b4d80194202cb09c3f57b4228fca072eb57dfe4b"
+    },
+    {
+      "path": "lib/libredwg.la",
+      "bytes": 883,
+      "sha1": "29a16f74cb03521f89853ea76118f7ed676b9ece"
+    },
+    {
+      "path": "lib/pkgconfig/libredwg.pc",
+      "bytes": 335,
+      "sha1": "fc9bd28b910cd95f6c074eda1c51406b2de908c4"
+    },
+    {
+      "path": "lib/python3.12/site-packages/LibreDWG.py",
+      "bytes": 1252930,
+      "sha1": "5b3c4884b0a9729c7182edb4b30e9dc879f06982"
+    },
+    {
+      "path": "lib/python3.12/site-packages/_LibreDWG.dll",
+      "bytes": 10008859,
+      "sha1": "2570c57263bf8d2c8051de8cd6b6e1eca12ab1c7"
+    },
+    {
+      "path": "lib/python3.12/site-packages/_LibreDWG.dll.a",
+      "bytes": 1592,
+      "sha1": "56163f22f2ae43f94b769c6dc086c53ebe7cf50a"
+    },
+    {
+      "path": "lib/python3.12/site-packages/_LibreDWG.la",
+      "bytes": 997,
+      "sha1": "de8dbcac14404cd3dbfb8084e0b3e40614e51e31"
+    },
+    {
+      "path": "libiconv-2.dll",
+      "bytes": 1136529,
+      "sha1": "3e0697a092965779973e8ce54c335dcce39a60d5"
+    },
+    {
+      "path": "libpcre2-16-0.dll",
+      "bytes": 653924,
+      "sha1": "719840912395dd8ab471a67f68b308866c76198f"
+    },
+    {
+      "path": "libpcre2-8-0.dll",
+      "bytes": 717955,
+      "sha1": "3ac956a5f786ed56e1ddff4ea7f2e20369edda8f"
+    },
+    {
+      "path": "libredwg-0.dll",
+      "bytes": 31171427,
+      "sha1": "4146008520eccd26ef9bd41139f16710c3a60475"
+    },
+    {
+      "path": "share/info/LibreDWG.info",
+      "bytes": 15995,
+      "sha1": "4af3a7846fef83e87d3c8dd467f2ed0895aafc2b"
+    },
+    {
+      "path": "share/info/LibreDWG.info-1",
+      "bytes": 302806,
+      "sha1": "da8c2673900da4f0f32dcbe7bf023ca4f07492e2"
+    },
+    {
+      "path": "share/info/LibreDWG.info-2",
+      "bytes": 526519,
+      "sha1": "c081cb6a8957ba497148ddbe35056a1a3b63524d"
+    },
+    {
+      "path": "share/info/dir",
+      "bytes": 628,
+      "sha1": "bbab6fc2f742d888c017125d10530e96ebf4cff9"
+    },
+    {
+      "path": "share/libredwg/dwgadd.example",
+      "bytes": 2142,
+      "sha1": "036757d1f744d2c4595adc8942e852ad2c0ecb5b"
+    },
+    {
+      "path": "share/libredwg/dwgadd.example_r10",
+      "bytes": 1120,
+      "sha1": "5885e3e4bae494aa9aa43cc0a6c3f4f488c0c5b5"
+    },
+    {
+      "path": "share/libredwg/dwgadd.example_r11",
+      "bytes": 1308,
+      "sha1": "a406af6d7aac57db5bbc3e2f44799f3f040f7080"
+    },
+    {
+      "path": "share/libredwg/dwgadd.example_r1_4",
+      "bytes": 434,
+      "sha1": "a971feb9790d99c7a4c519c2cd65fe10f363e5a5"
+    },
+    {
+      "path": "share/libredwg/dwgadd.example_r2_10",
+      "bytes": 770,
+      "sha1": "8558db43d8ff4f8419de45087d813f8e4528f5e3"
+    },
+    {
+      "path": "share/libredwg/load_dwg.py",
+      "bytes": 866,
+      "sha1": "8d4e4b4ec57ad37ab0daf92bf04de70ba12135eb"
+    },
+    {
+      "path": "share/man/man1/dwg2SVG.1",
+      "bytes": 886,
+      "sha1": "c5066a4d4f6865de7d1fc26540909d5795cf35b7"
+    },
+    {
+      "path": "share/man/man1/dwg2dxf.1",
+      "bytes": 1346,
+      "sha1": "cf245dce8eec4107990ad635bef621508e18db68"
+    },
+    {
+      "path": "share/man/man1/dwgadd.1",
+      "bytes": 1155,
+      "sha1": "f484a5bc0c427c568879038c799578283c995541"
+    },
+    {
+      "path": "share/man/man1/dwgbmp.1",
+      "bytes": 866,
+      "sha1": "c9197b5ec5c8798442cbf83fee826e4d88e47a60"
+    },
+    {
+      "path": "share/man/man1/dwgfilter.1",
+      "bytes": 736,
+      "sha1": "52944c44d8395508deb3bdce64b9d6a5c2f57097"
+    },
+    {
+      "path": "share/man/man1/dwggrep.1",
+      "bytes": 1271,
+      "sha1": "4d3f893ddf73689e0b4d54ed7df7408fb796ad27"
+    },
+    {
+      "path": "share/man/man1/dwglayers.1",
+      "bytes": 989,
+      "sha1": "d6c8101fb0d2ba89d6c6540db78fe8dcc373fd6b"
+    },
+    {
+      "path": "share/man/man1/dwgread.1",
+      "bytes": 1021,
+      "sha1": "ab8a724ec7c613962610e38b44bf152510987392"
+    },
+    {
+      "path": "share/man/man1/dwgrewrite.1",
+      "bytes": 1085,
+      "sha1": "ffda347f8313fbf3e16451a995a614c98e2355d5"
+    },
+    {
+      "path": "share/man/man1/dwgwrite.1",
+      "bytes": 1264,
+      "sha1": "85892449db2c2fb3cee55ed83f3c9d24e0f85210"
+    },
+    {
+      "path": "share/man/man1/dxf2dwg.1",
+      "bytes": 1223,
+      "sha1": "825987c597532c078df1588948ba809a925a38a3"
+    },
+    {
+      "path": "share/man/man1/dxfwrite.1",
+      "bytes": 1227,
+      "sha1": "aa237c4e0bb0988c2fd10dc5baf69507d9afd09c"
+    },
+    {
+      "path": "share/man/man5/dwgadd.5",
+      "bytes": 10743,
+      "sha1": "70093dd1b49ada5c5ace58a2581178dfb5434be0"
+    }
+  ]
+}

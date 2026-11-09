@@ -1,0 +1,223 @@
+{
+  "format": "layer-suggestions/1",
+  "office": null,
+  "layers": {
+    "A-ANNO-DIMS": {
+      "role": "ignore",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: A-ANNO-DIMS is ignore in bank_project.json"
+      ]
+    },
+    "A-ANNO-DIMS-100": {
+      "role": "ignore",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: A-ANNO-DIMS-100 is ignore in bank_project.json"
+      ]
+    },
+    "A-AREA-IDEN": {
+      "role": "room-name",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: A-AREA-IDEN is room-name in bank_project.json"
+      ]
+    },
+    "A-DETL": {
+      "role": "other",
+      "from": "default",
+      "evidence": [
+        "provisional fixture: A-DETL is other in bank_project.json"
+      ]
+    },
+    "A-DETL-GENF": {
+      "role": "other",
+      "from": "default",
+      "evidence": [
+        "provisional fixture: A-DETL-GENF is other in bank_project.json"
+      ]
+    },
+    "A-DOOR": {
+      "role": "door",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: A-DOOR is door in bank_project.json"
+      ]
+    },
+    "A-DOOR-FRAM": {
+      "role": "door",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: A-DOOR-FRAM is door in bank_project.json"
+      ]
+    },
+    "A-DOOR-GLAZ": {
+      "role": "door",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: A-DOOR-GLAZ is door in bank_project.json"
+      ]
+    },
+    "A-DOOR-HDLN": {
+      "role": "door",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: A-DOOR-HDLN is door in bank_project.json"
+      ]
+    },
+    "A-FLOR": {
+      "role": "other",
+      "from": "default",
+      "evidence": [
+        "provisional fixture: A-FLOR is other in bank_project.json"
+      ]
+    },
+    "A-FLOR-HRAL": {
+      "role": "railing",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: A-FLOR-HRAL is railing in bank_project.json"
+      ]
+    },
+    "A-FLOR-HRAL-MBND": {
+      "role": "other",
+      "from": "default",
+      "evidence": [
+        "provisional fixture: A-FLOR-HRAL-MBND is other in bank_project.json"
+      ]
+    },
+    "A-GENM": {
+      "role": "furniture",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: A-GENM is furniture in bank_project.json"
+      ]
+    },
+    "A-GLAZ-CURT": {
+      "role": "glass",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: A-GLAZ-CURT is glass in bank_project.json"
+      ]
+    },
+    "A-GLAZ-CWMG": {
+      "role": "glass",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: A-GLAZ-CWMG is glass in bank_project.json"
+      ]
+    },
+    "A-WALL": {
+      "role": "wall",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: A-WALL is wall in bank_project.json"
+      ]
+    },
+    "A-WALL-PATT": {
+      "role": "wall",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: A-WALL-PATT is wall in bank_project.json"
+      ]
+    },
+    "E-COMM": {
+      "role": "furniture",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: E-COMM is furniture in bank_project.json"
+      ]
+    },
+    "E-ELEC-FIXT": {
+      "role": "ignore",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: E-ELEC-FIXT is ignore in bank_project.json"
+      ]
+    },
+    "G-ANNO-TEXT": {
+      "role": "room-name",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: G-ANNO-TEXT is room-name in bank_project.json"
+      ]
+    },
+    "I-FURN": {
+      "role": "furniture",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: I-FURN is furniture in bank_project.json"
+      ]
+    },
+    "L-PLNT": {
+      "role": "furniture",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: L-PLNT is furniture in bank_project.json"
+      ]
+    },
+    "P-SANR-FIXT": {
+      "role": "furniture",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: P-SANR-FIXT is furniture in bank_project.json"
+      ]
+    },
+    "Q-CASE": {
+      "role": "furniture",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: Q-CASE is furniture in bank_project.json"
+      ]
+    },
+    "Q-CASE-HDLN": {
+      "role": "furniture",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: Q-CASE-HDLN is furniture in bank_project.json"
+      ]
+    },
+    "Q-SPCQ": {
+      "role": "furniture",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: Q-SPCQ is furniture in bank_project.json"
+      ]
+    },
+    "S-COLS": {
+      "role": "column",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: S-COLS is column in bank_project.json"
+      ]
+    },
+    "S-GRID": {
+      "role": "grid",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: S-GRID is grid in bank_project.json"
+      ]
+    },
+    "S-GRID-IDEN": {
+      "role": "grid",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: S-GRID-IDEN is grid in bank_project.json"
+      ]
+    },
+    "S-STRS": {
+      "role": "stair",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: S-STRS is stair in bank_project.json"
+      ]
+    },
+    "S-STRS-MBND": {
+      "role": "stair-above",
+      "from": "name",
+      "evidence": [
+        "provisional fixture: S-STRS-MBND is stair-above in bank_project.json"
+      ]
+    }
+  }
+}

@@ -1,0 +1,28 @@
+LibreDWG in this folder: licence notice (docs/upload/DESIGN.md U-6.1; tracked in git, the binaries are not)
+
+What it is
+  LibreDWG 0.14, the Windows x64 build: the GitHub release archive libredwg-0.14-win64.zip
+  (sha1 edb5c01152c3ea9bcb46175aa3403fd18b941ff3, 12,084,779 bytes, 75 entries), kept as
+  app/vendor/libredwg-0.14-win64.zip and extracted, unchanged, into app/vendor/libredwg-0.14-win64/ by
+  tools/vendor-libredwg.py. app/vendor/libredwg.manifest.json lists every extracted file with its size and sha1;
+  `npm run check:pins` verifies them.
+
+Licence
+  GNU General Public License, version 3 or (at your option) any later version (GPL-3.0-or-later).
+  Copyright (C) 2009, 2010, 2015, 2018-2026 Free Software Foundation, Inc.
+  Source of this statement: app/vendor/libredwg-0.14-win64/README.txt, shipped in the release zip (lines 3-6 and
+  238-244: "licensed under the terms of the GNU General Public License version 3 (or at you option any later
+  version)").
+
+Where the licence text is
+  The release zip carries no COPYING file. The full GPL-3.0 text is published at https://www.gnu.org/licenses/gpl-3.0.txt
+  and goes beside the binaries as app/vendor/libredwg-0.14-win64/COPYING once the owner fetches it (network):
+      node tools/run-builder-py.mjs tools/vendor-libredwg.py --add-licence <path of gpl-3.0.txt>
+  which copies it in and records its sha1 in the manifest. Until then this file names the licence and the release.
+  The source code of this release is at https://github.com/LibreDWG/libredwg (tag 0.14) and https://www.gnu.org/software/libredwg/.
+
+How the app uses it (the GPL boundary, U-6.1)
+  * Only as a separate program: the worker runs dwg2dxf.exe and dwgread.exe as child processes (U-6.2, U-6.3).
+    Nothing in the app links the library or loads its DLLs or its Python bindings.
+  * Its licence ships beside it (README.txt now, COPYING once fetched).
+  * The staff web app, the viewer and the offline HTML files never contain it.

@@ -1,0 +1,172 @@
+{
+  "format": "job/1",
+  "kind": "build",
+  "runId": "0002-build",
+  "status": "done",
+  "pid": null,
+  "procStart": null,
+  "queuedAt": "2026-11-04T00:00:00Z",
+  "startedAt": "2026-11-04T00:00:00Z",
+  "finishedAt": "2026-11-04T00:00:00Z",
+  "step": "validate",
+  "progress": 1.0,
+  "steps": [
+    {
+      "name": "ensure",
+      "label": "Checking the readings",
+      "status": "done",
+      "seconds": 0.1,
+      "note": ""
+    },
+    {
+      "name": "align",
+      "label": "Lining up the floors",
+      "status": "done",
+      "seconds": 0.1,
+      "note": ""
+    },
+    {
+      "name": "detect:L1",
+      "label": "Finding doors and windows on Level 1",
+      "status": "done",
+      "seconds": 1.68,
+      "note": ""
+    },
+    {
+      "name": "detect:L2",
+      "label": "Finding doors and windows on Level 2",
+      "status": "done",
+      "seconds": 1.88,
+      "note": ""
+    },
+    {
+      "name": "walls",
+      "label": "Building walls and glass",
+      "status": "done",
+      "seconds": 2.0,
+      "note": ""
+    },
+    {
+      "name": "openings",
+      "label": "Cutting the openings",
+      "status": "done",
+      "seconds": 2.0,
+      "note": ""
+    },
+    {
+      "name": "furniture",
+      "label": "Placing the furniture boxes",
+      "status": "done",
+      "seconds": 1.0,
+      "note": ""
+    },
+    {
+      "name": "outputs",
+      "label": "Writing the outputs",
+      "status": "done",
+      "seconds": 2.0,
+      "note": ""
+    },
+    {
+      "name": "validate",
+      "label": "Checking the outputs",
+      "status": "done",
+      "seconds": 0.5,
+      "note": ""
+    }
+  ],
+  "messages": [
+    {
+      "at": "2026-11-04T00:00:00Z",
+      "level": "info",
+      "text": "Checking the readings: done"
+    },
+    {
+      "at": "2026-11-04T00:00:00Z",
+      "level": "info",
+      "text": "Lining up the floors: done"
+    },
+    {
+      "at": "2026-11-04T00:00:00Z",
+      "level": "info",
+      "text": "Finding doors and windows on Level 1: done"
+    },
+    {
+      "at": "2026-11-04T00:00:00Z",
+      "level": "info",
+      "text": "Finding doors and windows on Level 2: done"
+    },
+    {
+      "at": "2026-11-04T00:00:00Z",
+      "level": "info",
+      "text": "Building walls and glass: done"
+    },
+    {
+      "at": "2026-11-04T00:00:00Z",
+      "level": "info",
+      "text": "Cutting the openings: done"
+    },
+    {
+      "at": "2026-11-04T00:00:00Z",
+      "level": "info",
+      "text": "Placing the furniture boxes: done"
+    },
+    {
+      "at": "2026-11-04T00:00:00Z",
+      "level": "info",
+      "text": "Writing the outputs: done"
+    },
+    {
+      "at": "2026-11-04T00:00:00Z",
+      "level": "info",
+      "text": "Checking the outputs: done"
+    }
+  ],
+  "error": null,
+  "outputs": {
+    "model.json": {
+      "bytes": 121498,
+      "sha1": "c3a9408304a240b83c36f5c5c53db56b50a72c64"
+    },
+    "stages.json": {
+      "bytes": 465291,
+      "sha1": "c7c01b67e97335ea3103179175534af919ae4aa8"
+    },
+    "presentation.json": {
+      "bytes": 1208,
+      "sha1": "c994c446162ed528af73461edfe441e4dc3d6bde"
+    },
+    "report.json": {
+      "bytes": 15501,
+      "sha1": "520bd8081b0a19ec4e84065c49a36a190d66a3bb"
+    },
+    "overlay.json": {
+      "bytes": 146059,
+      "sha1": "01893517d1be77a958ef1cf7bd843084731fcf1c"
+    },
+    "diff.json": {
+      "bytes": 430,
+      "sha1": "f1443890213a4d7c3d05da0329a75efd93635750"
+    },
+    "openings.json": {
+      "bytes": 36217,
+      "sha1": "f030b1c1457c1d3a6eefb8a236808f6b107d18a5"
+    },
+    "pieces.json": {
+      "bytes": 99782,
+      "sha1": "2b596b8ca7c52bf5620a131b98bc513f11c2d4e5"
+    },
+    "topview.png": {
+      "bytes": 169701,
+      "sha1": "f084b556503c4d5959e02d1dd55e84c607800775"
+    },
+    "Bangkok_Bank_Sampeng.ms": {
+      "bytes": 146416,
+      "sha1": "615d50137bdbe12d3f473cdcdc39cc09aca588e4"
+    },
+    "inputs.json": {
+      "bytes": 1647,
+      "sha1": "a9908f5a1bb69e8262630101d8963620c000ebbf"
+    }
+  }
+}

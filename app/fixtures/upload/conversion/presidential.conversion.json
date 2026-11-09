@@ -1,0 +1,553 @@
+{
+  "format": "conversion-report/1",
+  "source": {
+    "sha1": "b3f0dec93d1f636166a7573ab00ed1c5cc898a81",
+    "name": "layout presidential test.dwg",
+    "bytes": 17797665,
+    "kind": "dwg",
+    "formatVersion": "AC1032"
+  },
+  "converter": {
+    "name": "libredwg",
+    "version": "0.14",
+    "exeSha1": "07f9c8d95dc0209675c6d8dece4beaab8494d2c1"
+  },
+  "dxf": {
+    "sha1": "cf63e4ed25f80045f19571c9e40c7bdd937f555a",
+    "bytes": 104865487,
+    "acadVersion": "AC1032",
+    "insUnits": 4,
+    "auditErrors": 0,
+    "auditFixes": 1709
+  },
+  "seconds": 6.07,
+  "peakMemoryMB": null,
+  "exitCode": 0,
+  "messages": [
+    {
+      "class": "unstable-class",
+      "count": 1819,
+      "example": "Warning: Unstable Class object 505 MATERIAL (0x481) 9/0"
+    },
+    {
+      "class": "other",
+      "count": 17,
+      "example": "Warning: TODO TABLESTYLE r2010+ missing fields"
+    },
+    {
+      "class": "hatch-short-handles",
+      "count": 2689,
+      "example": "Warning: Skip HATCH common handles due to short handle stream"
+    },
+    {
+      "class": "error:bit_read_TU buffer overflow at",
+      "count": 17,
+      "example": "ERROR: bit_read_TU buffer overflow at 157.2 + 8048 > 158"
+    },
+    {
+      "class": "unknown-flag",
+      "count": 997,
+      "example": "Warning: Unknown flag (0x8)"
+    },
+    {
+      "class": "error:bit_read_BD",
+      "count": 27,
+      "example": "ERROR: bit_read_BD: unexpected 2-bit code: '11'"
+    },
+    {
+      "class": "error:Invalid ATTRIB.keep_duplicate_records",
+      "count": 144,
+      "example": "ERROR: Invalid ATTRIB.keep_duplicate_records 64"
+    },
+    {
+      "class": "unhandled-class",
+      "count": 159,
+      "example": "Warning: Unhandled Class object 561 ACDB_MTEXTATTRIBUTEOBJECTCONTEXTDATA_CLASS (0x481) 98877/0"
+    },
+    {
+      "class": "error:bit_read_BL",
+      "count": 36,
+      "example": "ERROR: bit_read_BL: unexpected 2-bit code: '11'"
+    },
+    {
+      "class": "error:Invalid REGION.silhouettes x",
+      "count": 3,
+      "example": "ERROR: Invalid REGION.silhouettes x 256"
+    },
+    {
+      "class": "handle-not-found",
+      "count": 646,
+      "example": "Warning: Object handle not found 147844/0x24184 in 111506 objects of max 0x1BD5D6 handles"
+    },
+    {
+      "class": "wrong-layer",
+      "count": 16,
+      "example": "Warning: Wrong POLYLINE.layer 24184"
+    },
+    {
+      "class": "error:Invalid CMC flag",
+      "count": 17,
+      "example": "ERROR: Invalid CMC flag 0x9f ignored"
+    },
+    {
+      "class": "error:Invalid CMC method",
+      "count": 17,
+      "example": "ERROR: Invalid CMC method 0x0 ignored"
+    },
+    {
+      "class": "error:Invalid MTEXT.class_version",
+      "count": 16,
+      "example": "ERROR: Invalid MTEXT.class_version 256"
+    },
+    {
+      "class": "unknown-object",
+      "count": 158,
+      "example": "Warning: Unknown object, skipping eed/reactors/xdic"
+    }
+  ],
+  "totals": {
+    "dwgEntities": 142182,
+    "dxfEntities": 133928,
+    "missing": 8254,
+    "extra": 0,
+    "layerChanged": 40,
+    "emptyLayer": 40
+  },
+  "byLayer": [
+    {
+      "layer": "",
+      "dwg": 0,
+      "dxf": 40
+    },
+    {
+      "layer": "0",
+      "dwg": 36553,
+      "dxf": 29883
+    },
+    {
+      "layer": "1VinaPVC-Hatch",
+      "dwg": 6,
+      "dxf": 3
+    },
+    {
+      "layer": "?",
+      "dwg": 40,
+      "dxf": 0
+    },
+    {
+      "layer": "A Net dut to 3",
+      "dwg": 12,
+      "dxf": 11
+    },
+    {
+      "layer": "A-1.Netcat - tuong",
+      "dwg": 434,
+      "dxf": 213
+    },
+    {
+      "layer": "A-1.Netthay",
+      "dwg": 139,
+      "dxf": 36
+    },
+    {
+      "layer": "A-1.Netthay - manh",
+      "dwg": 159,
+      "dxf": 76
+    },
+    {
+      "layer": "A-2.Noi That",
+      "dwg": 3242,
+      "dxf": 3121
+    },
+    {
+      "layer": "A-4. Cay",
+      "dwg": 53,
+      "dxf": 27
+    },
+    {
+      "layer": "A-4. Dim",
+      "dwg": 82,
+      "dxf": 50
+    },
+    {
+      "layer": "A-DETL-GENF",
+      "dwg": 196,
+      "dxf": 195
+    },
+    {
+      "layer": "A-GENM",
+      "dwg": 141,
+      "dxf": 133
+    },
+    {
+      "layer": "A-Hatch thiet bi",
+      "dwg": 7,
+      "dxf": 6
+    },
+    {
+      "layer": "A-HatchVatlieu",
+      "dwg": 3,
+      "dxf": 2
+    },
+    {
+      "layer": "A-Text",
+      "dwg": 40,
+      "dxf": 39
+    },
+    {
+      "layer": "A-WALL",
+      "dwg": 80,
+      "dxf": 79
+    },
+    {
+      "layer": "A.Cot 1",
+      "dwg": 286,
+      "dxf": 17
+    },
+    {
+      "layer": "DA-LATT-OTLN",
+      "dwg": 4,
+      "dxf": 1
+    },
+    {
+      "layer": "Defpoints",
+      "dwg": 1013,
+      "dxf": 972
+    },
+    {
+      "layer": "KC-NETTHAY",
+      "dwg": 2,
+      "dxf": 0
+    },
+    {
+      "layer": "KT-Betong",
+      "dwg": 76,
+      "dxf": 55
+    },
+    {
+      "layer": "KT-Cua",
+      "dwg": 7909,
+      "dxf": 7907
+    },
+    {
+      "layer": "KT-CuaKinh",
+      "dwg": 2487,
+      "dxf": 2485
+    },
+    {
+      "layer": "KT-DIM",
+      "dwg": 361,
+      "dxf": 333
+    },
+    {
+      "layer": "KT-Lancan",
+      "dwg": 976,
+      "dxf": 972
+    },
+    {
+      "layer": "KT-NetManh",
+      "dwg": 680,
+      "dxf": 557
+    },
+    {
+      "layer": "KT-Netthay",
+      "dwg": 303,
+      "dxf": 242
+    },
+    {
+      "layer": "KT-Thang",
+      "dwg": 130,
+      "dxf": 65
+    },
+    {
+      "layer": "KT-TrichCT",
+      "dwg": 13,
+      "dxf": 10
+    },
+    {
+      "layer": "KT-Tuong",
+      "dwg": 105,
+      "dxf": 82
+    },
+    {
+      "layer": "KT-hatch",
+      "dwg": 161,
+      "dxf": 139
+    },
+    {
+      "layer": "KT_BIEN DAM RED",
+      "dwg": 23,
+      "dxf": 13
+    },
+    {
+      "layer": "KT_BIEN PHAO GREEN",
+      "dwg": 20,
+      "dxf": 11
+    },
+    {
+      "layer": "KT_BIEN SAN BLUE",
+      "dwg": 17,
+      "dxf": 9
+    },
+    {
+      "layer": "Openning",
+      "dwg": 193,
+      "dxf": 1
+    },
+    {
+      "layer": "Phan manh khuat",
+      "dwg": 2,
+      "dxf": 1
+    },
+    {
+      "layer": "TG_Name",
+      "dwg": 3,
+      "dxf": 1
+    },
+    {
+      "layer": "Xr_SDC_DD_ID-PCS-ID wall$0$DA-DOOR-WIND",
+      "dwg": 42,
+      "dxf": 40
+    },
+    {
+      "layer": "Xr_SDC_DD_ID-PCS-ID wall$0$DA-LATT-OTLN",
+      "dwg": 66,
+      "dxf": 57
+    },
+    {
+      "layer": "Xr_SDC_DD_ID-PRS-Fur$0$DA-ELEV-PEN1",
+      "dwg": 11,
+      "dxf": 6
+    },
+    {
+      "layer": "Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES",
+      "dwg": 60,
+      "dxf": 39
+    },
+    {
+      "layer": "Xr_SDC_DD_ID-PRS-Fur$0$DA-FURN-OTLN",
+      "dwg": 34,
+      "dxf": 32
+    },
+    {
+      "layer": "Xr_SDC_DD_ID-PRS-Fur$0$DA-LEVEL-LIGHT",
+      "dwg": 18,
+      "dxf": 12
+    },
+    {
+      "layer": "Xr_SDC_DD_ID-PRS-Fur$0$DA-LOOSE-FURN",
+      "dwg": 103,
+      "dxf": 102
+    },
+    {
+      "layer": "Xr_SDC_DD_ID-PRS-ID wall$0$DA-ELEV-PEN3",
+      "dwg": 93,
+      "dxf": 68
+    },
+    {
+      "layer": "Xr_SDC_DD_ID-PRS-ID wall$0$DA-FLOR-PATT",
+      "dwg": 14,
+      "dxf": 12
+    },
+    {
+      "layer": "Xr_SDC_DD_ID-PRS-ID wall$0$DA-SANR",
+      "dwg": 6,
+      "dxf": 5
+    },
+    {
+      "layer": "Xr_SDC_DD_ID-PRS-ID wall$0$DA-WALL-FNSH",
+      "dwg": 108,
+      "dxf": 105
+    },
+    {
+      "layer": "Xr_SDC_DD_ID-PRS-ID wall$0$DA-WALL-FULL",
+      "dwg": 36,
+      "dxf": 35
+    },
+    {
+      "layer": "Xr_SDC_DD_ID-PRS-ID wall$0$DA-WALL-PATT",
+      "dwg": 66,
+      "dxf": 54
+    }
+  ],
+  "lostBlocks": [
+    {
+      "name": "*D",
+      "entities": 36,
+      "byLayer": {
+        "Defpoints": 12,
+        "KT-DIM": 24
+      },
+      "inserts": []
+    },
+    {
+      "name": "22DAB820-5C7F-4CE0-BE75-D9D1C19B0E2E",
+      "entities": 735,
+      "byLayer": {
+        "0": 733,
+        "DA-LATT-OTLN": 1,
+        "Defpoints": 1
+      },
+      "inserts": []
+    },
+    {
+      "name": "A$C59A32014",
+      "entities": 109,
+      "byLayer": {
+        "0": 109
+      },
+      "inserts": [
+        {
+          "x": 186.264,
+          "y": -3496.051,
+          "layer": "A-4. Dim"
+        }
+      ]
+    },
+    {
+      "name": "COSCAODO",
+      "entities": 5,
+      "byLayer": {
+        "0": 3,
+        "KC-NETTHAY": 2
+      },
+      "inserts": []
+    },
+    {
+      "name": "COT T7_HA",
+      "entities": 269,
+      "byLayer": {
+        "A.Cot 1": 269
+      },
+      "inserts": []
+    },
+    {
+      "name": "DGDGGHJGG",
+      "entities": 1074,
+      "byLayer": {
+        "0": 23,
+        "1VinaPVC-Hatch": 3,
+        "A Net dut to 3": 1,
+        "A-1.Netcat - tuong": 221,
+        "A-1.Netthay": 103,
+        "A-1.Netthay - manh": 83,
+        "A-2.Noi That": 121,
+        "A-4. Cay": 26,
+        "A-4. Dim": 32,
+        "A-DETL-GENF": 1,
+        "A-GENM": 8,
+        "A-Hatch thiet bi": 1,
+        "A-HatchVatlieu": 1,
+        "A-Text": 1,
+        "A-WALL": 1,
+        "KT-Betong": 21,
+        "KT-Cua": 2,
+        "KT-CuaKinh": 2,
+        "KT-DIM": 4,
+        "KT-Lancan": 4,
+        "KT-NetManh": 123,
+        "KT-Netthay": 61,
+        "KT-Thang": 65,
+        "KT-TrichCT": 3,
+        "KT-Tuong": 23,
+        "KT-hatch": 22,
+        "KT_BIEN DAM RED": 10,
+        "KT_BIEN PHAO GREEN": 9,
+        "KT_BIEN SAN BLUE": 8,
+        "Phan manh khuat": 1,
+        "Xr_SDC_DD_ID-PCS-ID wall$0$DA-DOOR-WIND": 2,
+        "Xr_SDC_DD_ID-PCS-ID wall$0$DA-LATT-OTLN": 9,
+        "Xr_SDC_DD_ID-PRS-Fur$0$DA-ELEV-PEN1": 5,
+        "Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES": 21,
+        "Xr_SDC_DD_ID-PRS-Fur$0$DA-FURN-OTLN": 2,
+        "Xr_SDC_DD_ID-PRS-Fur$0$DA-LEVEL-LIGHT": 6,
+        "Xr_SDC_DD_ID-PRS-Fur$0$DA-LOOSE-FURN": 1,
+        "Xr_SDC_DD_ID-PRS-ID wall$0$DA-ELEV-PEN3": 25,
+        "Xr_SDC_DD_ID-PRS-ID wall$0$DA-FLOR-PATT": 2,
+        "Xr_SDC_DD_ID-PRS-ID wall$0$DA-SANR": 1,
+        "Xr_SDC_DD_ID-PRS-ID wall$0$DA-WALL-FNSH": 3,
+        "Xr_SDC_DD_ID-PRS-ID wall$0$DA-WALL-FULL": 1,
+        "Xr_SDC_DD_ID-PRS-ID wall$0$DA-WALL-PATT": 12
+      },
+      "inserts": []
+    },
+    {
+      "name": "GDGDJGKHLLJKJ",
+      "entities": 192,
+      "byLayer": {
+        "Openning": 192
+      },
+      "inserts": []
+    },
+    {
+      "name": "KJHKJHH",
+      "entities": 1652,
+      "byLayer": {
+        "0": 1649,
+        "DA-LATT-OTLN": 2,
+        "Defpoints": 1
+      },
+      "inserts": []
+    },
+    {
+      "name": "TG_ARTISCARDIO_2D_1283_8",
+      "entities": 1946,
+      "byLayer": {
+        "0": 1936,
+        "Defpoints": 8,
+        "TG_Name": 2
+      },
+      "inserts": [
+        {
+          "x": 199.786,
+          "y": -3485.295,
+          "layer": "A-2.Noi That"
+        }
+      ]
+    },
+    {
+      "name": "TG_ARTISCARDIO_2D_1345_11",
+      "entities": 1385,
+      "byLayer": {
+        "0": 1375,
+        "Defpoints": 10
+      },
+      "inserts": [
+        {
+          "x": 198.487,
+          "y": -3485.163,
+          "layer": "A-2.Noi That"
+        }
+      ]
+    },
+    {
+      "name": "TG_ARTISCARDIO_2D_1388_13",
+      "entities": 850,
+      "byLayer": {
+        "0": 841,
+        "Defpoints": 9
+      },
+      "inserts": [
+        {
+          "x": 201.392,
+          "y": -3486.182,
+          "layer": "A-2.Noi That"
+        }
+      ]
+    },
+    {
+      "name": "_DOTSMALL",
+      "entities": 1,
+      "byLayer": {
+        "0": 1
+      },
+      "inserts": []
+    }
+  ],
+  "renamedBlocks": [],
+  "unknownObjects": 158,
+  "verdict": "loss",
+  "notes": [
+    "8,254 of 142,182 drawing items did not come through the conversion; 4,290 of them belong to the plan or to blocks placed in it. Export a DXF from AutoCAD for a complete build."
+  ]
+}

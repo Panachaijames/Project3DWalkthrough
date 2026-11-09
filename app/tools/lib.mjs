@@ -35,6 +35,42 @@ export function pyEnv(extra = {}) {
   };
 }
 
+/** The builder's Python (docs/upload/DESIGN.md U-10.1): WALKTHROUGH_BUILDER_PYTHON (relative to app/ or absolute), by
+ *  default the pinned venv services/builder/.venv. The venv is the only supported path; the system Python may stand in
+ *  for a diagnosis only (its libraries are in the user site, so nothing here passes -I, -E or -s). */
+export function builderPython() {
+  const set = process.env.WALKTHROUGH_BUILDER_PYTHON;
+  const candidates = set ? [set] : ['services/builder/.venv/Scripts/python.exe', 'services/builder/.venv/bin/python'];
+  for (const p of candidates) {
+    const abs = path.resolve(APP, p);
+    if (existsSync(abs)) return abs;
+  }
+  throw new Error(`no builder Python at ${path.resolve(APP, candidates[0])}: see app/README.md (setup), or set WALKTHROUGH_BUILDER_PYTHON`);
+}
+
+/** The environment of every builder process (U-3.5, U-10.1): PYTHONPATH=services/builder, UTF-8 I/O, no bytecode, one
+ *  OpenBLAS / OpenMP thread, matplotlib's Agg backend, and pytest's cache under WT_TMP (or none), as pyEnv does. */
+export function builderEnv(extra = {}) {
+  const cache = process.env.WT_TMP
+    ? `-o 'cache_dir=${path.join(process.env.WT_TMP, 'pytest-cache').replaceAll('\\', '/')}'`
+    : '-p no:cacheprovider';
+  const env = {
+    ...process.env,
+    PYTHONPATH: path.join(APP, 'services', 'builder'),
+    PYTHONIOENCODING: 'utf-8',
+    PYTHONUTF8: '1',
+    PYTHONDONTWRITEBYTECODE: '1',
+    OPENBLAS_NUM_THREADS: '1',
+    OMP_NUM_THREADS: '1',
+    MPLBACKEND: 'Agg',
+    PYTEST_ADDOPTS: [process.env.PYTEST_ADDOPTS, cache].filter(Boolean).join(' '),
+    ...extra,
+  };
+  // never hide the user site from a stand-in system Python (U-10.1)
+  delete env.PYTHONNOUSERSITE;
+  return env;
+}
+
 /** Resolves true when nothing listens on 127.0.0.1:port (a bind test on the address every server here uses). */
 export function portIsFree(port, host = '127.0.0.1') {
   return new Promise(resolve => {

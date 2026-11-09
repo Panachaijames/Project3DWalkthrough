@@ -1,0 +1,3517 @@
+{
+  "format": "furniture-placements/1",
+  "pieces": [
+    {
+      "id": "L1-atm-001",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "F6D",
+      "block": "ATM Machine - ATM Machine-2371857-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "ATM Machine - ATM Machine",
+      "elementId": "2371857",
+      "ins": [
+        6.1183,
+        -4.0194
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L1-atm-002",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "F6E",
+      "block": "ATM Machine - ATM Machine-2371857-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "ATM Machine - ATM Machine",
+      "elementId": "2371857",
+      "ins": [
+        6.1183,
+        -3.1956
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L1-atm-003",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "FDC",
+      "block": "ATM Machine - ATM Machine-V26-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "ATM Machine - ATM Machine",
+      "elementId": null,
+      "ins": [
+        5.5115,
+        6.865
+      ],
+      "rot": 91.14,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 1.14
+    },
+    {
+      "id": "L1-computer-001",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "E28",
+      "block": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+      "elementId": "2278189",
+      "ins": [
+        -1.4195,
+        4.7617
+      ],
+      "rot": -60.365,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 113.99
+    },
+    {
+      "id": "L1-computer-002",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1C2C",
+      "block": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+      "elementId": "2278189",
+      "ins": [
+        -1.3234,
+        -3.6075
+      ],
+      "rot": -60.365,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 113.99
+    },
+    {
+      "id": "L1-computer-003",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1BEB",
+      "block": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+      "elementId": "2278189",
+      "ins": [
+        -1.3234,
+        -1.8009
+      ],
+      "rot": -60.365,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 113.99
+    },
+    {
+      "id": "L1-computer-004",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1812",
+      "block": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-V34-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+      "elementId": null,
+      "ins": [
+        -1.3234,
+        -0.0009
+      ],
+      "rot": -60.365,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 113.99
+    },
+    {
+      "id": "L1-computer-005",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1865",
+      "block": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+      "elementId": "2278189",
+      "ins": [
+        -1.3234,
+        1.8441
+      ],
+      "rot": -60.365,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 113.99
+    },
+    {
+      "id": "L1-computer-006",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "FF1",
+      "block": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+      "elementId": "2278189",
+      "ins": [
+        2.1797,
+        1.5995
+      ],
+      "rot": 119.635,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 113.99
+    },
+    {
+      "id": "L1-computer-007",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1B32",
+      "block": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+      "elementId": "2278189",
+      "ins": [
+        3.59,
+        1.5995
+      ],
+      "rot": 119.635,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 113.99
+    },
+    {
+      "id": "L1-printer-001",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "E3D",
+      "block": "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1-V24-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1",
+      "elementId": null,
+      "ins": [
+        -3.2158,
+        2.6689
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-printer-002",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "A3A",
+      "block": "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1-2331658-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1",
+      "elementId": "2331658",
+      "ins": [
+        -3.1958,
+        -3.6515
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-phone-001",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1C2B",
+      "block": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1-2278177-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1",
+      "elementId": "2278177",
+      "ins": [
+        -1.6042,
+        -5.0209
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-phone-002",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1BEA",
+      "block": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1-2278177-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1",
+      "elementId": "2278177",
+      "ins": [
+        -1.6042,
+        -3.2142
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-phone-003",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "17B8",
+      "block": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1-2278177-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1",
+      "elementId": "2278177",
+      "ins": [
+        -1.6042,
+        -1.4142
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-phone-004",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1864",
+      "block": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1-2278177-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1",
+      "elementId": "2278177",
+      "ins": [
+        -1.6042,
+        0.4308
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-tv-001",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "170C",
+      "block": "IF_J04_WALL TV - WALL TV 3800W-2364417-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "IF_J04_WALL TV - WALL TV 3800W",
+      "elementId": "2364417",
+      "ins": [
+        0.6467,
+        4.5686
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-tv-002",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "16B0",
+      "block": "APPLIANCE_TV_WALL MOUNT WITH BRACKET - 75_-2364407-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "APPLIANCE_TV_WALL MOUNT WITH BRACKET - 75_",
+      "elementId": "2364407",
+      "ins": [
+        0.7783,
+        4.6132
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-partition-001",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1B9A",
+      "block": "Steelcase - Height-Adjustable Desk - Privacy Screen - Sarto - 30W x 19_5H-2316532-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Steelcase - Height-Adjustable Desk - Privacy Screen - Sarto - 30W x 19_5H",
+      "elementId": "2316532",
+      "ins": [
+        -1.3804,
+        -3.1843
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L1-partition-002",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "174A",
+      "block": "Steelcase - Height-Adjustable Desk - Privacy Screen - Sarto - 30W x 19_5H-2316532-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Steelcase - Height-Adjustable Desk - Privacy Screen - Sarto - 30W x 19_5H",
+      "elementId": "2316532",
+      "ins": [
+        -1.3804,
+        -1.3843
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L1-partition-003",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1813",
+      "block": "Steelcase - Height-Adjustable Desk - Privacy Screen - Sarto - 30W x 19_5H-2316532-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Steelcase - Height-Adjustable Desk - Privacy Screen - Sarto - 30W x 19_5H",
+      "elementId": "2316532",
+      "ins": [
+        -1.3804,
+        0.4157
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L1-partition-004",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1B33",
+      "block": "Steelcase - Height-Adjustable Desk - Privacy Screen - Sarto - 30W x 19_5H-2316532-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Steelcase - Height-Adjustable Desk - Privacy Screen - Sarto - 30W x 19_5H",
+      "elementId": "2316532",
+      "ins": [
+        3.294,
+        1.6189
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-plant-001",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1262",
+      "block": "POTTED PLANT - STOOL LOW_VITRA_VISIONA STOOL-2422933-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "POTTED PLANT - STOOL LOW_VITRA_VISIONA STOOL",
+      "elementId": "2422933",
+      "ins": [
+        0.7964,
+        -6.0212
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 153.56
+    },
+    {
+      "id": "L1-plant-002",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1321",
+      "block": "Enscape AssetDefinition - Potted Plant 028 Peace Lily - Enscape AssetDefinition - Potted Plant 028 Peace Lily 2-2422935-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Potted Plant 028 Peace Lily - Enscape AssetDefinition - Potted Plant 028 Peace Lily 2",
+      "elementId": "2422935",
+      "ins": [
+        0.7775,
+        -5.6799
+      ],
+      "rot": -36.17,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 89.28
+    },
+    {
+      "id": "L1-plant-003",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "127C",
+      "block": "Enscape AssetDefinition - Bush 020 Fern - Enscape AssetDefinition - Bush 020 Fern-2422934-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Bush 020 Fern - Enscape AssetDefinition - Bush 020 Fern",
+      "elementId": "2422934",
+      "ins": [
+        0.7992,
+        -5.9935
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 12.52
+    },
+    {
+      "id": "L1-sanitary-001",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "BA/70D",
+      "block": "Wall-hung vitreous china basin-Meridian-327242xx0 - 327242000 White-2274270-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Wall-hung vitreous china basin-Meridian-327242xx0 - 327242000 White",
+      "elementId": "2274270",
+      "ins": [
+        -5.0194,
+        -7.4585
+      ],
+      "rot": -88.426,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 91.57
+    },
+    {
+      "id": "L1-sanitary-002",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "BA/70C",
+      "block": "สุขภัณฑ์แบบนั่งราบ - C1403 - C1403-2281794-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "สุขภัณฑ์แบบนั่งราบ - C1403 - C1403",
+      "elementId": "2281794",
+      "ins": [
+        -4.2808,
+        -9.0596
+      ],
+      "rot": 180.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 87.15
+    },
+    {
+      "id": "L1-sanitary-003",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "7A7",
+      "block": "C12377 - C12377-2316655-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "C12377 - C12377",
+      "elementId": "2316655",
+      "ins": [
+        1.9428,
+        7.035
+      ],
+      "rot": 180.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 89.15
+    },
+    {
+      "id": "L1-sanitary-004",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "7FB",
+      "block": "อ่างล้างหน้าฝั่งครึ่งเคาน์เตอร์ - C0240 - อ่างล้างหน้าฝั่งครึ่งเคาน์เตอร์ - C0240-2329847-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "อ่างล้างหน้าฝั่งครึ่งเคาน์เตอร์ - C0240 - อ่างล้างหน้าฝั่งครึ่งเคาน์เตอร์ - C0240",
+      "elementId": "2329847",
+      "ins": [
+        3.2196,
+        7.9781
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 92.07
+    },
+    {
+      "id": "L1-seat-001",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1BEE",
+      "block": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range",
+      "elementId": "2299212",
+      "ins": [
+        -2.1552,
+        -4.2394
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-seat-002",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1B9D",
+      "block": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range",
+      "elementId": "2299212",
+      "ins": [
+        -2.1552,
+        -2.4328
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-seat-003",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1752",
+      "block": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range",
+      "elementId": "2299212",
+      "ins": [
+        -2.1552,
+        -0.6328
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-seat-004",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1816",
+      "block": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range",
+      "elementId": "2299212",
+      "ins": [
+        -2.1552,
+        1.1672
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-seat-005",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "B3D",
+      "block": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range",
+      "elementId": "2299212",
+      "ins": [
+        -2.1552,
+        4.2111
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-seat-006",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1BED",
+      "block": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY-2278169-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY",
+      "elementId": "2278169",
+      "ins": [
+        -0.6143,
+        -4.6117
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 49.27
+    },
+    {
+      "id": "L1-seat-007",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1B9C",
+      "block": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY-2278169-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY",
+      "elementId": "2278169",
+      "ins": [
+        -0.6143,
+        -2.8051
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 49.27
+    },
+    {
+      "id": "L1-seat-008",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1751",
+      "block": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY-2278169-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY",
+      "elementId": "2278169",
+      "ins": [
+        -0.6143,
+        -1.0051
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 49.27
+    },
+    {
+      "id": "L1-seat-009",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1815",
+      "block": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY-2278169-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - 500W GRAY",
+      "elementId": "2278169",
+      "ins": [
+        -0.6143,
+        0.7949
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 49.27
+    },
+    {
+      "id": "L1-seat-010",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "AD5",
+      "block": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE-2337390-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE",
+      "elementId": "2337390",
+      "ins": [
+        -0.6043,
+        3.8189
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 49.27
+    },
+    {
+      "id": "L1-seat-011",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1BEC",
+      "block": "mollie_chair_a685_revit - A685 2-2278197-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "elementId": "2278197",
+      "ins": [
+        -0.6143,
+        -3.8917
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 3.04
+    },
+    {
+      "id": "L1-seat-012",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1B9B",
+      "block": "mollie_chair_a685_revit - A685 2-2278197-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "elementId": "2278197",
+      "ins": [
+        -0.6143,
+        -2.0851
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 3.04
+    },
+    {
+      "id": "L1-seat-013",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "174B",
+      "block": "mollie_chair_a685_revit - A685 2-2278197-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "elementId": "2278197",
+      "ins": [
+        -0.6143,
+        -0.2851
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 3.04
+    },
+    {
+      "id": "L1-seat-014",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1814",
+      "block": "mollie_chair_a685_revit - A685 2-2278197-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "elementId": "2278197",
+      "ins": [
+        -0.6143,
+        1.5149
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 3.04
+    },
+    {
+      "id": "L1-seat-015",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "ACF",
+      "block": "mollie_chair_a685_revit - A685 2-2278197-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "elementId": "2278197",
+      "ins": [
+        -0.6043,
+        4.6189
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 3.04
+    },
+    {
+      "id": "L1-seat-016",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1063",
+      "block": "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4-2403364-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4",
+      "elementId": "2403364",
+      "ins": [
+        0.8546,
+        -4.0657
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 7.4
+    },
+    {
+      "id": "L1-seat-017",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1061",
+      "block": "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4-2403364-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4",
+      "elementId": "2403364",
+      "ins": [
+        0.8546,
+        -2.8057
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 7.4
+    },
+    {
+      "id": "L1-seat-018",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1062",
+      "block": "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4-2403364-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4",
+      "elementId": "2403364",
+      "ins": [
+        0.8546,
+        -2.0857
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 7.4
+    },
+    {
+      "id": "L1-seat-019",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1060",
+      "block": "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4-2403364-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4",
+      "elementId": "2403364",
+      "ins": [
+        0.8546,
+        -0.5436
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 5.73
+    },
+    {
+      "id": "L1-seat-020",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1A86",
+      "block": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE-2572387-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE",
+      "elementId": "2572387",
+      "ins": [
+        1.8365,
+        -0.9084
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 57.82
+    },
+    {
+      "id": "L1-seat-021",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1001",
+      "block": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE-2337390-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE",
+      "elementId": "2337390",
+      "ins": [
+        2.1833,
+        0.8428
+      ],
+      "rot": 180.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 55.53
+    },
+    {
+      "id": "L1-seat-022",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "19E8",
+      "block": "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR-V36-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR",
+      "elementId": null,
+      "ins": [
+        2.3246,
+        4.7828
+      ],
+      "rot": 45.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 45.0
+    },
+    {
+      "id": "L1-seat-023",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1473",
+      "block": "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR-2352777-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR",
+      "elementId": "2352777",
+      "ins": [
+        2.4965,
+        4.0356
+      ],
+      "rot": 135.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 135.0
+    },
+    {
+      "id": "L1-seat-024",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1AF0",
+      "block": "mollie_chair_a685_revit - A685 2-2278197-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "elementId": "2278197",
+      "ins": [
+        2.2983,
+        -2.8959
+      ],
+      "rot": 180.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 93.04
+    },
+    {
+      "id": "L1-seat-025",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1002",
+      "block": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range",
+      "elementId": "2299212",
+      "ins": [
+        2.5833,
+        2.3937
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L1-seat-026",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1A8F",
+      "block": "mollie_chair_a685_revit - A685 2-2437554-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "elementId": "2437554",
+      "ins": [
+        2.6416,
+        -0.4543
+      ],
+      "rot": 153.398,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 60.35
+    },
+    {
+      "id": "L1-seat-027",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1000",
+      "block": "mollie_chair_a685_revit - A685 2-2278197-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "elementId": "2278197",
+      "ins": [
+        2.9833,
+        0.8428
+      ],
+      "rot": 180.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 93.04
+    },
+    {
+      "id": "L1-seat-028",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1A3C",
+      "block": "CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA_VISIONA STOOL-2475694-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA_VISIONA STOOL",
+      "elementId": "2475694",
+      "ins": [
+        3.1283,
+        -1.8257
+      ],
+      "rot": 180.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L1-seat-029",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1587",
+      "block": "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR-2362416-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR",
+      "elementId": "2362416",
+      "ins": [
+        3.2325,
+        4.7716
+      ],
+      "rot": 135.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 135.0
+    },
+    {
+      "id": "L1-seat-030",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "16A2",
+      "block": "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR-V31-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "Meeting chair_Haworth_Chair_Very-Task - SE14 GM CHAIR",
+      "elementId": null,
+      "ins": [
+        3.082,
+        4.0253
+      ],
+      "rot": 45.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 45.0
+    },
+    {
+      "id": "L1-seat-031",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1A7E",
+      "block": "mollie_chair_a685_revit - A685 2-2437554-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "elementId": "2437554",
+      "ins": [
+        3.4185,
+        -2.941
+      ],
+      "rot": -30.046,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 56.91
+    },
+    {
+      "id": "L1-seat-032",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1AF6",
+      "block": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE-2337390-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE",
+      "elementId": "2337390",
+      "ins": [
+        3.5983,
+        0.8428
+      ],
+      "rot": 180.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 55.53
+    },
+    {
+      "id": "L1-seat-033",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1A80",
+      "block": "mollie_chair_a685_revit - A685 2-2278197-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "elementId": "2278197",
+      "ins": [
+        3.7613,
+        -0.3913
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 93.04
+    },
+    {
+      "id": "L1-seat-034",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1AF7",
+      "block": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range",
+      "elementId": "2299212",
+      "ins": [
+        3.9983,
+        2.3937
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L1-seat-035",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1A4B",
+      "block": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE-2471981-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE",
+      "elementId": "2471981",
+      "ins": [
+        4.2522,
+        -2.5659
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 57.82
+    },
+    {
+      "id": "L1-seat-036",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1A4A",
+      "block": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE-2471981-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE",
+      "elementId": "2471981",
+      "ins": [
+        4.3002,
+        -0.9484
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 60.11
+    },
+    {
+      "id": "L1-seat-037",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1AF5",
+      "block": "mollie_chair_a685_revit - A685 2-2278197-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "elementId": "2278197",
+      "ins": [
+        4.3983,
+        0.8428
+      ],
+      "rot": 180.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 93.04
+    },
+    {
+      "id": "L1-sofa-001",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1AA6",
+      "block": "SOFA_BENCH_DIOR - TYPE 2-2572508-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "SOFA_BENCH_DIOR - TYPE 2",
+      "elementId": "2572508",
+      "ins": [
+        5.5806,
+        -3.8925
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-sofa-002",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1ABE",
+      "block": "SOFA_BENCH_DIOR - TYPE 2-V37-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "SOFA_BENCH_DIOR - TYPE 2",
+      "elementId": null,
+      "ins": [
+        5.5806,
+        -2.8925
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-sofa-003",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1AD5",
+      "block": "SOFA_BENCH_DIOR - TYPE 2-V38-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "SOFA_BENCH_DIOR - TYPE 2",
+      "elementId": null,
+      "ins": [
+        5.5806,
+        -1.8925
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-sofa-004",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1AEC",
+      "block": "SOFA_BENCH_DIOR - TYPE 2-V39-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "SOFA_BENCH_DIOR - TYPE 2",
+      "elementId": null,
+      "ins": [
+        5.5806,
+        -0.8925
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-table-001",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1C2A",
+      "block": "IA_J15_WORKING TABLE - 1800W 1000D 750H-V43-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "IA_J15_WORKING TABLE - 1800W 1000D 750H",
+      "elementId": null,
+      "ins": [
+        -1.8804,
+        -4.135
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-table-002",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1BE9",
+      "block": "IA_J15_WORKING TABLE - 1800W 1000D 750H-V42-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "IA_J15_WORKING TABLE - 1800W 1000D 750H",
+      "elementId": null,
+      "ins": [
+        -1.8804,
+        -2.3283
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-table-003",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "179F",
+      "block": "IA_J15_WORKING TABLE - 1800W 1000D 750H-V33-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "IA_J15_WORKING TABLE - 1800W 1000D 750H",
+      "elementId": null,
+      "ins": [
+        -1.8804,
+        -0.5283
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-table-004",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1863",
+      "block": "IA_J15_WORKING TABLE - 1800W 1000D 750H-V35-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "IA_J15_WORKING TABLE - 1800W 1000D 750H",
+      "elementId": null,
+      "ins": [
+        -1.8804,
+        1.2717
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-table-005",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "E72",
+      "block": "IA_J15_WORKING TABLE - 1800W 1000D 750H-2337398-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "IA_J15_WORKING TABLE - 1800W 1000D 750H",
+      "elementId": "2337398",
+      "ins": [
+        -1.8804,
+        4.1742
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-table-006",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "104B",
+      "block": "IA_J15_WORKING TABLE - 1400W 1000D 750H-2278198-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "IA_J15_WORKING TABLE - 1400W 1000D 750H",
+      "elementId": "2278198",
+      "ins": [
+        2.5386,
+        2.1189
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L1-table-007",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1B2C",
+      "block": "IA_J15_WORKING TABLE - 1400W 1000D 750H-V40-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "IA_J15_WORKING TABLE - 1400W 1000D 750H",
+      "elementId": null,
+      "ins": [
+        3.9536,
+        2.1189
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L1-coffee-table-001",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1AEF",
+      "block": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H-2385305-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H",
+      "elementId": "2385305",
+      "ins": [
+        2.2983,
+        -2.3307
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 42.4
+    },
+    {
+      "id": "L1-coffee-table-002",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1A8E",
+      "block": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H-2385305-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H",
+      "elementId": "2385305",
+      "ins": [
+        2.3754,
+        -0.9859
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 67.61
+    },
+    {
+      "id": "L1-coffee-table-003",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "135F",
+      "block": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 1000W-2566611-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 1000W",
+      "elementId": "2566611",
+      "ins": [
+        2.7841,
+        4.4849
+      ],
+      "rot": 45.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 31.16
+    },
+    {
+      "id": "L1-coffee-table-004",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1A7F",
+      "block": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H-2395479-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H",
+      "elementId": "2395479",
+      "ins": [
+        3.7613,
+        -0.9859
+      ],
+      "rot": 180.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 67.61
+    },
+    {
+      "id": "L1-coffee-table-005",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1A44",
+      "block": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H-2395479-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H",
+      "elementId": "2395479",
+      "ins": [
+        3.7733,
+        -2.4259
+      ],
+      "rot": 180.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 67.61
+    },
+    {
+      "id": "L1-coffee-table-006",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1AEE",
+      "block": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H-2385305-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H",
+      "elementId": "2385305",
+      "ins": [
+        5.1633,
+        -2.7011
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 67.61
+    },
+    {
+      "id": "L1-coffee-table-007",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1AED",
+      "block": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H-2385305-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H",
+      "elementId": "2385305",
+      "ins": [
+        5.1633,
+        -0.7211
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 67.61
+    },
+    {
+      "id": "L1-cabinet-001",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "1B6E",
+      "block": "CONSOLE_CABINET_BAKER - TA13 1800W 400D-2569772-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "CONSOLE_CABINET_BAKER - TA13 1800W 400D",
+      "elementId": "2569772",
+      "ins": [
+        1.0399,
+        5.3199
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-cabinet-002",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "105A",
+      "block": "CONSOLE_CABINET_BAKER - TA13 1200W 400D-2383324-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "CONSOLE_CABINET_BAKER - TA13 1200W 400D",
+      "elementId": "2383324",
+      "ins": [
+        2.9216,
+        -8.6517
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L1-tall-cabinet-001",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "BDA",
+      "block": "TALL CABINET - TALL CABINET 2800W-2337389-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "TALL CABINET - TALL CABINET 2800W",
+      "elementId": "2337389",
+      "ins": [
+        -3.4804,
+        3.6742
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L1-tall-cabinet-002",
+      "floor": "L1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "key": "8E6",
+      "block": "TALL CABINET 4200W - TALL CABINET 4200W-2331846-LEVEL 1 GENERAL ARRANGEMENT",
+      "family": "TALL CABINET 4200W - TALL CABINET 4200W",
+      "elementId": "2331846",
+      "ins": [
+        -3.4804,
+        -1.4383
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-computer-001",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "FAE",
+      "block": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+      "elementId": "2278189",
+      "ins": [
+        -3.7797,
+        0.2151
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 84.36
+    },
+    {
+      "id": "L2-computer-002",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "10CA",
+      "block": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+      "elementId": "2278189",
+      "ins": [
+        -3.7797,
+        1.7426
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 84.36
+    },
+    {
+      "id": "L2-computer-003",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "10C2",
+      "block": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-V29-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+      "elementId": null,
+      "ins": [
+        -3.7797,
+        2.9426
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 84.36
+    },
+    {
+      "id": "L2-computer-004",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "ABE",
+      "block": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+      "elementId": "2278189",
+      "ins": [
+        -1.5709,
+        -4.1072
+      ],
+      "rot": -60.365,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 113.99
+    },
+    {
+      "id": "L2-computer-005",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "ABD",
+      "block": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+      "elementId": "2278189",
+      "ins": [
+        -1.5709,
+        -2.4319
+      ],
+      "rot": -60.365,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 113.99
+    },
+    {
+      "id": "L2-computer-006",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "ABC",
+      "block": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+      "elementId": "2278189",
+      "ins": [
+        -1.5709,
+        -0.3572
+      ],
+      "rot": -60.365,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 113.99
+    },
+    {
+      "id": "L2-computer-007",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "ABB",
+      "block": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+      "elementId": "2278189",
+      "ins": [
+        -1.5709,
+        1.3178
+      ],
+      "rot": -60.365,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 113.99
+    },
+    {
+      "id": "L2-computer-008",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "E47",
+      "block": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-2278189-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+      "elementId": "2278189",
+      "ins": [
+        -1.5709,
+        3.4053
+      ],
+      "rot": -60.365,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 113.99
+    },
+    {
+      "id": "L2-computer-009",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "1764",
+      "block": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003-V40-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Computer 003 - Enscape AssetDefinition - Computer 003",
+      "elementId": null,
+      "ins": [
+        0.9067,
+        5.5386
+      ],
+      "rot": -150.365,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 23.99
+    },
+    {
+      "id": "L2-printer-001",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "1068",
+      "block": "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1-V28-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1",
+      "elementId": null,
+      "ins": [
+        -3.8479,
+        4.2105
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-printer-002",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "DCE",
+      "block": "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1-2331658-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1",
+      "elementId": "2331658",
+      "ins": [
+        -3.1758,
+        -3.7299
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-printer-003",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "DCF",
+      "block": "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1-2331658-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1",
+      "elementId": "2331658",
+      "ins": [
+        -3.1758,
+        -1.7799
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-printer-004",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "DCD",
+      "block": "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1-2331658-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1",
+      "elementId": "2331658",
+      "ins": [
+        -3.1758,
+        0.1701
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-printer-005",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "168C",
+      "block": "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1-2483475-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "PRINTER_DESKTOP_LASER_HTH_FQGE-057 - Type 1",
+      "elementId": "2483475",
+      "ins": [
+        -0.8738,
+        6.6486
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-phone-001",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "A5D",
+      "block": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1-2278177-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1",
+      "elementId": "2278177",
+      "ins": [
+        -1.5126,
+        -5.4068
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-phone-002",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "A5C",
+      "block": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1-2278177-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1",
+      "elementId": "2278177",
+      "ins": [
+        -1.5126,
+        -3.7318
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-phone-003",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "A5A",
+      "block": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1-2278177-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1",
+      "elementId": "2278177",
+      "ins": [
+        -1.5126,
+        -1.6574
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-phone-004",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "A5B",
+      "block": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1-2278177-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1",
+      "elementId": "2278177",
+      "ins": [
+        -1.5126,
+        0.0179
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-phone-005",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "E46",
+      "block": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1-2278177-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "TELEPHONE_HANDSET_DESKTOP_HTH_ITNE-049 - Type 1",
+      "elementId": "2278177",
+      "ins": [
+        -1.5126,
+        2.1054
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-plant-001",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "23F6",
+      "block": "Enscape AssetDefinition - Potted Plant 011 Epipremnum - Enscape AssetDefinition - Potted Plant 011 Epipremnum-2609662-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Potted Plant 011 Epipremnum - Enscape AssetDefinition - Potted Plant 011 Epipremnum",
+      "elementId": "2609662",
+      "ins": [
+        2.5148,
+        6.579
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 88.38
+    },
+    {
+      "id": "L2-plant-002",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "22D4",
+      "block": "Enscape AssetDefinition - Vase 003 Heracleum - Enscape AssetDefinition - Vase 003 Heracleum-V53-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Vase 003 Heracleum - Enscape AssetDefinition - Vase 003 Heracleum",
+      "elementId": null,
+      "ins": [
+        4.3353,
+        2.8355
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 23.79
+    },
+    {
+      "id": "L2-plant-003",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "13D4",
+      "block": "Enscape AssetDefinition - Vase 003 Heracleum - Enscape AssetDefinition - Vase 003 Heracleum-2471975-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Vase 003 Heracleum - Enscape AssetDefinition - Vase 003 Heracleum",
+      "elementId": "2471975",
+      "ins": [
+        4.5753,
+        -2.6555
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 156.21
+    },
+    {
+      "id": "L2-plant-004",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "1338",
+      "block": "Enscape AssetDefinition - Vase 003 Heracleum - Enscape AssetDefinition - Vase 003 Heracleum-2475695-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Enscape AssetDefinition - Vase 003 Heracleum - Enscape AssetDefinition - Vase 003 Heracleum",
+      "elementId": "2475695",
+      "ins": [
+        5.3664,
+        0.0458
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 113.79
+    },
+    {
+      "id": "L2-sanitary-001",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "BA/97C",
+      "block": "COTTO Two piece toilet Elzra C13920 _1_ - COTTO Two piece toilet Elzra C13920-2270619-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "COTTO Two piece toilet Elzra C13920 _1_ - COTTO Two piece toilet Elzra C13920",
+      "elementId": "2270619",
+      "ins": [
+        -5.3071,
+        10.2829
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 177.38
+    },
+    {
+      "id": "L2-sanitary-002",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "BA/97B",
+      "block": "COTTO Two piece toilet Elzra C13920 _1_ - COTTO Two piece toilet Elzra C13920-2270619-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "COTTO Two piece toilet Elzra C13920 _1_ - COTTO Two piece toilet Elzra C13920",
+      "elementId": "2270619",
+      "ins": [
+        -5.3071,
+        11.1129
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 177.38
+    },
+    {
+      "id": "L2-sanitary-003",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "BA/980",
+      "block": "Wall-hung vitreous china basin-Meridian-327242xx0 - 327242000 White-2576848-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Wall-hung vitreous china basin-Meridian-327242xx0 - 327242000 White",
+      "elementId": "2576848",
+      "ins": [
+        -1.7279,
+        11.213
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-sanitary-004",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "BA/982",
+      "block": "Wall-hung vitreous china basin-Meridian-327242xx0 - 327242000 White-2274270-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Wall-hung vitreous china basin-Meridian-327242xx0 - 327242000 White",
+      "elementId": "2274270",
+      "ins": [
+        -1.7279,
+        11.213
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-sanitary-005",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "BA/97F",
+      "block": "COTTO Wall hung urinal Natasha C313BI _1_ - COTTO Wall hung urinal Natasha C313BI-2279716-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "COTTO Wall hung urinal Natasha C313BI _1_ - COTTO Wall hung urinal Natasha C313BI",
+      "elementId": "2279716",
+      "ins": [
+        -0.1179,
+        9.705
+      ],
+      "rot": 180.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L2-sanitary-006",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "BA/97D",
+      "block": "COTTO Two piece toilet Elzra C13920 _1_ - COTTO Two piece toilet Elzra C13920-V6-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "COTTO Two piece toilet Elzra C13920 _1_ - COTTO Two piece toilet Elzra C13920",
+      "elementId": null,
+      "ins": [
+        0.8396,
+        10.306
+      ],
+      "rot": 180.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-seat-001",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "FAD",
+      "block": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range",
+      "elementId": "2299212",
+      "ins": [
+        -4.5223,
+        0.2151
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-seat-002",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "10C9",
+      "block": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range",
+      "elementId": "2299212",
+      "ins": [
+        -4.5223,
+        1.7349
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-seat-003",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "101F",
+      "block": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2299212-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range",
+      "elementId": "2299212",
+      "ins": [
+        -4.5223,
+        2.9349
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-seat-004",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "A0C",
+      "block": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2437551-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range",
+      "elementId": "2437551",
+      "ins": [
+        -2.4023,
+        -4.5424
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-seat-005",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "A0B",
+      "block": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2437551-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range",
+      "elementId": "2437551",
+      "ins": [
+        -2.4023,
+        -2.8674
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-seat-006",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "A0A",
+      "block": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2437551-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range",
+      "elementId": "2437551",
+      "ins": [
+        -2.4023,
+        -0.7924
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-seat-007",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "A09",
+      "block": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2437551-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range",
+      "elementId": "2437551",
+      "ins": [
+        -2.4023,
+        0.8826
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-seat-008",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "E44",
+      "block": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2437551-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range",
+      "elementId": "2437551",
+      "ins": [
+        -2.4023,
+        2.9701
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-seat-009",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "A60",
+      "block": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE-2437550-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE",
+      "elementId": "2437550",
+      "ins": [
+        -0.7643,
+        -4.1001
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 5.11
+    },
+    {
+      "id": "L2-seat-010",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "A40",
+      "block": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE-2437550-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE",
+      "elementId": "2437550",
+      "ins": [
+        -0.7643,
+        -2.6251
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 5.11
+    },
+    {
+      "id": "L2-seat-011",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "A5E",
+      "block": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE-2437550-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE",
+      "elementId": "2437550",
+      "ins": [
+        -0.7643,
+        -0.2299
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 49.27
+    },
+    {
+      "id": "L2-seat-012",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "9A1",
+      "block": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE-2437550-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE",
+      "elementId": "2437550",
+      "ins": [
+        -0.7643,
+        1.1701
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 49.27
+    },
+    {
+      "id": "L2-seat-013",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "E43",
+      "block": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE-2437550-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE",
+      "elementId": "2437550",
+      "ins": [
+        -0.7643,
+        3.2576
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 49.27
+    },
+    {
+      "id": "L2-seat-014",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "A61",
+      "block": "mollie_chair_a685_revit - A685 2-2437554-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "elementId": "2437554",
+      "ins": [
+        -0.7643,
+        -4.8001
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 176.96
+    },
+    {
+      "id": "L2-seat-015",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "A41",
+      "block": "mollie_chair_a685_revit - A685 2-2437554-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "elementId": "2437554",
+      "ins": [
+        -0.7643,
+        -3.3251
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 176.96
+    },
+    {
+      "id": "L2-seat-016",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "A5F",
+      "block": "mollie_chair_a685_revit - A685 2-2437554-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "elementId": "2437554",
+      "ins": [
+        -0.7643,
+        -0.9299
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 176.96
+    },
+    {
+      "id": "L2-seat-017",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "A3F",
+      "block": "mollie_chair_a685_revit - A685 2-2437554-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "elementId": "2437554",
+      "ins": [
+        -0.7643,
+        0.4701
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 176.96
+    },
+    {
+      "id": "L2-seat-018",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "E45",
+      "block": "mollie_chair_a685_revit - A685 2-2437554-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "elementId": "2437554",
+      "ins": [
+        -0.7643,
+        2.5576
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 176.96
+    },
+    {
+      "id": "L2-seat-019",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "1709",
+      "block": "mollie_chair_a685_revit - A685 2-2437554-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "elementId": "2437554",
+      "ins": [
+        0.0591,
+        4.6365
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 86.96
+    },
+    {
+      "id": "L2-seat-020",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "1708",
+      "block": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range-2437551-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "HermanMiller_Seating_AER1A_NewAeron_WorkChair_ASize - SE101_Size Low-Hgt Range",
+      "elementId": "2437551",
+      "ins": [
+        0.2916,
+        6.2745
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L2-seat-021",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "1707",
+      "block": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE-2437550-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE103 500W BLUE",
+      "elementId": "2437550",
+      "ins": [
+        0.7591,
+        4.6365
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 74.48
+    },
+    {
+      "id": "L2-seat-022",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "1769",
+      "block": "Fritz-Hansen_SH200 - Default-2479048-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Fritz-Hansen_SH200 - Default",
+      "elementId": "2479048",
+      "ins": [
+        1.7276,
+        -4.5691
+      ],
+      "rot": -135.507,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 47.58
+    },
+    {
+      "id": "L2-seat-023",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "11AA",
+      "block": "Fritz-Hansen_SH200 - Default-2476898-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Fritz-Hansen_SH200 - Default",
+      "elementId": "2476898",
+      "ins": [
+        1.7797,
+        -5.6739
+      ],
+      "rot": 145.797,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 142.72
+    },
+    {
+      "id": "L2-seat-024",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "1217",
+      "block": "CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA_VISIONA STOOL-2471969-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA_VISIONA STOOL",
+      "elementId": "2471969",
+      "ins": [
+        2.776,
+        -5.39
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-seat-025",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "2346",
+      "block": "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4-2403364-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "FU_Chair_Sandler_Tablet 8-4 - TABLET 8_4",
+      "elementId": "2403364",
+      "ins": [
+        2.9949,
+        5.5026
+      ],
+      "rot": 159.166,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 84.06
+    },
+    {
+      "id": "L2-seat-026",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "127F",
+      "block": "mollie_chair_a685_revit - A685 2-2437554-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "elementId": "2437554",
+      "ins": [
+        3.7602,
+        -8.6622
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 176.96
+    },
+    {
+      "id": "L2-seat-027",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "1352",
+      "block": "Fritz-Hansen_SH200 - Default-2479048-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Fritz-Hansen_SH200 - Default",
+      "elementId": "2479048",
+      "ins": [
+        3.8238,
+        2.2748
+      ],
+      "rot": -41.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 142.08
+    },
+    {
+      "id": "L2-seat-028",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "1860",
+      "block": "Fritz-Hansen_SH200 - Default-2479048-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Fritz-Hansen_SH200 - Default",
+      "elementId": "2479048",
+      "ins": [
+        4.0025,
+        -7.6908
+      ],
+      "rot": -45.934,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 137.15
+    },
+    {
+      "id": "L2-seat-029",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "663A",
+      "block": "Fritz-Hansen_SH200 - Default-2476898-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Fritz-Hansen_SH200 - Default",
+      "elementId": "2476898",
+      "ins": [
+        4.1301,
+        -2.028
+      ],
+      "rot": 32.356,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 29.27
+    },
+    {
+      "id": "L2-seat-030",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "126E",
+      "block": "CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA_VISIONA STOOL-2475694-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "CHAIR_BENCH BACK - SE107 STOOL LOW_VITRA_VISIONA STOOL",
+      "elementId": "2475694",
+      "ins": [
+        4.3585,
+        -6.6974
+      ],
+      "rot": 180.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L2-seat-031",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "1275",
+      "block": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE-2471981-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE",
+      "elementId": "2471981",
+      "ins": [
+        4.4752,
+        -5.4462
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 17.19
+    },
+    {
+      "id": "L2-seat-032",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "1276",
+      "block": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE-2471981-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "CHAIR_STOOL LOW_VITRA_VISIONA STOOL - SE104 400W BLUE",
+      "elementId": "2471981",
+      "ins": [
+        4.858,
+        -7.58
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 57.82
+    },
+    {
+      "id": "L2-seat-033",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "44E0",
+      "block": "Fritz-Hansen_SH200 - Default-2476898-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Fritz-Hansen_SH200 - Default",
+      "elementId": "2476898",
+      "ins": [
+        4.8937,
+        2.2921
+      ],
+      "rot": -129.824,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 47.09
+    },
+    {
+      "id": "L2-seat-034",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "12B2",
+      "block": "mollie_chair_a685_revit - A685 2-2278197-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "mollie_chair_a685_revit - A685 2",
+      "elementId": "2278197",
+      "ins": [
+        5.0372,
+        -8.6622
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 3.04
+    },
+    {
+      "id": "L2-seat-035",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "13D5",
+      "block": "Fritz-Hansen_SH200 - Default-2479048-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Fritz-Hansen_SH200 - Default",
+      "elementId": "2479048",
+      "ins": [
+        5.0905,
+        -2.1351
+      ],
+      "rot": 139.824,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 142.91
+    },
+    {
+      "id": "L2-seat-036",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "1806",
+      "block": "Fritz-Hansen_SH200 - Default-2476898-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Fritz-Hansen_SH200 - Default",
+      "elementId": "2476898",
+      "ins": [
+        5.2976,
+        -5.4083
+      ],
+      "rot": -47.53,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 129.39
+    },
+    {
+      "id": "L2-seat-037",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "1D51",
+      "block": "BENCH-INSTANCE GENERIC - TYPE 1-2598774-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "BENCH-INSTANCE GENERIC - TYPE 1",
+      "elementId": "2598774",
+      "ins": [
+        5.9142,
+        -0.1708
+      ],
+      "rot": -88.369,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 91.63
+    },
+    {
+      "id": "L2-seat-038",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "2251",
+      "block": "BENCH-INSTANCE GENERIC - TYPE 1-V47-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "BENCH-INSTANCE GENERIC - TYPE 1",
+      "elementId": null,
+      "ins": [
+        5.9408,
+        -1.1068
+      ],
+      "rot": -88.369,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 91.63
+    },
+    {
+      "id": "L2-sofa-001",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "179C",
+      "block": "SOFA_03_1 - 1500W x 400D SE18-V41-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "SOFA_03_1 - 1500W x 400D SE18",
+      "elementId": null,
+      "ins": [
+        0.9462,
+        -0.9447
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-sofa-002",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "1783",
+      "block": "SOFA_03_1 - 1500W x 400D SE18-2492731-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "SOFA_03_1 - 1500W x 400D SE18",
+      "elementId": "2492731",
+      "ins": [
+        0.9462,
+        2.3553
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-sofa-003",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "233E",
+      "block": "SOFA_BENCH_DIOR - TYPE 1-2479320-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "SOFA_BENCH_DIOR - TYPE 1",
+      "elementId": "2479320",
+      "ins": [
+        4.3137,
+        6.4579
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L2-sofa-004",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "2340",
+      "block": "Etta Armchair1 - TYPE 2-2606587-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Etta Armchair1 - TYPE 2",
+      "elementId": "2606587",
+      "ins": [
+        3.7357,
+        5.0077
+      ],
+      "rot": -135.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 135.0
+    },
+    {
+      "id": "L2-sofa-005",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "2323",
+      "block": "Etta Armchair1 - TYPE 2-2607583-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Etta Armchair1 - TYPE 2",
+      "elementId": "2607583",
+      "ins": [
+        5.1916,
+        -1.1532
+      ],
+      "rot": -47.347,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 42.65
+    },
+    {
+      "id": "L2-sofa-006",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "2309",
+      "block": "Etta Armchair1 - TYPE 2-2606587-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Etta Armchair1 - TYPE 2",
+      "elementId": "2606587",
+      "ins": [
+        5.1916,
+        1.2266
+      ],
+      "rot": 47.347,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 137.35
+    },
+    {
+      "id": "L2-table-001",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "E42",
+      "block": "WORKING TABLE - WORKING TABLE-2446851-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "WORKING TABLE - WORKING TABLE",
+      "elementId": "2446851",
+      "ins": [
+        -2.0404,
+        3.9629
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-table-002",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "1706",
+      "block": "WORKING TABLE - WORKING TABLE-V39-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "WORKING TABLE - WORKING TABLE",
+      "elementId": null,
+      "ins": [
+        1.4644,
+        5.9126
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L2-table-003",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "11C0",
+      "block": "TABLE_DINING_RECTANGLE CHAMPAGNE LEG - TA103 380W x 380D x 750H-2475481-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "TABLE_DINING_RECTANGLE CHAMPAGNE LEG - TA103 380W x 380D x 750H",
+      "elementId": "2475481",
+      "ins": [
+        3.596,
+        -5.2716
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L2-table-004",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "126F",
+      "block": "TABLE_DINING_RECTANGLE CHAMPAGNE LEG - TA103 380W x 380D x 750H-2475481-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "TABLE_DINING_RECTANGLE CHAMPAGNE LEG - TA103 380W x 380D x 750H",
+      "elementId": "2475481",
+      "ins": [
+        4.4589,
+        -7.2906
+      ],
+      "rot": 180.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L2-table-005",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "1805",
+      "block": "TABLE_DINING_RECTANGLE CHAMPAGNE LEG - TA103 380W x 380D x 750H-2385270-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "TABLE_DINING_RECTANGLE CHAMPAGNE LEG - TA103 380W x 380D x 750H",
+      "elementId": "2385270",
+      "ins": [
+        4.8187,
+        -5.8837
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L2-coffee-table-001",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "11B2",
+      "block": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H-2395479-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H",
+      "elementId": "2395479",
+      "ins": [
+        2.1357,
+        -5.1117
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 2.82
+    },
+    {
+      "id": "L2-coffee-table-002",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "233F",
+      "block": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H-2385305-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H",
+      "elementId": "2385305",
+      "ins": [
+        3.6186,
+        6.0095
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 3.44
+    },
+    {
+      "id": "L2-coffee-table-003",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "225A",
+      "block": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 700W 400H-2621907-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 700W 400H",
+      "elementId": "2621907",
+      "ins": [
+        4.341,
+        2.7601
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 42.4
+    },
+    {
+      "id": "L2-coffee-table-004",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "127E",
+      "block": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H-2385305-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 600W 400H",
+      "elementId": "2385305",
+      "ins": [
+        4.4052,
+        -8.6622
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 32.61
+    },
+    {
+      "id": "L2-coffee-table-005",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "135A",
+      "block": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 700W 400H-2621897-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "TABLE_BEDSIDE_VITRA_OCCASIONAL - TA104 700W 400H",
+      "elementId": "2621897",
+      "ins": [
+        4.581,
+        -2.6001
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 42.4
+    },
+    {
+      "id": "L2-coffee-table-006",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "12BE",
+      "block": "COFFEE TABLE RETANGLE - VENNATIVE - TYPE 1-2607763-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "COFFEE TABLE RETANGLE - VENNATIVE - TYPE 1",
+      "elementId": "2607763",
+      "ins": [
+        5.4663,
+        -0.6574
+      ],
+      "rot": -88.369,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 91.63
+    },
+    {
+      "id": "L2-cabinet-001",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "17F7",
+      "block": "IA_J10_WORK CABINET - IA_J10_WORK CABINET-2576886-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "IA_J10_WORK CABINET - IA_J10_WORK CABINET",
+      "elementId": "2576886",
+      "ins": [
+        -4.3969,
+        6.7151
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L2-cabinet-002",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "1016",
+      "block": "IA_J12_CABINET - IA_J12_CABINET-2459946-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "IA_J12_CABINET - IA_J12_CABINET",
+      "elementId": "2459946",
+      "ins": [
+        -3.5804,
+        -3.5352
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-cabinet-003",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "17E6",
+      "block": "IA_J10_WORK CABINET - IA_J10_WORK CABINET-2579628-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "IA_J10_WORK CABINET - IA_J10_WORK CABINET",
+      "elementId": "2579628",
+      "ins": [
+        -3.5804,
+        -0.2846
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-cabinet-004",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "1155",
+      "block": "IA_J11_WORK CABINET - IA_J11_WORK CABINET-2459944-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "IA_J11_WORK CABINET - IA_J11_WORK CABINET",
+      "elementId": "2459944",
+      "ins": [
+        -3.5804,
+        2.5198
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-cabinet-005",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "D77",
+      "block": "IA_J07_WORK CABINET - IA_J07_WORK CABINET-2425803-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "IA_J07_WORK CABINET - IA_J07_WORK CABINET",
+      "elementId": "2425803",
+      "ins": [
+        -3.4904,
+        -1.0746
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-cabinet-006",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "F08",
+      "block": "WORK CABINET-1 - WORK CABINET-1-2458913-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "WORK CABINET-1 - WORK CABINET-1",
+      "elementId": "2458913",
+      "ins": [
+        -3.4904,
+        6.0629
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-cabinet-007",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": null,
+      "block": "",
+      "family": "loose shapes on Q-CASE",
+      "elementId": null,
+      "ins": null,
+      "rot": null,
+      "sx": null,
+      "sy": null,
+      "insertMirrored": null,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-cabinet-008",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "22EF",
+      "block": "CONSOLE_CABINET_BAKER - TA13 1800W 400D-2602679-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "CONSOLE_CABINET_BAKER - TA13 1800W 400D",
+      "elementId": "2602679",
+      "ins": [
+        2.8344,
+        0.7666
+      ],
+      "rot": 90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-cabinet-009",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "44D8",
+      "block": "Casework 2 - Casework 2-2619104-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Casework 2 - Casework 2",
+      "elementId": "2619104",
+      "ins": [
+        0.0,
+        0.0
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 0.0
+    },
+    {
+      "id": "L2-cabinet-010",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "6636",
+      "block": "Casework 1 - Casework 2-2622302-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "Casework 1 - Casework 2",
+      "elementId": "2622302",
+      "ins": [
+        0.0,
+        0.0
+      ],
+      "rot": 0.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 1.63
+    },
+    {
+      "id": "L2-tall-cabinet-001",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "BA/971",
+      "block": "RACKS_DATA - 1100x600-2280828-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "RACKS_DATA - 1100x600",
+      "elementId": "2280828",
+      "ins": [
+        -4.9888,
+        7.096
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-tall-cabinet-002",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "BA/972",
+      "block": "RACKS_DATA - 1100x600-2280828-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "RACKS_DATA - 1100x600",
+      "elementId": "2280828",
+      "ins": [
+        -4.1597,
+        7.096
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    },
+    {
+      "id": "L2-tall-cabinet-003",
+      "floor": "L2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "key": "1472",
+      "block": "TALL CABINET - TALL CABINET 1875W-2561397-LEVEL 2 GENERAL ARRANGEMENT",
+      "family": "TALL CABINET - TALL CABINET 1875W",
+      "elementId": "2561397",
+      "ins": [
+        -1.1784,
+        5.9922
+      ],
+      "rot": -90.0,
+      "sx": 1.0,
+      "sy": 1.0,
+      "insertMirrored": false,
+      "drawnVariant": null,
+      "boxRot": 90.0
+    }
+  ]
+}

@@ -21,7 +21,7 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
-from .store.base import NotFound, StoreError
+from .store.base import NotFound, PathTooLong, StoreError
 
 log = logging.getLogger('walkthrough_api.errors')
 
@@ -67,6 +67,11 @@ def install_error_handlers(app: FastAPI) -> None:
     @app.exception_handler(StoreError)
     async def _store_error(_request: Request, exc: StoreError) -> JSONResponse:
         return JSONResponse(status_code=500, content=error_body('store_error', str(exc)))
+
+    @app.exception_handler(PathTooLong)
+    async def _path_too_long(_request: Request, exc: PathTooLong) -> JSONResponse:
+        # docs/upload/DESIGN.md U-4.1: a plain message instead of a FileNotFoundError when a path would pass 259
+        return JSONResponse(status_code=500, content=error_body('path_too_long', str(exc), {'length': exc.length}))
 
     @app.exception_handler(RequestValidationError)
     async def _validation(_request: Request, exc: RequestValidationError) -> JSONResponse:
