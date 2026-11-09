@@ -8,7 +8,7 @@ model, summary and CSV are byte-identical, the goldens prove it):
     number, U-10.3); the vocabulary's patterns from the settings (defaults: the bank's);
   * the INSERT readers (door blocks, Revit wall types, object closures, furniture) read the whole-subtree reading
     F['src'], the line readers the per-item reading F['items'] (U-9.1: the same list under wholeFile);
-  * options (U-10.5): revitWallTypes, parapets 'auto' (only where the floor's wall layers carry fills), objectClosures,
+  * options (U-10.5): revitWallTypes, parapets 'auto' (only where the floor's wall layers carry solid fills), objectClosures,
     liftShafts, plinth, offset; the `screen` role (glass parts labelled 'screen', never cut, never glazing);
     eitherKind doors glazed like windows; a window "opening over a low wall" gets a 0.90 m sill; opening fixes
     (kind, head, sill) and accepted outline edges (U-10.6);
@@ -273,6 +273,7 @@ def read_floor(F, X):
     # 1. walls and columns
     fills, thin, thin_fills, col_pieces, segs, col_segs, wall_segs, arcs = [], [], [], [], [], [], [], []
     wall_src = []                                   # (key, layer) of each wall segment (the report's single-line items)
+    solid_fills = 0                                 # SOLID hatches among the fills (parapets 'auto', U-10.5)
     n = collections.Counter()
     for d in items:
         if not use(d, 'wall', 'column'): continue
@@ -282,6 +283,7 @@ def read_floor(F, X):
             g = even_odd(d['loops'])
             if g.is_empty: continue
             fills.append(g); n['fills'] += 1
+            solid_fills += bool(d.get('solid'))
             if is_col: col_pieces.append(g)
             elif 'wall' in d['roles']:
                 for p in polys(g):
@@ -325,11 +327,11 @@ def read_floor(F, X):
 
     # single-line items: wall lines that pair with nothing and lie in no wall
     cov = unary_union(W).buffer(0.02)
-    singles, single_src = [], []
+    singles, single_src, single_lines = [], [], []
     for (x1, y1, x2, y2), src in zip(wall_segs, wall_src):
         for part in lines_of(LineString([(x1, y1), (x2, y2)]).difference(cov)):
             if part.length > 0.2:
-                singles.append(part.buffer(SINGLE_W / 2, cap_style='flat')); single_src.append(src)
+                singles.append(part.buffer(SINGLE_W / 2, cap_style='flat')); single_src.append(src); single_lines.append(part)
     S = solidify(singles, 0.01) if singles else []
 
     # 2. glass (and window glazing, which only an opening's pane replaces)
@@ -378,7 +380,8 @@ def read_floor(F, X):
     door_blocks = [{'ins': d['ins'], 'name': d['name'], 'head': head_in_name(d['name'], F['unit_m'], X.V)}
                    for d in F['src'] if d['t'] == 'INSERT' and 'door' in d['roles'] and 'ignore' not in d['roles']]
     F.update({'W': W, 'COL': COL, 'S': S, 'G': G, 'n': n, 'door_blocks': door_blocks, 'rects': rects, 'fills': fills,
-              'thin_fills': thin_fills, 'grects': grects, 'segs': segs, 'SCR': SCR, 'singles_src': (singles, single_src)})
+              'thin_fills': thin_fills, 'grects': grects, 'segs': segs, 'SCR': SCR, 'solid_fills': solid_fills,
+              'singles_src': (singles, single_src, single_lines)})
     revit_wall_types(F, X)
     return F
 
@@ -615,7 +618,8 @@ def build_openings(F, X):
             off = r['offset']
             pane = rect(a, u, 0, w, off - PANE / 2, off + PANE / 2).difference(Wc.buffer(0.001))
             for p in polys(pane):
-                if p.area > 0.001: extra.append(('glass', p, r['sill'], r['head'], r['head'] >= top - 0.005, o['id'] + ' pane'))
+                if p.area > 0.001 and r['head'] > r['sill'] + 0.005:     # (a sill at or over its head: no pane, no z1 <= z0)
+                    extra.append(('glass', p, r['sill'], r['head'], r['head'] >= top - 0.005, o['id'] + ' pane'))
             band = rect(a, u, 0, w, -t / 2, t / 2).difference(Wc.buffer(0.001))
             if r['sill'] > 0.005:
                 for p in polys(band): extra.append(('sill', p, 0.0, r['sill'], False, o['id']))
@@ -878,7 +882,7 @@ def build_floors(floors, X, log):
         rails, rails_dropped, rails_dropped_polys = railings_of(F, unary_union([Wc] + [c['poly'] for c in closures]))
         walls = [p for p in polys(Wc) if p.area > 0.004]
         fills = unary_union(F['fills'])
-        run_parapets = X.options['parapets'] != 'off' and bool(F['fills'])          # U-10.5: only where walls carry fills
+        run_parapets = X.options['parapets'] != 'off' and F['solid_fills'] > 0     # U-10.5: only where walls carry solid fills
         parapets = parapets_of(walls, fills, rails) if run_parapets else []
         cols = [p for p in walls if not F['COL'].is_empty and p.intersection(F['COL']).area >= 0.9 * p.area]
         runs = [p for p in walls if not any(p is q for q in cols) and not any(p is q for q in parapets)]

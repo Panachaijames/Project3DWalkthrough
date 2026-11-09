@@ -101,12 +101,12 @@
   "error": null,
   "outputs": {
     "sources/459d40fc230607ffe35e2ee9d443cd2b0105dc36/conversion.json": {
-      "bytes": 1697,
-      "sha1": "20f2b322d74dffe32535121beb1b0eb89181461b"
+      "bytes": 1485,
+      "sha1": "041048a684c43a2c285cfa99824b36abefaef9d7"
     },
     "sources/459d40fc230607ffe35e2ee9d443cd2b0105dc36/drawing.json": {
-      "bytes": 91853,
-      "sha1": "c4c9d4857c37f1e1ddfb40cab81006b0f6bb1f10"
+      "bytes": 91925,
+      "sha1": "a10897178ce720ed3d055724b9e823a3f8450ebb"
     },
     "sources/459d40fc230607ffe35e2ee9d443cd2b0105dc36/plan.json.gz": {
       "bytes": 129010,

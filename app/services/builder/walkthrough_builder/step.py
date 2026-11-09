@@ -135,6 +135,14 @@ def _suggest(args: dict, ev: Events) -> dict:
     ev.progress('suggest', 0.5)
     proposed = impl('propose')(spec, drawings, suggestions, conversions, latest)
     jsonfile.write(args['proposed_out'], proposed)
+    # U-3.3's "plain-sentence note that these are guesses": the run's messages carry them (BuildSettings has no field for
+    # them; contract issue U2.md section 1, settled at integration). A courtesy: never fails the proposal.
+    try:
+        from walkthrough_builder import propose as _propose
+        for line in _propose.notes(proposed, drawings):
+            ev.log(line)
+    except Exception as exc:  # noqa: BLE001
+        ev.log(f'The notes on the proposal could not be written ({type(exc).__name__}).', 'warn')
     ev.progress('suggest', 1.0)
     return {}
 

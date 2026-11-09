@@ -120,6 +120,14 @@ def _n(n: int, word: str, plural: str | None = None) -> str:
     return f'{n} {word if n == 1 else (plural or word + "s")}'
 
 
+def _like(role: str) -> str:
+    """'named like a wall layer', 'named like an ignore layer'; the name rules that give `other` are the door and
+    window tag layers (A-DOOR-IDEN ...)."""
+    if role == 'other':
+        return 'named like a door or window tag layer'
+    return f'named like {"an" if role[:1] in "aeiou" else "a"} {role} layer'
+
+
 def _examples(values: Iterable[str], n: int = 3) -> str:
     vals = sorted(set(values), key=lambda s: (len(s), s))
     if not vals:
@@ -221,7 +229,7 @@ def by_name(f: LayerFacts) -> tuple[str, str] | None:
     for role, patterns in NAME_RULES:
         for p in patterns:
             if fnmatch.fnmatchcase(f.normalised, p) and _condition(role, p, f):
-                why = f'named like a {role} layer ({p})'
+                why = f'{_like(role)} ({p})'
                 if role == 'room-outline':
                     why += f', with {_n(f.closed, "closed outline")}'
                 elif role == 'level':
@@ -291,7 +299,7 @@ def suggest_one(f: LayerFacts, office: dict | None, exact: dict, norm: dict) -> 
         if found is not None and found[0] == role:
             evidence.append(f'its contents agree: {found[1]}')
         elif found is not None and found[2] and role not in _EXPLAINED.get(found[0], ()):
-            evidence.append(f'named like a {role} layer, but {found[1]}')
+            evidence.append(f'{_like(role)}, but {found[1]}')
         return {'role': role, 'from': 'name', 'evidence': evidence}
     if found is not None:
         return {'role': found[0], 'from': 'contents', 'evidence': [found[1]]}

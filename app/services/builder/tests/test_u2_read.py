@@ -187,6 +187,16 @@ def test_unreadable_drawings_fail_with_a_plain_sentence(case, match, tmp_path) -
         R.read_source(p, None, tmp_path / 'out', source={'sha1': '0' * 40, 'name': 'Plan B.dwg'})
     msg = str(err.value)
     assert msg.startswith('Plan B.dwg: ') and str(tmp_path) not in msg and 'case.dxf' not in msg
+    assert err.value.code == 'read_failed'
+
+
+def test_read_failed_carries_a_run_error_code_of_the_contract() -> None:
+    """U1's step child keeps the `code` of an exception when it is a RunErrorCode (upload-contracts.ts section 3)."""
+    import re
+    import kit
+    text = (kit.DOCS / 'upload-contracts.ts').read_text(encoding='utf-8')
+    union = re.search(r'export type RunErrorCode =(.*?);', text, re.S).group(1)
+    assert R.ReadFailed.code in re.findall(r"'([a-z_]+)'", union)
 
 
 @pytest.fixture(scope='module')
@@ -355,6 +365,57 @@ def test_a_drawing_with_broken_coordinates_still_reads(tmp_path) -> None:
     assert len(bad) == 1 and bad[0]['k'] not in r['plan']['items']['key']
     json.dumps(r['drawing'], allow_nan=False)
     assert r['drawing']['extents'] is not None
+
+
+def test_bytes_the_code_page_cannot_decode_still_read(tmp_path) -> None:
+    """ezdxf's recover keeps bytes the drawing's code page cannot decode as lone surrogates, which no UTF-8 file can
+    hold: such a character becomes U+FFFD in names and texts (the same string in items.pkl, drawing.json and
+    plan.json.gz, so the settings' layer names still match the items), and the read says so."""
+    def build(doc, msp):
+        doc.layers.add('WALLXX')
+        doc.blocks.new('BLOCKZZ').add_line((0, 0), (100, 0))
+        msp.add_line((0, 0), (1000, 0), dxfattribs={'layer': 'WALLXX'})
+        msp.add_text('ROOMYY', dxfattribs={'layer': 'WALLXX'}).set_placement((0, 500))
+        msp.add_blockref('BLOCKZZ', (0, 1000), dxfattribs={'layer': 'WALLXX'})
+    good = K.synthetic(tmp_path / 'good.dxf', build)
+    bad = tmp_path / 'bad.dxf'
+    bad.write_bytes(good.read_bytes().replace(b'WALLXX', b'WALL\x81\xff').replace(b'ROOMYY', b'ROOM\xe9\x81')
+                    .replace(b'BLOCKZZ', b'BLOCK\x81'))
+    r = K.read(bad, tmp_path / 'out', name='Bad bytes.dxf')
+    wall, room, block = 'WALL��', 'ROOM��', 'BLOCK�'
+    assert {d['lay'] for d in r['items']} == {wall}
+    assert [d['text'] for d in r['items'] if d['t'] == 'TEXT'] == [room]
+    assert [d['name'] for d in r['items'] if d['t'] == 'INSERT'] == [block]
+    assert [d['path'] for d in r['items'] if d['depth'] == 1] == [block]
+    assert wall in r['cache']['layers'] and wall in {la['name'] for la in r['drawing']['layers']}
+    assert r['plan']['layers'] == [wall] and room in [t['text'] for t in r['drawing']['texts']]
+    assert any('cannot spell' in s for s in r['log'])
+    # the items are prims' own, with only those characters replaced
+    def writable(d):
+        return {k: (R._writable(v, k in R._ID_FIELDS) if isinstance(v, str) else v) for k, v in d.items()}
+    assert K.strip(r['items']) == K.strip([writable(d) for d in K.prims_flatten(bad)[0]])
+    files = [('drawing', r['out'] / 'drawing.json'), ('plan', r['out'] / 'plan.json.gz')]
+    assert K.api_issues(files) == {str(p): [] for _k, p in files}
+
+
+def test_long_texts_are_cut_in_the_listing_only(tmp_path) -> None:
+    def build(doc, msp):
+        msp.add_mtext('NOTE ' * 600, dxfattribs={'layer': 'G-ANNO-NOTE'}).set_location((0, 0))   # 2,999 characters
+        msp.add_text('LOBBY', dxfattribs={'layer': 'A-AREA-IDEN'}).set_placement((0, 500))
+        msp.add_line((0, 0), (1000, 0), dxfattribs={'layer': 'A-WALL'})
+    r = K.read(K.synthetic(tmp_path / 'notes.dxf', build), tmp_path / 'out')
+    texts = r['drawing']['texts']
+    assert [len(t['text']) for t in texts] == [1000, 5] and texts[0]['text'].endswith('…')
+    assert next(d for d in r['items'] if d['t'] == 'MTEXT')['text'] == ('NOTE ' * 600).strip()   # the cache: whole
+
+
+def test_keys_with_undecodable_handles_stay_unique() -> None:
+    W = {'items': [{'t': 'LINE', 'lay': 'A', 'k': 'A\udc81', 'h': 'A\udc81'},
+                   {'t': 'LINE', 'lay': 'A', 'k': 'A\udc82', 'h': 'A\udc82'}],
+         'layers': {'A': 'Continuous'}, 'table': {'A': {'linetype': 'Continuous'}}, 'dims': {}, 'texts': {}}
+    assert R.clean_strings(W) == 4
+    assert [d['k'] for d in W['items']] == ['A\\udc81', 'A\\udc82']
+    assert all(d['k'].isascii() for d in W['items'])
 
 
 def test_plan_drops_points_that_are_not_on_any_sheet() -> None:

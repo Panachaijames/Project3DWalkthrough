@@ -589,8 +589,13 @@ class Run:
                          f'{"s" if len(removed) != 1 else ""}).')
 
     def libredwg(self) -> Path:
-        p = (self.spec.get('paths') or {}).get('libredwg')
-        return Path(p) if p else APP / 'vendor' / 'libredwg-0.14-win64'
+        """JobSpec.paths.libredwg, else WALKTHROUGH_LIBREDWG_DIR (relative to app/), else the vendored folder (U-6.1,
+        U-13.5)."""
+        p = (self.spec.get('paths') or {}).get('libredwg') or os.environ.get('WALKTHROUGH_LIBREDWG_DIR')
+        if not p:
+            return APP / 'vendor' / 'libredwg-0.14-win64'
+        p = Path(p)
+        return p if p.is_absolute() else APP / p
 
     def converter(self) -> dict:
         info = self.src.get('_converter')
@@ -868,13 +873,16 @@ class Run:
             self.step_done('suggest')
 
     def latest_version(self) -> dict | None:
-        """{model: path, msName} of the project's latest version when it has no project-data.json (U-3.3), else
+        """{model: path, msName} of the project's latest version when the project has no project-settings.json and that
+        version no project-data.json (the four seeded projects, U-3.3; the API's adoption uses the same rule), else
         None."""
         vm = (self.spec.get('paths') or {}).get('versionModel')
         if not vm or not Path(vm).is_file():
             return None
         vdir = Path(vm).parent
         if (vdir / 'project-data.json').exists():
+            return None
+        if vdir.parent.name == 'versions' and (vdir.parent.parent / 'project-settings.json').exists():
             return None
         ms = None
         try:
@@ -998,13 +1006,19 @@ class Run:
         return next((c for c in cands if c.is_file()), None)
 
     def validate(self, written: dict) -> None:
-        """Every output there and sound (U-3.1 `validate`); raises RunError invalid_output."""
+        """Every output there and sound (U-3.1 `validate`); raises RunError invalid_output. `written` = what the build
+        child says it wrote ({name: path}): each must be a file directly in out/."""
         ms_name = ((self.spec.get('settings') or {}).get('project') or {}).get('maxFileName')
         required = list(BUILD_OUTPUTS) + ([ms_name] if ms_name else [])
         missing = [n for n in required if not (self.out / n).is_file()]
         if missing:
             raise RunError('invalid_output', f'The build did not write {", ".join(missing)}.', 'validate')
         problems: list[str] = []
+        out_dir = self.out.resolve()
+        for name, path in sorted((written or {}).items()):
+            p = Path(str(path))
+            if p.resolve().parent != out_dir or not p.is_file():
+                problems.append(f'{Path(str(name)).name}: reported by the build but not written in its out folder')
         model_bytes = (self.out / 'model.json').read_bytes()
         try:
             model = jsonfile.loads(model_bytes)

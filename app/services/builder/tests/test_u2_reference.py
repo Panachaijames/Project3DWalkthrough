@@ -134,11 +134,16 @@ def test_house_grid_lines_give_the_shift_between_its_plans(ref) -> None:
 def test_area_proposals(ref) -> None:
     house = K.ref_read('sukhumvit')['drawing']['areas']
     plans = [a for a in house if a['looks'] == 'plan']
-    assert len(plans) == 2
     for region in HOUSE_PLANS.values():
-        assert max(_cover(a['bbox'], region) for a in plans) >= 0.9
+        assert max(_cover(a['bbox'], region) for a in plans) >= 0.9       # ACCEPTANCE 2.1 U2: one proposal, >= 90 %
     assert [a['id'] for a in house] == [f'a{i + 1}' for i in range(len(house))]
+    assert [a['bbox'] for a in house] == sorted((a['bbox'] for a in house), key=lambda b: (-b[3], b[0]))
     assert sum(1 for a in house if a['looks'] == 'elevation') >= 2
+    # the reference rule leaves the ground plan as a 92 % box and an overlapping plan-looking sliver (three plans);
+    # the floor guess joins them: two boxes, each holding its plan whole
+    assert len(plans) == 3
+    joined = P.plan_boxes(house)
+    assert len(joined) == 2 and [max(_cover(b, region) for b in joined) for region in HOUSE_PLANS.values()] == [1.0, 1.0]
     for name in ('bank1', 'bank2', 'l29', 'l30'):
         got = K.ref_read(name)['drawing']['areas']
         assert [a['looks'] for a in got].count('plan') == 1
@@ -231,7 +236,7 @@ def test_proposals_for_the_four_drawings(ref, tmp_path) -> None:
     assert house['project']['exportedFrom'] is None
     assert [f['area']['kind'] for f in house['floors']] == ['box', 'box']
     for f, region in zip(house['floors'], HOUSE_PLANS.values()):
-        assert _cover(f['area']['bbox'], region) >= 0.9 and f['area']['pad'] == 0.5 and f['area']['match'] == 'all'
+        assert _cover(f['area']['bbox'], region) == 1.0 and f['area']['pad'] == 0.5 and f['area']['match'] == 'all'
     assert house['sources'][0] == {'sha1': man['sukhumvit']['dwgSha1'], 'name': kit.DRAWINGS['sukhumvit'],
                                    'kind': 'dwg', 'units': 'mm', 'unitsConfirmed': False}
     assert len(suite['floors']) == 1 and len(tower['floors']) == 2
@@ -240,22 +245,34 @@ def test_proposals_for_the_four_drawings(ref, tmp_path) -> None:
 
 def test_provisional_fixtures_remade(ref) -> None:
     """The scaffold's provisional drawing and plan fixtures, made again by the reader: the plan's keys, sig, rsig, eid,
-    points and types and the drawing's blocks, level tags and grid labels are the same (two nested ATTRIB keys of the
-    house now carry their source handle); the rest is listed in WT_TMP\\u2-fixture-diff.json and U2.md."""
+    points and types and the drawing's blocks, level tags, grid labels and area boxes (U7's canvas tests pin these) are
+    the same (two nested ATTRIB keys of the house now carry their source handle); the rest is listed in
+    WT_TMP\\u2-fixture-diff.json and U2.md. The re-made fixtures are written to WT_TMP\\u2-fixtures\\{drawing,plan}\\ in
+    the scaffold's format (drawing: JSON indented 2 + newline; plan: the reader's own gzip bytes) for the integration
+    step, which owns fixtures/upload/, to copy."""
     import gzip
     report = {}
+    made = kit.RUN / 'u2-fixtures'
     for name in ('bank1', 'sukhumvit'):
         r = K.ref_read(name)
         old_dr = json.loads((kit.UPLOAD_FIXTURES / 'drawing' / f'{name}.drawing.json').read_text(encoding='utf-8'))
         old_pl = json.loads(gzip.decompress((kit.UPLOAD_FIXTURES / 'plan' / f'{name}.plan.json.gz').read_bytes()))
         new_dr, new_pl = r['drawing'], r['plan']
+        (made / 'drawing').mkdir(parents=True, exist_ok=True)
+        (made / 'plan').mkdir(parents=True, exist_ok=True)
+        (made / 'drawing' / f'{name}.drawing.json').write_bytes(
+            (json.dumps(new_dr, indent=2, ensure_ascii=False, allow_nan=False) + '\n').encode('utf-8'))
+        shutil.copyfile(r['out'] / 'plan.json.gz', made / 'plan' / f'{name}.plan.json.gz')
+        assert [a['bbox'] for a in old_dr['areas']] == [a['bbox'] for a in new_dr['areas']]
         for f in ('sig', 'rsig', 'eid', 'type', 'layer', 'first', 'count'):
             assert old_pl['items'][f] == new_pl['items'][f], f
         assert (old_pl['pts'], old_pl['origin'], old_pl['elementIds'], old_pl['layers']) == (
             new_pl['pts'], new_pl['origin'], new_pl['elementIds'], new_pl['layers'])
         keys = [(a, b) for a, b in zip(old_pl['items']['key'], new_pl['items']['key']) if a != b]
         assert all('@~' in a and '@' in b and a.split('@')[0] == b.split('@')[0] for a, b in keys)
-        assert len(keys) == (2 if name == 'sukhumvit' else 0)
+        # since the integration step (9 Nov 2026) fixtures/upload/{drawing,plan} ARE this reader's re-made files, so no
+        # key differs any more (against the scaffold's provisional ones, the house's two nested ATTRIB keys did)
+        assert len(keys) == 0
         for f in ('source', 'blocks', 'gridLabels', 'counts', 'dxf'):
             assert old_dr[f] == new_dr[f], f
         # sorted by value now; a blank text is never a label now (the provisional took one for +7.90)
@@ -275,7 +292,11 @@ def test_provisional_fixtures_remade(ref) -> None:
         report[name] = {
             'keysChanged': keys, 'labelsChanged': labels, 'unitsVotes': [old_dr['units']['votes'], new_dr['units']['votes']],
             'texts': [len(old_dr['texts']), len(new_dr['texts'])],
-            'areas': [[(a['bbox'], a['looks']) for a in old_dr['areas']], [(a['bbox'], a['looks']) for a in new_dr['areas']]],
+            'areasLooksChanged': [(a['id'], a['bbox'], a['looks'], b['looks']) for a, b in zip(old_dr['areas'], new_dr['areas'])
+                                  if a['looks'] != b['looks']],
+            'areasCountsChanged': [(a['id'], [a['items'], a['wallItems']], [b['items'], b['wallItems']])
+                                   for a, b in zip(old_dr['areas'], new_dr['areas'])
+                                   if (a['items'], a['wallItems']) != (b['items'], b['wallItems'])],
             'extents': [old_dr['extents'], new_dr['extents']], 'layerFieldsChanged': layer_fields,
             'planBytes': (r['out'] / 'plan.json.gz').stat().st_size, 'readSeconds': r['drawing']['reader']['seconds'],
         }

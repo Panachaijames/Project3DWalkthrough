@@ -28,7 +28,9 @@ SHA = ['a' * 40, 'b' * 40, 'c' * 40]
 def plan(tmp_path_factory):
     d = tmp_path_factory.mktemp('u3plan')
     out = {}
-    for name, kw in (('base', {}), ('moved', {'dx': 5000.0}), ('reexport', {'extra_first': 3, 'chair_dx': 500.0})):
+    for name, kw in (('base', {}), ('moved', {'dx': 5000.0}), ('reexport', {'extra_first': 3, 'chair_dx': 500.0}),
+                     ('extras', {'parapet': True, 'free_glass': True}),
+                     ('pattern', {'parapet': True, 'free_glass': True, 'fill': 'pattern'})):
         out[name] = read_plan(plan_dxf(d / f'{name}.dxf', **kw), d / name)
     return out
 
@@ -182,6 +184,82 @@ def test_settings_numbers_are_coerced(plan, scratch, fake_detector):
     assert type(res['model']['singleLineHeight']) is float
 
 
+# ---------------------------------------------------------------------------------------------------- parapets, probes
+def test_parapets_auto_runs_only_where_walls_carry_solid_fills(plan, scratch, fake_detector):
+    """U-10.5: the parapet rule (an unfilled wall piece whose ends both meet railings) runs only on a floor whose wall
+    layers carry SOLID fills (Revit fills every wall it cuts); with pattern hatches or none, the low wall is a wall."""
+    fake_detector({'F1': []})
+    ox = lambda res: res['model']['offset'][0]                                    # noqa: E731
+    low = lambda res, kind: [p for p in parts(res, kind) if Polygon(p['o']).bounds[0] + ox(res) > 16.9]  # noqa: E731
+    res, _ = run_build(plan_settings([SHA[0]]), [one(plan, 'extras')], scratch / 'solid')
+    assert len(low(res, 'parapet')) == 1 and not low(res, 'wall')
+    assert low(res, 'parapet')[0]['z1'] == 1.1 and low(res, 'parapet')[0]['follow'] is False
+    res, _ = run_build(plan_settings([SHA[0]]), [one(plan, 'pattern')], scratch / 'pattern')
+    assert res['report']['summary']['floors']['F1']['wallSources']['fills'] == 9          # the fills are read ...
+    assert not low(res, 'parapet') and len(low(res, 'wall')) == 1                          # ... but none is solid
+    s = plan_settings([SHA[0]])
+    s['options']['parapets'] = 'off'
+    res, _ = run_build(s, [one(plan, 'extras')], scratch / 'off')
+    assert not parts(res, 'parapet') and len(low(res, 'wall')) == 1
+
+
+def test_a_glass_probe_with_no_floor_on_either_side_is_left_out(plan, scratch, fake_detector):
+    """The model schema wants a probe's `inside` to name a side (the walk test walks at the glass from there): glass
+    standing alone, away from every floor plate, is built but gets no probe."""
+    fake_detector({'F1': plan_records()})
+    res, logs = run_build(plan_settings([SHA[0]]), [one(plan, 'extras')], scratch)
+    ox, oy = res['model']['offset']
+    alone = [p for p in parts(res, 'glass') if Polygon(p['o']).bounds[0] + ox > 21.9]
+    assert len(alone) == 1
+    assert res['model']['probes'] and all(p['inside'] for p in res['model']['probes'])
+    assert not any(p['x'] + ox > 21.9 for p in res['model']['probes'])
+    assert any('1 glass probe(s) with no floor on either side left out' in m for m in logs)
+
+
+def test_a_door_with_nothing_above_its_head_has_no_lintel_top(plan, scratch, fake_detector):
+    """The schema's lintelTop is a number or absent: a door whose head reaches the wall top has neither a lintel nor a
+    lintelTop (the prototype wrote null there; no bank door has it)."""
+    fake_detector({'F1': plan_records()})
+    res, _ = run_build(plan_settings([SHA[0]], doorHead=3.0), [one(plan)], scratch)
+    d1, d2 = opening(res, 'F1-001'), opening(res, 'F1-002')
+    assert (d1['head'], d1['headFrom'], d2['head'], d2['headFrom']) == (3.1, 'name', 3.0, 'floor')
+    for d in (d1, d2):
+        assert d['lintel'] is None and 'lintelTop' not in d
+        assert list(d)[list(d).index('lintel') + 1] == 'glassDoor'              # the other keys keep their order
+    res, _ = run_build(plan_settings([SHA[0]], heights=[3.5]), [one(plan)], scratch / 'b')
+    d2 = opening(res, 'F1-002')
+    assert (d2['head'], d2['lintel'], d2['lintelTop']) == (3.1, 'lintel', 3.5)
+
+
+def test_a_part_whose_hole_touches_its_outline_is_cut_for_max():
+    """The 3ds Max script cannot extrude a part with a hole touching its outline or another hole (the tower: one wall
+    network per floor): such a part is cut in two through that hole; any other part is as it was."""
+    from shapely.geometry import LinearRing
+    from walkthrough_builder.build.model import max_safe
+
+    def problems(rs):
+        out = 0
+        for r in rs:
+            outer, holes = LinearRing(r['o']), [LinearRing(h) for h in r['h']]
+            out += sum(h.distance(outer) < 5e-4 for h in holes)
+            out += sum(holes[i].distance(holes[j]) < 5e-4 for i in range(len(holes)) for j in range(i + 1, len(holes)))
+        return out
+    area = lambda rs: sum(Polygon(r['o'], r['h']).area for r in rs)          # noqa: E731
+    sq = [[0.0, 0.0], [4.0, 0.0], [4.0, 4.0], [0.0, 4.0]]
+    fine = {'o': sq, 'h': [[[1.0, 1.0], [1.0, 2.0], [2.0, 2.0], [2.0, 1.0]]]}
+    assert max_safe([fine], 0.002) == [fine] and max_safe([fine], 0.002)[0] is fine
+    touch = {'o': sq, 'h': [[[1.5, 1.0], [2.0, 0.0], [2.5, 1.0], [2.0, 2.0]]]}               # a corner on the outline
+    assert Polygon(touch['o'], touch['h']).is_valid and problems([touch]) == 1
+    cut = max_safe([touch], 0.002)
+    assert len(cut) == 2 and problems(cut) == 0 and area(cut) == pytest.approx(area([touch]), abs=1e-4)
+    assert all(Polygon(r['o'], r['h']).is_valid for r in cut)
+    pair = {'o': sq, 'h': [[[1.0, 1.0], [1.0, 2.0], [2.0, 2.0], [2.0, 1.0]], [[2.0, 2.0], [2.0, 3.0], [3.0, 3.0], [3.0, 2.0]]]}
+    assert Polygon(pair['o'], pair['h']).is_valid and problems([pair]) == 1      # two holes meeting at a corner
+    cut = max_safe([pair], 0.002)
+    assert problems(cut) == 0 and area(cut) == pytest.approx(area([pair]), abs=1e-4)
+    assert all(Polygon(r['o'], r['h']).is_valid for r in cut)
+
+
 # ---------------------------------------------------------------------------------------------------- set-aside
 def _item(plan, which, pred):
     return next(d for d in plan[which]['W']['items'] if pred(d))
@@ -238,6 +316,21 @@ def test_set_aside_matches_a_reexported_element_by_id_and_rsig(plan, scratch, fa
     assert row['matchedBy'] == 'element' and row['items'] == 1 and row['key'] != line['k']
     moved = [d for d in fake.items['F1'] if d['lay'] == 'I-FURN' and d['t'] == 'LINE']
     assert len(moved) == 1                                                       # the mirrored chair's line stays
+
+
+def test_the_matcher_reads_each_item_as_the_plan_geometry_does(plan):
+    """A-4 from the builder's side: the sig, rsig and element id the matcher compares are the reader's own
+    (plangeom.refs, what the plan entries carry and the browser copies into an ItemRef), and the matcher's own rule
+    (used when the reader's module cannot be imported) gives the same values."""
+    from walkthrough_builder import plangeom
+    from walkthrough_builder.build.fixes import SourceIndex
+    for which in ('base', 'reexport'):
+        items = plan[which]['W']['items']
+        ix = SourceIndex(items, 1.0)
+        want = plangeom.refs(items, 1.0)
+        assert [ix.ref(i) for i in range(len(items))] == [tuple(r) for r in want]
+        assert [ix._own_ref(i) for i in range(len(items))] == [tuple(r) for r in want]
+        assert sum(1 for r in want if r[2]) >= 6 and sum(1 for r in want if r[1]) >= 6      # the chairs' lines have both
 
 
 def test_set_aside_matches_by_sig_and_refuses_an_ambiguous_match(plan, scratch, fake_detector):

@@ -8,7 +8,9 @@
          the element's INSERT; an element id alone names a whole family instance, so it is never matched alone);
      (c) the same `sig` on the same layer;
    else the fix is unmatched (`matchedBy: None`, flag fix-unmatched, kept in the settings). When (b) or (c) matches more
-   than one item nothing is removed (`ambiguous` = how many matched: "pick again").
+   than one item nothing is removed (`ambiguous` = how many matched: "pick again"). The items' sig, rsig and element id
+   are the reader's own (`plangeom.ref_of`, U2), the values the plan entries carry and the browser copies into the
+   ItemRef (U-7.5), so both sides are made by one function.
 2. Openings (`fixes.openings`): matched to a detector record of the floor when both ends lie within 0.15 m of the fix's
    a, b (either order), else when they overlap 50 % on the same line within 0.1 m; `kind` replaces the detector's
    (`none` drops it: nothing is cut), `head` / `sill` replace the computed ones.
@@ -38,6 +40,18 @@ def _names(d) -> list[str]:
     return path
 
 
+def _reader_ref_of():
+    """The reader's own (sig, rsig, element id) of a cache item, `plangeom.ref_of(item, inserts_by_key, k)` (U2), so a
+    set-aside's ItemRef (copied by the browser from the plan entry, U-7.5) and the matcher compare values made by ONE
+    function (A-4: every plan entry's sig / rsig / eid equal what the builder computes). None when the reader's module
+    cannot be imported: the matcher then computes the same rule itself (keys.py, names.py: `_own_ref`)."""
+    try:
+        from ..plangeom import ref_of
+    except ImportError:
+        return None
+    return ref_of
+
+
 class SourceIndex:
     """One source's cache items with what the matcher needs: key -> index, element ids, sig and rsig (lazily)."""
 
@@ -48,19 +62,43 @@ class SourceIndex:
             kk = d.get('k')
             if kk is not None and kk not in self.by_key:
                 self.by_key[kk] = i
-        self._eid: dict[int, str | None] = {}
-        self._sig: dict[int, str] = {}
-        self._rsig: dict[int, str] = {}
+        self._refs: dict[int, tuple[str, str, str | None]] = {}
+        self._inserts: dict[str, dict] | None = None
+        self._ref_of = _reader_ref_of()
+
+    def ref(self, i: int) -> tuple[str, str, str | None]:
+        """(sig, rsig, element id) of item i; a signature that cannot be made (a coordinate that is not a finite number)
+        is '' and matches nothing."""
+        r = self._refs.get(i)
+        if r is None:
+            d = self.items[i]
+            if self._ref_of is not None and d.get('k') is not None:
+                if self._inserts is None:
+                    self._inserts = {x['k']: x for x in self.items if x['t'] == 'INSERT' and x.get('k') is not None}
+                r = tuple(self._ref_of(d, self._inserts, self.k))
+            else:
+                r = self._own_ref(i)
+            self._refs[i] = r
+        return r
+
+    def _own_ref(self, i: int) -> tuple[str, str, str | None]:
+        d = self.items[i]
+        try:
+            s = K.sig(d, self.k)
+        except (ValueError, TypeError, OverflowError):
+            s = ''
+        try:
+            el = self.element_insert(i)
+            rs = K.rsig(d, el, self.k) if el is not None else ''
+        except (ValueError, TypeError, OverflowError):
+            rs = ''
+        return s, rs, N.element_id(_names(d))
 
     def eid(self, i: int) -> str | None:
-        if i not in self._eid:
-            self._eid[i] = N.element_id(_names(self.items[i]))
-        return self._eid[i]
+        return self.ref(i)[2]
 
     def sig(self, i: int) -> str:
-        if i not in self._sig:
-            self._sig[i] = K.sig(self.items[i], self.k)
-        return self._sig[i]
+        return self.ref(i)[0]
 
     def element_insert(self, i: int) -> dict | None:
         d = self.items[i]
@@ -81,9 +119,7 @@ class SourceIndex:
         return self.items[j] if j is not None and self.items[j]['t'] == 'INSERT' else None
 
     def rsig(self, i: int) -> str:
-        if i not in self._rsig:
-            self._rsig[i] = K.rsig(self.items[i], self.element_insert(i), self.k)
-        return self._rsig[i]
+        return self.ref(i)[1]
 
     def subtree(self, i: int) -> list[int]:
         """The item, and for an INSERT its attributes and whole subtree (by key prefix: in cache order they follow it)."""
@@ -98,20 +134,28 @@ class SourceIndex:
         return out
 
     def by_element(self, layer: str, eid: str) -> list[int]:
+        """The items of one element on one layer (indexed by names.element_id of the item's block chain, the rule the
+        reader's element id follows; each candidate's own element id and rsig then come from `ref`)."""
         if not hasattr(self, '_by_eid'):
             self._by_eid: dict[tuple, list[int]] = {}
             for i, d in enumerate(self.items):
-                e = self.eid(i)
+                e = N.element_id(_names(d))
                 if e is not None:
                     self._by_eid.setdefault((d['lay'], e), []).append(i)
-        return self._by_eid.get((layer, eid), [])
+        return [i for i in self._by_eid.get((layer, eid), []) if self.eid(i) == eid]
 
     def by_sig(self, layer: str, sig: str) -> list[int]:
+        """The items with one signature on one layer (indexed by keys.sig, the function the reader's sig is; each
+        candidate's own sig then comes from `ref`)."""
         if not hasattr(self, '_by_sig'):
             self._by_sig: dict[tuple, list[int]] = {}
             for i, d in enumerate(self.items):
-                self._by_sig.setdefault((d['lay'], self.sig(i)), []).append(i)
-        return self._by_sig.get((layer, sig), [])
+                try:
+                    s = K.sig(d, self.k)
+                except (ValueError, TypeError, OverflowError):
+                    continue
+                self._by_sig.setdefault((d['lay'], s), []).append(i)
+        return [i for i in self._by_sig.get((layer, sig), []) if self.sig(i) == sig]
 
 
 def match_ref(ix: SourceIndex, ref: Mapping, same_source: bool) -> tuple[str | None, list[int], int]:

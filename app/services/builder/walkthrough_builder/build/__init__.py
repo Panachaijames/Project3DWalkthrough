@@ -223,16 +223,22 @@ def build(ctx: BuildContext, log, progress) -> BuildResult:
     log(f'door heads in the names: {len(X.named)}; doors without one get {X.DEFAULT_HEAD} '
         f'({"most common in the names" if X.DOMINANT else "project default"}) unless their floor gives one')
 
+    seconds['walls'] = round(time.perf_counter() - t0, 2)
+
     # 6. openings, walls, stairs, railings, plates
+    t1 = time.perf_counter()
     progress('openings', 0.0)
     parts_geo, built = BK.build_floors(floors, X, log)
     progress('openings', 1.0)
+    seconds['openings'] = round(time.perf_counter() - t1, 2)
 
     # 7. the model, the summary, the furniture
+    t1 = time.perf_counter()
     progress('furniture', 0.0)
     A = assemble(floors, X, parts_geo, built, log)
     variants = FU.drawn_variants(A['furniture'], A['furn_pieces'], A['perm'])
     progress('furniture', 1.0)
+    seconds['furniture'] = round(time.perf_counter() - t1, 2)
     seconds['build'] = round(time.perf_counter() - t0, 2)
 
     cx, cy = A['cx'], A['cy']

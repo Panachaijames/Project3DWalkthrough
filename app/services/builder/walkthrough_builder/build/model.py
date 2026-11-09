@@ -10,7 +10,8 @@ import collections
 import math
 import re
 
-from shapely.geometry import LineString, Point, Polygon
+from shapely.geometry import LinearRing, LineString, Point, Polygon
+from shapely.ops import split as _split
 from shapely.ops import unary_union
 
 from . import furniture as FU
@@ -20,6 +21,53 @@ from .errors import BuildError
 BLOCKING = ('wall', 'column', 'glass', 'single', 'railing', 'sill', 'parapet', 'mullion')
 SKIN = 0.08
 MIN_AREA = {'slab': 1.0, 'glass': 0.0002, 'mullion': 0.0002, 'lintel': 0.002, 'sill': 0.002}
+MAX_GAP = 5e-4              # m: the 3ds Max script refuses a hole this close to its outline or to another hole (U-11.5)
+MAX_CUTS = 64               # at most this many cuts per part (a guard; one is the rule)
+
+
+def _max_problem(r) -> int | None:
+    """The index of a hole the 3ds Max script would refuse (out/maxscript.py: within 0.5 mm of the outline, or of
+    another hole: Extrude cannot cap it), or None."""
+    if not r['h']:
+        return None
+    outer = LinearRing(r['o'])
+    rings = [LinearRing(h) for h in r['h']]
+    for i, h in enumerate(rings):
+        if h.distance(outer) < MAX_GAP:
+            return i
+    for i in range(len(rings)):
+        for j in range(i + 1, len(rings)):
+            if rings[i].distance(rings[j]) < MAX_GAP:
+                return i
+    return None
+
+
+def max_safe(rings: list[dict], min_area: float) -> list[dict]:
+    """Cleaned outlines ({o, h}, model frame) the 3ds Max script can extrude: a part with a hole that touches its outline
+    or another hole at a point (the tower: a wall network per floor) is cut in two along a line through that hole
+    (vertical, else horizontal), as often as needed. Valid shapely polygons, but Max's Extrude cannot cap them, and the
+    generator refuses the model (U-11.5). Nothing changes when no hole touches (the bank)."""
+    out, todo, cuts = [], list(rings), 0
+    while todo:
+        r = todo.pop(0)
+        i = _max_problem(r)
+        if i is None or cuts >= MAX_CUTS:
+            out.append(r)
+            continue
+        cuts += 1
+        g = Polygon(r['o'], r['h'])
+        c = Polygon(r['h'][i]).representative_point()
+        x0, y0, x1, y1 = g.bounds
+        pieces = []
+        for line in (LineString([(c.x, y0 - 1.0), (c.x, y1 + 1.0)]), LineString([(x0 - 1.0, c.y), (x1 + 1.0, c.y)])):
+            pieces = polys(_split(g, line))
+            if len(pieces) > 1:
+                break
+        if len(pieces) < 2:
+            out.append(r)
+            continue
+        todo[:0] = clean(pieces, min_area, 0.0, 0.0)
+    return out
 
 
 def assemble(floors, X, parts_geo, built, log) -> dict:
@@ -37,9 +85,15 @@ def assemble(floors, X, parts_geo, built, log) -> dict:
         cx, cy = X.options['offset']
     parts, counts = [], collections.defaultdict(collections.Counter)
     single_parts = []                                  # (index into parts, floor key)
+    n_cut = 0
     for key, kind, p, z0, z1, follow, label, ex in parts_geo:
         min_area = MIN_AREA.get(kind, 0.002)
-        for r in clean([p], min_area, cx, cy):
+        rings = clean([p], min_area, cx, cy)
+        if any(r['h'] for r in rings):
+            safe = max_safe(rings, min_area)
+            n_cut += len(safe) - len(rings)
+            rings = safe
+        for r in rings:
             q = Polygon(r['o'], r['h'])
             if not q.is_valid:
                 raise BuildError('build_failed', f'a {kind} part of {key} is not a valid outline after rounding', step='walls')
@@ -66,6 +120,8 @@ def assemble(floors, X, parts_geo, built, log) -> dict:
                 rec.update(head=R3(r['head']), headFrom=r['headFrom'], lintel=r['lintel'],
                            lintelTop=R3(r['lintelTop']) if r['lintelTop'] else None, glassDoor=r['glassDoor'],
                            liftDoor=r['liftDoor'], jambs=[j[0] for j in r['jambs']])
+                if rec['lintelTop'] is None:
+                    del rec['lintelTop']                 # nothing above the head: the schema's lintelTop is a number or absent
                 if r.get('depth'): rec['lintelDepth'] = [R3(r['depth'][0]), R3(r['depth'][1])]
                 for fam in sorted({FU.family(nm) for nm in r['blocks']} or {'(no door block in the opening)'}):
                     heads_by_family[(fam, r['head'], r['headFrom'])][key] += 1
@@ -93,6 +149,14 @@ def assemble(floors, X, parts_geo, built, log) -> dict:
     for rec in openings:
         if rec['kind'] in ('door', 'passage'):
             rec['exterior'] = len(rec['inside']) == 1
+    # a probe with floor on neither side cannot be walked at (the schema wants a side): left out, counted
+    n_probes = len(probes)
+    probes = [p for p in probes if p['inside']]
+    if n_cut:
+        log(f'{n_cut} part(s) added by cutting parts through a hole that touched their outline (the 3ds Max script '
+            f'cannot extrude those)')
+    if len(probes) < n_probes:
+        log(f'{n_probes - len(probes)} glass probe(s) with no floor on either side left out')
 
     blockers = collections.defaultdict(list)
     for p in parts:

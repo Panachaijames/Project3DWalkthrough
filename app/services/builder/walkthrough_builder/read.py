@@ -18,12 +18,17 @@ changes only:
   3. `MemoryError` and `RecursionError` are re-raised from the per-entity handlers (U-3.5: a memory cap fails
      allocations instead of killing); every other exception is still swallowed, and counted;
   4. the same pass keeps, beside the items, what drawing.json needs: text heights and the layers of the INSERTs around
-     each text, the arcs (centre in world coordinates, radius, sweep), the DIMENSIONs per layer and their measurements.
+     each text, the arcs (centre in world coordinates, radius, sweep), the DIMENSIONs per layer and their measurements;
+  5. text the drawing's code page cannot decode (ezdxf's recover keeps such bytes as lone surrogates, which no UTF-8
+     file can hold) is made writable after the walk (`clean_strings`): in names and texts each such character becomes
+     U+FFFD, in keys and handles an ASCII escape (`\\udc81`, so keys stay unique), in the items, the layer table and the
+     side tables alike, so a layer name is the same string in items.pkl, drawing.json, plan.json.gz and the settings.
+     Valid text (the six reference drawings) is unchanged.
 Units (U-7.4): the quick decision before the walk (`units.quick`, or the units staff chose), the full door vote on the
 walked items, and a second walk when the two disagree.
 
-A drawing the reader cannot open raises `ReadFailed` with a plain sentence naming the upload (never a server path);
-`MemoryError` propagates (the step child exits with 75, U-3.5). Owner: U2.
+A drawing the reader cannot open raises `ReadFailed` (code `read_failed`) with a plain sentence naming the upload (never
+a server path); `MemoryError` propagates (the step child exits with 75, U-3.5). Owner: U2.
 """
 from __future__ import annotations
 
@@ -53,7 +58,9 @@ ITEMS_FILE, DRAWING_FILE, PLAN_FILE = 'items.pkl', 'drawing.json', 'plan.json.gz
 
 
 class ReadFailed(RuntimeError):
-    """The drawing cannot be read. The message is a plain sentence for staff (it names the upload, never a path)."""
+    """The drawing cannot be read. The message is a plain sentence for staff (it names the upload, never a path).
+    `code` is its RunErrorCode: the step child (U1's step.py) keeps the code of an exception that carries one."""
+    code = 'read_failed'
 
 
 # ===================================================================================================================== walk
@@ -243,6 +250,55 @@ def walk_doc(doc, units: str) -> dict:
             'seconds': time.perf_counter() - t0}
 
 
+_SURROGATES = range(0xD800, 0xE000)
+#: item fields that identify (keys, handles): escaped, never merged into one replacement character
+_ID_FIELDS = ('k', 'h')
+
+
+def _writable(s: str, escape: bool = False) -> str:
+    """`s` as a string UTF-8 can hold: each lone surrogate becomes U+FFFD, or with `escape` its ASCII escape."""
+    if s.isascii():
+        return s
+    try:
+        s.encode('utf-8')
+        return s
+    except UnicodeEncodeError:
+        if escape:
+            return ''.join(f'\\u{ord(ch):04x}' if ord(ch) in _SURROGATES else ch for ch in s)
+        return ''.join('\N{REPLACEMENT CHARACTER}' if ord(ch) in _SURROGATES else ch for ch in s)
+
+
+def clean_strings(W: dict) -> int:
+    """Makes every string of a walk writable as UTF-8 (module text, change 5), in place: the items' string fields, the
+    layer table (`layers`, `table`: names and linetypes), the DIMENSION counts' layer names and the layers around each
+    text. Two names that differ only in undecodable characters become one. -> how many item fields changed."""
+    memo: dict[tuple[str, bool], str] = {}
+
+    def fix(s, escape=False):
+        if type(s) is not str or s.isascii():
+            return s
+        got = memo.get((s, escape))
+        if got is None:
+            got = memo[(s, escape)] = _writable(s, escape)
+        return got
+
+    changed = 0
+    for d in W['items']:
+        for key, v in [(key, v) for key, v in d.items() if type(v) is str and not v.isascii()]:
+            new = fix(v, key in _ID_FIELDS)
+            if new != v:
+                d[key] = new
+                changed += 1
+    W['layers'] = {fix(n): fix(lt) for n, lt in W['layers'].items()}
+    W['table'] = {fix(n): {**st, 'linetype': fix(st.get('linetype'))} for n, st in W['table'].items()}
+    dims: collections.Counter = collections.Counter()
+    for n, c in W['dims'].items():
+        dims[fix(n)] += c
+    W['dims'] = dict(dims)
+    W['texts'] = {i: (h, tuple(fix(b) for b in blays)) for i, (h, blays) in W['texts'].items()}
+    return changed
+
+
 def segments(items: list[dict]):
     """Straight segments of the line work (LINE, LWPOLYLINE, POLYLINE), reader frame: the door leaves' candidates."""
     for d in items:
@@ -307,6 +363,7 @@ def _walk(doc, units: str, name: str) -> dict:
         raise ReadFailed(f'{name}: its blocks are nested too deeply to read') from exc
     except Exception as exc:
         raise ReadFailed(f'{name}: the drawing cannot be read ({type(exc).__name__} in its entities)') from exc
+    W['undecodable'] = clean_strings(W)
     vote(W)
     return W
 
@@ -360,10 +417,10 @@ def read_source(dxf_path: Path, units: str | None, out_dir: Path, *, source: dic
     if units is not None and units not in U.UNITS_K:
         raise ValueError(f'unknown units {units!r} (allowed: {", ".join(U.UNITS)})')
     out_dir = Path(out_dir)
-    out_dir.mkdir(parents=True, exist_ok=True)
 
     doc, auditor = open_dxf(Path(dxf_path), name)
     t_open = time.perf_counter() - t0
+    out_dir.mkdir(parents=True, exist_ok=True)
     ins = doc.header.get('$INSUNITS', None)
     ins = ins if isinstance(ins, int) else None
     if units is None:
@@ -410,6 +467,8 @@ def read_source(dxf_path: Path, units: str | None, out_dir: Path, *, source: dic
     say(f'{name}: {len(items):,} items, {len(dr["layers"])} layers, {len(dr["levelTags"])} level tags, '
         f'{len(dr["gridLabels"])} grid labels, {len(dr["areas"])} areas in {seconds:.1f} s '
         f'(opened in {t_open:.1f} s); units {used}: {decided["note"]}'
-        + (f'; {swallowed} entities could not be read and were left out' if swallowed else ''))
+        + (f'; {swallowed} entities could not be read and were left out' if swallowed else '')
+        + (f'; {W["undecodable"]} names or texts hold characters the drawing\'s code page cannot spell, shown as '
+           '\N{REPLACEMENT CHARACTER}' if W.get('undecodable') else ''))
     return ReadResult(items=str(out_dir / ITEMS_FILE), drawing=str(out_dir / DRAWING_FILE),
                       plan=str(out_dir / PLAN_FILE), units=decided, seconds=seconds)

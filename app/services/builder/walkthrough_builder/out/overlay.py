@@ -155,8 +155,11 @@ def overlay(result: dict, ctx: dict) -> dict:
         rep = report['floors'].get(fl) or {}
         set_aside = []
         for _, fx, fr in fix_pairs(fixes.get('setAside'), (report.get('fixes') or {}).get('setAside')):
-            if fx.get('floor') == fl and fr.get('matchedBy') and fr.get('items', 0) > 0 and fx['key'] not in set_aside:
-                set_aside.append(fx['key'])
+            # the key the fix matched in THIS drawing (U3's report row `key`, contract issues U4-2 / U3-3, settled at
+            # integration): it differs from the ref's own key when the match was by element id or signature
+            key = fr.get('key') or fx['key']
+            if fx.get('floor') == fl and fr.get('matchedBy') and fr.get('items', 0) > 0 and key not in set_aside:
+                set_aside.append(key)
         flags += floor_flags(fl, rep, M)
         floors.append({'key': fl, 'source': frame['source'], 'toSheet': [tx, ty], 'area': frame['area'], 'parts': parts,
                        'slabs': slabs, 'openings': openings, 'furniture': furniture, 'rooms': rooms, 'setAside': set_aside})

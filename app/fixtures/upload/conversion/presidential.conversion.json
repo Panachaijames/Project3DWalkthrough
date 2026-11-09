@@ -20,29 +20,19 @@
     "auditErrors": 0,
     "auditFixes": 1709
   },
-  "seconds": 6.07,
-  "peakMemoryMB": null,
+  "seconds": 6.64,
+  "peakMemoryMB": 368.9,
   "exitCode": 0,
   "messages": [
-    {
-      "class": "unstable-class",
-      "count": 1819,
-      "example": "Warning: Unstable Class object 505 MATERIAL (0x481) 9/0"
-    },
-    {
-      "class": "other",
-      "count": 17,
-      "example": "Warning: TODO TABLESTYLE r2010+ missing fields"
-    },
     {
       "class": "hatch-short-handles",
       "count": 2689,
       "example": "Warning: Skip HATCH common handles due to short handle stream"
     },
     {
-      "class": "error:bit_read_TU buffer overflow at",
-      "count": 17,
-      "example": "ERROR: bit_read_TU buffer overflow at 157.2 + 8048 > 158"
+      "class": "unstable-class",
+      "count": 1819,
+      "example": "Warning: Unstable Class object 505 MATERIAL (0x481) 9/0"
     },
     {
       "class": "unknown-flag",
@@ -50,9 +40,19 @@
       "example": "Warning: Unknown flag (0x8)"
     },
     {
-      "class": "error:bit_read_BD",
-      "count": 27,
-      "example": "ERROR: bit_read_BD: unexpected 2-bit code: '11'"
+      "class": "handle-not-found",
+      "count": 646,
+      "example": "Warning: Object handle not found 147844/0x24184 in 111506 objects of max 0x1BD5D6 handles"
+    },
+    {
+      "class": "unhandled-class",
+      "count": 162,
+      "example": "Warning: TODO TABLESTYLE r2010+ missing fields"
+    },
+    {
+      "class": "unknown-object",
+      "count": 158,
+      "example": "Warning: Unknown object, skipping eed/reactors/xdic"
     },
     {
       "class": "error:Invalid ATTRIB.keep_duplicate_records",
@@ -60,39 +60,19 @@
       "example": "ERROR: Invalid ATTRIB.keep_duplicate_records 64"
     },
     {
-      "class": "unhandled-class",
-      "count": 159,
-      "example": "Warning: Unhandled Class object 561 ACDB_MTEXTATTRIBUTEOBJECTCONTEXTDATA_CLASS (0x481) 98877/0"
+      "class": "error:bit_read_*",
+      "count": 63,
+      "example": "ERROR: bit_read_BD: unexpected 2-bit code: '11'"
     },
     {
-      "class": "error:bit_read_BL",
-      "count": 36,
-      "example": "ERROR: bit_read_BL: unexpected 2-bit code: '11'"
-    },
-    {
-      "class": "error:Invalid REGION.silhouettes x",
-      "count": 3,
-      "example": "ERROR: Invalid REGION.silhouettes x 256"
-    },
-    {
-      "class": "handle-not-found",
-      "count": 646,
-      "example": "Warning: Object handle not found 147844/0x24184 in 111506 objects of max 0x1BD5D6 handles"
-    },
-    {
-      "class": "wrong-layer",
-      "count": 16,
-      "example": "Warning: Wrong POLYLINE.layer 24184"
-    },
-    {
-      "class": "error:Invalid CMC flag",
-      "count": 17,
+      "class": "error:Invalid CMC",
+      "count": 34,
       "example": "ERROR: Invalid CMC flag 0x9f ignored"
     },
     {
-      "class": "error:Invalid CMC method",
+      "class": "error:buffer overflow",
       "count": 17,
-      "example": "ERROR: Invalid CMC method 0x0 ignored"
+      "example": "ERROR: bit_read_TU buffer overflow at 157.2 + 8048 > 158"
     },
     {
       "class": "error:Invalid MTEXT.class_version",
@@ -100,9 +80,19 @@
       "example": "ERROR: Invalid MTEXT.class_version 256"
     },
     {
-      "class": "unknown-object",
-      "count": 158,
-      "example": "Warning: Unknown object, skipping eed/reactors/xdic"
+      "class": "wrong-layer",
+      "count": 16,
+      "example": "Warning: Wrong POLYLINE.layer 24184"
+    },
+    {
+      "class": "other",
+      "count": 14,
+      "example": "Warning: Ignore invalid handleoff (@377267)"
+    },
+    {
+      "class": "error:Invalid REGION.silhouettes",
+      "count": 3,
+      "example": "ERROR: Invalid REGION.silhouettes x 256"
     }
   ],
   "totals": {
@@ -372,26 +362,53 @@
   ],
   "lostBlocks": [
     {
-      "name": "*D",
-      "entities": 36,
+      "name": "TG_artiscardio_2d_1283_8",
+      "entities": 1946,
       "byLayer": {
-        "Defpoints": 12,
-        "KT-DIM": 24
+        "0": 1936,
+        "Defpoints": 8,
+        "TG_Name": 2
       },
-      "inserts": []
+      "inserts": [
+        {
+          "x": 199.786,
+          "y": -3485.295,
+          "layer": "A-2.Noi That"
+        }
+      ]
     },
     {
-      "name": "22DAB820-5C7F-4CE0-BE75-D9D1C19B0E2E",
-      "entities": 735,
+      "name": "TG_artiscardio_2d_1345_11",
+      "entities": 1385,
       "byLayer": {
-        "0": 733,
-        "DA-LATT-OTLN": 1,
-        "Defpoints": 1
+        "0": 1375,
+        "Defpoints": 10
       },
-      "inserts": []
+      "inserts": [
+        {
+          "x": 198.487,
+          "y": -3485.163,
+          "layer": "A-2.Noi That"
+        }
+      ]
     },
     {
-      "name": "A$C59A32014",
+      "name": "TG_artiscardio_2d_1388_13",
+      "entities": 850,
+      "byLayer": {
+        "0": 841,
+        "Defpoints": 9
+      },
+      "inserts": [
+        {
+          "x": 201.392,
+          "y": -3486.182,
+          "layer": "A-2.Noi That"
+        }
+      ]
+    },
+    {
+      "name": "A$C59a32014",
       "entities": 109,
       "byLayer": {
         "0": 109
@@ -405,24 +422,17 @@
       ]
     },
     {
-      "name": "COSCAODO",
-      "entities": 5,
+      "name": "kjhkjhh",
+      "entities": 1652,
       "byLayer": {
-        "0": 3,
-        "KC-NETTHAY": 2
+        "0": 1649,
+        "DA-LATT-OTLN": 2,
+        "Defpoints": 1
       },
       "inserts": []
     },
     {
-      "name": "COT T7_HA",
-      "entities": 269,
-      "byLayer": {
-        "A.Cot 1": 269
-      },
-      "inserts": []
-    },
-    {
-      "name": "DGDGGHJGG",
+      "name": "dgdgghjgg",
       "entities": 1074,
       "byLayer": {
         "0": 23,
@@ -472,7 +482,25 @@
       "inserts": []
     },
     {
-      "name": "GDGDJGKHLLJKJ",
+      "name": "22dab820-5c7f-4ce0-be75-d9d1c19b0e2e",
+      "entities": 735,
+      "byLayer": {
+        "0": 733,
+        "DA-LATT-OTLN": 1,
+        "Defpoints": 1
+      },
+      "inserts": []
+    },
+    {
+      "name": "COT T7_HA",
+      "entities": 269,
+      "byLayer": {
+        "A.Cot 1": 269
+      },
+      "inserts": []
+    },
+    {
+      "name": "gdgdjgkhlljkj",
       "entities": 192,
       "byLayer": {
         "Openning": 192
@@ -480,63 +508,52 @@
       "inserts": []
     },
     {
-      "name": "KJHKJHH",
-      "entities": 1652,
+      "name": "*D1541",
+      "entities": 9,
       "byLayer": {
-        "0": 1649,
-        "DA-LATT-OTLN": 2,
-        "Defpoints": 1
+        "Defpoints": 3,
+        "KT-DIM": 6
       },
       "inserts": []
     },
     {
-      "name": "TG_ARTISCARDIO_2D_1283_8",
-      "entities": 1946,
+      "name": "*D1542",
+      "entities": 9,
       "byLayer": {
-        "0": 1936,
-        "Defpoints": 8,
-        "TG_Name": 2
+        "Defpoints": 3,
+        "KT-DIM": 6
       },
-      "inserts": [
-        {
-          "x": 199.786,
-          "y": -3485.295,
-          "layer": "A-2.Noi That"
-        }
-      ]
+      "inserts": []
     },
     {
-      "name": "TG_ARTISCARDIO_2D_1345_11",
-      "entities": 1385,
+      "name": "*D1543",
+      "entities": 9,
       "byLayer": {
-        "0": 1375,
-        "Defpoints": 10
+        "Defpoints": 3,
+        "KT-DIM": 6
       },
-      "inserts": [
-        {
-          "x": 198.487,
-          "y": -3485.163,
-          "layer": "A-2.Noi That"
-        }
-      ]
+      "inserts": []
     },
     {
-      "name": "TG_ARTISCARDIO_2D_1388_13",
-      "entities": 850,
+      "name": "*D1544",
+      "entities": 9,
       "byLayer": {
-        "0": 841,
-        "Defpoints": 9
+        "Defpoints": 3,
+        "KT-DIM": 6
       },
-      "inserts": [
-        {
-          "x": 201.392,
-          "y": -3486.182,
-          "layer": "A-2.Noi That"
-        }
-      ]
+      "inserts": []
     },
     {
-      "name": "_DOTSMALL",
+      "name": "COSCAODO",
+      "entities": 5,
+      "byLayer": {
+        "0": 3,
+        "KC-NETTHAY": 2
+      },
+      "inserts": []
+    },
+    {
+      "name": "_DotSmall",
       "entities": 1,
       "byLayer": {
         "0": 1
@@ -544,10 +561,17 @@
       "inserts": []
     }
   ],
-  "renamedBlocks": [],
+  "renamedBlocks": [
+    {
+      "dwg": "NOI THAT T3 - NOI THAT T1_dwg_CONDOTEL-TWIN BED - CONDOTEL-TWIN BED_dwg_HOTEL-TWIN BED A_dwg_CĂN HÔ ĐIỂN HÌNH 2 GIƯỜNG NGỦ_dwg_A$C9f23fb41-7699153-Ref_ Level-11329015-Ref_ Level-17536739-MẶT BẰNG TẦNG 7 _ 7TH FLOOR PLAN-1373054-MBCH 8F",
+      "dxf": "8F"
+    }
+  ],
   "unknownObjects": 158,
   "verdict": "loss",
   "notes": [
-    "8,254 of 142,182 drawing items did not come through the conversion; 4,290 of them belong to the plan or to blocks placed in it. Export a DXF from AutoCAD for a complete build."
+    "8,254 of 142,182 drawing items did not come through the conversion; 4,290 of them belong to the plan or to blocks placed in it.",
+    "15 blocks came out empty or short; 4 of them are placed in the plan (TG_artiscardio_2d_1283_8, TG_artiscardio_2d_1345_11, TG_artiscardio_2d_1388_13, A$C59a32014).",
+    "Export a DXF from AutoCAD and upload it for a complete build."
   ]
 }

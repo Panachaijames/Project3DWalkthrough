@@ -124,12 +124,13 @@ nowhere. Compare after filling the defaults (parsePresentation / resolvePresenta
 
 ## upload/ (the upload milestone; made by its scaffold U0 on 4 Nov 2026, ACCEPTANCE 2.5)
 
-`node tools/run-builder-py.mjs tools/upload/make-fixtures.py [--only settings mapping drawing conversion result runs
-maxtexts]` (the builder Python; reads `WT_REF`, the `make:reference` output, read only; deterministic). Every file passes
+`node tools/run-builder-py.mjs tools/upload/make-fixtures.py [--only settings mapping drawing conversion result runs]`
+(no `maxtexts` part since the integration step: U4's profiles are not the tool's to write, U4-5) (the builder Python; reads `WT_REF`, the `make:reference` output, read only; deterministic). Every file passes
 the API's record check (`node tools/run-py.mjs -m walkthrough_api.check_file <kind> <file>`) and its type
 (`apps/web/test/upload-fixtures.test-d.ts`; `services/builder/tests/test_contracts.py` for the builder's own types).
-Owners after the scaffold: `settings/**` U3, `max-texts/**` U4; the provisional drawing, plan and conversion fixtures are
-re-made by U2 / U1, who list any difference in their contract-issues file. Each settings fixture's derived detector
+Owners after the scaffold: `settings/**` U3, `max-texts/**` U4; the provisional drawing, plan and conversion fixtures were
+re-made by U2 / U1, who listed the differences in their contract-issues files, and the integration step put the real ones
+in their place (9 Nov 2026, `docs/upload/contract-issues/UI.md`). Each settings fixture's derived detector
 mapping reproduces `detector/output/<name>_openings.json` record for record, `floor` aside
 (`tools/upload/check-derived-mapping.py`: 24, 25, 86, 25, 31, 34 records, all equal). The synthetic drawings
 (`tools/upload/make-test-dxf.py small|hostile <out.dxf>`) are made at test time (the root `.gitignore` ignores `*.dxf`):
@@ -138,17 +139,17 @@ small `fb8e7283ab205c8e49ecc057f6019c1e9fd2f6d0`, hostile `7d2193d20052ac4171e42
 | File | Source | sha1 |
 |---|---|---|
 | `build-result.bank.json` | contracts.BuildResult of the bank (compact JSON): the v2 model, bank_summary.json, the detector outputs, the stages regrouped, placements found by block and handle in the reference DXFs | `d566a7bea98f069a8591015ca0cf89ff619a1ba0` |
-| `conversion/bank1.conversion.json` | **provisional** ConversionReport of I1201 (dwgread -O JSON streamed against the DXF, nothing_lost_stream.py; the converter log by class): ok | `20f2b322d74dffe32535121beb1b0eb89181461b` |
-| `conversion/presidential.conversion.json` | **provisional** ConversionReport of the suite: loss, 8,254 of 142,182 missing; U1 makes the real one | `308a6d64167ab14b9486d1feacb223778b083e06` |
-| `drawing/bank1.drawing.json` | **provisional** DrawingRead of I1201 (`tools/upload/fixture_reader.py`: the prims walk with U-7.2 keys + read_drawing.py / areas_propose.py); U2 makes the real one | `c4c9d4857c37f1e1ddfb40cab81006b0f6bb1f10` |
-| `drawing/sukhumvit.drawing.json` | **provisional** DrawingRead of the house (same); 26 level tags where U-7.3 measured 28 (U2 settles) | `ed8d68e9ee410b3a3db26c443ab18e3e4004b864` |
+| `conversion/bank1.conversion.json` | ConversionReport of I1201 as the worker publishes it (U1's loss check; positions in sheet m), from the integration step's acceptance prepare (9 Nov): ok, 0 missing; 148 hatch-short-handles, 28 handle-not-found, 9 unstable-class, 2 unhandled-class; no note | `041048a684c43a2c285cfa99824b36abefaef9d7` |
+| `conversion/presidential.conversion.json` | ConversionReport of the suite as the worker publishes it (integration, 9 Nov): loss, 8,254 of 142,182 missing (4,290 in the plan); 15 lost blocks, the 4 placed in the plan with their inserts (sheet m) | `555d5b961ec2f1d143e04624f7da33f2cd80c587` |
+| `drawing/bank1.drawing.json` | DrawingRead of I1201 made by U2's `read_source` (re-made 9 Nov, U2.md section 4; JSON indented 2) | `a10897178ce720ed3d055724b9e823a3f8450ebb` |
+| `drawing/sukhumvit.drawing.json` | DrawingRead of the house made by U2's `read_source` (re-made 9 Nov): 26 level tags (18 on SPEC, 8 on layer 0; the 2 blank marks left out), door votes 28 mm / 4 m, 15 area proposals | `bdd520cfc2c633eba65fcaff15c109edc83fb34e` |
 | `mappings/dwp-revit.json` | OfficeMapping after the bank is saved for office dwp-revit (every bank layer by normalised name) | `484a50a4b84e8d2dfed5ded65081503e771c8a00` |
-| `max-texts/bank-27oct.json` | **provisional** MaxTexts profile: the verbatim header, tooltip and datum lines of `bank_test/Bangkok_Bank_Sampeng.ms`; U4 owns and completes it | `9db380a335ace16dc352d3ef3a2f40b649fd5dfd` |
-| `max-texts/hotel-2nov.json` | **provisional** MaxTexts profile from `hotel_test/Hotel_Lobby.ms` (same) | `12ecd5391ab8fd4c6109cb66d473d5fdd4bebe91` |
-| `max-texts/upload.json` | **provisional** the upload profile of U-11.5 in outline (placeholders); U4 owns it | `17c736a47a47c5b558230f856121146876a2640b` |
+| `max-texts/bank-27oct.json` | MaxTexts profile (format max-texts/1, U4's final; U4-4): the bank's verbatim header, tooltip, placed-at and datum lines; with it the generator gives `bank_test/Bangkok_Bank_Sampeng.ms` byte for byte (golden only) | `b04a506c29b8391084bf11c143908035a23817c8` |
+| `max-texts/hotel-2nov.json` | MaxTexts profile (U4's final): with it the generator gives `hotel_test/Hotel_Lobby.ms` byte for byte (golden only) | `c203796254960cf6c95c83c849250c5eada5dc93` |
+| `max-texts/upload.json` | MaxTexts profile `upload` (U4's final, U-11.5): read AT RUN TIME by every build's Max script, so it ships with the app (U4-4) | `1877c600203afc9fbafbfd2fefb3d7aad6f79955` |
 | `overlay/bank.overlay.json` | BuildOverlay of the bank from the v2 model and the detector records (sheet m = model + offset), with the opening, room-label and plate flags the data raise | `01893517d1be77a958ef1cf7bd843084731fcf1c` |
-| `plan/bank1.plan.json.gz` | **provisional** PlanGeometry of I1201 with nested keys, sig / rsig / eid per entry (gzip, mtime 0) | `9c7c8ef6a338ebe1ada0913f143750861599e9a3` |
-| `plan/sukhumvit.plan.json.gz` | **provisional** PlanGeometry of the house (same) | `e5688ac600f80c4b4f70a14ff1d9fc4184d3ddee` |
+| `plan/bank1.plan.json.gz` | PlanGeometry of I1201 made by U2's `read_source` (nested keys, sig / rsig / eid per entry; gzip, mtime 0): equal to the scaffold's provisional one | `9c7c8ef6a338ebe1ada0913f143750861599e9a3` |
+| `plan/sukhumvit.plan.json.gz` | PlanGeometry of the house made by U2's `read_source` (re-made 9 Nov): two ATTRIB keys now carry their source handle | `96a5b105feb1be774735619a356a9faeea92298d` |
 | `replay-input.bank.json` | contracts.ReplayInput: build-result.bank.json's `replay` (compact JSON) | `9ad979ad33bfb9f71bcbfb097b21813df3c090ed` |
 | `settings/bank.json` | BuildSettings: `bank_test/src/bank_project.json` (roles, names, furniture word Fritz-Hansen) + A-1 (keys L1 / L2, levels 0 / 3.70, wall heights 3.70, whole files) | `c7e09054b4271dec5316eda634d622ee8f2abd46` |
 | `settings/house.json` | BuildSettings: `detector/mappings_with_areas/sukhumvit.json` (roles, the two area boxes, pad 0.5, match all) + `cad_test/src/{build3d.py, furniture.json, heights.json}` + A-5 (ground / upper, levels 0.90 / 4.80, wall heights 3.90 / 3.50, door / window 3.00 / 0.00 / 3.00 and 2.60 / 0.00 / 2.60) | `4ddf3bc30096016cae821c6a864241bd93be2940` |
@@ -174,7 +175,7 @@ model and stages are `fixtures/models/bank-v2.model.json` and `fixtures/stages/b
 | `runs/bank-build/out/presentation.json` | `c994c446162ed528af73461edfe441e4dc3d6bde` |
 | `runs/bank-build/out/report.json` | `520bd8081b0a19ec4e84065c49a36a190d66a3bb` |
 | `runs/bank-build/run.json` | `0b10ae5d2de760ea92a5c49dc25d3376f434f2fb` |
-| `runs/bank-prepare/job.json` | `daa3360b877ce2e34e083672ab61708d21542731` |
+| `runs/bank-prepare/job.json` | `4178d8728355b93cea803d156d82146594fa9c1e` |
 | `runs/bank-prepare/out/proposed-settings.json` | `523360a3855d60a6362214dcfa62b60f79a375c4` |
 | `runs/bank-prepare/out/sources/6551bdc6f0cff4e31e83b68a55d22cf42703029a/conversion.json` | `269d79ae7ccd48700bc864935fb594cd9f5c82f5` |
 | `runs/bank-prepare/out/sources/6551bdc6f0cff4e31e83b68a55d22cf42703029a/drawing.json` | `30e28f37eca6c1e773768feaa3315c44667e6736` |

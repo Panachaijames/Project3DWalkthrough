@@ -103,19 +103,15 @@ export function makeHostileDxf(out: string): string {
   return out;
 }
 
-/** The version's own .ms with the `upload` profile, generated at test time with the build's date (U-11.5; real API only). */
+/** The version's own .ms with the `upload` profile, generated at test time with the build's date (U-11.5; real API only),
+ *  through the generator's command line exactly as the build calls it (U4-3, U4-6: `--sources kind:units` per source
+ *  in the model's order, the converter's version when a source is a DWG; settled at integration, contract issue U6-5). */
 export function uploadProfileScript(modelFile: string, files: string[], date: string, outDir: string): Buffer {
-  const script = path.join(outDir, 'gen_upload_ms.py');
-  writeFileSync(script, [
-    'import json, sys',
-    'from pathlib import Path',
-    'from walkthrough_builder.out.maxscript import maxscript',
-    'model = Path(sys.argv[1]).read_bytes()',
-    "profile = json.loads(Path('fixtures/upload/max-texts/upload.json').read_text(encoding='utf-8'))",
-    "out = maxscript(model, profile, files=json.loads(sys.argv[2]), units='mm', date=sys.argv[3])",
-    'Path(sys.argv[4]).write_bytes(out)',
-  ].join('\n'), 'utf8');
   const out = path.join(outDir, 'expected-upload.ms');
-  execFileSync(process.execPath, ['tools/run-builder-py.mjs', script, modelFile, JSON.stringify(files), date, out], { cwd: APP_DIR, stdio: 'pipe' });
+  const kinds = files.map(f => (f.toLowerCase().endsWith('.dxf') ? 'dxf' : 'dwg'));
+  const args = ['tools/run-builder-py.mjs', '-m', 'walkthrough_builder.out', modelFile, '--profile', 'upload', '--date', date,
+    '--sources', kinds.map(k => `${k}:mm`).join(',')];
+  if (kinds.includes('dwg')) args.push('--converter-version', '0.14');
+  execFileSync(process.execPath, [...args, '--out', out], { cwd: APP_DIR, stdio: 'pipe' });
   return readFileSync(out);
 }

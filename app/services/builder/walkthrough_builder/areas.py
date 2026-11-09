@@ -3,14 +3,17 @@ docs/upload/reference/areas_propose.py).
 
 The occupied 1 m cells of every item's points (texts and INSERT anchors aside; at most 20 points an item, every
 len // 20-th, as the reference samples them), grown by 2 m (cells up to two apart are neighbours), connected; the boxes
-of the connected groups over 25 m2 are kept. They are starting points for the Floors step: the house's are near
-regions.json but not equal, and the suite sits in a 163 x 70 m cluster with its neighbours (the Floors step clusters
-again on the wall-role layers in the browser once roles exist, U-14.3).
+[min x, min y, max x + 1, max y + 1] of the connected groups over 25 m2 are kept, nothing more: this is the clustering
+the browser runs again on the wall-role layers (U-14.3, U7's `plan/areas.ts`, which reproduces these boxes in this
+order), so the two never disagree. They are starting points for the Floors step: the house's are near regions.json but
+not equal (its ground plan is a 92 % box and an overlapping sliver; the settings proposal joins such pieces when it
+guesses the floors, propose.py), and the suite sits in a 163 x 70 m cluster with its neighbours.
 
+Order (`id` a1, a2 ...): reading order, top edge first, then left edge (the scaffold's fixtures and U7's order). At
+most 200 proposals are written (the most items first; a hostile sheet of thousands of islands stays small).
 `looks` (a guess the settings proposal uses, U-3.3): `plan` when the area holds door-size arcs (2 or more) and items on
 wall-like layers (fills or wall-like line pairs); `elevation` when it holds level tags (2 or more), or long horizontal
-lines dominate its long lines and it has no door arcs; else `other`. Ids a1, a2 ... in reading order: rows from the top,
-left to right within a row. Owner: U2.
+lines dominate its long lines and it has no door arcs; else `other`. Owner: U2.
 """
 from __future__ import annotations
 
@@ -24,8 +27,6 @@ SAMPLES = 20              # points an item contributes at most
 NOT_DRAWN = ('TEXT', 'MTEXT', 'ATTRIB', 'INSERT')
 LONG_LINE = 3.0           # m: a long line, for the elevation guess
 LIMIT = 1e9               # m: points farther out are not sheet points (hostile or broken coordinates)
-MERGE_SHARE = 0.3         # a group whose box lies this much inside a larger one's joins it
-MERGE_MAX = 400           # groups that take part in the merging (a hostile sheet of thousands stays linear enough)
 MAX_AREAS = 200           # proposals written at most (the most items first)
 
 
@@ -49,62 +50,23 @@ def _ok(x: float, y: float) -> bool:
     return math.isfinite(x) and math.isfinite(y) and abs(x) < LIMIT and abs(y) < LIMIT
 
 
-def _area(b: list[float]) -> float:
+def area_of(b: list[float]) -> float:
     return (b[2] - b[0]) * (b[3] - b[1])
 
 
-def _overlap(a: list[float], b: list[float]) -> float:
+def overlap(a: list[float], b: list[float]) -> float:
+    """The area two boxes share."""
     return max(0.0, min(a[2], b[2]) - max(a[0], b[0])) * max(0.0, min(a[3], b[3]) - max(a[1], b[1]))
 
 
-def merge_overlapping(comps: list[tuple[set, list[float]]]) -> list[tuple[set, list[float]]]:
-    """Groups whose box lies at least MERGE_SHARE inside a larger group's box join it (cells and box united), until
-    nothing changes: one drawing's pieces separated by more than the growth (a courtyard, the grid bubbles above a plan)
-    become one proposal, and boxes never stack. Only the MERGE_MAX largest groups take part (the rest are kept as
-    they are)."""
-    comps = sorted(comps, key=lambda cb: (-_area(cb[1]), cb[1]))
-    head, tail = [list(c) for c in comps[:MERGE_MAX]], comps[MERGE_MAX:]
-    changed = True
-    while changed:
-        changed = False
-        for i in range(len(head)):
-            for j in range(len(head)):
-                if i == j or head[i] is None or head[j] is None:
-                    continue
-                a, b = head[i][1], head[j][1]
-                if _area(a) >= _area(b) and _overlap(a, b) >= MERGE_SHARE * _area(b):
-                    head[i] = [head[i][0] | head[j][0],
-                               [min(a[0], b[0]), min(a[1], b[1]), max(a[2], b[2]), max(a[3], b[3])]]
-                    head[j] = None
-                    changed = True
-        head = [h for h in head if h is not None]
-    return [(c, b) for c, b in head] + tail
+def reading_order(boxes: list[list[float]]) -> list[int]:
+    """Indices of `boxes` top edge first, then left edge (a stable sort: ties keep the order they were found in)."""
+    return sorted(range(len(boxes)), key=lambda i: (-boxes[i][3], boxes[i][0]))
 
 
-def _reading_order(boxes: list[list[float]]) -> list[int]:
-    """Rows from the top (a box joins a row when it overlaps the row's first box vertically by half the smaller
-    height), left to right within a row."""
-    order = sorted(range(len(boxes)), key=lambda i: (-boxes[i][3], boxes[i][0], boxes[i][1]))
-    rows: list[list[int]] = []
-    for i in order:
-        b = boxes[i]
-        for row in rows:
-            a = boxes[row[0]]
-            ov = min(a[3], b[3]) - max(a[1], b[1])
-            if ov >= 0.5 * min(a[3] - a[1], b[3] - b[1]):
-                row.append(i)
-                break
-        else:
-            rows.append([i])
-    return [i for row in rows for i in sorted(row, key=lambda j: (boxes[j][0], -boxes[j][3]))]
-
-
-def propose_areas(items: list[dict], k: float, *, wall_layers: Iterable[str] = (),
-                  door_points: Iterable[tuple[float, float]] = (), level_points: Iterable[tuple[float, float]] = ()) -> list[dict]:
-    """items: reader items (reader frame), k: reader frame -> metres; wall_layers: names of the layers that look like
-    walls; door_points / level_points: sheet metres of the door-size arcs' centres and of the level tags. ->
-    AreaProposal[]."""
-    walls = set(wall_layers)
+def clusters(items: list[dict], k: float) -> tuple[list[tuple[set, list[float]]], dict[int, tuple[int, int]]]:
+    """areas_propose.py's clustering: -> ([(cells, box)] of the groups over MIN_AREA in the order they were found
+    (cells in sorted order), {item index: its first sampled cell})."""
     cells: collections.Counter = collections.Counter()
     first_cell: dict[int, tuple[int, int]] = {}
     for i, d in enumerate(items):
@@ -134,9 +96,18 @@ def propose_areas(items: list[dict], k: float, *, wall_layers: Iterable[str] = (
         xs = [p[0] for p in comp]
         ys = [p[1] for p in comp]
         box = [float(min(xs)), float(min(ys)), float(max(xs) + 1), float(max(ys) + 1)]
-        if _area(box) > MIN_AREA:
+        if area_of(box) > MIN_AREA:
             comps.append((set(comp), box))
-    comps = merge_overlapping(comps)
+    return comps, first_cell
+
+
+def propose_areas(items: list[dict], k: float, *, wall_layers: Iterable[str] = (),
+                  door_points: Iterable[tuple[float, float]] = (), level_points: Iterable[tuple[float, float]] = ()) -> list[dict]:
+    """items: reader items (reader frame), k: reader frame -> metres; wall_layers: names of the layers that look like
+    walls; door_points / level_points: sheet metres of the door-size arcs' centres and of the level tags. ->
+    AreaProposal[]."""
+    walls = set(wall_layers)
+    comps, first_cell = clusters(items, k)
     if not comps:
         return []
     owner = {}
@@ -149,7 +120,7 @@ def propose_areas(items: list[dict], k: float, *, wall_layers: Iterable[str] = (
         if n is not None:
             members[n].append(i)
     if len(comps) > MAX_AREAS:
-        keep = sorted(range(len(comps)), key=lambda n: (-len(members[n]), comps[n][1]))[:MAX_AREAS]
+        keep = sorted(sorted(range(len(comps)), key=lambda n: (-len(members[n]), n))[:MAX_AREAS])
         comps = [comps[n] for n in keep]
         members = [members[n] for n in keep]
     long_h = [0] * len(comps)
@@ -176,7 +147,7 @@ def propose_areas(items: list[dict], k: float, *, wall_layers: Iterable[str] = (
     levels = [p for p in level_points if _ok(*p)]
     boxes = [box for _comp, box in comps]
     out = []
-    for n in _reading_order(boxes):
+    for n in reading_order(boxes):
         box = boxes[n]
         arcs_in = count_in(doors, box)
         tags_in = count_in(levels, box)

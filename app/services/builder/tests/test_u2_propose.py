@@ -118,6 +118,27 @@ def test_one_sheet_with_several_plans_one_floor_per_plan() -> None:
     assert notes[0].startswith('The floors are a guess: 2 plans were found side by side on one sheet')
 
 
+def test_pieces_of_one_plan_are_joined_into_one_floor() -> None:
+    """The reader's clustering (the reference rule, which the browser repeats) gives the house's ground plan as a 92 %
+    box and an overlapping plan-looking sliver: the floor guess joins them, so the sheet gives two floors, not three."""
+    dr = drawing(SHA[0], areas=[area(1, [3, 38, 48, 62], 'elevation'), area(2, [0, 5, 50, 36], 'plan'),
+                                area(3, [6, 23, 10, 36], 'other'), area(4, [77, 5, 129, 36], 'plan'),
+                                area(5, [46, 10, 57, 33], 'plan'), area(6, [73, 18, 78, 25], 'elevation')])
+    s = check(P.propose_settings(spec(SHA[:1]), [dr], SUG, [], None))
+    assert [(f['key'], f['area']['bbox']) for f in s['floors']] == [('L1', [0.0, 5.0, 57.0, 36.0]),
+                                                                     ('L2', [77.0, 5.0, 129.0, 36.0])]
+    # less than 30 % of the smaller box shared: two plans side by side (reading order: top edge, then left edge)
+    assert P.plan_boxes([area(1, [45, 0, 65, 30], 'plan'), area(2, [0, 0, 50, 30], 'plan')]) == [
+        [0.0, 0.0, 50.0, 30.0], [45.0, 0.0, 65.0, 30.0]]
+    # joins go on until nothing joins: C reaches the union of A and B, not A alone
+    assert P.plan_boxes([area(1, [0, 0, 20, 10], 'plan'), area(2, [15, 0, 25, 10], 'plan'),
+                         area(3, [22, 0, 32, 10], 'plan')]) == [[0.0, 0.0, 32.0, 10.0]]
+    # one plan and its sliver: one floor, the whole file; boxes that are not boxes are left out
+    one = drawing(SHA[0], areas=[area(1, [0, 0, 50, 30], 'plan'), area(2, [40, 5, 52, 25], 'plan'),
+                                 area(3, [5, 5, 5, 9], 'plan'), area(4, [0, 0, float('nan'), 1], 'plan')])
+    assert P.propose_settings(spec(SHA[:1]), [one], SUG, [], None)['floors'][0]['area'] == {'kind': 'wholeFile'}
+
+
 def test_what_the_spec_settings_carry() -> None:
     base = {'format': 'build-settings/1', 'office': 'dwp-revit',
             'project': {'name': 'Bangkok Bank & Co', 'shortName': 'Bank', 'projectNo': '26-0216', 'photoName': 'Bank-1',

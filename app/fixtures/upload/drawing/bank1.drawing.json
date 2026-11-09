@@ -6,8 +6,8 @@
   },
   "reader": {
     "version": "1",
-    "seconds": 1.7,
-    "peakMemoryMB": null
+    "seconds": 3.84,
+    "peakMemoryMB": 139.9
   },
   "dxf": {
     "acadVersion": "AC1024",
@@ -27,7 +27,7 @@
     "dimensionMedian": 3487.500000000005,
     "used": "mm",
     "verdict": "agree",
-    "note": ""
+    "note": "the file says millimetres and 16 doors agree"
   },
   "extents": [
     -5.33,
@@ -105,7 +105,9 @@
       "linetype": "Continuous",
       "colour": 211,
       "items": 0,
-      "byType": {},
+      "byType": {
+        "DIMENSION": 14
+      },
       "inBlocks": 0,
       "closedShapes": 0,
       "solidHatches": 0,
@@ -216,8 +218,8 @@
       "extents": [
         -4.523,
         -8.058,
-        1.9,
-        8.101
+        1.901,
+        8.264
       ]
     },
     {
@@ -295,7 +297,7 @@
       "extents": [
         -5.49,
         7.234,
-        0.999,
+        1.109,
         11.455
       ]
     },
@@ -369,13 +371,13 @@
       },
       "pairs": {
         "glassLike": 17,
-        "wallLike": 3
+        "wallLike": 1
       },
       "extents": [
         -4.88,
         -8.668,
-        6.06,
-        7.633
+        6.067,
+        7.635
       ]
     },
     {
@@ -414,7 +416,7 @@
       "extents": [
         -4.93,
         -8.18,
-        3.12,
+        3.17,
         7.234
       ]
     },
@@ -492,8 +494,8 @@
       "extents": [
         -0.394,
         -8.021,
-        5.872,
-        5.628
+        6.044,
+        5.799
       ]
     },
     {
@@ -532,7 +534,7 @@
       "extents": [
         -5.798,
         -11.036,
-        8.158,
+        8.2,
         13.605
       ]
     },
@@ -614,7 +616,7 @@
         "BYLAYER": 24
       },
       "pairs": {
-        "glassLike": 20,
+        "glassLike": 15,
         "wallLike": 0
       },
       "extents": [
@@ -665,13 +667,13 @@
         "BYLAYER": 365
       },
       "pairs": {
-        "glassLike": 48,
-        "wallLike": 15
+        "glassLike": 26,
+        "wallLike": 0
       },
       "extents": [
         -4.933,
         -7.836,
-        6.507,
+        6.511,
         8.35
       ]
     },
@@ -811,13 +813,13 @@
         "BYLAYER": 296
       },
       "pairs": {
-        "glassLike": 44,
-        "wallLike": 104
+        "glassLike": 27,
+        "wallLike": 69
       },
       "extents": [
         -5.498,
         -9.18,
-        6.229,
+        6.241,
         11.455
       ]
     },
@@ -1045,8 +1047,8 @@
       "extents": [
         -0.499,
         -5.016,
-        4.582,
-        1.317
+        6.608,
+        8.017
       ]
     },
     {
@@ -1157,8 +1159,8 @@
         "BYLAYER": 3182
       },
       "pairs": {
-        "glassLike": 11,
-        "wallLike": 49
+        "glassLike": 12,
+        "wallLike": 21
       },
       "extents": [
         -2.369,
@@ -1212,8 +1214,8 @@
       "extents": [
         0.4,
         -6.324,
-        1.176,
-        -5.207
+        1.181,
+        -5.182
       ]
     },
     {
@@ -1267,13 +1269,13 @@
       },
       "pairs": {
         "glassLike": 0,
-        "wallLike": 6
+        "wallLike": 4
       },
       "extents": [
         -4.476,
         -9.044,
         3.085,
-        8.359
+        8.361
       ]
     },
     {
@@ -1374,8 +1376,8 @@
         "BYLAYER": 285
       },
       "pairs": {
-        "glassLike": 24,
-        "wallLike": 26
+        "glassLike": 23,
+        "wallLike": 3
       },
       "extents": [
         -3.48,
@@ -1420,7 +1422,7 @@
         -3.08,
         -4.681,
         -3.062,
-        5.114
+        5.119
       ]
     },
     {
@@ -1463,8 +1465,8 @@
         "BYLAYER": 51
       },
       "pairs": {
-        "glassLike": 6,
-        "wallLike": 0
+        "glassLike": 4,
+        "wallLike": 2
       },
       "extents": [
         -3.196,
@@ -1540,7 +1542,7 @@
         -5.57,
         -9.359,
         6.712,
-        9.622
+        9.629
       ]
     },
     {
@@ -1625,7 +1627,7 @@
       "extents": [
         -9.368,
         -9.256,
-        6.961,
+        7.055,
         15.037
       ]
     },
@@ -1659,7 +1661,7 @@
       },
       "pairs": {
         "glassLike": 11,
-        "wallLike": 44
+        "wallLike": 0
       },
       "extents": [
         -3.99,
@@ -1698,7 +1700,7 @@
       },
       "pairs": {
         "glassLike": 22,
-        "wallLike": 124
+        "wallLike": 2
       },
       "extents": [
         -3.4,
@@ -3953,7 +3955,7 @@
         16.0
       ],
       "items": 5831,
-      "wallItems": 5194,
+      "wallItems": 4721,
       "looks": "plan"
     }
   ]

@@ -21,7 +21,7 @@ import pytest
 import kit
 from test_contracts import walk
 from test_u3_helpers import (GOLDEN_CSV, GOLDEN_MODEL, csv_bytes, model_bytes, ref_sources, run_build, settings, sha1,
-                             strip_floor)
+                             strip_floor, write_and_check)
 from walkthrough_builder import contracts, oslock
 
 pytestmark = pytest.mark.heavy
@@ -234,9 +234,21 @@ def test_drawn_variant_finds_the_analysis_mirrors(bank):
     assert all(p['drawnVariant'] is None for p in pl if p['family'] in one)
 
 
+def test_outputs_pass_the_api_checks(bank, ref):
+    """The bank's result through U4's contracts.write_outputs and the API's own checks of a done run (U-3.2): accepted,
+    and model.json is v2's bytes."""
+    s = settings('bank')
+    written, problems = write_and_check(bank['res'], s, ref_sources('bank', s, ref, drawings=bank['drawings']),
+                                        bank['tmp'] / 'outputs', 'bank-sampeng')
+    assert problems == []
+    assert sha1(written['model.json'].read_bytes()) == GOLDEN_MODEL
+
+
 def test_steps_and_seconds(bank):
     steps = [s for s, _ in bank['res']['_steps']]
     assert steps[0] == 'align' and 'detect:L1' in steps and 'detect:L2' in steps and steps[-1] == 'furniture'
-    assert {'read', 'align', 'detect:L1', 'detect:L2', 'build', 'total'} <= set(bank['res']['seconds'])
+    assert {'read', 'align', 'detect:L1', 'detect:L2', 'walls', 'openings', 'furniture', 'build', 'total'} <= \
+        set(bank['res']['seconds'])
+    assert set(steps) == {'align', 'detect:L1', 'detect:L2', 'walls', 'openings', 'furniture'}   # U1's child step names
     if os.environ.get('WT_TIMINGS'):
         print(bank['res']['seconds'])

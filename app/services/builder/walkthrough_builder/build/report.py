@@ -11,7 +11,7 @@ import math
 from shapely.geometry import LineString, Polygon
 
 from .. import roles as R
-from .bank import axis_of, cat_of, segs_of
+from .bank import axis_of, cat_of, lines_of, segs_of
 
 NOISE_LINES = 6000          # per floor: the longest lines the build sets aside (the bank's)
 
@@ -32,18 +32,37 @@ def _keys_near(items, geom, role, reach=0.03):
     return sorted(set(out))
 
 
+def _longest_run(lines, q):
+    """The longest straight run of the line work `lines` that lies inside the part `q` -> (a, b), or None. A single part
+    can be several lines joined (an L, a hook): its run, not its bounding rectangle's axis, says where the line is (the
+    middle of the run lies on the part, where the check screen puts the flag)."""
+    best = None
+    inside = q.buffer(0.001)
+    for ln in lines:
+        for piece in lines_of(ln.intersection(inside)):
+            cs = list(piece.coords)
+            for a, b in zip(cs, cs[1:]):
+                L = math.dist(a, b)
+                if best is None or L > best[0]:
+                    best = (L, a, b)
+    return None if best is None else (best[1], best[2])
+
+
 def singles(F, A, part_ids, s) -> list[dict]:
-    """SingleLine: each `single` part with the wall-layer line work it came from (keys, layer) and its long axis."""
+    """SingleLine: each `single` part with the wall-layer line work it came from (keys, layer) and the ends of its
+    longest straight run (the part's long axis when no line work is found)."""
     out = []
     cx, cy = A['cx'], A['cy']
-    pieces, src = F['singles_src']
+    pieces, src, lines = F['singles_src']
     for idx in part_ids:
         p = A['parts'][idx]
-        q = Polygon([(x + cx, y + cy) for x, y in p['o']])
-        near = [src[i] for i, g in enumerate(pieces) if g.intersects(q.buffer(0.01))]
-        keys = sorted({k for k, _ in near if k})
-        lays = collections.Counter(lay for _, lay in near)
-        a, b, _ = axis_of(q)
+        q = Polygon([(x + cx, y + cy) for x, y in p['o']], [[(x + cx, y + cy) for x, y in h] for h in p['h']])
+        touch = q.buffer(0.01)
+        near = [i for i, g in enumerate(pieces) if g.intersects(touch)]
+        keys = sorted({src[i][0] for i in near if src[i][0]})
+        lays = collections.Counter(src[i][1] for i in near)
+        run = _longest_run([lines[i] for i in near], q)
+        a, b = run if run is not None else axis_of(q)[:2]
         out.append({'part': idx, 'keys': keys, 'layer': min(lays, key=lambda l: (-lays[l], l)) if lays else '',
                     'a': _at(*a, s), 'b': _at(*b, s)})
     return out

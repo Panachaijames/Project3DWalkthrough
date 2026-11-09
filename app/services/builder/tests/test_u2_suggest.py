@@ -70,6 +70,17 @@ def test_the_name_table(name, role) -> None:
     assert got['evidence'] and all(isinstance(e, str) and e for e in got['evidence'])
 
 
+def test_name_evidence_reads_as_a_sentence() -> None:
+    assert one('A-WALL')['evidence'] == ['named like a wall layer (A-WALL*)']
+    assert one('A-ANNO-DIMS')['evidence'] == ['named like an ignore layer (*DIM*)']
+    assert one('A-DOOR-IDEN')['evidence'] == ['named like a door or window tag layer (A-DOOR-IDEN)']
+    texts = S.suggest([drawing([layer('G-ANNO-TEXT', byType={'TEXT': 3}, texts=3)],
+                               texts=[('G-ANNO-TEXT', t) for t in ('BANK HALL', 'LOBBY', 'STORE')])], None)
+    assert texts['layers']['G-ANNO-TEXT']['evidence'] == [
+        'named like an ignore layer (*ANNO*)', 'named like an ignore layer, but only texts (3), such as LOBBY, STORE, '
+                                               'BANK HALL']
+
+
 def test_conditions_on_the_contents() -> None:
     outlines = dict(closedShapes=4, length=40.0, byType={'LWPOLYLINE': 4})
     assert one('A-AREA', **outlines)['role'] == 'room-outline'

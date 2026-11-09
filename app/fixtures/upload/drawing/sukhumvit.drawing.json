@@ -6,8 +6,8 @@
   },
   "reader": {
     "version": "1",
-    "seconds": 10.7,
-    "peakMemoryMB": null
+    "seconds": 10.02,
+    "peakMemoryMB": 389.6
   },
   "dxf": {
     "acadVersion": "AC1032",
@@ -18,7 +18,7 @@
   "units": {
     "declared": "in",
     "votes": {
-      "mm": 22,
+      "mm": 28,
       "cm": 0,
       "m": 4,
       "in": 0,
@@ -27,7 +27,7 @@
     "dimensionMedian": 7099.999999694526,
     "used": "mm",
     "verdict": "votes-win",
-    "note": "the file says inches, its doors say millimetres"
+    "note": "the file says inches, its doors say millimetres (28 doors against 0): read in millimetres"
   },
   "extents": [
     8.338,
@@ -101,8 +101,8 @@
         "XR_L55 Plan$0$HIDDEN2": 137
       },
       "pairs": {
-        "glassLike": 26,
-        "wallLike": 9
+        "glassLike": 24,
+        "wallLike": 1
       },
       "extents": [
         53.69,
@@ -141,7 +141,7 @@
       },
       "pairs": {
         "glassLike": 3,
-        "wallLike": 2
+        "wallLike": 1
       },
       "extents": [
         114.216,
@@ -231,12 +231,12 @@
       },
       "pairs": {
         "glassLike": 6,
-        "wallLike": 42
+        "wallLike": 20
       },
       "extents": [
         7.748,
         5.288,
-        126.798,
+        127.498,
         58.893
       ]
     },
@@ -316,14 +316,14 @@
         "BYLAYER": 806
       },
       "pairs": {
-        "glassLike": 115,
-        "wallLike": 48
+        "glassLike": 91,
+        "wallLike": 0
       },
       "extents": [
         7.998,
         6.978,
         122.147,
-        44.893
+        50.693
       ]
     },
     {
@@ -369,6 +369,7 @@
       "colour": 6,
       "items": 10,
       "byType": {
+        "DIMENSION": 22,
         "INSERT": 1,
         "LINE": 9
       },
@@ -430,7 +431,7 @@
         "BYLAYER": 4
       },
       "pairs": {
-        "glassLike": 4,
+        "glassLike": 3,
         "wallLike": 0
       },
       "extents": [
@@ -464,7 +465,7 @@
       "hatchPatterns": {},
       "length": 51.51,
       "doorArcs": 7,
-      "doorArcsWithLeaf": 2,
+      "doorArcsWithLeaf": 7,
       "texts": 0,
       "inserts": 30,
       "topBlocks": [
@@ -500,7 +501,7 @@
         -36.748,
         6.879,
         117.722,
-        23.449
+        23.909
       ]
     },
     {
@@ -536,7 +537,7 @@
       "extents": [
         10.673,
         13.961,
-        109.347,
+        109.747,
         21.955
       ]
     },
@@ -570,7 +571,7 @@
       },
       "pairs": {
         "glassLike": 2,
-        "wallLike": 2
+        "wallLike": 1
       },
       "extents": [
         14.222,
@@ -625,8 +626,8 @@
       "extents": [
         8.68,
         11.959,
-        117.609,
-        22.789
+        117.669,
+        23.259
       ]
     },
     {
@@ -665,7 +666,7 @@
       },
       "pairs": {
         "glassLike": 12,
-        "wallLike": 16
+        "wallLike": 9
       },
       "extents": [
         6.932,
@@ -710,7 +711,7 @@
         19.269,
         7.109,
         127.713,
-        25.481
+        25.482
       ]
     },
     {
@@ -737,7 +738,7 @@
       "hatchPatterns": {},
       "length": 60.76,
       "doorArcs": 8,
-      "doorArcsWithLeaf": 0,
+      "doorArcsWithLeaf": 8,
       "texts": 0,
       "inserts": 3,
       "topBlocks": [
@@ -757,8 +758,8 @@
       "extents": [
         12.948,
         12.186,
-        115.674,
-        22.859
+        116.272,
+        23.032
       ]
     },
     {
@@ -844,14 +845,14 @@
         "HIDDEN2": 7
       },
       "pairs": {
-        "glassLike": 84,
-        "wallLike": 51
+        "glassLike": 50,
+        "wallLike": 11
       },
       "extents": [
         7.948,
         5.457,
         126.695,
-        59.594
+        60.431
       ]
     },
     {
@@ -889,7 +890,7 @@
       "extents": [
         108.331,
         18.249,
-        109.521,
+        110.714,
         19.984
       ]
     },
@@ -968,7 +969,7 @@
       "extents": [
         81.61,
         6.981,
-        113.547,
+        113.597,
         57.068
       ]
     },
@@ -1007,7 +1008,7 @@
       "extents": [
         8.698,
         46.251,
-        125.998,
+        126.115,
         55.474
       ]
     },
@@ -1041,12 +1042,12 @@
       },
       "pairs": {
         "glassLike": 0,
-        "wallLike": 104
+        "wallLike": 78
       },
       "extents": [
         4.717,
         41.193,
-        46.389,
+        46.735,
         43.593
       ]
     },
@@ -1089,7 +1090,7 @@
       "extents": [
         -0.918,
         44.179,
-        125.051,
+        125.385,
         60.74
       ]
     },
@@ -1173,7 +1174,7 @@
       "extents": [
         53.586,
         16.254,
-        53.586,
+        53.606,
         16.254
       ]
     },
@@ -1237,14 +1238,14 @@
         "BYLAYER": 840
       },
       "pairs": {
-        "glassLike": 992,
-        "wallLike": 716
+        "glassLike": 190,
+        "wallLike": 27
       },
       "extents": [
         -0.891,
         29.141,
-        128.539,
-        61.058
+        128.546,
+        61.07
       ]
     },
     {
@@ -1278,7 +1279,7 @@
       },
       "pairs": {
         "glassLike": 0,
-        "wallLike": 46
+        "wallLike": 37
       },
       "extents": [
         8.266,
@@ -1322,8 +1323,8 @@
       "extents": [
         14.022,
         58.893,
-        14.022,
-        58.893
+        17.924,
+        58.894
       ]
     },
     {
@@ -1364,7 +1365,7 @@
       "extents": [
         4.389,
         6.982,
-        32.183,
+        46.643,
         51.393
       ]
     },
@@ -1441,8 +1442,8 @@
       "extents": [
         14.185,
         8.628,
-        94.984,
-        59.472
+        114.336,
+        59.92
       ]
     },
     {
@@ -1479,8 +1480,8 @@
       "extents": [
         10.545,
         41.493,
-        124.905,
-        57.462
+        126.701,
+        57.506
       ]
     },
     {
@@ -1520,8 +1521,8 @@
         "HIDDEN2": 15
       },
       "pairs": {
-        "glassLike": 14,
-        "wallLike": 122
+        "glassLike": 11,
+        "wallLike": 89
       },
       "extents": [
         7.748,
@@ -1559,7 +1560,7 @@
       },
       "length": 3259.74,
       "doorArcs": 5,
-      "doorArcsWithLeaf": 2,
+      "doorArcsWithLeaf": 4,
       "texts": 0,
       "inserts": 73,
       "topBlocks": [
@@ -1611,8 +1612,8 @@
         "HIDDEN2": 11
       },
       "pairs": {
-        "glassLike": 118,
-        "wallLike": 364
+        "glassLike": 163,
+        "wallLike": 351
       },
       "extents": [
         7.748,
@@ -1653,13 +1654,13 @@
       },
       "pairs": {
         "glassLike": 0,
-        "wallLike": 8
+        "wallLike": 6
       },
       "extents": [
         7.923,
         7.402,
-        110.547,
-        56.468
+        111.697,
+        57.693
       ]
     },
     {
@@ -1698,8 +1699,8 @@
       "extents": [
         9.514,
         12.817,
-        115.897,
-        22.131
+        115.899,
+        22.135
       ]
     },
     {
@@ -1741,8 +1742,8 @@
       "extents": [
         8.505,
         11.977,
-        117.783,
-        23.218
+        117.784,
+        23.24
       ]
     },
     {
@@ -1781,7 +1782,7 @@
         53.356,
         21.537,
         53.763,
-        22.046
+        22.048
       ]
     },
     {
@@ -1903,13 +1904,13 @@
         "HIDDEN2": 17
       },
       "pairs": {
-        "glassLike": 331,
-        "wallLike": 183
+        "glassLike": 236,
+        "wallLike": 39
       },
       "extents": [
         7.898,
         7.758,
-        123.859,
+        123.872,
         57.693
       ]
     },
@@ -1945,13 +1946,13 @@
       },
       "pairs": {
         "glassLike": 1,
-        "wallLike": 12
+        "wallLike": 6
       },
       "extents": [
         17.694,
         5.896,
         31.567,
-        6.021
+        6.079
       ]
     },
     {
@@ -1977,7 +1978,7 @@
       "hatchPatterns": {},
       "length": 8.04,
       "doorArcs": 2,
-      "doorArcsWithLeaf": 1,
+      "doorArcsWithLeaf": 2,
       "texts": 0,
       "inserts": 0,
       "topBlocks": [],
@@ -1987,8 +1988,8 @@
         "XR_L44 Plan$0$HIDDEN2": 1
       },
       "pairs": {
-        "glassLike": 11,
-        "wallLike": 4
+        "glassLike": 3,
+        "wallLike": 0
       },
       "extents": [
         36.914,
@@ -2089,7 +2090,7 @@
       "hatchPatterns": {},
       "length": 9.89,
       "doorArcs": 4,
-      "doorArcsWithLeaf": 2,
+      "doorArcsWithLeaf": 4,
       "texts": 0,
       "inserts": 2,
       "topBlocks": [
@@ -2192,8 +2193,8 @@
         "XR_L44$0$DASHED2": 20
       },
       "pairs": {
-        "glassLike": 133,
-        "wallLike": 221
+        "glassLike": 89,
+        "wallLike": 30
       },
       "extents": [
         8.343,
@@ -2308,7 +2309,7 @@
       "hatchPatterns": {},
       "length": 117.32,
       "doorArcs": 8,
-      "doorArcsWithLeaf": 0,
+      "doorArcsWithLeaf": 7,
       "texts": 0,
       "inserts": 0,
       "topBlocks": [],
@@ -2319,7 +2320,7 @@
         "XR_L44$0$Hidden": 44
       },
       "pairs": {
-        "glassLike": 16,
+        "glassLike": 12,
         "wallLike": 0
       },
       "extents": [
@@ -2365,7 +2366,7 @@
         9.824,
         9.777,
         36.79,
-        11.544
+        11.546
       ]
     },
     {
@@ -2403,7 +2404,7 @@
       "extents": [
         35.406,
         16.287,
-        35.406,
+        35.481,
         16.287
       ]
     },
@@ -2443,7 +2444,7 @@
       "extents": [
         38.247,
         6.958,
-        39.572,
+        50.363,
         23.359
       ]
     },
@@ -3294,7 +3295,7 @@
       "layer": "SPEC",
       "x": 60.203,
       "y": 28.156,
-      "height": null,
+      "height": 0.36,
       "text": "1 : 100",
       "kind": "ATTRIB",
       "tag": "NUMBER",
@@ -3314,7 +3315,7 @@
       "layer": "0",
       "x": -0.354,
       "y": 59.698,
-      "height": null,
+      "height": 0.4,
       "text": "+8.30",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3324,7 +3325,7 @@
       "layer": "0",
       "x": -0.348,
       "y": 43.698,
-      "height": null,
+      "height": 0.4,
       "text": "+0.30",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3334,7 +3335,7 @@
       "layer": "0",
       "x": -0.348,
       "y": 44.898,
-      "height": null,
+      "height": 0.4,
       "text": "+0.90",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3344,7 +3345,7 @@
       "layer": "0",
       "x": -0.348,
       "y": 52.698,
-      "height": null,
+      "height": 0.4,
       "text": "+4.80",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3354,7 +3355,7 @@
       "layer": "0",
       "x": 79.107,
       "y": 58.371,
-      "height": null,
+      "height": 0.4,
       "text": "+8.30",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3364,7 +3365,7 @@
       "layer": "0",
       "x": 79.113,
       "y": 42.571,
-      "height": null,
+      "height": 0.4,
       "text": "+0.40",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3374,7 +3375,7 @@
       "layer": "0",
       "x": 79.113,
       "y": 43.571,
-      "height": null,
+      "height": 0.4,
       "text": "+0.90",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3384,7 +3385,7 @@
       "layer": "0",
       "x": 79.113,
       "y": 51.371,
-      "height": null,
+      "height": 0.4,
       "text": "+4.80",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3394,7 +3395,7 @@
       "layer": "SPEC",
       "x": 8.325,
       "y": 61.025,
-      "height": null,
+      "height": 0.4,
       "text": "+9.05",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3404,7 +3405,7 @@
       "layer": "SPEC",
       "x": 8.357,
       "y": 59.024,
-      "height": null,
+      "height": 0.4,
       "text": "+7.95",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3414,7 +3415,7 @@
       "layer": "SPEC",
       "x": 14.905,
       "y": 58.924,
-      "height": null,
+      "height": 0.4,
       "text": "+7.90",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3424,7 +3425,7 @@
       "layer": "SPEC",
       "x": 15.564,
       "y": 44.924,
-      "height": null,
+      "height": 0.4,
       "text": "+0.90",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3434,7 +3435,7 @@
       "layer": "SPEC",
       "x": 15.564,
       "y": 52.724,
-      "height": null,
+      "height": 0.4,
       "text": "+4.80",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3444,7 +3445,7 @@
       "layer": "SPEC",
       "x": 29.523,
       "y": 59.024,
-      "height": null,
+      "height": 0.4,
       "text": "+7.95",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3454,7 +3455,7 @@
       "layer": "SPEC",
       "x": 29.729,
       "y": 44.924,
-      "height": null,
+      "height": 0.4,
       "text": "+0.90",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3464,7 +3465,7 @@
       "layer": "SPEC",
       "x": 35.172,
       "y": 44.524,
-      "height": null,
+      "height": 0.4,
       "text": "+0.70",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3474,7 +3475,7 @@
       "layer": "SPEC",
       "x": 43.381,
       "y": 59.024,
-      "height": null,
+      "height": 0.4,
       "text": "+7.95",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3484,7 +3485,7 @@
       "layer": "SPEC",
       "x": 90.419,
       "y": 57.629,
-      "height": null,
+      "height": 0.288,
       "text": "+7.95",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3494,7 +3495,7 @@
       "layer": "SPEC",
       "x": 103.15,
       "y": 43.598,
-      "height": null,
+      "height": 0.36,
       "text": "+0.90",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3504,7 +3505,7 @@
       "layer": "SPEC",
       "x": 108.154,
       "y": 58.098,
-      "height": null,
+      "height": 0.36,
       "text": "+8.15",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3514,7 +3515,7 @@
       "layer": "SPEC",
       "x": 122.253,
       "y": 42.798,
-      "height": null,
+      "height": 0.36,
       "text": "+0.50",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3524,7 +3525,7 @@
       "layer": "SPEC",
       "x": 122.253,
       "y": 43.598,
-      "height": null,
+      "height": 0.36,
       "text": "+0.90",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3534,7 +3535,7 @@
       "layer": "SPEC",
       "x": 123.831,
       "y": 48.398,
-      "height": null,
+      "height": 0.36,
       "text": "+3.30",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3544,7 +3545,7 @@
       "layer": "SPEC",
       "x": 124.872,
       "y": 59.898,
-      "height": null,
+      "height": 0.36,
       "text": "+9.05",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3554,7 +3555,7 @@
       "layer": "SPEC",
       "x": 128.832,
       "y": 42.598,
-      "height": null,
+      "height": 0.36,
       "text": "+0.40",
       "kind": "ATTRIB",
       "tag": "LEVEL",
@@ -3584,7 +3585,7 @@
       "layer": "SPEC",
       "x": 50.557,
       "y": 28.343,
-      "height": null,
+      "height": 0.36,
       "text": "1.03",
       "kind": "ATTRIB",
       "tag": "RPG",
@@ -3594,7 +3595,7 @@
       "layer": "SPEC",
       "x": 95.338,
       "y": 53.803,
-      "height": null,
+      "height": 0.36,
       "text": "AW12",
       "kind": "ATTRIB",
       "tag": "DW",
@@ -3604,7 +3605,7 @@
       "layer": "SPEC",
       "x": 110.49,
       "y": 54.301,
-      "height": null,
+      "height": 0.36,
       "text": "AW14",
       "kind": "ATTRIB",
       "tag": "DW",
@@ -3614,7 +3615,7 @@
       "layer": "SPEC",
       "x": 125.093,
       "y": 47.023,
-      "height": null,
+      "height": 0.36,
       "text": "AW14",
       "kind": "ATTRIB",
       "tag": "DW",
@@ -3624,7 +3625,7 @@
       "layer": "SPEC",
       "x": 125.428,
       "y": 54.172,
-      "height": null,
+      "height": 0.36,
       "text": "AW17",
       "kind": "ATTRIB",
       "tag": "DW",
@@ -3664,7 +3665,7 @@
       "layer": "SPEC",
       "x": 49.987,
       "y": 29.479,
-      "height": null,
+      "height": 0.6,
       "text": "D-D",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -3674,7 +3675,7 @@
       "layer": "SPEC",
       "x": 96.326,
       "y": 46.518,
-      "height": null,
+      "height": 0.36,
       "text": "AW1",
       "kind": "ATTRIB",
       "tag": "DW",
@@ -3684,7 +3685,7 @@
       "layer": "SPEC",
       "x": 114.501,
       "y": 46.321,
-      "height": null,
+      "height": 0.36,
       "text": "AD1",
       "kind": "ATTRIB",
       "tag": "DW",
@@ -3694,7 +3695,7 @@
       "layer": "GRID-01",
       "x": 41.293,
       "y": 30.389,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "10",
       "kind": "TEXT",
       "tag": null,
@@ -3704,7 +3705,7 @@
       "layer": "GRID-01",
       "x": 46.793,
       "y": 30.386,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "11",
       "kind": "TEXT",
       "tag": null,
@@ -3714,7 +3715,7 @@
       "layer": "GRID-01",
       "x": 48.918,
       "y": 11.323,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "H1",
       "kind": "TEXT",
       "tag": null,
@@ -3724,7 +3725,7 @@
       "layer": "GRID-01",
       "x": 48.933,
       "y": 6.898,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "H2",
       "kind": "TEXT",
       "tag": null,
@@ -3734,7 +3735,7 @@
       "layer": "GRID-01",
       "x": 52.293,
       "y": 30.386,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "12",
       "kind": "TEXT",
       "tag": null,
@@ -3744,7 +3745,7 @@
       "layer": "GRID-01",
       "x": 115.314,
       "y": 30.389,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "10",
       "kind": "TEXT",
       "tag": null,
@@ -3754,7 +3755,7 @@
       "layer": "GRID-01",
       "x": 120.814,
       "y": 30.386,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "11",
       "kind": "TEXT",
       "tag": null,
@@ -3764,7 +3765,7 @@
       "layer": "GRID-01",
       "x": 126.314,
       "y": 30.386,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "12",
       "kind": "TEXT",
       "tag": null,
@@ -3774,7 +3775,7 @@
       "layer": "SPEC",
       "x": 103.203,
       "y": 46.295,
-      "height": null,
+      "height": 0.36,
       "text": "D1",
       "kind": "ATTRIB",
       "tag": "DW",
@@ -3784,7 +3785,7 @@
       "layer": "SPEC",
       "x": 121.516,
       "y": 46.245,
-      "height": null,
+      "height": 0.36,
       "text": "D3",
       "kind": "ATTRIB",
       "tag": "DW",
@@ -3814,7 +3815,7 @@
       "layer": "GRID-01",
       "x": 0.328,
       "y": 6.626,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "M",
       "kind": "TEXT",
       "tag": null,
@@ -3824,7 +3825,7 @@
       "layer": "GRID-01",
       "x": 0.339,
       "y": 17.139,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "G",
       "kind": "TEXT",
       "tag": null,
@@ -3834,7 +3835,7 @@
       "layer": "GRID-01",
       "x": 0.351,
       "y": 14.274,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "H",
       "kind": "TEXT",
       "tag": null,
@@ -3844,7 +3845,7 @@
       "layer": "GRID-01",
       "x": 0.351,
       "y": 21.125,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "D",
       "kind": "TEXT",
       "tag": null,
@@ -3854,7 +3855,7 @@
       "layer": "GRID-01",
       "x": 0.351,
       "y": 22.285,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "C",
       "kind": "TEXT",
       "tag": null,
@@ -3864,7 +3865,7 @@
       "layer": "GRID-01",
       "x": 0.362,
       "y": 11.0,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "K",
       "kind": "TEXT",
       "tag": null,
@@ -3874,7 +3875,7 @@
       "layer": "GRID-01",
       "x": 0.362,
       "y": 20.074,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "E",
       "kind": "TEXT",
       "tag": null,
@@ -3884,7 +3885,7 @@
       "layer": "GRID-01",
       "x": 0.362,
       "y": 24.634,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "B",
       "kind": "TEXT",
       "tag": null,
@@ -3894,7 +3895,7 @@
       "layer": "GRID-01",
       "x": 0.362,
       "y": 25.993,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "A",
       "kind": "TEXT",
       "tag": null,
@@ -3904,7 +3905,7 @@
       "layer": "GRID-01",
       "x": 0.373,
       "y": 19.124,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "F",
       "kind": "TEXT",
       "tag": null,
@@ -3914,7 +3915,7 @@
       "layer": "GRID-01",
       "x": 0.384,
       "y": 7.722,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "L",
       "kind": "TEXT",
       "tag": null,
@@ -3924,7 +3925,7 @@
       "layer": "GRID-01",
       "x": 0.396,
       "y": 12.475,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "J",
       "kind": "TEXT",
       "tag": null,
@@ -3934,7 +3935,7 @@
       "layer": "GRID-01",
       "x": 6.896,
       "y": 30.371,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "1",
       "kind": "TEXT",
       "tag": null,
@@ -3944,7 +3945,7 @@
       "layer": "GRID-01",
       "x": 6.938,
       "y": 34.311,
-      "height": 0.583,
+      "height": 0.5833,
       "text": "A",
       "kind": "TEXT",
       "tag": null,
@@ -3954,7 +3955,7 @@
       "layer": "GRID-01",
       "x": 8.656,
       "y": 30.386,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "2",
       "kind": "TEXT",
       "tag": null,
@@ -3964,7 +3965,7 @@
       "layer": "GRID-01",
       "x": 13.715,
       "y": 34.311,
-      "height": 0.583,
+      "height": 0.5833,
       "text": "D",
       "kind": "TEXT",
       "tag": null,
@@ -3974,7 +3975,7 @@
       "layer": "GRID-01",
       "x": 14.156,
       "y": 30.389,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "3",
       "kind": "TEXT",
       "tag": null,
@@ -3984,7 +3985,7 @@
       "layer": "GRID-01",
       "x": 17.762,
       "y": 34.311,
-      "height": 0.583,
+      "height": 0.5833,
       "text": "F",
       "kind": "TEXT",
       "tag": null,
@@ -3994,7 +3995,7 @@
       "layer": "GRID-01",
       "x": 19.256,
       "y": 30.387,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "4",
       "kind": "TEXT",
       "tag": null,
@@ -4004,7 +4005,7 @@
       "layer": "GRID-01",
       "x": 21.156,
       "y": 30.392,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "5",
       "kind": "TEXT",
       "tag": null,
@@ -4014,7 +4015,7 @@
       "layer": "GRID-01",
       "x": 26.658,
       "y": 30.389,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "6",
       "kind": "TEXT",
       "tag": null,
@@ -4024,7 +4025,7 @@
       "layer": "GRID-01",
       "x": 27.416,
       "y": 34.311,
-      "height": 0.583,
+      "height": 0.5833,
       "text": "H",
       "kind": "TEXT",
       "tag": null,
@@ -4034,7 +4035,7 @@
       "layer": "GRID-01",
       "x": 32.158,
       "y": 30.387,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "7",
       "kind": "TEXT",
       "tag": null,
@@ -4044,7 +4045,7 @@
       "layer": "GRID-01",
       "x": 32.489,
       "y": 34.311,
-      "height": 0.583,
+      "height": 0.5833,
       "text": "K",
       "kind": "TEXT",
       "tag": null,
@@ -4054,7 +4055,7 @@
       "layer": "GRID-01",
       "x": 37.956,
       "y": 30.389,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "8",
       "kind": "TEXT",
       "tag": null,
@@ -4064,7 +4065,7 @@
       "layer": "GRID-01",
       "x": 40.176,
       "y": 30.389,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "9",
       "kind": "TEXT",
       "tag": null,
@@ -4074,7 +4075,7 @@
       "layer": "GRID-01",
       "x": 41.171,
       "y": 34.311,
-      "height": 0.583,
+      "height": 0.5833,
       "text": "M",
       "kind": "TEXT",
       "tag": null,
@@ -4084,7 +4085,7 @@
       "layer": "GRID-01",
       "x": 49.031,
       "y": 14.274,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "H",
       "kind": "TEXT",
       "tag": null,
@@ -4094,7 +4095,7 @@
       "layer": "GRID-01",
       "x": 73.74,
       "y": 6.626,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "M",
       "kind": "TEXT",
       "tag": null,
@@ -4104,7 +4105,7 @@
       "layer": "GRID-01",
       "x": 73.751,
       "y": 17.139,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "G",
       "kind": "TEXT",
       "tag": null,
@@ -4114,7 +4115,7 @@
       "layer": "GRID-01",
       "x": 73.763,
       "y": 14.274,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "H",
       "kind": "TEXT",
       "tag": null,
@@ -4124,7 +4125,7 @@
       "layer": "GRID-01",
       "x": 73.763,
       "y": 21.125,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "D",
       "kind": "TEXT",
       "tag": null,
@@ -4134,7 +4135,7 @@
       "layer": "GRID-01",
       "x": 73.763,
       "y": 22.285,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "C",
       "kind": "TEXT",
       "tag": null,
@@ -4144,7 +4145,7 @@
       "layer": "GRID-01",
       "x": 73.774,
       "y": 11.0,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "K",
       "kind": "TEXT",
       "tag": null,
@@ -4154,7 +4155,7 @@
       "layer": "GRID-01",
       "x": 73.774,
       "y": 20.074,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "E",
       "kind": "TEXT",
       "tag": null,
@@ -4164,7 +4165,7 @@
       "layer": "GRID-01",
       "x": 73.774,
       "y": 24.634,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "B",
       "kind": "TEXT",
       "tag": null,
@@ -4174,7 +4175,7 @@
       "layer": "GRID-01",
       "x": 73.774,
       "y": 25.993,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "A",
       "kind": "TEXT",
       "tag": null,
@@ -4184,7 +4185,7 @@
       "layer": "GRID-01",
       "x": 73.785,
       "y": 19.124,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "F",
       "kind": "TEXT",
       "tag": null,
@@ -4194,7 +4195,7 @@
       "layer": "GRID-01",
       "x": 73.797,
       "y": 7.722,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "L",
       "kind": "TEXT",
       "tag": null,
@@ -4204,7 +4205,7 @@
       "layer": "GRID-01",
       "x": 73.808,
       "y": 12.475,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "J",
       "kind": "TEXT",
       "tag": null,
@@ -4214,7 +4215,7 @@
       "layer": "GRID-01",
       "x": 80.917,
       "y": 30.371,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "1",
       "kind": "TEXT",
       "tag": null,
@@ -4224,7 +4225,7 @@
       "layer": "GRID-01",
       "x": 82.678,
       "y": 30.386,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "2",
       "kind": "TEXT",
       "tag": null,
@@ -4234,7 +4235,7 @@
       "layer": "GRID-01",
       "x": 88.178,
       "y": 30.389,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "3",
       "kind": "TEXT",
       "tag": null,
@@ -4244,7 +4245,7 @@
       "layer": "GRID-01",
       "x": 92.58,
       "y": 34.566,
-      "height": 0.583,
+      "height": 0.5833,
       "text": "M",
       "kind": "TEXT",
       "tag": null,
@@ -4254,7 +4255,7 @@
       "layer": "GRID-01",
       "x": 93.278,
       "y": 30.387,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "4",
       "kind": "TEXT",
       "tag": null,
@@ -4264,7 +4265,7 @@
       "layer": "GRID-01",
       "x": 95.178,
       "y": 30.392,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "5",
       "kind": "TEXT",
       "tag": null,
@@ -4274,7 +4275,7 @@
       "layer": "GRID-01",
       "x": 100.679,
       "y": 30.389,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "6",
       "kind": "TEXT",
       "tag": null,
@@ -4284,7 +4285,7 @@
       "layer": "GRID-01",
       "x": 102.913,
       "y": 34.671,
-      "height": 0.583,
+      "height": 0.5833,
       "text": "J",
       "kind": "TEXT",
       "tag": null,
@@ -4294,7 +4295,7 @@
       "layer": "GRID-01",
       "x": 106.179,
       "y": 30.387,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "7",
       "kind": "TEXT",
       "tag": null,
@@ -4304,7 +4305,7 @@
       "layer": "GRID-01",
       "x": 106.425,
       "y": 34.666,
-      "height": 0.583,
+      "height": 0.5833,
       "text": "H",
       "kind": "TEXT",
       "tag": null,
@@ -4314,7 +4315,7 @@
       "layer": "GRID-01",
       "x": 111.978,
       "y": 30.389,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "8",
       "kind": "TEXT",
       "tag": null,
@@ -4324,7 +4325,7 @@
       "layer": "GRID-01",
       "x": 113.603,
       "y": 34.666,
-      "height": 0.583,
+      "height": 0.5833,
       "text": "G",
       "kind": "TEXT",
       "tag": null,
@@ -4334,7 +4335,7 @@
       "layer": "GRID-01",
       "x": 114.199,
       "y": 30.389,
-      "height": 0.292,
+      "height": 0.2917,
       "text": "9",
       "kind": "TEXT",
       "tag": null,
@@ -4344,7 +4345,7 @@
       "layer": "GRID-01",
       "x": 124.026,
       "y": 34.666,
-      "height": 0.583,
+      "height": 0.5833,
       "text": "C",
       "kind": "TEXT",
       "tag": null,
@@ -4354,7 +4355,7 @@
       "layer": "GRID-01",
       "x": 126.949,
       "y": 34.666,
-      "height": 0.583,
+      "height": 0.5833,
       "text": "A",
       "kind": "TEXT",
       "tag": null,
@@ -4394,7 +4395,7 @@
       "layer": "TEXT100",
       "x": 10.545,
       "y": 44.229,
-      "height": null,
+      "height": 0.36,
       "text": "1",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4404,7 +4405,7 @@
       "layer": "TEXT100",
       "x": 11.972,
       "y": 51.626,
-      "height": null,
+      "height": 0.36,
       "text": "3",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4414,7 +4415,7 @@
       "layer": "TEXT100",
       "x": 18.653,
       "y": 51.573,
-      "height": null,
+      "height": 0.36,
       "text": "3",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4424,7 +4425,7 @@
       "layer": "TEXT100",
       "x": 92.347,
       "y": 54.418,
-      "height": null,
+      "height": 0.36,
       "text": "3",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4434,7 +4435,7 @@
       "layer": "TEXT100",
       "x": 92.36,
       "y": 46.562,
-      "height": null,
+      "height": 0.36,
       "text": "1",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4444,7 +4445,7 @@
       "layer": "TEXT100",
       "x": 92.36,
       "y": 57.418,
-      "height": null,
+      "height": 0.36,
       "text": "1",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4454,7 +4455,7 @@
       "layer": "TEXT100",
       "x": 92.768,
       "y": 50.255,
-      "height": null,
+      "height": 0.27,
       "text": "1",
       "kind": "ATTRIB",
       "tag": "1",
@@ -4464,7 +4465,7 @@
       "layer": "TEXT100",
       "x": 95.521,
       "y": 57.506,
-      "height": null,
+      "height": 0.27,
       "text": "1",
       "kind": "ATTRIB",
       "tag": "1",
@@ -4474,7 +4475,7 @@
       "layer": "TEXT100",
       "x": 95.859,
       "y": 50.518,
-      "height": null,
+      "height": 0.36,
       "text": "1",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4484,7 +4485,7 @@
       "layer": "TEXT100",
       "x": 95.859,
       "y": 56.587,
-      "height": null,
+      "height": 0.36,
       "text": "1",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4494,7 +4495,7 @@
       "layer": "TEXT100",
       "x": 97.106,
       "y": 49.565,
-      "height": null,
+      "height": 0.36,
       "text": "1",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4504,7 +4505,7 @@
       "layer": "TEXT100",
       "x": 98.499,
       "y": 41.493,
-      "height": null,
+      "height": 0.36,
       "text": "8",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4514,7 +4515,7 @@
       "layer": "TEXT100",
       "x": 101.346,
       "y": 46.411,
-      "height": null,
+      "height": 0.36,
       "text": "2",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4524,7 +4525,7 @@
       "layer": "TEXT100",
       "x": 104.456,
       "y": 50.518,
-      "height": null,
+      "height": 0.36,
       "text": "1",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4534,7 +4535,7 @@
       "layer": "TEXT100",
       "x": 104.456,
       "y": 54.048,
-      "height": null,
+      "height": 0.36,
       "text": "3",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4544,7 +4545,7 @@
       "layer": "TEXT100",
       "x": 105.206,
       "y": 57.462,
-      "height": null,
+      "height": 0.27,
       "text": "1",
       "kind": "ATTRIB",
       "tag": "1",
@@ -4554,7 +4555,7 @@
       "layer": "TEXT100",
       "x": 107.893,
       "y": 46.411,
-      "height": null,
+      "height": 0.36,
       "text": "2",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4564,7 +4565,7 @@
       "layer": "TEXT100",
       "x": 109.098,
       "y": 43.047,
-      "height": null,
+      "height": 0.36,
       "text": "1",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4574,7 +4575,7 @@
       "layer": "TEXT100",
       "x": 109.87,
       "y": 41.493,
-      "height": null,
+      "height": 0.36,
       "text": "8",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4584,7 +4585,7 @@
       "layer": "TEXT100",
       "x": 114.653,
       "y": 49.657,
-      "height": null,
+      "height": 0.36,
       "text": "1",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4594,7 +4595,7 @@
       "layer": "TEXT100",
       "x": 116.305,
       "y": 43.029,
-      "height": null,
+      "height": 0.36,
       "text": "1",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4604,7 +4605,7 @@
       "layer": "TEXT100",
       "x": 116.751,
       "y": 57.462,
-      "height": null,
+      "height": 0.27,
       "text": "1",
       "kind": "ATTRIB",
       "tag": "1",
@@ -4614,7 +4615,7 @@
       "layer": "TEXT100",
       "x": 117.557,
       "y": 41.493,
-      "height": null,
+      "height": 0.36,
       "text": "8",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4624,7 +4625,7 @@
       "layer": "TEXT100",
       "x": 118.508,
       "y": 50.518,
-      "height": null,
+      "height": 0.36,
       "text": "1",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4634,7 +4635,7 @@
       "layer": "TEXT100",
       "x": 118.508,
       "y": 54.048,
-      "height": null,
+      "height": 0.36,
       "text": "3",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4644,7 +4645,7 @@
       "layer": "TEXT100",
       "x": 118.508,
       "y": 57.37,
-      "height": null,
+      "height": 0.36,
       "text": "1",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4654,7 +4655,7 @@
       "layer": "TEXT100",
       "x": 119.488,
       "y": 46.382,
-      "height": null,
+      "height": 0.36,
       "text": "3",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4664,7 +4665,7 @@
       "layer": "TEXT100",
       "x": 123.305,
       "y": 46.399,
-      "height": null,
+      "height": 0.36,
       "text": "3",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4674,7 +4675,7 @@
       "layer": "TEXT100",
       "x": 123.391,
       "y": 41.493,
-      "height": null,
+      "height": 0.36,
       "text": "8",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4684,7 +4685,7 @@
       "layer": "TEXT100",
       "x": 124.905,
       "y": 54.048,
-      "height": null,
+      "height": 0.36,
       "text": "1",
       "kind": "ATTRIB",
       "tag": "NUM",
@@ -4694,154 +4695,50 @@
       "layer": "TEXT100",
       "x": 126.701,
       "y": 41.493,
-      "height": null,
+      "height": 0.36,
       "text": "8",
       "kind": "ATTRIB",
       "tag": "NUM",
       "block": "EXT-FIN1"
-    },
-    {
-      "layer": "0",
-      "x": 14.913,
-      "y": 58.277,
-      "height": null,
-      "text": "",
-      "kind": "ATTRIB",
-      "tag": "LEVEL",
-      "block": "TAG-LEV"
-    },
-    {
-      "layer": "0",
-      "x": 14.918,
-      "y": 50.677,
-      "height": null,
-      "text": "",
-      "kind": "ATTRIB",
-      "tag": "LEVEL",
-      "block": "TAG-LEV"
-    },
-    {
-      "layer": "DSYM",
-      "x": 10.673,
-      "y": 14.258,
-      "height": null,
-      "text": "",
-      "kind": "ATTRIB",
-      "tag": "RF",
-      "block": "_1D3R90"
-    },
-    {
-      "layer": "DSYM",
-      "x": 11.073,
-      "y": 14.258,
-      "height": null,
-      "text": "",
-      "kind": "ATTRIB",
-      "tag": "D-N",
-      "block": "_1D3R90"
-    },
-    {
-      "layer": "DSYM",
-      "x": 11.949,
-      "y": 20.309,
-      "height": null,
-      "text": "",
-      "kind": "ATTRIB",
-      "tag": "RF",
-      "block": "_1D0L100"
-    },
-    {
-      "layer": "DSYM",
-      "x": 12.349,
-      "y": 20.309,
-      "height": null,
-      "text": "",
-      "kind": "ATTRIB",
-      "tag": "D-N",
-      "block": "_1D0L100"
-    },
-    {
-      "layer": "DSYM",
-      "x": 13.498,
-      "y": 15.558,
-      "height": null,
-      "text": "",
-      "kind": "ATTRIB",
-      "tag": "RF",
-      "block": "_1D0L100"
-    },
-    {
-      "layer": "DSYM",
-      "x": 13.498,
-      "y": 15.958,
-      "height": null,
-      "text": "",
-      "kind": "ATTRIB",
-      "tag": "D-N",
-      "block": "_1D0L100"
-    },
-    {
-      "layer": "DSYM",
-      "x": 34.273,
-      "y": 15.058,
-      "height": null,
-      "text": "",
-      "kind": "ATTRIB",
-      "tag": "D-N",
-      "block": "_1D3R90"
-    },
-    {
-      "layer": "DSYM",
-      "x": 34.673,
-      "y": 15.058,
-      "height": null,
-      "text": "",
-      "kind": "ATTRIB",
-      "tag": "RF",
-      "block": "_1D3R90"
-    },
-    {
-      "layer": "DSYM",
-      "x": 36.198,
-      "y": 21.955,
-      "height": null,
-      "text": "",
-      "kind": "ATTRIB",
-      "tag": "RF",
-      "block": "_1D3R90"
-    },
-    {
-      "layer": "DSYM",
-      "x": 36.598,
-      "y": 21.955,
-      "height": null,
-      "text": "",
-      "kind": "ATTRIB",
-      "tag": "D-N",
-      "block": "_1D3R90"
-    },
-    {
-      "layer": "DSYM",
-      "x": 109.347,
-      "y": 13.961,
-      "height": null,
-      "text": "",
-      "kind": "ATTRIB",
-      "tag": "D-N",
-      "block": "_1D3R90"
-    },
-    {
-      "layer": "DSYM",
-      "x": 109.747,
-      "y": 13.961,
-      "height": null,
-      "text": "",
-      "kind": "ATTRIB",
-      "tag": "RF",
-      "block": "_1D3R90"
     }
   ],
   "levelTags": [
+    {
+      "x": -0.348,
+      "y": 43.698,
+      "value": 0.3,
+      "text": "+0.30",
+      "layer": "0",
+      "source": "attrib",
+      "label": "ระดับพื้นชั้นที่ 1"
+    },
+    {
+      "x": 79.113,
+      "y": 42.571,
+      "value": 0.4,
+      "text": "+0.40",
+      "layer": "0",
+      "source": "attrib",
+      "label": "ระดับพื้นชั้นที่ 1"
+    },
+    {
+      "x": 128.832,
+      "y": 42.598,
+      "value": 0.4,
+      "text": "+0.40",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "8"
+    },
+    {
+      "x": 122.253,
+      "y": 42.798,
+      "value": 0.5,
+      "text": "+0.50",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "8"
+    },
     {
       "x": 35.172,
       "y": 44.524,
@@ -4852,16 +4749,115 @@
       "label": null
     },
     {
-      "x": 8.325,
-      "y": 61.025,
-      "value": 9.05,
-      "text": "+9.05",
-      "layer": "SPEC",
+      "x": -0.348,
+      "y": 44.898,
+      "value": 0.9,
+      "text": "+0.90",
+      "layer": "0",
       "source": "attrib",
-      "label": null
+      "label": "ระดับพื้นชั้นที่ 1"
     },
     {
-      "x": 43.381,
+      "x": 15.564,
+      "y": 44.924,
+      "value": 0.9,
+      "text": "+0.90",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "สะพานทางเชื่อม"
+    },
+    {
+      "x": 29.729,
+      "y": 44.924,
+      "value": 0.9,
+      "text": "+0.90",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "โล่ง"
+    },
+    {
+      "x": 79.113,
+      "y": 43.571,
+      "value": 0.9,
+      "text": "+0.90",
+      "layer": "0",
+      "source": "attrib",
+      "label": "ระดับพื้นชั้นที่ 1"
+    },
+    {
+      "x": 103.15,
+      "y": 43.598,
+      "value": 0.9,
+      "text": "+0.90",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "D1"
+    },
+    {
+      "x": 122.253,
+      "y": 43.598,
+      "value": 0.9,
+      "text": "+0.90",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "8"
+    },
+    {
+      "x": 50.557,
+      "y": 28.343,
+      "value": 1.03,
+      "text": "1.03",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "A"
+    },
+    {
+      "x": 123.831,
+      "y": 48.398,
+      "value": 3.3,
+      "text": "+3.30",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "AW14"
+    },
+    {
+      "x": -0.348,
+      "y": 52.698,
+      "value": 4.8,
+      "text": "+4.80",
+      "layer": "0",
+      "source": "attrib",
+      "label": "ระดับพื้นชั้นที่ 2."
+    },
+    {
+      "x": 15.564,
+      "y": 52.724,
+      "value": 4.8,
+      "text": "+4.80",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "สะพานทางเชื่อม"
+    },
+    {
+      "x": 79.113,
+      "y": 51.371,
+      "value": 4.8,
+      "text": "+4.80",
+      "layer": "0",
+      "source": "attrib",
+      "label": "ระดับพื้นชั้นที่ 2."
+    },
+    {
+      "x": 14.905,
+      "y": 58.924,
+      "value": 7.9,
+      "text": "+7.90",
+      "layer": "SPEC",
+      "source": "attrib",
+      "label": "ระดับแนวฝ้าเพดาน"
+    },
+    {
+      "x": 8.357,
       "y": 59.024,
       "value": 7.95,
       "text": "+7.95",
@@ -4879,109 +4875,10 @@
       "label": "หลังคากระเบื้อง NEUSTILE"
     },
     {
-      "x": 29.729,
-      "y": 44.924,
-      "value": 0.9,
-      "text": "+0.90",
-      "layer": "SPEC",
-      "source": "attrib",
-      "label": "โล่ง"
-    },
-    {
-      "x": 15.564,
-      "y": 52.724,
-      "value": 4.8,
-      "text": "+4.80",
-      "layer": "SPEC",
-      "source": "attrib",
-      "label": "สะพานทางเชื่อม"
-    },
-    {
-      "x": 15.564,
-      "y": 44.924,
-      "value": 0.9,
-      "text": "+0.90",
-      "layer": "SPEC",
-      "source": "attrib",
-      "label": "สะพานทางเชื่อม"
-    },
-    {
-      "x": 14.905,
-      "y": 58.924,
-      "value": 7.9,
-      "text": "+7.90",
-      "layer": "SPEC",
-      "source": "attrib",
-      "label": ""
-    },
-    {
-      "x": 8.357,
+      "x": 43.381,
       "y": 59.024,
       "value": 7.95,
       "text": "+7.95",
-      "layer": "SPEC",
-      "source": "attrib",
-      "label": null
-    },
-    {
-      "x": 50.557,
-      "y": 28.343,
-      "value": 1.03,
-      "text": "1.03",
-      "layer": "SPEC",
-      "source": "attrib",
-      "label": "A"
-    },
-    {
-      "x": -0.354,
-      "y": 59.698,
-      "value": 8.3,
-      "text": "+8.30",
-      "layer": "0",
-      "source": "attrib",
-      "label": "ระดับหลังคาน ค.ศ.ล."
-    },
-    {
-      "x": -0.348,
-      "y": 44.898,
-      "value": 0.9,
-      "text": "+0.90",
-      "layer": "0",
-      "source": "attrib",
-      "label": "ระดับพื้นชั้นที่ 1"
-    },
-    {
-      "x": -0.348,
-      "y": 52.698,
-      "value": 4.8,
-      "text": "+4.80",
-      "layer": "0",
-      "source": "attrib",
-      "label": "ระดับพื้นชั้นที่ 2."
-    },
-    {
-      "x": -0.348,
-      "y": 43.698,
-      "value": 0.3,
-      "text": "+0.30",
-      "layer": "0",
-      "source": "attrib",
-      "label": "ระดับพื้นชั้นที่ 1"
-    },
-    {
-      "x": 123.831,
-      "y": 48.398,
-      "value": 3.3,
-      "text": "+3.30",
-      "layer": "SPEC",
-      "source": "attrib",
-      "label": "AW14"
-    },
-    {
-      "x": 124.872,
-      "y": 59.898,
-      "value": 9.05,
-      "text": "+9.05",
       "layer": "SPEC",
       "source": "attrib",
       "label": null
@@ -4996,42 +4893,6 @@
       "label": "1"
     },
     {
-      "x": 79.107,
-      "y": 58.371,
-      "value": 8.3,
-      "text": "+8.30",
-      "layer": "0",
-      "source": "attrib",
-      "label": "ระดับหลังคาน ค.ศ.ล."
-    },
-    {
-      "x": 79.113,
-      "y": 43.571,
-      "value": 0.9,
-      "text": "+0.90",
-      "layer": "0",
-      "source": "attrib",
-      "label": "ระดับพื้นชั้นที่ 1"
-    },
-    {
-      "x": 79.113,
-      "y": 51.371,
-      "value": 4.8,
-      "text": "+4.80",
-      "layer": "0",
-      "source": "attrib",
-      "label": "ระดับพื้นชั้นที่ 2."
-    },
-    {
-      "x": 79.113,
-      "y": 42.571,
-      "value": 0.4,
-      "text": "+0.40",
-      "layer": "0",
-      "source": "attrib",
-      "label": "ระดับพื้นชั้นที่ 1"
-    },
-    {
       "x": 108.154,
       "y": 58.098,
       "value": 8.15,
@@ -5041,40 +4902,40 @@
       "label": null
     },
     {
-      "x": 103.15,
-      "y": 43.598,
-      "value": 0.9,
-      "text": "+0.90",
-      "layer": "SPEC",
+      "x": -0.354,
+      "y": 59.698,
+      "value": 8.3,
+      "text": "+8.30",
+      "layer": "0",
       "source": "attrib",
-      "label": "D1"
+      "label": "ระดับหลังคาน ค.ศ.ล."
     },
     {
-      "x": 128.832,
-      "y": 42.598,
-      "value": 0.4,
-      "text": "+0.40",
-      "layer": "SPEC",
+      "x": 79.107,
+      "y": 58.371,
+      "value": 8.3,
+      "text": "+8.30",
+      "layer": "0",
       "source": "attrib",
-      "label": "8"
+      "label": "ระดับหลังคาน ค.ศ.ล."
     },
     {
-      "x": 122.253,
-      "y": 43.598,
-      "value": 0.9,
-      "text": "+0.90",
+      "x": 8.325,
+      "y": 61.025,
+      "value": 9.05,
+      "text": "+9.05",
       "layer": "SPEC",
       "source": "attrib",
-      "label": "8"
+      "label": null
     },
     {
-      "x": 122.253,
-      "y": 42.798,
-      "value": 0.5,
-      "text": "+0.50",
+      "x": 124.872,
+      "y": 59.898,
+      "value": 9.05,
+      "text": "+9.05",
       "layer": "SPEC",
       "source": "attrib",
-      "label": "8"
+      "label": null
     }
   ],
   "gridLabels": [
@@ -5353,7 +5214,7 @@
       "block": null,
       "direction": [
         1.0,
-        -0.0
+        0.0
       ],
       "line": [
         [
@@ -5374,7 +5235,7 @@
       "block": null,
       "direction": [
         1.0,
-        -0.0
+        0.0
       ],
       "line": [
         [
@@ -5395,7 +5256,7 @@
       "block": null,
       "direction": [
         1.0,
-        -0.0
+        0.0
       ],
       "line": [
         [
@@ -5425,7 +5286,7 @@
       "block": null,
       "direction": [
         1.0,
-        -0.0
+        0.0
       ],
       "line": [
         [
@@ -5455,7 +5316,7 @@
       "block": null,
       "direction": [
         1.0,
-        -0.0
+        0.0
       ],
       "line": [
         [
@@ -5485,7 +5346,7 @@
       "block": null,
       "direction": [
         -1.0,
-        -0.0
+        0.0
       ],
       "line": [
         [
@@ -5506,7 +5367,7 @@
       "block": null,
       "direction": [
         -1.0,
-        -0.0
+        0.0
       ],
       "line": [
         [
@@ -5527,7 +5388,7 @@
       "block": null,
       "direction": [
         -1.0,
-        -0.0
+        0.0
       ],
       "line": [
         [
@@ -5734,7 +5595,7 @@
       "block": "hjhjj",
       "direction": [
         1.0,
-        -0.0
+        0.0
       ],
       "line": [
         [
@@ -5764,7 +5625,7 @@
       "block": "hjhjj",
       "direction": [
         1.0,
-        -0.0
+        0.0
       ],
       "line": [
         [
@@ -5794,7 +5655,7 @@
       "block": "hjhjj",
       "direction": [
         1.0,
-        -0.0
+        0.0
       ],
       "line": [
         [
@@ -5815,7 +5676,7 @@
       "block": "hjhjj",
       "direction": [
         1.0,
-        -0.0
+        0.0
       ],
       "line": [
         [
@@ -5836,7 +5697,7 @@
       "block": "hjhjj",
       "direction": [
         1.0,
-        -0.0
+        0.0
       ],
       "line": [
         [
@@ -6088,7 +5949,7 @@
         62.0
       ],
       "items": 729,
-      "wallItems": 667,
+      "wallItems": 655,
       "looks": "elevation"
     },
     {
@@ -6100,7 +5961,7 @@
         61.0
       ],
       "items": 524,
-      "wallItems": 504,
+      "wallItems": 483,
       "looks": "elevation"
     },
     {
@@ -6124,7 +5985,7 @@
         36.0
       ],
       "items": 11995,
-      "wallItems": 11610,
+      "wallItems": 11170,
       "looks": "plan"
     },
     {
@@ -6184,7 +6045,7 @@
         36.0
       ],
       "items": 18446,
-      "wallItems": 17964,
+      "wallItems": 12573,
       "looks": "plan"
     },
     {
@@ -6232,7 +6093,7 @@
         33.0
       ],
       "items": 334,
-      "wallItems": 210,
+      "wallItems": 194,
       "looks": "plan"
     },
     {
@@ -6245,7 +6106,7 @@
       ],
       "items": 16,
       "wallItems": 7,
-      "looks": "other"
+      "looks": "elevation"
     },
     {
       "id": "a15",

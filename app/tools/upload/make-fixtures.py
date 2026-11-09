@@ -17,8 +17,9 @@ into app/fixtures/upload/ (each listed in fixtures/README.md with its source and
              bank_stages.json, bank_summary.json and the detector outputs) and overlay/bank.overlay.json
   runs       runs/bank-prepare/ and runs/bank-build/: what a FakeJobRunner copies for a prepare and a build of the bank
              (job.json and the out/ files; files that exist in fixtures/models, fixtures/stages are referenced by path)
-  maxtexts   max-texts/{bank-27oct,hotel-2nov,upload}.json: PROVISIONAL MaxTexts profiles (U-11.5), the verbatim lines
-             read from the two prototype scripts; U4 owns and completes them
+  (maxtexts  no longer a part: max-texts/{bank-27oct,hotel-2nov,upload}.json are U4's final profiles since the
+             upload milestone's U4, and this tool must not overwrite them (contract issue U4-5, settled at integration);
+             fixture_parts.part_maxtexts, the scaffold's provisional outline, is kept for the record only)
 The reference folder (WT_REF, default %TEMP%\\wt-u0\\ref) is read only. Everything is deterministic: the same inputs give
 the same bytes (dates are fixed at 2026-11-04).
 """
@@ -42,7 +43,7 @@ sys.path.insert(0, str(HERE))
 import fixture_settings as fs  # noqa: E402
 
 FX = APP / 'fixtures' / 'upload'
-PARTS = ('settings', 'mapping', 'drawing', 'conversion', 'result', 'runs', 'maxtexts')
+PARTS = ('settings', 'mapping', 'drawing', 'conversion', 'result', 'runs')   # not 'maxtexts': U4-5
 AT = '2026-11-04T00:00:00Z'
 
 
@@ -108,7 +109,7 @@ def main() -> int:
     if not (ref / 'manifest.json').exists():
         print(f'make-fixtures: no reference at {ref}: run npm run make:reference first', file=sys.stderr)
         return 1
-    import fixture_parts as fp                               # the larger parts (drawing, conversion, result, runs, maxtexts)
+    import fixture_parts as fp                               # the larger parts (drawing, conversion, result, runs)
     todo = a.only or list(PARTS)
     for part in PARTS:
         if part not in todo:

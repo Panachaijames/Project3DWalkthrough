@@ -20,20 +20,10 @@
     "auditErrors": 0,
     "auditFixes": 24
   },
-  "seconds": 0.27,
-  "peakMemoryMB": null,
+  "seconds": 0.23,
+  "peakMemoryMB": 16.5,
   "exitCode": 0,
   "messages": [
-    {
-      "class": "unstable-class",
-      "count": 9,
-      "example": "Warning: Unstable Class object 501 MATERIAL (0x481) 14/0"
-    },
-    {
-      "class": "other",
-      "count": 1,
-      "example": "Warning: TODO TABLESTYLE r2010+ missing fields"
-    },
     {
       "class": "hatch-short-handles",
       "count": 148,
@@ -45,9 +35,14 @@
       "example": "Warning: Object handle not found 7326/0x1C9E in 5244 objects of max 0x1EBF handles"
     },
     {
+      "class": "unstable-class",
+      "count": 9,
+      "example": "Warning: Unstable Class object 501 MATERIAL (0x481) 14/0"
+    },
+    {
       "class": "unhandled-class",
-      "count": 1,
-      "example": "Warning: Unhandled Object TABLESTYLE in out_dxf 98/65"
+      "count": 2,
+      "example": "Warning: TODO TABLESTYLE r2010+ missing fields"
     }
   ],
   "totals": {
@@ -63,7 +58,5 @@
   "renamedBlocks": [],
   "unknownObjects": 0,
   "verdict": "ok",
-  "notes": [
-    "the converter reported 1 message(s) of the class other; nothing is missing"
-  ]
+  "notes": []
 }

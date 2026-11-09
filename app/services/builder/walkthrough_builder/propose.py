@@ -7,9 +7,11 @@ U-3.3, U-7.4, U-9, U-10.4). The API adopts it as revision 1 (U5); staff change i
   `agree` or `declared-only`, false for `votes-win` or `unknown` (staff confirm on the Files step, U-7.4);
 * layers: every suggested layer with its suggested role (suggest.py);
 * floors: one per source (the whole file) when there are several sources; one per area proposal that looks like a plan
-  (a box, pad 0.5, match 'all') when one source holds several; else one floor, the whole file. Keys L1, L2 ..., names
-  Level 1 ..., levels 0, 3.00, 6.00 ..., wall heights 3.00, alignment auto. These are guesses (`notes()` says so in plain
-  sentences: BuildSettings has no field for them);
+  (a box, pad 0.5, match 'all') when one source holds several, pieces of one plan joined first (a plan-looking box
+  that lies 30 % or more inside a larger one is part of it: the house's ground plan is a 92 % box and an overlapping
+  sliver in the reader's clustering, which the browser repeats and so cannot join them itself); else one floor, the
+  whole file. Keys L1, L2 ..., names Level 1 ..., levels 0, 3.00, 6.00 ..., wall heights 3.00, alignment auto. These
+  are guesses (`notes()` says so in plain sentences: BuildSettings has no field for them);
 * project, office, defaults, furniture, vocabulary, options and fixes: the spec's settings (revision 0, which the API
   writes from the project and project-settings.json) where they are there, else U-10.4's defaults; `exportedFrom` left
   as given, or 'Revit' when most of the drawings' blocks carry Revit element ids;
@@ -26,9 +28,10 @@ import math
 import re
 import unicodedata
 
+from . import areas as A
 from . import names, roles
 
-DEFAULTS = {'doorHead': 2.1, 'windowSill': 0.9, 'windowHead': 2.1, 'railingHeight': 1.1, 'slabThickness': 0.25,
+DEFAULTS ={'doorHead': 2.1, 'windowSill': 0.9, 'windowHead': 2.1, 'railingHeight': 1.1, 'slabThickness': 0.25,
             'singleLineHeight': 1.0}
 FURNITURE = {'heights': {}, 'bases': {}, 'words': {}, 'skip': [], 'minSize': 0.08, 'minDepth': None, 'looseLayers': [],
              'pieceLayer': 'insert'}
@@ -38,6 +41,8 @@ FIXES = {'setAside': [], 'openings': [], 'outlineEdges': []}
 LEVEL_STEP = 3.0
 WALL_HEIGHT = 3.0
 PAD = 0.5
+#: a plan-looking box that shares this much of its own area with a larger one is a piece of that plan
+JOIN_SHARE = 0.3
 
 KEY_RE = re.compile(r'^[A-Za-z0-9_]{1,32}$')
 PHOTO_RE = re.compile(r'^[A-Za-z0-9_.-]{1,64}$')
@@ -111,17 +116,45 @@ def _floor(key: str, name: str, source: str, area: dict, level: float, wall: flo
             'slabThickness': None, 'doorHead': None, 'windowSill': None, 'windowHead': None, 'align': {'method': 'auto'}}
 
 
+def plan_boxes(areas: list[dict]) -> list[list[float]]:
+    """The boxes of the plan-looking area proposals with the pieces of one plan joined: a box that shares JOIN_SHARE of
+    its own area or more with a larger (or equal, earlier) box joins it, their union taking both, until nothing joins;
+    in reading order (top edge first, then left edge)."""
+    boxes = []
+    for a in areas:
+        if a.get('looks') != 'plan':
+            continue
+        b = a.get('bbox')
+        if (isinstance(b, (list, tuple)) and len(b) == 4 and all(_num(v) is not None for v in b)
+                and b[0] < b[2] and b[1] < b[3]):
+            boxes.append([float(v) for v in b])
+    joined = True
+    while joined:
+        joined = False
+        for i in range(len(boxes)):
+            for j in range(len(boxes)):
+                a, b = boxes[i], boxes[j]
+                if i != j and A.area_of(a) >= A.area_of(b) and A.overlap(a, b) >= JOIN_SHARE * A.area_of(b):
+                    boxes[i] = [min(a[0], b[0]), min(a[1], b[1]), max(a[2], b[2]), max(a[3], b[3])]
+                    del boxes[j]
+                    joined = True
+                    break
+            if joined:
+                break
+    return [boxes[i] for i in A.reading_order(boxes)]
+
+
 def guess_floors(sources: list[dict], by_sha: dict[str, dict]) -> list[dict]:
-    """U-3.3's floors: one per source when there are several; one per plan-looking area when one source has several."""
+    """U-3.3's floors: one per source when there are several; one per plan-looking area (pieces of one plan joined)
+    when one source has several."""
     plans = []
     if len(sources) == 1:
         dr = by_sha.get(sources[0]['sha1']) or {}
-        plans = [a for a in dr.get('areas') or [] if a.get('looks') == 'plan']
+        plans = plan_boxes(dr.get('areas') or [])
     if len(plans) >= 2:
         sha = sources[0]['sha1']
-        return [_floor(f'L{i + 1}', f'Level {i + 1}', sha,
-                       {'kind': 'box', 'bbox': [float(v) for v in a['bbox']], 'pad': PAD, 'match': 'all'},
-                       i * LEVEL_STEP, WALL_HEIGHT) for i, a in enumerate(plans)]
+        return [_floor(f'L{i + 1}', f'Level {i + 1}', sha, {'kind': 'box', 'bbox': box, 'pad': PAD, 'match': 'all'},
+                       i * LEVEL_STEP, WALL_HEIGHT) for i, box in enumerate(plans)]
     return [_floor(f'L{i + 1}', f'Level {i + 1}', s['sha1'], {'kind': 'wholeFile'}, i * LEVEL_STEP, WALL_HEIGHT)
             for i, s in enumerate(sources)]
 

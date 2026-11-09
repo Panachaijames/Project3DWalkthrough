@@ -13,7 +13,8 @@ Every number is counted over the walked items (blocks unpacked, by effective lay
   centre (units.door_votes);
 * blocks: every INSERT at every depth by name, family (names.family: no xref prefix, no Revit suffix), most inserted
   first, at most 2000;
-* texts: TEXT, MTEXT (plain text), ATTRIB (tag, block), blank ones aside, longest first, at most 5000;
+* texts: TEXT, MTEXT (plain text), ATTRIB (tag, block), blank ones aside, longest first, at most 5000, each cut at
+  1000 characters;
 * levelTags (levels.py), gridLabels (grid.py), areas (areas.py).
 Drawing text is untrusted: it is copied as text, never interpreted. Owner: U2.
 """
@@ -31,6 +32,9 @@ from . import units as U
 
 MAX_BLOCKS = 2000
 MAX_TEXTS = 5000
+#: a listed text longer than this is cut (ending in an ellipsis), so a drawing of long notes cannot make drawing.json huge
+#: (the six drawings' longest text has 43 characters); level tags and grid labels read the whole text
+MAX_TEXT_CHARS = 1000
 MAX_TOP_BLOCKS = 10
 #: parallel pairs (LayerRead.pairs)
 PAIR_MIN_LEN = 0.2
@@ -252,6 +256,8 @@ def drawing_read(walk: dict, *, source: dict, units: dict, seconds: float) -> di
         s = t['text'].strip()
         if not s:
             continue
+        if len(s) > MAX_TEXT_CHARS:
+            s = s[:MAX_TEXT_CHARS - 1] + '\N{HORIZONTAL ELLIPSIS}'
         texts.append({'layer': t['layer'], 'x': round(t['x'], 3) + 0.0, 'y': round(t['y'], 3) + 0.0,
                       'height': t['height'], 'text': s, 'kind': t['kind'], 'tag': t['tag'], 'block': t['block']})
     texts.sort(key=lambda t: (-len(t['text']), t['layer'], t['x'], t['y'], t['text']))

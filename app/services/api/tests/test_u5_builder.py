@@ -31,8 +31,10 @@ P = '/api/projects'
 BUILDER = APP / 'services' / 'builder' / 'walkthrough_builder'
 STUB = 'not built yet (stub by the scaffold U0)'
 RUN_TIMEOUT_S = 15 * 60
-#: False until U1 - U4 land: without WT_INTEGRATION=1 these tests skip (see the module text)
-RUN_WITHOUT_THE_FLAG = False
+#: True since the integration step UI (9 Nov 2026): U1 - U4 have landed, so these run in every `npm run test:api`
+#: (ACCEPTANCE 2.2 "always"); they still skip when the builder Python or LibreDWG is missing, and fail then under
+#: WT_INTEGRATION=1
+RUN_WITHOUT_THE_FLAG = True
 
 
 def builder_missing() -> str | None:

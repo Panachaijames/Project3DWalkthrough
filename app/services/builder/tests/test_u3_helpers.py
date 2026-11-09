@@ -5,6 +5,8 @@
   `tools/upload/fixture_reader.py` (prims.py's walk plus the nested keys `k` of U-7.2, and a DrawingRead with grid
   labels), so the set-aside matcher can be tested before U2's reader lands.
 * A fake detector (monkeypatched into walkthrough_builder.build) that returns chosen records, for the opening rules.
+* `write_and_check`: a result through U4's contracts.write_outputs and the API's own record checks (check_file), the
+  checks the API runs on a done run before it accepts it (U-3.2).
 """
 from __future__ import annotations
 
@@ -13,7 +15,10 @@ import hashlib
 import json
 import math
 import pickle
+import shutil
+import subprocess
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import pytest
@@ -83,8 +88,40 @@ def strip_floor(records: list[dict]) -> list[dict]:
     return [{k: v for k, v in r.items() if k != 'floor'} for r in records]
 
 
+# ------------------------------------------------------------------------------- the outputs and the API's checks
+def check_file(kind: str, path: Path, model: Path | None = None) -> tuple[int, str]:
+    """The API's own record check of one worker file, run as the design says: `node tools/run-py.mjs -m
+    walkthrough_api.check_file <kind> <path> [--model <model>]` (the API's Python) -> (exit code, output)."""
+    cmd = [shutil.which('node') or 'node', str(kit.APP / 'tools' / 'run-py.mjs'), '-m', 'walkthrough_api.check_file', kind,
+           str(path)] + (['--model', str(model)] if model is not None else [])
+    r = subprocess.run(cmd, cwd=kit.APP, capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=300,
+                       stdin=subprocess.DEVNULL)
+    return r.returncode, (r.stdout + r.stderr).strip()
+
+
+def write_and_check(res: dict, s: dict, sources: list[dict], tmp: Path, project_id: str = 'test') -> tuple[dict, list[str]]:
+    """U4's contracts.write_outputs on a build's result, then the API's check of every output it validates when a run
+    is done (U-3.2: the model with the schema and D-5.6, the replay and presentation against it, the sidecars) ->
+    ({name: path}, the problems found: empty when the API would accept the run)."""
+    from walkthrough_builder import contracts
+    ctx = build_ctx(s, sources, tmp, project_id)
+    ctx['spec'].update(runId='0002-build', buildId='20261109T120000-abcdef', settingsRevision=1, only=None, office=None,
+                       sources=[{'sha1': x['sha1'], 'name': x['name'], 'kind': x['kind'], 'path': str(tmp / 'no-original'),
+                                 'units': x['units']} for x in sources])
+    for d in (ctx['outDir'], ctx['tmpDir']):
+        Path(d).mkdir(parents=True, exist_ok=True)
+    written = contracts.write_outputs({k: v for k, v in res.items() if not k.startswith('_')}, ctx, lambda m: None)
+    m = written['model.json']
+    items = [('model', m, None), ('stages', written['stages.json'], m), ('presentation', written['presentation.json'], m)]
+    items += [(k, written[f'{k}.json'], None) for k in ('overlay', 'diff', 'pieces', 'openings', 'inputs')]
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        got = list(pool.map(lambda it: check_file(*it), items))
+    return written, [f'{it[0]}: {out[-1500:]}' for it, (code, out) in zip(items, got) if code != 0]
+
+
 # ------------------------------------------------------------------------------------------- the synthetic plan
-def plan_dxf(path: Path, *, dx: float = 0.0, dy: float = 0.0, chair_dx: float = 0.0, extra_first: int = 0) -> Path:
+def plan_dxf(path: Path, *, dx: float = 0.0, dy: float = 0.0, chair_dx: float = 0.0, extra_first: int = 0,
+             fill: str = 'solid', parapet: bool = False, free_glass: bool = False) -> Path:
     """A 10 x 6 m building (mm) with 200 mm walls drawn as solid fills on A-WALL, openings left in them:
          south wall: door 1 at x 4.0 - 5.0 (block 'Door slider 920x920x3100' on A-DOOR: W x W x H), door 2 at 7.0 - 8.0
                      (block 'Door plain', no size);
@@ -94,13 +131,16 @@ def plan_dxf(path: Path, *, dx: float = 0.0, dy: float = 0.0, chair_dx: float = 
        (two 'Chair-Mollie-1234567-Level 1', one mirrored) on I-FURN; the room name LOBBY; grid lines 1, 2 (x 0, 10 m)
        and A, B (y 0, 6 m) with their bubbles; a corridor outline on A-AREA east of the building (x 10 - 14 m); a
        line drawn twice on A-ANNO. `dx, dy` move everything (mm); `chair_dx` moves the chair group only; `extra_first`
-       adds that many lines first, so every handle changes (a re-export)."""
+       adds that many lines first, so every handle changes (a re-export). Options that add to the drawing (off: the
+       same file): `fill='pattern'` draws the wall fills as ANSI31 hatches instead of solid ones; `parapet` adds a
+       low wall (a 2.0 x 0.2 m outline on A-WALL at x 17 - 19 m, y 1.0 - 1.2) with a railing line on A-HRAL meeting
+       each of its ends; `free_glass` adds two A-GLAZ lines 20 mm apart standing alone at x 22 - 24 m, y 3.0."""
     import ezdxf
     from ezdxf import units
     doc = ezdxf.new('R2013')
     doc.units = units.MM
     for name in ('A-WALL', 'A-DOOR', 'A-GLAZ', 'A_Grill', 'I-FURN', 'A-AREA-IDEN', 'S-GRID', 'S-GRID-IDEN', 'A-AREA',
-                 'A-ANNO', 'X-FIRST'):
+                 'A-ANNO', 'X-FIRST') + (('A-HRAL',) if parapet else ()):
         doc.layers.add(name)
     msp = doc.modelspace()
     for i in range(extra_first):
@@ -110,7 +150,10 @@ def plan_dxf(path: Path, *, dx: float = 0.0, dy: float = 0.0, chair_dx: float = 
     def wall(x0, y0, x1, y1):
         pts = [P(x0, y0), P(x1, y0), P(x1, y1), P(x0, y1)]
         h = msp.add_hatch(color=8, dxfattribs={'layer': 'A-WALL'})
-        h.set_solid_fill(color=8)
+        if fill == 'solid':
+            h.set_solid_fill(color=8)
+        else:
+            h.set_pattern_fill('ANSI31', color=8, scale=10.0)
         h.paths.add_polyline_path(pts, is_closed=True)
     for r in ((0, 0, 4000, 200), (5000, 0, 7000, 200), (8000, 0, 10000, 200),
               (0, 5800, 2000, 6000), (3500, 5800, 6000, 6000), (8000, 5800, 10000, 6000),
@@ -149,13 +192,21 @@ def plan_dxf(path: Path, *, dx: float = 0.0, dy: float = 0.0, chair_dx: float = 
                        dxfattribs={'layer': 'A-AREA'})
     for _ in range(2):
         msp.add_line(P(1000, 4000), P(2000, 4000), dxfattribs={'layer': 'A-ANNO'})
+    if parapet:
+        msp.add_lwpolyline([P(17000, 1000), P(19000, 1000), P(19000, 1200), P(17000, 1200)], close=True,
+                           dxfattribs={'layer': 'A-WALL'})
+        msp.add_line(P(15500, 1100), P(17000, 1100), dxfattribs={'layer': 'A-HRAL'})
+        msp.add_line(P(19000, 1100), P(20500, 1100), dxfattribs={'layer': 'A-HRAL'})
+    if free_glass:
+        msp.add_line(P(22000, 3000), P(24000, 3000), dxfattribs={'layer': 'A-GLAZ'})
+        msp.add_line(P(22000, 3020), P(24000, 3020), dxfattribs={'layer': 'A-GLAZ'})
     doc.saveas(path)
     return path
 
 
 PLAN_LAYERS = {'A-WALL': 'wall', 'A-DOOR': 'door', 'A-GLAZ': 'window', 'A_Grill': 'screen', 'I-FURN': 'furniture',
                'A-AREA-IDEN': 'room-name', 'S-GRID': 'grid', 'S-GRID-IDEN': 'grid', 'A-AREA': 'room-outline',
-               'A-ANNO': 'other', 'X-FIRST': 'other', '0': 'other'}
+               'A-ANNO': 'other', 'X-FIRST': 'other', '0': 'other', 'A-HRAL': 'railing'}
 
 
 def read_plan(dxf: Path, out: Path) -> dict:

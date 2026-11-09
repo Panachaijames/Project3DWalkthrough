@@ -21,7 +21,7 @@ from shapely.ops import unary_union
 
 import kit
 from test_contracts import walk
-from test_u3_helpers import ref_sources, run_build, settings
+from test_u3_helpers import ref_sources, run_build, settings, write_and_check
 from walkthrough_builder import contracts, oslock
 
 pytestmark = pytest.mark.heavy
@@ -30,8 +30,10 @@ pytestmark = pytest.mark.heavy
 def _built(ref, tmp, name, options=None, project='proj'):
     s = settings(name)
     s['options'].update(options or {})
-    res, logs = run_build(s, ref_sources(name, s, ref), tmp, project)
+    srcs = ref_sources(name, s, ref)
+    res, logs = run_build(s, srcs, tmp, project)
     assert walk({k: v for k, v in res.items() if k != '_steps'}, contracts.BuildResult) == []
+    res['_settings'], res['_sources'], res['_tmp'], res['_logs'] = s, srcs, tmp, logs
     return res
 
 
@@ -45,6 +47,12 @@ def house(ref, tmp_path_factory):
 def suite(ref, tmp_path_factory):
     with oslock.hold():
         return _built(ref, tmp_path_factory.mktemp('suite'), 'suite', {'outlineWalls': 'suggest'})
+
+
+@pytest.fixture(scope='module')
+def tower(ref, tmp_path_factory):
+    with oslock.hold():
+        return _built(ref, tmp_path_factory.mktemp('tower'), 'tower')
 
 
 def proto(name):
@@ -147,8 +155,8 @@ def test_suite_lost_blocks_from_the_conversion_report(ref, tmp_path):
 
 
 # ---------------------------------------------------------------------------------------------------- the tower
-def test_tower_two_whole_files_on_one_origin(ref, tmp_path):
-    res = _built(ref, tmp_path, 'tower')
+def test_tower_two_whole_files_on_one_origin(tower):
+    res = tower
     m = res['model']
     assert [f['key'] for f in m['floors']] == ['L29', 'L30'] and m['source'] == ['L29.dwg', 'L30.dwg']
     assert res['report']['floors']['L30']['alignment']['method'] == 'origin'
@@ -168,3 +176,17 @@ def test_tower_two_whole_files_on_one_origin(ref, tmp_path):
             q = Polygon(m['parts'][s['part']]['o'])
             mid = ((s['a'][0] + s['b'][0]) / 2 - off[0], (s['a'][1] + s['b'][1]) / 2 - off[1])
             assert q.buffer(0.05).contains(Polygon([mid, (mid[0] + 1e-4, mid[1]), (mid[0], mid[1] + 1e-4)]))
+
+
+# ---------------------------------------------------------------------------------------------------- the outputs
+@pytest.mark.parametrize('name', ['house', 'suite', 'tower'])
+def test_outputs_pass_the_api_checks(request, name):
+    """Each drawing's result through U4's contracts.write_outputs and the API's own checks of a done run (U-3.2): the
+    model schema and D-5.6 (no probe without a side, no null lintelTop), the replay, the presentation, the sidecars,
+    and a 3ds Max script written (no part with a hole touching its outline: the tower's two were cut, U-11.5)."""
+    res = request.getfixturevalue(name)
+    written, problems = write_and_check(res, res['_settings'], res['_sources'], res['_tmp'] / 'outputs', 'proj')
+    assert problems == []
+    assert written[res['_settings']['project']['maxFileName']].stat().st_size > 0
+    if name == 'tower':
+        assert any('added by cutting parts through a hole' in m for m in res['_logs'])

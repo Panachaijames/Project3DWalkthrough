@@ -126,16 +126,32 @@ def test_areas_separate_drawings_and_guess_what_they_are() -> None:
     assert got[1]['wallItems'] == 0
 
 
-def test_areas_inside_a_larger_box_join_it_and_reading_order() -> None:
-    main = _block(0, 0, 30, 20)
-    inner = _block(10, 30, 4, 7)          # a cluster 10 m above a plan (bubbles): its box lies ... outside
-    sliver = _block(28, 2, 8, 15)         # overlapping the plan's box by more than 30 %: joins it
+def test_areas_are_the_reference_clustering_in_reading_order() -> None:
+    """Nothing is joined here: the browser repeats this clustering on the wall layers (U-14.3, U7's plan/areas.ts), so
+    a piece lying inside another group's box stays its own proposal (the settings proposal joins plan pieces when it
+    guesses floors). Order: top edge first, then left edge, ties in the order found."""
+    main = _block(0, 0, 30, 20) + _block(0, 21, 4, 14)    # an L: cells x 0..30, y 0..20 and x 0..4, y 21..35
+    inside = _block(20, 25, 8, 8)                         # in the L's box, 5 m above its cells: a group of its own
     top = _block(0, 60, 10, 8)
-    got = A.propose_areas(main + sliver + inner + top, 1.0)
-    boxes = [g['bbox'] for g in got]
-    assert [0.0, 0.0, 37.0, 21.0] in boxes                                # the plan and the sliver, one box
-    assert boxes[0] == [0.0, 60.0, 11.0, 69.0]                             # the top row first
-    assert [g['id'] for g in got] == [f'a{i + 1}' for i in range(len(got))]
+    right = _block(50, 60, 10, 8)                         # the same top edge as `top`, further right
+    got = A.propose_areas(right + inside + main + top, 1.0)
+    assert [g['bbox'] for g in got] == [[0.0, 60.0, 11.0, 69.0], [50.0, 60.0, 61.0, 69.0], [0.0, 0.0, 31.0, 36.0],
+                                        [20.0, 25.0, 29.0, 34.0]]
+    assert [g['id'] for g in got] == ['a1', 'a2', 'a3', 'a4']
+    assert [g['items'] for g in got] == [len(top), len(right), len(main), len(inside)]
+    # the reference script's own clustering (docs/upload/reference/areas_propose.py, gap 2) gives the same boxes
+    comps, _first = A.clusters(right + inside + main + top, 1.0)
+    assert sorted(b for _c, b in comps) == sorted(g['bbox'] for g in got)
+
+
+def test_at_most_200_areas_the_largest_kept() -> None:
+    items = []
+    for i in range(205):                                  # 205 islands of 6 x 6 cells, 10 m apart; the first five larger
+        items += _block(i * 10, 0, 5, 5) if i >= 5 else _block(i * 10, 0, 5, 5) + _block(i * 10, 0, 5, 5)
+    got = A.propose_areas(items, 1.0)
+    assert len(got) == A.MAX_AREAS
+    assert [g['bbox'][0] for g in got] == sorted(g['bbox'][0] for g in got)        # one row, left to right
+    assert got[0]['items'] == 2 * len(_block(0, 0, 5, 5))
 
 
 def test_areas_ignore_texts_inserts_and_broken_points() -> None:
