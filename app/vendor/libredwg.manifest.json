@@ -4,9 +4,9 @@
   "release": "0.14 (win64 build, GitHub release libredwg-0.14-win64.zip)",
   "licence": {
     "path": "COPYING",
-    "bytes": null,
-    "sha1": null,
-    "note": "GPL-3.0-or-later (README.txt); the zip has no COPYING: the owner fetches the text from gnu.org and runs --add-licence"
+    "bytes": 35149,
+    "sha1": "31a3d460bb3c7d98845187c716a30db81c44b615",
+    "note": "GPL-3.0 text from https://www.gnu.org/licenses/gpl-3.0.txt; not in the release zip"
   },
   "zip": {
     "path": "vendor/libredwg-0.14-win64.zip",

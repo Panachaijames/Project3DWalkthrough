@@ -121,6 +121,16 @@ export const setOptions = (patch: Partial<BuildSettings['options']>): Change => 
 export const setPieceLayer = (pieceLayer: BuildSettings['furniture']['pieceLayer']): Change => s =>
   (s.furniture.pieceLayer === pieceLayer ? s : { ...s, furniture: { ...s.furniture, pieceLayer } });
 
+/** The furniture reader's smallest-piece limits staff set on the Floors step (U-10.4: `minSize`, m, default 0.08: a
+ *  piece whose long side is shorter is left out; `minDepth`, m or null, default null: a piece thinner than it is left
+ *  out). After the final check of 9 Nov: no screen had them, so the house built through the screens read 7 thin items
+ *  more than its settings (0.25 / 0.25 m) do. The same values again are no change (the saver then sends nothing). */
+export const setFurnitureLimits = (patch: Partial<Pick<BuildSettings['furniture'], 'minSize' | 'minDepth'>>): Change => s => {
+  const minSize = patch.minSize === undefined ? s.furniture.minSize : patch.minSize;
+  const minDepth = patch.minDepth === undefined ? s.furniture.minDepth : patch.minDepth;
+  return minSize === s.furniture.minSize && minDepth === s.furniture.minDepth ? s : { ...s, furniture: { ...s.furniture, minSize, minDepth } };
+};
+
 /** The ItemRef of a plan entry (U-7.5, U-12.3): every field from the plan geometry, never derived here. */
 export function itemRef(plan: { source: Sha1; refOf(key: string): { sig: string; rsig: string; elementId: string | null; layer: string } | null },
   floor: string, key: string): ItemRef | null {
@@ -188,11 +198,50 @@ export const setOutlineEdge = (fix: OutlineEdgeFix): Change => s => {
   return { ...s, fixes: { ...s.fixes, outlineEdges: [...rest, fix] } };
 };
 
-/** A grey furniture family given a kind (U-12.3): settings.furniture.words[kind] gains it (and leaves any other kind). */
+/** The furniture kit's kinds (vendor/furniture_kit.py KINDS, in its legend order). */
+export const FURNITURE_KINDS: { kind: string; label: string }[] = [
+  { kind: 'atm', label: 'ATM / kiosk' }, { kind: 'computer', label: 'Computer / monitor' }, { kind: 'printer', label: 'Printer / copier' },
+  { kind: 'phone', label: 'Telephone' }, { kind: 'tv', label: 'TV / wall screen' }, { kind: 'partition', label: 'Privacy screen / panel' },
+  { kind: 'curtain', label: 'Curtain' }, { kind: 'lamp', label: 'Lamp' }, { kind: 'plant', label: 'Plant' },
+  { kind: 'sanitary', label: 'Sanitary fitting' }, { kind: 'appliance', label: 'Appliance' }, { kind: 'bed', label: 'Bed' },
+  { kind: 'seat', label: 'Chair / stool' }, { kind: 'sofa', label: 'Sofa / armchair' }, { kind: 'seat-back', label: 'Seat back' },
+  { kind: 'table', label: 'Table / desk' }, { kind: 'coffee-table', label: 'Coffee / side table' }, { kind: 'bar-table', label: 'Bar table' },
+  { kind: 'counter', label: 'Counter top' }, { kind: 'cabinet', label: 'Cabinet / casework' }, { kind: 'tall-cabinet', label: 'Tall cabinet / wardrobe' },
+  { kind: 'other', label: 'Other furniture' },
+];
+const KIND_KEYS = new Set(FURNITURE_KINDS.map(k => k.kind));
+
+/** White space as Python's str.split() sees it (str.isspace), by code point: the builder removes the same set. */
+const WHITE = new Set([0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x1c, 0x1d, 0x1e, 0x1f, 0x20, 0x85, 0xa0, 0x1680, 0x2000, 0x2001, 0x2002,
+  0x2003, 0x2004, 0x2005, 0x2006, 0x2007, 0x2008, 0x2009, 0x200a, 0x2028, 0x2029, 0x202f, 0x205f, 0x3000]);
+
+/** The one form a family name and a family word are compared in, the builder's own (services/builder/walkthrough_builder/
+ *  build/furniture.py `family_form`): every run of white space removed, lower case. So 'TF2092P' (a family as its flag
+ *  shows it, which is what the Check step saves), 'TF2092 P' (the acceptance settings' way: the furniture kit's
+ *  camel-case split) and 'tf2092p' are one family. After the final check of 9 Nov: the builder compared the word as
+ *  written with the camel-split name, so a family like TF2092P, A$C238E5230 or SmartTable kept no kind. */
+export const familyForm = (name: string): string =>
+  Array.from(name).filter(c => !WHITE.has(c.codePointAt(0)!)).join('').toLowerCase();
+
+/** The kind the settings give a family, or '': the first kind in the kit's order (sorted by key, as the builder tries
+ *  them) holding a word in the family's form. The select shows this, so it shows the kind the next build gives. */
+export function kindOfFamily(s: BuildSettings, family: string): string {
+  const form = familyForm(family);
+  if (!form) return '';
+  for (const kind of Object.keys(s.furniture.words).sort()) {
+    if (KIND_KEYS.has(kind) && (s.furniture.words[kind] ?? []).some(w => familyForm(w) === form)) return kind;
+  }
+  return '';
+}
+
+/** A grey furniture family given a kind (U-12.3): settings.furniture.words[kind] gains the family exactly as its flag
+ *  shows it, and every word in the family's form leaves every kind (one family, one kind: a word saved before in
+ *  another way, e.g. 'TF2092 P', is replaced, not kept beside it). '' (No kind) only takes the family out. */
 export const setFurnitureWord = (family: string, kind: string): Change => s => {
+  const form = familyForm(family);
   const words: Record<string, string[]> = {};
   for (const [k, list] of Object.entries(s.furniture.words)) {
-    const rest = list.filter(w => w !== family);
+    const rest = list.filter(w => familyForm(w) !== form);
     if (rest.length) words[k] = rest;
   }
   if (kind) words[kind] = [...(words[kind] ?? []), family];
@@ -253,6 +302,18 @@ export function namingIssues(s: BuildSettings): Issue[] {
   if (!PHOTO_NAME.test(s.project.photoName)) out.push({ path: 'project/photoName', message: 'photo name: letters, digits, _ . - only, at most 64' });
   if (!MAX_PREFIX.test(s.project.maxPrefix)) out.push({ path: 'project/maxPrefix', message: 'Max prefix: 2 - 4 capital letters' });
   if (!MAX_FILE_NAME.test(s.project.maxFileName)) out.push({ path: 'project/maxFileName', message: 'Max file name: letters, digits, _ . - only, ending in .ms' });
+  return out;
+}
+
+/** The furniture size limits' bounds (U-13.2 settings_issues: 0 - 10 m each; no depth limit is null). */
+export const MAX_FURNITURE_LIMIT = 10;
+
+/** What the API would refuse in the furniture size limits (U-13.2), in its words. */
+export function furnitureIssues(s: BuildSettings): Issue[] {
+  const out: Issue[] = [];
+  const { minSize, minDepth } = s.furniture;
+  if (!(minSize >= 0 && minSize <= MAX_FURNITURE_LIMIT)) out.push({ path: 'furniture/minSize', message: 'the smallest piece is 0 - 10 m' });
+  if (minDepth !== null && !(minDepth >= 0 && minDepth <= MAX_FURNITURE_LIMIT)) out.push({ path: 'furniture/minDepth', message: 'the smallest depth is 0 - 10 m' });
   return out;
 }
 

@@ -15,14 +15,16 @@ Licence
   version)").
 
 Where the licence text is
-  The release zip carries no COPYING file. The full GPL-3.0 text is published at https://www.gnu.org/licenses/gpl-3.0.txt
-  and goes beside the binaries as app/vendor/libredwg-0.14-win64/COPYING once the owner fetches it (network):
+  The release zip carries no COPYING file. The full GPL-3.0 text, fetched from https://www.gnu.org/licenses/gpl-3.0.txt
+  on 9 Nov 2026 (35,149 bytes, sha1 31a3d460bb3c7d98845187c716a30db81c44b615), sits beside the binaries as
+  app/vendor/libredwg-0.14-win64/COPYING, recorded in the manifest, so `npm run check:pins` verifies it with the rest.
+  It was put there with
       node tools/run-builder-py.mjs tools/vendor-libredwg.py --add-licence <path of gpl-3.0.txt>
-  which copies it in and records its sha1 in the manifest. Until then this file names the licence and the release.
+  (the same command again after a fresh extraction on another computer; re-extracting here keeps it).
   The source code of this release is at https://github.com/LibreDWG/libredwg (tag 0.14) and https://www.gnu.org/software/libredwg/.
 
 How the app uses it (the GPL boundary, U-6.1)
   * Only as a separate program: the worker runs dwg2dxf.exe and dwgread.exe as child processes (U-6.2, U-6.3).
     Nothing in the app links the library or loads its DLLs or its Python bindings.
-  * Its licence ships beside it (README.txt now, COPYING once fetched).
+  * Its licence ships beside it (README.txt and COPYING).
   * The staff web app, the viewer and the offline HTML files never contain it.

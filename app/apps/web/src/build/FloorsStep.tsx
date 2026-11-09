@@ -6,8 +6,8 @@
 // alignment (auto, grid, origin, two points picked on both sheets); "propose areas again on the wall layers" (in the
 // browser, on the decoded plan); the project details (office, names, photo name, Max prefix and file name, exported
 // from), the project defaults and the build options (outline-wall suggestions, how furniture pieces are read, the
-// offset with its Reset: U-10.5, U-9.6; UR, V2-1). Locked while a source is read again (U-7.4). Names from the drawing
-// are text.
+// furniture size limits, the offset with its Reset: U-10.4, U-10.5, U-9.6; UR, V2-1; the size limits after the final
+// check of 9 Nov). Locked while a source is read again (U-7.4). Names from the drawing are text.
 import { ArrowDown, ArrowUp, Crosshair, Plus, SquareDashed, Trash2 } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -21,8 +21,8 @@ import { FieldRow, NativeSelect, NumberField, TextField } from './fields';
 import { OfficeSelect } from './OfficeSelect';
 import { WALL_ROLES } from './roles';
 import {
-  addFloor, boxArea, defaultWallHeight, floorIssues, moveFloor, namingIssues, removeFloor, roleOf, round3, setDefaults,
-  setOffice, setOptions, setPieceLayer, setProject, updateFloor, DEFAULT_MATCH, DEFAULT_PAD,
+  addFloor, boxArea, defaultWallHeight, floorIssues, furnitureIssues, moveFloor, namingIssues, removeFloor, roleOf, round3,
+  setDefaults, setFurnitureLimits, setOffice, setOptions, setPieceLayer, setProject, updateFloor, DEFAULT_MATCH, DEFAULT_PAD,
 } from './settingsEdit';
 
 export const PAD_HELP = 'how far outside the box a line may reach';
@@ -275,12 +275,18 @@ function ProjectDetails({ settings, editable }: { settings: BuildSettings; edita
 
 export const OUTLINE_HELP = 'free edges of room outlines are offered as walls or glass on the Check step; nothing is built until accepted';
 export const PIECE_LAYER_HELP = 'also a block placed on another layer whose drawing is mostly on furniture layers (the suite\'s pieces)';
+export const MIN_SIZE_HELP = 'a piece whose longest side is shorter is left out (0.08 m keeps almost everything)';
+export const MIN_DEPTH_HELP = 'a piece whose shortest side is thinner is left out, such as thin lines read as furniture; empty: no limit';
 
 /** The builder options staff set for a drawing style (U-10.5) and the offset (U-9.6): UR, V2-1 found them reachable
- *  through the API only, although the design and the gap report send staff here for them. */
+ *  through the API only, although the design and the gap report send staff here for them. The furniture size limits
+ *  (U-10.4 minSize, minDepth) joined them after the final check of 9 Nov (the house's settings leave out pieces under
+ *  0.25 m; through the screens 7 thin items came in grey). */
 function BuildOptions({ settings, editable }: { settings: BuildSettings; editable: boolean }) {
   const { change } = useBuildContext();
   const offset = settings.options.offset;
+  const fu = settings.furniture;
+  const limitIssues = furnitureIssues(settings);
   return (
     <section className="grid gap-3 border-t pt-3" data-testid="build-options">
       <h4 className="text-xs font-semibold text-muted-foreground">Build options</h4>
@@ -299,7 +305,14 @@ function BuildOptions({ settings, editable }: { settings: BuildSettings; editabl
             <option value="drawn">Also blocks drawn on furniture layers</option>
           </NativeSelect>
         </FieldRow>
+        <NumberField label="Leave out furniture shorter than" help={MIN_SIZE_HELP} value={fu.minSize} disabled={!editable}
+          testId="option-min-size" onCommit={v => change(setFurnitureLimits({ minSize: v ?? fu.minSize }))} />
+        <NumberField label="Leave out furniture thinner than" help={MIN_DEPTH_HELP} value={fu.minDepth} allowEmpty placeholder="no limit"
+          disabled={!editable} testId="option-min-depth" onCommit={v => change(setFurnitureLimits({ minDepth: v }))} />
       </div>
+      {limitIssues.length > 0 && (
+        <ul className="text-xs text-destructive" data-testid="option-limit-issues">{limitIssues.map(i => <li key={i.path}>{i.message}</li>)}</ul>
+      )}
       <div className="grid gap-1 text-sm" data-testid="option-offset" data-offset={offset === 'auto' ? 'auto' : offset.join(',')}>
         <span className="text-xs text-muted-foreground">Model position (offset)</span>
         {offset === 'auto' ? (

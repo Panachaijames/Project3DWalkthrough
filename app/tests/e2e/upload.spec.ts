@@ -7,7 +7,11 @@
 // click makes one version) -> the version page shows the viewer with one canvas, live() === 1 -> the CSV download equals
 // v2's and the Max script the upload-profile script (generated at test time with the build's date; the mock serves the
 // bank's). A second test uploads a synthetic DXF with hostile names and walks every step: nothing injected, no dialog,
-// the names shown as text. Projects made here use ids e2e-* (U-15.3).
+// the names shown as text. A third (after the final check of 9 Nov, contract-issues/UR.md) uploads the synthetic plan
+// with two furniture families named as the house's that the Check step could not give a kind (TF2092P: a capital after a
+// digit; FurnGroup: after a small letter): both grey, each given a kind with its select, the rebuild gives each its kind
+// and no flag is left for them (real API only: the mock serves the bank's overlay). Projects made here use ids e2e-*
+// (U-15.3).
 //
 // U6 alone, against the mock API and the fake viewer (Git Bash, from app/):
 //   WT_WEB_PORT=5736 WT_API_PORT=8736 WT_TMP="$TEMP/wt-u6" WT_SERVE=web WT_SKIP_STORE_CHECK=1 VITE_FAKE_VIEWER=1 \
@@ -17,11 +21,11 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
 import { formatDate } from '../../apps/web/src/lib/format';
-import type { BuildSettings } from '../../apps/web/src/upload/contracts';
+import type { BuildOverlay, BuildSettings } from '../../apps/web/src/upload/contracts';
 import { backend, download, facts, MOCK_API, useApi, viewerReady } from '../../apps/web/test/e2e/web-kit';
 import {
-  BANK_DWGS, buildIdOf, getBuild, itemInBlock, itemOn, makeHostileDxf, planOf, putBuildSettings, settingsSaved,
-  uploadProfileScript, waitForReading, waitForResult,
+  BANK_DWGS, buildIdOf, getBuild, GREY_FAMILIES, itemInBlock, itemOn, makeGreyFamilyDxf, makeHostileDxf, planOf,
+  putBuildSettings, settingsSaved, uploadProfileScript, waitForReading, waitForResult,
 } from '../../apps/web/test/e2e/upload-kit';
 import { BUILD_FILES } from '../../apps/web/test/mock-api/builds';
 import { FIXTURES_DIR } from '../../apps/web/test/mock-api/fixtures';
@@ -241,5 +245,58 @@ test('A-7: a DXF with hostile names through every step: shown as text, nothing i
   await expect(page).toHaveURL(new RegExp(`/projects/${projectId}/v/1$`), { timeout: 60_000 });
   await expect(page.getByTestId('app-bar-title')).toHaveText('E2E Hostile <img src=x onerror=alert(9)>');
   expect(await injected()).toEqual({ imgs: 0, scripts: 0 });
+  expect(dialogs).toEqual([]);
+});
+
+test('after the final check: a grey family given a kind on the Check step takes it at the rebuild (TF2092P, FurnGroup)', async ({ page, request }, testInfo) => {
+  test.skip(MOCK_API, 'the mock API serves the bank overlay whatever the settings: this needs the real builder');
+  test.setTimeout(10 * 60_000);
+  const dialogs = noDialogs(page);
+  const projectId = 'e2e-grey';
+  await newProject(page, 'E2E Grey families', projectId, {});
+  await uploadAndContinue(page, [makeGreyFamilyDxf(testInfo.outputPath('grey-families.dxf'))]);
+  const buildId = await buildIdOf(page);
+  await waitForReading(request, projectId, buildId);
+  await expect(page.locator('[data-testid=source-card] [data-testid=units-select]')).toBeEnabled({ timeout: 30_000 });
+
+  // Layers (I-FURN is furniture by its name), Floors (the proposal: one floor, the whole file), Build
+  await goStep(page, 'layers');
+  await expect(page.locator('[data-testid=layer-row][data-layer="I-FURN"] [data-testid=role-select]')).toHaveValue('furniture');
+  await goStep(page, 'floors');
+  await settingsSaved(page);
+  await goStep(page, 'build');
+  await expect(page.getByTestId('checklist-clear')).toBeVisible();
+  await page.getByTestId('run-build').click();
+  const first = await waitForResult(page, request, projectId, buildId, null);
+
+  // Check: both families grey; each given a kind with its select, saved exactly as the flag shows it
+  await goStep(page, 'check');
+  for (const [family, kind] of Object.entries(GREY_FAMILIES)) {
+    const row = page.locator(`[data-testid=furniture-family][data-family="${family}"]`);
+    await expect(row).toBeVisible({ timeout: 30_000 });
+    await row.getByTestId('furniture-word-kind').selectOption(kind);
+    await settingsSaved(page);
+    await expect(row.getByTestId('furniture-word-kind')).toHaveValue(kind);
+  }
+  expect((await getBuild(request, projectId, buildId)).settings!.furniture.words).toEqual(
+    Object.fromEntries(Object.entries(GREY_FAMILIES).map(([family, kind]) => [kind, [family]])));
+
+  // Rebuild: each family has its kind in the model, no grey flag is left for them, and the list on screen drops them
+  await page.getByTestId('rebuild').click();
+  const second = await waitForResult(page, request, projectId, buildId, first.result!.runId);
+  const model = (await (await request.get(second.result!.urls.model)).json()) as { furniture: { family: string; kind: string }[] };
+  const overlay = (await (await request.get(second.result!.urls.overlay)).json()) as BuildOverlay;
+  const grey = overlay.flags.filter(f => f.kind === 'grey-furniture').map(f => f.ref.family);
+  for (const [family, kind] of Object.entries(GREY_FAMILIES)) {
+    expect(model.furniture.filter(p => p.family === family).map(p => p.kind), family).toEqual([kind]);
+    expect(grey).not.toContain(family);
+    await expect(page.locator(`[data-testid=furniture-family][data-family="${family}"]`)).toHaveCount(0, { timeout: 30_000 });
+  }
+
+  // saved, so that the e2e project has a version (web.spec.ts checks every card of the list it reads)
+  await goStep(page, 'save');
+  await expect(page.getByTestId('save-build')).toBeEnabled();
+  await page.getByTestId('save-build').click();
+  await expect(page).toHaveURL(new RegExp(`/projects/${projectId}/v/1$`), { timeout: 60_000 });
   expect(dialogs).toEqual([]);
 });

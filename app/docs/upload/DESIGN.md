@@ -78,7 +78,7 @@ All screens are in the staff app (`apps/web`), PC first. Every name that comes f
 | 5 | `/projects/:id/builds/:buildId` | **Build** page with a step bar: Files . Layers . Floors . Build . Check . Save (`?step=`); a step is reachable once its inputs exist | the build's `BuildDetail`, polled every 1 s while a run is queued or running | the six panels below |
 | 5a | step **Files** | per source: name, size, kind, the conversion verdict (`ok` green, `minor` amber, `loss` red, `failed`), its notes, the layers whose counts differ, the blocks lost with how many of their inserts lie on the sheet (and a sheet view with the lost inserts marked); the units: declared, the door votes, the verdict | units select per source, enabled once the proposal is in (a change rescales that source's boxes and points and re-reads it at once, U-7.4); **Start again with other files** (new build, settings copied: `createBuild { from: { kind: 'build' } }`), the advice to export a DXF from AutoCAD when the verdict is `loss` |
 | 5b | step **Layers** | one row per layer name across the sources (100 - 400 rows): name, on/off/frozen, items by type, fills, door arcs, texts, inserts, top block families, the suggested role with where it came from and its evidence; filters (unmapped, by role, search); the sheet on the canvas (U-12.1) with the hovered or selected layer highlighted and every layer coloured by its role | a native `<select>` per row (17 roles shown by their labels with one line of help, U-8.1; a warning chip on an `ignore` row close to walls); "apply to all rows shown" for a filtered set; changes save as settings (`putBuildSettings`, debounced 800 ms, If-Match; the first save from this step carries `layersReviewed: true`, U-8.3) |
-| 5c | step **Floors** | each source's sheet with the area proposals (dashed) and the level tags and grid labels marked; the floor list | add, remove, reorder floors; per floor: key, name, source, area (whole file, or a box: click a proposal or drag one; pad and match under "Advanced", U-9.1), level (typed, or picked from the list of all the source's level tags with their labels, U-9.2), wall height (default: next level - this level; the top floor typed), slab thickness, door head / window sill / head defaults, alignment (auto, grid, origin, two points picked on both sheets); project details: office (U-8.4), photo name, Max prefix, Max file name, exported from |
+| 5c | step **Floors** | each source's sheet with the area proposals (dashed) and the level tags and grid labels marked; the floor list | add, remove, reorder floors; per floor: key, name, source, area (whole file, or a box: click a proposal or drag one; pad and match under "Advanced", U-9.1), level (typed, or picked from the list of all the source's level tags with their labels, U-9.2), wall height (default: next level - this level; the top floor typed), slab thickness, door head / window sill / head defaults, alignment (auto, grid, origin, two points picked on both sheets); project details: office (U-8.4), photo name, Max prefix, Max file name, exported from; the build options (UR: outline-wall suggestions, how furniture pieces are read, the model position's Reset; after the final check of 9 Nov: the furniture size limits `minSize` and `minDepth`, U-10.4) |
 | 5d | step **Build** | the pre-build checklist (U-14.3); the run's steps with their status and seconds, a progress bar, the last messages ("Stopping..." after Cancel); when done: counts per floor, the flags count, the top view, a **3D preview** (the viewer on the draft, U-14.4) | **Build** (`runBuild`), **Cancel** (`cancelBuildRun`); a failed run shows its error and what to change |
 | 5e | step **Check** | per floor: the plan with the built walls, glass, openings, furniture boxes and flags over it (U-12); the flag list; the diff against the previous build and against the latest version | select items (click, shift-click, box; pick modes item / whole block / layer in a box, U-12.1) -> **Set aside** / **Restore**; an opening -> kind (door, window, passage, not an opening), head, sill; an outline suggestion -> wall, glass, refuse; grey furniture families -> pick a kind; floor heights; **Rebuild** (a build run) |
 | 5f | step **Save** | the label (default `<d Mon yyyy>: built from <file names>`), what will be saved (counts, flags left, the stamp), "carry the furniture heights of v<n>" (ticked), "remember these layer roles for <office>" (ticked; hidden with no office, and an office select offered, U-8.4) | `saveBuild` (the button disabled while the request is in flight) -> the new version's page `/projects/:id/v/:n` |
@@ -340,9 +340,9 @@ no Retry, and the size refusal is said in MB.
   `app/vendor/libredwg.manifest.json` (tracked) lists each file's path, bytes and sha1 (`dwg2dxf.exe` `07f9c8d95dc0...`,
   `dwgread.exe` `bd2a2745827a...`, `libredwg-0.dll` `4146008520ec...`), and `npm run check:pins` verifies them.
 * **Licence:** the zip carries no COPYING file; its `README.txt` (shipped) states GPL-3.0-or-later. The full GPL-3.0
-  text goes beside it as `app/vendor/libredwg-0.14-win64/COPYING` once the owner fetches it (gnu.org, network; its sha1
-  recorded in the manifest). Until then `app/vendor/LIBREDWG-LICENCE.txt` (tracked) names the licence, the release and
-  where the text is, and the scaffold's report lists the fetch as the owner's action.
+  text goes beside it as `app/vendor/libredwg-0.14-win64/COPYING` (fetched from gnu.org and recorded, with its sha1, in
+  the manifest on 9 Nov 2026). `app/vendor/LIBREDWG-LICENCE.txt` (tracked) names the licence, the release and where the
+  text is.
 * Setting `WALKTHROUGH_LIBREDWG_DIR` (default `vendor/libredwg-0.14-win64`, relative to `app/`). Cloud Run later needs a
   Linux build behind the same setting.
 * **GPL boundary:** LibreDWG runs only as a separate program; nothing links it; its licence ships beside it; the staff
@@ -813,7 +813,14 @@ golden breaks. A U3 test builds the bank from its settings rewritten with intege
    detector's (`none` drops it: nothing is cut), `head` / `sill` replace the computed ones. Unmatched: flagged.
 3. **Outline edges** (`fixes.outlineEdges`): an accepted suggestion (same edge within 0.05 m) becomes a wall or glass
    segment before the cut.
-4. **Furniture words and heights** come in through `settings.furniture`.
+4. **Furniture words and heights** come in through `settings.furniture`. A word that names a family exactly gives it
+   that kind, the two compared with every run of white space removed and in lower case (`build/furniture.py`
+   `family_form`; the web app's `familyForm` is the same rule), after the kit's skip words and before its vocabulary;
+   it also wins over another kind's word that the kit finds inside the family's longer name (the family's own word is
+   what staff picked for it). Every word also reaches the kit in the kit's own camel-case form, so it still matches
+   whole inside longer names. A
+   loose-shape family (`loose shapes on <layer>`) takes its word too. (After the final check of 9 Nov: the Check step
+   saves a family as its flag shows it, `TF2092P`, and the kit compared it as written with the split name `TF2092 P`.)
 
 ### 10.7 The detector wrapper (`build/detect.py`)
 
@@ -1134,8 +1141,9 @@ From the report and the detector, in `overlay.json` (`Flag`):
   settings saver shows "too many items set aside at once: set aside whole blocks instead" on a 413.
 * **Opening**: click an opening -> kind, head, sill -> `fixes.openings` (a, b as detected, sheet m).
 * **Outline suggestion**: wall / glass / refuse -> `fixes.outlineEdges`.
-* **Grey furniture**: per family, a kind -> `settings.furniture.words[kind]` gains the family (and "remember for the
-  office").
+* **Grey furniture**: per family, a kind -> `settings.furniture.words[kind]` gains the family exactly as its flag shows
+  it, and any word of the same family (U-10.6 point 4's form) leaves every other kind; the select shows the kind the
+  next build gives ("remember for the office" is not offered: no contract field, U6-3).
 * **Heights**: the floors' levels and wall heights, the project's door head, railing and single-line heights (the same
   fields as the Floors step).
 * **Rebuild** -> `runBuild`; while it runs, the screen keeps the last result.

@@ -629,6 +629,9 @@ export function createUploadMock(host: UploadHost): UploadMock {
       if (!b.sources.includes(f.source)) out.push({ path: `floors/${i}/source`, message: 'not a source of the build' });
       if (f.area.kind === 'box' && !(f.area.bbox[0] < f.area.bbox[2] && f.area.bbox[1] < f.area.bbox[3])) out.push({ path: `floors/${i}/area`, message: 'an empty box' });
     });
+    // the furniture size limits, as the API's settings_issues (U-13.2: 0 - 10 m; no depth limit is null)
+    if (!(s.furniture.minSize >= 0 && s.furniture.minSize <= 10)) out.push({ path: 'furniture/minSize', message: 'the smallest piece is 0 - 10 m' });
+    if (s.furniture.minDepth !== null && !(s.furniture.minDepth >= 0 && s.furniture.minDepth <= 10)) out.push({ path: 'furniture/minDepth', message: 'the smallest depth is 0 - 10 m' });
     if (s.fixes.setAside.length > 20_000) out.push({ path: 'fixes/setAside', message: 'at most 20,000 set-asides' });
     if (s.sources.some(x => x.units === null)) out.push({ path: 'sources', message: 'every source needs its units' });
     if (s.office !== null && !/^[a-z0-9][a-z0-9-]{1,62}$/.test(s.office)) out.push({ path: 'office', message: 'not an office id' });

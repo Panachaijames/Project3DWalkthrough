@@ -36,8 +36,8 @@ Both forms (a new project `bank-reupload`, and version 3 of the seeded `bank-sam
 `stages.json` in `floors[k].lines`, `rings`, `sheet` and `source.files`, `layersInUse`, `units`. The Max generator with the
 `bank-27oct` profile on the uploaded model gives `bank_test/Bangkok_Bank_Sampeng.ms` byte for byte (`615d50137bdb`, 867
 CRLF lines); the version's own script (profile `upload`) equals the generator's output with the build's date (9 Nov 2026)
-and differs from the bank-profile script in its 13 profile lines only (header, built-by, converter, follow / keep, datum
-Source and Built, rollout title). The gap report finds nothing over its thresholds on either floor.
+and differs from the bank-profile script only in its profile lines: 8 lines replaced by 11 (header, built-by, converter,
+follow / keep, datum Source and Built, rollout title; corrected on 9 Nov after the final check, which counted them). The gap report finds nothing over its thresholds on either floor.
 
 Different by design (A-1 "may differ"): `stages.json` `pieces` (the build's own pairing) and every text; `version.json`
 `label`, `createdAt`, no `seed`; the presentation (heading without "(test)", the fact-built intro, the fitSlabs camera);

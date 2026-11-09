@@ -1,27 +1,14 @@
 // Grey furniture (docs/upload/DESIGN.md U-12.3): a family the furniture kit could not classify (kind `other`) gets a kind
-// -> settings.furniture.words[kind] gains the family (and leaves any other kind). Family names are drawing text.
+// -> settings.furniture.words[kind] gains the family as its flag shows it (and it leaves any other kind). The select
+// shows the kind the builder will give the family: both compare a word and a family in one form (settingsEdit.ts
+// `familyForm`, the builder's `family_form`; after the final check of 9 Nov). Family names are drawing text.
 // "Remember for the office" per word is not offered: the settings and SaveBuildRequest carry no such flag
 // (contract-issues/U6.md U6-3), so words stay with the project.
 import type { BuildSettings } from '@/upload/contracts';
 import { NativeSelect } from './fields';
+import { FURNITURE_KINDS, kindOfFamily } from './settingsEdit';
 
-/** The furniture kit's kinds (vendor/furniture_kit.py KINDS, in its legend order). */
-export const FURNITURE_KINDS: { kind: string; label: string }[] = [
-  { kind: 'atm', label: 'ATM / kiosk' }, { kind: 'computer', label: 'Computer / monitor' }, { kind: 'printer', label: 'Printer / copier' },
-  { kind: 'phone', label: 'Telephone' }, { kind: 'tv', label: 'TV / wall screen' }, { kind: 'partition', label: 'Privacy screen / panel' },
-  { kind: 'curtain', label: 'Curtain' }, { kind: 'lamp', label: 'Lamp' }, { kind: 'plant', label: 'Plant' },
-  { kind: 'sanitary', label: 'Sanitary fitting' }, { kind: 'appliance', label: 'Appliance' }, { kind: 'bed', label: 'Bed' },
-  { kind: 'seat', label: 'Chair / stool' }, { kind: 'sofa', label: 'Sofa / armchair' }, { kind: 'seat-back', label: 'Seat back' },
-  { kind: 'table', label: 'Table / desk' }, { kind: 'coffee-table', label: 'Coffee / side table' }, { kind: 'bar-table', label: 'Bar table' },
-  { kind: 'counter', label: 'Counter top' }, { kind: 'cabinet', label: 'Cabinet / casework' }, { kind: 'tall-cabinet', label: 'Tall cabinet / wardrobe' },
-  { kind: 'other', label: 'Other furniture' },
-];
-
-/** The kind the settings give a family, or ''. */
-export function kindOfFamily(s: BuildSettings, family: string): string {
-  for (const [kind, words] of Object.entries(s.furniture.words)) if (words.includes(family)) return kind;
-  return '';
-}
+export { FURNITURE_KINDS, kindOfFamily };
 
 export interface FurnitureWordsProps {
   families: { family: string; count: number | null }[];

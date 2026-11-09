@@ -85,8 +85,9 @@ npm run test:builder                                  (the builder's own tests)
 ```
 
 LibreDWG is GPL-3.0-or-later (`vendor/LIBREDWG-LICENCE.txt`): it only ever runs as a separate program, and the staff app
-and the offline files never contain it. Its full licence text is fetched by the owner from gnu.org and recorded with
-`npm run vendor:libredwg -- --add-licence <file>`.
+and the offline files never contain it. Its full licence text (from gnu.org) sits beside it as
+`vendor/libredwg-0.14-win64/COPYING`, recorded on 9 Nov 2026 with `npm run vendor:libredwg -- --add-licence <file>`
+(run that again after a fresh extraction on another computer).
 
 ## The offline viewer (one HTML file per project version)
 

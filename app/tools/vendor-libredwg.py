@@ -7,7 +7,7 @@ The zip is the authority. This script
   * writes app/vendor/libredwg.manifest.json (path, bytes and sha1 of every file; the zip's sha1 and entry count) when it
     does not exist, and otherwise checks the extraction against it;
   * --verify checks the extracted folder against the manifest without extracting (npm run check:pins does the same);
-  * --add-licence <file> copies the GPL-3.0 text the owner fetched (gnu.org) in as libredwg-0.14-win64/COPYING and
+  * --add-licence <file> copies the GPL-3.0 text (fetched from gnu.org) in as libredwg-0.14-win64/COPYING and
     records its sha1 in the manifest (U-6.1).
 
 Standard library only, so any Python runs it (npm run vendor:libredwg uses the builder Python, -B). Run from app/:
@@ -153,7 +153,7 @@ def main() -> int:
         dst = TARGET / LICENCE_NAME
         shutil.copyfile(src, dst)
         manifest['licence'] = {'path': LICENCE_NAME, 'bytes': dst.stat().st_size, 'sha1': sha1_file(dst),
-                               'note': 'GPL-3.0 text fetched by the owner (gnu.org); not in the release zip'}
+                               'note': 'GPL-3.0 text from https://www.gnu.org/licenses/gpl-3.0.txt; not in the release zip'}
         write_manifest(manifest)
         print(f'vendor-libredwg: {dst} recorded ({manifest["licence"]["sha1"]})')
         return 0

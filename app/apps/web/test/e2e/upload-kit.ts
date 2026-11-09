@@ -118,6 +118,29 @@ export function makeHostileDxf(out: string): string {
   return out;
 }
 
+/** The grey families of makeGreyFamilyDxf's drawing and the kind the test gives each on the Check step. */
+export const GREY_FAMILIES: Record<string, string> = { TF2092P: 'sanitary', FurnGroup: 'sofa' };
+
+/** The synthetic plan (tools/upload/make-test-dxf.py small, the builder Python) with its furniture blocks renamed the way
+ *  the final check of 9 Nov found failing (contract-issues/UR.md, "After the final check"): the desk becomes 'TF2092P'
+ *  (a capital right after a digit, as the house's sanitary fittings) and the group's two chairs 'A$C238E5230' (the
+ *  house's beds), so that the group 'FurnGroup' (a capital right after a small letter) is a piece of its own. The
+ *  furniture kit knows none of them: 'TF2092P' and 'FurnGroup' come out grey. The names are replaced in the file's
+ *  text, as make-test-dxf.py itself places its hostile names. */
+export function makeGreyFamilyDxf(out: string): string {
+  const small = `${out}.small.dxf`;
+  execFileSync(process.execPath, ['tools/run-builder-py.mjs', 'tools/upload/make-test-dxf.py', 'small', small], {
+    cwd: APP_DIR, stdio: 'pipe', env: { ...process.env, PYTHONIOENCODING: 'utf-8' },
+  });
+  let text = readFileSync(small, 'utf8');
+  for (const [was, now] of [['Desk 1600x800', 'TF2092P'], ['Chair-Mollie-1234567-Level 1', 'A$C238E5230']] as const) {
+    if (!text.includes(was)) throw new Error(`make-test-dxf.py small has no block ${was}`);
+    text = text.split(was).join(now);
+  }
+  writeFileSync(out, text, 'utf8');
+  return out;
+}
+
 /** The version's own .ms with the `upload` profile, generated at test time with the build's date (U-11.5; real API only),
  *  through the generator's command line exactly as the build calls it (U4-3, U4-6: `--sources kind:units` per source
  *  in the model's order, the converter's version when a source is a DWG; settled at integration, contract issue U6-5). */

@@ -1,7 +1,7 @@
 // The Build page's six steps (docs/upload/DESIGN.md U-2 screen 5, U-14.3): which are reachable, and the pre-build
 // checklist. Pure functions of the BuildDetail and the settings on screen.
 import type { BuildDetail, BuildSettings, RunInfo, Units } from '@/upload/contracts';
-import { floorIssues, namingIssues, UNIT_NAMES, UNITS } from './settingsEdit';
+import { floorIssues, furnitureIssues, namingIssues, UNIT_NAMES, UNITS } from './settingsEdit';
 
 export const STEPS = ['files', 'layers', 'floors', 'build', 'check', 'save'] as const;
 export type StepId = (typeof STEPS)[number];
@@ -105,7 +105,7 @@ export function checklist(d: BuildDetail, s: BuildSettings | null,
     }
   });
   const seen = new Set(out.map(i => i.text));
-  for (const issue of [...floorIssues(s), ...namingIssues(s)]) {
+  for (const issue of [...floorIssues(s), ...namingIssues(s), ...furnitureIssues(s)]) {
     if (seen.has(issue.message)) continue;
     seen.add(issue.message);
     out.push({ id: `issue:${issue.path}`, step: 'floors', text: issue.message, level: 'block' });

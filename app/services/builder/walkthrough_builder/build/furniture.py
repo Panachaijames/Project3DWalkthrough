@@ -17,6 +17,10 @@ The report keys these rules add appear only when they counted something, so the 
 
 The kit (vendor/furniture_kit.py) is unchanged. Each piece carries `_src` (its INSERT item, or None for loose lines)
 and `_kids` (what is drawn in it) for the placements (U-11.7); finish() never copies those keys into the model.
+
+The staff's family words (`furniture.words`, written by the Check step as the family's flag shows it) go through
+`FamilyWords` (after the final check of 9 Nov 2026): a word that names a family exactly, compared in one form
+(`family_form`), gives that family its kind whatever its capitals, digits, underscores or symbols.
 """
 from __future__ import annotations
 
@@ -33,6 +37,66 @@ fk = load('furniture_kit')
 _geom = load('geom')
 even_odd = _geom.even_odd
 KIND_BY = {k['key']: k for k in fk.KINDS}
+
+
+# ---------------------------------------------------------------------------------------------------- family words
+def family_form(name: str) -> str:
+    """The one form a family name and a staff family word are compared in: every run of white space (as str.split()
+    sees it) removed, lower case. So 'TF2092P' (the Check step saves a family as its flag shows it), 'TF2092 P' (the
+    acceptance settings' way: the kit's camel-case split) and 'tf2092p' are one family. The web app's `familyForm`
+    (apps/web/src/build/settingsEdit.ts) is the same rule, so the kind its select shows is the kind built."""
+    return ''.join((name or '').split()).lower()
+
+
+def shown_family(fam: str, block: str) -> str:
+    """The family name a piece's grey-furniture flag shows (out/overlay.py grey_furniture_flags: the family, else the
+    block, else '(no name)'): the name the Check step saves as the word."""
+    return fam or block or '(no name)'
+
+
+def loose_family(layer: str) -> str:
+    """The family of a box made from loose lines on a layer, as the model, the CSV and the flags name it."""
+    return f'loose shapes on {layer}'
+
+
+class FamilyWords:
+    """settings.furniture.words as the furniture reader uses them (U-10.6 point 4, U-12.3).
+
+    The Check step saves a grey family under the kind staff pick, as the family's flag shows it ('TF2092P'). The kit
+    matches words against the family name split at camel case ('TF2092 P'), so until 9 Nov a word with a capital right
+    after a digit or a small letter never matched, and its family stayed grey while the select showed the kind (5 of the
+    house's 13 families; a loose-shape family was never given its word at all). Now, in the kit's order:
+      * a skip word still says a block is no furniture (the kit decides that first);
+      * a word in the family's own form (`family_form`) gives the family that kind; when several kinds hold one, the first
+        kind in the kit's own order (sorted by key) wins;
+      * every word also reaches the kit in the kit's own camel-case form, so it still matches whole inside longer names
+        whatever its capitals and digits ('Fritz-Hansen' in 'Fritz-Hansen_SH200 - Default', 'TF2092P' in 'TF2092P-L'),
+        as the kit's words always did; a word the kit cannot take as a word (blank, or holding '|', its 'or') names its own
+        family only.
+    The bank's words reach the kit unchanged (no capital after a digit or small letter): its model and CSV stay v2's."""
+
+    def __init__(self, furn: dict):
+        words = furn.get('words') or {}
+        self.skip = furn.get('skip')
+        self.kit_words = {kind: [fk._camel(w) for w in ws if w.strip() and '|' not in w] for kind, ws in words.items()}
+        self.exact: dict[str, str] = {}
+        for kind in sorted(words):
+            if kind not in KIND_BY:
+                continue                                    # the kit refuses an unknown kind itself
+            for w in words[kind]:
+                form = family_form(w)
+                if form:
+                    self.exact.setdefault(form, kind)
+
+    def of_block(self, fam: str, layer: str, block: str) -> str | None:
+        """The kind of a block's piece: `fam` its family (what the kit reads), `block` its block name (for the flag's
+        fallback). None: not furniture (a skip word)."""
+        kind = fk.classify(fam, layer, self.kit_words, self.skip)
+        return None if kind is None else self.exact.get(family_form(shown_family(fam, block)), kind)
+
+    def of_loose(self, layer: str) -> str:
+        """The kind of a box made from loose lines on `layer`: its family's word, else the kit's rule for the layer."""
+        return self.exact.get(family_form(loose_family(layer)), fk.classify('', layer))
 
 
 def shape_of(d):
@@ -62,6 +126,7 @@ def furniture_of(F, X, solid_model=None, cxy=(0.0, 0.0)):
     MIN_DEPTH = FURN.get('minDepth')
     drawn_rule = FURN.get('pieceLayer', 'insert') == 'drawn'
     loose_layers = set(FURN.get('looseLayers') or [])
+    words = FamilyWords(FURN)
     furn_role = lambda lay: 'furniture' in X.role_of(lay) and 'ignore' not in X.role_of(lay)  # noqa: E731
     furn = lambda d: 'furniture' in d['roles'] and 'ignore' not in d['roles']  # noqa: E731
 
@@ -101,9 +166,9 @@ def furniture_of(F, X, solid_model=None, cxy=(0.0, 0.0)):
             if piece:
                 kids, j = I.drawn_inside(items, i)
                 fam = family(d['name'])
-                kind = fk.classify(fam, lay, FURN.get('words'), FURN.get('skip'))
+                kind = words.of_block(fam, lay, d['name'])
                 nested = [k for k in kids if k['t'] == 'INSERT' and furn(k)]
-                parts = [fk.classify(family(k['name']), k['lay'], FURN.get('words'), FURN.get('skip')) for k in nested]
+                parts = [words.of_block(family(k['name']), k['lay'], k['name']) for k in nested]
                 known = [kd for kd in parts if kd not in (None, 'other') and not KIND_BY[kd]['onTop']]
                 if kind == 'other' and len(known) >= 2:     # an assembly: its parts are met next (house rule 2)
                     extra['assemblies'] += 1
@@ -166,7 +231,7 @@ def furniture_of(F, X, solid_model=None, cxy=(0.0, 0.0)):
                     extra['builtOver'] += 1
                     continue
             loose_boxes += 1
-            pieces.append({'floor': key, 'kind': fk.classify('', lay), 'family': f'loose shapes on {lay}', 'block': '', 'layer': lay,
+            pieces.append({'floor': key, 'kind': words.of_loose(lay), 'family': loose_family(lay), 'block': '', 'layer': lay,
                            'handle': '', **b, 'on': None, 'note': 'drawn loose, not as a block', '_src': None, '_kids': None})
     # the same box twice (a drawing bound in twice): one piece (house)
     unique, dup = {}, 0
