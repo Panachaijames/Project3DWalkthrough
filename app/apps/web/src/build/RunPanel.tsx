@@ -28,7 +28,7 @@ function StepIcon({ status }: { status: RunInfo['steps'][number]['status'] }) {
 
 export interface RunPanelProps {
   run: RunInfo;
-  /** Cancel is offered (the Build step); null hides it. */
+  /** Cancel is offered (the Build step, and the Files step's reading: UR, V2-4); null hides it. */
   onCancel?: (() => void) | null;
   cancelling?: boolean;
   title?: string;
@@ -79,7 +79,7 @@ export function RunPanel({ run, onCancel = null, cancelling = false, title }: Ru
           <AlertTitle>{run.status === 'cancelled' ? 'Cancelled' : 'The run did not finish'}</AlertTitle>
           <AlertDescription>
             <p data-testid="run-error-message">{run.error.message}</p>
-            <p className="mt-1" data-testid="run-advice">{errorAdvice(run.error.code)}</p>
+            <p className="mt-1" data-testid="run-advice">{errorAdvice(run.error.code, run.kind)}</p>
           </AlertDescription>
         </Alert>
       )}

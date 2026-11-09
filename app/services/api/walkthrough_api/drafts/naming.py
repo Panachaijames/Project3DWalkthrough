@@ -45,8 +45,10 @@ def slug(text: str, limit: int = NEW_ID_MAX) -> str:
 
 
 def derived_project_id(name: str) -> str:
+    """The slug of the name, or `project-<6 hex>` when it is shorter than 2 or holds no letter (UR, V2-15: a Thai name
+    with a number, 'บ้านสุขุมวิท ซอย 31', became the id '31')."""
     s = slug(name)
-    return s if len(s) >= 2 else f'project-{secrets.token_hex(3)}'
+    return s if len(s) >= 2 and any(c.isalpha() for c in s) else f'project-{secrets.token_hex(3)}'
 
 
 def id_problem(project_id: str) -> str | None:
@@ -54,6 +56,9 @@ def id_problem(project_id: str) -> str | None:
     if not NEW_ID.fullmatch(project_id):
         return ('a project id is 2 - 40 lower-case letters, digits and hyphens, starting with a letter or digit '
                 '(the 40-character limit keeps every file path within Windows\' 260 characters)')
+    if project_id.endswith('-') or '--' in project_id:
+        # (UR, V2-15: 'ab-' and 'a--b' were taken; a slug never makes either)
+        return 'a project id ends with a letter or digit and has no two hyphens in a row'
     return None
 
 

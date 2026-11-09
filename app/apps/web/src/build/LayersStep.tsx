@@ -1,7 +1,9 @@
 // Step "Layers" (docs/upload/DESIGN.md U-2 5b, U-8.1, U-8.3, U-14.3): one row per layer name across the sources (100 - 400
 // rows): name, on/off/frozen, items by type, fills, door arcs, texts, inserts, top block families, the suggested role with
 // where it came from (its evidence under the sheet when the row is picked), and a native <select> showing the 17 role
-// labels with one line of help. Filters (unmapped, by role, search) and "apply to all rows shown". Rows are windowed
+// labels with one line of help (and a legend of every role). A suggestion whose name and contents disagree, or that only
+// the contents made for a role that builds parts, carries a "check" mark (UR, V2-6). Filters (not mapped yet,
+// suggestions to check, by role, search) and "apply to all rows shown". Rows are windowed
 // above 200 (a fixed row height and a slice; no library). The sheet on the canvas with the hovered or picked layer lit
 // and every layer coloured by its role. A warning chip on an `ignore` row whose items lie within 1 m of wall-role lines
 // (nearLayers). Changes save as settings (800 ms debounce, If-Match); every save from this step carries
@@ -20,8 +22,14 @@ import { cn } from '@/lib/utils';
 import { formatNumber } from '@/lib/format';
 import { sourceToken, useBuildContext } from './context';
 import { NativeSelect } from './fields';
-import { CLOSE_TO_WALLS, CLOSE_TO_WALLS_M, isRole, roleHelp, roleLabel, ROLES, SUGGESTION_FROM, WALL_ROLES } from './roles';
+import {
+  CLOSE_TO_WALLS, CLOSE_TO_WALLS_M, isRole, roleHelp, roleLabel, ROLES, SUGGESTION_FROM, SUGGESTION_FROM_SHORT, suggestionToCheck,
+  WALL_ROLES,
+} from './roles';
 import { roleOf, setRoles } from './settingsEdit';
+
+/** The Doors column (UR, V2-12: '0/8' had no legend). */
+export const DOORS_HELP = 'door swings with a leaf, of the door-sized arcs on the layer';
 
 /** Rows above this many are windowed (U-14.3). */
 export const WINDOW_ABOVE = 200;
@@ -102,7 +110,8 @@ function RoleSelect({ value, onChange, disabled, name }: { value: LayerRole; onC
     <NativeSelect
       aria-label={`Role of ${name}`}
       data-testid="role-select"
-      className="h-7 w-48"
+      // the cell's width, never wider (UR, V2-12: a 192 px select overflowed its column and the table scrolled sideways)
+      className="h-7 w-full min-w-0"
       value={value}
       disabled={disabled}
       title={roleHelp(value)}
@@ -115,12 +124,26 @@ function RoleSelect({ value, onChange, disabled, name }: { value: LayerRole; onC
 
 function SuggestionCell({ s }: { s: LayerSuggestion | undefined }) {
   if (!s) return <span className="text-xs text-muted-foreground">-</span>;
+  const check = suggestionToCheck(s);
   return (
-    <span className="truncate text-xs" data-testid="layer-suggestion" data-role={s.role} data-from={s.from} title={[`${roleLabel(s.role)}: ${SUGGESTION_FROM[s.from]}`, ...s.evidence].join('\n')}>
-      {roleLabel(s.role)}
-      <span className="text-muted-foreground">{` · ${s.from}`}</span>
+    <span className="flex min-w-0 items-center gap-1 text-xs" data-testid="layer-suggestion" data-role={s.role} data-from={s.from} data-check={check ? '' : undefined}
+      title={[`${roleLabel(s.role)}: ${SUGGESTION_FROM[s.from]}`, ...s.evidence].join('\n')}>
+      <span className="truncate">
+        {roleLabel(s.role)}
+        <span className="text-muted-foreground">{` · ${SUGGESTION_FROM_SHORT[s.from]}`}</span>
+      </span>
+      {check && (
+        <Badge variant="outline" className="shrink-0 border-amber-500 px-1 text-amber-700" title={check} data-testid="suggestion-check">check</Badge>
+      )}
     </span>
   );
+}
+
+/** A layer no rule mapped yet (UR, V2-12: "Unmapped only" counted the layers missing from the settings, and after the
+ *  proposal every layer is in them): not in the settings, or still `other` as the suggester's default (nothing known). */
+export function notMappedYet(name: string, settings: { layers: Record<string, LayerRole> } | null, s: LayerSuggestion | undefined): boolean {
+  if (!settings || !(name in settings.layers)) return true;
+  return settings.layers[name] === 'other' && (!s || s.from === 'default');
 }
 
 export function LayersStep() {
@@ -136,6 +159,7 @@ export function LayersStep() {
 
   const [search, setSearch] = useState('');
   const [unmapped, setUnmapped] = useState(false);
+  const [toCheck, setToCheck] = useState(false);
   const [roleFilter, setRoleFilter] = useState<'' | LayerRole>('');
   const [applyRole, setApplyRole] = useState<LayerRole>('ignore');
   const [picked, setPicked] = useState<string | null>(null);
@@ -157,9 +181,11 @@ export function LayersStep() {
   const near = useMemo(() => (settings ? closeToWalls(plans, n => roleOf(settings, n)) : new Set<string>()), [plans, settings]);
 
   const q = search.trim().toLowerCase();
+  const checks = useMemo(() => new Set(Object.entries(suggestions).filter(([, s]) => suggestionToCheck(s)).map(([n]) => n)), [suggestions]);
   const shown = rows.filter(r =>
     (!q || r.name.toLowerCase().includes(q))
-    && (!unmapped || !settings || !(r.name in settings.layers))
+    && (!unmapped || notMappedYet(r.name, settings, suggestions[r.name]))
+    && (!toCheck || checks.has(r.name))
     && (!roleFilter || role(r.name) === roleFilter));
 
   const windowed = shown.length > WINDOW_ABOVE;
@@ -179,9 +205,13 @@ export function LayersStep() {
       <section className="grid min-w-0 content-start gap-3">
         <div className="flex flex-wrap items-center gap-2">
           <Input className="h-8 w-56" placeholder="Search layers" value={search} onChange={e => { setSearch(e.target.value); setScrollTop(0); }} data-testid="layers-search" aria-label="Search layers" />
-          <label className="flex items-center gap-1.5 text-sm">
+          <label className="flex items-center gap-1.5 text-sm" title="Layers no rule mapped: not built, kept as context by default">
             <Checkbox checked={unmapped} onCheckedChange={v => { setUnmapped(v === true); setScrollTop(0); }} data-testid="layers-unmapped" />
-            Unmapped only
+            Not mapped yet
+          </label>
+          <label className="flex items-center gap-1.5 text-sm" title="Suggestions whose name and contents disagree, or made from the contents alone">
+            <Checkbox checked={toCheck} onCheckedChange={v => { setToCheck(v === true); setScrollTop(0); }} data-testid="layers-to-check" />
+            {`Suggestions to check (${formatNumber(checks.size)})`}
           </label>
           <NativeSelect aria-label="Show the layers of one role" value={roleFilter} onChange={e => { setRoleFilter(e.target.value as '' | LayerRole); setScrollTop(0); }} data-testid="layers-role-filter">
             <option value="">Every role</option>
@@ -199,6 +229,14 @@ export function LayersStep() {
           </Button>
           <span className="text-xs text-muted-foreground">{roleHelp(applyRole)}</span>
         </div>
+        <details className="text-sm" data-testid="roles-legend">
+          <summary className="cursor-pointer text-xs text-muted-foreground">What each role does</summary>
+          <dl className="mt-1 grid grid-cols-[max-content_1fr] gap-x-3 gap-y-0.5 text-xs">
+            {ROLES.map(r => (
+              <div key={r.role} className="contents"><dt className="font-medium">{r.label}</dt><dd className="text-muted-foreground">{r.help}</dd></div>
+            ))}
+          </dl>
+        </details>
 
         <div
           className="overflow-auto rounded-lg border bg-background"
@@ -208,15 +246,16 @@ export function LayersStep() {
         >
           <table className="w-full table-fixed text-sm" data-testid="layers-table" data-windowed={windowed ? '' : undefined}>
             <colgroup>
-              <col className="w-[26%]" /><col className="w-[5%]" /><col className="w-[7%]" /><col className="w-[5%]" /><col className="w-[6%]" />
-              <col className="w-[5%]" /><col className="w-[6%]" /><col className="w-[12%]" /><col className="w-[12%]" /><col className="w-[16%]" />
+              <col className="w-[24%]" /><col className="w-[5%]" /><col className="w-[6%]" /><col className="w-[5%]" /><col className="w-[7%]" />
+              <col className="w-[5%]" /><col className="w-[6%]" /><col className="w-[10%]" /><col className="w-[14%]" /><col className="w-[18%]" />
             </colgroup>
             <thead className="sticky top-0 z-10 bg-muted text-left text-xs text-muted-foreground">
               <tr style={{ height: ROW_HEIGHT }}>
                 <th className="px-2 font-medium">Layer</th><th className="font-medium">State</th><th className="font-medium">Items</th>
-                <th className="font-medium" title="Solid fills">Fills</th><th className="font-medium" title="Door arcs (with a leaf)">Doors</th>
+                <th className="font-medium" title="Solid fills">Fills</th>
+                <th className="font-medium" title={DOORS_HELP}>Doors</th>
                 <th className="font-medium">Texts</th><th className="font-medium">Inserts</th><th className="font-medium">Blocks</th>
-                <th className="font-medium">Suggested</th><th className="font-medium">Role</th>
+                <th className="font-medium" title="The role suggested, and where it came from">Suggested</th><th className="pr-2 font-medium">Role</th>
               </tr>
             </thead>
             <tbody>
@@ -237,26 +276,29 @@ export function LayersStep() {
                     onMouseLeave={() => setHovered(h => (h === r.name ? null : h))}
                     onClick={() => setPicked(p => (p === r.name ? null : r.name))}
                   >
-                    <td className="truncate px-2 font-mono text-xs" title={r.name} data-testid="layer-name">
-                      {r.name}
-                      {chip && (
-                        <Badge variant="outline" className="ml-1.5 border-amber-500 text-amber-700" title={CLOSE_TO_WALLS} data-testid="close-to-walls">
-                          <TriangleAlert aria-hidden="true" />
-                          close to walls
-                        </Badge>
-                      )}
+                    <td className="px-2" title={r.name} data-testid="layer-name">
+                      {/* the name gives way, never the chip (UR, V2-5: the ellipsis hid it on the bank's G-ANNO-TEXT) */}
+                      <div className="flex min-w-0 items-center gap-1.5">
+                        <span className="min-w-0 truncate font-mono text-xs">{r.name}</span>
+                        {chip && (
+                          <Badge variant="outline" className="shrink-0 border-amber-500 text-amber-700" title={CLOSE_TO_WALLS} data-testid="close-to-walls">
+                            <TriangleAlert aria-hidden="true" />
+                            close to walls
+                          </Badge>
+                        )}
+                      </div>
                     </td>
                     <td className="text-xs">{STATE_TEXT(rd)}</td>
                     <td className="truncate text-xs tabular-nums" title={rd ? typesText(rd.byType) : ''}>{rd ? formatNumber(rd.items) : ''}</td>
                     <td className="text-xs tabular-nums">{rd?.solidHatches || ''}</td>
-                    <td className="text-xs tabular-nums">{rd && rd.doorArcs ? `${rd.doorArcsWithLeaf}/${rd.doorArcs}` : ''}</td>
+                    <td className="text-xs tabular-nums" title={DOORS_HELP}>{rd && rd.doorArcs ? `${rd.doorArcsWithLeaf} of ${rd.doorArcs}` : ''}</td>
                     <td className="text-xs tabular-nums">{rd?.texts || ''}</td>
                     <td className="text-xs tabular-nums">{rd?.inserts || ''}</td>
                     <td className="truncate text-xs" title={rd ? rd.topBlocks.map(b => `${b.family} (${b.count})`).join('\n') : ''}>
                       {rd ? rd.topBlocks.slice(0, 2).map(b => b.family).join(', ') : ''}
                     </td>
-                    <td className="truncate"><SuggestionCell s={suggestions[r.name]} /></td>
-                    <td onClick={e => e.stopPropagation()}>
+                    <td className="min-w-0 pr-1"><SuggestionCell s={suggestions[r.name]} /></td>
+                    <td className="pr-2" onClick={e => e.stopPropagation()}>
                       <RoleSelect value={value} name={r.name} disabled={!editable} onChange={x => setRole([r.name], x)} />
                     </td>
                   </tr>
@@ -305,6 +347,9 @@ export function LayersStep() {
                 <ul className="list-disc pl-4" data-testid="layer-evidence">
                   {pickedSuggestion.evidence.map((e, i) => <li key={i}>{e}</li>)}
                 </ul>
+                {suggestionToCheck(pickedSuggestion) && (
+                  <p className="mt-1 font-medium text-amber-700" data-testid="layer-check-reason">{`Check this one: ${suggestionToCheck(pickedSuggestion)}`}</p>
+                )}
               </div>
             )}
             {role(pickedRow.name) === 'ignore' && near.has(pickedRow.name) && <p className="text-xs text-amber-700">{CLOSE_TO_WALLS}</p>}

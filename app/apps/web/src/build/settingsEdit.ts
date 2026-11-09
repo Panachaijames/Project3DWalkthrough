@@ -110,7 +110,16 @@ export const setDefaults = (patch: Partial<BuildDefaults>): Change => s => ({ ..
 
 export const setProject = (patch: Partial<BuildSettings['project'] & ProjectNaming>): Change => s => ({ ...s, project: { ...s.project, ...patch } });
 
-export const setOffice = (office: string | null): Change => s => ({ ...s, office });
+/** The office (U-8.4). The same office again is no change at all (the saver then sends nothing: UR, V3-1). */
+export const setOffice = (office: string | null): Change => s => (s.office === office ? s : { ...s, office });
+
+/** Builder options (U-10.5) staff set on the Floors step (UR, V2-1): the outline suggestions and the offset (U-9.6:
+ *  'auto' resets a pinned offset to the bank rule, for a project re-drawn in a new frame). */
+export const setOptions = (patch: Partial<BuildSettings['options']>): Change => s => ({ ...s, options: { ...s.options, ...patch } });
+
+/** How furniture pieces are read (U-10.5's pieceLayer: 'insert' the bank's rule, 'drawn' the suite's). */
+export const setPieceLayer = (pieceLayer: BuildSettings['furniture']['pieceLayer']): Change => s =>
+  (s.furniture.pieceLayer === pieceLayer ? s : { ...s, furniture: { ...s.furniture, pieceLayer } });
 
 /** The ItemRef of a plan entry (U-7.5, U-12.3): every field from the plan geometry, never derived here. */
 export function itemRef(plan: { source: Sha1; refOf(key: string): { sig: string; rsig: string; elementId: string | null; layer: string } | null },
@@ -120,23 +129,47 @@ export function itemRef(plan: { source: Sha1; refOf(key: string): { sig: string;
   return { floor, source: plan.source, key, sig: r.sig, rsig: r.rsig, elementId: r.elementId, layer: r.layer };
 }
 
-const sameRef = (a: Pick<ItemRef, 'floor' | 'source' | 'key'>, b: Pick<ItemRef, 'floor' | 'source' | 'key'>) =>
-  a.floor === b.floor && a.source === b.source && a.key === b.key;
+/** The identity of a set-aside: floor, source and key (U-12.3). */
+const refId = (r: Pick<ItemRef, 'floor' | 'source' | 'key'>) => `${r.floor}\u0000${r.source}\u0000${r.key}`;
 
-/** Sets the items aside (refs already in the settings are kept once). */
+/** Sets the items aside (refs already in the settings are kept once). Linear in the set-asides and the refs (UR, V3-5:
+ *  20,000 refs took 2.8 s, and 10,000 onto 10,000 3.3 s, each paid on every application). */
 export const addSetAside = (refs: readonly ItemRef[], note = ''): Change => s => {
   const have = s.fixes.setAside;
+  const seen = new Set(have.map(refId));
   const add: SetAside[] = [];
-  for (const r of refs) if (!have.some(h => sameRef(h, r)) && !add.some(h => sameRef(h, r))) add.push({ ...r, note });
-  return add.length ? { ...s, fixes: { ...s.fixes, setAside: [...have, ...add] } } : s;
+  for (const r of refs) {
+    const id = refId(r);
+    if (seen.has(id)) continue;
+    seen.add(id);
+    add.push({ ...r, note });
+  }
+  return add.length ? { ...s, fixes: { ...s.fixes, setAside: have.concat(add) } } : s;
 };
 
-/** Restores items: drops the set-asides of these keys on the floor (and those of their enclosing blocks, U-10.6). */
+/** Each key with every key that holds it ('a/b/c' -> 'a/b/c', 'a/b', 'a'): an INSERT's set-aside covers its subtree. */
+export function keyAndHolders(key: string): string[] {
+  const out = [key];
+  for (let i = key.lastIndexOf('/'); i > 0; i = key.lastIndexOf('/', i - 1)) out.push(key.slice(0, i));
+  return out;
+}
+
+/** Restores items: drops the set-asides of these keys on the floor (and those of their enclosing blocks, U-10.6). Linear
+ *  in the set-asides and the keys' depth (UR, V3-5). */
 export const restoreSetAside = (floor: string, keys: readonly string[]): Change => s => {
-  const covers = (refKey: string, key: string) => refKey === key || key.startsWith(`${refKey}/`);
-  const setAside = s.fixes.setAside.filter(r => !(r.floor === floor && keys.some(k => covers(r.key, k))));
+  const drop = new Set<string>();
+  for (const k of keys) for (const h of keyAndHolders(k)) drop.add(h);
+  const setAside = s.fixes.setAside.filter(r => !(r.floor === floor && drop.has(r.key)));
   return setAside.length === s.fixes.setAside.length ? s : { ...s, fixes: { ...s.fixes, setAside } };
 };
+
+/** The selected keys that are set aside on this floor (themselves, or inside a set-aside block), in selection order
+ *  (UR, V3-5: each render spread every set-aside key for every selected key). */
+export function asideOf(selected: Iterable<string>, setAsideKeys: ReadonlySet<string>): string[] {
+  const out: string[] = [];
+  for (const k of selected) if (keyAndHolders(k).some(h => setAsideKeys.has(h))) out.push(k);
+  return out;
+}
 
 const near = (a: Vec2, b: Vec2, tol = 0.005) => Math.abs(a[0] - b[0]) <= tol && Math.abs(a[1] - b[1]) <= tol;
 const sameSegment = (f: { floor: string; a: Vec2; b: Vec2 }, g: { floor: string; a: Vec2; b: Vec2 }) =>

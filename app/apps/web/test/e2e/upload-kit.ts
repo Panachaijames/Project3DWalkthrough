@@ -72,6 +72,21 @@ export async function settingsSaved(page: Page): Promise<void> {
   await expect(page.getByTestId('settings-status')).toHaveAttribute('data-status', 'saved', { timeout: 30_000 });
 }
 
+/** Waits for the draft's reading (its prepare run) to end with the proposal adopted, by polling the build as
+ *  waitForResult does, and returns the build (the run's error if it did not end done). UR, V1-7: a fixed 120 s wait for
+ *  the verdicts failed on a busy laptop where the bank's prepare took 159 s (2 + 4 s alone). */
+export async function waitForReading(request: APIRequestContext, projectId: string, buildId: string): Promise<BuildDetail> {
+  let d: BuildDetail | null = null;
+  await expect.poll(async () => {
+    d = await getBuild(request, projectId, buildId);
+    const run = d.run;
+    if (!run || run.kind !== 'prepare' || run.status === 'queued' || run.status === 'running') return 'waiting';
+    if (run.status !== 'done') return `${run.status}: ${run.error?.code ?? ''} ${run.error?.message ?? ''}`;
+    return d.settingsRevision >= 1 ? 'done' : 'waiting';
+  }, { timeout: 8 * 60_000, intervals: [1_000] }).toBe('done');
+  return d!;
+}
+
 /** Waits for a build run newer than `afterRun` (null: any) to end done, and returns the build (its error if not). */
 export async function waitForResult(page: Page, request: APIRequestContext, projectId: string, buildId: string, afterRun: string | null): Promise<BuildDetail> {
   let d: BuildDetail | null = null;

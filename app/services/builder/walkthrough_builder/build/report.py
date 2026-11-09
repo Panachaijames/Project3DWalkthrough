@@ -83,8 +83,9 @@ def floor_report(F, A, B, det, align_rep, lost, outline_sugg, s) -> dict:
         'swingsUnmatched': det['swingsUnmatched'],
         'railsLeftOut': rails,
         'roomLabels': [{'text': t, 'at': _at(x, y, s)} for t, x, y in B['skipped_at']],
-        'platesDropped': [{'area': round(x.area, 2), 'at': _at(x.representative_point().x, x.representative_point().y, s)}
-                          for x, _ in B['plate_dropped']],
+        'platesDropped': [{'area': round(x.area, 2), 'at': _at(x.representative_point().x, x.representative_point().y, s),
+                           'why': why}
+                          for x, why in B['plate_dropped']],
         'detector': {'seconds': det['seconds'], 'slow': det['slow'], 'frameRowsSkipped': det['frameRowsSkipped'],
                      'records': len(det['records'])},
         'lost': lost,

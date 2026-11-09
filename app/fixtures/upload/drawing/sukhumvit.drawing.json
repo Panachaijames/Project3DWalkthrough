@@ -27,7 +27,7 @@
     "dimensionMedian": 7099.999999694526,
     "used": "mm",
     "verdict": "votes-win",
-    "note": "the file says inches, its doors say millimetres (28 doors against 0): read in millimetres"
+    "note": "the file says inches, its doors say millimetres (28 doors measure right in millimetres, 0 in inches): read in millimetres"
   },
   "extents": [
     8.338,

@@ -77,6 +77,9 @@ export interface MockBuildConfig {
   drawingFixture: Record<string, string>;
   /** Flags added to every overlay (their floor as given). */
   extraFlags: C.Flag[];
+  /** The next prepare run fails at its first step with this error, publishing a 'failed' conversion report for every
+   *  DWG it reads (as the worker does, so the Files step can say why: UR, V3-9). */
+  failPrepare: { code: C.RunErrorCode; message: string } | null;
 }
 
 export interface UploadHost {
@@ -245,7 +248,10 @@ export function createUploadMock(host: UploadHost): UploadMock {
     conversionFixture: {},
     drawingFixture: {},
     extraFlags: [],
+    failPrepare: null,
   };
+  /** Per build id and source sha1: the notes of a conversion that failed in the build's newest prepare. */
+  const failedConversions = new Map<string, Map<string, string[]>>();
   const sessions = new Map<string, SessionRec>();
   const sources = new Map<string, Map<string, SourceRec>>();          // projectId -> sha1 -> source
   const builds = new Map<string, Map<string, BuildRec>>();            // projectId -> buildId -> build
@@ -371,8 +377,9 @@ export function createUploadMock(host: UploadHost): UploadMock {
       cancelAt: null,
       settings: clone(b.settings),
       revision: b.revision,
-      fail: kind === 'build' ? config.failBuild : null,
+      fail: kind === 'build' ? config.failBuild : config.failPrepare,
     };
+    if (kind === 'prepare') { config.failPrepare = null; failedConversions.delete(b.id); }
     b.runs.push(run);
     b.updatedAt = now();
     return run;
@@ -458,6 +465,14 @@ export function createUploadMock(host: UploadHost): UploadMock {
         finish(b, run, 'failed', { code: run.fail.code, message: run.fail.message, step: cur.name });
         return;
       }
+      if (cur && run.fail && run.info.kind === 'prepare') {
+        cur.status = 'failed';
+        const notes = new Map<string, string>();
+        for (const sha of b.sources) if (srcRec(b, sha).kind === 'dwg') notes.set(sha, `${srcRec(b, sha).name}: ${run.fail.message}`);
+        failedConversions.set(b.id, new Map([...notes].map(([k, v]) => [k, [v]])));
+        finish(b, run, 'failed', { code: run.fail.code, message: run.fail.message, step: cur.name });
+        return;
+      }
       if (cur) { cur.status = 'done'; cur.seconds = 0.5; }
       run.cursor++;
       run.info.progress = run.info.steps.length ? Math.min(1, run.cursor / run.info.steps.length) : 1;
@@ -477,18 +492,28 @@ export function createUploadMock(host: UploadHost): UploadMock {
     const s = srcRec(b, sha1);
     const read = b.read.get(sha1);
     const base = `${buildUrl(b)}/sources/${sha1}`;
-    if (!read) return { sha1, name: s.name, bytes: s.bytes, kind: s.kind, conversion: null, units: null, urls: null };
+    if (!read) {
+      // a failed conversion of the newest prepare reaches the Files step (the API's failed_conversion: UR, V3-9)
+      const failed = failedConversions.get(b.id)?.get(sha1);
+      const conversion = failed ? { verdict: 'failed' as const, notes: failed, lostInModelSpace: 0 } : null;
+      return { sha1, name: s.name, bytes: s.bytes, kind: s.kind, conversion, units: null, urls: null };
+    }
     const conv = conversionOf(b, sha1);
     const d = drawingOf(b, sha1);
     return {
       sha1, name: s.name, bytes: s.bytes, kind: s.kind,
-      conversion: { verdict: conv.verdict, notes: conv.notes, lostInModelSpace: conv.totals.missing },
+      // the placements of lost blocks in the plan, as the API counts them (U5.md; UR, V2-2: the mock sent the missing
+      // item count, so the Files step's "4 items" read right against the mock only)
+      conversion: { verdict: conv.verdict, notes: conv.notes, lostInModelSpace: conv.lostBlocks.reduce((a, lb) => a + lb.inserts.length, 0) },
       units: { declared: d.units.declared, used: d.units.used, verdict: d.units.verdict, note: d.units.note },
       urls: { conversion: `${base}/conversion`, drawing: `${base}/drawing`, plan: `${base}/plan` },
     };
   }
 
   const setAsideOn = (s: C.BuildSettings, floor: string) => s.fixes.setAside.filter(r => r.floor === floor).length;
+  /** The API's is_stale: the settings changed since the run in more than the office (UR, V3-1). */
+  const recipe = (s: C.BuildSettings) => JSON.stringify({ ...s, office: null });
+  const isStale = (b: BuildRec, r: ResultRec) => r.settingsRevision !== b.revision && recipe(r.settings) !== recipe(b.settings);
   function resultFloors(r: ResultRec): C.BuildResultInfo['floors'] {
     const m = readJson(BUILD_FILES.model) as { parts: { floor: string }[]; openings: { floor: string; kind: string }[]; furniture?: { floor: string }[]; rooms: { floor: string }[]; floors: { key: string }[] };
     return r.settings.floors.map((f, i) => {
@@ -513,7 +538,7 @@ export function createUploadMock(host: UploadHost): UploadMock {
     return {
       runId: r.runId,
       finishedAt: r.finishedAt,
-      stale: r.settingsRevision !== b.revision,
+      stale: isStale(b, r),
       settingsRevision: r.settingsRevision,
       counts: {
         floors: floors.length,
@@ -635,9 +660,12 @@ export function createUploadMock(host: UploadHost): UploadMock {
     let id = req.id ?? null;
     if (id !== null && id !== '') {
       if (!/^[a-z0-9][a-z0-9-]{1,39}$/.test(id)) return error(422, 'bad_project', 'A new project id is 2 - 40 lower-case letters, digits and -, starting with a letter or digit.');
+      if (id.endsWith('-') || id.includes('--')) return error(422, 'bad_project', 'a project id ends with a letter or digit and has no two hyphens in a row');
       if (RESERVED_IDS.includes(id)) return error(422, 'bad_project', `The id ${id} is reserved.`);
     } else {
-      id = slugOf(name) || `project-${hex(6)}`;
+      // as the API's derived_project_id: a slug with no letter ('31' of a Thai name) is no id (UR, V2-15)
+      const s = slugOf(name);
+      id = /[a-z]/.test(s) ? s : `project-${hex(6)}`;
     }
     if (host.hasProject(id) || (RESERVED_IDS.includes(id) && req.id == null)) {
       let n = 2;
@@ -664,7 +692,10 @@ export function createUploadMock(host: UploadHost): UploadMock {
     let req: C.UploadRequest;
     try { req = JSON.parse(body ?? '') as C.UploadRequest; } catch { return validation(['body'], 'JSON decode error', 'json_invalid'); }
     if (!host.hasProject(req.projectId)) return error(404, 'project_not_found', `There is no project ${req.projectId}.`);
-    if (req.bytes > config.maxUploadBytes) return error(413, 'too_large', `This file is larger than ${Math.round(config.maxUploadBytes / 1048576)} MiB, the upload limit.`);
+    if (req.bytes > config.maxUploadBytes) {
+      const mb = (n: number) => `${(n / 1_000_000).toFixed(1)} MB`;
+      return error(413, 'too_large', `${req.fileName} is ${mb(req.bytes)}; at most ${mb(config.maxUploadBytes)} can be uploaded`);
+    }
     // eslint-disable-next-line no-control-regex
     if (!/\.(dwg|dxf)$/i.test(req.fileName) || req.fileName.length > 255 || /[\x00-\x1f\x7f]/.test(req.fileName)) {
       return error(422, 'bad_kind', 'Only DWG and DXF drawings can be uploaded (a name ending in .dwg or .dxf).');
@@ -730,6 +761,11 @@ export function createUploadMock(host: UploadHost): UploadMock {
       const n = f?.kind === 'version' ? f.version : latest;
       if (f?.kind === 'version' && !host.versionDetail(pid, n)) return error(404, 'version_not_found', `Project ${pid} has no version ${n}.`);
       const vs = versionSettings.get(`${pid}/${n}`);
+      // as the API: a version that was not built from uploads (a seeded one) has no settings to take (UR, V3-8: the
+      // mock answered 422 bad_sources where the API answers 404 version_not_found)
+      if (!vs && f?.kind === 'version') {
+        return error(404, 'version_not_found', `v${n} of ${pid} has no build settings: it was not built from uploaded drawings`);
+      }
       if (vs) {
         startFrom = { settings: clone(vs), reviewed: true };
         from = { kind: 'version', version: n };
@@ -793,7 +829,15 @@ export function createUploadMock(host: UploadHost): UploadMock {
   function runBuild(b: BuildRec): MockResponse {
     if (b.status === 'saved') return error(409, 'build_saved', `This build was saved as v${b.savedVersion}.`, { version: b.savedVersion });
     if (activeRun(b)) return error(409, 'run_in_progress', 'A run of this build is going.');
-    if (b.revision === 0) return error(409, 'not_prepared', 'The drawings are still being read.');
+    if (b.revision === 0) {
+      // the first reading ended without a proposal: read the files again (the API's first_reading_ended: UR, V3-4)
+      const first = b.runs.filter(r => r.info.kind === 'prepare' && !r.info.only).at(-1);
+      if (first && ['failed', 'cancelled', 'interrupted'].includes(first.info.status)) {
+        startRun(b, 'prepare', null);
+        return json(202, detail(b, true));
+      }
+      return error(409, 'not_prepared', 'The drawings are still being read.');
+    }
     if (b.settings.sources.some(s => !s.unitsConfirmed)) return error(409, 'units_unconfirmed', 'Confirm the units of every drawing first (Files step).');
     if (!b.layersReviewedAt) return error(409, 'layers_not_reviewed', 'Look through the Layers step once before building.');
     startRun(b, 'build', null);
@@ -814,7 +858,7 @@ export function createUploadMock(host: UploadHost): UploadMock {
     if (activeRun(b)) return error(409, 'run_in_progress', 'A run of this build is going.');
     const r = b.results[b.results.length - 1];
     if (!r) return error(409, 'not_built', 'This draft has not been built yet.');
-    if (r.settingsRevision !== b.revision) return error(409, 'stale', 'The settings changed since the last build: build again first.');
+    if (isStale(b, r)) return error(409, 'stale', 'The settings changed since the last build: build again first.');
     let req: C.SaveBuildRequest;
     try { req = JSON.parse(body ?? '') as C.SaveBuildRequest; } catch { return validation(['body'], 'JSON decode error', 'json_invalid'); }
     if (typeof req.label !== 'string' || !req.label.trim() || req.label.length > 200) return validation(['body', 'label'], 'String should have 1 - 200 characters', 'string_too_short');

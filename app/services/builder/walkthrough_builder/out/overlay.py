@@ -14,6 +14,8 @@ furniture boxes, the room names and the keys of the items set aside. Flags (`Fla
 | outline-wall, outline-glass | each outline suggestion still open (report.floors[k].outlineSuggestions) | check |
 | grey-furniture | each family the kit classified `other`, with its count | info |
 | rail-left-out, room-label, plate-dropped | report.floors[k].railsLeftOut, roomLabels, platesDropped | info |
+| plate-dropped | a large area inside the walls with no floor plate (`unfloored_flags`, UR) | check |
+| room-label | 3+ texts like room names inside the plate on a layer set to ignore / other (`room_name_flags`, UR) | check |
 | alignment | spread over 5 mm, one grid direction only (report.floors[k].alignment) | check |
 | units | a source whose declared units the door votes overruled (its drawing.json, through BuildContext) | check |
 | fix-unmatched | a remembered fix that matched nothing, or more than one item (report.fixes) | check |
@@ -28,6 +30,7 @@ from __future__ import annotations
 import gzip
 import hashlib
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -161,6 +164,8 @@ def overlay(result: dict, ctx: dict) -> dict:
             if fx.get('floor') == fl and fr.get('matchedBy') and fr.get('items', 0) > 0 and key not in set_aside:
                 set_aside.append(key)
         flags += floor_flags(fl, rep, M)
+        flags += unfloored_flags(fl, parts, slabs)
+        flags += room_name_flags(fl, frame['source'], slabs, settings.get('layers') or {}, _drawing_of(ctx, frame['source']))
         floors.append({'key': fl, 'source': frame['source'], 'toSheet': [tx, ty], 'area': frame['area'], 'parts': parts,
                        'slabs': slabs, 'openings': openings, 'furniture': furniture, 'rooms': rooms, 'setAside': set_aside})
     flags += grey_furniture_flags(M, result['floors_frame'])
@@ -205,8 +210,13 @@ def floor_flags(fl: str, rep: dict, M: dict) -> list[dict]:
                         'A text on a room-name layer that names no room (a tag or a code): left out of the rooms.',
                         [_r(lab['at'][0], 3), _r(lab['at'][1], 3)] if lab.get('at') else None))
     for p in rep.get('platesDropped') or []:
-        out.append(flag('plate-dropped', fl, p, 'info', 'A floor area was left out',
-                        f'An area of {p["area"]} m2 inside a railing was left out of the floor plate.',
+        # (UR, V1-1: these are areas the bank's closing found next to the walls, outside the rooms the walls close, not
+        # areas "inside a railing"; the report row says why each was left out)
+        why = f' ({p["why"]})' if p.get('why') else ''
+        out.append(flag('plate-dropped', fl, {k: v for k, v in p.items() if k != 'why'}, 'info',
+                        'A floor area was left out',
+                        f'An area of {p["area"]} m2 next to the walls, outside the rooms they close, was left out of the '
+                        f'floor plate{why}.',
                         [_r(p['at'][0], 3), _r(p['at'][1], 3)] if p.get('at') else None))
     a = rep.get('alignment') or {}
     if a.get('method') in ('grid', 'points'):
@@ -232,6 +242,127 @@ def floor_flags(fl: str, rep: dict, M: dict) -> list[dict]:
         out.append(flag('slow', fl, {'seconds': det.get('seconds')}, 'info', f'{fl}: the openings detector was slow',
                         f'Finding the openings took {det.get("seconds", 0):.0f} s on this floor. Mapping busy layers '
                         f'(hatches, symbols) to ignore makes it faster.'))
+    return out
+
+
+#: the unfloored-area flag (UR, V1-1): the walls closed by this radius (m), components of at least UNFLOORED_PIECE m2
+#: with standing room, flagged from UNFLOORED_MIN m2 in all; or, when the walls do not close at all, a plate under
+#: OPEN_SHARE of the walls' convex hull and at least OPEN_MIN m2 short of it. Measured on 9 Nov: the bank 0 / 6 m2 (its L2
+#: stair, under the threshold) and plate / hull 0.97, 1.15: no flag; the house's ground floor 64 m2 (the glass-walled
+#: living area), the tower 321 / 190 m2, the suite 113 of 505 m2 and the Revit suite 35 of 296 m2: flagged.
+UNFLOORED_CLOSE = 1.5
+UNFLOORED_PIECE = 4.0
+UNFLOORED_MIN = 20.0
+OPEN_SHARE = 0.5
+OPEN_MIN = 100.0
+UNFLOORED_DETAIL = ('The floor plate is made of the rooms the walls close (the bank\'s rule): where the walls or the '
+                    'facade do not close (gaps at corners, glass that is not built, or walls on a layer that is not '
+                    'built), the rooms between them get no floor and cannot be walked. Check the wall and glass layers '
+                    'on the Layers step; plates from the wall network are a later option.')
+
+
+def _poly(o, h):
+    from shapely.geometry import Polygon
+    try:
+        p = Polygon(o, h or [])
+    except (ValueError, TypeError):
+        return None
+    if not p.is_valid:
+        p = p.buffer(0)
+    return None if p.is_empty else p
+
+
+def unfloored_flags(fl: str, parts: list[dict], slabs: list[dict]) -> list[dict]:
+    """A `plate-dropped` check flag when a large area inside the floor's walls has no floor plate (UR, V1-1: the tower's
+    rooms between the core and the facade, about half of each floor, had none and no flag said so)."""
+    from shapely.ops import unary_union
+    walls = [p for p in (_poly(x['o'], x['h']) for x in parts) if p is not None]
+    if not walls:
+        return []
+    W = unary_union(walls)
+    S = unary_union([p for p in (_poly(x['o'], x['h']) for x in slabs) if p is not None])
+    C = W.buffer(UNFLOORED_CLOSE, join_style='round').buffer(-UNFLOORED_CLOSE, join_style='round')
+    from shapely.geometry import Polygon
+    filled = unary_union([Polygon(g.exterior) for g in getattr(C, 'geoms', [C]) if not g.is_empty])
+    miss = filled.difference(S.buffer(0.3)).difference(W.buffer(0.3))
+    pieces = sorted((g for g in getattr(miss, 'geoms', [miss])
+                     if not g.is_empty and g.area >= UNFLOORED_PIECE and not g.buffer(-0.6).is_empty),
+                    key=lambda g: -g.area)
+    total = sum(g.area for g in pieces)
+    if total >= UNFLOORED_MIN:
+        big = pieces[0]
+        c = big.representative_point()
+        return [flag('plate-dropped', fl, {'unfloored': round(total)}, 'check',
+                     f'{fl}: about {total:.0f} m2 inside the walls has no floor',
+                     f'{len(pieces)} area{"s" if len(pieces) != 1 else ""} inside the walls, the largest {big.area:.0f} m2, '
+                     f'{"have" if len(pieces) != 1 else "has"} no floor plate. ' + UNFLOORED_DETAIL,
+                     [_r(c.x, 3), _r(c.y, 3)], [_r(v, 3) for v in big.bounds])]
+    hull = W.convex_hull
+    if hull.area >= OPEN_MIN and S.area < OPEN_SHARE * hull.area and hull.area - S.area >= OPEN_MIN:
+        c = hull.representative_point()
+        return [flag('plate-dropped', fl, {'open': round(hull.area), 'plate': round(S.area)}, 'check',
+                     f'{fl}: the floor plate is {S.area:.0f} m2 of the about {hull.area:.0f} m2 the walls span',
+                     'The walls do not close round the floor, so most of it has no floor plate. ' + UNFLOORED_DETAIL,
+                     [_r(c.x, 3), _r(c.y, 3)], [_r(v, 3) for v in hull.bounds])]
+    return []
+
+
+def _drawing_of(ctx: dict, sha1: str) -> dict | None:
+    """The drawing.json (DrawingRead) of a source of the build, through BuildContext, or None."""
+    for s in ctx.get('sources') or []:
+        if s.get('sha1') == sha1:
+            try:
+                return _read_json(s.get('drawing'))
+            except (OSError, ValueError):
+                return None
+    return None
+
+
+#: door / window tags (D1, W2, WD-01): the suggester's pattern (suggest.TAG_RE)
+_TAG = re.compile(r'^[A-Z]{1,3}[-.]?\d{1,3}[A-Z]?$', re.I)
+#: name-like texts on one layer inside a floor's plate before it is flagged
+ROOM_NAMES_MIN = 3
+
+
+def _name_like(text: str) -> bool:
+    return sum(1 for ch in text if ch.isalpha()) >= 2 and not _TAG.match(text)
+
+
+def room_name_flags(fl: str, source: str, slabs: list[dict], layers: dict, drawing: dict | None) -> list[dict]:
+    """A `room-label` check flag per layer that is not built as room names (`ignore` or `other`) yet holds 3 or more
+    texts that look like room names inside the floor's plate (UR, V2-6: the bank with its room-name layer G-ANNO-TEXT
+    suggested `ignore` lost 5 of its 18 rooms and nothing said so). Texts of blocks and attributes are left out (furniture
+    and tag values); title blocks and notes lie outside the plate. With the acceptance settings no floor gets one."""
+    if not drawing:
+        return []
+    from shapely.geometry import Point
+    from shapely.ops import unary_union
+    plate = unary_union([p for p in (_poly(x['o'], x['h']) for x in slabs) if p is not None])
+    if plate.is_empty:
+        return []
+    by: dict[str, list[dict]] = {}
+    for t in drawing.get('texts') or []:
+        layer = t.get('layer')
+        role = layers.get(layer, 'other')
+        if role not in ('ignore', 'other') or t.get('kind') == 'ATTRIB' or t.get('block'):
+            continue
+        text = str(t.get('text') or '').strip()
+        if not _name_like(text) or not plate.contains(Point(float(t['x']), float(t['y']))):
+            continue
+        by.setdefault(str(layer), []).append(t)
+    out = []
+    for layer, ts in sorted(by.items()):
+        if len(ts) < ROOM_NAMES_MIN:
+            continue
+        role = layers.get(layer, 'other')
+        names_ = sorted({str(t['text']).strip() for t in ts}, key=lambda s: (len(s), s))
+        shown = ', '.join(names_[:4]) + (' ...' if len(names_) > 4 else '')
+        pts = [(float(t['x']), float(t['y'])) for t in ts]
+        out.append(flag('room-label', fl, {'layer': layer, 'source': source, 'texts': len(ts)}, 'check',
+                        f'{len(ts)} texts on {layer} look like room names',
+                        f'{layer} is set to {"Ignore" if role == "ignore" else "Not built"}, so these texts name no room: '
+                        f'{shown}. If they name rooms, set the layer to Room names on the Layers step and build again.',
+                        [_r(pts[0][0], 3), _r(pts[0][1], 3)], _bbox(pts)))
     return out
 
 

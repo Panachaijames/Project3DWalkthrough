@@ -1,8 +1,11 @@
 # Gap report: uploaded versions against their prototypes (9 Nov 2026)
 
-Written by the integration step UI (docs/upload/ACCEPTANCE.md A-5, A-6, A-12) with `tools/upload/gap-report.py`. Every
+Written by the integration step UI (docs/upload/ACCEPTANCE.md A-5, A-6, A-12) with `tools/upload/gap-report.py`, and
+**made again by the review-and-fix step UR** after its fixes (contract-issues/UR.md: the house's curtain windows take the
+floors' window heads, the Check step's new `plate-dropped` and `room-label` check flags, the causes corrected for the
+tower, the suite and the house). Every
 version below was made through the app's own path: the DWGs uploaded in parts to a served API (`node tools/run-api.mjs
---port 8711 --seed-fresh`, a freshly seeded store in `%TEMP%\wt-ui\acc\data`, a fresh cache), prepared and built by the
+--port 8739 --seed-fresh`, a freshly seeded store in `%TEMP%\wt-ur\acc\data`, a fresh cache), prepared and built by the
 real worker (`walkthrough_builder.job` in the builder's venv, LibreDWG 0.14), with the settings fixtures
 `fixtures/upload/settings/<name>.json` and **no fixes** (A-5), saved with `saveBuild`, then made into offline files with
 `make-offline.mjs` and walked in headless Edge by `tests/e2e/upload-walk.spec.ts` (A-6). The API validated every run
@@ -14,16 +17,16 @@ The metrics are compared in drawing coordinates (model + offset + the floor's sh
 the suite, the tower or the A-12 drawing is listed the same way (A-6: must run, should pass); the bank re-upload must pass
 every walk check.
 
-| Version | Drawing(s) | Model stamp | Parts | Openings | Furniture | Flags (to check) | Walk checks (A-6) |
+| Version | Drawing(s) | Model stamp | Parts | Openings | Furniture | Flags (to check; UR: + the new plate-dropped check flag on each floor with a large area without floor) | Walk checks (A-6) |
 |---|---|---|---|---|---|---|---|
 | bank-reupload v1 (A-1 a) | I1201, I1202 | `c3a9408304a2` (v2's bytes) | 124 | 49 | 185 in 14 kinds | 20 (8) | loads ok; start ok; floors ok; walls ok (80); doors ok (39); glass ok (30 probes + 14 random parts) |
 | bank-sampeng v3 (A-1 b) | I1201, I1202 | `c3a9408304a2` | 124 | 49 | 185 | 20 (8) | loads ok; start ok; floors ok; walls ok (80); doors ok (39); glass ok (30 probes + 14 random parts) |
-| house-upload v1 (A-5) | Test Sukhumvit Residence | `730ca65a45d3` | 185 | 86 | 79 in 9 kinds | 64 (49) | loads ok; start ok; floors ok; walls ok (80); doors 4 failing of 32; glass 2 failing of 57 probes + 20 random parts |
-| suite-upload v1 (A-5) | layout presidential test | `205e9c2c46e8` | 50 | 25 | 127 in 13 kinds | 47 (24) | loads ok; start ok; floors ok; walls ok (40); doors 1 failing of 15; glass no glass to probe |
-| suite-outlines v1 (A-5, every outline suggestion accepted) | layout presidential test | `2c85c67fe80f` | 71 | 25 | 127 | 45 (25) | loads ok; start ok; floors ok; walls ok (40); doors 1 failing of 15; glass ok (2 probes + 2 random parts) |
-| tower-upload v1 (A-5) | L29, L30 | `91414f408cb2` | 233 | 65 | 270 in 9 kinds | 98 (66) | loads ok; start ok; floors ok; walls ok (80); doors 7 failing of 44; glass 4 failing of 13 probes + 7 random parts |
-| suite-revit v1 (A-12, new project) | presidential suite_layout | `1d90d91ef949` | 35 | 25 | 81 in 7 kinds | 33 (22) | loads ok; start ok; floors ok; walls ok (40); doors 3 failing of 9; glass no glass to probe |
-| presidential-suite v2 (A-12, new version) | presidential suite_layout | `467d3f8444c0` | 35 | 25 | 81 | 33 (22) | loads ok; start ok; floors ok; walls no start spot found (0 of 40 tried); doors 3 failing of 9; glass no glass to probe |
+| house-upload v1 (A-5) | Test Sukhumvit Residence | `1c07bfeef580` (UR: was `730ca65a45d3`; 28 lintels more) | 213 | 86 | 79 in 9 kinds | 65 (50) | loads ok; start ok; floors ok; walls ok (80); doors 4 failing of 32; glass 2 failing of 57 probes + 20 random parts |
+| suite-upload v1 (A-5) | layout presidential test | `205e9c2c46e8` | 50 | 25 | 127 in 13 kinds | 48 (25) | loads ok; start ok; floors ok; walls ok (40); doors 1 failing of 15; glass no glass to probe |
+| suite-outlines v1 (A-5, every outline suggestion accepted) | layout presidential test | `2c85c67fe80f` | 71 | 25 | 127 | 46 (26) | loads ok; start ok; floors ok; walls ok (40); doors 1 failing of 15; glass ok (2 probes + 2 random parts) |
+| tower-upload v1 (A-5) | L29, L30 | `91414f408cb2` | 233 | 65 | 270 in 9 kinds | 100 (68) | loads ok; start ok; floors ok; walls ok (80); doors 7 failing of 44; glass 4 failing of 13 probes + 7 random parts |
+| suite-revit v1 (A-12, new project) | presidential suite_layout | `1d90d91ef949` | 35 | 25 | 81 in 7 kinds | 34 (23) | loads ok; start ok; floors ok; walls ok (40); doors 3 failing of 9; glass no glass to probe |
+| presidential-suite v2 (A-12, new version) | presidential suite_layout | `467d3f8444c0` | 35 | 25 | 81 | 34 (23) | loads ok; start ok; floors ok; walls no start spot found (0 of 40 tried); doors 3 failing of 9; glass no glass to probe |
 
 ## 1. The bank re-upload (A-1): no gap
 
@@ -126,19 +129,27 @@ the 1,004 handle-not-found, 385 wrong-layer and 81 + 1 error lines leave it `min
   families (`2` ... `12`, `D`, `E`, `F`, `H`, `J`); the model's upper floor has `sheetShift [74.022, 0]`. A-5 asks
   (-74.021 +- 0.002, 0.000 +- 0.002) with a spread under 2 mm: met. (A-4's "12 numbered and 12 lettered labels on each
   plan" is not: the drawing's grid lines are 1.5 m ticks and 27 of the 63 labels have none; U2.md 3, U3.md 2.)
-* **Openings:** 86 (43 a floor), all 43 + 43 matched to the prototype's by kind and centre within 0.2 m. Their heads:
-  28 floor-length sliding windows (`eitherKind`, no sill in plan: 10 ground, 18 upper) are glazed to the wall height by
-  the bank's curtain rule (3.90 / 3.50 m) where the prototype gave them the floor's window head (3.00 / 2.60): **accepted
-  difference** (U-10.5 "not adopted": glass full height against the prototype's lower glazing). The 5 openings whose
-  heights the prototype took from the elevations (`cad_test/src/heights.json`: 3.90, 3.90, 2.90, 2.90, 2.55 m) get the
-  floor defaults here: **check-and-fix now** (the opening editor's head and sill).
+* **Openings:** 86 (43 a floor), all 43 + 43 matched to the prototype's by kind and centre within 0.2 m. **Their heads
+  and lintels (corrected by UR, V1-3):** 28 windows have their glass drawn in the opening on `WALL-GL` ("curtain"
+  windows: 10 ground, 18 upper; 15 sliding, 3 sliding with no glass drawn in the frame, 8 fixed, 2 casement; 8 of them
+  `eitherKind`). The bank's curtain rule glazed them from the floor to the wall top (3.90 / 3.50 m) with no lintel and
+  ignored the floors' typed window heads (3.00 / 2.60 m: U-10.5's per-floor defaults, a must for the house), which is
+  why the upload had 6 + 3 window lintels against the prototype's 13 + 21. **Fixed by UR** (`build/bank.py`): a curtain
+  window takes its floor's own window head when staff typed one, with a lintel above it; with none typed (the bank, the
+  suite, the tower) the bank's rule is unchanged. Now the 28 stand at 3.00 / 2.60 m with a lintel
+  each, as in the prototype: 35 + 34 lintels against its 31 + 34 (over windows 16 + 21 against 13 + 21); the ground
+  floor's 4 more (3 over windows, 1 over a door) are lintels the prototype's lintel-bearing rule leaves out (**option
+  later**, the house cutter rules). The model is therefore new: `1c07bfeef580` (it was `730ca65a45d3`). The 4 window
+  heads that still differ are the ones the prototype took from the elevations (`cad_test/src/heights.json`): ground-040,
+  -041 and -042 at 3.90 m (the stair's double-height glazing) and upper-041 at 2.55 m; here they get the floor
+  defaults: **check-and-fix now** (the opening editor's head and sill).
 * **Stairs:** tread lines against the prototype's panels, and the upper stair void: **option later** (climbable stairs).
 * **Furniture:** ground 47 = 47 kind for kind; upper 32 against 29 (`other` +3: the prototype's `settle()` of rug and zone
   outlines is not a U-10.5 rule): **option later**.
 
 ### Gap report: house
 
-Prototype: Test Sukhumvit Residence (2 floor(s), 197 parts); upload: Test Sukhumvit Residence (2 floor(s), 185 parts). Drawing coordinates (model + offset + sheetShift). Differences over 0.05 m2, 1 opening or 1 piece are listed below the table.
+Prototype: Test Sukhumvit Residence (2 floor(s), 197 parts); upload: Test Sukhumvit Residence (2 floor(s), 213 parts). Drawing coordinates (model + offset + sheetShift). Differences over 0.05 m2, 1 opening or 1 piece are listed below the table.
 
 #### Floor ground (prototype) / ground (upload)
 
@@ -152,7 +163,7 @@ Prototype: Test Sukhumvit Residence (2 floor(s), 197 parts); upload: Test Sukhum
 | windows | 16 | 16 | 0 |
 | passages | 8 | 8 | 0 |
 | openings matched (centre within 0.2 m) | - | 43 of 43 | 0 prototype openings unmatched |
-| lintels | 31 | 25 | -6 |
+| lintels | 31 | 35 | 4 |
 | sills | 1 | 1 | 0 |
 | panes | 19 | 0 | -19 |
 | plate area (m2) | 493.81 | 428.02 | sym. difference 129.44 |
@@ -178,7 +189,7 @@ Prototype: Test Sukhumvit Residence (2 floor(s), 197 parts); upload: Test Sukhum
 | windows | 21 | 21 | 0 |
 | passages | 9 | 9 | 0 |
 | openings matched (centre within 0.2 m) | - | 43 of 43 | 0 prototype openings unmatched |
-| lintels | 34 | 16 | -18 |
+| lintels | 34 | 34 | 0 |
 | sills | 0 | 0 | 0 |
 | panes | 21 | 0 | -21 |
 | plate area (m2) | 439.08 | 421.08 | sym. difference 34.59 |
@@ -194,17 +205,16 @@ Prototype: Test Sukhumvit Residence (2 floor(s), 197 parts); upload: Test Sukhum
 |---|---|---|---|---|---|---|
 | ground | wall area | 30.45 | 32.40 | 3.22 m2 symmetric difference | the prototype's house cutter rules (fins, glass corners, jamb-section depth, lintel slots) and its 0.03 m closing against the bank's 0.12 m; on the ground floor also an 8.7 m x 0.8 m double line east of the main block (x 40.1 - 40.9) that the bank's pairing builds as a wall | option later |
 | ground | glass area | 8.14 | 7.52 | 0.65 m2 symmetric difference | glass full height against the prototype's H - 0.6 m, and the glass corners of the cutter rules (U-10.5 not adopted) | accepted difference |
-| ground | plate area | 493.81 | 428.02 | 129.44 m2 symmetric difference | the prototype's plates are the fused walls and glass with gaps under 3 m closed (cad_test/src/merge_cad.py); the general builder's come from the bank's room rule, which gives no plate to the glass-walled living area on the ground floor (75 + 18 m2 at x 19 - 32, y 6 - 14) and the glass room at the upper floor's east end (18.5 m2), and gives plates the prototype's shell left out (16 + 10 m2) | option later |
+| ground | plate area | 493.81 | 428.02 | 129.44 m2 symmetric difference | the prototype's plates are the fused walls and glass with gaps under 3 m closed (cad_test/src/merge_cad.py); the general builder's come from the bank's room rule, which gives no plate to the glass-walled living area on the ground floor (75 + 18 m2 at x 19 - 32, y 6 - 14) and the glass room at the upper floor's east end (18.5 m2), and gives plates the prototype's shell left out (16 + 10 m2); since UR the Check step flags the ground floor (plate-dropped, check: about 64 m2 inside the walls has no floor) | option later |
 | ground | wall runs | 32 | 27 | -5 | the same cutter rules and closing (the prototype cut its runs at fins, glass corners and lintel slots) | option later |
 | ground | glass pieces | 23 | 24 | +1 | window glass built as glass parts by the bank's rules where the prototype made panes, and the eitherKind sliding doors glazed like windows | accepted difference |
-| ground | lintels | 31 | 25 | -6 | the lintel-bearing rule and the lintel slots of the house cutter (U-10.5 house cutter rules) | option later |
+| ground | lintels | 31 | 35 | +4 | since UR the curtain windows take the floors' typed window heads (3.00 / 2.60 m) with a lintel above (V1-3: before, the bank's curtain rule glazed them to the wall top with no lintel: 6 + 3 window lintels against the prototype's 13 + 21); the ground floor's 4 more (3 over windows, 1 over a door) are lintels the prototype's lintel-bearing rule leaves out (a lintel only where both jambs bear: U-10.5 house cutter rules) | option later |
 | ground | panes | 19 | 0 | -19 | the house prototype made each window's glass a pane part; the general builder (the bank's rules) glazes windows with glass parts (counted under glass pieces) | accepted difference |
-| upper | wall area | 36.87 | 37.06 | 1.25 m2 symmetric difference | the prototype's house cutter rules (fins, glass corners, jamb-section depth, lintel slots) and its 0.03 m closing against the bank's 0.12 m; on the ground floor also an 8.7 m x 0.8 m double line east of the main block (x 40.1 - 40.9) that the bank's pairing builds as a wall | option later |
+| upper | wall area | 36.87 | 37.06 | 1.25 m2 symmetric difference | the prototype's house cutter rules (fins, glass corners, jamb-section depth, lintel slots) and its 0.03 m closing against the bank's 0.12 m | option later |
 | upper | glass area | 3.66 | 3.18 | 0.90 m2 symmetric difference | glass full height against the prototype's H - 0.6 m, and the glass corners of the cutter rules (U-10.5 not adopted) | accepted difference |
-| upper | plate area | 439.08 | 421.08 | 34.59 m2 symmetric difference | the prototype's plates are the fused walls and glass with gaps under 3 m closed (cad_test/src/merge_cad.py); the general builder's come from the bank's room rule, which gives no plate to the glass-walled living area on the ground floor (75 + 18 m2 at x 19 - 32, y 6 - 14) and the glass room at the upper floor's east end (18.5 m2), and gives plates the prototype's shell left out (16 + 10 m2) | option later |
+| upper | plate area | 439.08 | 421.08 | 34.59 m2 symmetric difference | the prototype's plates are the fused walls and glass with gaps under 3 m closed (cad_test/src/merge_cad.py); the general builder's come from the bank's room rule, which gives no plate to the glass-walled living area on the ground floor (75 + 18 m2 at x 19 - 32, y 6 - 14) and the glass room at the upper floor's east end (18.5 m2), and gives plates the prototype's shell left out (16 + 10 m2); since UR the Check step flags the ground floor (plate-dropped, check: about 64 m2 inside the walls has no floor) | option later |
 | upper | wall runs | 27 | 24 | -3 | the same cutter rules and closing (the prototype cut its runs at fins, glass corners and lintel slots) | option later |
 | upper | glass pieces | 28 | 43 | +15 | window glass built as glass parts by the bank's rules where the prototype made panes, and the eitherKind sliding doors glazed like windows | accepted difference |
-| upper | lintels | 34 | 16 | -18 | the lintel-bearing rule and the lintel slots of the house cutter (U-10.5 house cutter rules) | option later |
 | upper | panes | 21 | 0 | -21 | the house prototype made each window's glass a pane part; the general builder (the bank's rules) glazes windows with glass parts (counted under glass pieces) | accepted difference |
 | upper | furniture: other | 22 | 25 | +3 | the prototype's settle() (rug and zone outlines that enclose a smaller piece) is not among U-10.5's rules (U3.md section 6) | option later |
 
@@ -220,7 +230,7 @@ Prototype: Test Sukhumvit Residence (2 floor(s), 197 parts); upload: Test Sukhum
 | ground | walk: doors | ground-018 | exterior door; through one way: no start: no floor 0.40 - 0.90 m before the door; the other way: -0.45 m (stopped before the door) | one of the three sliding glass doors (eitherKind, glazed like windows by design, U3-6); it opens onto the glass-walled living area, which has no floor plate in this build (the plate gap above) | option later |
 | ground | walk: doors | ground-034 | interior door; through one way: no start: no floor 0.40 - 0.90 m before the door; the other way: no start: no floor 0.40 - 0.90 m before the door | in the small east building, which gets no floor plate from the room rule | option later |
 | ground | walk: glass | ground glass 18 | walked from side -1: stopped at 1 m, by ground glass:follow at 0.98 m | a second glass line 0.98 m in front of the probed pane stops the walk: glass still stops you, one line early | accepted difference |
-| upper | walk: glass | upper glass 44 | walked from side 1: stopped at None m, nothing ahead (no start on a floor) | its probe spot is the 1.03 m2 area inside a railing that the plate rule left out (a plate-dropped flag) | option later |
+| upper | walk: glass | upper glass 44 | walked from side 1: stopped at None m, nothing ahead (no start on a floor) | its probe spot is a 1.03 m2 area next to the walls, outside the rooms they close, that the plate rule left out (a plate-dropped info flag) | option later |
 
 
 ## 3. The suite (A-5): `layout presidential test.dwg` against `presidential-suite` v1
@@ -241,9 +251,15 @@ validated, and the version saves and opens.
   `FEATURE_PANEL`, `PARTITION_FACES` / `PARTITION_PANELS`, `BATH_GLASS`; v1 has low 7, post 4, deck 2, builtin 1,
   balustrade 1 parts from them): the upload has none of these kinds (walls, lintels, single-line parts, columns,
   slabs): **check-and-fix later** (this milestone can set items aside, not lower or re-kind them: U-16).
-* **Terrace pieces at full height, room names as drawn (with their areas), the slab and balustrade from the general
-  rules:** accepted difference. **The gym machines and `A$C59a32014`**: lost in conversion, absent in the prototype too:
+* **Terrace pieces at full height, room names as drawn (with their areas), the balustrade from the general rules:**
+  accepted difference. **The gym machines and `A$C59a32014`**: lost in conversion, absent in the prototype too:
   accepted difference (conversion; the AutoCAD DXF fallback).
+* **The floor plate (corrected by UR, V1-2): option later**, not an accepted difference. The bank's room rule gives a
+  plate only to rooms the walls close; without the corridor walls and the facade glass the suite's wall network does
+  not close, so 535 of its 648 m2 has no plate: 113 m2 is built (the walls span about 556 m2), and the whole central
+  living and dining space has none; with every outline suggestion accepted, 146 m2. Plates from the wall network are U-16's (as for the house and the tower). Since
+  UR the Check step flags it (`plate-dropped`, check), and the walk probe suite-025 (no floor on either side) is the
+  same cause.
 
 ### Gap report: suite
 
@@ -285,10 +301,10 @@ Prototype: Presidential suite (1 floor(s), 62 parts); upload: Presidential suite
 | Floor | Metric | Prototype | Upload | Difference | Cause | Class |
 |---|---|---|---|---|---|---|
 | suite | wall area | 21.22 | 20.04 | 9.26 m2 symmetric difference | the corridor walls on the east side (4.8 m2 at x 201 - 207) lie on room-outline edges and are not built without the outline option; walls at x 177 - 181 that the prototype's hand rules made low or built-in parts (C_WALL, CABANA, JACUZZI_KERBS) are full walls here | option now |
-| suite | glass area | 5.39 | 0.00 | 5.39 m2 symmetric difference | the north and south facade glass lies on outline edges (not built without the outline option); the octagon faces (GLASS_FACE_IN / OUT on A-4. Dim) and BATH_GLASS were hand rules | option now |
-| suite | plate area | 647.57 | 112.79 | 534.78 m2 symmetric difference | the slab from the general rules: without the corridor walls the wall network does not close, so 8 rooms' plates are dropped (5 with every outline accepted); the prototype's slab is the hand-made outline of presidential_test/src/floor_spec.json | accepted difference |
+| suite | glass area | 5.39 | 0.00 | 5.39 m2 symmetric difference | the north and south facade glass lies on outline edges: the outline option builds its 6 glass edges as 0.02 m panes, which recover only 0.44 m2 of the 5.39 m2 (the second row); the octagon faces (GLASS_FACE_IN / OUT on A-4. Dim) and BATH_GLASS were hand rules: check-and-fix later | option now |
+| suite | plate area | 647.57 | 112.79 | 534.78 m2 symmetric difference | the slab comes from the bank's room rule, which needs a closed wall network: without the corridor walls and the facade glass the network does not close, so 535 of the suite's 648 m2 has no plate (146 m2 with every outline accepted), the central living and dining space among it; the prototype's slab is the hand-made outline of presidential_test/src/floor_spec.json. Plates from the wall network (U-16); the Check step flags it (plate-dropped, check) | option later |
 | suite | wall runs | 12 | 26 | +14 | the prototype's hand rules joined or re-kinded runs (C_WALL, CABANA, NOT_WALLS); the general builder keeps each paired run, and NOT_WALLS lines become 1.0 m single-line parts | check-and-fix later |
-| suite | glass pieces | 15 | 0 | -15 | as glass area | option now |
+| suite | glass pieces | 15 | 0 | -15 | as glass area: the outline option recovers 6 of the 15 pieces, as thin panes | option now |
 | suite | lintels | 17 | 13 | -4 | lintels follow the detector's openings (15 doors, 10 passages) where the prototype had its own list (16 doors, 6 passages) and the FEATURE_PANEL / PARTITION_PANELS hand rules | check-and-fix now |
 | suite | doors | 16 | 15 | -1 | the frozen detector's 25 records against the prototype's 22 hand-checked openings (20 match by centre) | check-and-fix now |
 | suite | passages | 6 | 10 | +4 | as doors: the detector reads 4 more passages | check-and-fix now |
@@ -305,7 +321,7 @@ Prototype: Presidential suite (1 floor(s), 62 parts); upload: Presidential suite
 
 | Floor | Probe | Id | Detail | Cause | Class |
 |---|---|---|---|---|---|
-| suite | walk: doors | suite-025 | interior door; through one way: no start: no floor 0.40 - 0.90 m before the door; the other way: no start: no floor 0.40 - 0.90 m before the door | no floor plate on either side: the slab from the general rules leaves those rooms out (8 plates dropped; 5 with the outlines accepted) | accepted difference |
+| suite | walk: doors | suite-025 | interior door; through one way: no start: no floor 0.40 - 0.90 m before the door; the other way: no start: no floor 0.40 - 0.90 m before the door | no floor plate on either side: the room rule leaves the suite's centre without a plate (the plate area row) | option later |
 
 
 ### The second suite row (should): every outline suggestion accepted
@@ -314,7 +330,9 @@ The same drawing and settings with `options.outlineWalls: 'suggest'`: the first 
 (20 walls, 6 glass; 67.8 m, U-10.5's measurement); all 26 accepted as offered (`fixes.outlineEdges`) and rebuilt: 71
 parts against 50, one outline flag left, 5 plates dropped against 8. The corridor walls come in, but accepting EVERY
 edge overshoots (wall area 27.43 against the prototype's 21.22 m2): some outline edges are open or glazed in the
-prototype, so staff accept them one by one on the Check step.
+prototype, so staff accept them one by one on the Check step. The 6 glass edges give 0.02 m panes: 0.44 m2 of the
+prototype's 5.39 m2 of facade glass, so the outline option recovers only part of the glass (the first row's glass rows
+say so); the plate grows to 146 m2 only (option later, as above).
 
 ### Gap report: suite-outlines
 
@@ -357,7 +375,7 @@ Prototype: Presidential suite (1 floor(s), 62 parts); upload: Presidential suite
 |---|---|---|---|---|---|---|
 | suite | wall area | 21.22 | 27.43 | 12.73 m2 symmetric difference | every outline suggestion accepted as offered (26 edges: 20 walls, 6 glass): the corridor walls come in, but edges the prototype left open or glazed become 0.20 m walls too (27.43 against 21.22 m2); on the Check step staff accept them one by one | check-and-fix now |
 | suite | glass area | 5.39 | 0.44 | 5.06 m2 symmetric difference | the 6 accepted glass edges give 0.44 m2 of 0.02 m panes; the facade glass of the prototype was a hand rule with its own thickness (GLASS_FACE_IN / OUT, BATH_GLASS) | check-and-fix later |
-| suite | plate area | 647.57 | 145.86 | 502.43 m2 symmetric difference | the slab from the general rules: without the corridor walls the wall network does not close, so 8 rooms' plates are dropped (5 with every outline accepted); the prototype's slab is the hand-made outline of presidential_test/src/floor_spec.json | accepted difference |
+| suite | plate area | 647.57 | 145.86 | 502.43 m2 symmetric difference | the slab comes from the bank's room rule, which needs a closed wall network: without the corridor walls and the facade glass the network does not close, so 535 of the suite's 648 m2 has no plate (146 m2 with every outline accepted), the central living and dining space among it; the prototype's slab is the hand-made outline of presidential_test/src/floor_spec.json. Plates from the wall network (U-16); the Check step flags it (plate-dropped, check) | option later |
 | suite | wall runs | 12 | 40 | +28 | the 20 accepted wall edges are runs of their own, on top of the hand-rule runs of the first row | check-and-fix later |
 | suite | glass pieces | 15 | 6 | -9 | as glass area | check-and-fix later |
 | suite | lintels | 17 | 14 | -3 | lintels follow the detector's openings (15 doors, 10 passages) where the prototype had its own list (16 doors, 6 passages) and the FEATURE_PANEL / PARTITION_PANELS hand rules | check-and-fix now |
@@ -376,7 +394,7 @@ Prototype: Presidential suite (1 floor(s), 62 parts); upload: Presidential suite
 
 | Floor | Probe | Id | Detail | Cause | Class |
 |---|---|---|---|---|---|
-| suite | walk: doors | suite-025 | interior door; through one way: no start: no floor 0.40 - 0.90 m before the door; the other way: no start: no floor 0.40 - 0.90 m before the door | no floor plate on either side: the slab from the general rules leaves those rooms out (8 plates dropped; 5 with the outlines accepted) | accepted difference |
+| suite | walk: doors | suite-025 | interior door; through one way: no start: no floor 0.40 - 0.90 m before the door; the other way: no start: no floor 0.40 - 0.90 m before the door | no floor plate on either side: the room rule leaves the suite's centre without a plate (the plate area row) | option later |
 
 
 ## 4. The tower (A-5): `L29.dwg`, `L30.dwg` (no prototype model)
@@ -396,9 +414,20 @@ two, U3.md 5), and the version saves and opens.
 The openings are exactly the frozen detector's (31 + 34 records = `detector/output/l29_openings.json`,
 `l30_openings.json`, `floor` aside): the detector scored 72 % held out on this drawing (28 Oct: 54 of 54 after the fix
 round, a development-set figure), so every doubtful one is flagged: **check-and-fix now** (the opening editor), reviewed by
-count. Flags: 98, 66 to check: 27 openings, 39 single-line parts (lines on the wall layers with no partner face, built as
-1.00 m items: set aside on the Check step where they are not walls), 21 plates dropped (areas inside railings), 11 grey
-furniture families.
+count. Flags: 100, 68 to check: 27 openings, 39 single-line parts (lines on the wall layers with no partner face, built
+as 1.00 m items: set aside on the Check step where they are not walls), 2 large areas inside the walls with no floor
+(one `plate-dropped` check flag a floor, since UR), 21 plates dropped (small areas next to the walls, outside the rooms
+they close: info), 11 grey furniture families.
+
+**About half of each floor has no floor plate (UR, V1-1; the integration's report gave the wrong cause).** The slab is
+445 m2 on L29, against about 866 m2 closed by the walls and the facade, and 504 m2 on L30 against about 751 m2. The rooms between the core and the curtain-wall facade were never plate candidates: the bank's room
+rule gives a plate only to rooms a closed wall network encloses, and the curtain wall does not close at its corners
+(single-line pieces stand there), so about 321 m2 of L29 and 190 m2 of L30 inside the walls has no floor (the flags' measure: the walls closed by
+1.5 m, pieces of 4 m2 or more with standing room; the slab against the whole enclosed area gives about 420 and 250 m2). The doors and the glass that
+fail their walk probes below stand there. The 21 plates dropped are a different, small thing: areas of 0.5 - 11 m2
+next to the walls, outside the rooms they close, none within 3 m of these doors. **Option later** (plates from the
+wall network, U-16); since UR the Check step flags each floor (`plate-dropped`, check: "about N m2 inside the walls
+has no floor").
 
 ### Walk checks (A-6, should pass)
 
@@ -406,17 +435,17 @@ furniture families.
 
 | Floor | Probe | Id | Detail | Cause | Class |
 |---|---|---|---|---|---|
-| L29 | walk: doors | L29-001 | interior door; through one way: no start: no floor 0.40 - 0.90 m before the door; the other way: no start: no floor 0.40 - 0.90 m before the door | no floor on either side: the bank rule drops plate areas inside railings (21 plate-dropped flags) | option later |
-| L29 | walk: doors | L29-016 | interior door; through one way: no start: no floor 0.40 - 0.90 m before the door; the other way: no start: no floor 0.40 - 0.90 m before the door | no floor on either side: the bank rule drops plate areas inside railings (21 plate-dropped flags) | option later |
-| L29 | walk: doors | L29-025 | interior door; through one way: no start: no floor 0.40 - 0.90 m before the door; the other way: no start: no floor 0.40 - 0.90 m before the door | no floor on either side: the bank rule drops plate areas inside railings (21 plate-dropped flags) | option later |
+| L29 | walk: doors | L29-001 | interior door; through one way: no start: no floor 0.40 - 0.90 m before the door; the other way: no start: no floor 0.40 - 0.90 m before the door | no floor on either side: these doors stand in the rooms between the core and the curtain wall, which get no plate: the bank's room rule needs a closed wall network, and the curtain wall does not close at its corners (single-line pieces stand there). About 321 m2 of L29 and 190 m2 of L30 inside the walls have no floor (plate-dropped check flags since UR). The 21 plates dropped (0.5 - 11 m2, next to the walls) are none of these doors' areas | option later |
+| L29 | walk: doors | L29-016 | interior door; through one way: no start: no floor 0.40 - 0.90 m before the door; the other way: no start: no floor 0.40 - 0.90 m before the door | no floor on either side: these doors stand in the rooms between the core and the curtain wall, which get no plate: the bank's room rule needs a closed wall network, and the curtain wall does not close at its corners (single-line pieces stand there). About 321 m2 of L29 and 190 m2 of L30 inside the walls have no floor (plate-dropped check flags since UR). The 21 plates dropped (0.5 - 11 m2, next to the walls) are none of these doors' areas | option later |
+| L29 | walk: doors | L29-025 | interior door; through one way: no start: no floor 0.40 - 0.90 m before the door; the other way: no start: no floor 0.40 - 0.90 m before the door | no floor on either side: these doors stand in the rooms between the core and the curtain wall, which get no plate: the bank's room rule needs a closed wall network, and the curtain wall does not close at its corners (single-line pieces stand there). About 321 m2 of L29 and 190 m2 of L30 inside the walls have no floor (plate-dropped check flags since UR). The 21 plates dropped (0.5 - 11 m2, next to the walls) are none of these doors' areas | option later |
 | L29 | walk: doors | L29-026 | interior door; through one way: -0.1 m (stopped before the door); the other way: -0.55 m (stopped before the door) | something solid in the doorway stops you before the door line: a single-line part or a detected door over a wall end (the detector scored 72 % held out on this drawing) | check-and-fix now |
-| L29 | walk: doors | L29-028 | interior door; through one way: no start: no floor 0.40 - 0.90 m before the door; the other way: no start: no floor 0.40 - 0.90 m before the door | no floor on either side: the bank rule drops plate areas inside railings (21 plate-dropped flags) | option later |
-| L30 | walk: doors | L30-033 | interior door; through one way: no start: no floor 0.40 - 0.90 m before the door; the other way: no start: no floor 0.40 - 0.90 m before the door | no floor on either side: the bank rule drops plate areas inside railings (21 plate-dropped flags) | option later |
+| L29 | walk: doors | L29-028 | interior door; through one way: no start: no floor 0.40 - 0.90 m before the door; the other way: no start: no floor 0.40 - 0.90 m before the door | no floor on either side: these doors stand in the rooms between the core and the curtain wall, which get no plate: the bank's room rule needs a closed wall network, and the curtain wall does not close at its corners (single-line pieces stand there). About 321 m2 of L29 and 190 m2 of L30 inside the walls have no floor (plate-dropped check flags since UR). The 21 plates dropped (0.5 - 11 m2, next to the walls) are none of these doors' areas | option later |
+| L30 | walk: doors | L30-033 | interior door; through one way: no start: no floor 0.40 - 0.90 m before the door; the other way: no start: no floor 0.40 - 0.90 m before the door | no floor on either side: these doors stand in the rooms between the core and the curtain wall, which get no plate: the bank's room rule needs a closed wall network, and the curtain wall does not close at its corners (single-line pieces stand there). About 321 m2 of L29 and 190 m2 of L30 inside the walls have no floor (plate-dropped check flags since UR). The 21 plates dropped (0.5 - 11 m2, next to the walls) are none of these doors' areas | option later |
 | L30 | walk: doors | L30-034 | interior door; through one way: -0.1 m (stopped before the door); the other way: -0.55 m (stopped before the door) | something solid in the doorway stops you before the door line: a single-line part or a detected door over a wall end (the detector scored 72 % held out on this drawing) | check-and-fix now |
-| L30 | walk: glass | L30-032 | walked from side 1: stopped at None m, nothing ahead (no start on a floor) | no floor beside the glass (plates dropped) | option later |
+| L30 | walk: glass | L30-032 | walked from side 1: stopped at None m, nothing ahead (no start on a floor) | no floor beside the glass: the same rooms between the core and the curtain wall have no plate | option later |
 | L30 | walk: glass | L30 glass 19 | walked from side 1: stopped at 0.65 m, by L30 solid:follow at 0.33 m | a solid part 0.33 m in front of the glass stops the walk first | check-and-fix now |
-| L30 | walk: glass | L30 glass 24 | walked from side 1: stopped at None m, nothing ahead (no start on a floor) | no floor beside the glass (plates dropped) | option later |
-| L30 | walk: glass | L30 glass 26 | walked from side 1: stopped at None m, nothing ahead (no start on a floor) | no floor beside the glass (plates dropped) | option later |
+| L30 | walk: glass | L30 glass 24 | walked from side 1: stopped at None m, nothing ahead (no start on a floor) | no floor beside the glass: the same rooms between the core and the curtain wall have no plate | option later |
+| L30 | walk: glass | L30 glass 26 | walked from side 1: stopped at None m, nothing ahead (no start on a floor) | no floor beside the glass: the same rooms between the core and the curtain wall have no plate | option later |
 
 
 ## 5. A new drawing from the 3D team (A-12, should): `presidential suite_layout.dwg`, the Revit export of 9 Nov
@@ -440,7 +469,9 @@ millimetres: read in mm, as the main session's preview found), no fixes.
 
 1. **The interior walls are on layer `0`.** The export puts the suite's partitions at the top level on layer `0`
    (2,634 items: 99 solid fills, 84 wall-like line pairs, 1,640 lines, 787 arcs over the whole suite), which the office
-   mapping and the proposal leave as `other`. Only `A-WALL` is built as walls (8.4 m2 at the floor, against the 19 Oct
+   mapping and the proposal leave as `other` (since UR the Layers step's evidence for layer `0` says so: "layer 0 holds
+   2634 items drawn at the top level, not inside blocks (99 solid fills, 84 wall-like line pairs, 238 glass-like line
+   pairs): check whether walls or other parts are drawn here"). Only `A-WALL` is built as walls (8.4 m2 at the floor, against the 19 Oct
    suite's 21.2 m2): the facade, the columns and a few walls stand; the bedrooms, bathroom and living area have no
    partitions. Tried once (a build of the new project's recipe with layer `0` set to `wall`, not saved): 126 parts (47
    walls, 23 glass, 13 lintels), 37 openings (14 doors, 15 windows, 8 passages), walls 35.2 m2 and a plate of 175 m2,
@@ -450,7 +481,8 @@ millimetres: read in mm, as the main session's preview found), no fixes.
    asking the 3D team to export with the walls on their own layer (the 19 Oct "cleaner version ... with walls on their
    own layer" built with no hand fixes).
 2. **The floor plate is 35 m2** (5 plates dropped): the bank's room rule needs a closed wall network, which item 1
-   leaves open. Same cause, same class.
+   leaves open. Same cause, same class. Since UR the Check step says it (a `plate-dropped` check flag: the plate against
+   the area the walls span).
 3. **Furniture: 81 pieces in 7 kinds**: curtains 24, sanitary 12, cabinets 9, TV 2, lamps 2, appliance 1 and `other`
    31 (16 loose shapes on `I-FURN`, 8 `Gruppo-19`, 6 loose shapes on `A-GENM`, 1 on `M_Arredi`). No bed, sofa, seat or
    table kind: the Revit family names of this export are not in the furniture vocabulary, so they fall to grey `other`
@@ -458,8 +490,9 @@ millimetres: read in mm, as the main session's preview found), no fixes.
 4. **The frame of the new version:** `presidential-suite` has no `project-settings.json`, so its new version keeps
    v1's offset `[190.523, -3494.655]` (U-9.6, by design) although the new drawing is in another frame: the model sits
    about 3.5 km from the origin (it builds, renders and walks; the Max script still places it at the drawing's own
-   coordinates). The new project gets the bank rule's offset `[13.329, 6.575]`. For a re-drawn project staff should
-   reset the offset on the Floors step; the diff against v1 compares two different sheets.
+   coordinates). The new project gets the bank rule's offset `[13.329, 6.575]`. For a re-drawn project staff reset the
+   offset on the Floors step (Build options, Model position, **Reset**: a staff action since UR, V2-1); the diff against
+   v1 compares two different sheets.
 5. **Openings, from the frozen detector with no tuning** (for a later held-out scoring against an answer key made
    without the detector): 25 records: 9 doors (8 hinged single 0.70 - 0.98 m, 1 hinged double 1.80 m), 15 sliding windows
    in the five facade bays (three per bay: 1.417, 0.807, 0.807 m), 1 passage (0.80 m).
@@ -585,7 +618,7 @@ Prototype: Presidential suite (1 floor(s), 62 parts); upload: Presidential suite
 
 | Floor | Probe | Id | Detail | Cause | Class |
 |---|---|---|---|---|---|
-| suite | walk: walls | walls-1 | {"tried": 0, "wentThrough": 0, "endedInsideWall": 0} | the walk sampler found no start spot on this version, which keeps v1 offset and sits 3.5 km from the origin (UI-3); the same model in its own frame (suite-revit v1) passes 40 of 40 | accepted difference |
+| suite | walk: walls | walls-1 | {"tried": 0, "wentThrough": 0, "endedInsideWall": 0} | the walk sampler found no start spot on this version, which keeps v1's offset and sits 3.5 km from the origin (UI-3); the same model in its own frame (suite-revit v1) passes 40 of 40. Since UR staff reset the offset on the Floors step (Build options, Model position, Reset) for a project re-drawn in another frame | accepted difference |
 | suite | walk: doors | suite-004 | interior door; through one way: no start: no floor 0.40 - 0.90 m before the door; the other way: no start: no floor 0.40 - 0.90 m before the door | no floor plate around the door: the partitions on layer 0 leave the wall network open, so only 35 m2 of plate is built | option later |
 | suite | walk: doors | suite-008 | interior door; through one way: no start: no floor 0.40 - 0.90 m before the door; the other way: no start: no floor 0.40 - 0.90 m before the door | no floor plate around the door: the partitions on layer 0 leave the wall network open, so only 35 m2 of plate is built | option later |
 | suite | walk: doors | suite-010 | interior door; through one way: no start: no floor 0.40 - 0.90 m before the door; the other way: no start: no floor 0.40 - 0.90 m before the door | no floor plate around the door: the partitions on layer 0 leave the wall network open, so only 35 m2 of plate is built | option later |

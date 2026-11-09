@@ -9,7 +9,9 @@
 //     name must still be there with identical text;
 //  3. the two copies of each contract file are identical: docs/contracts.ts = packages/viewer/src/contracts.ts and
 //     docs/upload/upload-contracts.ts = apps/web/src/upload/contracts.ts.
-// Exits 1 listing what moved. `--base <rev>` compares with another commit (default HEAD).
+// Exits 1 listing what moved. `--base <rev>` compares with another commit (default: the foundation's baseline commit
+// 9eb2d58, the API before the upload milestone; UR, V3-10: the default was HEAD, which holds the milestone itself since
+// commit 12921b9, so the check compared the API with itself and could not fail).
 //   node tools/check-openapi-additive.mjs
 import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
@@ -19,7 +21,9 @@ import ts from 'typescript';
 import { APP, parseArgs } from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2), { flags: ['base'] });
-const BASE = args.base ?? 'HEAD';
+/** "Baseline: prototypes, plan and the application foundation (4 Nov 2026)": the API the milestone must only add to. */
+export const FOUNDATION = '9eb2d5819784472821ad6a8b0c11eba642a27d0b';
+const BASE = args.base ?? FOUNDATION;
 const problems = [];
 const notes = [];
 

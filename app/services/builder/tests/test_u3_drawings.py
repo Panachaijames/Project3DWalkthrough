@@ -94,6 +94,19 @@ def test_house_floor_door_heads(house):
     assert any(o['sill'] == 0.9 for o in wins)                               # the opening over a low wall
 
 
+def test_house_curtain_windows_take_the_floor_window_head(house):
+    """UR, V1-3: a curtain window (glass drawn in the opening) is glazed to the floor's own window head when staff typed
+    one (U-10.5's per-floor window defaults), with a lintel above it; the house's were glazed to the wall top (3.90 /
+    3.50 m) with no lintel against its 3.00 / 2.60 m heads. The bank sets none: its model is unchanged (test_u3_bank)."""
+    m = house['model']
+    heads = {'ground': 3.0, 'upper': 2.6}
+    curtain = [o for o in m['openings'] if o['kind'] == 'window' and o['curtain']]
+    assert len(curtain) >= 20
+    assert all((o['sill'], o['head']) == (0.0, heads[o['floor']]) for o in curtain)
+    lintels = collections.Counter(p.get('label') for p in m['parts'] if p['kind'] == 'lintel')
+    assert all(lintels[o['id']] >= 1 for o in curtain)
+
+
 def test_house_furniture_against_the_prototype(house):
     p = proto('house')
     assert by_kind(house['model'], 'ground') == by_kind(p, 'ground')           # 47 pieces, kind for kind

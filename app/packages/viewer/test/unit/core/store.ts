@@ -72,8 +72,12 @@ function meta(root: string, id: string, model: any, versions: number[]) {
   }, 2);
 }
 
-/** Writes the store at <root> (default <WT_TMP>/data), replacing what was there. */
-export function writeStore(root = path.join(TMP, 'data')): { root: string; versions: StoreVersion[] } {
+/** The unit tests' own store folder. Never <WT_TMP>/data: the upload milestone gives that folder to the API
+ *  (WALKTHROUGH_DATA_DIR=<WT_TMP>\data, app/CLAUDE.md), and a unit run replaced a served store there (UR, V1-4). */
+export const UNIT_STORE = path.join(TMP, 'unit-store');
+
+/** Writes the store at <root> (default <WT_TMP>/unit-store), replacing what was there. */
+export function writeStore(root = UNIT_STORE): { root: string; versions: StoreVersion[] } {
   rmSync(root, { recursive: true, force: true });
   const out: StoreVersion[] = [];
 

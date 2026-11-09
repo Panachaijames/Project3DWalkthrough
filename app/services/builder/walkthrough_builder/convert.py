@@ -28,6 +28,9 @@ from .contracts import ConvertResult
 
 #: the converted DXF may not grow past this (U-3.5: 1.5 GB on disk, killed beyond)
 MAX_DXF_BYTES = 1536 * 1024 * 1024
+#: the converter's messages (stdout and stderr together) may not grow past this (UR, V3-7: the largest convert.log of the
+#: project's drawings is 440 KB, the presidential suite's): beyond it the converter is stopped and the conversion fails
+MAX_TEXT_BYTES = 64 * 1024 * 1024
 _DWG = re.compile(rb'^AC(\d{4})')
 _PRE_R10 = re.compile(rb'^AC[12]\.\d')
 _VERSION = re.compile(r'libredwg-(\d+(?:\.\d+)*)', re.IGNORECASE)
@@ -71,7 +74,7 @@ def converter_info(libredwg: Path) -> dict:
 
 def convert(dwg: Path, work_dir: Path, *, libredwg: Path, seconds: float, memory_mb: int,
             cancelled: Callable[[], object] | None = None, poll: Callable[[], None] | None = None,
-            env: dict | None = None, max_bytes: int = MAX_DXF_BYTES) -> ConvertResult:
+            env: dict | None = None, max_bytes: int = MAX_DXF_BYTES, max_text: int = MAX_TEXT_BYTES) -> ConvertResult:
     """Copies `dwg` in as `work_dir/input.dwg` (unless it is that file) and runs `dwg2dxf -y -o plan.dxf input.dwg`
     (U-6.2). Returns the ConvertResult (contracts.py) plus `code` (None when the DXF was written; else a RunErrorCode
     or 'cancelled'), `detail` (a plain sentence) and the raw isolate result under `run`."""
@@ -87,11 +90,17 @@ def convert(dwg: Path, work_dir: Path, *, libredwg: Path, seconds: float, memory
     res = isolate.run([str(exe(libredwg, 'dwg2dxf')), '-y', '-o', 'plan.dxf', 'input.dwg'], cwd=work_dir,
                       env=env if env is not None else isolate.child_env(), seconds=seconds, memory_mb=memory_mb,
                       stdout=out, stderr=err, cancelled=cancelled, watch_file=dxf, watch_max_bytes=max_bytes,
-                      leaf=True, poll=poll)
-    log.write_bytes(out.read_bytes() + err.read_bytes())
+                      leaf=True, poll=poll, watch_text_max_bytes=max_text)
+    with open(log, 'wb') as fl:                                    # streamed: never the whole text in memory
+        for part in (out, err):
+            with open(part, 'rb') as fp:
+                shutil.copyfileobj(fp, fl, 1024 * 1024)
     code = isolate.classify(res, 'convert')
     detail = ''
-    if res['killed_for_size']:
+    if res.get('killed_for_text'):
+        code, detail = 'convert_failed', (f'the converter printed more than {max_text // 2 ** 20:,} MB of messages '
+                                          f'and was stopped')
+    elif res['killed_for_size']:
         code, detail = 'convert_failed', f'the converted file grew past {max_bytes // 2 ** 20:,} MB and was stopped'
     elif code == 'convert_timeout':
         detail = f'the converter took longer than {seconds:.0f} s and was stopped'

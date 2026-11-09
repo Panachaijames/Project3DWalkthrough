@@ -19,7 +19,7 @@ from typing import Any
 
 from pydantic import ValidationError
 
-from .. import views
+from .. import check_file, views
 from ..errors import ApiError
 from ..jobs.base import JobRunner
 from ..jsonio import JsonError, iso_utc, loads_strict, read_bytes, sha1_hex
@@ -152,9 +152,36 @@ def _source_run(runs: list[RunView], sha1: str, name: str = 'drawing.json') -> R
     return None
 
 
+def failed_conversion(runs: list[RunView], sha1: str) -> dict[str, Any] | None:
+    """The conversion report the worker published for this source when the draft's newest prepare failed on it (verdict
+    'failed', U-6.3), checked like every worker record first; None otherwise (UR, V3-9: it was written 'so the Files step
+    can say why' and never served, so the step said 'Not read yet')."""
+    prepares = [r for r in runs if r.kind == 'prepare']
+    if not prepares or prepares[-1].status != 'failed':
+        return None
+    try:
+        data = (prepares[-1].out / 'sources' / sha1 / 'conversion.json').read_bytes()
+    except OSError:
+        return None
+    if check_file.issues('conversion', data):
+        return None
+    try:
+        rep = loads_strict(data)
+    except JsonError:
+        return None
+    if rep.get('verdict') != 'failed' or (rep.get('source') or {}).get('sha1') != sha1:
+        return None
+    return rep
+
+
 def _source_info(project_id: str, build_id: str, rec: SourceRecord, runs: list[RunView]) -> BuildSourceInfo:
     rv = _source_run(runs, rec.sha1)
     conversion = units = urls = None
+    if rv is None:
+        failed = failed_conversion(runs, rec.sha1)
+        if failed is not None:
+            conversion = BuildSourceConversion(verdict='failed', notes=[str(n) for n in failed.get('notes') or []][:20],
+                                               lost_in_model_space=0)
     if rv is not None:
         conv = _json_or_none(rv.out / 'sources' / rec.sha1 / 'conversion.json')
         drawing = _json_or_none(rv.out / 'sources' / rec.sha1 / 'drawing.json')
@@ -176,7 +203,25 @@ def result_run(runs: list[RunView]) -> RunView | None:
     return next((rv for rv in reversed(runs) if rv.kind == 'build' and rv.done_and_valid), None)
 
 
-def _result(project_id: str, build_id: str, rv: RunView, revision: int) -> BuildResultInfo | None:
+def _recipe(settings: dict[str, Any]) -> dict[str, Any]:
+    """The settings the model is made from: all but `office`, which only names the layer memory read at the prepare and
+    written at save (U-8.4); no build step reads it."""
+    return {k: v for k, v in settings.items() if k != 'office'}
+
+
+def is_stale(rv: RunView, sf: BuildSettingsFile) -> bool:
+    """The settings changed since this build run in a way that changes the model (U-11.1). A change of the office only
+    (the Save step's office select of a project with none, U-8.4) leaves the build saveable: UR, V3-1 found that picking
+    the office there made Save need a whole new build."""
+    if rv.settings_revision == sf.revision:
+        return False
+    ran = (rv.spec or {}).get('settings')
+    if not isinstance(ran, dict):
+        return True
+    return _recipe(ran) != _recipe(sf.settings.model_dump(mode='json', by_alias=True))
+
+
+def _result(project_id: str, build_id: str, rv: RunView, sf: BuildSettingsFile) -> BuildResultInfo | None:
     try:
         model, model_sha1 = cached_json(rv.out / 'model.json')
         overlay, _ = cached_json(rv.out / 'overlay.json')
@@ -202,7 +247,7 @@ def _result(project_id: str, build_id: str, rv: RunView, revision: int) -> Build
     record = rv.job or {}
     seconds = {s['name']: float(s['seconds']) for s in record.get('steps') or [] if s.get('seconds') is not None}
     return BuildResultInfo(
-        run_id=rv.id, finished_at=record.get('finishedAt') or '', stale=rv.settings_revision != revision,
+        run_id=rv.id, finished_at=record.get('finishedAt') or '', stale=is_stale(rv, sf),
         settings_revision=rv.settings_revision or 0,
         counts=VersionCounts(floors=len(model['floors']), parts=len(parts), openings=len(openings),
                              furniture=len(furniture), furniture_kinds=len(model.get('furnitureKinds') or []),
@@ -249,7 +294,7 @@ def detail(store: Store, jobs: JobRunner, project_id: str, build_id: str, with_s
         **_summary_fields(store, build, runs), sources=sources, settings=sf.settings if with_settings else None,
         settings_revision=sf.revision, layers_reviewed_at=build.layers_reviewed_at, suggestions=suggestions,
         run=run_info(runs[-1]) if runs else None,
-        result=_result(project_id, build_id, done, sf.revision) if done is not None else None,
+        result=_result(project_id, build_id, done, sf) if done is not None else None,
         urls=BuildUrls(settings=f'{url}/settings', run=f'{url}/run', cancel=f'{url}/cancel', save=f'{url}/save'))
 
 
@@ -469,18 +514,31 @@ def run_build(store: Store, jobs: JobRunner, settings: Settings, project_id: str
             raise ApiError(409, 'run_in_progress', 'a run is going: wait until it is done, or cancel it')
         sf = store.get_build_settings(project_id, build_id)
         if sf.revision == 0:
-            raise ApiError(409, 'not_prepared', 'the drawings are still being read')
-        unconfirmed = [s.name for s in sf.settings.sources if not s.units_confirmed]
-        if unconfirmed:
-            raise ApiError(409, 'units_unconfirmed', f'confirm the units of {", ".join(unconfirmed)} on the Files step',
-                           {'sources': unconfirmed})
-        if build.layers_reviewed_at is None:
-            raise ApiError(409, 'layers_not_reviewed', 'look through the Layers step once before the first build')
-        _builder_missing(jobs, {s.kind for s in sf.settings.sources})
-        cleanup.clean_runs(store, project_id, build_id, runs)
-        start_run(store, jobs, settings, project_id, build, 'build')
+            if not first_reading_ended(runs):
+                raise ApiError(409, 'not_prepared', 'the drawings are still being read')
+            # the first reading ended without a proposal (failed, cancelled, or interrupted by a restart, U-3.4): Build
+            # reads the draft's files again instead of leaving a dead end (UR, V3-4)
+            _builder_missing(jobs, {store.get_source(project_id, s).kind for s in build.sources})
+            start_run(store, jobs, settings, project_id, build, 'prepare')
+        else:
+            unconfirmed = [s.name for s in sf.settings.sources if not s.units_confirmed]
+            if unconfirmed:
+                raise ApiError(409, 'units_unconfirmed', f'confirm the units of {", ".join(unconfirmed)} on the Files '
+                                                         f'step', {'sources': unconfirmed})
+            if build.layers_reviewed_at is None:
+                raise ApiError(409, 'layers_not_reviewed', 'look through the Layers step once before the first build')
+            _builder_missing(jobs, {s.kind for s in sf.settings.sources})
+            cleanup.clean_runs(store, project_id, build_id, runs)
+            start_run(store, jobs, settings, project_id, build, 'build')
         store.write_build(build.model_copy(update={'updated_at': iso_utc()}))
     return detail(store, jobs, project_id, build_id)
+
+
+def first_reading_ended(runs: list[RunView]) -> bool:
+    """The draft's first reading (its newest whole prepare) ended without a proposal: failed, cancelled or interrupted.
+    runBuild then reads the files again (UR, V3-4)."""
+    first = [r for r in runs if r.kind == 'prepare' and not r.only]
+    return bool(first) and first[-1].status in ('failed', 'cancelled', 'interrupted')
 
 
 def cancel_run(store: Store, jobs: JobRunner, project_id: str, build_id: str) -> BuildDetail:

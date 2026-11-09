@@ -26,6 +26,8 @@ export interface BuildContextValue {
   editable: boolean;
   /** Puts an answer of the API (runBuild, cancel ...) into the caches. */
   setDetail: (d: BuildDetail) => void;
+  /** Reads the build again (a run another tab started: UR, V2-14). */
+  refresh: () => void;
   goto: (step: StepId) => void;
 }
 
@@ -51,17 +53,24 @@ export function useDrawing(src: BuildSourceInfo | undefined): UseQueryResult<Dra
 
 export interface PlanState { plan: DecodedPlan | null; loading: boolean; error: unknown }
 
-/** A source's plan geometry, decoded once (U-7.5, U-12.1). */
+/** A source's plan geometry, decoded once (U-7.5, U-12.1): the decoded plan is the same object for as long as the
+ *  plan's file is (its query keeps one answer per URL and source token). UR, V2-3: it was decoded again whenever the page
+ *  got a new BuildDetail (every settings save gives a new `urls` object), and the canvas took that as a new plan and
+ *  fitted it, throwing away the staff member's zoom after every Set aside, Restore or fix. */
 export function usePlan(src: BuildSourceInfo | undefined): PlanState {
   const q = useQuery(rawQueryOptions<PlanGeometry>(src?.urls?.plan, src ? sourceToken(src) : ''));
-  return useMemo<PlanState>(() => {
-    if (!q.data) return { plan: null, loading: q.isPending && !!src?.urls, error: q.error };
+  const hasUrls = !!src?.urls;
+  const decoded = useMemo<{ plan: DecodedPlan | null; error: unknown }>(() => {
+    if (!q.data) return { plan: null, error: null };
     try {
-      return { plan: decodePlan(q.data), loading: false, error: null };
+      return { plan: decodePlan(q.data), error: null };
     } catch (err) {
-      return { plan: null, loading: false, error: err };
+      return { plan: null, error: err };
     }
-  }, [q.data, q.isPending, q.error, src?.urls]);
+  }, [q.data]);
+  return useMemo<PlanState>(() => (q.data
+    ? { plan: decoded.plan, loading: false, error: decoded.error }
+    : { plan: null, loading: q.isPending && hasUrls, error: q.error }), [q.data, decoded, q.isPending, q.error, hasUrls]);
 }
 
 /** The text that locks the Floors and Check steps while a source is read again (U-7.4), or null. */

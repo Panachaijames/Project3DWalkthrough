@@ -7,6 +7,7 @@
 import path from 'node:path';
 import { act } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { notMappedYet } from '@/build/LayersStep';
 import { ROLES } from '@/build/roles';
 import type { DrawingRead } from '@/upload/contracts';
 import { choose, click, enter, settle, text, typeInto, waitFor } from '../helpers';
@@ -141,8 +142,10 @@ describe('Layers', () => {
     await choose(q('[data-testid=layers-role-filter]'), '');
     await click(q('[data-testid=layers-unmapped]'));
     await waitFor(() => qa('[data-testid=layer-row]').length < all);
-    const settings = mock.uploads.build('bank-sampeng', qa('[data-testid=build-page]')[0]!.dataset.buildId!)!.settings;
-    expect(qa('[data-testid=layer-row]').every(r => !(r.dataset.layer! in settings.layers))).toBe(true);
+    // "Not mapped yet": not in the settings, or still `other` as the suggester's default (UR, V2-12)
+    const b = mock.uploads.build('bank-sampeng', qa('[data-testid=build-page]')[0]!.dataset.buildId!)!;
+    expect(qa('[data-testid=layer-row]').every(r => notMappedYet(r.dataset.layer!, b.settings, b.suggestions[r.dataset.layer!]))).toBe(true);
+    expect(qa('[data-testid=layer-row]').some(r => r.dataset.layer! in b.settings.layers)).toBe(true);
   });
 
   it('an ignore row with items close to wall-role lines carries the chip', async () => {

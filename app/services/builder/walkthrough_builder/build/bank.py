@@ -513,6 +513,7 @@ def build_openings(F, X):
     W0, G0u, S0 = unary_union(F['W']), unary_union(F['G']), unary_union(F['S'])
     sill0 = fc['windowSill'] if fc.get('windowSill') is not None else DEF['windowSill']
     head0 = fc['windowHead'] if fc.get('windowHead') is not None else DEF['windowHead']
+    curtain_head = min(float(fc['windowHead']), top) if fc.get('windowHead') is not None else top
     recs = []
     for o in F['ops']:
         a, b = tuple(o['a']), tuple(o['b'])
@@ -568,7 +569,11 @@ def build_openings(F, X):
         gz = G0u.intersection(r['foot'])
         if o['kind'] == 'window':
             r['curtain'] = gz.area > 1e-4
-            r['sill'], r['head'] = (0.0, top) if r['curtain'] else (sill0, head0)
+            # a curtain window (glass drawn in the opening) is glazed from the floor to the wall top (the bank's rule),
+            # or to the floor's own window head when staff typed one (UR, V1-3: U-10.5's per-floor window defaults; the
+            # house's 28 curtain windows reached 3.90 / 3.50 m with no lintel against its 3.00 / 2.60 m heads; the bank,
+            # the suite and the tower set none, so their models are unchanged)
+            r['sill'], r['head'] = (0.0, curtain_head) if r['curtain'] else (sill0, head0)
             if not r['curtain'] and 'low wall' in (o.get('subtype') or ''): r['sill'] = LOW_WALL_SILL
             if o.get('_sill') is not None: r['sill'] = o['_sill']
             if o.get('_head') is not None: r['head'] = o['_head']

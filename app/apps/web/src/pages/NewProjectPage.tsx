@@ -16,7 +16,7 @@ import { listOfficesOptions, listProjectsQueryKey } from '@/api/generated/@tanst
 import { createProject } from '@/api/generated/sdk.gen';
 import { OfficeSelect, type OfficeChoice } from '@/build/OfficeSelect';
 import { APP_NAME, errorReason } from '@/lib/format';
-import { projectIdProblem, slugify } from '@/lib/slug';
+import { projectIdOf, projectIdProblem } from '@/lib/slug';
 import { useDocumentTitle } from '@/lib/useDocumentTitle';
 
 export const newProjectTitle = () => `New project · ${APP_NAME}`;
@@ -43,7 +43,7 @@ export function NewProjectPage() {
   const [suggested, setSuggested] = useState<string | null>(null);
   const [tried, setTried] = useState(false);
 
-  const shownId = idTouched ? id : slugify(name);
+  const shownId = idTouched ? id : projectIdOf(name);
   const idProblem = projectIdProblem(shownId);
   const nameProblem = !name.trim() ? 'a project needs a name' : name.length > 200 ? 'at most 200 characters' : null;
   const officeProblem = office.office === null && office.newOfficeName !== null && !office.newOfficeName.trim() ? 'type the new office\'s name' : null;

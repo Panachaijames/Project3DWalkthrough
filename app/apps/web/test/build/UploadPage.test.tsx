@@ -84,15 +84,34 @@ describe('Upload', () => {
     void app;
   });
 
-  it('a project with versions: "Use the files of v2 again" asks for a build of that version\'s files (the API says why it cannot)', async () => {
-    const app = await openApp('/projects/bank-sampeng/builds/new');
+  it('"Use the files of v<n> again" only when that version was built from uploads (UR, V3-8: never on a seeded one)', async () => {
+    // the seeded bank: v2 came from the prototype folders, so it has no files to use again
+    const seeded = await openApp('/projects/bank-sampeng/builds/new');
+    await waitFor(() => q('[data-testid=upload-page]') && seeded.mock.requests.some(r => r.path.endsWith('/builds') && r.method === 'GET'));
+    await waitFor(() => q('[data-testid=drop-zone]'));
+    expect(q('[data-testid=reuse-files]')).toBeNull();
+    await closeAll();
+    // v3 saved from a draft: offered, and the build starts from that version
+    const mock = createMockApi();
+    const { build } = draftOf(mock, 'bank-sampeng', ['I1201.dwg'], { built: true });
+    const saved = mock.handle({ method: 'POST', path: `/api/projects/bank-sampeng/builds/${build.id}/save`, headers: {},
+      body: JSON.stringify({ label: 'v3', carryHeights: false, rememberMapping: false }) });
+    expect(saved.status).toBe(201);
+    const app = await openApp('/projects/bank-sampeng/builds/new', { mock });
     const reuse = await waitFor(() => q('[data-testid=reuse-files]'));
-    expect(reuse.textContent).toBe('Use the files of v2 again');
+    expect(reuse.textContent).toBe('Use the files of v3 again');
     await click(reuse);
-    await waitFor(() => q('[data-testid=start-error]'));
-    const body = JSON.parse(app.mock.requests.find(r => r.method === 'POST' && r.path.endsWith('/builds'))!.body!);
-    expect(body).toEqual({ sources: null, from: { kind: 'version', version: 2 } });
-    expect(q('[data-testid=start-error]')?.textContent).toContain('A build needs at least one source file.');
+    await waitFor(() => app.router.state.location.pathname !== '/projects/bank-sampeng/builds/new');
+    const body = JSON.parse(mock.requests.filter(r => r.method === 'POST' && r.path.endsWith('/builds')).at(-1)!.body!);
+    expect(body).toEqual({ sources: null, from: { kind: 'version', version: 3 } });
+  });
+
+  it('the mock answers a version with no build settings as the API does (404 version_not_found)', async () => {
+    const mock = createMockApi();
+    const r = mock.handle({ method: 'POST', path: '/api/projects/bank-sampeng/builds', headers: {},
+      body: JSON.stringify({ sources: null, from: { kind: 'version', version: 2 } }) });
+    expect(r.status).toBe(404);
+    expect(JSON.parse(r.body.toString('utf8')).error.code).toBe('version_not_found');
   });
 
   it('?from=<build> (Start again with other files): the new draft starts from that draft\'s settings; open drafts are listed', async () => {

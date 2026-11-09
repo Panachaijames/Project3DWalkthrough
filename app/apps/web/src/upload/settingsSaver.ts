@@ -95,6 +95,10 @@ export function createSettingsSaver(deps: SettingsSaverDeps): SettingsSaver {
   let base = { ...deps.base };
   let pending: SettingsChange[] = [];
   let inflight: SettingsChange[] | null = null;
+  /** The settings on screen: the base with the changes in flight and waiting applied. Kept as changes come, and made
+   *  again only when the base moves (a save, a conflict, a rebase): each change is applied once, not on every emit
+   *  (UR, V3-5: a set-aside of 10,000 items cost three applications, 8 - 10 s). */
+  let view: BuildSettings = base.settings;
   let reviewWanted = false;
   let reviewInFlight = false;
   let timer: ReturnType<typeof setTimeout> | null = null;
@@ -105,10 +109,12 @@ export function createSettingsSaver(deps: SettingsSaverDeps): SettingsSaver {
   const listeners = new Set<() => void>();
   let state: SettingsSaverState = snapshot();
 
+  function remake() { view = apply([...(inflight ?? []), ...pending], base.settings); }
+
   function snapshot(): SettingsSaverState {
     const status: SettingsSaverStatus = inflight ? 'saving' : error ? 'error' : pending.length || timer || reviewWanted ? 'pending' : 'saved';
     return {
-      settings: apply([...(inflight ?? []), ...pending], base.settings),
+      settings: view,
       revision: base.revision,
       status,
       error: inflight ? null : error,
@@ -130,11 +136,20 @@ export function createSettingsSaver(deps: SettingsSaverDeps): SettingsSaver {
     if (inflight) return;                                   // one at a time: the next goes when this one is answered
     if (timer) { clearTimeout(timer); timer = null; }
     if (!pending.length && !reviewWanted) { emit(); return; }
+    // nothing in flight, so the settings on screen are the base with exactly the waiting changes applied
+    const sending = view;
+    if (sending === base.settings && !reviewWanted) {
+      // the changes changed nothing (the same office picked again ...): no save, so no new revision (UR, V3-1)
+      pending = [];
+      error = null;
+      issues = [];
+      emit();
+      return;
+    }
     inflight = pending;
     pending = [];
     reviewInFlight = reviewWanted;
     reviewWanted = false;
-    const sending = apply(inflight, base.settings);
     const carried = reviewInFlight;
     error = null;
     issues = [];
@@ -145,6 +160,7 @@ export function createSettingsSaver(deps: SettingsSaverDeps): SettingsSaver {
         inflight = null;
         reviewInFlight = false;
         conflicts = 0;
+        remake();                                           // the changes made meanwhile, on the saved settings
         deps.onSaved?.(detail);
         if (pending.length || reviewWanted) schedule();
         emit();
@@ -159,6 +175,7 @@ export function createSettingsSaver(deps: SettingsSaverDeps): SettingsSaver {
           pending = [...changes, ...pending];
           reviewWanted = reviewWanted || reviewInFlight;
           reviewInFlight = false;
+          remake();
           send();                                           // at once: the change was waited for already
           return;
         }
@@ -168,8 +185,9 @@ export function createSettingsSaver(deps: SettingsSaverDeps): SettingsSaver {
           error = TOO_MANY_SET_ASIDE;
           issues = [];
           reviewWanted = reviewWanted || reviewInFlight;
+          remake();
         } else {
-          pending = [...changes, ...pending];
+          pending = [...changes, ...pending];               // the same changes on the same base: the view stands
           reviewWanted = reviewWanted || reviewInFlight;
           error = conflict ? 'the settings keep changing elsewhere: reload the page' : errorReason(err);
           issues = issuesOf(err);
@@ -185,6 +203,7 @@ export function createSettingsSaver(deps: SettingsSaverDeps): SettingsSaver {
     change(fn, opts) {
       if (closed) return;
       pending.push(fn);
+      view = fn(view);
       if (opts?.layersReviewed) reviewWanted = true;
       schedule();
       emit();
@@ -200,6 +219,7 @@ export function createSettingsSaver(deps: SettingsSaverDeps): SettingsSaver {
     rebase(settings, revision) {
       if (revision <= base.revision) return;
       base = { settings, revision };
+      remake();
       emit();
     },
     subscribe(listener) {

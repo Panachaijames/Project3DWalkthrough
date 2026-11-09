@@ -45,6 +45,11 @@ def source_model(record: SourceRecord) -> SourceFile:
                       format_version=record.format_version, uploaded_at=record.uploaded_at)
 
 
+def mb(n: int) -> str:
+    """Bytes as the web app's formatBytes shows them from 1 MB up: decimal megabytes with one decimal ('315.6 MB')."""
+    return f'{n / 1_000_000:,.1f} MB'
+
+
 def name_problem(file_name: str) -> str | None:
     if not 1 <= len(file_name) <= MAX_NAME:
         return f'a file name is 1 - {MAX_NAME} characters'
@@ -65,8 +70,9 @@ def create_upload(store: Store, settings: Settings, body: UploadRequest) -> Uplo
     if body.bytes < 1:
         raise ApiError(422, 'bad_kind', f'{body.file_name} is empty: it is not a drawing')
     if body.bytes > settings.upload_max_bytes:
-        raise ApiError(413, 'too_large', f'{body.file_name} is {body.bytes:,} bytes; at most '
-                                         f'{settings.upload_max_bytes:,} are taken')
+        # in MB, as the upload screen shows file sizes (UR, V2-10: '315,621,376 bytes' beside the row's '315.6 MB')
+        raise ApiError(413, 'too_large', f'{body.file_name} is {mb(body.bytes)}; at most {mb(settings.upload_max_bytes)} '
+                                         f'can be uploaded')
     now = datetime.now(UTC)
     store.clean_uploads(iso_utc(now))
     record = UploadSessionFile(

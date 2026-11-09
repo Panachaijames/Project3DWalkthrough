@@ -102,8 +102,9 @@ export function BuildPage() {
     change: (fn, o) => { if (editable) saverHook.change(fn, o); },
     editable,
     setDetail: (d: BuildDetail) => build.set(d),
+    refresh: build.refetch,
     goto,
-  } : null), [detail, project.data, settings, saverHook.saver, saverHook.state, saverHook.change, editable, build.set, goto, projectId, buildId]);   // eslint-disable-line react-hooks/exhaustive-deps
+  } : null), [detail, project.data, settings, saverHook.saver, saverHook.state, saverHook.change, editable, build.set, build.refetch, goto, projectId, buildId]);   // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!detail || !value) {
     return (
@@ -137,6 +138,14 @@ export function BuildPage() {
             <StepBar detail={detail} current={step} onStep={goto} />
             <p className="truncate text-xs text-muted-foreground" data-testid="build-files">{detail.sourceNames.join(', ')}</p>
           </div>
+          {build.pollError !== null && build.pollError !== undefined && (
+            <Alert variant="destructive" data-testid="api-not-answering">
+              <CircleAlert aria-hidden="true" />
+              <AlertDescription>
+                {`The API is not answering (${errorReason(build.pollError)}): what you see may be out of date. Trying again every second...`}
+              </AlertDescription>
+            </Alert>
+          )}
           {detail.status === 'saved' && detail.savedVersion !== null && (
             <Alert data-testid="build-saved">
               <AlertDescription>

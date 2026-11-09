@@ -5,7 +5,9 @@
 // wall height (default: next level - this level; the top floor typed), slab thickness, door head / window sill / head,
 // alignment (auto, grid, origin, two points picked on both sheets); "propose areas again on the wall layers" (in the
 // browser, on the decoded plan); the project details (office, names, photo name, Max prefix and file name, exported
-// from) and the project defaults. Locked while a source is read again (U-7.4). Names from the drawing are text.
+// from), the project defaults and the build options (outline-wall suggestions, how furniture pieces are read, the
+// offset with its Reset: U-10.5, U-9.6; UR, V2-1). Locked while a source is read again (U-7.4). Names from the drawing
+// are text.
 import { ArrowDown, ArrowUp, Crosshair, Plus, SquareDashed, Trash2 } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -20,7 +22,7 @@ import { OfficeSelect } from './OfficeSelect';
 import { WALL_ROLES } from './roles';
 import {
   addFloor, boxArea, defaultWallHeight, floorIssues, moveFloor, namingIssues, removeFloor, roleOf, round3, setDefaults,
-  setOffice, setProject, updateFloor, DEFAULT_MATCH, DEFAULT_PAD,
+  setOffice, setOptions, setPieceLayer, setProject, updateFloor, DEFAULT_MATCH, DEFAULT_PAD,
 } from './settingsEdit';
 
 export const PAD_HELP = 'how far outside the box a line may reach';
@@ -78,8 +80,8 @@ function FloorCard({ index, floor, settings, editable, selected, onSelect, tool,
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
         <TextField label="Key" value={floor.key} disabled={!editable} onCommit={v => set({ key: v.trim() })} testId="floor-key" />
         <TextField label="Name" value={floor.name} disabled={!editable} onCommit={v => set({ name: v })} testId="floor-name" className="col-span-1 md:col-span-2" />
-        <FieldRow label="Source">
-          <NativeSelect value={floor.source} disabled={!editable} onChange={e => set({ source: e.target.value })} data-testid="floor-source">
+        <FieldRow label="Source" className="min-w-0">
+          <NativeSelect className="w-full min-w-0" value={floor.source} disabled={!editable} onChange={e => set({ source: e.target.value })} data-testid="floor-source">
             {settings.sources.map(s => <option key={s.sha1} value={s.sha1}>{s.name}</option>)}
             {!settings.sources.some(s => s.sha1 === floor.source) && <option value={floor.source}>(no source)</option>}
           </NativeSelect>
@@ -266,6 +268,53 @@ function ProjectDetails({ settings, editable }: { settings: BuildSettings; edita
         <NumberField label="Single-line height" value={d.singleLineHeight} disabled={!editable} testId="default-single-line" onCommit={v => change(setDefaults({ singleLineHeight: v ?? d.singleLineHeight }))} />
       </div>
       {issues.length > 0 && <ul className="text-xs text-destructive">{issues.map(i => <li key={i.path}>{i.message}</li>)}</ul>}
+      <BuildOptions settings={settings} editable={editable} />
+    </section>
+  );
+}
+
+export const OUTLINE_HELP = 'free edges of room outlines are offered as walls or glass on the Check step; nothing is built until accepted';
+export const PIECE_LAYER_HELP = 'also a block placed on another layer whose drawing is mostly on furniture layers (the suite\'s pieces)';
+
+/** The builder options staff set for a drawing style (U-10.5) and the offset (U-9.6): UR, V2-1 found them reachable
+ *  through the API only, although the design and the gap report send staff here for them. */
+function BuildOptions({ settings, editable }: { settings: BuildSettings; editable: boolean }) {
+  const { change } = useBuildContext();
+  const offset = settings.options.offset;
+  return (
+    <section className="grid gap-3 border-t pt-3" data-testid="build-options">
+      <h4 className="text-xs font-semibold text-muted-foreground">Build options</h4>
+      <div className="grid gap-3 md:grid-cols-2">
+        <FieldRow label="Walls along room outlines" help={OUTLINE_HELP} className="min-w-0">
+          <NativeSelect className="w-full min-w-0" value={settings.options.outlineWalls} disabled={!editable} data-testid="option-outline-walls"
+            onChange={e => change(setOptions({ outlineWalls: e.target.value === 'suggest' ? 'suggest' : 'off' }))}>
+            <option value="off">Off</option>
+            <option value="suggest">Suggest them</option>
+          </NativeSelect>
+        </FieldRow>
+        <FieldRow label="Furniture pieces" help={PIECE_LAYER_HELP} className="min-w-0">
+          <NativeSelect className="w-full min-w-0" value={settings.furniture.pieceLayer} disabled={!editable} data-testid="option-piece-layer"
+            onChange={e => change(setPieceLayer(e.target.value === 'drawn' ? 'drawn' : 'insert'))}>
+            <option value="insert">Blocks on furniture layers</option>
+            <option value="drawn">Also blocks drawn on furniture layers</option>
+          </NativeSelect>
+        </FieldRow>
+      </div>
+      <div className="grid gap-1 text-sm" data-testid="option-offset" data-offset={offset === 'auto' ? 'auto' : offset.join(',')}>
+        <span className="text-xs text-muted-foreground">Model position (offset)</span>
+        {offset === 'auto' ? (
+          <p className="text-xs">Worked out from this build's floor plates (the centre of all slabs).</p>
+        ) : (
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-mono text-xs">{`${round3(offset[0])}, ${round3(offset[1])} m`}</span>
+            <span className="text-xs text-muted-foreground">kept from the project's earlier versions, so saved views still fit.</span>
+            <Button size="sm" variant="outline" className="h-7" disabled={!editable} onClick={() => change(setOptions({ offset: 'auto' }))} data-testid="offset-reset">
+              Reset
+            </Button>
+          </div>
+        )}
+        {offset !== 'auto' && <p className="text-xs text-muted-foreground">Reset it when the drawings were re-drawn in another position (another frame): the model then centres on this build's floors.</p>}
+      </div>
     </section>
   );
 }
@@ -382,12 +431,16 @@ export function FloorsStep() {
             <Button size="sm" variant="outline" disabled={!plan} onClick={proposeAgain} data-testid="propose-again">Propose areas again on the wall layers</Button>
           </div>
         </div>
-        {tool.kind !== 'pan' && (
-          <p className="text-xs font-medium" data-testid="floors-tool">
-            {tool.kind === 'box' ? 'Drag a box round the floor\'s plan.' : `Click the point ${tool.target.side === 0 ? 'on the first floor\'s sheet' : 'on this floor\'s sheet'}.`}
-            <Button size="sm" variant="link" className="h-auto p-0 pl-2 text-xs" onClick={() => setTool({ kind: 'pan' })}>Stop</Button>
-          </p>
-        )}
+        {/* the hint's line is always there, so the sheet never moves when a tool starts (UR, V2-13: it moved 24 px down
+            under a box being aimed, and back up after the drag) */}
+        <p className="flex h-6 items-center text-xs font-medium" data-testid="floors-tool-line">
+          {tool.kind !== 'pan' ? (
+            <span data-testid="floors-tool">
+              {tool.kind === 'box' ? 'Drag a box round the floor\'s plan.' : `Click the point ${tool.target.side === 0 ? 'on the first floor\'s sheet' : 'on this floor\'s sheet'}.`}
+              <Button size="sm" variant="link" className="h-auto p-0 pl-2 text-xs" onClick={() => setTool({ kind: 'pan' })}>Stop</Button>
+            </span>
+          ) : <span className="font-normal text-muted-foreground">Wheel: zoom · drag: move the sheet · F: fit</span>}
+        </p>
         <div className="h-[520px] overflow-hidden rounded-lg border bg-white" data-testid="floors-canvas">
           {plan ? (
             <PlanCanvas

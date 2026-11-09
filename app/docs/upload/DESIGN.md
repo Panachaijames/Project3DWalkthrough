@@ -144,7 +144,10 @@ fixture settings, whose floor keys are the prototypes' (`L1`/`L2`, `ground`/`upp
 ### 3.4 Status, cancel, restart
 
 * `runBuild` answers 409 `run_in_progress` while any run of the build (prepare or build) is `queued` or `running`, 409
-  `not_prepared` before the first prepare is done, 409 `layers_not_reviewed` until staff have seen the Layers step once
+  `not_prepared` before the first prepare is done (**UR:** when that first prepare ended `failed`, `cancelled` or
+  `interrupted`, so no proposal can ever come, `runBuild` starts a new prepare of the draft's files instead: the Files
+  step's "Read the drawings again"; and the reading's run panel has Cancel, so a wrong or huge drawing can be stopped and
+  its draft deleted), 409 `layers_not_reviewed` until staff have seen the Layers step once
   (U-8.3), 503 `builder_missing` when the builder Python or LibreDWG is not where the settings say. A `loss` conversion
   verdict warns (on the Files step and the pre-build checklist, U-14.3) and never blocks.
 * **Process identity:** `procStart` is the process creation time as returned by `GetProcessTimes`, the raw FILETIME
@@ -318,7 +321,9 @@ the allowed headers stay `content-type` and `if-match`.
 `Blob.slice` per part, `fetch(partUrl, { method: 'PUT', body })`, two parts in flight, progress per finished part (an
 XHR is not needed at 8 MiB), retries per part after 1, 2, 5, 10 and 20 s, then the file shows Retry. The session id is
 kept in `localStorage` under `walkthrough-upload:<projectId>:<name>:<size>:<lastModified>` (try/catch around every
-access); re-picking the same file resumes with the parts the session lacks.
+access); re-picking the same file resumes with the parts the session lacks. Leaving the Upload screen pauses the uploads
+(session and key kept, UR); only Remove cancels one. A refusal of the file itself (too large, not a drawing, too old) has
+no Retry, and the size refusal is said in MB.
 
 ---
 
@@ -365,7 +370,8 @@ stdout and stderr to files. Success = exit 0 **and** `plan.dxf` exists and is no
 4. **Messages** of the converter by class: `hatch-short-handles` (one per HATCH), `handle-not-found`,
    `unstable-class`, `unhandled-class`, `unknown-flag`, `unknown-object`, `wrong-layer` (`Wrong POLYLINE.layer` ...),
    `error:<kind>` (`Invalid ATTRIB.keep_duplicate_records`, `bit_read_*`, `Invalid CMC`, `buffer overflow` ...), `other`;
-   one example line each with paths removed. Measured: bank L1 148 hatch, 28 handle-not-found, 6 unstable-class; the
+   one example line each with paths removed. Measured: bank L1 148 hatch, 28 handle-not-found, 9 unstable-class
+   (MATERIAL x6, TABLESTYLE, MLEADERSTYLE x2; UR measured 9, the integration too); the
    house 1,004 handle-not-found, 385 wrong-layer, 81 `error:Invalid ATTRIB.keep_duplicate_records`, 46 hatch.
 5. **Verdict, from the comparison only** (messages never decide it): `ok` (nothing missing, no type, layer or owner
    change), `minor` (nothing missing; only items whose layer or owner the DWG decode did not know, written to layer 0,
@@ -378,6 +384,13 @@ stdout and stderr to files. Success = exit 0 **and** `plan.dxf` exists and is no
 6. **What it cannot see:** both sides come from LibreDWG's decoder, so it proves the writer kept what the decoder read;
    what the decoder never read shows only as `UNKNOWN_*` counts and ERROR classes. The Files step says so. The
    independent checks are a DXF exported from AutoCAD (decision F's fallback) or a second converter (ODA, U-18.12).
+
+**The DWG side must be whole (UR):** dwgread exits 0 and ends its JSON with `  }}` on all eight project drawings; a
+non-zero exit, a JSON whose `OBJECTS` array or whole document never closed (a crash, a kill or a failed allocation while
+it wrote), or more than 64 MB of dwgread messages give `check_failed`, never a verdict (a prefix of the drawing made
+every later entity `extra`, which never counted: verdict `ok`). Extra handles now make the verdict at least `minor` with a
+note (none on the eight drawings). The converter's own messages are capped at 64 MB (the largest is 440 KB), and a
+child's output goes into the run's `log.txt` as its first and last 256 KB.
 
 A DXF upload gets `verdict: 'not-converted'`, its audit counts, and the note "Exported by the drawing's own program: no
 conversion to check".
@@ -638,7 +651,10 @@ read it). The house's upper floor: `[74.021, 0]`.
   project).
 * **grid** (per gridline, replacing the bank's median of label shifts). **Which labels belong to a floor:** the
   source's `drawing.json` `gridLabels`; a label belongs to floor i when its `line` crosses floor i's area (the box +
-  pad; under `wholeFile`, every label with a `line`). A label with no `line`, or whose line enters no floor's area, is
+  pad; under `wholeFile`, every label with a `line`), **its line continued 10 m away from its bubble** (`align.py`
+  `EXTEND`: the house's grid lines are 1.5 m ticks, which reach no plan on their own: 3 / 0 labels without the
+  continuation, 19 / 16 with it, 16 shared; U2.md, U3.md, UR). A label with no `line`, or whose continued line enters
+  no floor's area, is
   dropped (elevation labels: the house's elevations repeat the letters A - M at y 34.3 - 34.7). The bubbles themselves
   may lie outside the box (the house's all do: numbers at y 30.4 above boxes ending at 25.85, letters at x 0.3 - 0.4
   and 73.7 - 73.8 left of boxes starting at 7.75 and 81.77). Labels of floors i and 0 are paired by the same text and
@@ -646,7 +662,8 @@ read it). The house's upper floor: `[74.021, 0]`.
   line. Lines are grouped into direction families (within 2 degrees). Two families: the shift is the least-squares
   solution of all normal offsets; one family: the shift along its normal only, with the flag "only one direction of grid
   lines is shared: the other axis is not checked". Spread = the largest residual. Bank: 10 labels, shift 0 within 0.0
-  mm. House: 12 numbered and 12 lettered labels on each floor; the numbered lines agree on 74.021 - 74.023 m, the
+  mm. House: 19 labels on the ground floor and 16 on the upper (16 shared; measured by UR: the design's first reading
+  said 12 numbered and 12 lettered on each); the numbered lines agree on 74.021 - 74.023 m, the
   lettered ones on dy = 0, so the shift is (-74.021, 0) with a spread under 2 mm (a U3 test). **A shift under 0.5 mm in
   both axes is no shift** (no transform is applied at all), so floating-point noise never moves the bank's coordinates.
   (The figure 74.021 was first measured with `reference/house_align.py`, which splits the sheet by hand-set quadrant
@@ -767,7 +784,7 @@ golden breaks. A U3 test builds the bank from its settings rewritten with intege
 | areas per floor (U-9.1), unit-aware reading (U-7) | house, suite | must | wholeFile, mm | |
 | per-gridline alignment (U-9.4) | house | must | 0 shift | the 0.304 m error goes |
 | plinth auto (U-9.5) | house | must | level 0 | |
-| per-floor door / window defaults | house | must | none set | |
+| per-floor door / window defaults (a floor's typed window head also caps its curtain windows, which get a lintel above: UR) | house | must | none set | the house's 28 curtain windows reached the wall top (3.90 / 3.50 m) with no lintel |
 | `parapets: 'auto'` = only where the floor's wall layers carry solid fills | house (no fills: no false parapets) | must | fills: on | Revit fills every wall it cuts |
 | eitherKind openings glazed like windows (decision 27 Oct) | house (11) | must | its 5 are windows already | |
 | window "opening over a low wall" gets a 0.90 m sill wall (`LOW_WALL_SILL`) | house (1) | must | none | |
@@ -947,8 +964,11 @@ latest version if carryHeights, project_data: <settings JSON> }` (`project_data`
 `sha1(model.json)[:12]` (`seed.build.ms_stamp`), checked **after** its file-name checks (so
 `test_create_version_refuses_odd_file_names` still sees the name error; `test_store.py`'s draft with the stamp
 `000000000000` gets the real stamp, a change on purpose, ACCEPTANCE 3). version.json: `stamp = sha1(model)[:12]`,
-`stampSource 'model.json'`, no `seed` record (that is how the seed tells an uploaded version, U-15.3). Then `saveBuild`
-writes `project-settings.json` (office, naming, the pinned offset), updates the office memory (U-8.4) and marks the
+`stampSource 'model.json'`, no `seed` record (that is how the seed tells an uploaded version, U-15.3). **Stale (UR):** the
+settings changed since the run in more than `office` (the office only names the layer memory read at the prepare and
+written at save; no build step reads it), so picking the office on the Save step keeps the build saveable, and
+`project_data`, `project-settings.json` and the office memory take the office as the settings have it at save. Then
+`saveBuild` writes `project-settings.json` (office, naming, the pinned offset), updates the office memory (U-8.4) and marks the
 build saved. **Save is idempotent:** the "still open" check, `create_version` and marking the build saved all happen
 under the per-build lock (U-3.2), so a double click or a client retry gets 409 `build_saved` (with the version number
 in `details`) instead of a second version; the Save button is disabled while the request is in flight. The furniture
@@ -1096,7 +1116,9 @@ From the report and the detector, in `overlay.json` (`Flag`):
 | lost | a lost block's insert (U-6.3) inside the floor's area | check |
 | outline-wall, outline-glass | each suggestion (U-10.5) not yet accepted or refused | check |
 | grey-furniture | each family the kit classified `other`, with its count | info |
-| rail-left-out, room-label, plate-dropped | from the report | info |
+| rail-left-out, room-label, plate-dropped | from the report (a dropped plate area: an area next to the walls, outside the rooms they close, with why) | info |
+| plate-dropped (UR) | about N m2 inside the walls has no floor plate (the walls closed by 1.5 m, pieces of 4 m2 or more with standing room, 20 m2 in all), or the walls never close and the plate is under half their convex hull (and 100 m2 short): the bank's room rule needs a closed wall network | check |
+| room-label (UR) | 3 or more texts that look like room names inside the plate on a layer set to `ignore` or `other` (not block attributes or texts of blocks) | check |
 | alignment | spread over 5 mm, one grid direction only, points disagreeing | check |
 | units | declared units overruled by the votes | check |
 | fix-unmatched | a remembered fix that matched nothing in this drawing, or more than one item (U-10.6) | check |
@@ -1188,7 +1210,8 @@ worker's outputs, **not** in OpenAPI. `models.py` does not change.
 
 ### 13.3 createProject
 
-Id: the given one, or a slug of the name (NFKD, ASCII letters and digits, spaces and punctuation to `-`, 2 - **40**
+Id (UR: a slug with no letter is no id: a Thai name with a number gave `31`; a given id may not end in `-` or hold
+`--`): the given one, or a slug of the name (NFKD, ASCII letters and digits, spaces and punctuation to `-`, 2 - **40**
 characters for a new project, U-4.1's path length; a longer slug is cut at a `-` and the given id is refused with 422
 `bad_project`); empty (Thai names) -> `project-<6 hex>`. Taken -> 409 `project_exists` with `details.suggested` (the next
 `-2`, `-3` ...). Reserved: `new` and the seed table's ids (`bank-sampeng`, `presidential-suite`, `sukhumvit-house`,

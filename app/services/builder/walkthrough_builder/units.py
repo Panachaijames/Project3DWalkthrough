@@ -158,8 +158,10 @@ def decide(ins_units: int | None, votes: dict, dimension_median: float | None, f
                         f'({v[declared]} door{"" if v[declared] == 1 else "s"} found)')
         else:
             used, verdict = best, 'votes-win'
+            # (UR, V2-15: '28 doors against 0' did not say what the 0 was against, beside votes of mm 28, m 4)
             note = (f'the file says {WORDS[declared]}, its doors say {WORDS[best]} '
-                    f'({v[best]} doors against {v[declared]}): read in {WORDS[best]}')
+                    f'({v[best]} doors measure right in {WORDS[best]}, {v[declared]} in {WORDS[declared]}): '
+                    f'read in {WORDS[best]}')
     elif v[best] >= ENOUGH:
         used, verdict = best, 'votes-win'
         note = f'the file names no units; {v[best]} doors say {WORDS[best]}'

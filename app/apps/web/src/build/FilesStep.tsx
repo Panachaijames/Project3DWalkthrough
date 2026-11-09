@@ -1,24 +1,27 @@
 // Step "Files" (docs/upload/DESIGN.md U-2 5a, U-6.3, U-7.4): per source its name, size and kind, the conversion verdict
 // (ok green, minor amber, loss red, failed), its notes, the layers whose counts differ, the blocks lost with their inserts
 // (and the sheet with the lost inserts marked); the units: declared, the door votes, the verdict, a units select per
-// source (enabled once the proposal is in: a change rescales and re-reads that source) and Confirm; "Start again with
-// other files"; the advice to export a DXF from AutoCAD when the verdict is loss. Every name is drawing text: text only.
-import { CircleAlert, FileWarning, RotateCcw } from 'lucide-react';
+// source (enabled once the proposal is in and no run goes: a change rescales and re-reads that source) and Confirm, with a
+// warning when the chosen units have no door votes; "Start again with other files"; the advice to export a DXF from
+// AutoCAD when the verdict is loss. The reading's run panel has Cancel, and a first reading that ended without a proposal
+// offers "Read the drawings again" (UR, V2-4 / V3-4). Every name is drawing text: text only.
+import { CircleAlert, FileWarning, RotateCcw, RotateCw } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { cancelBuildRun, runBuild } from '@/api/generated/sdk.gen';
 import { PlanCanvas } from '@/plan';
-import type { BuildSourceInfo, ConversionVerdict, Flag, Units } from '@/upload/contracts';
+import type { BuildDetail, BuildSourceInfo, ConversionVerdict, Flag, Units } from '@/upload/contracts';
 import { formatBytes } from '@/upload/upload';
 import { cn } from '@/lib/utils';
-import { formatNumber } from '@/lib/format';
+import { errorReason, formatNumber } from '@/lib/format';
 import { useBuildContext, useConversion, useDrawing, usePlan } from './context';
 import { NativeSelect } from './fields';
 import { RunPanel } from './RunPanel';
 import { confirmUnits, roleOf, setUnits, UNIT_NAMES, UNITS } from './settingsEdit';
-import { LOSS_WARNING, proposalIn, readingNow } from './steps';
+import { firstReadingEnded, LOSS_WARNING, proposalIn, readingNow, runGoing, unitsAgainstVotes } from './steps';
 
 const VERDICT: Record<ConversionVerdict, { text: string; className: string }> = {
   ok: { text: 'ok', className: 'bg-emerald-600 text-white' },
@@ -61,7 +64,9 @@ function SourceCard({ src, index }: { src: BuildSourceInfo; index: number }) {
     title: b.name, detail: `${formatNumber(b.entities)} items lost`, at: [ins.x, ins.y] as [number, number], bbox: null, ref: {},
   }))), [report, index]);
   const reread = readingNow(detail.run)?.only?.includes(src.sha1) ?? false;
-  const unitsDisabled = !editable || !proposalIn(detail) || !setting;
+  // no units change while any run goes (the API refuses it, and the select kept showing the unsaved value: UR, V2-11)
+  const unitsDisabled = !editable || !proposalIn(detail) || !setting || runGoing(detail.run);
+  const against = unitsAgainstVotes(setting?.units ?? src.units?.used, votes);
 
   return (
     <article className="grid gap-3 rounded-lg border bg-background p-4" data-testid="source-card" data-sha1={src.sha1}>
@@ -86,7 +91,7 @@ function SourceCard({ src, index }: { src: BuildSourceInfo; index: number }) {
           <FileWarning aria-hidden="true" />
           <AlertTitle>Parts of the drawing were lost in conversion</AlertTitle>
           <AlertDescription>
-            <p>{`${formatNumber(src.conversion.lostInModelSpace)} items did not come through. ${LOSS_WARNING[0]!.toUpperCase()}${LOSS_WARNING.slice(1)}.`}</p>
+            <p>{`${lossText(src.conversion.lostInModelSpace)} ${LOSS_WARNING[0]!.toUpperCase()}${LOSS_WARNING.slice(1)}.`}</p>
             <p className="mt-1">You can still build: the lost parts are left out.</p>
           </AlertDescription>
         </Alert>
@@ -142,6 +147,7 @@ function SourceCard({ src, index }: { src: BuildSourceInfo; index: number }) {
             <span data-testid="units-verdict" data-verdict={src.units.verdict}>{`Verdict: ${src.units.verdict}`}</span>
           </div>
           {src.units.note && <p className="text-xs" data-testid="units-note">{src.units.note}</p>}
+          {against && <p className="text-xs font-medium text-amber-700" data-testid="units-against-votes">{`This drawing: ${against}.`}</p>}
           <div className="flex flex-wrap items-center gap-2">
             <label className="text-xs font-medium text-muted-foreground" htmlFor={`units-${index}`}>Units</label>
             <NativeSelect
@@ -168,14 +174,62 @@ function SourceCard({ src, index }: { src: BuildSourceInfo; index: number }) {
   );
 }
 
+/** The loss alert's first sentence. `lostInModelSpace` counts the PLACEMENTS of lost blocks in the plan (U5.md), not
+ *  items: '4 items did not come through' beside '8,254 of 142,182 items ...' made the loss look negligible (UR, V2-2). */
+export function lossText(lostInModelSpace: number): string {
+  if (lostInModelSpace <= 0) return 'Parts of the plan did not come through (the notes above say how much).';
+  return `${formatNumber(lostInModelSpace)} placement${lostInModelSpace === 1 ? '' : 's'} of lost blocks ${lostInModelSpace === 1 ? 'is' : 'are'} `
+    + 'in the plan, and the notes above say how many items did not come through.';
+}
+
 export function FilesStep() {
-  const { detail, projectId, buildId } = useBuildContext();
+  const { detail, projectId, buildId, setDetail } = useBuildContext();
   const navigate = useNavigate();
+  const [busy, setBusy] = useState<'cancel' | 'reread' | null>(null);
+  const [runError, setRunError] = useState<string | null>(null);
   const run = detail.run;
   const preparing = run && run.kind === 'prepare' ? run : null;
+  // the reading can be stopped (a wrong or huge drawing held the machine's run lock: UR, V2-4), and a first reading that
+  // ended without a proposal is read again (UR, V3-4)
+  const cancel = async () => {
+    setBusy('cancel');
+    setRunError(null);
+    try {
+      const { data } = await cancelBuildRun({ path: { projectId, buildId }, body: {}, throwOnError: true });
+      setDetail(data as BuildDetail);
+    } catch (err) {
+      setRunError(errorReason(err));
+    } finally {
+      setBusy(null);
+    }
+  };
+  const readAgain = async () => {
+    setBusy('reread');
+    setRunError(null);
+    try {
+      const { data } = await runBuild({ path: { projectId, buildId }, body: {}, throwOnError: true });
+      setDetail(data as BuildDetail);
+    } catch (err) {
+      setRunError(errorReason(err));
+    } finally {
+      setBusy(null);
+    }
+  };
   return (
     <div className="grid gap-4" data-testid="files-step">
-      {preparing && (preparing.status !== 'done' || !proposalIn(detail)) && <RunPanel run={preparing} />}
+      {preparing && (preparing.status !== 'done' || !proposalIn(detail)) && (
+        <RunPanel run={preparing} onCancel={detail.status === 'open' ? () => void cancel() : null} cancelling={busy === 'cancel'} />
+      )}
+      {firstReadingEnded(detail) && (
+        <div className="flex flex-wrap items-center gap-3" data-testid="read-again-row">
+          <Button onClick={() => void readAgain()} disabled={busy !== null} data-testid="read-again">
+            <RotateCw aria-hidden="true" />
+            {busy === 'reread' ? 'Starting...' : 'Read the drawings again'}
+          </Button>
+          <span className="text-xs text-muted-foreground">The same files, read again; or start again with other files below.</span>
+        </div>
+      )}
+      {runError && <Alert variant="destructive" data-testid="files-run-error"><AlertDescription>{runError}</AlertDescription></Alert>}
       {!proposalIn(detail) && preparing?.status === 'done' && (
         <p className="text-sm text-muted-foreground">Reading the drawings... the layer roles and floors are being proposed.</p>
       )}

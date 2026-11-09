@@ -1,5 +1,5 @@
 // Builder A: packages/viewer/scripts/make-offline.mjs (DESIGN.md 16) on a store written by hand from the fixtures into
-// <WT_TMP>/data (D-9.1 layout): each marker exactly once in the template (else an error), the stamp first, then a split on
+// <WT_TMP>/unit-store (D-9.1 layout; never <WT_TMP>/data, the API's folder: UR, V1-4): each marker exactly once in the template (else an error), the stamp first, then a split on
 // the data marker; the payload is the store's files as they are, "<" escaped as \u003c, the plan pictures as data: URLs in
 // floor order; names with </script>, <!--, $' $& $` $$ and the marker texts stay inside the JSON and parse back equal.
 import { spawnSync } from 'node:child_process';
@@ -7,7 +7,7 @@ import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { beforeAll, describe, expect, it } from 'vitest';
-import { APP, HAND_TEMPLATE, HOSTILE, TMP, writeStore, type StoreVersion } from './store';
+import { APP, HAND_TEMPLATE, HOSTILE, TMP, UNIT_STORE, writeStore, type StoreVersion } from './store';
 
 interface MakeOffline {
   STAMP_MARKER: string; DATA_MARKER: string;
@@ -36,7 +36,7 @@ const readJson = (file: string) => JSON.parse(readFileSync(file, 'utf8'));
 
 beforeAll(async () => {
   M = await import(pathToFileURL(SCRIPT).href) as MakeOffline;
-  store = writeStore(path.join(TMP, 'data'));
+  store = writeStore(UNIT_STORE);
   mkdirSync(TMP, { recursive: true });
   writeFileSync(TEMPLATE, HAND_TEMPLATE, 'utf8');
   rmSync(OUT, { recursive: true, force: true });

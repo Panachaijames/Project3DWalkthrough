@@ -161,7 +161,9 @@ def test_save_refusals(api: TestClient, fake: FakeJobRunner, data_copy: Path) ->
     b = api.post(f'{b["url"]}/run', json={}).json()
     err(api.post(f'{b["url"]}/save', json={**SAVE, 'label': ' '}), 422, 'bad_label')
     err(api.post(f'{b["url"]}/save', json={**SAVE, 'label': 'x' * 201}), 422, 'bad_label')
-    stale = save_settings(api, b, b['settings']).json()
+    changed = copy.deepcopy(b['settings'])
+    changed['defaults']['railingHeight'] = 1.2                             # a real change (UR, V3-1)
+    stale = save_settings(api, b, changed).json()
     err(api.post(f'{b["url"]}/save', json=SAVE), 409, 'stale')
     b = api.post(f'{stale["url"]}/run', json={}).json()
     out = data_copy / 'projects' / b['projectId'] / 'builds' / b['id'] / 'runs' / b['result']['runId'] / 'out'

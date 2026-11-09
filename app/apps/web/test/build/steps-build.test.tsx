@@ -192,7 +192,7 @@ describe('Check', () => {
     const edge: [[number, number], [number, number]] = [[1, 2], [4, 2]];
     const { mock } = await openCheck([
       { id: 'outline-wall:L1:aaaaaaaaaaaa', kind: 'outline-wall', floor: 'L1', severity: 'check', title: 'A wall here?', detail: 'a free edge of a room outline', at: [2.5, 2], bbox: null, ref: { edge } },
-      { id: 'grey-furniture:L1:bbbbbbbbbbbb', kind: 'grey-furniture', floor: 'L1', severity: 'info', title: 'Mystery-Box', detail: '3 pieces', at: null, bbox: null, ref: { family: 'Mystery-Box' } },
+      { id: 'grey-furniture:L1:bbbbbbbbbbbb', kind: 'grey-furniture', floor: 'L1', severity: 'info', title: 'Mystery-Box: 3 grey boxes', detail: 'The furniture kit does not know what Mystery-Box is, so its 3 pieces are grey. Pick a kind for the family.', at: null, bbox: null, ref: { family: 'Mystery-Box' } },
     ]);
     const outline = await waitFor(() => q('[data-testid=flag][data-kind=outline-wall]'));
     await click(outline.querySelector('[data-testid=outline-wall]'));
@@ -265,7 +265,8 @@ describe('Save', () => {
     const mock = createMockApi();
     const { build } = draftOf(mock, 'bank-sampeng', ['I1201.dwg'], { built: true });
     build.settings.office = 'dwp-revit';
-    build.revision++;                                                     // the settings changed since the build
+    build.settings.layers['A-WALL'] = 'other';                            // the settings changed since the build (not
+    build.revision++;                                                     // only the office: UR, V3-1)
     await openApp(`/projects/bank-sampeng/builds/${build.id}?step=save`, { mock });
     await waitFor(() => q('[data-testid=remember-mapping]'));
     await waitFor(() => text(q('[data-testid=remember-field]')) === 'Remember these layer roles for DWP (Revit)');

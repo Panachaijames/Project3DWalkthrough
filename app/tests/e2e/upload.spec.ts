@@ -21,7 +21,7 @@ import type { BuildSettings } from '../../apps/web/src/upload/contracts';
 import { backend, download, facts, MOCK_API, useApi, viewerReady } from '../../apps/web/test/e2e/web-kit';
 import {
   BANK_DWGS, buildIdOf, getBuild, itemInBlock, itemOn, makeHostileDxf, planOf, putBuildSettings, settingsSaved,
-  uploadProfileScript, waitForResult,
+  uploadProfileScript, waitForReading, waitForResult,
 } from '../../apps/web/test/e2e/upload-kit';
 import { BUILD_FILES } from '../../apps/web/test/mock-api/builds';
 import { FIXTURES_DIR } from '../../apps/web/test/mock-api/fixtures';
@@ -70,7 +70,9 @@ async function uploadAndContinue(page: Page, files: string[]) {
 }
 
 test('A-7: the staff path from a new project to a saved version (the bank\'s two DWGs)', async ({ page, request }, testInfo) => {
-  test.setTimeout(10 * 60_000);
+  // one reading and four builds, each polled for up to 8 min on a busy laptop (8.4 min in all at UR's re-run, 5.2 at
+  // integration: UR, V1-7)
+  test.setTimeout(20 * 60_000);
   const dialogs = noDialogs(page);
   const projectId = 'e2e-bank';
   await newProject(page, 'E2E Bank', projectId, { newName: 'E2E Revit' });
@@ -87,8 +89,9 @@ test('A-7: the staff path from a new project to a saved version (the bank\'s two
   await row.getByTestId('draft-continue').click();
   await expect(page).toHaveURL(new RegExp(`/builds/${buildId}$`));
 
-  // Files: both read, verdicts ok
-  await expect(page.locator('[data-testid=source-card] [data-testid=source-verdict]')).toHaveCount(2, { timeout: 120_000 });
+  // Files: both read, verdicts ok (the reading waited for by polling the build: a busy laptop took 159 s, UR V1-7)
+  await waitForReading(request, projectId, buildId);
+  await expect(page.locator('[data-testid=source-card] [data-testid=source-verdict]')).toHaveCount(2, { timeout: 30_000 });
   await expect(page.locator('[data-testid=source-card] [data-testid=source-verdict][data-verdict=ok]')).toHaveCount(2);
   await expect(page.locator('[data-testid=source-card] [data-testid=units-select]').first()).toBeEnabled({ timeout: 60_000 });
 
@@ -128,7 +131,8 @@ test('A-7: the staff path from a new project to a saved version (the bank\'s two
   await expect(page.getByTestId('checklist-clear')).toBeVisible();
   await page.getByTestId('run-build').click();
   await expect(page.locator('[data-testid=run-panel][data-kind=build]')).toBeVisible();
-  await expect(page.locator('[data-testid=run-panel][data-kind=build][data-status=running]')).toBeVisible({ timeout: 120_000 });
+  // queued while another run holds the machine's lock: as long as waitForResult allows (UR, V1-7)
+  await expect(page.locator('[data-testid=run-panel][data-kind=build][data-status=running]')).toBeVisible({ timeout: 8 * 60_000 });
   const first = await waitForResult(page, request, projectId, buildId, null);
   await expect(page.getByTestId('build-result')).toHaveAttribute('data-run', first.result!.runId, { timeout: 30_000 });
 
@@ -211,7 +215,8 @@ test('A-7: a DXF with hostile names through every step: shown as text, nothing i
     scripts: [...document.querySelectorAll('script')].filter(s => /alert\(/.test(s.textContent ?? '')).length,
   }));
   await expect(page.locator('[data-testid=source-card] [data-testid=source-name]')).toHaveText("E2E $' &amp; hostile.dxf");
-  await expect(page.locator('[data-testid=source-card] [data-testid=units-select]')).toBeEnabled({ timeout: 120_000 });
+  await waitForReading(request, projectId, buildId);                     // polled, not a fixed wait (UR, V1-7)
+  await expect(page.locator('[data-testid=source-card] [data-testid=units-select]')).toBeEnabled({ timeout: 30_000 });
   await expect(page.getByTestId('build-project-name')).toHaveText('E2E Hostile <img src=x onerror=alert(9)>');
   for (const step of ['layers', 'floors', 'build']) {
     await goStep(page, step);

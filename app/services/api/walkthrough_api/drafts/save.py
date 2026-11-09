@@ -1,7 +1,8 @@
 """saveBuild (docs/upload/DESIGN.md U-11.1) and the office memory (U-8.4).
 
 Under the build's lock, so a double click or a client retry gets 409 build_saved (details.version) instead of a second
-version: the build still open, no run going, a finished build run (409 not_built), not stale (409 stale), its outputs
+version: the build still open, no run going, a finished build run (409 not_built), not stale (409 stale: the settings
+changed since the run in more than the office, `builds.is_stale`; the office as saved now is the version's), its outputs
 checked again (422 invalid_output: the worker reads untrusted drawings), then `create_version` with VersionDraft
 { label, 'cad', model.source, model.json as built, stages, presentation, topview.png, the Max script, source/
 {inputs.json, conversion-<sha12>.json per source, build-report.json, openings.json, pieces.json, flags.json},
@@ -29,7 +30,7 @@ from ..jsonio import dumps_pretty, iso_utc, loads_strict
 from ..models import VersionDetail
 from ..models_upload import OfficeLayer, OfficeMapping, RunApiRecord, SaveBuildRequest
 from ..store.base import Naming, ProjectSettingsFile, Store, VersionDraft
-from .builds import _json_or_none, _source_run, refresh, result_run
+from .builds import _json_or_none, _source_run, is_stale, refresh, result_run
 from .runs import api_record, mark_invalid, read_runs, write_record
 from .validate import run_issues
 
@@ -92,7 +93,7 @@ def save_build(store: Store, jobs: JobRunner, project_id: str, build_id: str, bo
         if rv is None:
             raise ApiError(409, 'not_built', 'there is no finished build to save: build first')
         sf = store.get_build_settings(project_id, build_id)
-        if rv.settings_revision != sf.revision:
+        if is_stale(rv, sf):
             raise ApiError(409, 'stale', 'the settings changed since the last build: build again, then save')
         issues = run_issues(rv)
         if issues:
@@ -100,7 +101,9 @@ def save_build(store: Store, jobs: JobRunner, project_id: str, build_id: str, bo
             mark_invalid(rv, issues)
             raise ApiError(422, 'invalid_output', f'the build\'s outputs did not pass the checks: {issues[0]}',
                            {'issues': issues})
-        settings: dict[str, Any] = (rv.spec or {})['settings']
+        # the run's recipe, with the office as the settings have it now: picked on the Save step after the build (UR,
+        # V3-1), it goes into project-data.json, project-settings.json and the office memory
+        settings: dict[str, Any] = {**(rv.spec or {})['settings'], 'office': sf.settings.office}
         out = rv.out
         model_raw = (out / 'model.json').read_bytes()
         model = loads_strict(model_raw)

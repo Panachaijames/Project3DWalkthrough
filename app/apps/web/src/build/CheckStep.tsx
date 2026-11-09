@@ -6,26 +6,29 @@
 // the project's heights; Rebuild (the screen keeps the last result while it runs). Keyboard: Esc clears the selection,
 // Delete sets it aside. Locked while a source is read again. Keys, layers and flag texts are drawing text: text only.
 import { useQuery } from '@tanstack/react-query';
-import { EyeOff, Hammer, RotateCcw, Search, X } from 'lucide-react';
-import { useMemo, useState, type KeyboardEvent } from 'react';
+import { EyeOff, Hammer, Maximize2, RotateCcw, Search, X, ZoomIn, ZoomOut } from 'lucide-react';
+import { useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { runBuild } from '@/api/generated/sdk.gen';
 import { PlanCanvas, type DecodedPlan, type PickMode } from '@/plan';
-import type { Bbox, BuildDetail, BuildDiff, BuildOverlay, Flag, ItemRef, OpeningFix } from '@/upload/contracts';
+import type { Bbox, BuildDetail, BuildDiff, BuildOverlay, Flag, FlagKind, ItemRef, OpeningFix, SetAside } from '@/upload/contracts';
 import { rawQueryOptions } from '@/upload/raw';
 import { errorReason, formatNumber } from '@/lib/format';
 import { cn } from '@/lib/utils';
+import { isRunInProgress, STARTED_ELSEWHERE } from './BuildStep';
 import { useBuildContext, useLockText, usePlan } from './context';
 import { DiffPanel } from './DiffPanel';
 import { NativeSelect, NumberField } from './fields';
-import { FlagList } from './FlagList';
+import { FLAG_KIND_TEXT, FlagList } from './FlagList';
 import { FurnitureWords } from './FurnitureWords';
 import { OpeningEditor } from './OpeningEditor';
 import { RunPanel } from './RunPanel';
 import {
-  addSetAside, itemRef, restoreSetAside, roleOf, setDefaults, setFurnitureWord, setOpeningFix, setOutlineEdge, updateFloor,
+  addSetAside, asideOf, itemRef, restoreSetAside, roleOf, setDefaults, setFurnitureWord, setOpeningFix, setOutlineEdge,
+  updateFloor,
 } from './settingsEdit';
 
 export const TYPE_NAMES = ['line', 'closed line', 'solid fill', 'pattern fill', 'text', 'block'];
@@ -83,8 +86,49 @@ export function findItems(plan: DecodedPlan, query: string, limit = FIND_LIMIT, 
 
 const bboxAround = (f: Flag): Bbox | null => f.bbox ?? (f.at ? [f.at[0] - 3, f.at[1] - 3, f.at[0] + 3, f.at[1] + 3] : null);
 
+/** A grey-furniture flag's piece count: the title's own ending ('<family>: 3 grey boxes') or the detail's 'so its 3
+ *  pieces are grey'; never the first number of a sentence that starts with the family name (UR, V2-7: TF2092P showed
+ *  '2092 pieces'). null when neither says it. */
+export function greyCount(f: Pick<Flag, 'title' | 'detail'>): number | null {
+  const t = /: (\d+) grey box(?:es)?$/.exec(f.title);
+  if (t) return Number(t[1]);
+  const d = /so its (\d+) pieces? (?:are|is) grey/.exec(f.detail);
+  return d ? Number(d[1]) : null;
+}
+
+/** The canvas's controls, said once above it (UR, V2-13: nothing on the screen said how the canvas works). */
+export const CANVAS_HINT = 'Wheel: zoom · drag: select a box (Shift adds, Alt takes what it touches) · middle button or the Pan tool: move · F: fit';
+
+/** The set-aside list: rows of this height, this many pixels shown, windowed beyond WINDOW_ASIDE rows (UR, V3-5). */
+export const ASIDE_ROW = 26;
+export const ASIDE_VIEW = 160;
+export const WINDOW_ASIDE = 100;
+
+function SetAsideList({ refs, editable, onRestore }: { refs: SetAside[]; editable: boolean; onRestore: (key: string) => void }) {
+  const [top, setTop] = useState(0);
+  const windowed = refs.length > WINDOW_ASIDE;
+  const first = windowed ? Math.max(0, Math.floor(top / ASIDE_ROW) - 5) : 0;
+  const last = windowed ? Math.min(refs.length, Math.ceil((top + ASIDE_VIEW) / ASIDE_ROW) + 5) : refs.length;
+  return (
+    <div className="overflow-auto text-xs" style={{ maxHeight: ASIDE_VIEW }} onScroll={e => setTop((e.target as HTMLDivElement).scrollTop)}
+      data-testid="set-aside-scroll" data-windowed={windowed ? '' : undefined}>
+      <ul className="grid gap-0">
+        {first > 0 && <li style={{ height: first * ASIDE_ROW }} aria-hidden="true" />}
+        {refs.slice(first, last).map(r => (
+          <li key={r.key} className="flex items-center gap-2" style={{ height: ASIDE_ROW }} data-testid="set-aside-row" data-key={r.key}>
+            <span className="font-mono">{r.key}</span>
+            <span className="min-w-0 flex-1 truncate text-muted-foreground">{r.layer}</span>
+            <Button size="sm" variant="ghost" className="h-6" disabled={!editable} onClick={() => onRestore(r.key)} data-testid="restore-one">Restore</Button>
+          </li>
+        ))}
+        {last < refs.length && <li style={{ height: (refs.length - last) * ASIDE_ROW }} aria-hidden="true" />}
+      </ul>
+    </div>
+  );
+}
+
 export function CheckStep() {
-  const { detail, settings, change, editable: canEdit, setDetail, projectId, buildId, saverState } = useBuildContext();
+  const { detail, settings, change, editable: canEdit, setDetail, refresh, projectId, buildId, saverState } = useBuildContext();
   const lock = useLockText();
   const editable = canEdit && !lock;
   const result = detail.result;
@@ -113,14 +157,28 @@ export function CheckStep() {
   const [drawDiff, setDrawDiff] = useState(false);
   const [runError, setRunError] = useState<string | null>(null);
   const [starting, setStarting] = useState(false);
+  const [flagKind, setFlagKind] = useState<'' | FlagKind>('');
+  const [checkOnly, setCheckOnly] = useState(false);
+  const canvasBox = useRef<HTMLDivElement>(null);
 
   const flags = useMemo(() => (overlay?.flags ?? []).filter(f => f.floor === key || f.floor === null), [overlay, key]);
-  const setAsideRefs = (settings?.fixes.setAside ?? []).filter(r => r.floor === key);
-  const setAsideKeys = useMemo(() => new Set(setAsideRefs.map(r => r.key)), [setAsideRefs.map(r => r.key).join('\n')]);   // eslint-disable-line react-hooks/exhaustive-deps
-  const greyFamilies = flags.filter(f => f.kind === 'grey-furniture' && f.ref.family).map(f => {
-    const m = /(\d+)/.exec(f.detail);
-    return { family: f.ref.family!, count: m ? Number(m[1]) : null };
-  });
+  const canvasFlags = useMemo(() => flags.filter(f => f.floor === key), [flags, key]);
+  const allAside = settings?.fixes.setAside;
+  const setAsideRefs = useMemo(() => (allAside ?? []).filter(r => r.floor === key), [allAside, key]);
+  const setAsideKeys = useMemo(() => new Set(setAsideRefs.map(r => r.key)), [setAsideRefs]);
+  const greyFamilies = flags.filter(f => f.kind === 'grey-furniture' && f.ref.family).map(f => ({ family: f.ref.family!, count: greyCount(f) }));
+  // the flag list by kind and severity (UR, V2-13: the house's ground floor alone had 47 cards)
+  const kindsHere = useMemo(() => {
+    const m = new Map<FlagKind, number>();
+    for (const f of flags) m.set(f.kind, (m.get(f.kind) ?? 0) + 1);
+    return [...m.entries()].sort((a, b) => b[1] - a[1]);
+  }, [flags]);
+  const listed = useMemo(() => flags.filter(f => (!flagKind || f.kind === flagKind) && (!checkOnly || f.severity === 'check')),
+    [flags, flagKind, checkOnly]);
+  const canvasKey = (k: string) => {
+    // the canvas's own keys (+, -, F): it listens on its <canvas> (plan/controller.ts)
+    canvasBox.current?.querySelector('canvas')?.dispatchEvent(new KeyboardEvent('keydown', { key: k, cancelable: true }));
+  };
   const diffBody = diffQ.data?.against[Math.min(against, Math.max(0, (diffQ.data?.against.length ?? 1) - 1))]?.diff ?? null;
   const run = detail.run;
   const active = run && (run.status === 'queued' || run.status === 'running');
@@ -142,8 +200,11 @@ export function CheckStep() {
     for (const k of keys) { const r = itemRef(plan, key, k); if (r) out.push(r); }
     return out;
   };
-  const selectedAside = [...selected].filter(k => setAsideKeys.has(k) || [...setAsideKeys].some(a => k.startsWith(`${a}/`)));
-  const selectedFree = [...selected].filter(k => !selectedAside.includes(k));
+  const selectedAside = useMemo(() => asideOf(selected, setAsideKeys), [selected, setAsideKeys]);
+  const selectedFree = useMemo(() => {
+    const aside = new Set(selectedAside);
+    return [...selected].filter(k => !aside.has(k));
+  }, [selected, selectedAside]);
   const setAside = () => {
     const refs = refsOf(selectedFree);
     if (refs.length) change(addSetAside(refs));
@@ -165,7 +226,12 @@ export function CheckStep() {
       const { data } = await runBuild({ path: { projectId, buildId }, body: {}, throwOnError: true });
       setDetail(data as BuildDetail);
     } catch (err) {
-      setRunError(errorReason(err));
+      if (isRunInProgress(err)) {
+        refresh();                                          // a run started elsewhere: show and poll it (UR, V2-14)
+        setRunError(STARTED_ELSEWHERE);
+      } else {
+        setRunError(errorReason(err));
+      }
     } finally {
       setStarting(false);
     }
@@ -221,14 +287,29 @@ export function CheckStep() {
             <Button size="sm" variant="ghost" onClick={() => setSelected(new Set())} data-testid="clear-selection"><X aria-hidden="true" />Clear</Button>
           )}
         </div>
-        <div className="h-[560px] overflow-hidden rounded-lg border bg-white" data-testid="check-canvas" tabIndex={-1}>
+        <div className="flex flex-wrap items-center justify-between gap-2" data-testid="canvas-help">
+          <p className="text-xs text-muted-foreground">{CANVAS_HINT}</p>
+          <div className="flex items-center gap-1">
+            <Button size="sm" variant="outline" className="h-7" disabled={!plan} onClick={() => canvasKey('f')} data-testid="canvas-fit" title="Fit the plan (F)">
+              <Maximize2 aria-hidden="true" />
+              Fit
+            </Button>
+            <Button size="icon" variant="outline" className="size-7" disabled={!plan} onClick={() => canvasKey('+')} data-testid="canvas-zoom-in" aria-label="Zoom in" title="Zoom in (+)">
+              <ZoomIn aria-hidden="true" />
+            </Button>
+            <Button size="icon" variant="outline" className="size-7" disabled={!plan} onClick={() => canvasKey('-')} data-testid="canvas-zoom-out" aria-label="Zoom out" title="Zoom out (-)">
+              <ZoomOut aria-hidden="true" />
+            </Button>
+          </div>
+        </div>
+        <div ref={canvasBox} className="h-[560px] overflow-hidden rounded-lg border bg-white" data-testid="check-canvas" tabIndex={-1}>
           {plan && settings ? (
             <PlanCanvas
               plan={plan}
               roleOf={i => roleOf(settings, plan.layers[i] ?? '')}
               area={ofloor?.area ?? setting?.area ?? null}
               overlay={ofloor}
-              flags={flags.filter(f => f.floor === key)}
+              flags={canvasFlags}
               selected={selected}
               setAside={setAsideKeys}
               diff={drawDiff ? diffBody : null}
@@ -289,21 +370,24 @@ export function CheckStep() {
             onApply={fix => { change(setOpeningFix(fix)); setOpening(null); }} onClose={() => setOpening(null)} />
         )}
         <section className="grid gap-2" data-testid="set-aside-list">
-          <h4 className="text-sm font-semibold">{`Set aside on this floor (${setAsideRefs.length})`}</h4>
-          {setAsideRefs.length > 0 && (
-            <ul className="grid max-h-40 gap-0.5 overflow-auto text-xs">
-              {setAsideRefs.map(r => (
-                <li key={r.key} className="flex items-center gap-2" data-testid="set-aside-row" data-key={r.key}>
-                  <span className="font-mono">{r.key}</span>
-                  <span className="min-w-0 flex-1 truncate text-muted-foreground">{r.layer}</span>
-                  <Button size="sm" variant="ghost" className="h-6" disabled={!editable} onClick={() => restore([r.key])} data-testid="restore-one">Restore</Button>
-                </li>
-              ))}
-            </ul>
-          )}
+          <h4 className="text-sm font-semibold">{`Set aside on this floor (${formatNumber(setAsideRefs.length)})`}</h4>
+          {setAsideRefs.length > 0 && <SetAsideList refs={setAsideRefs} editable={editable} onRestore={k => restore([k])} />}
         </section>
+        {flags.length > 0 && (
+          <div className="flex flex-wrap items-center gap-2 text-sm" data-testid="flag-filter">
+            <span className="font-semibold">{`Flags (${formatNumber(listed.length)} of ${formatNumber(flags.length)})`}</span>
+            <NativeSelect aria-label="Flags of one kind" value={flagKind} onChange={e => setFlagKind(e.target.value as '' | FlagKind)} data-testid="flag-kind-filter">
+              <option value="">Every kind</option>
+              {kindsHere.map(([k, n]) => <option key={k} value={k}>{`${FLAG_KIND_TEXT[k] ?? k} (${n})`}</option>)}
+            </NativeSelect>
+            <label className="flex items-center gap-1.5">
+              <Checkbox checked={checkOnly} onCheckedChange={v => setCheckOnly(v === true)} data-testid="flag-check-only" />
+              To check only
+            </label>
+          </div>
+        )}
         <FlagList
-          flags={flags}
+          flags={listed}
           activeId={activeFlag}
           disabled={!editable}
           outlineOf={outlineOf}

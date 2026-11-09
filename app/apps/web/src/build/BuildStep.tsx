@@ -2,20 +2,20 @@
 // clear; the run's steps with their status and seconds, a progress bar, the last messages ("Stopping..." after Cancel);
 // when done: counts per floor, the flags, the top view and a 3D preview (the viewer on the draft, disposed when closed);
 // a failed run shows its error and what to change.
-import { useQuery } from '@tanstack/react-query';
+import { useQueries, useQuery } from '@tanstack/react-query';
 import type { Viewer } from '@walkthrough/viewer';
 import { Box, Download, Hammer, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { ViewerHost } from '@/components/ViewerHost';
-import { apiUrl } from '@/api/client';
+import { ApiError, apiUrl } from '@/api/client';
 import { cancelBuildRun, runBuild } from '@/api/generated/sdk.gen';
-import type { BuildDetail, BuildResultInfo } from '@/upload/contracts';
+import type { BuildDetail, BuildResultInfo, DrawingRead } from '@/upload/contracts';
 import { draftViewerOptions, toDraftViewerProject } from '@/upload/draftViewerProject';
 import { rawQueryOptions } from '@/upload/raw';
 import { errorReason, formatNumber } from '@/lib/format';
-import { useBuildContext } from './context';
+import { sourceToken, useBuildContext } from './context';
 import { PreBuildChecklist } from './PreBuildChecklist';
 import { RunPanel } from './RunPanel';
 import { checklist } from './steps';
@@ -87,12 +87,22 @@ export function DraftPreview({ detail, onClose }: { detail: BuildDetail; onClose
   );
 }
 
+/** A run another tab (or the API's own restart marking) started: the answer to runBuild's 409 run_in_progress. The page
+ *  reads the build again so the running build shows and is polled (UR, V2-14: the tab kept its old 'done' panel). */
+export const STARTED_ELSEWHERE = 'A run of this draft is going already (started in another tab or window): it is shown below.';
+
+export function isRunInProgress(err: unknown): boolean {
+  return err instanceof ApiError && err.status === 409 && err.code === 'run_in_progress';
+}
+
 export function BuildStep() {
-  const { detail, settings, saverState, setDetail, goto, projectId, buildId } = useBuildContext();
+  const { detail, settings, saverState, setDetail, refresh, goto, projectId, buildId } = useBuildContext();
   const [busy, setBusy] = useState<'run' | 'cancel' | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [preview, setPreview] = useState(false);
-  const items = checklist(detail, settings, { reviewPending: saverState?.reviewPending });
+  const drawings = useQueries({ queries: detail.sources.map(s => rawQueryOptions<DrawingRead>(s.urls?.drawing, sourceToken(s))) });
+  const votes = Object.fromEntries(detail.sources.map((s, i) => [s.sha1, drawings[i]?.data?.units.votes]));
+  const items = checklist(detail, settings, { reviewPending: saverState?.reviewPending, votes });
   const blocked = items.some(i => i.level === 'block');
   const run = detail.run;
   const active = run && (run.status === 'queued' || run.status === 'running');
@@ -107,7 +117,12 @@ export function BuildStep() {
       const { data } = await runBuild({ path: { projectId, buildId }, body: {}, throwOnError: true });
       setDetail(data as BuildDetail);
     } catch (err) {
-      setError(errorReason(err));
+      if (isRunInProgress(err)) {
+        refresh();
+        setError(STARTED_ELSEWHERE);
+      } else {
+        setError(errorReason(err));
+      }
     } finally {
       setBusy(null);
     }

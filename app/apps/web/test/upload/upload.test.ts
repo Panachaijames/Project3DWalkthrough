@@ -248,6 +248,24 @@ describe('cancel', () => {
     expect(storage.getItem(uploadStorageKey('p1', file))).toBeNull();
     expect(api.puts.length).toBeLessThan(10);
   });
+
+  it('pause (leaving the Upload screen, UR V2-8) keeps the session and its key: the same file resumes', async () => {
+    const api = fakeApi(10, { putDelay: 30 });
+    const storage = memoryStorage();
+    const file = fileOf('x.dwg', 100);
+    const task = uploadFile('p1', file, { api, storage: () => storage });
+    await new Promise(r => setTimeout(r, 75));
+    task.pause();
+    await expect(task.promise).rejects.toBeInstanceOf(UploadCancelled);
+    const sent = api.puts.length;
+    expect(sent).toBeGreaterThan(0);
+    expect(api.cancelled.length).toBe(0);
+    expect(storage.getItem(uploadStorageKey('p1', file))).not.toBeNull();
+    const again = uploadFile('p1', file, { api, storage: () => storage });
+    await again.promise;
+    expect(api.sessions.size).toBe(1);                                   // the same session, resumed
+    expect(api.puts.length).toBe(10);                                    // only the parts it lacked were sent again
+  });
 });
 
 describe('the real client against the mock API', () => {

@@ -1,9 +1,10 @@
 // /projects/:projectId/builds/new (docs/upload/DESIGN.md U-2 screen 4, U-5, U-14.1): a drop zone and a file picker
-// (.dwg, .dxf, several at once); per file its name, size, a progress bar by part, Retry / Remove; for a project with
-// versions "Use the files of v<n> again"; then createBuild with the uploaded sources (in the order picked) -> the Build
-// page. Files go one at a time, each with two parts in flight (upload/upload.ts); picking a file again after a reload
-// resumes its session. `?from=<buildId>` (the Files step's "Start again with other files") starts the new draft from that
-// draft's settings. File names are the user's: text only.
+// (.dwg, .dxf, several at once); per file its name, size, a progress bar by part, Retry (not for a file the API refuses
+// outright) / Remove; for a project whose latest version was built from uploads "Use the files of v<n> again"; then
+// createBuild with the uploaded sources (in the order picked) -> the Build page. Files go one at a time, each with two
+// parts in flight (upload/upload.ts); leaving the page pauses them, and picking a file again (after a reload, or after
+// coming back) resumes its session. `?from=<buildId>` (the Files step's "Start again with other files") starts the new
+// draft from that draft's settings. File names are the user's: text only.
 import { useQuery, useQueryClient, type QueryClient } from '@tanstack/react-query';
 import { CircleAlert, FileUp, RotateCw, Trash2, Upload } from 'lucide-react';
 import { useEffect, useRef, useState, type DragEvent } from 'react';
@@ -19,7 +20,10 @@ import { checkProjectId, fetchOrCached, loadOr404 } from '@/lib/routeData';
 import { useDocumentTitle } from '@/lib/useDocumentTitle';
 import { cn } from '@/lib/utils';
 import type { BuildDetail, NewBuildRequest, SourceFile } from '@/upload/contracts';
-import { DRAWING_FILE, formatBytes, UploadCancelled, uploadFile, type UploadOptions, type UploadProgress, type UploadTask } from '@/upload/upload';
+import {
+  DRAWING_FILE, formatBytes, PERMANENT_UPLOAD_ERRORS, UploadCancelled, UploadError, uploadFile, type UploadOptions, type UploadProgress,
+  type UploadTask,
+} from '@/upload/upload';
 
 export const uploadTitle = (name: string) => `${name} · upload · ${APP_NAME}`;
 const BUILD_ID = /^[0-9]{8}T[0-9]{6}-[0-9a-f]{6}$/;
@@ -43,6 +47,16 @@ interface Row {
   progress: UploadProgress | null;
   source: SourceFile | null;
   error: string | null;
+  /** The file itself was refused (too large, not a drawing, too old): Retry cannot help (UR, V2-10). */
+  permanent: boolean;
+}
+
+/** The project's latest version was built from uploaded drawings, so its files can be used again: a saved draft of the
+ *  builds list made it (UR, V3-8: the four seeded projects offered the button and it always failed, 404
+ *  version_not_found). A saved draft is cleaned 7 days after its save, and with it the button: the files are uploaded
+ *  again then. */
+export function latestFromUpload(latest: number, builds: { status: string; savedVersion: number | null }[] | undefined): boolean {
+  return latest >= 1 && (builds ?? []).some(b => b.status === 'saved' && b.savedVersion === latest);
 }
 
 /** Test seam: the upload options (api, sleep ...) the page passes to every file's upload. */
@@ -88,13 +102,15 @@ export function UploadPage() {
       source => update(next.id, { state: 'done', source }),
       err => {
         if (err instanceof UploadCancelled) return;
-        update(next.id, { state: 'failed', error: errorReason(err) });
+        const code = err instanceof UploadError ? err.code : '';
+        update(next.id, { state: 'failed', error: errorReason(err), permanent: PERMANENT_UPLOAD_ERRORS.has(code) });
       },
     ).finally(() => tasks.current.delete(next.id));
   }, [rows, projectId]);
 
-  // leaving the page stops the uploads (the sessions resume when the same files are picked again)
-  useEffect(() => () => { for (const t of tasks.current.values()) void t.cancel(); }, []);
+  // leaving the page pauses the uploads: their sessions and resume keys stay, so picking the same files again resumes
+  // them (U-5.3; UR, V2-8). Remove cancels one for good.
+  useEffect(() => () => { for (const t of tasks.current.values()) t.pause(); }, []);
 
   const add = (files: FileList | File[] | null) => {
     if (!files) return;
@@ -104,7 +120,7 @@ export function UploadPage() {
     setRows(rs => [
       ...rs,
       ...ok.filter(f => !rs.some(r => r.file.name === f.name && r.file.size === f.size && r.file.lastModified === f.lastModified))
-        .map(f => ({ id: nextRowId++, file: f, state: 'waiting' as const, progress: null, source: null, error: null })),
+        .map(f => ({ id: nextRowId++, file: f, state: 'waiting' as const, progress: null, source: null, error: null, permanent: false })),
     ]);
   };
   const remove = (row: Row) => {
@@ -117,6 +133,8 @@ export function UploadPage() {
 
   const done = rows.filter(r => r.state === 'done' && r.source);
   const ready = done.length > 0 && done.length === rows.length;
+  const failed = rows.filter(r => r.state === 'failed');
+  const reusable = latestFromUpload(latest, builds.data?.builds);
   const begin = async (body: NewBuildRequest, kind: 'build' | 'reuse') => {
     setStarting(kind);
     setStartError(null);
@@ -179,7 +197,7 @@ export function UploadPage() {
                   <div className="flex items-center gap-2">
                     <span className="min-w-0 flex-1 truncate text-sm font-medium" data-testid="upload-name">{r.file.name}</span>
                     <span className="text-xs text-muted-foreground">{formatBytes(r.file.size)}</span>
-                    {r.state === 'failed' && (
+                    {r.state === 'failed' && !r.permanent && (
                       <Button size="sm" variant="outline" className="h-7" onClick={() => retry(r)} data-testid="upload-retry"><RotateCw aria-hidden="true" />Retry</Button>
                     )}
                     <Button size="icon" variant="ghost" className="size-7" aria-label={`Remove ${r.file.name}`} onClick={() => remove(r)} data-testid="upload-remove"><Trash2 /></Button>
@@ -205,12 +223,17 @@ export function UploadPage() {
             <Upload aria-hidden="true" />
             {starting === 'build' ? 'Starting...' : sources.length ? `Continue with ${sources.length} file${sources.length === 1 ? '' : 's'}` : 'Continue'}
           </Button>
-          {latest >= 1 && !fromBuild && (
+          {reusable && !fromBuild && (
             <Button variant="outline" disabled={starting !== null} onClick={() => void begin({ sources: null, from: { kind: 'version', version: latest } }, 'reuse')} data-testid="reuse-files">
               {`Use the files of v${latest} again`}
             </Button>
           )}
         </div>
+        {failed.length > 0 && done.length > 0 && (
+          <p className="text-sm text-muted-foreground" data-testid="remove-failed-hint">
+            {`Remove the file${failed.length === 1 ? '' : 's'} that ${failed.length === 1 ? 'was' : 'were'} not uploaded to continue with the others.`}
+          </p>
+        )}
 
         {openDrafts.length > 0 && (
           <section className="grid gap-2" data-testid="open-drafts">

@@ -18,11 +18,19 @@ export function slugify(name: string, max: number = PROJECT_ID_MAX): string {
   return s.length >= 2 ? s : '';
 }
 
+/** The project id the API derives from a name (U-13.3): its slug, or '' (the API then makes `project-<6 hex>`) when the
+ *  slug holds no letter: 'บ้านสุขุมวิท ซอย 31' gave the id '31' (UR, V2-15). */
+export function projectIdOf(name: string): string {
+  const s = slugify(name, PROJECT_ID_MAX);
+  return /[a-z]/.test(s) ? s : '';
+}
+
 /** Why a typed project id cannot be used, or null. */
 export function projectIdProblem(id: string): string | null {
   if (!id) return null;
   if (id.length > PROJECT_ID_MAX) return `at most ${PROJECT_ID_MAX} characters (Windows path length)`;
   if (id.length < 2) return 'at least 2 characters';
   if (!NEW_PROJECT_ID.test(id)) return 'lower-case letters, digits and -, starting with a letter or digit';
+  if (id.endsWith('-') || id.includes('--')) return 'ending in a letter or digit, with no two hyphens in a row';
   return null;
 }

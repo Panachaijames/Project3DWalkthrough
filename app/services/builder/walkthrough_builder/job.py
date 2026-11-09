@@ -56,6 +56,28 @@ PROGRESS_EVERY_S = 0.5
 STOP_EVERY_S = 0.4
 FINAL_WRITE_S = 60.0
 MESSAGES_KEPT = 200
+#: a child's output file copied into the run's log.txt: its first and last this many bytes when it is larger (UR, V3-7:
+#: a converter that prints without end must not fill the store or the worker's memory)
+CHILD_LOG_KEEP = 256 * 1024
+
+
+def _head_and_tail(path: Path, keep: int) -> str | None:
+    """The file's text, or its first and last `keep` bytes with a line saying how much was left out; None when it cannot
+    be read. Never reads more than 2 x `keep` bytes."""
+    try:
+        size = os.path.getsize(path)
+        with open(path, 'rb') as f:
+            if size <= 2 * keep:
+                data = f.read()
+                return data.decode('utf-8', errors='replace')
+            head = f.read(keep)
+            f.seek(size - keep)
+            tail = f.read(keep)
+    except OSError:
+        return None
+    left = size - 2 * keep
+    return (head.decode('utf-8', errors='replace') + f'\n[... {left:,} bytes left out ...]\n'
+            + tail.decode('utf-8', errors='replace'))
 APP = Path(__file__).resolve().parents[3]
 API_PYTHON_ENV = 'WALKTHROUGH_API_PYTHON'
 
@@ -199,11 +221,8 @@ class Run:
             f'{", timed out" if res.get("timed_out") else ""}{", cancelled" if res.get("cancelled") else ""}'
             f'{", memory limit" if res.get("memory_hit") else ""}' if res else '')]
         for f in files:
-            try:
-                text = f.read_text(encoding='utf-8', errors='replace')
-            except OSError:
-                continue
-            if text.strip():
+            text = _head_and_tail(f, CHILD_LOG_KEEP)
+            if text is not None and text.strip():
                 parts.append(f'---- {f.name}\n{text.rstrip()}')
         try:
             with open(self.log_path, 'a', encoding='utf-8', newline='\n') as fh:
@@ -516,7 +535,11 @@ class Run:
                 shutil.rmtree(self.tmp, ignore_errors=True)
 
     def finish(self, status: str, error: dict | None = None) -> int:
-        """Cleans up, then writes the final job.json (retried; nothing is written after it). Returns the exit code."""
+        """Cleans up, then writes the final job.json (retried; nothing is written after it). Returns the exit code.
+        The error's message is scrubbed like every message (U-3.4: it names no server path; UR, V3-6: some RunError texts
+        quote an exception, and job.json's error is what the run panel shows)."""
+        if error and isinstance(error.get('message'), str):
+            error = {**error, 'message': losscheck.scrub(error['message'])[:1000]}
         self.cleanup()
         for st in self.steps:
             if st['status'] == 'running':

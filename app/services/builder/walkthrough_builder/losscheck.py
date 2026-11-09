@@ -31,6 +31,7 @@ import os
 import re
 import subprocess
 import sys
+import threading
 import time
 from collections.abc import Callable, Iterable
 from pathlib import Path
@@ -51,7 +52,12 @@ QUIET = {'hatch-short-handles', 'handle-not-found', 'unstable-class', 'unhandled
 _ERROR = re.compile(r'^\s*ERROR:?\s*(.*)$')
 _INVALID = re.compile(r'^(Invalid\s+[A-Za-z_][A-Za-z_0-9]*(?:\.[A-Za-z_][A-Za-z_0-9]*)?)')
 _KIND_HEAD = re.compile(r'^([^:0-9]+?)\s*(?::|\d|$)')
-_WIN_PATH = re.compile(r'(?:[A-Za-z]:[\\/]|\\\\)[^\s"\'<>|*?]*')
+#: an absolute Windows path: a drive or a UNC start, then folders, then the last part. A folder may hold spaces (this
+#: laptop's project folder is 'Project walkthrough': UR found the path kept from its first space on) and ends at the
+#: path's own separator (a backslash path's folders end at backslashes, a slash path's at slashes, so prose after the
+#: path is never taken for a folder); a colon, a quote or a line end ends it; the last part ends at the first space.
+_WIN_PATH = re.compile(r'(?:(?:[A-Za-z]:\\|\\\\)(?:[^\\/\r\n:"\'<>|*?]*\\)*|[A-Za-z]:/(?:[^\\/\r\n:"\'<>|*?]*/)*)'
+                       r'[^\s\\/"\'<>|*?]*')
 _SKIP = ('Reading DWG file', 'Writing DXF file', 'Reading DXF file', 'Writing DWG file', 'SUCCESS')
 
 
@@ -168,6 +174,14 @@ class DwgSide:
         self.model: int | None = None
         self.ents: dict[int, tuple[str, str, str]] = {}   # handle -> (type, layer, owner name) for the comparison
         self.owner_h: dict[int, int | None] = {}  # handle -> owner block handle (model space included)
+        #: the OBJECTS array was closed (`  ],`) and the whole JSON ended (its last line `  }}` in 0.14, or `}`): a
+        #: dwgread that crashed, was killed or failed an allocation while writing leaves a prefix (UR, V3-3)
+        self.objects_closed = False
+        self.ended = False
+
+    @property
+    def complete(self) -> bool:
+        return self.objects_closed and self.ended
 
     @classmethod
     def scan(cls, lines: Iterable[str]) -> DwgSide:
@@ -176,9 +190,16 @@ class DwgSide:
         in_objects = False
         cur: dict | None = None
         objs: list[dict] = []
+        prev = last = ''
         for line in lines:
+            prev, last = last, line                           # (no work per line beyond this: millions of lines)
             if line.startswith('  "') and not line.startswith('   '):
                 in_objects = line.startswith('  "OBJECTS"')
+                cur = None
+                continue
+            if in_objects and line.startswith('  ]'):
+                side.objects_closed = True
+                in_objects = False
                 cur = None
                 continue
             if not in_objects:
@@ -212,6 +233,8 @@ class DwgSide:
             except (ValueError, TypeError, IndexError):
                 if key in _STR_KEYS and v.startswith('"'):
                     cur[key] = v.strip('"')
+        end = (last if last.strip() else prev).rstrip()       # one trailing blank line allowed
+        side.ended = end == '}' or (end.endswith('}}') and not end.startswith('   '))
         side.objects = len(objs)
         for o in objs:
             kind = o.get('entity') or o.get('object')
@@ -592,11 +615,18 @@ def verdict_and_notes(c: dict, msgs: list[dict], dwg_entities: int) -> tuple[str
         notes.append('Export a DXF from AutoCAD and upload it for a complete build.')
     else:
         changed = len(c['typeChanged']) + len(c['layerChanged']) + len(c['ownerChanged'])
-        if missing or changed:
+        extra = len(c['extra'])
+        if missing or changed or extra:
             verdict = 'minor'
             if missing:
                 notes.append(f'{_n(missing, "item")} of blocks that are not placed in the plan, or of paper space, '
                              f'did not come through; the plan itself is complete.')
+            if extra:
+                # never seen on the project's drawings (0 on all eight): items the converted file has and the decoded
+                # drawing does not list, so the decoded side may be incomplete (UR, V3-3)
+                notes.append(f'{_n(extra, "item")} of the converted file {"is" if extra == 1 else "are"} not in the '
+                             f'drawing as decoded, so this check may have missed a loss: compare with a DXF exported '
+                             f'from AutoCAD if the build looks incomplete.')
             parts = []
             if c['benignLayer']:
                 parts.append(f'{_n(len(c["benignLayer"]), "item")} whose layer the converter could not read '
@@ -700,23 +730,61 @@ class CheckError(RuntimeError):
     code = 'check_failed'
 
 
-def dwgread_side(dwg: Path, libredwg: Path, stderr: Path | None = None) -> tuple[DwgSide, int, float]:
+#: dwgread's messages (stderr) may not grow past this: a damaged drawing that makes it print without end is stopped
+MAX_DWGREAD_STDERR = 64 * 1024 * 1024
+
+
+def _watch_size(p: subprocess.Popen, path: Path, limit: int, hit: list[bool], done: threading.Event) -> None:
+    """Kills `p` once the file at `path` grows past `limit` bytes (checked twice a second until `done`)."""
+    while not done.wait(0.5):
+        try:
+            if os.path.getsize(path) > limit:
+                hit.append(True)
+                p.kill()
+                return
+        except OSError:
+            pass
+
+
+def dwgread_side(dwg: Path, libredwg: Path, stderr: Path | None = None,
+                 max_stderr: int = MAX_DWGREAD_STDERR) -> tuple[DwgSide, int, float]:
     """Runs `dwgread -O JSON <dwg>` (in the DWG's folder, by its bare name) with stdout piped into the scanner. Returns
-    (side, exit code, seconds). It runs inside the check child's Job Object (memory and time capped there)."""
+    (side, exit code, seconds). It runs inside the check child's Job Object (memory and time capped there).
+
+    The comparison is only as good as the DWG side is whole: an exit code other than 0, or a JSON whose OBJECTS array or
+    whole document never closed (dwgread crashed, was killed or failed an allocation while writing), raises CheckError
+    (`check_failed`), never a verdict: a prefix of the drawing would make every later entity 'extra' and pass as `ok`
+    (UR, V3-3; measured 9 Nov: dwgread exits 0 and ends with `  }}` on all eight project drawings)."""
     exe = Path(libredwg) / ('dwgread.exe' if sys.platform == 'win32' else 'dwgread')
     t0 = time.perf_counter()
     err = open(stderr, 'wb') if stderr else subprocess.DEVNULL
+    hit: list[bool] = []
+    done = threading.Event()
     try:
         p = subprocess.Popen([str(exe), '-O', 'JSON', dwg.name], cwd=str(dwg.parent), stdin=subprocess.DEVNULL,
                              stdout=subprocess.PIPE, stderr=err,
                              creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+        watch = None
+        if stderr:
+            watch = threading.Thread(target=_watch_size, args=(p, Path(stderr), max_stderr, hit, done), daemon=True)
+            watch.start()
         try:
             side = DwgSide.scan(io.TextIOWrapper(p.stdout, encoding='utf-8', errors='replace'))
         finally:
             code = p.wait()
+            done.set()
+            if watch is not None:
+                watch.join()
     finally:
         if stderr:
             err.close()
+    if hit:
+        raise CheckError(f'the drawing reader printed more than {max_stderr // 2 ** 20} MB of messages and was stopped')
+    if code != 0:
+        raise CheckError(f'the drawing reader stopped with exit code {code:#x} before the end of the drawing'
+                         if code < 0 or code > 255 else f'the drawing reader stopped with exit code {code}')
+    if not side.complete:
+        raise CheckError('the drawing reader stopped part way through the drawing (its output ends early)')
     if side.objects == 0 or not side.blocks:
         raise CheckError(f'the drawing reader found nothing to compare (exit code {code})')
     return side, code, time.perf_counter() - t0

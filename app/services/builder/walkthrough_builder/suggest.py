@@ -98,9 +98,11 @@ class LayerFacts:
         self.level_tags: list[str] = []
         self.grid_labels = 0
         self.listed_texts: list[str] = []
+        self.in_blocks = 0
 
     def add(self, la: dict) -> None:
         self.items += int(la.get('items', 0))
+        self.in_blocks += int(la.get('inBlocks', 0))
         self.by_type.update({k: int(v) for k, v in (la.get('byType') or {}).items()})
         self.solid += int(la.get('solidHatches', 0))
         self.closed += int(la.get('closedShapes', 0))
@@ -284,6 +286,31 @@ def facts_of(drawings: list[dict]) -> dict[str, LayerFacts]:
     return out
 
 
+def layer0_evidence(f: LayerFacts) -> str:
+    """What layer 0 holds, in one sentence (it never gets a role by its contents). UR, V1-5: 'layer 0 holds whatever
+    blocks drew there' was said of every drawing, but the 3D team's Revit export of 9 Nov draws its partitions at the
+    top level on layer 0 (2,634 items, none in blocks: 99 solid fills, 84 wall-like pairs), and the house's 5,101 layer-0
+    items are top-level line work too; there the sentence names what is drawn and asks staff to look."""
+    tail = 'not built, but still read when finding doors and windows'
+    if not f.items:
+        return f'layer 0 holds nothing: {tail}'
+    top = f.items - f.in_blocks
+    if top * 2 <= f.items:
+        return (f'layer 0 holds what blocks drew there ({f.in_blocks} of its {_n(f.items, "item")} are inside blocks): '
+                f'{tail}')
+    found = [s for n, s in ((f.solid, _n(f.solid, 'solid fill')),
+                            (f.wall_pairs, _n(f.wall_pairs, 'wall-like line pair')),
+                            (f.glass_pairs, _n(f.glass_pairs, 'glass-like line pair')),
+                            (f.door_leaf, _n(f.door_leaf, 'door swing')),
+                            (f.texts, _n(f.texts, 'text')),
+                            (f.inserts, _n(f.inserts, 'insert'))) if n]
+    if not found:
+        found = [f'{_n(n, t.lower())}' for t, n in f.by_type.most_common(3) if n]
+    return (f'layer 0 holds {_n(top, "item")} drawn at the top level, not inside blocks ({", ".join(found)}): check '
+            f'whether walls or other parts are drawn here, since layer 0 is never given a role by what it holds; '
+            f'{tail}')
+
+
 def suggest_one(f: LayerFacts, office: dict | None, exact: dict, norm: dict) -> dict:
     found = contents(f)
     if f.name in exact:
@@ -304,9 +331,7 @@ def suggest_one(f: LayerFacts, office: dict | None, exact: dict, norm: dict) -> 
     if found is not None:
         return {'role': found[0], 'from': 'contents', 'evidence': [found[1]]}
     if f.name == '0':
-        return {'role': roles.DEFAULT_ROLE, 'from': 'default',
-                'evidence': [f'layer 0 holds whatever blocks drew there ({_n(f.items, "item")}): not built, but still '
-                             f'read when finding doors and windows']}
+        return {'role': roles.DEFAULT_ROLE, 'from': 'default', 'evidence': [layer0_evidence(f)]}
     what = (f'{_n(f.items, "item")}, nothing that names a role' if f.items else 'no items in the drawing')
     return {'role': roles.DEFAULT_ROLE, 'from': 'default',
             'evidence': [f'no rule matched ({what}): not built, but still read when finding doors and windows']}

@@ -265,9 +265,14 @@ def test_build_and_its_result(api: TestClient, fake: FakeJobRunner, data_copy: P
     r = api.post(f'{b["url"]}/run', json={})
     spec = load(fake.started[-1] / 'spec.json')
     assert spec['paths']['previousRun'].endswith('0002-build') and r.json()['result']['runId'] == '0003-build'
-    # a settings change makes the result stale
-    d = save_settings(api, r.json(), r.json()['settings']).json()
+    # a settings change makes the result stale (a real change: an unchanged save, or the office alone, leaves the build
+    # saveable since UR, V3-1)
+    changed = copy.deepcopy(r.json()['settings'])
+    changed['defaults']['doorHead'] = 2.2
+    d = save_settings(api, r.json(), changed).json()
     assert d['result']['stale'] is True
+    same = save_settings(api, d, r.json()['settings']).json()               # back to the built recipe
+    assert same['result']['stale'] is False and same['settingsRevision'] == d['settingsRevision'] + 1
 
 
 def test_raw_files(api: TestClient, data_copy: Path) -> None:

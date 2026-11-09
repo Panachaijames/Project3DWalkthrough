@@ -48,6 +48,8 @@ export interface UseBuild {
   /** The run is queued or running (the poll is on). */
   active: boolean;
   error: unknown;
+  /** The last poll failed while a detail is on screen (UR, V2-9: the page showed a frozen 'Building'), else null. */
+  pollError: unknown;
   /** Puts an answer of the API (runBuild, cancelBuildRun ...) into the caches. */
   set(detail: BuildDetail): void;
   refetch(): void;
@@ -65,6 +67,8 @@ export function useBuild(projectId: string, buildId: string, opts: { pollMs?: nu
     enabled: !!full.data,
     refetchInterval: q => (shouldPoll((q.state.data as BuildDetail | undefined) ?? full.data) ? pollMs : false),
     refetchOnWindowFocus: true,
+    // the next poll is the retry: a failed one shows at once (pollError) instead of after a second try
+    retry: false,
   });
 
   // a newer settings revision seen in the poll: the full detail again
@@ -85,6 +89,10 @@ export function useBuild(projectId: string, buildId: string, opts: { pollMs?: nu
   }, [full.data, poll.data, full.dataUpdatedAt, poll.dataUpdatedAt]);
 
   const set = useCallback((d: BuildDetail) => setBuildDetail(queryClient, path, d), [queryClient, path]);
-  const refetch = useCallback(() => { void full.refetch(); void poll.refetch(); }, [full, poll]);
-  return { detail, active: isActive(detail?.run), error: full.error ?? poll.error, set, refetch };
+  const fullRefetch = full.refetch;
+  const pollRefetch = poll.refetch;
+  const refetch = useCallback(() => { void fullRefetch(); void pollRefetch(); }, [fullRefetch, pollRefetch]);
+  // the poll failed while the page holds a detail (the API stopped answering): the page says so, and keeps polling
+  const pollError = poll.isError && detail !== undefined ? poll.error : null;
+  return { detail, active: isActive(detail?.run), error: full.error ?? poll.error, pollError, set, refetch };
 }

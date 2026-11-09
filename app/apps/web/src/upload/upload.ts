@@ -55,11 +55,17 @@ export interface UploadOptions {
 }
 
 export interface UploadTask {
-  /** The stored source, or the reason it failed (an UploadError, or UploadCancelled after cancel()). */
+  /** The stored source, or the reason it failed (an UploadError, or UploadCancelled after cancel() or pause()). */
   readonly promise: Promise<SourceFile>;
-  /** Stops the upload: aborts the parts in flight, cancels the session on the API, forgets the resume key. */
+  /** Stops the upload: aborts the parts in flight, cancels the session on the API, forgets the resume key (Remove). */
   cancel(): Promise<void>;
+  /** Stops sending but keeps the session and its resume key, so picking the same file again resumes it (U-5.3): what
+   *  leaving the Upload screen does (UR, V2-8: leaving cancelled the session, and the file started again at part 1). */
+  pause(): void;
 }
+
+/** API refusals an upload can never get past by trying again: the file itself is refused (U-5.1). */
+export const PERMANENT_UPLOAD_ERRORS: ReadonlySet<string> = new Set(['too_large', 'bad_kind', 'unsupported_version', 'not_a_drawing']);
 
 export class UploadError extends Error {
   /** The API's code (too_large, bad_kind, unsupported_version, incomplete ...) or network_error. */
@@ -271,6 +277,10 @@ export function uploadFile(projectId: string, file: FileLike, opts: UploadOption
       if (s) {
         try { await api.cancel(s.id); } catch { /* gone already, or the API is down: it expires in 24 h */ }
       }
+    },
+    pause() {
+      if (cancelled || signal.aborted) return;
+      controller.abort(new UploadCancelled());          // the parts in flight stop; the session and the key stay
     },
   };
 }

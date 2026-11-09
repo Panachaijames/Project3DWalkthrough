@@ -45,3 +45,26 @@ export const SUGGESTION_FROM: Record<'office' | 'office-similar' | 'name' | 'con
   contents: 'by what is drawn on it',
   default: 'nothing known: kept as context',
 };
+
+/** The same in a word or two, for the table's Suggested column (UR, V2-12: it showed the raw codes '· name'). */
+export const SUGGESTION_FROM_SHORT: Record<keyof typeof SUGGESTION_FROM, string> = {
+  office: 'office', 'office-similar': 'office, like', name: 'by name', contents: 'by contents', default: 'no rule',
+};
+
+/** Roles that build parts: a suggestion of one of them made from the contents alone is worth a look. */
+const BUILDING_ROLES: ReadonlySet<LayerRole> = new Set<LayerRole>(['wall', 'column', 'glass', 'window', 'door', 'screen',
+  'stair', 'stair-above', 'railing', 'furniture']);
+
+/** Why a suggestion should be looked at before it is accepted, or null (UR, V2-6: accepting the bank's suggestions lost its
+ *  room names, the house's invented glass and doors, and nothing on screen said so): its name and its contents disagree
+ *  (the suggester keeps the name's role and adds the contents' sentence, U-8.3), or only its contents suggested a role
+ *  that builds parts (glass-like line pairs, door swings, fills ...). */
+export function suggestionToCheck(s: { role: LayerRole; from: keyof typeof SUGGESTION_FROM; evidence: string[] } | undefined): string | null {
+  if (!s) return null;
+  if (s.from === 'name') {
+    const against = s.evidence.slice(1).find(e => !e.startsWith('its contents agree'));
+    if (against) return `the name and the contents disagree: ${against}`;
+  }
+  if (s.from === 'contents' && BUILDING_ROLES.has(s.role)) return `suggested by what is drawn on it only: ${s.evidence[0] ?? ''}`;
+  return null;
+}

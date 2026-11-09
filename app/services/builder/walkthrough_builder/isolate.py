@@ -195,17 +195,19 @@ def _size(path: Path | None) -> int:
 
 def run(cmd: list[str], *, cwd: Path, env: dict, seconds: float, memory_mb: int, stdout: Path, stderr: Path,
         cancelled: Callable[[], object] | None = None, watch_file: Path | None = None,
-        watch_max_bytes: int | None = None, leaf: bool = False, poll: Callable[[], None] | None = None) -> dict:
+        watch_max_bytes: int | None = None, leaf: bool = False, poll: Callable[[], None] | None = None,
+        watch_text_max_bytes: int | None = None) -> dict:
     """Runs `cmd` (an argument list) in a Job Object; see the module text. stdout and stderr go to the two files (made
     or truncated). Raises IsolateError when the child cannot be started inside its limits; `poll()` exceptions end the
-    job and pass through."""
+    job and pass through. `watch_text_max_bytes`: the job is ended once stdout and stderr together pass it
+    (`killed_for_text`; UR, V3-7: only the converted file was watched)."""
     if not isinstance(cmd, (list, tuple)) or not cmd:
         raise ValueError('cmd must be a non-empty argument list (never a shell string)')
     if sys.platform != 'win32':                                    # pragma: no cover - the app runs on Windows
         return _run_plain(cmd, cwd=cwd, env=env, seconds=seconds, stdout=stdout, stderr=stderr, cancelled=cancelled)
     job = _Job(memory_mb, 1 if leaf else PYTHON_PROCESS_LIMIT)
     t0 = time.perf_counter()
-    timed_out = was_cancelled = too_big = False
+    timed_out = was_cancelled = too_big = too_chatty = False
     try:
         with open(stdout, 'wb') as fo, open(stderr, 'wb') as fe:
             try:
@@ -234,7 +236,9 @@ def run(cmd: list[str], *, cwd: Path, env: dict, seconds: float, memory_mb: int,
                         was_cancelled = True
                     elif watch_max_bytes is not None and _size(watch_file) > watch_max_bytes:
                         too_big = True
-                    if timed_out or was_cancelled or too_big:
+                    elif watch_text_max_bytes is not None and _size(stdout) + _size(stderr) > watch_text_max_bytes:
+                        too_chatty = True
+                    if timed_out or was_cancelled or too_big or too_chatty:
                         job.terminate()
                         break
                     if poll is not None:
@@ -252,11 +256,11 @@ def run(cmd: list[str], *, cwd: Path, env: dict, seconds: float, memory_mb: int,
         job.close()
     memory_hit = bool(job.memory_message or exit_code == EXIT_MEMORY
                       or peak_mb * 2 ** 20 >= 0.95 * job.memory_bytes)
-    return {'exit_code': exit_code if not (timed_out or was_cancelled or too_big) else None,
+    return {'exit_code': exit_code if not (timed_out or was_cancelled or too_big or too_chatty) else None,
             'raw_exit_code': exit_code, 'seconds': round(elapsed, 3), 'cpu_seconds': round(cpu, 3),
             'peak_mb': round(peak_mb, 1), 'memory_hit': memory_hit, 'memory_message': job.memory_message,
             'timed_out': timed_out, 'cancelled': was_cancelled, 'killed_for_size': too_big,
-            'active_limit_hit': job.active_limit}
+            'killed_for_text': too_chatty, 'active_limit_hit': job.active_limit}
 
 
 def _run_plain(cmd, *, cwd, env, seconds, stdout, stderr, cancelled):  # pragma: no cover - not Windows
@@ -278,7 +282,7 @@ def _run_plain(cmd, *, cwd, env, seconds, stdout, stderr, cancelled):  # pragma:
     return {'exit_code': None if (timed_out or was_cancelled) else code, 'raw_exit_code': code,
             'seconds': round(time.perf_counter() - t0, 3), 'cpu_seconds': 0.0, 'peak_mb': 0.0,
             'memory_hit': code == EXIT_MEMORY, 'memory_message': False, 'timed_out': timed_out,
-            'cancelled': was_cancelled, 'killed_for_size': False, 'active_limit_hit': False}
+            'cancelled': was_cancelled, 'killed_for_size': False, 'killed_for_text': False, 'active_limit_hit': False}
 
 
 def child_env(base: dict | None = None, **extra: str) -> dict:
@@ -303,7 +307,7 @@ def classify(res: dict, prefix: str) -> str | None:
         return 'cancelled'
     if res.get('timed_out'):
         return f'{prefix}_timeout'
-    if res.get('exit_code') == 0 and not res.get('killed_for_size'):
+    if res.get('exit_code') == 0 and not res.get('killed_for_size') and not res.get('killed_for_text'):
         return None
     if res.get('memory_hit'):
         return f'{prefix}_memory'
