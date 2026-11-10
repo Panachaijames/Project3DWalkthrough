@@ -1,0 +1,8 @@
+{
+  "name": "walkthrough-project-folder",
+  "private": true,
+  "description": "Lets `npm run dev` work from the project folder too: it starts the application in app/ (added 10 Nov 2026).",
+  "scripts": {
+    "dev": "cd app && npm run dev"
+  }
+}

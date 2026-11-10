@@ -67,7 +67,8 @@ starts with = + - or @ is written as plain text), which settles the question lef
 
 ## How to start it (one command, unchanged)
 
-Open PowerShell in `C:\Users\DWP2\Desktop\Project walkthrough\app` and type:
+Open PowerShell in `C:\Users\DWP2\Desktop\Project walkthrough` (the project folder, or its `app` folder: since 10 Nov
+both work) and type:
 
 ```
 npm run dev
@@ -140,7 +141,7 @@ typed on the Floors step.
 | A-2 | One 3ds Max script generator (must) | **Met** | The hotel's script byte for byte; two touching holes refused; a model with every kind of part runs in the stand-in for 3ds Max (builder tests) |
 | A-3 | Taking in drawings (must) | **Met** | All 8 DWGs in the project folder convert: the bank's two, L29, L30 and the 3D team's new suite **ok**; the house and "layout presidential xx" **minor**; "layout presidential test" **loss** (8,254 of 142,182 items; the 4 lost blocks in the suite listed, with the advice to export a DXF from AutoCAD). Refusals, time and memory limits, Cancel and restarts: covered by the tests, all passed |
 | A-4 | Reading and the openings detector (must) | **Met** | The readings equal the prototype's on six drawings, and the detector's openings equal record for record; the house reads in millimetres (28 doors against 4) though it says inches; 26 level tags; grid labels: bank 10, house 63, tower 0 |
-| A-5 | The house, suite and tower build from a layer mapping and a floors setup only, with a gap report (must) | **Met** | All three build, are checked, save and open; the house's upper floor lines up by the grid lines (74.022 m, within 0.9 mm). The suite has 127 furniture pieces against the prototype's 120: 6 % more, the wish was within 5 % (a *should*, missed). The gap report `docs/upload/GAPS.md` explains and classes every difference; this check rebuilt exactly the same models and got the same walk results |
+| A-5 | The house, suite and tower build from a layer mapping and a floors setup only, with a gap report (must) | **Met** | All three build, are checked, save and open; the house's upper floor lines up by the grid lines (74.022 m, within 0.9 mm). The suite has 127 furniture pieces against the prototype's 120: 6 % more, the wish was within 5 % (a *should*, missed; accepted by you on 10 Nov). The gap report `docs/upload/GAPS.md` explains and classes every difference; this check rebuilt exactly the same models and got the same walk results |
 | A-6 | Walk checks on every uploaded version (must for the bank; must run, should pass for the others) | **Met** | The bank, both ways: every wall, door and glass probe passes (80 wall spots, 39 doors, 44 glass probes). The others run, and their failing probes are exactly the ones the gap report lists and explains: house 4 doors and 2 glass, suite 1 door, tower 7 doors and 4 glass, the Revit suite 3 doors |
 | A-7 | The staff path in Edge (must) | **Met** | Both browser tests pass: the bank through every screen to a saved version (5.5 min), and a drawing full of hostile names (nothing injected, no pop-up) |
 | A-8 | Office memory (must) | **Met** | The office remembered the bank's roles; a new tower project of that office had its 13 shared layers suggested from the office; a new version of the bank kept its floor keys, names and position |
@@ -321,11 +322,14 @@ grid lines to within a millimetre, and all 86 openings are found where the proto
 
 1. **Done after the final check:** the furniture-kind fault on the Check step is fixed, and the furniture size limits
    have their boxes on the Floors step (see *What failed*).
-2. **Box editing** (your choice of 4 Nov, after the upload): rename and recolour furniture kinds, move pieces between
-   kinds, add boxes by hand; then the real furniture models, finishes and lights.
-3. **Rooms and slabs**: floors made from the wall network, so the house's glass living area, the suite's centre and the
-   tower's outer rooms get their floor (most of the failing walk probes go with them). Then **stairs you can climb**.
-4. A fifth office's drawing, to confirm the openings detector's 80 % gate.
+2. **Rooms and slabs** (your choice of 10 Nov, started that day): floors made from the wall network, so the house's
+   glass living area, the suite's centre and the tower's outer rooms get their floor (most of the failing walk probes go
+   with them). Then **stairs you can climb**.
+3. **Box editing** after that: rename and recolour furniture kinds, move pieces between kinds, add boxes by hand; then
+   the real furniture models, finishes and lights.
+4. The openings detector on a fifth drawing: the 3D team's new suite drawing is being scored held out (started 10 Nov),
+   with an answer key made the same way as the tower floors' (separate labellers who never see the detector's output).
+   A drawing from another office would still be the stronger test.
 5. For you: ask the 3D team to export Revit files with the walls on their own layer.
 
 ## Decisions
@@ -337,8 +341,10 @@ Answered after the final check (9 Nov): the furniture size limits (smallest piec
 the Floors step now rather than with the box editing, because without them the house built through the screens reads 7
 thin items more than its settings; say if you would rather have them moved to the box editing.
 
-Open:
+Settled by you on 10 Nov: the suite's furniture count (6 % over the prototype's, against a wish of 5 %) is accepted as
+it is; rooms and slabs with climbable stairs come next, then the box editing; the new suite drawing is the openings
+detector's fifth drawing.
 
-* Whether the suite's furniture count (6 % over the prototype's, against a wish of 5 %) is acceptable as it is.
+Open: nothing.
 
 Nothing in this milestone needs deploying. When anything goes online later, you run that deploy yourself.
