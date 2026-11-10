@@ -15,19 +15,23 @@ passage; or window).
 
 ### What to expect on a new drawing: the held-out figures
 
-Two drawings were run with the code frozen before their answer key existed. These are the only honest predictions:
+Three drawings were run with the code frozen before their answer key existed. These are the only honest predictions:
 
 | Drawing | Right | |
 |---|---|---|
 | Bank branch, Revit export (first run, `blind_run/`) | **39 of 41 (95 %)** | |
 | **Tower floors L29 and L30**, Revit export (27 Oct, `blind_run_L29_L30/`) | **39 of 54 (72 %)** | **Below the 80 % gate.** 85 % of the openings were found, but the width was right on fewer, and 48 detections were not in the audited key (45 of the 49 extras were judged not to be openings by two blind auditors). The causes were general, see below |
+| **Presidential suite, the 3D team's Revit export** (`presidential suite_layout.dwg`, 10 Nov, [`blind_run_suite_revit/README.md`](blind_run_suite_revit/README.md)) | **7 of 16 (44 %)** | **Below the 80 % gate**, with the detector as fixed on 28 Oct. 50 % of the openings were found: every hinged door whose swing is drawn whole, and none of the four pocket doors, the two doors cut by the view's crop, the bi-fold door or the wide doorless opening. Seven of the nine failures have one cause: the wall's lines are drawn on across the door opening, so no gap is found. 8 detections were not in the key (all 8 judged not to be openings by two blind auditors): furniture on the wall layer, two recess mouths, a cabinet niche. Nothing was fixed |
 
 ### After the fix round (28 Oct): development-set figures, not held out
 
 The general causes the tower test showed were fixed in the detector (rules in `openings.py`, listed below), checked by
 independent reviewers, and every drawing was re-run. **These figures are not predictions.** The tower floors were used to
-design the fixes, and each limit was swept on exactly these six floors. A fifth drawing, from another office, is needed to
-find out what the fixed detector does on a new one. Until then the held-out figures above are the answer to "does it meet the gate".
+design the fixes, and each limit was swept on exactly these six floors. A fifth drawing has since shown what the fixed
+detector does on a new one: the 3D team's Revit export of a presidential suite, run held out on 10 Nov, came out at 7 of 16
+right (44 %), mostly because the wall's lines are drawn on across its door openings (`blind_run_suite_revit/README.md`). It is
+the company's own export, so a drawing from another office would still be the stronger test. The held-out figures above are
+the answer to "does it meet the gate".
 
 | Drawing | Floor | Key | Right | Detections the key does not list |
 |---|---|---|---|---|
@@ -216,7 +220,14 @@ drawings; a drawing with one plan per file, like the bank's, needs nothing. `map
 
 ## Limits worth knowing
 
-- **The next real test is a fifth drawing.** Every figure after the fix round is a development-set figure.
+- **The fifth drawing was run held out on 10 Nov and came out below the gate: 7 of 16 right** (the 3D team's Revit export of
+  a presidential suite, `blind_run_suite_revit/README.md`). What it showed, none of it fixed: wall lines drawn on across a door
+  opening (every pocket door, both unit doors, one hinged door) leave no gap, so the door is missed, or read from its swing at
+  the width of its leaf; a door whose swing is cut by the view's crop is not read from its symbol; a bi-fold door is not a
+  door the detector knows; a doorless opening of 1.975 m that ends at a flush corner is dropped (the limit under "Passages
+  next to walls"); furniture on a layer that has to be mapped as wall makes false passages; the mouths of door recesses and
+  an equipment niche are reported as passages. Every figure after the fix round is still a development-set figure, and that
+  drawing is the company's own: a drawing from another office would still be the stronger test.
 - The 14 detections the key does not list are passages (one window). They cost nothing in 3D (passages are left as they are), but a
   product would show them to a reviewer. Whether passages should be reported at all is a question for the owner: a passage adds no
   object in 3D.

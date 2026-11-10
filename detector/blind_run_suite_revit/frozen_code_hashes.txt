@@ -1,0 +1,7 @@
+14a570251f6d0af4e92037db2db69322b31cc065 *openings.py
+6d4f8178794ea90821632b945c36d2b4cc25625e *geomkit.py
+0e5566a0cf5bf0767cf7c76845aae47316fcbc7a *prims.py           (copy of detector/tools/prims.py, the cache tool)
+8269f9dddba29163ecffc10b836cbe52be51ce1e *render_openings.py (imported by openings.py for --png)
+sha1 (full) of each file in frozen_code/, identical to the detector folder's files at freezing time.
+openings.py and prims.py import nothing else from the detector (geomkit, prims, render_openings only; prims.py imports ezdxf and the standard library).
+frozen at: 2026-11-10 08:38 (before the DWG was converted and before any detector run on this drawing); hashes checked again unchanged just before and just after the one run (08:55)

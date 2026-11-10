@@ -1,0 +1,230 @@
+## INSERTS
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11356429-GENERAL ARRANGEMENT PLAN                             ins=(21.4637,11.6110) rot=75.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11357310-GENERAL ARRANGEMENT PLAN                             ins=(23.4668,12.7677) rot=165.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11356429-GENERAL ARRANGEMENT PLAN                             ins=(21.5603,11.5851) rot=75.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11357310-GENERAL ARRANGEMENT PLAN                             ins=(23.4409,12.6711) rot=165.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11356429-GENERAL ARRANGEMENT PLAN                             ins=(17.0887,11.6110) rot=75.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11357310-GENERAL ARRANGEMENT PLAN                             ins=(19.0918,12.7677) rot=165.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11356429-GENERAL ARRANGEMENT PLAN                             ins=(17.1853,11.5851) rot=75.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11357310-GENERAL ARRANGEMENT PLAN                             ins=(19.0659,12.6711) rot=165.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11356429-GENERAL ARRANGEMENT PLAN                             ins=(12.7137,11.6110) rot=75.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11357310-GENERAL ARRANGEMENT PLAN                             ins=(14.7168,12.7677) rot=165.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11356429-GENERAL ARRANGEMENT PLAN                             ins=(12.8103,11.5851) rot=75.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11357310-GENERAL ARRANGEMENT PLAN                             ins=(14.6909,12.6711) rot=165.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11356429-GENERAL ARRANGEMENT PLAN                             ins=(8.3387,11.6110) rot=75.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11357310-GENERAL ARRANGEMENT PLAN                             ins=(10.3418,12.7677) rot=165.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11356429-GENERAL ARRANGEMENT PLAN                             ins=(8.4353,11.5851) rot=75.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11357310-GENERAL ARRANGEMENT PLAN                             ins=(10.3159,12.6711) rot=165.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11357310-GENERAL ARRANGEMENT PLAN                             ins=(5.9668,12.7677) rot=165.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11357310-GENERAL ARRANGEMENT PLAN                             ins=(5.9409,12.6711) rot=165.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       TOILET PAPER - SA-03-12051735-GENERAL ARRANGEMENT PLAN                                     ins=(11.6266,1.5891) rot=90.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11356429-GENERAL ARRANGEMENT PLAN                             ins=(2.7410,3.0551) rot=135.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11356429-GENERAL ARRANGEMENT PLAN                             ins=(2.8124,3.1265) rot=135.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11357310-GENERAL ARRANGEMENT PLAN                             ins=(2.7410,8.6631) rot=225.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11357310-GENERAL ARRANGEMENT PLAN                             ins=(2.8124,8.5916) rot=225.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11356429-GENERAL ARRANGEMENT PLAN                             ins=(3.9637,11.6110) rot=75.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       CURTAIN_LINEAR_SINGLE - DB01-11356429-GENERAL ARRANGEMENT PLAN                             ins=(4.0603,11.5851) rot=75.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       APPLIANCE_TV - 70_-12504961-GENERAL ARRANGEMENT PLAN                                       ins=(2.5296,5.8591) rot=90.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       APPLIANCE_TV_WALL MOUNT WITH BRACKET - 65_-11362946-GENERAL ARRANGEMENT PLAN               ins=(11.7866,8.4091) rot=90.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       ADSK_US_M_M_Refrigerator - 500-13836790-GENERAL ARRANGEMENT PLAN                           ins=(22.7616,3.7341) rot=90.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       LAMP_TABLE LAMP_003_ANTIFONI - DL-08-13906887-FURNITURE PLAN                               ins=(18.3610,11.6090) rot=210.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-SPCQ       LAMP_TABLE LAMP_003_ANTIFONI - DL-08-13593144-FURNITURE PLAN - EXECUTIVE SUITE             ins=(4.5982,2.0939) rot=90.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT S-COLS       COLUMN_CONCRETE RECTANGLE_GEN - 500W 1000D-3497240-GENERAL ARRANGEMENT PLAN                ins=(3.0116,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT S-COLS       COLUMN_CONCRETE RECTANGLE_GEN - 500W 1000D-2665214-GENERAL ARRANGEMENT PLAN                ins=(11.7616,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT S-COLS       COLUMN_CONCRETE RECTANGLE_GEN - 500W 1000D-2665214-GENERAL ARRANGEMENT PLAN                ins=(20.5116,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT S-COLS       COLUMN_CONCRETE RECTANGLE_GEN - 500W 1000D-2665214-GENERAL ARRANGEMENT PLAN                ins=(11.7616,0.7091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT S-COLS       COLUMN_CONCRETE RECTANGLE_GEN - 500W 1000D-2665214-GENERAL ARRANGEMENT PLAN                ins=(20.5116,0.7091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT S-COLS       COLUMN_CONCRETE RECTANGLE_GEN - 500W 1000D-3497240-GENERAL ARRANGEMENT PLAN                ins=(3.0116,0.7091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-WALL       Walls 13 - Walls 1-2656323-GENERAL ARRANGEMENT PLAN                                        ins=(-5.7384,11.0091) rot=6.65 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CURT  System Panel - GLAZED-2447687-GENERAL ARRANGEMENT PLAN                                     ins=(4.6932,12.6605) rot=30.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447657-GENERAL ARRANGEMENT PLAN                              ins=(-5.7384,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CURT  System Panel - GLAZED-2447686-GENERAL ARRANGEMENT PLAN                                     ins=(5.7346,12.9154) rot=345.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447655-GENERAL ARRANGEMENT PLAN                              ins=(-5.7384,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447682-GENERAL ARRANGEMENT PLAN                              ins=(-6.1244,12.8110) rot=195.00 sx=1 sy=1 ext_z=(0.0, 0.0, -1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447683-GENERAL ARRANGEMENT PLAN                              ins=(5.3448,13.0198) rot=165.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CURT  System Panel - GLAZED-2447686-GENERAL ARRANGEMENT PLAN                                     ins=(3.9519,11.8860) rot=255.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-V10-GENERAL ARRANGEMENT PLAN                                  ins=(-5.7384,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447682-GENERAL ARRANGEMENT PLAN                              ins=(-3.8475,11.4961) rot=285.00 sx=1 sy=1 ext_z=(0.0, 0.0, -1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447683-GENERAL ARRANGEMENT PLAN                              ins=(4.0563,12.2758) rot=75.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CURT  System Panel - GLAZED-2447687-GENERAL ARRANGEMENT PLAN                                     ins=(9.0682,12.6605) rot=30.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-V11-GENERAL ARRANGEMENT PLAN                                  ins=(-5.7384,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CURT  System Panel - GLAZED-2447686-GENERAL ARRANGEMENT PLAN                                     ins=(10.1096,12.9154) rot=345.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-V12-GENERAL ARRANGEMENT PLAN                                  ins=(-5.7384,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447682-GENERAL ARRANGEMENT PLAN                              ins=(-10.4994,12.8110) rot=195.00 sx=1 sy=1 ext_z=(0.0, 0.0, -1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447683-GENERAL ARRANGEMENT PLAN                              ins=(9.7198,13.0198) rot=165.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CURT  System Panel - GLAZED-2447686-GENERAL ARRANGEMENT PLAN                                     ins=(8.3269,11.8860) rot=255.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-V13-GENERAL ARRANGEMENT PLAN                                  ins=(-5.7384,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447682-GENERAL ARRANGEMENT PLAN                              ins=(-8.2225,11.4961) rot=285.00 sx=1 sy=1 ext_z=(0.0, 0.0, -1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447683-GENERAL ARRANGEMENT PLAN                              ins=(8.4313,12.2758) rot=75.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CURT  System Panel - GLAZED-2447687-GENERAL ARRANGEMENT PLAN                                     ins=(13.4432,12.6605) rot=30.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-V14-GENERAL ARRANGEMENT PLAN                                  ins=(-5.7384,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CURT  System Panel - GLAZED-2447686-GENERAL ARRANGEMENT PLAN                                     ins=(14.4846,12.9154) rot=345.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-V15-GENERAL ARRANGEMENT PLAN                                  ins=(-5.7384,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447682-GENERAL ARRANGEMENT PLAN                              ins=(-14.8744,12.8110) rot=195.00 sx=1 sy=1 ext_z=(0.0, 0.0, -1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447683-GENERAL ARRANGEMENT PLAN                              ins=(14.0948,13.0198) rot=165.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CURT  System Panel - GLAZED-2447686-GENERAL ARRANGEMENT PLAN                                     ins=(12.7019,11.8860) rot=255.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-V16-GENERAL ARRANGEMENT PLAN                                  ins=(-5.7384,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447682-GENERAL ARRANGEMENT PLAN                              ins=(-12.5975,11.4961) rot=285.00 sx=1 sy=1 ext_z=(0.0, 0.0, -1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447683-GENERAL ARRANGEMENT PLAN                              ins=(12.8063,12.2758) rot=75.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CURT  System Panel - GLAZED-2447687-GENERAL ARRANGEMENT PLAN                                     ins=(17.8182,12.6605) rot=30.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-V17-GENERAL ARRANGEMENT PLAN                                  ins=(-5.7384,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CURT  System Panel - GLAZED-2447686-GENERAL ARRANGEMENT PLAN                                     ins=(18.8596,12.9154) rot=345.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-V18-GENERAL ARRANGEMENT PLAN                                  ins=(-5.7384,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447682-GENERAL ARRANGEMENT PLAN                              ins=(-19.2494,12.8110) rot=195.00 sx=1 sy=1 ext_z=(0.0, 0.0, -1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447683-GENERAL ARRANGEMENT PLAN                              ins=(18.4698,13.0198) rot=165.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CURT  System Panel - GLAZED-2447686-GENERAL ARRANGEMENT PLAN                                     ins=(17.0769,11.8860) rot=255.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-V19-GENERAL ARRANGEMENT PLAN                                  ins=(-5.7384,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447682-GENERAL ARRANGEMENT PLAN                              ins=(-16.9725,11.4961) rot=285.00 sx=1 sy=1 ext_z=(0.0, 0.0, -1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447683-GENERAL ARRANGEMENT PLAN                              ins=(17.1813,12.2758) rot=75.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CURT  System Panel - GLAZED-2447687-GENERAL ARRANGEMENT PLAN                                     ins=(22.1932,12.6605) rot=30.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-V20-GENERAL ARRANGEMENT PLAN                                  ins=(-5.7384,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CURT  System Panel - GLAZED-2447686-GENERAL ARRANGEMENT PLAN                                     ins=(23.2346,12.9154) rot=345.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-V21-GENERAL ARRANGEMENT PLAN                                  ins=(-5.7384,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447682-GENERAL ARRANGEMENT PLAN                              ins=(-23.6244,12.8110) rot=195.00 sx=1 sy=1 ext_z=(0.0, 0.0, -1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447683-GENERAL ARRANGEMENT PLAN                              ins=(22.8448,13.0198) rot=165.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CURT  System Panel - GLAZED-2447686-GENERAL ARRANGEMENT PLAN                                     ins=(21.4519,11.8860) rot=255.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-V22-GENERAL ARRANGEMENT PLAN                                  ins=(-5.7384,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447682-GENERAL ARRANGEMENT PLAN                              ins=(-21.3475,11.4961) rot=285.00 sx=1 sy=1 ext_z=(0.0, 0.0, -1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447683-GENERAL ARRANGEMENT PLAN                              ins=(21.5563,12.2758) rot=75.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT M-EQPM       FHC 02 - Type 1-2794844-GENERAL ARRANGEMENT PLAN                                           ins=(14.2866,1.1091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CURT  System Panel - GLAZED-2447692-GENERAL ARRANGEMENT PLAN                                     ins=(1.6116,5.8591) rot=270.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447665-GENERAL ARRANGEMENT PLAN                              ins=(-5.7384,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CURT  System Panel - GLAZED-2447693-GENERAL ARRANGEMENT PLAN                                     ins=(2.2116,8.2384) rot=45.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447667-GENERAL ARRANGEMENT PLAN                              ins=(-5.7384,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447682-GENERAL ARRANGEMENT PLAN                              ins=(-2.7970,8.8237) rot=135.00 sx=1 sy=1 ext_z=(0.0, 0.0, -1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447683-GENERAL ARRANGEMENT PLAN                              ins=(1.6263,7.6530) rot=225.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CURT  System Panel - GLAZED-2447693-GENERAL ARRANGEMENT PLAN                                     ins=(2.2116,3.4798) rot=315.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-V23-GENERAL ARRANGEMENT PLAN                                  ins=(-5.7384,11.0091) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447682-GENERAL ARRANGEMENT PLAN                              ins=(-2.7970,2.8944) rot=225.00 sx=1 sy=1 ext_z=(0.0, 0.0, -1.0)
+INSERT A-GLAZ-CWMG  Rectangular Mullion - 100X50-2447683-GENERAL ARRANGEMENT PLAN                              ins=(1.6263,4.0651) rot=135.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-DOOR       UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM-3324157-GENERAL ARRANGEMENT PLAN                 ins=(21.3466,0.8591) rot=180.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-DOOR       UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM-3324155-GENERAL ARRANGEMENT PLAN                 ins=(19.6766,0.8591) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-DOOR       SERVICE_SWING_DOUBLE - D22 1800X2100MM-2804302-GENERAL ARRANGEMENT PLAN                    ins=(24.8866,3.2591) rot=180.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-DOOR       SERVICE_SWING_DOUBLE - D22 1800X2100MM-V24-GENERAL ARRANGEMENT PLAN                        ins=(16.1366,3.2591) rot=180.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-DOOR       SERVICE_SWING_DOUBLE - D22 1800X2100MM-V25-GENERAL ARRANGEMENT PLAN                        ins=(24.8866,1.1591) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT A-DOOR       SERVICE_DOOR_SWING_1_SOLID - 850X2400MM_D06-3801650-GENERAL ARRANGEMENT PLAN               ins=(16.6116,1.1591) rot=0.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-CASE       FP_27-GENERAL ARRANGEMENT PLAN                                                             ins=(7.3539,5.9038) rot=270.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-CASE       FP_28-GENERAL ARRANGEMENT PLAN                                                             ins=(7.3539,5.9038) rot=270.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-CASE       FP_29-GENERAL ARRANGEMENT PLAN                                                             ins=(7.3539,5.9038) rot=270.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-CASE       FP_30-GENERAL ARRANGEMENT PLAN                                                             ins=(7.3539,5.9038) rot=270.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-CASE       FP_31-GENERAL ARRANGEMENT PLAN                                                             ins=(7.3539,5.9038) rot=270.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-CASE       FP_53-GENERAL ARRANGEMENT PLAN                                                             ins=(24.7766,9.3963) rot=270.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-CASE       FP_54-GENERAL ARRANGEMENT PLAN                                                             ins=(24.7766,9.3963) rot=270.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-CASE       FP_55-GENERAL ARRANGEMENT PLAN                                                             ins=(24.7766,9.3963) rot=270.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-CASE       FP_56-GENERAL ARRANGEMENT PLAN                                                             ins=(24.7766,9.3963) rot=270.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-CASE       FP_57-GENERAL ARRANGEMENT PLAN                                                             ins=(24.7766,9.3963) rot=270.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-CASE       FP_58-GENERAL ARRANGEMENT PLAN                                                             ins=(24.7766,9.3963) rot=270.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT Q-CASE       FP_59-GENERAL ARRANGEMENT PLAN                                                             ins=(24.7766,9.3963) rot=270.00 sx=1 sy=1 ext_z=(0.0, 0.0, 1.0)
+INSERT I-FURN-CHAR  Gruppo-19                                                                                  ins=(21.4650,1.6267) rot=180.35 sx=-10.0 sy=10.0 ext_z=(0.0, 0.0, 1.0)
+INSERT I-FURN-CHAR  Gruppo-19                                                                                  ins=(25.5952,5.7528) rot=225.35 sx=-10.0 sy=10.0 ext_z=(0.0, 0.0, 1.0)
+INSERT I-FURN-CHAR  Gruppo-19                                                                                  ins=(25.5981,11.5908) rot=270.35 sx=-10.0 sy=10.0 ext_z=(0.0, 0.0, 1.0)
+INSERT I-FURN-CHAR  Gruppo-19                                                                                  ins=(21.4720,15.7210) rot=315.35 sx=-10.0 sy=10.0 ext_z=(0.0, 0.0, 1.0)
+INSERT I-FURN-CHAR  Gruppo-19                                                                                  ins=(15.6340,15.7239) rot=0.35 sx=-10.0 sy=10.0 ext_z=(0.0, 0.0, 1.0)
+INSERT I-FURN-CHAR  Gruppo-19                                                                                  ins=(11.5039,11.5978) rot=45.35 sx=-10.0 sy=10.0 ext_z=(0.0, 0.0, 1.0)
+INSERT I-FURN-CHAR  Gruppo-19                                                                                  ins=(11.5010,5.7598) rot=90.35 sx=-10.0 sy=10.0 ext_z=(0.0, 0.0, 1.0)
+INSERT I-FURN-CHAR  Gruppo-19                                                                                  ins=(15.6270,1.6296) rot=135.35 sx=-10.0 sy=10.0 ext_z=(0.0, 0.0, 1.0)
+## ARCS
+ARC Q-SPCQ       lt=Hidden         c=(22.0616,3.4841) r=0.5000 a=90.00->180.00 sweep=90.00 ext=(0.0, 0.0, 1.0) start=(22.0616,3.9841) end=(21.5616,3.4841) [in ADSK_US_M_M_Refrigerator - 500-13836790-GENERAL AR]
+ARC A-DOOR       lt=- DASH SMALL   c=(20.8816,0.8091) r=0.9300 a=-59.44->0.50 sweep=59.94 ext=(0.0, 0.0, 1.0) start=(21.3544,0.0082) end=(21.8116,0.8172) [in UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM-3324157-]
+ARC A-DOOR       lt=- DASH SMALL   c=(20.1416,0.8091) r=0.9300 a=179.50->-120.56 sweep=59.94 ext=(0.0, 0.0, 1.0) start=(19.2117,0.8172) end=(19.6688,0.0082) [in UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM-3324155-]
+ARC A-DOOR       lt=- DASH SMALL   c=(25.7516,3.2091) r=0.8650 a=179.50->-145.00 sweep=35.50 ext=(0.0, 0.0, 1.0) start=(24.8867,3.2166) end=(25.0431,2.7129) [in SERVICE_SWING_DOUBLE - D22 1800X2100MM-2804302-GEN]
+ARC A-DOOR       lt=- DASH SMALL   c=(24.0216,3.2091) r=0.8650 a=-35.00->0.50 sweep=35.50 ext=(0.0, 0.0, 1.0) start=(24.7302,2.7129) end=(24.8866,3.2166) [in SERVICE_SWING_DOUBLE - D22 1800X2100MM-2804302-GEN]
+ARC A-DOOR       lt=- DASH SMALL   c=(17.0016,3.2091) r=0.8650 a=179.50->-145.00 sweep=35.50 ext=(0.0, 0.0, 1.0) start=(16.1367,3.2166) end=(16.2931,2.7129) [in SERVICE_SWING_DOUBLE - D22 1800X2100MM-V24-GENERAL]
+ARC A-DOOR       lt=- DASH SMALL   c=(15.2716,3.2091) r=0.8650 a=-35.00->0.50 sweep=35.50 ext=(0.0, 0.0, 1.0) start=(15.9802,2.7129) end=(16.1366,3.2166) [in SERVICE_SWING_DOUBLE - D22 1800X2100MM-V24-GENERAL]
+ARC A-DOOR       lt=- DASH SMALL   c=(24.0216,1.2091) r=0.8650 a=-0.50->35.00 sweep=35.50 ext=(0.0, 0.0, 1.0) start=(24.8866,1.2015) end=(24.7302,1.7052) [in SERVICE_SWING_DOUBLE - D22 1800X2100MM-V25-GENERAL]
+ARC A-DOOR       lt=- DASH SMALL   c=(25.7516,1.2091) r=0.8650 a=145.00->-179.50 sweep=35.50 ext=(0.0, 0.0, 1.0) start=(25.0431,1.7052) end=(24.8867,1.2015) [in SERVICE_SWING_DOUBLE - D22 1800X2100MM-V25-GENERAL]
+ARC A-DOOR       lt=- DASH SMALL   c=(17.0016,1.2091) r=0.7800 a=145.00->-179.50 sweep=35.50 ext=(0.0, 0.0, 1.0) start=(16.3627,1.6565) end=(16.2217,1.2023) [in SERVICE_DOOR_SWING_1_SOLID - 850X2400MM_D06-380165]
+ARC A-DOOR       lt=- DASH SMALL   c=(13.3216,3.3091) r=0.8650 a=359.50->90.00 sweep=90.50 ext=(0.0, 0.0, 1.0) start=(14.1866,3.3015) end=(13.3216,4.1741) 
+ARC A-DOOR       lt=- DASH SMALL   c=(15.0516,3.3091) r=0.8650 a=90.00->180.50 sweep=90.50 ext=(0.0, 0.0, 1.0) start=(15.0516,4.1741) end=(14.1867,3.3015) 
+ARC A-DOOR       lt=- DASH SMALL   c=(11.7116,3.2291) r=0.7000 a=270.00->0.50 sweep=90.50 ext=(0.0, 0.0, 1.0) start=(11.7116,2.5291) end=(12.4116,3.2352) 
+ARC I-FURN       lt=BYLAYER        c=(6.8841,6.5718) r=0.6093 a=265.39->285.48 sweep=20.09 ext=(0.0, 0.0, 1.0) start=(6.8351,5.9644) end=(7.0467,5.9846) 
+ARC I-FURN       lt=BYLAYER        c=(6.8841,5.6718) r=0.6093 a=265.39->285.48 sweep=20.09 ext=(0.0, 0.0, 1.0) start=(6.8351,5.0644) end=(7.0467,5.0846) 
+ARC A-GENM       lt=BYLAYER        c=(6.8841,6.5718) r=0.6093 a=265.39->285.48 sweep=20.09 ext=(0.0, 0.0, 1.0) start=(6.8351,5.9644) end=(7.0467,5.9846) 
+ARC A-GENM       lt=BYLAYER        c=(6.8841,5.6718) r=0.6093 a=265.39->285.48 sweep=20.09 ext=(0.0, 0.0, 1.0) start=(6.8351,5.0644) end=(7.0467,5.0846) 
+ARC A-GENM       lt=BYLAYER        c=(5.9000,5.8688) r=0.9717 a=304.03->328.70 sweep=24.67 ext=(0.0, 0.0, 1.0) start=(6.4438,5.0636) end=(6.7302,5.3640) 
+ARC A-GENM       lt=BYLAYER        c=(6.0648,6.0708) r=0.8490 a=276.75->326.65 sweep=49.90 ext=(0.0, 0.0, 1.0) start=(6.1645,5.2278) end=(6.7739,5.6041) 
+ARC A-GENM       lt=BYLAYER        c=(5.7918,4.7920) r=0.5318 a=16.62->47.57 sweep=30.95 ext=(0.0, 0.0, 1.0) start=(6.3014,4.9441) end=(6.1506,5.1845) 
+ARC A-GENM       lt=BYLAYER        c=(6.4739,5.5199) r=0.3000 a=328.70->0.00 sweep=31.30 ext=(0.0, 0.0, 1.0) start=(6.7302,5.3640) end=(6.7739,5.5199) 
+ARC A-DOOR       lt=- DASH SMALL   c=(20.5666,5.1591) r=0.7000 a=269.50->0.00 sweep=90.50 ext=(0.0, 0.0, 1.0) start=(20.5605,4.4591) end=(21.2666,5.1591) 
+ARC A-DOOR       lt=- DASH SMALL   c=(20.7616,3.3891) r=0.7000 a=359.50->90.00 sweep=90.50 ext=(0.0, 0.0, 1.0) start=(21.4616,3.3830) end=(20.7616,4.0891) 
+ARC A-DOOR-HDLN  lt=- DASH SMALL   c=(23.0016,4.7800) r=0.7000 a=0.00->30.00 sweep=30.00 ext=(0.0, 0.0, 1.0) start=(23.7016,4.7800) end=(23.6079,5.1300) 
+ARC I-FURN       lt=BYLAYER        c=(24.2568,10.2014) r=0.6093 a=74.52->94.61 sweep=20.09 ext=(0.0, 0.0, 1.0) start=(24.4194,10.7886) end=(24.2078,10.8087) 
+ARC A-GENM       lt=BYLAYER        c=(24.2568,10.2014) r=0.6093 a=74.52->94.61 sweep=20.09 ext=(0.0, 0.0, 1.0) start=(24.4194,10.7886) end=(24.2078,10.8087) 
+ARC A-GENM       lt=BYLAYER        c=(23.2727,10.2193) r=0.9717 a=31.30->55.97 sweep=24.67 ext=(0.0, 0.0, 1.0) start=(24.1030,10.7241) end=(23.8165,11.0246) 
+ARC A-GENM       lt=BYLAYER        c=(23.4375,10.0173) r=0.8490 a=33.35->83.25 sweep=49.90 ext=(0.0, 0.0, 1.0) start=(24.1466,10.4841) end=(23.5372,10.8604) 
+ARC A-GENM       lt=BYLAYER        c=(23.1646,11.2962) r=0.5318 a=312.43->343.38 sweep=30.95 ext=(0.0, 0.0, 1.0) start=(23.5233,10.9037) end=(23.6741,11.1441) 
+ARC A-GENM       lt=BYLAYER        c=(23.8466,10.5683) r=0.3000 a=0.00->31.30 sweep=31.30 ext=(0.0, 0.0, 1.0) start=(24.1466,10.5683) end=(24.1030,10.7241) 
+ARC I-FURN       lt=BYLAYER        c=(24.2568,7.9964) r=0.6093 a=74.52->94.61 sweep=20.09 ext=(0.0, 0.0, 1.0) start=(24.4194,8.5836) end=(24.2078,8.6037) 
+ARC A-GENM       lt=BYLAYER        c=(24.2568,7.9964) r=0.6093 a=74.52->94.61 sweep=20.09 ext=(0.0, 0.0, 1.0) start=(24.4194,8.5836) end=(24.2078,8.6037) 
+ARC A-GENM       lt=BYLAYER        c=(23.2727,8.0143) r=0.9717 a=31.30->55.97 sweep=24.67 ext=(0.0, 0.0, 1.0) start=(24.1030,8.5191) end=(23.8165,8.8196) 
+ARC A-GENM       lt=BYLAYER        c=(23.4375,7.8123) r=0.8490 a=33.35->83.25 sweep=49.90 ext=(0.0, 0.0, 1.0) start=(24.1466,8.2791) end=(23.5372,8.6554) 
+ARC A-GENM       lt=BYLAYER        c=(23.1646,9.0912) r=0.5318 a=312.43->343.38 sweep=30.95 ext=(0.0, 0.0, 1.0) start=(23.5233,8.6987) end=(23.6741,8.9391) 
+ARC A-GENM       lt=BYLAYER        c=(23.8466,8.3633) r=0.3000 a=0.00->31.30 sweep=31.30 ext=(0.0, 0.0, 1.0) start=(24.1466,8.3633) end=(24.1030,8.5191) 
+ARC A-DOOR-HDLN  lt=- DASH SMALL   c=(9.5116,5.3507) r=0.7000 a=90.00->120.00 sweep=30.00 ext=(0.0, 0.0, 1.0) start=(9.5116,6.0507) end=(9.1616,5.9569) 
+ARC A-DOOR-HDLN  lt=- DASH SMALL   c=(9.5116,10.1341) r=0.7000 a=240.00->270.00 sweep=30.00 ext=(0.0, 0.0, 1.0) start=(9.1616,9.5279) end=(9.5116,9.4341) 
+ARC I-FURN       lt=BYLAYER        c=(18.5496,8.6753) r=0.7500 a=26.80->63.19 sweep=36.38 ext=(0.0, 0.0, 1.0) start=(19.2190,9.0135) end=(18.8879,9.3446) 
+ARC I-FURN       lt=BYLAYER        c=(18.5496,8.6753) r=0.7500 a=71.84->108.16 sweep=36.32 ext=(0.0, 0.0, 1.0) start=(18.7834,9.3879) end=(18.3158,9.3879) 
+ARC I-FURN       lt=BYLAYER        c=(18.5496,8.6753) r=0.7500 a=116.81->153.20 sweep=36.38 ext=(0.0, 0.0, 1.0) start=(18.2113,9.3446) end=(17.8802,9.0135) 
+ARC I-FURN       lt=BYLAYER        c=(18.5496,8.6753) r=0.7500 a=206.80->243.19 sweep=36.38 ext=(0.0, 0.0, 1.0) start=(17.8802,8.3371) end=(18.2113,8.0059) 
+ARC I-FURN       lt=BYLAYER        c=(18.5496,8.6753) r=0.7500 a=251.84->288.16 sweep=36.32 ext=(0.0, 0.0, 1.0) start=(18.3158,7.9626) end=(18.7834,7.9626) 
+ARC I-FURN       lt=BYLAYER        c=(18.5496,8.6753) r=0.7500 a=296.81->333.20 sweep=36.38 ext=(0.0, 0.0, 1.0) start=(18.8879,8.0059) end=(19.2190,8.3371) 
+ARC A-DOOR       lt=- DASH SMALL   c=(11.5067,3.7474) r=0.9000 a=89.50->180.00 sweep=90.50 ext=(0.0, 0.0, 1.0) start=(11.5145,4.6473) end=(10.6067,3.7473) 
+ARC A-DOOR-HDLN  lt=- DASH SMALL   c=(9.5116,7.1655) r=0.7000 a=90.00->120.00 sweep=30.00 ext=(0.0, 0.0, 1.0) start=(9.5116,7.8655) end=(9.1616,7.7717) 
+ARC A-DOOR       lt=- DASH SMALL   c=(22.8666,6.7841) r=0.7000 a=269.50->0.00 sweep=90.50 ext=(0.0, 0.0, 1.0) start=(22.8605,6.0841) end=(23.5666,6.7841) 
+## A-DOOR LINES > 0.3 m
+LINE A-DOOR (20.9216,0.8091)-(20.9216,0.0086) L=0.8005 [in UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM-3324157-]
+LINE A-DOOR (20.8816,0.8091)-(20.8816,0.0086) L=0.8005 [in UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM-3324157-]
+LINE A-DOOR (20.1016,0.8091)-(20.1016,0.0086) L=0.8005 [in UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM-3324155-]
+LINE A-DOOR (20.1416,0.8091)-(20.1416,0.0086) L=0.8005 [in UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM-3324155-]
+LINE A-DOOR (24.0446,3.2418)-(24.7531,2.7457) L=0.8650 [in SERVICE_SWING_DOUBLE - D22 1800X2100MM-2804302-GEN]
+LINE A-DOOR (24.0216,3.2091)-(24.7302,2.7129) L=0.8650 [in SERVICE_SWING_DOUBLE - D22 1800X2100MM-2804302-GEN]
+LINE A-DOOR (16.9787,3.2418)-(16.2701,2.7457) L=0.8650 [in SERVICE_SWING_DOUBLE - D22 1800X2100MM-V24-GENERAL]
+LINE A-DOOR (17.0016,3.2091)-(16.2931,2.7129) L=0.8650 [in SERVICE_SWING_DOUBLE - D22 1800X2100MM-V24-GENERAL]
+LINE A-DOOR (15.2946,3.2418)-(16.0031,2.7457) L=0.8650 [in SERVICE_SWING_DOUBLE - D22 1800X2100MM-V24-GENERAL]
+LINE A-DOOR (15.2716,3.2091)-(15.9802,2.7129) L=0.8650 [in SERVICE_SWING_DOUBLE - D22 1800X2100MM-V24-GENERAL]
+LINE A-DOOR (24.0446,1.1763)-(24.7531,1.6725) L=0.8650 [in SERVICE_SWING_DOUBLE - D22 1800X2100MM-V25-GENERAL]
+LINE A-DOOR (24.0216,1.2091)-(24.7302,1.7052) L=0.8650 [in SERVICE_SWING_DOUBLE - D22 1800X2100MM-V25-GENERAL]
+LINE A-DOOR (16.9787,1.1763)-(16.3398,1.6237) L=0.7800 [in SERVICE_DOOR_SWING_1_SOLID - 850X2400MM_D06-380165]
+LINE A-DOOR (17.0016,1.2091)-(16.3627,1.6565) L=0.7800 [in SERVICE_DOOR_SWING_1_SOLID - 850X2400MM_D06-380165]
+LINE A-DOOR (13.3616,3.3091)-(13.3616,4.1741) L=0.8650 
+LINE A-DOOR (13.3216,3.3091)-(13.3216,4.1741) L=0.8650 
+LINE A-DOOR (15.0116,3.3091)-(15.0116,4.1741) L=0.8650 
+LINE A-DOOR (15.0516,3.3091)-(15.0516,4.1741) L=0.8650 
+LINE A-DOOR (11.7516,3.1941)-(11.7516,2.5291) L=0.6650 
+LINE A-DOOR (11.7116,3.1941)-(11.7116,2.5291) L=0.6650 
+LINE A-DOOR (7.3239,2.4841)-(7.3239,3.0841) L=0.6000 
+LINE A-DOOR (7.4339,4.2241)-(7.4339,3.2241) L=1.0000 
+LINE A-DOOR (7.4739,3.2241)-(7.4739,4.2241) L=1.0000 
+LINE A-DOOR (7.3239,11.1341)-(7.3239,10.5341) L=0.6000 
+LINE A-DOOR (7.4339,9.3941)-(7.4339,10.3941) L=1.0000 
+LINE A-DOOR (7.4739,10.3941)-(7.4739,9.3941) L=1.0000 
+LINE A-DOOR (8.3789,5.2907)-(8.9789,5.2907) L=0.6000 
+LINE A-DOOR (10.1189,5.1807)-(9.1189,5.1807) L=1.0000 
+LINE A-DOOR (9.1189,5.1407)-(10.1189,5.1407) L=1.0000 
+LINE A-DOOR (20.5666,5.1191)-(21.2666,5.1191) L=0.7000 
+LINE A-DOOR (20.5866,5.1591)-(21.2666,5.1591) L=0.6800 
+LINE A-DOOR (20.8016,3.3891)-(20.8016,4.0891) L=0.7000 
+LINE A-DOOR (20.7616,3.4091)-(20.7616,4.0891) L=0.6800 
+LINE A-DOOR (23.0016,4.7800)-(23.6079,5.1300) L=0.7000 
+LINE A-DOOR (23.6129,5.1214)-(23.0066,4.7714) L=0.7000 
+LINE A-DOOR (9.3996,2.4556)-(9.9441,2.6015) L=0.5637 
+LINE A-DOOR (9.9312,2.6498)-(9.3866,2.5039) L=0.5637 
+LINE A-DOOR (9.3866,2.7957)-(9.9312,2.6498) L=0.5637 
+LINE A-DOOR (9.9441,2.6981)-(9.3996,2.8440) L=0.5637 
+LINE A-DOOR (9.3996,2.8440)-(9.9441,2.9899) L=0.5637 
+LINE A-DOOR (9.9312,3.0382)-(9.3866,2.8923) L=0.5637 
+LINE A-DOOR (9.3866,3.1841)-(9.9312,3.0382) L=0.5637 
+LINE A-DOOR (9.9441,3.0865)-(9.3996,3.2324) L=0.5637 
+LINE A-DOOR (9.5116,5.3507)-(9.1616,5.9569) L=0.7000 
+LINE A-DOOR (9.1703,5.9619)-(9.5203,5.3557) L=0.7000 
+LINE A-DOOR (9.5116,10.1341)-(9.1616,9.5279) L=0.7000 
+LINE A-DOOR (9.1703,9.5229)-(9.5203,10.1291) L=0.7000 
+LINE A-DOOR (20.3816,6.3341)-(20.3816,6.9341) L=0.6000 
+LINE A-DOOR (20.4916,8.0741)-(20.4916,7.0741) L=1.0000 
+LINE A-DOOR (20.5316,7.0741)-(20.5316,8.0741) L=1.0000 
+LINE A-DOOR (11.5067,3.7874)-(10.6067,3.7873) L=0.9000 
+LINE A-DOOR (11.4867,3.7474)-(10.6067,3.7473) L=0.8800 
+LINE A-DOOR (9.5116,7.1655)-(9.1616,7.7717) L=0.7000 
+LINE A-DOOR (9.1703,7.7767)-(9.5203,7.1705) L=0.7000 
+LINE A-DOOR (22.8666,6.7441)-(23.5666,6.7441) L=0.7000 
+LINE A-DOOR (22.8866,6.7841)-(23.5666,6.7841) L=0.6800 

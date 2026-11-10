@@ -1,0 +1,1060 @@
+{
+ "openings": [
+  {
+   "id": "suite_revit-001",
+   "floor": "suite_revit",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    9.5166,
+    7.8654
+   ],
+   "b": [
+    9.5166,
+    7.1655
+   ],
+   "width": 0.7,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-DOOR-HDLN"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-002",
+   "floor": "suite_revit",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    11.5617,
+    3.6974
+   ],
+   "b": [
+    11.5617,
+    4.6974
+   ],
+   "width": 1.0,
+   "wallThickness": 0.15,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-003",
+   "floor": "suite_revit",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    12.9039,
+    11.2091
+   ],
+   "b": [
+    15.6645,
+    11.2091
+   ],
+   "width": 2.761,
+   "wallThickness": 0.4,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-004",
+   "floor": "suite_revit",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    9.5166,
+    6.0507
+   ],
+   "b": [
+    9.5166,
+    5.3507
+   ],
+   "width": 0.7,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-DOOR-HDLN"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-005",
+   "floor": "suite_revit",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    12.6692,
+    7.0416
+   ],
+   "b": [
+    13.3682,
+    7.0468
+   ],
+   "width": 0.699,
+   "wallThickness": 0.4,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-006",
+   "floor": "suite_revit",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    20.7116,
+    3.3716
+   ],
+   "b": [
+    21.5116,
+    3.3716
+   ],
+   "width": 0.8,
+   "wallThickness": 0.125,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-007",
+   "floor": "suite_revit",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    23.7016,
+    4.7741
+   ],
+   "b": [
+    23.0016,
+    4.7741
+   ],
+   "width": 0.7,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-DOOR-HDLN"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-008",
+   "floor": "suite_revit",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    13.8866,
+    1.1091
+   ],
+   "b": [
+    14.6866,
+    1.1091
+   ],
+   "width": 0.8,
+   "wallThickness": 0.2,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-009",
+   "floor": "suite_revit",
+   "kind": "door",
+   "subtype": "hinged double",
+   "a": [
+    13.2866,
+    3.2716
+   ],
+   "b": [
+    15.0866,
+    3.2716
+   ],
+   "width": 1.8,
+   "wallThickness": 0.125,
+   "host": "wall",
+   "hinge": null,
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "2 swing arc(s)",
+    "arc on A-DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-010",
+   "floor": "suite_revit",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    9.4941,
+    10.1341
+   ],
+   "b": [
+    9.4941,
+    9.4341
+   ],
+   "width": 0.7,
+   "wallThickness": 0.055,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-DOOR-HDLN"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-011",
+   "floor": "suite_revit",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    12.7192,
+    6.7511
+   ],
+   "b": [
+    12.0116,
+    6.7511
+   ],
+   "width": 0.708,
+   "wallThickness": 0.081,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-012",
+   "floor": "suite_revit",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    14.0658,
+    6.7511
+   ],
+   "b": [
+    15.1366,
+    6.7511
+   ],
+   "width": 1.071,
+   "wallThickness": 0.081,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-013",
+   "floor": "suite_revit",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    22.7991,
+    6.0341
+   ],
+   "b": [
+    22.7991,
+    6.8341
+   ],
+   "width": 0.8,
+   "wallThickness": 0.175,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "right",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (cap-end)",
+    "1 swing arc(s)",
+    "arc on A-DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-014",
+   "floor": "suite_revit",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    16.1,
+    11.1966
+   ],
+   "b": [
+    17.7917,
+    11.1966
+   ],
+   "width": 1.692,
+   "wallThickness": 0.375,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (cap-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-015",
+   "floor": "suite_revit",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    16.1866,
+    1.1091
+   ],
+   "b": [
+    17.0366,
+    1.1091
+   ],
+   "width": 0.85,
+   "wallThickness": 0.2,
+   "host": "wall",
+   "hinge": "b",
+   "swing": "left",
+   "confidence": 0.9,
+   "evidence": [
+    "wall gap (L-end)",
+    "1 swing arc(s)",
+    "arc on A-DOOR"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-016",
+   "floor": "suite_revit",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    19.0866,
+    1.1591
+   ],
+   "b": [
+    20.2616,
+    1.1591
+   ],
+   "width": 1.175,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (L-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-017",
+   "floor": "suite_revit",
+   "kind": "passage",
+   "subtype": "open",
+   "a": [
+    21.9366,
+    1.1591
+   ],
+   "b": [
+    20.7616,
+    1.1591
+   ],
+   "width": 1.175,
+   "wallThickness": 0.1,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.5,
+   "evidence": [
+    "wall gap (L-end), nothing drawn in it"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-018",
+   "floor": "suite_revit",
+   "kind": "door",
+   "subtype": "hinged double",
+   "a": [
+    17.0366,
+    3.4966
+   ],
+   "b": [
+    15.2366,
+    3.4966
+   ],
+   "width": 1.8,
+   "wallThickness": 0.575,
+   "host": "wall",
+   "hinge": null,
+   "swing": "left",
+   "confidence": 0.8,
+   "evidence": [
+    "swing arc + leaf on A-DOOR",
+    "second leaf, closed tips meet",
+    "ends: wall end, wall end"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-019",
+   "floor": "suite_revit",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    24.0216,
+    3.2129
+   ],
+   "b": [
+    24.8866,
+    3.2129
+   ],
+   "width": 0.865,
+   "wallThickness": 0.1,
+   "host": "none",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.5,
+   "evidence": [
+    "swing arc + leaf on A-DOOR",
+    "ends from the swing",
+    "line work along the opening on another layer"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-020",
+   "floor": "suite_revit",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    23.9866,
+    0.9341
+   ],
+   "b": [
+    24.8866,
+    0.9341
+   ],
+   "width": 0.9,
+   "wallThickness": 0.55,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "left",
+   "confidence": 0.65,
+   "evidence": [
+    "swing arc + leaf on A-DOOR",
+    "ends: wall end"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-021",
+   "floor": "suite_revit",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    11.7116,
+    3.2641
+   ],
+   "b": [
+    12.4116,
+    3.2641
+   ],
+   "width": 0.7,
+   "wallThickness": 0.14,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "right",
+   "confidence": 0.5,
+   "evidence": [
+    "swing arc + leaf on A-DOOR",
+    "ends from the swing"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-022",
+   "floor": "suite_revit",
+   "kind": "door",
+   "subtype": "hinged single",
+   "a": [
+    20.5116,
+    5.1591
+   ],
+   "b": [
+    20.5116,
+    4.4591
+   ],
+   "width": 0.7,
+   "wallThickness": 0.2,
+   "host": "wall",
+   "hinge": "a",
+   "swing": "left",
+   "confidence": 0.5,
+   "evidence": [
+    "swing arc + leaf on A-DOOR",
+    "ends from the swing"
+   ],
+   "eitherKind": false,
+   "glazing": null
+  },
+  {
+   "id": "suite_revit-023",
+   "floor": "suite_revit",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    5.2965,
+    13.0327
+   ],
+   "b": [
+    4.0692,
+    12.3241
+   ],
+   "width": 1.417,
+   "wallThickness": 0.041,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "A-GLAZ-CURT",
+    "A-GLAZ-CWMG",
+    "sliding sashes (4 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    -0.029,
+    0.071
+   ]
+  },
+  {
+   "id": "suite_revit-024",
+   "floor": "suite_revit",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    6.1274,
+    12.8222
+   ],
+   "b": [
+    5.3478,
+    13.031
+   ],
+   "width": 0.807,
+   "wallThickness": 0.177,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "A-GLAZ-CURT",
+    "A-GLAZ-CWMG",
+    "sliding sashes (4 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    -0.038,
+    0.062
+   ]
+  },
+  {
+   "id": "suite_revit-025",
+   "floor": "suite_revit",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    4.0388,
+    11.4449
+   ],
+   "b": [
+    4.2477,
+    12.2245
+   ],
+   "width": 0.807,
+   "wallThickness": 0.097,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "A-GLAZ-CURT",
+    "A-GLAZ-CWMG",
+    "sliding sashes (4 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    0.148,
+    0.248
+   ]
+  },
+  {
+   "id": "suite_revit-026",
+   "floor": "suite_revit",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    9.6715,
+    13.0327
+   ],
+   "b": [
+    8.4442,
+    12.3241
+   ],
+   "width": 1.417,
+   "wallThickness": 0.041,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "A-GLAZ-CURT",
+    "A-GLAZ-CWMG",
+    "sliding sashes (4 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    -0.029,
+    0.071
+   ]
+  },
+  {
+   "id": "suite_revit-027",
+   "floor": "suite_revit",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    10.5042,
+    12.829
+   ],
+   "b": [
+    9.7246,
+    13.0378
+   ],
+   "width": 0.807,
+   "wallThickness": 0.163,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "A-GLAZ-CURT",
+    "A-GLAZ-CWMG",
+    "sliding sashes (4 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    -0.031,
+    0.069
+   ]
+  },
+  {
+   "id": "suite_revit-028",
+   "floor": "suite_revit",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    8.3952,
+    11.4499
+   ],
+   "b": [
+    8.604,
+    12.2295
+   ],
+   "width": 0.807,
+   "wallThickness": 0.058,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "A-GLAZ-CURT",
+    "A-GLAZ-CWMG",
+    "sliding sashes (4 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    0.129,
+    0.229
+   ]
+  },
+  {
+   "id": "suite_revit-029",
+   "floor": "suite_revit",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    14.0465,
+    13.0327
+   ],
+   "b": [
+    12.8192,
+    12.3241
+   ],
+   "width": 1.417,
+   "wallThickness": 0.041,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "A-GLAZ-CURT",
+    "A-GLAZ-CWMG",
+    "sliding sashes (4 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    -0.029,
+    0.071
+   ]
+  },
+  {
+   "id": "suite_revit-030",
+   "floor": "suite_revit",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    14.8755,
+    12.8151
+   ],
+   "b": [
+    14.0959,
+    13.0239
+   ],
+   "width": 0.807,
+   "wallThickness": 0.191,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "A-GLAZ-CURT",
+    "A-GLAZ-CWMG",
+    "sliding sashes (4 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    -0.046,
+    0.054
+   ]
+  },
+  {
+   "id": "suite_revit-031",
+   "floor": "suite_revit",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    12.8295,
+    11.434
+   ],
+   "b": [
+    13.0383,
+    12.2136
+   ],
+   "width": 0.807,
+   "wallThickness": 0.181,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "A-GLAZ-CURT",
+    "A-GLAZ-CWMG",
+    "sliding sashes (4 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    0.19,
+    0.29
+   ]
+  },
+  {
+   "id": "suite_revit-032",
+   "floor": "suite_revit",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    18.4215,
+    13.0327
+   ],
+   "b": [
+    17.1942,
+    12.3241
+   ],
+   "width": 1.417,
+   "wallThickness": 0.041,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "A-GLAZ-CURT",
+    "A-GLAZ-CWMG",
+    "sliding sashes (4 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    -0.029,
+    0.071
+   ]
+  },
+  {
+   "id": "suite_revit-033",
+   "floor": "suite_revit",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    19.2505,
+    12.8151
+   ],
+   "b": [
+    18.4709,
+    13.0239
+   ],
+   "width": 0.807,
+   "wallThickness": 0.191,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "A-GLAZ-CURT",
+    "A-GLAZ-CWMG",
+    "sliding sashes (4 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    -0.046,
+    0.054
+   ]
+  },
+  {
+   "id": "suite_revit-034",
+   "floor": "suite_revit",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    17.1638,
+    11.4449
+   ],
+   "b": [
+    17.3727,
+    12.2245
+   ],
+   "width": 0.807,
+   "wallThickness": 0.097,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "A-GLAZ-CURT",
+    "A-GLAZ-CWMG",
+    "sliding sashes (4 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    0.148,
+    0.248
+   ]
+  },
+  {
+   "id": "suite_revit-035",
+   "floor": "suite_revit",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    22.7965,
+    13.0327
+   ],
+   "b": [
+    21.5692,
+    12.3241
+   ],
+   "width": 1.417,
+   "wallThickness": 0.041,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "A-GLAZ-CURT",
+    "A-GLAZ-CWMG",
+    "sliding sashes (4 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    -0.029,
+    0.071
+   ]
+  },
+  {
+   "id": "suite_revit-036",
+   "floor": "suite_revit",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    23.6274,
+    12.8222
+   ],
+   "b": [
+    22.8478,
+    13.031
+   ],
+   "width": 0.807,
+   "wallThickness": 0.177,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "A-GLAZ-CURT",
+    "A-GLAZ-CWMG",
+    "sliding sashes (4 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    -0.038,
+    0.062
+   ]
+  },
+  {
+   "id": "suite_revit-037",
+   "floor": "suite_revit",
+   "kind": "window",
+   "subtype": "sliding",
+   "a": [
+    21.5388,
+    11.4449
+   ],
+   "b": [
+    21.7477,
+    12.2245
+   ],
+   "width": 0.807,
+   "wallThickness": 0.097,
+   "host": "wall",
+   "hinge": null,
+   "swing": null,
+   "confidence": 0.4,
+   "evidence": [
+    "glazing between wall ends (bay)",
+    "A-GLAZ-CURT",
+    "A-GLAZ-CWMG",
+    "sliding sashes (4 lines)",
+    "may be a floor-length sliding door (no sill in plan)"
+   ],
+   "eitherKind": true,
+   "glazing": [
+    0.148,
+    0.248
+   ]
+  }
+ ],
+ "mapping": "blind_run_suite_revit/mappings_first_run/suite_revit.json"
+}

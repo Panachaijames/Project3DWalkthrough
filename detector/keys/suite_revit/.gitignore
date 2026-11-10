@@ -1,0 +1,4 @@
+# The pictures the labellers and auditors worked from (about 23 MB) stay on disk, untracked:
+# pictures/INDEX.md lists them and scripts/ re-makes them from the drawing. The marked key is kept.
+*.png
+!disputes/work/key_marked.png

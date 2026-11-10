@@ -495,7 +495,10 @@ millimetres: read in mm, as the main session's preview found), no fixes.
    v1 compares two different sheets.
 5. **Openings, from the frozen detector with no tuning** (for a later held-out scoring against an answer key made
    without the detector): 25 records: 9 doors (8 hinged single 0.70 - 0.98 m, 1 hinged double 1.80 m), 15 sliding windows
-   in the five facade bays (three per bay: 1.417, 0.807, 0.807 m), 1 passage (0.80 m).
+   in the five facade bays (three per bay: 1.417, 0.807, 0.807 m), 1 passage (0.80 m). **Scored held out on 10 Nov**
+   (`detector/blind_run_suite_revit/README.md`), with layer `0` mapped as wall, which gives 37 records instead of these
+   25: 7 of the key's 16 scored openings right (44 %), 8 found, 8 passages that are not there. The key's makers and
+   auditors were kept away from this table.
 
 | Id | Kind | Subtype | Width (m) | a (drawing m) | b (drawing m) | Confidence |
 |---|---|---|---|---|---|---|

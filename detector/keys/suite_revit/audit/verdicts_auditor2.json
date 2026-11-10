@@ -1,0 +1,288 @@
+{
+ "auditor": "auditor2",
+ "date": "2026-11-10",
+ "drawing": "presidential suite_layout.dwg (cache suite_revit), held-out run step 6 of 7: blind judgement of 24 places",
+ "inputsUsed": [
+  "detector/keys/suite_revit/audit/places.json and places/P01-P24.png",
+  "detector/keys/suite_revit/description.md, pictures/INDEX.md, pictures/overview_all.png",
+  "the drawing cache WORK/suite_revit/prims.pkl (made from plan.dxf; read by my own helpers q.py and r.py, which list and draw drawing items only)",
+  "detector/tools/render.py and tools/prims.py read to learn the cache format"
+ ],
+ "notRead": "secret_map.json, suite_revit.json, labels/, disputes/, make_audit_places.py, anything in detector/blind_run_suite_revit/, any other auditor's work, any detector output or opening count",
+ "conventions": {
+  "coordinates": "drawing metres (DXF mm / 1000)",
+  "ends": "on the door's frame line (centre of the wall core where the frames sit; centre of the wall-end faces where there is no frame), at the faces of the wall ends that bound the opening",
+  "width": "wall-end face to wall-end face (the fill and the wall's end lines stop there; the frames stand inside the opening). clearWidth = between the frame legs, given for information",
+  "kinds": "door (walkable, with a leaf), passage (walkable gap, no leaf), window (none in this drawing: there is no window layer or family; the facade glazing is curtain wall)",
+  "curtainWall": "the six curtain-wall bays are a glass wall, not window or door openings (no door is drawn in any of them); not listed as openings"
+ },
+ "counts": {
+  "places": 24,
+  "real": 16,
+  "notReal": 8,
+  "unsure": 0,
+  "realWithClaimedKindAndWidthRight": 16,
+  "noticedNearbyWithin2m": {"definiteOpenings": 2, "possiblePassages": 2},
+  "noticedJustBeyond2m": 3,
+  "noticedFartherAway": 1
+ },
+ "verdicts": [
+  {
+   "place": "P01", "claimed": {"kind": "passage", "width": 1.071},
+   "verdict": "not real", "confidence": "high",
+   "whatIsThere": "furniture in open floor (living room)",
+   "evidence": "No wall, fill, frame or door symbol near. West end = east edge of the second of two upholstered ottomans (layer 0 rounded rectangles x 12.669-13.369 and 13.416-14.116, y 6.79-7.29, dashed inner outline); east end = corner of the chaise of the L-shaped sofa (x 15.02-15.14, y 7.0-7.35). The band runs along the south edge of a rug (layer 0 rectangle x 12.24-16.13, y 6.71-11.01)."
+  },
+  {
+   "place": "P02", "claimed": {"kind": "passage", "width": 1.175},
+   "verdict": "not real", "confidence": "medium-high",
+   "whatIsThere": "mouth of a 0.30 m deep door recess (alcove) of the corridor, between a column and a wall end",
+   "evidence": "The corridor's south wall (A-WALL y 1.109-1.209) steps back between the alcove's end walls (x 18.987-19.087 and 21.937-22.037) to the 0.10 m wall y 0.809-0.909 that holds the two D01 unit doors (P23, P10). The column (S-COLS x 20.262-20.762) stands in the alcove flush with the corridor face. Ends = column's east face (20.762) and the face of the alcove's east end wall (21.937). Nothing marks an opening on this line (no head, frame, threshold or leaf, nothing drawn across); behind it is only the 0.30 m reveal of door P10, not a space. The opening here is door P10, 0.30 m behind. If recess mouths between a wall end and a column were counted as passages this would be one, but I do not think it is an opening."
+  },
+  {
+   "place": "P03", "claimed": {"kind": "passage", "width": 0.8},
+   "verdict": "not real", "confidence": "high",
+   "whatIsThere": "equipment niche: fire-hose cabinet recessed in the corridor wall",
+   "evidence": "The 0.20 m corridor wall (A-WALL y 1.009-1.209) is cut x 13.887-14.687 for the block 'FHC 02 - Type 1' (M-EQPM, a 0.80 x 0.35 m box x 13.887-14.687, y 0.859-1.209) with the text FHC. Behind it is the closed shaft x 12.01-14.69, y 0.41-1.01 (200 mm walls, no door). Not a door, window or passage."
+  },
+  {
+   "place": "P04", "claimed": {"kind": "door", "width": 1.1},
+   "verdict": "real", "confidence": "high",
+   "kind": "door", "subtype": "sliding pocket (cavity) door",
+   "ends": [[20.512, 6.084], [20.512, 7.184]], "width": 1.100, "clearWidth": 1.000,
+   "between": "LIVING & DINING AREA (west) and the lobby of BEDROOM 2 / BEDROOM 2 (east)",
+   "claimMatches": {"kind": true, "width": true},
+   "evidence": "Partition x 20.412-20.612 (layer 0 fill) stops at y 6.084 and resumes at 7.184 (end lines across the wall). Frames (A-DOOR-FRAM) at 6.084-6.134 and 7.134-7.184. Leaf 1.00 m (two A-DOOR lines 40 mm apart, x 20.492/20.532) drawn in the pocket y 7.074-8.074 (pocket lines x 20.477/20.547 to y 8.072). Slide arrow (A-DOOR) at x 20.382, y 6.334-6.934, pointing north. The two core lines x 20.437/20.587 run on across the opening."
+  },
+  {
+   "place": "P05", "claimed": {"kind": "door", "width": 0.8},
+   "verdict": "real", "confidence": "high",
+   "kind": "door", "subtype": "hinged, single leaf",
+   "ends": [[20.712, 3.359], [21.512, 3.359]], "width": 0.800, "clearWidth": 0.700,
+   "between": "corridor (south) and BOH. (north)",
+   "claimMatches": {"kind": true, "width": true},
+   "evidence": "Wall y 3.309-3.409 (core) + 25 mm lining to 3.434 on the BOH side; end lines at x 20.712 and 21.512. Frames 20.712-20.762 and 21.462-21.512. Leaf 0.70 (x 20.762-20.802) drawn open 90 degrees into the BOH, dashed swing r 0.70 to the closed position; threshold line y 3.409."
+  },
+  {
+   "place": "P06", "claimed": {"kind": "passage", "width": 2.761},
+   "verdict": "not real", "confidence": "high",
+   "whatIsThere": "mouth of a projecting curtain-wall bay (north bay 3): open floor, the room runs on into the bay",
+   "evidence": "The facade wall (A-WALL y 11.409-11.509) ends at x 12.65 and the facade turns out round the bay: curtain-wall glass and mullions (A-GLAZ-CURT / A-GLAZ-CWMG, x 12.55-14.89) and a solid angled A-WALL back to x 16.13. The band lies 0.2 m inside the facade line in open floor; nothing crosses it. Ends = corner where the 25 mm wall lining turns along the bay (12.904, 11.384) and the corner of the shelving along the angled wall (15.665, 11.384). The bay glazing is curtain wall (a glass wall), not a window or door opening."
+  },
+  {
+   "place": "P07", "claimed": {"kind": "door", "width": 2.225},
+   "verdict": "real", "confidence": "high",
+   "kind": "door", "subtype": "bi-fold (four folding panels)",
+   "ends": [[9.462, 0.959], [9.462, 3.184]], "width": 2.225, "clearWidth": null,
+   "between": "dressing area (west) and walk-in wardrobe (east)",
+   "claimMatches": {"kind": true, "width": true},
+   "evidence": "Partition x 9.387-9.537 (core 9.412-9.512 + linings) ends at y 0.959; the opening runs to the south face (lining) of the cross partition y 3.184-3.334. Four panels of 0.564 m (8 A-DOOR lines) drawn folded as a zigzag against the north end; dashed track (layer 0, DASH SMALL) along x 9.462 from 0.959 to 3.184. No frames."
+  },
+  {
+   "place": "P08", "claimed": {"kind": "door", "width": 1.1},
+   "verdict": "real", "confidence": "high",
+   "kind": "door", "subtype": "sliding pocket (cavity) door",
+   "ends": [[8.129, 5.161], [9.229, 5.161]], "width": 1.100, "clearWidth": 1.000,
+   "between": "BEDROOM FOYER (south) and MASTER BATHROOM (north)",
+   "claimMatches": {"kind": true, "width": true},
+   "evidence": "Partition y 5.061-5.251 (core 5.086-5.236) ends at x 8.129 and resumes at 9.229. Frames 8.129-8.179 and 9.179-9.229. Leaf 1.00 m in the pocket x 9.119-10.119 (y 5.141-5.181). Slide arrow at y 5.291 (bathroom side) pointing east. Core lines y 5.086/5.236 run on across the opening."
+  },
+  {
+   "place": "P09", "claimed": {"kind": "passage", "width": 1.175},
+   "verdict": "not real", "confidence": "medium-high",
+   "whatIsThere": "mouth of the same 0.30 m deep corridor door recess as P02 (west half), between a wall end and the column",
+   "evidence": "Ends = face of the alcove's west end wall (A-WALL x 18.987-19.087, y 0.809-1.209) at 19.087 and the column's west face (20.262). The corridor wall y 1.109-1.209 steps back to the D01 door wall y 0.809-0.909; nothing is drawn on the band. The opening here is door P23, 0.30 m behind. Same reasoning and same caveat as P02."
+  },
+  {
+   "place": "P10", "claimed": {"kind": "door", "width": 1.0},
+   "verdict": "real", "confidence": "high",
+   "kind": "door", "subtype": "hinged, single leaf (block UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM-3324157, rotated 180)",
+   "ends": [[20.847, 0.859], [21.847, 0.859]], "width": 1.000, "clearWidth": 0.900,
+   "between": "corridor alcove (north) and a neighbouring unit outside the drawing (south)",
+   "claimMatches": {"kind": true, "width": true},
+   "evidence": "100 mm A-WALL y 0.809-0.909; wall stubs end at x 20.847 (stub 20.762-20.847 beside the column) and 21.847 (stub 21.847-21.937). Frames in the block at both jambs (rebates 0.93 apart). Leaf at x 20.882-20.922 and dashed swing point south and are cut by the view crop at y 0.009. The wall's two face lines run on across the opening (as the description says)."
+  },
+  {
+   "place": "P11", "claimed": {"kind": "door", "width": 1.8},
+   "verdict": "real", "confidence": "high",
+   "kind": "door", "subtype": "hinged, double leaf (service riser door, block SERVICE_SWING_DOUBLE - D22 1800X2100MM-V24)",
+   "ends": [[15.237, 3.259], [17.037, 3.259]], "width": 1.800, "clearWidth": 1.700,
+   "between": "corridor (south) and a 0.35 m service riser (north, X mark on A-DETL)",
+   "claimMatches": {"kind": true, "width": true},
+   "evidence": "A-WALL jambs x 15.137-15.237 (y 3.309-3.759) and 17.037-17.137 (y 3.209-3.659); door line y 3.209-3.309 (the corridor's north wall line). Two leaves of 0.865 drawn open 35 degrees into the corridor with dashed swings; three frame lines across the whole opening (y 3.209/3.249/3.309). A door into a riser cupboard, outside the suite."
+  },
+  {
+   "place": "P12", "claimed": {"kind": "door", "width": 1.001},
+   "verdict": "real", "confidence": "high",
+   "kind": "door", "subtype": "hinged, single leaf",
+   "ends": [[11.562, 3.697], [11.562, 4.697]], "width": 1.000, "clearWidth": 0.900,
+   "between": "BEDROOM FOYER (west) and FOYER (east)",
+   "claimMatches": {"kind": true, "width": true},
+   "evidence": "Partition x 11.487-11.637: fill ends at y 3.697 and resumes at 4.698 (end lines at 3.697 and 4.697). Frames 3.697-3.747 and 4.647-4.697. Leaf 0.90 (x 10.607-11.507, y 3.747-3.787) drawn open 90 degrees into the bedroom foyer, dashed swing r 0.90, lever handle on A-DETL-GENF."
+  },
+  {
+   "place": "P13", "claimed": {"kind": "passage", "width": 0.699},
+   "verdict": "not real", "confidence": "high",
+   "whatIsThere": "furniture: an upholstered ottoman / footstool",
+   "evidence": "The band runs across the ottoman (layer 0 rounded rectangle x 12.669-13.369, y 6.79-7.29, with a dashed inner outline); its ends are the ottoman's two side edges. No wall anywhere near (living room floor, rug edge at y 6.711)."
+  },
+  {
+   "place": "P14", "claimed": {"kind": "door", "width": 0.85},
+   "verdict": "real", "confidence": "high",
+   "kind": "door", "subtype": "hinged, single leaf (service riser door, block SERVICE_DOOR_SWING_1_SOLID - 850X2400MM_D06)",
+   "ends": [[16.187, 1.159], [17.037, 1.159]], "width": 0.850, "clearWidth": 0.750,
+   "between": "corridor (north) and a 0.35 m service riser (south, X on layer 0)",
+   "claimMatches": {"kind": true, "width": true},
+   "evidence": "Corridor south wall A-WALL y 1.109-1.209; jambs x 16.087-16.187 and 17.037-17.137. Leaf 0.78 drawn open 35 degrees into the corridor with a dashed swing; three frame lines across the opening."
+  },
+  {
+   "place": "P15", "claimed": {"kind": "door", "width": 1.8},
+   "verdict": "real", "confidence": "high",
+   "kind": "door", "subtype": "hinged, double leaf (the suite's entrance)",
+   "ends": [[13.287, 3.259], [15.087, 3.259]], "width": 1.800, "clearWidth": 1.700,
+   "between": "corridor (south) and FOYER (north)",
+   "claimMatches": {"kind": true, "width": true},
+   "evidence": "Wall y 3.209-3.309 (+ 25 mm lining to 3.334 on the foyer side) ends at x 13.287 and 15.087. Frames at both jambs. Two leaves of 0.865 drawn open 90 degrees into the foyer, dashed swings meeting at x 14.187; a threshold line y 3.309 across."
+  },
+  {
+   "place": "P16", "claimed": {"kind": "passage", "width": 1.975},
+   "verdict": "real", "confidence": "high",
+   "kind": "passage", "subtype": "open doorway without a leaf (cased opening; head drawn dashed)",
+   "ends": [[13.137, 5.136], [15.112, 5.136]], "width": 1.975, "clearWidth": null,
+   "between": "FOYER (south) and LIVING & DINING AREA (north)",
+   "claimMatches": {"kind": true, "width": true},
+   "evidence": "The 0.15 m partition y 5.061-5.211 stops (fill and end lines at x 13.137 and 15.112) and its two face lines run across the gap dashed (layer 0, DASH SMALL): the wall above the opening. No leaf, swing or frame."
+  },
+  {
+   "place": "P17", "claimed": {"kind": "door", "width": 1.1},
+   "verdict": "real", "confidence": "high",
+   "kind": "door", "subtype": "sliding pocket (cavity) door",
+   "ends": [[7.454, 10.284], [7.454, 11.384]], "width": 1.100, "clearWidth": 1.000,
+   "between": "MASTER BEDROOM (west) and MASTER BATHROOM (east)",
+   "claimMatches": {"kind": true, "width": true},
+   "evidence": "Partition x 7.354-7.544 ends at y 10.284; the opening runs to the inside face of the facade lining (y 11.384; facade wall A-WALL y 11.409-11.509). Frames 10.284-10.334 and 11.334-11.384. Leaf 1.00 m in the pocket y 9.394-10.394. Slide arrow at x 7.324 (bedroom side) pointing south. Core lines run on across."
+  },
+  {
+   "place": "P18", "claimed": {"kind": "door", "width": 0.8},
+   "verdict": "real", "confidence": "high",
+   "kind": "door", "subtype": "hinged, single leaf",
+   "ends": [[22.812, 6.034], [22.812, 6.834]], "width": 0.800, "clearWidth": 0.700,
+   "between": "lobby of BEDROOM 2 (west) and the unlabelled room east of the BOH (east, x 22.89-24.79)",
+   "claimMatches": {"kind": true, "width": true},
+   "evidence": "Partition x 22.712-22.887 ends at y 6.034; the opening runs to the south face (lining) of the cross partition y 6.834-6.994. Frames 6.034-6.084 and 6.784-6.834. Leaf 0.70 (x 22.867-23.567) drawn open 90 degrees east, dashed swing r 0.70."
+  },
+  {
+   "place": "P19", "claimed": {"kind": "passage", "width": 0.708},
+   "verdict": "not real", "confidence": "high",
+   "whatIsThere": "joinery and furniture in open floor (living room)",
+   "evidence": "West end = front line (x 12.012) of a 0.40 m deep built-in joinery / TV wall unit along the living room's west wall (layer 0 outline x 11.612-12.012, y 5.211-10.509, no fill, dashed divisions; the wall-mounted TV on frozen Q-SPCQ sits in it). East end = west edge of the west ottoman (x 12.669-12.719). The band runs along the rug edge (y 6.711). No wall is cut."
+  },
+  {
+   "place": "P20", "claimed": {"kind": "passage", "width": 1.692},
+   "verdict": "not real", "confidence": "high",
+   "whatIsThere": "open floor just inside the north facade; furniture at the east end",
+   "evidence": "Behind the band the straight facade wall between bays 3 and 4 (A-WALL y 11.409-11.509, x 16.19-16.92) is continuous; bay 4 starts at x 16.92. West end = the rug corner / start of the facade lining (x 16.10); east end = the arm of an armchair (layer 0, x 17.76-17.90, y 10.84-11.26). Nothing is cut and nothing is drawn across."
+  },
+  {
+   "place": "P21", "claimed": {"kind": "door", "width": 1.1},
+   "verdict": "real", "confidence": "high",
+   "kind": "door", "subtype": "sliding pocket (cavity) door",
+   "ends": [[7.454, 2.234], [7.454, 3.334]], "width": 1.100, "clearWidth": 1.000,
+   "between": "MASTER BEDROOM (west) and the dressing area / BEDROOM FOYER (east)",
+   "claimMatches": {"kind": true, "width": true},
+   "evidence": "Partition x 7.354-7.554: fill ends at y 2.234 and resumes at 3.334. Frames 2.234-2.284 and 3.284-3.334. Leaf 1.00 m in the pocket y 3.224-4.224 (pocket lines x 7.419/7.489 to y 4.267). Slide arrow at x 7.324 pointing north. Core lines x 7.379/7.529 run on across."
+  },
+  {
+   "place": "P22", "claimed": {"kind": "door", "width": 0.8},
+   "verdict": "real", "confidence": "high",
+   "kind": "door", "subtype": "hinged, single leaf",
+   "ends": [[20.512, 4.409], [20.512, 5.209]], "width": 0.800, "clearWidth": 0.700,
+   "between": "BAR (west) and BOH. (east)",
+   "claimMatches": {"kind": true, "width": true},
+   "evidence": "Partition x 20.412-20.612 ends at y 4.409 and resumes at 5.209. Frames 4.409-4.459 and 5.159-5.209. Leaf 0.70 (x 20.567-21.267, y 5.119-5.159) drawn open 90 degrees into the BOH, dashed swing r 0.70. Core lines x 20.437/20.587 run on across."
+  },
+  {
+   "place": "P23", "claimed": {"kind": "door", "width": 1.0},
+   "verdict": "real", "confidence": "high",
+   "kind": "door", "subtype": "hinged, single leaf (block UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM-3324155)",
+   "ends": [[19.177, 0.859], [20.177, 0.859]], "width": 1.000, "clearWidth": 0.900,
+   "between": "corridor alcove (north) and a neighbouring unit outside the drawing (south)",
+   "claimMatches": {"kind": true, "width": true},
+   "evidence": "100 mm A-WALL y 0.809-0.909; wall stubs end at x 19.177 (stub 19.087-19.177) and 20.177 (stub 20.177-20.262 beside the column). Frames at both jambs. Leaf at x 20.102-20.142 and dashed swing point south, cut by the crop at y 0.009; the wall's face lines run on across."
+  },
+  {
+   "place": "P24", "claimed": {"kind": "door", "width": 0.75},
+   "verdict": "real", "confidence": "high",
+   "kind": "door", "subtype": "hinged, single leaf",
+   "ends": [[11.712, 3.259], [12.462, 3.259]], "width": 0.750, "clearWidth": 0.700,
+   "between": "FOYER (north) and the small room south of it (x 11.64-13.12, y 1.22-3.19; probably a WC)",
+   "claimMatches": {"kind": true, "width": true},
+   "evidence": "Wall y 3.209-3.309 (+ linings) ends at x 11.712 (a 0.075 m stub beside the partition x 11.487-11.637) and 12.462. Frame lines at both jambs (12.412-12.462 east). Leaf 0.665 (x 11.712-11.752, y 2.529-3.194) drawn open 90 degrees into the small room, dashed swing r 0.70; threshold line y 3.309. A 15 mm lining fill on the small room's side (y 3.194-3.209) is drawn on across the opening (a finish line, it does not close the door)."
+  }
+ ],
+ "noticedNearby": [
+  {
+   "id": "N1", "status": "definite opening",
+   "kind": "door", "subtype": "hinged glass door (0.70 m leaf) in the 10 mm glass screen of the master bathroom; door of the WC",
+   "ends": [[9.517, 5.351], [9.517, 6.051]], "width": 0.700,
+   "nearestPlace": "P08", "distance": 0.34,
+   "evidence": "Glass (two layer-0 lines x 9.512/9.522) stops at y 5.351 and resumes at 6.051. Leaf (A-DOOR, two lines 10 mm apart) hinged at (9.512, 5.351), drawn open 30 degrees west to (9.162, 5.957); dashed 30-degree swing on A-DOOR-HDLN to (9.512, 6.051); dashed handle on A-GENM-HDLN. The screen's two 0.10 m lines (x 9.467/9.567) run on across. Leads into the WC (x 9.57-11.49, y 5.25-6.95). The key may treat glass WC / shower doors like cubicle doors (optional)."
+  },
+  {
+   "id": "N2", "status": "definite opening",
+   "kind": "door", "subtype": "hinged glass door (0.70 m leaf) in a 10 mm glass screen (shower of the room east of the BOH)",
+   "ends": [[23.002, 4.775], [23.702, 4.775]], "width": 0.700,
+   "nearestPlace": "P18", "distance": 1.27,
+   "evidence": "Glass y 4.770-4.780 (layer 0) stops at x 23.002 and resumes at 23.702. Leaf hinged at (23.002, 4.78), drawn open 30 degrees north to (23.608, 5.130); dashed swing on A-DOOR-HDLN; the screen's 0.10 m lines (y 4.724/4.824) run on across."
+  },
+  {
+   "id": "N3", "status": "possible passage (borderline; I would not count it, or only as optional)",
+   "kind": "passage", "subtype": "open side of a room: a partition simply ends",
+   "ends": [[7.554, 3.259], [9.387, 3.259]], "width": 1.833,
+   "nearestPlace": "P21 / P07", "distance": 0.10,
+   "evidence": "The cross partition y 3.184-3.334 (between the walk-in wardrobe and the bedroom foyer) ends at x 9.387 with a free end; west of it the dressing area (x 7.55-9.39, y 0.33-3.18) opens into the BEDROOM FOYER up to the corner of the bedroom partition (x 7.554, y 3.334), beside pocket door P21. Nothing is drawn across (no head line, frame or leaf). The description calls this an opening look (b), so the key may list it."
+  },
+  {
+   "id": "N4", "status": "possible passage (borderline; I would not count it, or only as optional)",
+   "kind": "passage", "subtype": "open side of a room: a partition simply ends",
+   "ends": [[20.612, 6.924], [22.737, 6.924]], "width": 2.125,
+   "nearestPlace": "P04 / P18", "distance": 0.10,
+   "evidence": "The cross partition y 6.854-6.994 (between the room east of the BOH and BEDROOM 2) ends at x 22.737 with a free end above door P18; west of it the lobby of bedroom 2 (wardrobe on its south side) is open to BEDROOM 2 as far as the bedroom's west wall at x 20.612, which is itself open there (pocket door P04, y 6.084-7.184). Nothing is drawn across."
+  }
+ ],
+ "noticedJustBeyond2m": [
+  {
+   "id": "N5", "status": "definite opening",
+   "kind": "door", "subtype": "hinged glass door (0.70 m) in the 10 mm glass screen, into the shower (x 9.57-11.49, y 7.07-10.23)",
+   "ends": [[9.517, 7.166], [9.517, 7.866]], "width": 0.700, "nearestPlace": "P08", "distance": 2.03,
+   "evidence": "Glass stops at y 7.166 and resumes at 7.866; leaf hinged at (9.512, 7.166) open 30 degrees west; dashed swing on A-DOOR-HDLN."
+  },
+  {
+   "id": "N6", "status": "definite opening",
+   "kind": "door", "subtype": "hinged glass door (0.70 m) in the 10 mm glass screen, into the shower (north end)",
+   "ends": [[9.517, 9.434], [9.517, 10.134]], "width": 0.700, "nearestPlace": "P17", "distance": 2.06,
+   "evidence": "Glass stops at y 9.434 and resumes at 10.134; leaf hinged at (9.512, 10.134) open 30 degrees west to (9.162, 9.528); dashed swing on A-DOOR-HDLN."
+  },
+  {
+   "id": "N7", "status": "definite opening (cut by the view's crop)",
+   "kind": "door", "subtype": "hinged, double leaf (service riser door, block SERVICE_SWING_DOUBLE - D22 1800X2100MM-V25)",
+   "ends": [[23.987, 1.159], [25.787, 1.159]], "width": 1.800, "nearestPlace": "P02", "distance": 2.05,
+   "evidence": "Corridor south wall y 1.109-1.209; west jamb A-WALL x 23.887-23.987; the opening runs east past the crop at x 25.079 (1.092 m visible; 1.80 m by the type name, like P11). Leaves open 35 degrees into the corridor; riser behind with an X on A-DETL."
+  }
+ ],
+ "noticedFartherAway": [
+  {
+   "id": "N8", "status": "definite opening (cut by the view's crop)",
+   "kind": "door", "subtype": "hinged, double leaf (service riser door, block SERVICE_SWING_DOUBLE - D22 1800X2100MM-2804302)",
+   "ends": [[23.987, 3.259], [25.787, 3.259]], "width": 1.800, "nearestPlace": "P05", "distance": 2.48,
+   "evidence": "Corridor north wall line y 3.209-3.309; west jamb (layer 0 wall x 23.887-23.987); cut by the crop at x 25.079. Leaves open 35 degrees into the corridor; riser behind (X on A-DETL)."
+  }
+ ],
+ "otherNotes": [
+  "Every door symbol of the drawing was accounted for: 16 hinged swings on A-DOOR (6 exploded doors with 7 leaves, and 6 door blocks with 9), 4 pocket doors (4 slide arrows), 1 bi-fold, 4 glass doors (A-DOOR-HDLN). 15 of these doors are covered by places; the other 6 are N1, N2 and N5-N8 above.",
+  "All 16 real places have the claimed kind and a width equal to mine (to 1 mm).",
+  "P02 and P09 are my least certain verdicts: geometrically the corridor wall line is interrupted there (wall on both sides in line, a column between), but the gaps only lead into a 0.30 m door recess; the doors behind them (P23, P10) are the openings.",
+  "Not listed as openings: the curtain-wall bays (glass wall), the open plan between the BAR and the LIVING & DINING AREA (no wall line), the corridor's 0.35 m widening x 17.14-20.44, y 3.31-3.66 east of P11 (nothing drawn across), the luggage-rack niche in bedroom 2's west wall (x 20.61-20.79, y 7.54-8.61).",
+  "My extra pictures (drawn from the cache, no detector output): audit/work_auditor2/west_south.png, east_south.png, west_north.png, east_north.png (walls and doors only), bathroom_glass_doors.png (N1, N5, N6), room_east_glass_door.png (N2), corridor_alcove.png (P02, P09), dressing_mouth.png (N3), lobby2_mouth.png (N4). Helpers: work_auditor2/q.py (list items), r.py (draw)."
+ ]
+}

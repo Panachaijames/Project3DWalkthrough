@@ -1,0 +1,20 @@
+{
+ "parts": [
+  {
+   "file": "keys/suite_revit/parts/suite_revit.json",
+   "floor": "suite_revit",
+   "box": [
+    1.569,
+    0.008,
+    25.079,
+    13.084
+   ],
+   "own": [
+    1.569,
+    0.008,
+    25.079,
+    13.084
+   ]
+  }
+ ]
+}

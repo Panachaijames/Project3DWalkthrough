@@ -1,0 +1,1500 @@
+{
+ "about": "Result of the blind audit (step 7 of 7): made by analyze_audit.py from secret_map.json and the two verdict files.",
+ "checks": {
+  "keySha1": "c9f9035c7cfba3c94055b87ff408b9e9cb2bdb75",
+  "keySha1InSecretMap": "c9f9035c7cfba3c94055b87ff408b9e9cb2bdb75",
+  "detectionsSha1": "1c785001dd0613f63887be23df9b805861d48216",
+  "detectionsSha1InSecretMap": "1c785001dd0613f63887be23df9b805861d48216"
+ },
+ "controls": {
+  "auditor1": {
+   "controls": 7,
+   "calledReal": 7,
+   "calledRealWithTheKeysKind": 7,
+   "withTheKeysKindAndWidth": 7
+  },
+  "auditor2": {
+   "controls": 7,
+   "calledReal": 7,
+   "calledRealWithTheKeysKind": 7,
+   "withTheKeysKindAndWidth": 7
+  }
+ },
+ "extras": {
+  "both real": 0,
+  "both not real": 8,
+  "split": 0,
+  "perAuditor": {
+   "auditor1": {
+    "extras": 8,
+    "rejected": 8,
+    "accepted": 0
+   },
+   "auditor2": {
+    "extras": 8,
+    "rejected": 8,
+    "accepted": 0
+   }
+  }
+ },
+ "keyOpeningsMissedOrNotRight": {
+  "both real": 9,
+  "both not real": 0,
+  "split": 0,
+  "perAuditor": {
+   "auditor1": {
+    "keyOpenings": 9,
+    "calledReal": 9,
+    "calledRealWithTheKeysKind": 9,
+    "withTheKeysKindAndWidth": 9
+   },
+   "auditor2": {
+    "keyOpenings": 9,
+    "calledReal": 9,
+    "calledRealWithTheKeysKind": 9,
+    "withTheKeysKindAndWidth": 9
+   }
+  }
+ },
+ "keyChanges": [],
+ "places": [
+  {
+   "place": "P01",
+   "source": "detector extra",
+   "keyId": null,
+   "detId": "suite_revit-012",
+   "claimedKind": "passage",
+   "claimedWidth": 1.071,
+   "auditor1": {
+    "verdict": "not real",
+    "real": false,
+    "kind": null,
+    "ends": null,
+    "width": null,
+    "kindSameAsClaim": false,
+    "widthSameAsClaim": false,
+    "whatItIs": "furniture / open floor",
+    "confidence": 0.95
+   },
+   "auditor2": {
+    "verdict": "not real",
+    "real": false,
+    "kind": null,
+    "ends": null,
+    "width": null,
+    "kindSameAsClaim": null,
+    "widthSameAsClaim": null,
+    "whatItIs": "furniture in open floor (living room)",
+    "confidence": "high"
+   },
+   "agreement": "both not real"
+  },
+  {
+   "place": "P02",
+   "source": "detector extra",
+   "keyId": null,
+   "detId": "suite_revit-017",
+   "claimedKind": "passage",
+   "claimedWidth": 1.175,
+   "auditor1": {
+    "verdict": "not real",
+    "real": false,
+    "kind": null,
+    "ends": null,
+    "width": null,
+    "kindSameAsClaim": false,
+    "widthSameAsClaim": false,
+    "whatItIs": "mouth of a 0.30 m door recess (wall end beside open space)",
+    "confidence": 0.8
+   },
+   "auditor2": {
+    "verdict": "not real",
+    "real": false,
+    "kind": null,
+    "ends": null,
+    "width": null,
+    "kindSameAsClaim": null,
+    "widthSameAsClaim": null,
+    "whatItIs": "mouth of a 0.30 m deep door recess (alcove) of the corridor, between a column and a wall end",
+    "confidence": "medium-high"
+   },
+   "agreement": "both not real"
+  },
+  {
+   "place": "P03",
+   "source": "detector extra",
+   "keyId": null,
+   "detId": "suite_revit-008",
+   "claimedKind": "passage",
+   "claimedWidth": 0.8,
+   "auditor1": {
+    "verdict": "not real",
+    "real": false,
+    "kind": null,
+    "ends": null,
+    "width": null,
+    "kindSameAsClaim": false,
+    "widthSameAsClaim": false,
+    "whatItIs": "recessed fire-hose cabinet (equipment niche in the wall)",
+    "confidence": 0.85
+   },
+   "auditor2": {
+    "verdict": "not real",
+    "real": false,
+    "kind": null,
+    "ends": null,
+    "width": null,
+    "kindSameAsClaim": null,
+    "widthSameAsClaim": null,
+    "whatItIs": "equipment niche: fire-hose cabinet recessed in the corridor wall",
+    "confidence": "high"
+   },
+   "agreement": "both not real"
+  },
+  {
+   "place": "P04",
+   "source": "key opening missed",
+   "keyId": "SR-11",
+   "detId": null,
+   "claimedKind": "door",
+   "claimedWidth": 1.1,
+   "auditor1": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      20.512,
+      6.084
+     ],
+     [
+      20.512,
+      7.184
+     ]
+    ],
+    "width": 1.1,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "pocket (cavity) sliding door: 1.0 m leaf parked in the wall pocket to the north (y 7.074-8.074, pocket x 20.477-20.547 to y 8.072), slide arrow on the dining side (x 20.382, y 6.33-6.93, pointing north), 50 mm frames at both jambs, the partition's two core lines (x 20.437 / 20.587) run across the opening",
+    "confidence": 0.95,
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "auditor2": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      20.512,
+      6.084
+     ],
+     [
+      20.512,
+      7.184
+     ]
+    ],
+    "width": 1.1,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "sliding pocket (cavity) door",
+    "confidence": "high",
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "agreement": "both real"
+  },
+  {
+   "place": "P05",
+   "source": "control: key opening found right",
+   "keyId": "SR-09",
+   "detId": "suite_revit-006",
+   "claimedKind": "door",
+   "claimedWidth": 0.8,
+   "auditor1": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      20.712,
+      3.359
+     ],
+     [
+      21.512,
+      3.359
+     ]
+    ],
+    "width": 0.8,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "single hinged door: 0.70 m leaf (x 20.762-20.802, y 3.389-4.089) hinged at the west jamb, drawn open 90 deg into the BOH (north), dashed swing to (21.462, 3.383); 50 mm frames; a layer-0 threshold line y 3.409 across",
+    "confidence": 0.95,
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "auditor2": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      20.712,
+      3.359
+     ],
+     [
+      21.512,
+      3.359
+     ]
+    ],
+    "width": 0.8,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "hinged, single leaf",
+    "confidence": "high",
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "agreement": "both real"
+  },
+  {
+   "place": "P06",
+   "source": "detector extra",
+   "keyId": null,
+   "detId": "suite_revit-003",
+   "claimedKind": "passage",
+   "claimedWidth": 2.761,
+   "auditor1": {
+    "verdict": "not real",
+    "real": false,
+    "kind": null,
+    "ends": null,
+    "width": null,
+    "kindSameAsClaim": false,
+    "widthSameAsClaim": false,
+    "whatItIs": "mouth of curtain-wall bay 3 (the room continues into the bay; nothing spans the mouth)",
+    "confidence": 0.75
+   },
+   "auditor2": {
+    "verdict": "not real",
+    "real": false,
+    "kind": null,
+    "ends": null,
+    "width": null,
+    "kindSameAsClaim": null,
+    "widthSameAsClaim": null,
+    "whatItIs": "mouth of a projecting curtain-wall bay (north bay 3): open floor, the room runs on into the bay",
+    "confidence": "high"
+   },
+   "agreement": "both not real"
+  },
+  {
+   "place": "P07",
+   "source": "key opening missed",
+   "keyId": "SR-03",
+   "detId": null,
+   "claimedKind": "door",
+   "claimedWidth": 2.225,
+   "auditor1": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      9.462,
+      0.959
+     ],
+     [
+      9.462,
+      3.184
+     ]
+    ],
+    "width": 2.225,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "bi-fold door: four panels (8 A-DOOR lines of 0.564 m) drawn folded as a zigzag against the north jamb, dashed layer-0 track line along the opening (x 9.462, y 0.959-3.184)",
+    "confidence": 0.92,
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "auditor2": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      9.462,
+      0.959
+     ],
+     [
+      9.462,
+      3.184
+     ]
+    ],
+    "width": 2.225,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "bi-fold (four folding panels)",
+    "confidence": "high",
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "agreement": "both real"
+  },
+  {
+   "place": "P08",
+   "source": "key opening missed",
+   "keyId": "SR-04",
+   "detId": null,
+   "claimedKind": "door",
+   "claimedWidth": 1.1,
+   "auditor1": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      8.129,
+      5.156
+     ],
+     [
+      9.229,
+      5.156
+     ]
+    ],
+    "width": 1.1,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "pocket (cavity) sliding door: 1.0 m leaf parked in the pocket to the east (x 9.119-10.119, slot y 5.126-5.196 to x 10.667), slide arrow on the bathroom side (y 5.291, pointing east), 50 mm frames, core lines y 5.086 / 5.236 across",
+    "confidence": 0.95,
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "auditor2": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      8.129,
+      5.161
+     ],
+     [
+      9.229,
+      5.161
+     ]
+    ],
+    "width": 1.1,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "sliding pocket (cavity) door",
+    "confidence": "high",
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "agreement": "both real"
+  },
+  {
+   "place": "P09",
+   "source": "detector extra",
+   "keyId": null,
+   "detId": "suite_revit-016",
+   "claimedKind": "passage",
+   "claimedWidth": 1.175,
+   "auditor1": {
+    "verdict": "not real",
+    "real": false,
+    "kind": null,
+    "ends": null,
+    "width": null,
+    "kindSameAsClaim": false,
+    "widthSameAsClaim": false,
+    "whatItIs": "mouth of a 0.30 m door recess (wall end beside open space)",
+    "confidence": 0.8
+   },
+   "auditor2": {
+    "verdict": "not real",
+    "real": false,
+    "kind": null,
+    "ends": null,
+    "width": null,
+    "kindSameAsClaim": null,
+    "widthSameAsClaim": null,
+    "whatItIs": "mouth of the same 0.30 m deep corridor door recess as P02 (west half), between a wall end and the column",
+    "confidence": "medium-high"
+   },
+   "agreement": "both not real"
+  },
+  {
+   "place": "P10",
+   "source": "key opening missed",
+   "keyId": "SR-16",
+   "detId": null,
+   "claimedKind": "door",
+   "claimedWidth": 1.0,
+   "auditor1": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      20.847,
+      0.859
+     ],
+     [
+      21.847,
+      0.859
+     ]
+    ],
+    "width": 1.0,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "single hinged unit door (block UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM, rot 180): leaf hinged at the west jamb (x 20.882-20.922) drawn open 90 deg to the south, leaf and swing cut by the view crop at y 0.009; frames; the A-WALL face lines y 0.809 / 0.909 run on across the opening; door of the neighbouring unit (its room is not drawn)",
+    "confidence": 0.93,
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "auditor2": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      20.847,
+      0.859
+     ],
+     [
+      21.847,
+      0.859
+     ]
+    ],
+    "width": 1.0,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "hinged, single leaf (block UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM-3324157, rotated 180)",
+    "confidence": "high",
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "agreement": "both real"
+  },
+  {
+   "place": "P11",
+   "source": "control: key opening found right",
+   "keyId": "SR-13",
+   "detId": "suite_revit-018",
+   "claimedKind": "door",
+   "claimedWidth": 1.8,
+   "auditor1": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      15.237,
+      3.259
+     ],
+     [
+      17.037,
+      3.259
+     ]
+    ],
+    "width": 1.8,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "service double swing door (block SERVICE_SWING_DOUBLE - D22 1800X2100MM-V24, rot 180): two 0.865 m leaves hinged at x 15.272 and 17.002, drawn open 35 deg into the corridor (south); three A-DOOR-FRAM lines across the opening (y 3.209 / 3.249 / 3.309); behind it a 0.35 m service riser (X marks on A-DETL)",
+    "confidence": 0.93,
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "auditor2": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      15.237,
+      3.259
+     ],
+     [
+      17.037,
+      3.259
+     ]
+    ],
+    "width": 1.8,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "hinged, double leaf (service riser door, block SERVICE_SWING_DOUBLE - D22 1800X2100MM-V24)",
+    "confidence": "high",
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "agreement": "both real"
+  },
+  {
+   "place": "P12",
+   "source": "control: key opening found right",
+   "keyId": "SR-05",
+   "detId": "suite_revit-002",
+   "claimedKind": "door",
+   "claimedWidth": 1.001,
+   "auditor1": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      11.562,
+      3.697
+     ],
+     [
+      11.562,
+      4.698
+     ]
+    ],
+    "width": 1.001,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "single hinged door: 0.90 m leaf (40 mm rectangle x 10.607-11.507, y 3.747-3.787) hinged at the south jamb, drawn open 90 deg into the bedroom foyer (west), dashed swing r 0.90; 50 mm frames; nothing across the opening",
+    "confidence": 0.96,
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "auditor2": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      11.562,
+      3.697
+     ],
+     [
+      11.562,
+      4.697
+     ]
+    ],
+    "width": 1.0,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "hinged, single leaf",
+    "confidence": "high",
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "agreement": "both real"
+  },
+  {
+   "place": "P13",
+   "source": "detector extra",
+   "keyId": null,
+   "detId": "suite_revit-005",
+   "claimedKind": "passage",
+   "claimedWidth": 0.699,
+   "auditor1": {
+    "verdict": "not real",
+    "real": false,
+    "kind": null,
+    "ends": null,
+    "width": null,
+    "kindSameAsClaim": false,
+    "widthSameAsClaim": false,
+    "whatItIs": "furniture (inside an ottoman)",
+    "confidence": 0.97
+   },
+   "auditor2": {
+    "verdict": "not real",
+    "real": false,
+    "kind": null,
+    "ends": null,
+    "width": null,
+    "kindSameAsClaim": null,
+    "widthSameAsClaim": null,
+    "whatItIs": "furniture: an upholstered ottoman / footstool",
+    "confidence": "high"
+   },
+   "agreement": "both not real"
+  },
+  {
+   "place": "P14",
+   "source": "control: key opening found right",
+   "keyId": "SR-14",
+   "detId": "suite_revit-015",
+   "claimedKind": "door",
+   "claimedWidth": 0.85,
+   "auditor1": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      16.187,
+      1.159
+     ],
+     [
+      17.037,
+      1.159
+     ]
+    ],
+    "width": 0.85,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "single service door (block SERVICE_DOOR_SWING_1_SOLID - 850X2400MM_D06): 0.78 m leaf hinged at the east jamb (17.002, 1.209), drawn open 35 deg into the corridor (north); three frame lines across; behind it a 0.35 m riser (layer-0 X)",
+    "confidence": 0.93,
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "auditor2": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      16.187,
+      1.159
+     ],
+     [
+      17.037,
+      1.159
+     ]
+    ],
+    "width": 0.85,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "hinged, single leaf (service riser door, block SERVICE_DOOR_SWING_1_SOLID - 850X2400MM_D06)",
+    "confidence": "high",
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "agreement": "both real"
+  },
+  {
+   "place": "P15",
+   "source": "control: key opening found right",
+   "keyId": "SR-07",
+   "detId": "suite_revit-009",
+   "claimedKind": "door",
+   "claimedWidth": 1.8,
+   "auditor1": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      13.287,
+      3.259
+     ],
+     [
+      15.087,
+      3.259
+     ]
+    ],
+    "width": 1.8,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "double hinged entrance door of the suite: two 0.865 m leaves hinged at x 13.322-13.362 and 15.012-15.052, drawn open 90 deg into the foyer (north), dashed swings meeting at x 14.187; frames; layer-0 threshold line y 3.309 across",
+    "confidence": 0.96,
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "auditor2": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      13.287,
+      3.259
+     ],
+     [
+      15.087,
+      3.259
+     ]
+    ],
+    "width": 1.8,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "hinged, double leaf (the suite's entrance)",
+    "confidence": "high",
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "agreement": "both real"
+  },
+  {
+   "place": "P16",
+   "source": "key opening missed",
+   "keyId": "SR-08",
+   "detId": null,
+   "claimedKind": "passage",
+   "claimedWidth": 1.975,
+   "auditor1": {
+    "verdict": "real",
+    "real": true,
+    "kind": "passage",
+    "ends": [
+     [
+      13.137,
+      5.136
+     ],
+     [
+      15.112,
+      5.136
+     ]
+    ],
+    "width": 1.975,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "doorless opening with a head: the partition fill stops and its two face lines (y 5.061 / 5.211) carry on across the gap dashed, with dashed end lines at x 13.137 and 15.112 (head / bulkhead over the opening); no leaf, frame or track",
+    "confidence": 0.92,
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "auditor2": {
+    "verdict": "real",
+    "real": true,
+    "kind": "passage",
+    "ends": [
+     [
+      13.137,
+      5.136
+     ],
+     [
+      15.112,
+      5.136
+     ]
+    ],
+    "width": 1.975,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "open doorway without a leaf (cased opening; head drawn dashed)",
+    "confidence": "high",
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "agreement": "both real"
+  },
+  {
+   "place": "P17",
+   "source": "key opening missed",
+   "keyId": "SR-02",
+   "detId": null,
+   "claimedKind": "door",
+   "claimedWidth": 1.1,
+   "auditor1": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      7.454,
+      10.284
+     ],
+     [
+      7.454,
+      11.384
+     ]
+    ],
+    "width": 1.1,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "pocket (cavity) sliding door: 1.0 m leaf parked in the pocket to the south (y 9.394-10.394), slide arrow on the bedroom side (x 7.324, y 10.53-11.13, pointing south), 50 mm frames at y 10.284-10.334 and 11.334-11.384, core lines x 7.379 / 7.529 across; the north jamb is the inner (lining) face of the facade wall",
+    "confidence": 0.94,
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "auditor2": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      7.454,
+      10.284
+     ],
+     [
+      7.454,
+      11.384
+     ]
+    ],
+    "width": 1.1,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "sliding pocket (cavity) door",
+    "confidence": "high",
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "agreement": "both real"
+  },
+  {
+   "place": "P18",
+   "source": "control: key opening found right",
+   "keyId": "SR-12",
+   "detId": "suite_revit-013",
+   "claimedKind": "door",
+   "claimedWidth": 0.8,
+   "auditor1": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      22.812,
+      6.034
+     ],
+     [
+      22.812,
+      6.834
+     ]
+    ],
+    "width": 0.8,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "single hinged door: 0.70 m leaf (x 22.867-23.567, y 6.744-6.784) hinged at the north jamb, drawn open 90 deg into the room east of the BOH (east), dashed swing to (22.861, 6.084); 50 mm frames",
+    "confidence": 0.95,
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "auditor2": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      22.812,
+      6.034
+     ],
+     [
+      22.812,
+      6.834
+     ]
+    ],
+    "width": 0.8,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "hinged, single leaf",
+    "confidence": "high",
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "agreement": "both real"
+  },
+  {
+   "place": "P19",
+   "source": "detector extra",
+   "keyId": null,
+   "detId": "suite_revit-011",
+   "claimedKind": "passage",
+   "claimedWidth": 0.708,
+   "auditor1": {
+    "verdict": "not real",
+    "real": false,
+    "kind": null,
+    "ends": null,
+    "width": null,
+    "kindSameAsClaim": false,
+    "widthSameAsClaim": false,
+    "whatItIs": "joinery face and furniture / open floor",
+    "confidence": 0.95
+   },
+   "auditor2": {
+    "verdict": "not real",
+    "real": false,
+    "kind": null,
+    "ends": null,
+    "width": null,
+    "kindSameAsClaim": null,
+    "widthSameAsClaim": null,
+    "whatItIs": "joinery and furniture in open floor (living room)",
+    "confidence": "high"
+   },
+   "agreement": "both not real"
+  },
+  {
+   "place": "P20",
+   "source": "detector extra",
+   "keyId": null,
+   "detId": "suite_revit-014",
+   "claimedKind": "passage",
+   "claimedWidth": 1.692,
+   "auditor1": {
+    "verdict": "not real",
+    "real": false,
+    "kind": null,
+    "ends": null,
+    "width": null,
+    "kindSameAsClaim": false,
+    "widthSameAsClaim": false,
+    "whatItIs": "open floor beside a continuous facade wall (rug corner to armchair)",
+    "confidence": 0.9
+   },
+   "auditor2": {
+    "verdict": "not real",
+    "real": false,
+    "kind": null,
+    "ends": null,
+    "width": null,
+    "kindSameAsClaim": null,
+    "widthSameAsClaim": null,
+    "whatItIs": "open floor just inside the north facade; furniture at the east end",
+    "confidence": "high"
+   },
+   "agreement": "both not real"
+  },
+  {
+   "place": "P21",
+   "source": "key opening missed",
+   "keyId": "SR-01",
+   "detId": null,
+   "claimedKind": "door",
+   "claimedWidth": 1.1,
+   "auditor1": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      7.454,
+      2.234
+     ],
+     [
+      7.454,
+      3.334
+     ]
+    ],
+    "width": 1.1,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "pocket (cavity) sliding door: 1.0 m leaf parked in the pocket to the north (y 3.224-4.224), slide arrow on the bedroom side (x 7.324, y 2.48-3.08, pointing north), 50 mm frames (y 2.234-2.284 and 3.284-3.334), core lines x 7.379 / 7.529 across",
+    "confidence": 0.95,
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "auditor2": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      7.454,
+      2.234
+     ],
+     [
+      7.454,
+      3.334
+     ]
+    ],
+    "width": 1.1,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "sliding pocket (cavity) door",
+    "confidence": "high",
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "agreement": "both real"
+  },
+  {
+   "place": "P22",
+   "source": "key opening found but not right",
+   "keyId": "SR-10",
+   "detId": "suite_revit-022",
+   "claimedKind": "door",
+   "claimedWidth": 0.8,
+   "auditor1": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      20.512,
+      4.409
+     ],
+     [
+      20.512,
+      5.209
+     ]
+    ],
+    "width": 0.8,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "single hinged door: 0.70 m leaf (x 20.567-21.267, y 5.119-5.159) hinged at the north jamb, drawn open 90 deg into the BOH (east), dashed swing to (20.561, 4.459); 50 mm frames; the partition's core lines x 20.437 / 20.587 run across",
+    "confidence": 0.95,
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "auditor2": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      20.512,
+      4.409
+     ],
+     [
+      20.512,
+      5.209
+     ]
+    ],
+    "width": 0.8,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "hinged, single leaf",
+    "confidence": "high",
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "agreement": "both real"
+  },
+  {
+   "place": "P23",
+   "source": "key opening missed",
+   "keyId": "SR-15",
+   "detId": null,
+   "claimedKind": "door",
+   "claimedWidth": 1.0,
+   "auditor1": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      19.177,
+      0.859
+     ],
+     [
+      20.177,
+      0.859
+     ]
+    ],
+    "width": 1.0,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "single hinged unit door (block UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM, rot 0): leaf hinged at the east jamb (x 20.102-20.142) drawn open 90 deg to the south, leaf and swing cut by the crop at y 0.009; frames; the A-WALL face lines run on across; door of the neighbouring unit",
+    "confidence": 0.93,
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "auditor2": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      19.177,
+      0.859
+     ],
+     [
+      20.177,
+      0.859
+     ]
+    ],
+    "width": 1.0,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "hinged, single leaf (block UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM-3324155)",
+    "confidence": "high",
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "agreement": "both real"
+  },
+  {
+   "place": "P24",
+   "source": "control: key opening found right",
+   "keyId": "SR-06",
+   "detId": "suite_revit-021",
+   "claimedKind": "door",
+   "claimedWidth": 0.75,
+   "auditor1": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      11.712,
+      3.259
+     ],
+     [
+      12.462,
+      3.259
+     ]
+    ],
+    "width": 0.75,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "single hinged door: 0.665-0.70 m leaf (x 11.712-11.752, y 2.529-3.229) hinged at the west jamb, drawn open 90 deg into the small room south of the foyer (probably a WC), dashed swing r 0.70; frames; layer-0 threshold line y 3.309 across",
+    "confidence": 0.95,
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "auditor2": {
+    "verdict": "real",
+    "real": true,
+    "kind": "door",
+    "ends": [
+     [
+      11.712,
+      3.259
+     ],
+     [
+      12.462,
+      3.259
+     ]
+    ],
+    "width": 0.75,
+    "kindSameAsClaim": true,
+    "widthSameAsClaim": true,
+    "whatItIs": "hinged, single leaf",
+    "confidence": "high",
+    "matchesClaimByScorer": true,
+    "kindRight": true,
+    "widthRight": true
+   },
+   "agreement": "both real"
+  }
+ ],
+ "noticedBesideThePlaces": {
+  "auditor1": [
+   {
+    "id": "N1",
+    "field": "noticedNearby",
+    "status": "definite opening",
+    "kind": "door",
+    "a": [
+     9.517,
+     5.351
+    ],
+    "b": [
+     9.517,
+     6.051
+    ],
+    "width": 0.7,
+    "nearestPlace": "P08",
+    "keyId": "SR-19",
+    "keyOptional": true,
+    "keyKind": "door"
+   },
+   {
+    "id": "N2",
+    "field": "noticedNearby",
+    "status": "definite opening",
+    "kind": "door",
+    "a": [
+     23.002,
+     4.775
+    ],
+    "b": [
+     23.702,
+     4.775
+    ],
+    "width": 0.7,
+    "nearestPlace": "P18",
+    "keyId": "SR-22",
+    "keyOptional": true,
+    "keyKind": "door"
+   },
+   {
+    "id": "N7",
+    "field": "noticedNearby",
+    "status": "possible",
+    "kind": "passage",
+    "a": [
+     7.554,
+     3.259
+    ],
+    "b": [
+     9.387,
+     3.259
+    ],
+    "width": 1.833,
+    "nearestPlace": "P21 / P07",
+    "keyId": "SR-23",
+    "keyOptional": true,
+    "keyKind": "passage"
+   },
+   {
+    "id": "N8",
+    "field": "noticedNearby",
+    "status": "possible",
+    "kind": "passage",
+    "a": [
+     20.612,
+     6.924
+    ],
+    "b": [
+     22.737,
+     6.924
+    ],
+    "width": 2.125,
+    "nearestPlace": "P04 / P18",
+    "keyId": "SR-24",
+    "keyOptional": true,
+    "keyKind": "passage"
+   },
+   {
+    "id": "N3",
+    "field": "noticedJustBeyond2m",
+    "status": "definite opening",
+    "kind": "door",
+    "a": [
+     9.517,
+     7.165
+    ],
+    "b": [
+     9.517,
+     7.865
+    ],
+    "width": 0.7,
+    "nearestPlace": "P08",
+    "keyId": "SR-20",
+    "keyOptional": true,
+    "keyKind": "door"
+   },
+   {
+    "id": "N4",
+    "field": "noticedJustBeyond2m",
+    "status": "definite opening",
+    "kind": "door",
+    "a": [
+     9.517,
+     9.434
+    ],
+    "b": [
+     9.517,
+     10.134
+    ],
+    "width": 0.7,
+    "nearestPlace": "P17",
+    "keyId": "SR-21",
+    "keyOptional": true,
+    "keyKind": "door"
+   },
+   {
+    "id": "N5",
+    "field": "noticedJustBeyond2m",
+    "status": "definite opening",
+    "kind": "door",
+    "a": [
+     23.987,
+     1.159
+    ],
+    "b": [
+     25.787,
+     1.159
+    ],
+    "width": 1.8,
+    "nearestPlace": "P02",
+    "keyId": "SR-18",
+    "keyOptional": true,
+    "keyKind": "door"
+   },
+   {
+    "id": "N6",
+    "field": "noticedJustBeyond2m",
+    "status": "definite opening",
+    "kind": "door",
+    "a": [
+     23.987,
+     3.259
+    ],
+    "b": [
+     25.787,
+     3.259
+    ],
+    "width": 1.8,
+    "nearestPlace": "P05",
+    "keyId": "SR-17",
+    "keyOptional": true,
+    "keyKind": "door"
+   }
+  ],
+  "auditor2": [
+   {
+    "id": "N1",
+    "field": "noticedNearby",
+    "status": "definite opening",
+    "kind": "door",
+    "a": [
+     9.517,
+     5.351
+    ],
+    "b": [
+     9.517,
+     6.051
+    ],
+    "width": 0.7,
+    "nearestPlace": "P08",
+    "keyId": "SR-19",
+    "keyOptional": true,
+    "keyKind": "door"
+   },
+   {
+    "id": "N2",
+    "field": "noticedNearby",
+    "status": "definite opening",
+    "kind": "door",
+    "a": [
+     23.002,
+     4.775
+    ],
+    "b": [
+     23.702,
+     4.775
+    ],
+    "width": 0.7,
+    "nearestPlace": "P18",
+    "keyId": "SR-22",
+    "keyOptional": true,
+    "keyKind": "door"
+   },
+   {
+    "id": "N3",
+    "field": "noticedNearby",
+    "status": "possible passage (borderline; I would not count it, or only as optional)",
+    "kind": "passage",
+    "a": [
+     7.554,
+     3.259
+    ],
+    "b": [
+     9.387,
+     3.259
+    ],
+    "width": 1.833,
+    "nearestPlace": "P21 / P07",
+    "keyId": "SR-23",
+    "keyOptional": true,
+    "keyKind": "passage"
+   },
+   {
+    "id": "N4",
+    "field": "noticedNearby",
+    "status": "possible passage (borderline; I would not count it, or only as optional)",
+    "kind": "passage",
+    "a": [
+     20.612,
+     6.924
+    ],
+    "b": [
+     22.737,
+     6.924
+    ],
+    "width": 2.125,
+    "nearestPlace": "P04 / P18",
+    "keyId": "SR-24",
+    "keyOptional": true,
+    "keyKind": "passage"
+   },
+   {
+    "id": "N5",
+    "field": "noticedJustBeyond2m",
+    "status": "definite opening",
+    "kind": "door",
+    "a": [
+     9.517,
+     7.166
+    ],
+    "b": [
+     9.517,
+     7.866
+    ],
+    "width": 0.7,
+    "nearestPlace": "P08",
+    "keyId": "SR-20",
+    "keyOptional": true,
+    "keyKind": "door"
+   },
+   {
+    "id": "N6",
+    "field": "noticedJustBeyond2m",
+    "status": "definite opening",
+    "kind": "door",
+    "a": [
+     9.517,
+     9.434
+    ],
+    "b": [
+     9.517,
+     10.134
+    ],
+    "width": 0.7,
+    "nearestPlace": "P17",
+    "keyId": "SR-21",
+    "keyOptional": true,
+    "keyKind": "door"
+   },
+   {
+    "id": "N7",
+    "field": "noticedJustBeyond2m",
+    "status": "definite opening (cut by the view's crop)",
+    "kind": "door",
+    "a": [
+     23.987,
+     1.159
+    ],
+    "b": [
+     25.787,
+     1.159
+    ],
+    "width": 1.8,
+    "nearestPlace": "P02",
+    "keyId": "SR-18",
+    "keyOptional": true,
+    "keyKind": "door"
+   },
+   {
+    "id": "N8",
+    "field": "noticedFartherAway",
+    "status": "definite opening (cut by the view's crop)",
+    "kind": "door",
+    "a": [
+     23.987,
+     3.259
+    ],
+    "b": [
+     25.787,
+     3.259
+    ],
+    "width": 1.8,
+    "nearestPlace": "P05",
+    "keyId": "SR-17",
+    "keyOptional": true,
+    "keyKind": "door"
+   }
+  ]
+ }
+}

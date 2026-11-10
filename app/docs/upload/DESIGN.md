@@ -1393,7 +1393,7 @@ Each step writes its own `docs/contract-issues/<U0..U7, UI>.md`; the integration
 | Porting a 1,487-line module-level script changes an order or a float | step-by-step port gated by the bank's sha1s; one change at a time |
 | Hostile or huge drawings (C parser, ezdxf, quadratic detector) | child processes in Job Objects with time and memory caps, one run at a time, output size cap, pickles only ours, text as text |
 | Handles change on a Revit re-export: remembered fixes miss | element id, then geometry signature; unmatched fixes flagged, never silently dropped |
-| The detector's held-out score is 72 % on the tower | every doubtful opening flagged; the opening editor; the fifth drawing still decides the gate |
+| The detector's held-out score is 72 % on the tower | every doubtful opening flagged; the opening editor; the fifth drawing still decides the gate (10 Nov: it came out at 7 of 16, 44 %, on the 3D team's Revit suite, `detector/blind_run_suite_revit/README.md`: the opening editor is what staff use until the second fix round) |
 | Ctrl+C on `npm run dev`, or the API ending, during a run | the worker owns its state and has its own console: it normally finishes (`done`); when a tree kill reaches it (concurrently `-k` after the web server stopped, Playwright's teardown), `interrupted` and run again. No `--reload` in `npm run dev` since 10 Nov (UI-5) |
 | 16 GB with the dev servers, Edge and a build | one run at a time machine-wide, OpenBLAS threads 1, 4 GB caps; builders' heavy tests share the lock |
 | Uploaded versions break the e2e counts or are overwritten by the seed | fresh seeded e2e store; the seed refuses uploaded versions |

@@ -1,0 +1,15 @@
+{
+  "cache": "suite_revit",
+  "units": "mm",
+  "floors": {"suite_revit": "suite_revit"},
+  "layers": {
+    "wall": ["0", "A-WALL", "A-WALL-PATT"],
+    "column": ["S-COLS"],
+    "glass": ["A-GLAZ-CURT", "A-GLAZ-CWMG"],
+    "door": ["A-DOOR", "A-DOOR-FRAM", "A-DOOR-HDLN"],
+    "stair": ["S-STRS", "S-STRS-MBND"],
+    "ignore": ["A-ANNO-DIMS", "A-ANNO-IDEN", "A-ANNO-NOTE", "A-DETL", "A-DETL-GENF", "A-FLOR", "A-GENM", "A-GENM-HDLN",
+               "Defpoints", "E-LITE-EQPM", "G-ANNO-TEXT", "G-IMPT", "I-FURN", "I-FURN-CHAR", "I-WALL-HATT", "ID-LOOSE",
+               "ID-LOOSE2", "M-EQPM", "M_Arredi", "P-SANR-FIXT", "Q-CASE", "Q-CASE-HDLN", "Q-SPCQ"]
+  }
+}

@@ -1,0 +1,296 @@
+DXF AC1032  INSUNITS 1  MEASUREMENT 0  LUNITS 2  EXTMIN (1151, 8, 0)  EXTMAX (25079, 13084, 0)
+
+== layer table (name | colour | linetype | on/off frozen) and items per effective layer (top level / inside blocks)
+  0                                          col    7 lt Continuous     on         top   2635  in blocks      0
+  A-ANNO-DIMS                                col  211 lt Continuous     on         top      0  in blocks      0
+  A-ANNO-IDEN                                col  131 lt Continuous     on  FROZEN top      8  in blocks      0
+  A-ANNO-NOTE                                col    7 lt Continuous     on         top      1  in blocks      0
+  A-DETL                                     col   50 lt Continuous     on         top      6  in blocks      0
+  A-DETL-GENF                                col   92 lt Continuous     on         top    160  in blocks     32
+  A-DOOR                                     col    7 lt Continuous     on         top    102  in blocks     41
+  A-DOOR-FRAM                                col   10 lt Continuous     on         top     82  in blocks     79
+  A-DOOR-HDLN                                col    7 lt IMPORT-- DASH SMALL on         top      4  in blocks      0
+  A-FLOR                                     col    7 lt Continuous     on         top      0  in blocks      0
+  A-GENM                                     col   13 lt Continuous     on         top    139  in blocks      0
+  A-GENM-HDLN                                col   13 lt - DASH SMALL   on         top    524  in blocks      0
+  A-GLAZ-CURT                                col    7 lt Continuous     on         top     18  in blocks     72
+  A-GLAZ-CWMG                                col    7 lt Continuous     on         top     42  in blocks    140
+  A-WALL                                     col    7 lt Continuous     on         top    249  in blocks     58
+  A-WALL-PATT                                col  111 lt Continuous     on         top      0  in blocks      0
+  Defpoints                                  col    7 lt Continuous     on         top      0  in blocks      0
+  E-LITE-EQPM                                col   33 lt Continuous     on         top    253  in blocks      0
+  G-ANNO-TEXT                                col  231 lt Continuous     on         top      0  in blocks      0
+  G-IMPT                                     col    8 lt Continuous     on         top     24  in blocks      0
+  I-FURN                                     col   30 lt Continuous     on         top    206  in blocks      0
+  I-FURN-CHAR                                col  140 lt Continuous     on         top      8  in blocks     40
+  I-WALL-HATT                                col    8 lt Continuous     on         top     13  in blocks      0
+  ID-LOOSE                                   col   31 lt Continuous     on         top      0  in blocks      0
+  ID-LOOSE2                                  col    8 lt Continuous     on         top      0  in blocks      0
+  M-EQPM                                     col    7 lt Continuous     on         top    271  in blocks      4
+  M_Arredi                                   col    7 lt Continuous     on         top     13  in blocks      0
+  P-SANR-FIXT                                col    6 lt Continuous     on         top    806  in blocks      0
+  Q-CASE                                     col   31 lt Continuous     on         top  17191  in blocks   5650
+  Q-CASE-HDLN                                col   31 lt - DASH SMALL   on         top     58  in blocks      0
+  Q-SPCQ                                     col   91 lt Continuous     on  FROZEN top     30  in blocks    892
+  S-COLS                                     col    7 lt Continuous     on         top      6  in blocks     30
+  S-STRS                                     col    7 lt Continuous     on         top      0  in blocks      0
+  S-STRS-MBND                                col   10 lt Continuous     on         top      0  in blocks      0
+
+== per effective layer (sizes in DXF units)
+
+-- Q-CASE
+   top level:     {'LINE': 17020, 'ARC': 92, 'SPLINE': 32, 'HATCH': 19, 'LWPOLYLINE': 16, 'INSERT': 12}
+   inside blocks: {'LINE': 5646, 'LWPOLYLINE': 4}
+   linetypes: {'BYLAYER': 22607, 'Continuous': 234}
+   LINE lengths n=22666 min/p10/med/p90/max 0 / 0 / 0 / 1 / 4215
+   ARC radius n=92 min/p10/med/p90/max 10 / 25 / 100 / 200 / 200; sweep 3 / 5 / 18 / 90 / 115; r 280-2000 & sweep 20-125 deg: 0
+   open polylines 20
+   HATCH {'FP_17': 9, 'FP_6': 5, 'FP_16': 3, 'FP_15': 2}; area (units^2) 9 / 3150 / 21434 / 187673 / 573225
+   ellipses 0, splines 32
+   blocks: {'FP_27-GENERAL ARRANGEMENT PLAN': 1, 'FP_28-GENERAL ARRANGEMENT PLAN': 1, 'FP_29-GENERAL ARRANGEMENT PLAN': 1, 'FP_30-GENERAL ARRANGEMENT PLAN': 1, 'FP_31-GENERAL ARRANGEMENT PLAN': 1, 'FP_53-GENERAL ARRANGEMENT PLAN': 1, 'FP_54-GENERAL ARRANGEMENT PLAN': 1, 'FP_55-GENERAL ARRANGEMENT PLAN': 1} ... (12 names)
+   extent x 2888..24787  y 4134..11744
+
+-- 0
+   top level:     {'LINE': 1640, 'ARC': 787, 'HATCH': 99, 'LWPOLYLINE': 83, 'CIRCLE': 24, 'SOLID': 1, 'WIPEOUT': 1}
+   inside blocks: {}
+   linetypes: {'Continuous': 1443, 'BYLAYER': 1107, 'Hidden': 36, '- DASH MEDIUM': 26, '- DASH SMALL': 23}
+   LINE lengths n=1640 min/p10/med/p90/max 0 / 1 / 25 / 1344 / 7750
+   ARC radius n=787 min/p10/med/p90/max 2 / 14 / 107 / 1454 / 1192398; sweep 0 / 1 / 8 / 48 / 140; r 280-2000 & sweep 20-125 deg: 0
+   CIRCLE radius n=24 10 / 50 / 200 / 750 / 750
+   closed outlines n=17 mean width 71 / 71 / 148 / 244 / 379; long side 318 / 345 / 541 / 648 / 2000
+   open polylines 66
+   HATCH {'solid': 99}; area (units^2) 25 / 3547 / 22650 / 332937 / 1189278
+   extent x -191852..1208045  y 307..25137
+
+-- Q-SPCQ
+   top level:     {'INSERT': 30}
+   inside blocks: {'ARC': 729, 'LINE': 135, 'ELLIPSE': 16, 'LWPOLYLINE': 12}
+   linetypes: {'BYLAYER': 920, 'Hidden': 2}
+   LINE lengths n=135 min/p10/med/p90/max 3 / 15 / 53 / 500 / 1550
+   ARC radius n=729 min/p10/med/p90/max 15 / 20 / 20 / 20 / 500; sweep 32 / 108 / 127 / 127 / 171; r 280-2000 & sweep 20-125 deg: 1
+   door-like arc radii by 100s: {500: 1}
+   open polylines 12
+   ellipses 16, splines 0
+   blocks: {'CURTAIN_LINEAR_SINGLE - DB01-11356429-GENERAL ARRANGEMENT PLAN': 12, 'CURTAIN_LINEAR_SINGLE - DB01-11357310-GENERAL ARRANGEMENT PLAN': 12, 'TOILET PAPER - SA-03-12051735-GENERAL ARRANGEMENT PLAN': 1, 'APPLIANCE_TV - 70_-12504961-GENERAL ARRANGEMENT PLAN': 1, 'APPLIANCE_TV_WALL MOUNT WITH BRACKET - 65_-11362946-GENERAL ARRANGEMENT PLAN': 1, 'ADSK_US_M_M_Refrigerator - 500-13836790-GENERAL ARRANGEMENT PLAN': 1, 'LAMP_TABLE LAMP_003_ANTIFONI - DL-08-13906887-FURNITURE PLAN': 1, 'LAMP_TABLE LAMP_003_ANTIFONI - DL-08-13593144-FURNITURE PLAN - EXECUTIVE SUITE': 1}
+   extent x 2328..23466  y 1449..12922
+
+-- P-SANR-FIXT
+   top level:     {'LINE': 385, 'SPLINE': 152, 'ARC': 113, 'ELLIPSE': 102, 'LWPOLYLINE': 54}
+   inside blocks: {}
+   linetypes: {'BYLAYER': 806}
+   LINE lengths n=385 min/p10/med/p90/max 0 / 1 / 14 / 100 / 950
+   ARC radius n=113 min/p10/med/p90/max 3 / 5 / 22 / 50 / 373; sweep 2 / 14 / 90 / 180 / 269; r 280-2000 & sweep 20-125 deg: 0
+   open polylines 54
+   ellipses 102, splines 152
+   extent x 7632..11487  y 6685..12255
+
+-- A-GENM-HDLN
+   top level:     {'LINE': 520, 'CIRCLE': 4}
+   inside blocks: {}
+   linetypes: {'BYLAYER': 524}
+   LINE lengths n=520 min/p10/med/p90/max 2 / 2 / 3 / 28 / 571
+   CIRCLE radius n=4 12 / 12 / 12 / 12 / 12
+   extent x 9132..23614  y 4771..10139
+
+-- A-WALL
+   top level:     {'LINE': 181, 'HATCH': 54, 'ARC': 13, 'INSERT': 1}
+   inside blocks: {'LINE': 52, 'HATCH': 6}
+   linetypes: {'BYLAYER': 307}
+   LINE lengths n=233 min/p10/med/p90/max 3 / 31 / 100 / 1550 / 8250
+   ARC radius n=13 min/p10/med/p90/max 5 / 5 / 100 / 100 / 100; sweep 5 / 5 / 90 / 180 / 180; r 280-2000 & sweep 20-125 deg: 0
+   HATCH {'solid': 60}; area (units^2) 60 / 8284 / 40000 / 180560 / 825000
+   blocks: {'Walls 13 - Walls 1-2656323-GENERAL ARRANGEMENT PLAN': 1}
+   extent x 1569..25079  y 9..13084
+
+-- M-EQPM
+   top level:     {'LINE': 270, 'INSERT': 1}
+   inside blocks: {'LINE': 4}
+   linetypes: {'BYLAYER': 275}
+   LINE lengths n=274 min/p10/med/p90/max 0 / 19 / 44 / 78 / 800
+   blocks: {'FHC 02 - Type 1-2794844-GENERAL ARRANGEMENT PLAN': 1}
+   extent x 4806..19299  y 859..12080
+
+-- E-LITE-EQPM
+   top level:     {'LINE': 92, 'ARC': 80, 'SPLINE': 24, 'ELLIPSE': 22, 'LWPOLYLINE': 19, 'CIRCLE': 16}
+   inside blocks: {}
+   linetypes: {'BYLAYER': 227, 'CENTER2': 16, '- DASH MEDIUM': 10}
+   LINE lengths n=92 min/p10/med/p90/max 1 / 2 / 7 / 280 / 750
+   ARC radius n=80 min/p10/med/p90/max 8 / 9 / 126 / 175 / 200; sweep 180 / 180 / 180 / 180 / 180; r 280-2000 & sweep 20-125 deg: 0
+   CIRCLE radius n=16 50 / 50 / 100 / 305 / 305
+   open polylines 19
+   ellipses 22, splines 24
+   extent x 3360..24713  y 4498..11955
+
+-- I-FURN
+   top level:     {'ARC': 116, 'LINE': 68, 'LWPOLYLINE': 22}
+   inside blocks: {}
+   linetypes: {'BYLAYER': 205, '- DASH SMALL': 1}
+   LINE lengths n=68 min/p10/med/p90/max 3 / 3 / 5 / 1895 / 3950
+   ARC radius n=116 min/p10/med/p90/max 10 / 10 / 275 / 2333 / 5250; sweep 1 / 3 / 20 / 180 / 180; r 280-2000 & sweep 20-125 deg: 10
+   door-like arc radii by 100s: {600: 4, 700: 6}
+   closed outlines n=3 mean width 288 / 288 / 360 / 454 / 454; long side 732 / 732 / 794 / 1000 / 1000
+   open polylines 19
+   extent x 4354..29449  y 1744..12197
+
+-- A-DETL-GENF
+   top level:     {'LINE': 110, 'ARC': 50}
+   inside blocks: {'LINE': 20, 'ARC': 12}
+   linetypes: {'BYLAYER': 192}
+   LINE lengths n=130 min/p10/med/p90/max 3 / 3 / 29 / 109 / 112
+   ARC radius n=62 min/p10/med/p90/max 3 / 3 / 3 / 5 / 5; sweep 90 / 90 / 90 / 90 / 90; r 280-2000 & sweep 20-125 deg: 0
+   extent x 10669..23504  y 9..6834
+
+-- A-GLAZ-CWMG
+   top level:     {'INSERT': 42}
+   inside blocks: {'LINE': 131, 'HATCH': 9}
+   linetypes: {'BYLAYER': 182}
+   LINE lengths n=131 min/p10/med/p90/max 50 / 50 / 100 / 1417 / 3517
+   HATCH {'FP_1': 9}; area (units^2) 63640 / 63640 / 63640 / 140007 / 291517
+   blocks: {'Rectangular Mullion - 100X50-2447682-GENERAL ARRANGEMENT PLAN': 12, 'Rectangular Mullion - 100X50-2447683-GENERAL ARRANGEMENT PLAN': 12, 'Rectangular Mullion - 100X50-2447657-GENERAL ARRANGEMENT PLAN': 1, 'Rectangular Mullion - 100X50-2447655-GENERAL ARRANGEMENT PLAN': 1, 'Rectangular Mullion - 100X50-V10-GENERAL ARRANGEMENT PLAN': 1, 'Rectangular Mullion - 100X50-V11-GENERAL ARRANGEMENT PLAN': 1, 'Rectangular Mullion - 100X50-V12-GENERAL ARRANGEMENT PLAN': 1, 'Rectangular Mullion - 100X50-V13-GENERAL ARRANGEMENT PLAN': 1} ... (20 names)
+   extent x 1569..23637  y 2859..13068
+
+-- A-DOOR-FRAM
+   top level:     {'LINE': 82}
+   inside blocks: {'LINE': 79}
+   linetypes: {'BYLAYER': 161}
+   LINE lengths n=161 min/p10/med/p90/max 5 / 5 / 50 / 150 / 1730
+   extent x 7379..25079  y 809..11384
+
+-- A-DOOR
+   top level:     {'LINE': 89, 'ARC': 7, 'INSERT': 6}
+   inside blocks: {'LINE': 32, 'ARC': 9}
+   linetypes: {'BYLAYER': 127, '- DASH SMALL': 16}
+   LINE lengths n=121 min/p10/med/p90/max 10 / 40 / 141 / 865 / 1000
+   ARC radius n=16 min/p10/med/p90/max 700 / 700 / 865 / 930 / 930; sweep 35 / 35 / 60 / 91 / 91; r 280-2000 & sweep 20-125 deg: 16
+   door-like arc radii by 100s: {600: 2, 700: 3, 800: 9, 900: 2}
+   blocks: {'UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM-3324157-GENERAL ARRANGEMENT PLAN': 1, 'UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM-3324155-GENERAL ARRANGEMENT PLAN': 1, 'SERVICE_SWING_DOUBLE - D22 1800X2100MM-2804302-GENERAL ARRANGEMENT PLAN': 1, 'SERVICE_SWING_DOUBLE - D22 1800X2100MM-V24-GENERAL ARRANGEMENT PLAN': 1, 'SERVICE_SWING_DOUBLE - D22 1800X2100MM-V25-GENERAL ARRANGEMENT PLAN': 1, 'SERVICE_DOOR_SWING_1_SOLID - 850X2400MM_D06-3801650-GENERAL ARRANGEMENT PLAN': 1}
+   extent x 7224..25752  y 9..11134
+
+-- A-GENM
+   top level:     {'LINE': 77, 'ARC': 62}
+   inside blocks: {}
+   linetypes: {'BYLAYER': 87, 'Continuous': 52}
+   LINE lengths n=77 min/p10/med/p90/max 5 / 25 / 208 / 431 / 1295
+   ARC radius n=62 min/p10/med/p90/max 10 / 10 / 894 / 4156 / 5250; sweep 1 / 4 / 14 / 91 / 131; r 280-2000 & sweep 20-125 deg: 16
+   door-like arc radii by 100s: {200: 3, 500: 3, 600: 4, 800: 3, 900: 3}
+   extent x 2941..29449  y 4323..11765
+
+-- A-GLAZ-CURT
+   top level:     {'INSERT': 18}
+   inside blocks: {'LINE': 72}
+   linetypes: {'BYLAYER': 90}
+   LINE lengths n=72 min/p10/med/p90/max 10 / 10 / 707 / 1417 / 3517
+   blocks: {'System Panel - GLAZED-2447686-GENERAL ARRANGEMENT PLAN': 10, 'System Panel - GLAZED-2447687-GENERAL ARRANGEMENT PLAN': 5, 'System Panel - GLAZED-2447693-GENERAL ARRANGEMENT PLAN': 2, 'System Panel - GLAZED-2447692-GENERAL ARRANGEMENT PLAN': 1}
+   extent x 1607..23577  y 2926..13019
+
+-- Q-CASE-HDLN
+   top level:     {'LINE': 52, 'ARC': 4, 'LWPOLYLINE': 2}
+   inside blocks: {}
+   linetypes: {'BYLAYER': 58}
+   LINE lengths n=52 min/p10/med/p90/max 24 / 25 / 450 / 750 / 750
+   ARC radius n=4 min/p10/med/p90/max 75 / 75 / 75 / 75 / 75; sweep 90 / 90 / 90 / 90 / 90; r 280-2000 & sweep 20-125 deg: 0
+   open polylines 2
+   extent x 2921..21625  y 9064..11058
+
+-- I-FURN-CHAR
+   top level:     {'INSERT': 8}
+   inside blocks: {'LWPOLYLINE': 40}
+   raw layers of these items: {'0': 40, 'I-FURN-CHAR': 8}
+   linetypes: {'Continuous': 40, 'BYLAYER': 8}
+   closed outlines n=16 mean width 92 / 92 / 244 / 244 / 244; long side 541 / 541 / 592 / 640 / 640
+   open polylines 24
+   blocks: {'Gruppo-19': 8}
+   extent x 17324..19775  y 7450..9901
+
+-- S-COLS
+   top level:     {'INSERT': 6}
+   inside blocks: {'LINE': 24, 'HATCH': 6}
+   linetypes: {'BYLAYER': 36}
+   LINE lengths n=24 min/p10/med/p90/max 500 / 500 / 1000 / 1000 / 1000
+   HATCH {'solid': 6}; area (units^2) 500000 / 500000 / 500000 / 500000 / 500000
+   blocks: {'COLUMN_CONCRETE RECTANGLE_GEN - 500W 1000D-2665214-GENERAL ARRANGEMENT PLAN': 4, 'COLUMN_CONCRETE RECTANGLE_GEN - 500W 1000D-3497240-GENERAL ARRANGEMENT PLAN': 2}
+   extent x 2762..20762  y 209..11509
+
+-- G-IMPT
+   top level:     {'LINE': 19, 'LWPOLYLINE': 5}
+   inside blocks: {}
+   linetypes: {'BYLAYER': 24}
+   LINE lengths n=19 min/p10/med/p90/max 0 / 1 / 4 / 121 / 341
+   open polylines 5
+   extent x 10323..10695  y 6685..6935
+
+-- M_Arredi
+   top level:     {'LWPOLYLINE': 8, 'LINE': 4, 'HATCH': 1}
+   inside blocks: {}
+   linetypes: {'Continuous': 10, 'Hidden': 3}
+   LINE lengths n=4 min/p10/med/p90/max 2 / 2 / 510 / 1341 / 1341
+   closed outlines n=3 mean width 20 / 20 / 31 / 470 / 470; long side 691 / 691 / 983 / 1344 / 1344
+   open polylines 5
+   HATCH {'solid': 1}; area (units^2) 23956 / 23956 / 23956 / 23956 / 23956
+   extent x 6487..7246  y 8665..10067
+
+-- I-WALL-HATT
+   top level:     {'LWPOLYLINE': 12, 'LINE': 1}
+   inside blocks: {}
+   linetypes: {'BYLAYER': 13}
+   LINE lengths n=1 min/p10/med/p90/max 0 / 0 / 0 / 0 / 0
+   closed outlines n=1 mean width 103 / 103 / 103 / 103 / 103; long side 340 / 340 / 340 / 340 / 340
+   open polylines 11
+   extent x 6829..7085  y 8849..9438
+
+-- A-ANNO-IDEN
+   top level:     {'MTEXT': 8}
+   inside blocks: {}
+   linetypes: {'BYLAYER': 8}
+
+-- A-DETL
+   top level:     {'LINE': 6}
+   inside blocks: {}
+   linetypes: {'Centre': 6}
+   LINE lengths n=6 min/p10/med/p90/max 1112 / 1112 / 1112 / 1834 / 1834
+   extent x 15237..25079  y 759..3659
+
+-- A-DOOR-HDLN
+   top level:     {'ARC': 4}
+   inside blocks: {}
+   linetypes: {'- DASH SMALL': 4}
+   ARC radius n=4 min/p10/med/p90/max 700 / 700 / 700 / 700 / 700; sweep 30 / 30 / 30 / 30 / 30; r 280-2000 & sweep 20-125 deg: 4
+   door-like arc radii by 100s: {600: 2, 700: 2}
+   extent x 9512..23002  y 4780..10134
+
+-- A-ANNO-NOTE
+   top level:     {'MTEXT': 1}
+   inside blocks: {}
+   linetypes: {'BYLAYER': 1}
+
+== raw layers used inside block definitions (entity counts per block definition, not per insert)
+  Q-CASE                                     14357
+  P-SANR-FIXT                                1120
+  A-WALL                                     307
+  A-GENM-HDLN                                262
+  A-ANNO-DIMS                                240
+  I-FURN                                     200
+  Q-SPCQ                                     188
+  A-DETL-GENF                                160
+  E-LITE-EQPM                                146
+  A-DOOR-FRAM                                137
+  Defpoints                                  120
+  A-DOOR                                     116
+  A-GENM                                     105
+  A-GLAZ-CWMG                                101
+  G-IMPT                                     72
+  0                                          61
+  A-GLAZ-CURT                                38
+  Q-CASE-HDLN                                29
+  S-STRS                                     16
+  S-COLS                                     16
+  M_Arredi                                   13
+  I-WALL-HATT                                13
+  A-DETL                                     6
+  M-EQPM                                     5
+  A-DOOR-HDLN                                2
+  I-FURN-CHAR                                2
+  S-STRS-MBND                                1
+  A-ANNO-NOTE                                1
+
+audit errors 0 fixes 13

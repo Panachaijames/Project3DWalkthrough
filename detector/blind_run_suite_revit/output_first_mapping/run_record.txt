@@ -1,0 +1,9 @@
+Held-out run on the presidential suite Revit export, first mapping, run once (step 1 of 7, 10 Nov 2026).
+
+Command, from the detector folder (detector files identical to frozen_code/, see ../frozen_code_hashes.txt):
+  OPENINGS_DATA=<work folder holding suite_revit/prims.pkl> python -B openings.py blind_run_suite_revit/mappings_first_run/suite_revit.json blind_run_suite_revit/output_first_mapping/suite_revit.json --png blind_run_suite_revit/output_first_mapping/png
+Started 2026-11-10 08:55:52, wall time 4.4 s, exit status 0, stderr empty.
+Records in suite_revit.json ("openings"): 37 (counted by a one-line script that printed only the number).
+
+The detections, the PNG and run_stdout.txt (which prints counts per kind) were NOT looked at when this run was made: the answer
+key did not exist yet. suite_revit.json, png/ and run_stdout.txt / run_stderr.txt are exactly as the run wrote them.

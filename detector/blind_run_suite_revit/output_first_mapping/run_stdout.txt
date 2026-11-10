@@ -1,0 +1,2 @@
+suite_revit: 37 openings (door 14, window 15, passage 8)  1.9 s
+total 3.2 s -> blind_run_suite_revit/output_first_mapping/suite_revit.json

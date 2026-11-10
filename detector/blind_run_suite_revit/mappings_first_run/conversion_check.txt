@@ -1,0 +1,21 @@
+entity counts, dump vs DXF (all spaces and block definitions):
+  ARC              dump    1976  dxf    1976
+  BLOCK            dump     167  dxf       0   <-- differs
+  CIRCLE           dump      55  dxf      55
+  ELLIPSE          dump     268  dxf     268
+  ENDBLK           dump     167  dxf       0   <-- differs
+  HATCH            dump     264  dxf     264
+  INSERT           dump     311  dxf     311
+  LINE             dump   36663  dxf   36663
+  LWPOLYLINE       dump     434  dxf     434
+  MTEXT            dump      50  dxf      50
+  POINT            dump     120  dxf     120
+  SOLID            dump       1  dxf       1
+  SPLINE           dump     539  dxf     539
+  WIPEOUT          dump       2  dxf       2
+
+entities of the dump not found in the DXF by handle: {'BLOCK': 167, 'ENDBLK': 167}
+entities whose layer differs (type, dump layer, DXF layer): count
+
+HATCH layers in the dump: {'A-WALL': 114, '0': 99, 'Q-CASE': 38, 'A-GLAZ-CWMG': 9, 'S-COLS': 2, 'M_Arredi': 2}
+HATCH layers in the DXF:  {'A-WALL': 114, '0': 99, 'Q-CASE': 38, 'A-GLAZ-CWMG': 9, 'M_Arredi': 2, 'S-COLS': 2}

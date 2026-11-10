@@ -1,0 +1,1496 @@
+{
+ "what": "every cluster of the three lists (scorer matching, transitive) with its members and the checks of the step: presence, kind, optional flag, ends within 5 cm, width within the scorer tolerance",
+ "counts": {
+  "A": 42,
+  "B": 42,
+  "C": 44
+ },
+ "clusters": 44,
+ "withIssues": 4,
+ "list": [
+  {
+   "at": [
+    9.517,
+    5.701
+   ],
+   "ids": {
+    "A": "A-19",
+    "B": "SRB-05",
+    "C": "C-24"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": false
+   },
+   "width": {
+    "A": 0.7,
+    "B": 0.7,
+    "C": 0.7
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "glass hinged door 0.70 m in a glass screen (IN_SHOWER DOOR1 shower-door family), WC compartment",
+    "B": "glass swing door 0.70 in a 10 mm glass screen (family IN_SHOWER DOOR1 - Shower door 700x2160), WC compartment",
+    "C": "glass hinged door 0.70 in a glass screen (exploded; matches the unused definition IN_SHOWER DOOR1 - Shower door_700X2160MM), WC compartment"
+   },
+   "issues": [
+    "optional A True / B True / C False"
+   ]
+  },
+  {
+   "at": [
+    19.674,
+    1.159
+   ],
+   "ids": {
+    "C": "C-40"
+   },
+   "kind": {
+    "C": "passage"
+   },
+   "optional": {
+    "C": true
+   },
+   "width": {
+    "C": 1.175
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "C": "mouth of a 0.30 m door recess in the corridor wall"
+   },
+   "issues": [
+    "not in A+B"
+   ]
+  },
+  {
+   "at": [
+    21.349,
+    1.159
+   ],
+   "ids": {
+    "C": "C-43"
+   },
+   "kind": {
+    "C": "passage"
+   },
+   "optional": {
+    "C": true
+   },
+   "width": {
+    "C": 1.175
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "C": "mouth of a 0.30 m door recess in the corridor wall"
+   },
+   "issues": [
+    "not in A+B"
+   ]
+  },
+  {
+   "at": [
+    21.674,
+    6.994
+   ],
+   "ids": {
+    "A": "A-24",
+    "B": "SRB-24",
+    "C": "C-20"
+   },
+   "kind": {
+    "A": "passage",
+    "B": "passage",
+    "C": "passage"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 2.125,
+    "B": 2.125,
+    "C": 2.125
+   },
+   "maxEndDiff": 0.07,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "open side of the lobby of bedroom 2 (no wall, nothing drawn)",
+    "B": "open side of a lobby (no wall, nothing drawn)",
+    "C": "open side of the lobby of bedroom 2"
+   },
+   "issues": [
+    "ends differ by up to 0.070 m"
+   ]
+  },
+  {
+   "at": [
+    1.612,
+    5.859
+   ],
+   "ids": {
+    "A": "A-26",
+    "B": "SRB-W02",
+    "C": "C-23"
+   },
+   "kind": {
+    "A": "window",
+    "B": "window",
+    "C": "window"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 3.6172,
+    "B": 3.5172,
+    "C": 3.5172
+   },
+   "maxEndDiff": 0.05,
+   "maxWidthDiff": 0.1,
+   "subtype": {
+    "A": "fixed curtain-wall glazing, facet 2 of 3 of the west bay (master bedroom)",
+    "B": "fixed curtain-wall glazing, facet 2 of 3 of the west bay (3.517 m, between the corner wedges, no mullion box)",
+    "C": "fixed curtain-wall glazing, west bay facet 2 at 90 deg (pane 3.517)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    2.212,
+    3.48
+   ],
+   "ids": {
+    "A": "A-25",
+    "B": "SRB-W01",
+    "C": "C-30"
+   },
+   "kind": {
+    "A": "window",
+    "B": "window",
+    "C": "window"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 1.6556,
+    "B": 1.6556,
+    "C": 1.6556
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "fixed curtain-wall glazing, facet 1 of 3 of the west bay (master bedroom)",
+    "B": "fixed curtain-wall glazing, facet 1 of 3 of the west bay (1.656 m, its two 50 mm mullion boxes included)",
+    "C": "fixed curtain-wall glazing, west bay facet 1 at 135 deg (pane 1.556)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    2.212,
+    8.238
+   ],
+   "ids": {
+    "A": "A-27",
+    "B": "SRB-W03",
+    "C": "C-18"
+   },
+   "kind": {
+    "A": "window",
+    "B": "window",
+    "C": "window"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 1.6556,
+    "B": 1.6556,
+    "C": 1.6556
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "fixed curtain-wall glazing, facet 3 of 3 of the west bay (master bedroom)",
+    "B": "fixed curtain-wall glazing, facet 3 of 3 of the west bay (1.656 m, its two 50 mm mullion boxes included)",
+    "C": "fixed curtain-wall glazing, west bay facet 3 at 45 deg (pane 1.556)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    3.952,
+    11.886
+   ],
+   "ids": {
+    "A": "A-28",
+    "B": "SRB-W04",
+    "C": "C-11"
+   },
+   "kind": {
+    "A": "window",
+    "B": "window",
+    "C": "window"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 0.8072,
+    "B": 0.8072,
+    "C": 0.8072
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "fixed curtain-wall glazing, facet 1 of 3 of the north bay 1 (master bedroom)",
+    "B": "fixed curtain-wall glazing, facet 1 of 3 of the north bay 1 (0.807 m, its two 50 mm mullion boxes included)",
+    "C": "fixed curtain-wall glazing, bay N1 facet 1 at 75 deg (pane 0.707)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    4.693,
+    12.66
+   ],
+   "ids": {
+    "A": "A-29",
+    "B": "SRB-W05",
+    "C": "C-06"
+   },
+   "kind": {
+    "A": "window",
+    "B": "window",
+    "C": "window"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 1.5171,
+    "B": 1.4171,
+    "C": 1.4171
+   },
+   "maxEndDiff": 0.05,
+   "maxWidthDiff": 0.1,
+   "subtype": {
+    "A": "fixed curtain-wall glazing, facet 2 of 3 of the north bay 1 (master bedroom)",
+    "B": "fixed curtain-wall glazing, facet 2 of 3 of the north bay 1 (1.417 m, between the corner wedges, no mullion box)",
+    "C": "fixed curtain-wall glazing, bay N1 facet 2 at 30 deg (pane 1.417)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    5.735,
+    12.915
+   ],
+   "ids": {
+    "A": "A-30",
+    "B": "SRB-W06",
+    "C": "C-01"
+   },
+   "kind": {
+    "A": "window",
+    "B": "window",
+    "C": "window"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 0.8071,
+    "B": 0.8071,
+    "C": 0.8071
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "fixed curtain-wall glazing, facet 3 of 3 of the north bay 1 (master bedroom)",
+    "B": "fixed curtain-wall glazing, facet 3 of 3 of the north bay 1 (0.807 m, its two 50 mm mullion boxes included)",
+    "C": "fixed curtain-wall glazing, bay N1 facet 3 at 165 deg (pane 0.707)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    7.454,
+    2.784
+   ],
+   "ids": {
+    "A": "A-01",
+    "B": "SRB-01",
+    "C": "C-37"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": false,
+    "B": false,
+    "C": false
+   },
+   "width": {
+    "A": 1.1,
+    "B": 1.1,
+    "C": 1.1
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "pocket (cavity) sliding door, leaf 1.00 m",
+    "B": "pocket (cavity) sliding door, single leaf 1.00 m",
+    "C": "pocket (cavity) sliding door, leaf 1.00 (exploded; matches the unused definition DOOR_SLIDING_CAVITY_1_SOLID - D13, opening 1.1 m)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    7.454,
+    10.834
+   ],
+   "ids": {
+    "A": "A-02",
+    "B": "SRB-02",
+    "C": "C-16"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": false,
+    "B": false,
+    "C": false
+   },
+   "width": {
+    "A": 1.1,
+    "B": 1.1,
+    "C": 1.1
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "pocket (cavity) sliding door, leaf 1.00 m",
+    "B": "pocket (cavity) sliding door, single leaf 1.00 m",
+    "C": "pocket (cavity) sliding door, leaf 1.00 (exploded; matches the unused definition DOOR_SLIDING_CAVITY_1_SOLID - D13, opening 1.1 m), at a corner"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    8.327,
+    11.886
+   ],
+   "ids": {
+    "A": "A-31",
+    "B": "SRB-W07",
+    "C": "C-12"
+   },
+   "kind": {
+    "A": "window",
+    "B": "window",
+    "C": "window"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 0.8072,
+    "B": 0.8072,
+    "C": 0.8072
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "fixed curtain-wall glazing, facet 1 of 3 of the north bay 2 (master bathroom, bath)",
+    "B": "fixed curtain-wall glazing, facet 1 of 3 of the north bay 2 (0.807 m, its two 50 mm mullion boxes included)",
+    "C": "fixed curtain-wall glazing, bay N2 facet 1 at 75 deg (pane 0.707)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    8.47,
+    3.259
+   ],
+   "ids": {
+    "A": "A-23",
+    "B": "SRB-23",
+    "C": "C-31"
+   },
+   "kind": {
+    "A": "passage",
+    "B": "passage",
+    "C": "passage"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 1.8327,
+    "B": 1.8327,
+    "C": 1.8327
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "open side of the dressing area (no wall, nothing drawn)",
+    "B": "open side of an alcove (no wall, nothing drawn)",
+    "C": "open side of the dressing area"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    8.679,
+    5.156
+   ],
+   "ids": {
+    "A": "A-04",
+    "B": "SRB-03",
+    "C": "C-25"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": false,
+    "B": false,
+    "C": false
+   },
+   "width": {
+    "A": 1.1,
+    "B": 1.1,
+    "C": 1.1
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "pocket (cavity) sliding door, leaf 1.00 m",
+    "B": "pocket (cavity) sliding door, single leaf 1.00 m",
+    "C": "pocket (cavity) sliding door, leaf 1.00 (exploded; matches the unused definition DOOR_SLIDING_CAVITY_1_SOLID - D13, opening 1.1 m)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    9.068,
+    12.66
+   ],
+   "ids": {
+    "A": "A-32",
+    "B": "SRB-W08",
+    "C": "C-07"
+   },
+   "kind": {
+    "A": "window",
+    "B": "window",
+    "C": "window"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 1.5171,
+    "B": 1.4171,
+    "C": 1.4171
+   },
+   "maxEndDiff": 0.05,
+   "maxWidthDiff": 0.1,
+   "subtype": {
+    "A": "fixed curtain-wall glazing, facet 2 of 3 of the north bay 2 (master bathroom, bath)",
+    "B": "fixed curtain-wall glazing, facet 2 of 3 of the north bay 2 (1.417 m, between the corner wedges, no mullion box)",
+    "C": "fixed curtain-wall glazing, bay N2 facet 2 at 30 deg (pane 1.417)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    9.462,
+    2.072
+   ],
+   "ids": {
+    "A": "A-03",
+    "B": "SRB-04",
+    "C": "C-38"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": false,
+    "B": false,
+    "C": false
+   },
+   "width": {
+    "A": 2.225,
+    "B": 2.225,
+    "C": 2.225
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "bi-fold door, 4 panels (drawn folded)",
+    "B": "bi-fold door, 4 panels of 0.564 m drawn folded at the north end",
+    "C": "bi-fold door, 4 panels of 0.564 (exploded; matches the unused definition Doors 1 - Doors 1)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    9.517,
+    7.515
+   ],
+   "ids": {
+    "A": "A-20",
+    "B": "SRB-06",
+    "C": "C-19"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 0.6999,
+    "B": 0.7,
+    "C": 0.7
+   },
+   "maxEndDiff": 0.0001,
+   "maxWidthDiff": 0.0001,
+   "subtype": {
+    "A": "glass hinged door 0.70 m in a shower screen (IN_SHOWER DOOR1)",
+    "B": "glass swing door 0.70 in a 10 mm glass shower screen (family IN_SHOWER DOOR1 - Shower door 700x2160)",
+    "C": "glass hinged shower door 0.70 (exploded; matches the unused definition IN_SHOWER DOOR1 - Shower door_700X2160MM)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    9.517,
+    9.784
+   ],
+   "ids": {
+    "A": "A-21",
+    "B": "SRB-07",
+    "C": "C-17"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 0.7,
+    "B": 0.7,
+    "C": 0.7
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "glass hinged door 0.70 m in a shower screen (IN_SHOWER DOOR1)",
+    "B": "glass swing door 0.70 in a 10 mm glass shower screen (family IN_SHOWER DOOR1 - Shower door 700x2160)",
+    "C": "glass hinged shower door 0.70 (exploded; matches the unused definition IN_SHOWER DOOR1 - Shower door_700X2160MM)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    10.11,
+    12.915
+   ],
+   "ids": {
+    "A": "A-33",
+    "B": "SRB-W09",
+    "C": "C-02"
+   },
+   "kind": {
+    "A": "window",
+    "B": "window",
+    "C": "window"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 0.8071,
+    "B": 0.8071,
+    "C": 0.8071
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "fixed curtain-wall glazing, facet 3 of 3 of the north bay 2 (master bathroom, bath)",
+    "B": "fixed curtain-wall glazing, facet 3 of 3 of the north bay 2 (0.807 m, its two 50 mm mullion boxes included)",
+    "C": "fixed curtain-wall glazing, bay N2 facet 3 at 165 deg (pane 0.707)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    11.562,
+    4.198
+   ],
+   "ids": {
+    "A": "A-05",
+    "B": "SRB-08",
+    "C": "C-29"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": false,
+    "B": false,
+    "C": false
+   },
+   "width": {
+    "A": 1.0006,
+    "B": 1.0,
+    "C": 1.0006
+   },
+   "maxEndDiff": 0.0006,
+   "maxWidthDiff": 0.0006,
+   "subtype": {
+    "A": "hinged single, leaf 0.90 m",
+    "B": "single swing, leaf 0.90 (exploded DOOR_SWING_1_SOLID)",
+    "C": "single swing, leaf 0.90 (exploded; matches the unused definition DOOR_SWING_1_SOLID - D09, 1.0 m)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    12.087,
+    3.259
+   ],
+   "ids": {
+    "A": "A-06",
+    "B": "SRB-09",
+    "C": "C-32"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": false,
+    "B": false,
+    "C": false
+   },
+   "width": {
+    "A": 0.75,
+    "B": 0.75,
+    "C": 0.75
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "hinged single, leaf 0.70 m",
+    "B": "single swing, leaf 0.665 (swing r 0.70)",
+    "C": "single swing, leaf 0.70 (exploded; matches DOOR_SWING_1_SOLID - 800)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    12.702,
+    11.886
+   ],
+   "ids": {
+    "A": "A-34",
+    "B": "SRB-W10",
+    "C": "C-13"
+   },
+   "kind": {
+    "A": "window",
+    "B": "window",
+    "C": "window"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 0.8072,
+    "B": 0.8072,
+    "C": 0.8072
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "fixed curtain-wall glazing, facet 1 of 3 of the north bay 3 (living)",
+    "B": "fixed curtain-wall glazing, facet 1 of 3 of the north bay 3 (0.807 m, its two 50 mm mullion boxes included)",
+    "C": "fixed curtain-wall glazing, bay N3 facet 1 at 75 deg (pane 0.707)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    13.443,
+    12.66
+   ],
+   "ids": {
+    "A": "A-35",
+    "B": "SRB-W11",
+    "C": "C-08"
+   },
+   "kind": {
+    "A": "window",
+    "B": "window",
+    "C": "window"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 1.5171,
+    "B": 1.4171,
+    "C": 1.4171
+   },
+   "maxEndDiff": 0.05,
+   "maxWidthDiff": 0.1,
+   "subtype": {
+    "A": "fixed curtain-wall glazing, facet 2 of 3 of the north bay 3 (living)",
+    "B": "fixed curtain-wall glazing, facet 2 of 3 of the north bay 3 (1.417 m, between the corner wedges, no mullion box)",
+    "C": "fixed curtain-wall glazing, bay N3 facet 2 at 30 deg (pane 1.417)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    14.124,
+    5.136
+   ],
+   "ids": {
+    "A": "A-08",
+    "B": "SRB-11",
+    "C": "C-26"
+   },
+   "kind": {
+    "A": "passage",
+    "B": "passage",
+    "C": "passage"
+   },
+   "optional": {
+    "A": false,
+    "B": false,
+    "C": false
+   },
+   "width": {
+    "A": 1.975,
+    "B": 1.975,
+    "C": 1.975
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "doorless opening with a drawn head (dashed face lines across)",
+    "B": "doorless opening with a head drawn (face lines dashed across)",
+    "C": "cased opening with a head (no leaf)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    14.187,
+    3.259
+   ],
+   "ids": {
+    "A": "A-07",
+    "B": "SRB-10",
+    "C": "C-33"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": false,
+    "B": false,
+    "C": false
+   },
+   "width": {
+    "A": 1.8,
+    "B": 1.8,
+    "C": 1.8
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "hinged double, 2 leaves of 0.865 m (suite entrance)",
+    "B": "double swing, two leaves 0.865 (exploded DOOR_SWING_DOUBLE), suite entrance",
+    "C": "double swing, 2 x 0.865 leaves, suite entrance (exploded; matches the unused definition DOOR_SWING_DOUBLE_TYPE 2 - L16_D07, 1.8 m)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    14.485,
+    12.915
+   ],
+   "ids": {
+    "A": "A-36",
+    "B": "SRB-W12",
+    "C": "C-03"
+   },
+   "kind": {
+    "A": "window",
+    "B": "window",
+    "C": "window"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 0.8071,
+    "B": 0.8071,
+    "C": 0.8071
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "fixed curtain-wall glazing, facet 3 of 3 of the north bay 3 (living)",
+    "B": "fixed curtain-wall glazing, facet 3 of 3 of the north bay 3 (0.807 m, its two 50 mm mullion boxes included)",
+    "C": "fixed curtain-wall glazing, bay N3 facet 3 at 165 deg (pane 0.707)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    16.137,
+    3.259
+   ],
+   "ids": {
+    "A": "A-13",
+    "B": "SRB-12",
+    "C": "C-34"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": false,
+    "B": false,
+    "C": false
+   },
+   "width": {
+    "A": 1.8,
+    "B": 1.8,
+    "C": 1.8
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "hinged double, 2 leaves of 0.865 m (SERVICE_SWING_DOUBLE - D22 1800X2100MM), riser door",
+    "B": "double swing service door D22 1800x2100 (block SERVICE_SWING_DOUBLE - D22 1800X2100MM-V24), leaves drawn open 35 deg",
+    "C": "double swing service door 2 x 0.865 (SERVICE_SWING_DOUBLE - D22 1800X2100MM), to a riser"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    16.612,
+    1.159
+   ],
+   "ids": {
+    "A": "A-14",
+    "B": "SRB-13",
+    "C": "C-39"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": false,
+    "B": false,
+    "C": false
+   },
+   "width": {
+    "A": 0.85,
+    "B": 0.85,
+    "C": 0.85
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "hinged single, leaf 0.78 m (SERVICE_DOOR_SWING_1_SOLID - 850X2400MM_D06), riser door",
+    "B": "single swing service door 850x2400 (block SERVICE_DOOR_SWING_1_SOLID - 850X2400MM_D06), leaf drawn open 35 deg",
+    "C": "single swing service door, leaf 0.78 (SERVICE_DOOR_SWING_1_SOLID - 850X2400MM_D06), to a riser"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    17.077,
+    11.886
+   ],
+   "ids": {
+    "A": "A-37",
+    "B": "SRB-W13",
+    "C": "C-14"
+   },
+   "kind": {
+    "A": "window",
+    "B": "window",
+    "C": "window"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 0.8072,
+    "B": 0.8072,
+    "C": 0.8072
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "fixed curtain-wall glazing, facet 1 of 3 of the north bay 4 (dining)",
+    "B": "fixed curtain-wall glazing, facet 1 of 3 of the north bay 4 (0.807 m, its two 50 mm mullion boxes included)",
+    "C": "fixed curtain-wall glazing, bay N4 facet 1 at 75 deg (pane 0.707)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    17.818,
+    12.66
+   ],
+   "ids": {
+    "A": "A-38",
+    "B": "SRB-W14",
+    "C": "C-09"
+   },
+   "kind": {
+    "A": "window",
+    "B": "window",
+    "C": "window"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 1.5171,
+    "B": 1.4171,
+    "C": 1.4171
+   },
+   "maxEndDiff": 0.05,
+   "maxWidthDiff": 0.1,
+   "subtype": {
+    "A": "fixed curtain-wall glazing, facet 2 of 3 of the north bay 4 (dining)",
+    "B": "fixed curtain-wall glazing, facet 2 of 3 of the north bay 4 (1.417 m, between the corner wedges, no mullion box)",
+    "C": "fixed curtain-wall glazing, bay N4 facet 2 at 30 deg (pane 1.417)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    18.86,
+    12.915
+   ],
+   "ids": {
+    "A": "A-39",
+    "B": "SRB-W15",
+    "C": "C-04"
+   },
+   "kind": {
+    "A": "window",
+    "B": "window",
+    "C": "window"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 0.8071,
+    "B": 0.8071,
+    "C": 0.8071
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "fixed curtain-wall glazing, facet 3 of 3 of the north bay 4 (dining)",
+    "B": "fixed curtain-wall glazing, facet 3 of 3 of the north bay 4 (0.807 m, its two 50 mm mullion boxes included)",
+    "C": "fixed curtain-wall glazing, bay N4 facet 3 at 165 deg (pane 0.707)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    19.677,
+    0.859
+   ],
+   "ids": {
+    "A": "A-15",
+    "B": "SRB-14",
+    "C": "C-41"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": false,
+    "B": false,
+    "C": false
+   },
+   "width": {
+    "A": 1.0,
+    "B": 1.0,
+    "C": 1.0
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "hinged single, leaf 0.93 m (UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM)",
+    "B": "single swing unit door D01 1000x2250 (block UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM-3324155)",
+    "C": "single swing unit door, leaf 0.93 (UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    20.512,
+    4.809
+   ],
+   "ids": {
+    "A": "A-10",
+    "B": "SRB-15",
+    "C": "C-27"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": false,
+    "B": false,
+    "C": false
+   },
+   "width": {
+    "A": 0.8,
+    "B": 0.8,
+    "C": 0.8
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "hinged single, leaf 0.70 m",
+    "B": "single swing, leaf 0.70 (exploded)",
+    "C": "single swing, leaf 0.70 (exploded; matches the unused definition DOOR_SWING_1_SOLID - 800, 0.8 m)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    20.512,
+    6.634
+   ],
+   "ids": {
+    "A": "A-11",
+    "B": "SRB-16",
+    "C": "C-21"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": false,
+    "B": false,
+    "C": false
+   },
+   "width": {
+    "A": 1.1,
+    "B": 1.1,
+    "C": 1.1
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "pocket (cavity) sliding door, leaf 1.00 m",
+    "B": "pocket (cavity) sliding door, single leaf 1.00 m",
+    "C": "pocket (cavity) sliding door, leaf 1.00 (exploded; matches the unused definition DOOR_SLIDING_CAVITY_1_SOLID - D13, opening 1.1 m)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    21.112,
+    3.359
+   ],
+   "ids": {
+    "A": "A-09",
+    "B": "SRB-17",
+    "C": "C-35"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": false,
+    "B": false,
+    "C": false
+   },
+   "width": {
+    "A": 0.8,
+    "B": 0.8,
+    "C": 0.8
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "hinged single, leaf 0.70 m",
+    "B": "single swing, leaf 0.70 (exploded)",
+    "C": "single swing, leaf 0.70 (exploded; matches the unused definition DOOR_SWING_1_SOLID - 800, 0.8 m)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    21.347,
+    0.859
+   ],
+   "ids": {
+    "A": "A-16",
+    "B": "SRB-18",
+    "C": "C-42"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": false,
+    "B": false,
+    "C": false
+   },
+   "width": {
+    "A": 1.0,
+    "B": 1.0,
+    "C": 1.0
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "hinged single, leaf 0.93 m (UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM)",
+    "B": "single swing unit door D01 1000x2250 (block UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM-3324157)",
+    "C": "single swing unit door, leaf 0.93 (UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    21.452,
+    11.886
+   ],
+   "ids": {
+    "A": "A-40",
+    "B": "SRB-W16",
+    "C": "C-15"
+   },
+   "kind": {
+    "A": "window",
+    "B": "window",
+    "C": "window"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 0.8072,
+    "B": 0.8072,
+    "C": 0.8072
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "fixed curtain-wall glazing, facet 1 of 3 of the north bay 5 (bedroom 2)",
+    "B": "fixed curtain-wall glazing, facet 1 of 3 of the north bay 5 (0.807 m, its two 50 mm mullion boxes included)",
+    "C": "fixed curtain-wall glazing, bay N5 facet 1 at 75 deg (pane 0.707)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    22.193,
+    12.66
+   ],
+   "ids": {
+    "A": "A-41",
+    "B": "SRB-W17",
+    "C": "C-10"
+   },
+   "kind": {
+    "A": "window",
+    "B": "window",
+    "C": "window"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 1.5171,
+    "B": 1.4171,
+    "C": 1.4171
+   },
+   "maxEndDiff": 0.05,
+   "maxWidthDiff": 0.1,
+   "subtype": {
+    "A": "fixed curtain-wall glazing, facet 2 of 3 of the north bay 5 (bedroom 2)",
+    "B": "fixed curtain-wall glazing, facet 2 of 3 of the north bay 5 (1.417 m, between the corner wedges, no mullion box)",
+    "C": "fixed curtain-wall glazing, bay N5 facet 2 at 30 deg (pane 1.417)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    22.812,
+    6.434
+   ],
+   "ids": {
+    "A": "A-12",
+    "B": "SRB-19",
+    "C": "C-22"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": false,
+    "B": false,
+    "C": false
+   },
+   "width": {
+    "A": 0.8,
+    "B": 0.8,
+    "C": 0.8
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "hinged single, leaf 0.70 m",
+    "B": "single swing, leaf 0.70 (exploded)",
+    "C": "single swing, leaf 0.70, at a corner (exploded; matches DOOR_SWING_1_SOLID - 800, 0.8 m)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    23.235,
+    12.915
+   ],
+   "ids": {
+    "A": "A-42",
+    "B": "SRB-W18",
+    "C": "C-05"
+   },
+   "kind": {
+    "A": "window",
+    "B": "window",
+    "C": "window"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 0.8071,
+    "B": 0.8071,
+    "C": 0.8071
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "fixed curtain-wall glazing, facet 3 of 3 of the north bay 5 (bedroom 2)",
+    "B": "fixed curtain-wall glazing, facet 3 of 3 of the north bay 5 (0.807 m, its two 50 mm mullion boxes included)",
+    "C": "fixed curtain-wall glazing, bay N5 facet 3 at 165 deg (pane 0.707)"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    23.352,
+    4.775
+   ],
+   "ids": {
+    "A": "A-22",
+    "B": "SRB-20",
+    "C": "C-28"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 0.7,
+    "B": 0.7,
+    "C": 0.7
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "glass hinged door 0.70 m in a glass (shower) screen (IN_SHOWER DOOR1)",
+    "B": "glass swing door 0.70 in a 10 mm glass screen (family IN_SHOWER DOOR1 - Shower door 700x2160)",
+    "C": "glass hinged door 0.70 in a glass screen (exploded; matches the unused definition IN_SHOWER DOOR1 - Shower door_700X2160MM), probably a shower"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    24.887,
+    1.159
+   ],
+   "ids": {
+    "A": "A-18",
+    "B": "SRB-21",
+    "C": "C-44"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 1.8,
+    "B": 1.8,
+    "C": 1.8
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "hinged double (SERVICE_SWING_DOUBLE - D22 1800X2100MM), riser door CUT BY THE VIEW CROP",
+    "B": "double swing service door D22 1800x2100 (block SERVICE_SWING_DOUBLE - D22 1800X2100MM-V25), cut by the view crop",
+    "C": "double swing service door 2 x 0.865 (SERVICE_SWING_DOUBLE - D22 1800X2100MM), cut by the view crop"
+   },
+   "issues": []
+  },
+  {
+   "at": [
+    24.887,
+    3.259
+   ],
+   "ids": {
+    "A": "A-17",
+    "B": "SRB-22",
+    "C": "C-36"
+   },
+   "kind": {
+    "A": "door",
+    "B": "door",
+    "C": "door"
+   },
+   "optional": {
+    "A": true,
+    "B": true,
+    "C": true
+   },
+   "width": {
+    "A": 1.8,
+    "B": 1.8,
+    "C": 1.8
+   },
+   "maxEndDiff": 0.0,
+   "maxWidthDiff": 0.0,
+   "subtype": {
+    "A": "hinged double (SERVICE_SWING_DOUBLE - D22 1800X2100MM), riser door CUT BY THE VIEW CROP",
+    "B": "double swing service door D22 1800x2100 (block SERVICE_SWING_DOUBLE - D22 1800X2100MM-2804302), cut by the view crop",
+    "C": "double swing service door 2 x 0.865 (SERVICE_SWING_DOUBLE - D22 1800X2100MM), cut by the view crop"
+   },
+   "issues": []
+  }
+ ]
+}

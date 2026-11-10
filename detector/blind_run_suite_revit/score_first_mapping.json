@@ -1,0 +1,427 @@
+{
+ "floors": {
+  "suite_revit": {
+   "keyCount": 16,
+   "detCount": 16,
+   "optionalKeys": 26,
+   "optionalFound": [
+    {
+     "key": "SR-19",
+     "det": "suite_revit-004"
+    },
+    {
+     "key": "SR-20",
+     "det": "suite_revit-001"
+    },
+    {
+     "key": "SR-22",
+     "det": "suite_revit-007"
+    },
+    {
+     "key": "SR-36",
+     "det": "suite_revit-030"
+    },
+    {
+     "key": "SR-39",
+     "det": "suite_revit-033"
+    },
+    {
+     "key": "SR-30",
+     "det": "suite_revit-024"
+    },
+    {
+     "key": "SR-42",
+     "det": "suite_revit-036"
+    },
+    {
+     "key": "SR-33",
+     "det": "suite_revit-027"
+    },
+    {
+     "key": "SR-38",
+     "det": "suite_revit-032"
+    },
+    {
+     "key": "SR-41",
+     "det": "suite_revit-035"
+    },
+    {
+     "key": "SR-29",
+     "det": "suite_revit-023"
+    },
+    {
+     "key": "SR-32",
+     "det": "suite_revit-026"
+    },
+    {
+     "key": "SR-35",
+     "det": "suite_revit-029"
+    },
+    {
+     "key": "SR-21",
+     "det": "suite_revit-010"
+    },
+    {
+     "key": "SR-31",
+     "det": "suite_revit-028"
+    },
+    {
+     "key": "SR-37",
+     "det": "suite_revit-034"
+    },
+    {
+     "key": "SR-40",
+     "det": "suite_revit-037"
+    },
+    {
+     "key": "SR-28",
+     "det": "suite_revit-025"
+    },
+    {
+     "key": "SR-34",
+     "det": "suite_revit-031"
+    },
+    {
+     "key": "SR-17",
+     "det": "suite_revit-019"
+    },
+    {
+     "key": "SR-18",
+     "det": "suite_revit-020"
+    }
+   ],
+   "matched": 8,
+   "width": 7,
+   "ends": 7,
+   "class": 8,
+   "kind": 8,
+   "right": 7,
+   "recall": 0.5,
+   "precision": 0.5,
+   "rightShare": 0.438,
+   "byKind": {
+    "door": {
+     "key": 15,
+     "right": 7,
+     "share": 0.467
+    },
+    "passage": {
+     "key": 1,
+     "right": 0,
+     "share": 0.0
+    }
+   },
+   "missed": [
+    {
+     "key": "SR-01",
+     "kind": "door",
+     "at": [
+      7.454,
+      2.784
+     ],
+     "width": 1.1,
+     "subtype": "pocket (cavity) sliding door, leaf 1.00 m"
+    },
+    {
+     "key": "SR-02",
+     "kind": "door",
+     "at": [
+      7.454,
+      10.834
+     ],
+     "width": 1.1,
+     "subtype": "pocket (cavity) sliding door, leaf 1.00 m"
+    },
+    {
+     "key": "SR-03",
+     "kind": "door",
+     "at": [
+      9.462,
+      2.072
+     ],
+     "width": 2.225,
+     "subtype": "bi-fold door, 4 panels (drawn folded)"
+    },
+    {
+     "key": "SR-04",
+     "kind": "door",
+     "at": [
+      8.679,
+      5.156
+     ],
+     "width": 1.1,
+     "subtype": "pocket (cavity) sliding door, leaf 1.00 m"
+    },
+    {
+     "key": "SR-08",
+     "kind": "passage",
+     "at": [
+      14.124,
+      5.136
+     ],
+     "width": 1.975,
+     "subtype": "doorless opening with a drawn head (dashed face lines across)"
+    },
+    {
+     "key": "SR-11",
+     "kind": "door",
+     "at": [
+      20.512,
+      6.634
+     ],
+     "width": 1.1,
+     "subtype": "pocket (cavity) sliding door, leaf 1.00 m"
+    },
+    {
+     "key": "SR-15",
+     "kind": "door",
+     "at": [
+      19.677,
+      0.859
+     ],
+     "width": 1.0,
+     "subtype": "hinged single, leaf 0.93 m (UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM)"
+    },
+    {
+     "key": "SR-16",
+     "kind": "door",
+     "at": [
+      21.347,
+      0.859
+     ],
+     "width": 1.0,
+     "subtype": "hinged single, leaf 0.93 m (UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM)"
+    }
+   ],
+   "extra": [
+    {
+     "det": "suite_revit-003",
+     "kind": "passage",
+     "at": [
+      14.284,
+      11.209
+     ],
+     "width": 2.761,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "suite_revit-005",
+     "kind": "passage",
+     "at": [
+      13.019,
+      7.044
+     ],
+     "width": 0.699,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "suite_revit-008",
+     "kind": "passage",
+     "at": [
+      14.287,
+      1.109
+     ],
+     "width": 0.8,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "suite_revit-011",
+     "kind": "passage",
+     "at": [
+      12.365,
+      6.751
+     ],
+     "width": 0.708,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "suite_revit-012",
+     "kind": "passage",
+     "at": [
+      14.601,
+      6.751
+     ],
+     "width": 1.071,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "suite_revit-014",
+     "kind": "passage",
+     "at": [
+      16.946,
+      11.197
+     ],
+     "width": 1.692,
+     "why": [
+      "wall gap (cap-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "suite_revit-016",
+     "kind": "passage",
+     "at": [
+      19.674,
+      1.159
+     ],
+     "width": 1.175,
+     "why": [
+      "wall gap (L-end), nothing drawn in it"
+     ]
+    },
+    {
+     "det": "suite_revit-017",
+     "kind": "passage",
+     "at": [
+      21.349,
+      1.159
+     ],
+     "width": 1.175,
+     "why": [
+      "wall gap (L-end), nothing drawn in it"
+     ]
+    }
+   ],
+   "pairs": [
+    {
+     "key": "SR-10",
+     "det": "suite_revit-022",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 0.8,
+     "widthDet": 0.7,
+     "endErr": 0.05,
+     "widthOk": false,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": false
+    },
+    {
+     "key": "SR-05",
+     "det": "suite_revit-002",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.0,
+     "widthKey": 1.001,
+     "widthDet": 1.0,
+     "endErr": 0.001,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "SR-12",
+     "det": "suite_revit-013",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.012,
+     "widthKey": 0.8,
+     "widthDet": 0.8,
+     "endErr": 0.012,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "SR-07",
+     "det": "suite_revit-009",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.012,
+     "widthKey": 1.8,
+     "widthDet": 1.8,
+     "endErr": 0.012,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "SR-09",
+     "det": "suite_revit-006",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.012,
+     "widthKey": 0.8,
+     "widthDet": 0.8,
+     "endErr": 0.012,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "SR-06",
+     "det": "suite_revit-021",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.025,
+     "widthKey": 0.75,
+     "widthDet": 0.7,
+     "endErr": 0.05,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "SR-14",
+     "det": "suite_revit-015",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.05,
+     "widthKey": 0.85,
+     "widthDet": 0.85,
+     "endErr": 0.05,
+     "widthOk": true,
+     "endsOk": true,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    },
+    {
+     "key": "SR-13",
+     "det": "suite_revit-018",
+     "kindKey": "door",
+     "kindDet": "door",
+     "centreOff": 0.237,
+     "widthKey": 1.8,
+     "widthDet": 1.8,
+     "endErr": 0.237,
+     "widthOk": true,
+     "endsOk": false,
+     "classOk": true,
+     "kindOk": true,
+     "right": true
+    }
+   ]
+  }
+ },
+ "total": {
+  "keyCount": 16,
+  "detCount": 16,
+  "matched": 8,
+  "right": 7,
+  "recall": 0.5,
+  "precision": 0.5,
+  "rightShare": 0.438
+ }
+}

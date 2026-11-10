@@ -342,9 +342,16 @@ grid lines to within a millimetre, and all 86 openings are found where the proto
    with them). Then **stairs you can climb**.
 3. **Box editing** after that: rename and recolour furniture kinds, move pieces between kinds, add boxes by hand; then
    the real furniture models, finishes and lights.
-4. The openings detector on a fifth drawing: the 3D team's new suite drawing is being scored held out (started 10 Nov),
-   with an answer key made the same way as the tower floors' (separate labellers who never see the detector's output).
-   A drawing from another office would still be the stronger test.
+4. **A second round of fixes for the door finder.** The 3D team's new suite drawing was tested on 10 Nov as a drawing
+   the finder had never seen (its answer key made by separate labellers who never saw the finder's output, then checked
+   by two blind auditors): **7 of its 16 doorways came out right (44 %; the goal is 80 %)**, and 8 openings were
+   reported that are not there. The main cause is known: this kind of Revit export draws the wall's lines on across the
+   doorways (all four pocket doors are hidden that way) and has the furniture on the wall layer. With those lines left
+   out, the same finder gets 14 of 16. Nothing is fixed yet. Until then the Check step has two tools for it: select the
+   lines drawn across a doorway that has no door and set them aside (Delete), then **Rebuild**, and the door is found;
+   and give an opening that is not there the kind "not an opening". (The Check step cannot add a door by hand.) The full
+   result, with a marked plan: `detector\blind_run_suite_revit\README.md` and `result_marked.png` beside it. A drawing
+   from another office would still be the stronger test.
 5. For you: ask the 3D team to export Revit files with the walls on their own layer.
 
 ## Decisions

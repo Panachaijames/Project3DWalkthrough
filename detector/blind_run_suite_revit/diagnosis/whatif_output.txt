@@ -1,0 +1,53 @@
+
+== the drawing as it is (the held-out run): left out 0 line(s)
+   7 of 16 right, 8 found, 8 not in the key, optional found 21/26
+   missed: SR-01, SR-02, SR-03, SR-04, SR-08, SR-11, SR-15, SR-16
+   not in the key: passage 2.76 at (14.28, 11.21), passage 0.70 at (13.02, 7.04), passage 0.80 at (14.29, 1.11), passage 0.71 at (12.37, 6.75), passage 1.07 at (14.60, 6.75), passage 1.69 at (16.95, 11.20), passage 1.18 at (19.67, 1.16), passage 1.18 at (21.35, 1.16)
+   SR-01: not found
+   SR-02: not found
+   SR-04: not found
+   SR-06: door hinged single w 0.700 (key 0.750) RIGHT  ['swing arc + leaf on A-DOOR', 'ends from the swing']
+   SR-10: door hinged single w 0.700 (key 0.800) not right  ['swing arc + leaf on A-DOOR', 'ends from the swing']
+   SR-11: not found
+   SR-15: not found
+   SR-16: not found
+   SR-03: not found
+   SR-08: not found
+
+== without the wall-layer lines drawn across eight door openings: left out 15 line(s)
+   14 of 16 right, 14 found, 8 not in the key, optional found 21/26
+   missed: SR-03, SR-08
+   not in the key: passage 0.70 at (13.02, 7.04), passage 2.76 at (14.28, 11.21), passage 0.80 at (14.29, 1.11), passage 0.71 at (12.37, 6.75), passage 1.07 at (14.60, 6.75), passage 1.69 at (16.95, 11.20), passage 1.18 at (19.67, 1.16), passage 1.18 at (21.35, 1.16)
+   SR-01: door pocket sliding w 1.100 (key 1.100) RIGHT  ['wall gap (cap-end)', 'pocket line on A-DOOR', 'pocket panel on A-DOOR']
+   SR-02: door pocket sliding w 1.100 (key 1.100) RIGHT  ['wall gap (cap-end)', 'pocket line on A-DOOR', 'pocket panel on A-DOOR']
+   SR-04: door pocket sliding w 1.100 (key 1.100) RIGHT  ['wall gap (cap-end)', 'pocket line on A-DOOR', 'pocket panel on A-DOOR']
+   SR-06: door hinged single w 0.750 (key 0.750) RIGHT  ['wall gap (cap-end)', '1 swing arc(s)', 'arc on A-DOOR']
+   SR-10: door hinged single w 0.800 (key 0.800) RIGHT  ['wall gap (cap-end)', '1 swing arc(s)', 'arc on A-DOOR']
+   SR-11: door pocket sliding w 1.100 (key 1.100) RIGHT  ['wall gap (cap-end)', 'pocket line on A-DOOR', 'pocket panel on A-DOOR']
+   SR-15: door hinged single w 1.000 (key 1.000) RIGHT  ['wall gap (cap-end)', '1 swing arc(s)', 'arc on A-DOOR']
+   SR-16: door hinged single w 1.000 (key 1.000) RIGHT  ['wall gap (cap-end)', '1 swing arc(s)', 'arc on A-DOOR']
+
+== without the wardrobe joinery lines beside the end wall of the bi-fold door: left out 5 line(s)
+   7 of 16 right, 8 found, 8 not in the key, optional found 21/26
+   missed: SR-01, SR-02, SR-03, SR-04, SR-08, SR-11, SR-15, SR-16
+   not in the key: passage 2.76 at (14.28, 11.21), passage 0.70 at (13.02, 7.04), passage 0.80 at (14.29, 1.11), passage 0.71 at (12.37, 6.75), passage 1.07 at (14.60, 6.75), passage 1.69 at (16.95, 11.20), passage 1.18 at (19.67, 1.16), passage 1.18 at (21.35, 1.16)
+   SR-03: not found
+    GAP (9.462, 0.959) -> (9.462, 3.184) w 2.225 t 0.150 near 'cap' far 'end' (found from both ends) wall ends 0.089 / 0.296 m
+      swings 0, glazing bands 0 (+0 running on), panels [], frame pieces inside 0, read as: nothing  []
+      frame drawn (door-layer lines across the wall at both ends): False
+      -> NO: stub to stub (wall ends 0.089 / 0.296 m, under 0.3) and no frame / own wall ends
+
+== both: left out 20 line(s)
+   14 of 16 right, 14 found, 8 not in the key, optional found 21/26
+   missed: SR-03, SR-08
+   not in the key: passage 0.70 at (13.02, 7.04), passage 2.76 at (14.28, 11.21), passage 0.80 at (14.29, 1.11), passage 0.71 at (12.37, 6.75), passage 1.07 at (14.60, 6.75), passage 1.69 at (16.95, 11.20), passage 1.18 at (19.67, 1.16), passage 1.18 at (21.35, 1.16)
+   SR-01: door pocket sliding w 1.100 (key 1.100) RIGHT  ['wall gap (cap-end)', 'pocket line on A-DOOR', 'pocket panel on A-DOOR']
+   SR-02: door pocket sliding w 1.100 (key 1.100) RIGHT  ['wall gap (cap-end)', 'pocket line on A-DOOR', 'pocket panel on A-DOOR']
+   SR-04: door pocket sliding w 1.100 (key 1.100) RIGHT  ['wall gap (cap-end)', 'pocket line on A-DOOR', 'pocket panel on A-DOOR']
+   SR-06: door hinged single w 0.750 (key 0.750) RIGHT  ['wall gap (cap-end)', '1 swing arc(s)', 'arc on A-DOOR']
+   SR-10: door hinged single w 0.800 (key 0.800) RIGHT  ['wall gap (cap-end)', '1 swing arc(s)', 'arc on A-DOOR']
+   SR-11: door pocket sliding w 1.100 (key 1.100) RIGHT  ['wall gap (cap-end)', 'pocket line on A-DOOR', 'pocket panel on A-DOOR']
+   SR-15: door hinged single w 1.000 (key 1.000) RIGHT  ['wall gap (cap-end)', '1 swing arc(s)', 'arc on A-DOOR']
+   SR-16: door hinged single w 1.000 (key 1.000) RIGHT  ['wall gap (cap-end)', '1 swing arc(s)', 'arc on A-DOOR']
+   SR-03: not found
+   SR-08: not found

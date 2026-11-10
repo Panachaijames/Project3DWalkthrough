@@ -1,0 +1,639 @@
+{
+ "what": "Candidate openings of \"presidential suite_layout.dwg\" (drawing cache suite_revit) to judge from the drawing.",
+ "how to read": "Each place claims that an opening of the claimed kind (door, window or passage) runs between its two ends. A claim may be right, wrong in kind, width or ends, or there may be no opening there at all: judge every place from the drawing, the same way for each.",
+ "coordinates": "drawing metres (DXF millimetres / 1000), the same as prims.pkl and the pictures of the drawing",
+ "fields": {
+  "centre": "midpoint of the two ends",
+  "ends": "the two ends, west to east (south to north when the line runs closer to north-south)",
+  "claimedKind": "door, window or passage",
+  "claimedWidth": "distance between the two ends, m",
+  "picture": "close-up of every layer, 1 m labelled grid, 0.1 m minor lines, the place marked by a yellow band with a tick at each end",
+  "pictureBox": "[xmin, ymin, xmax, ymax] of the picture"
+ },
+ "places": [
+  {
+   "place": "P01",
+   "centre": [
+    14.601,
+    6.751
+   ],
+   "ends": [
+    [
+     14.066,
+     6.751
+    ],
+    [
+     15.137,
+     6.751
+    ]
+   ],
+   "claimedKind": "passage",
+   "claimedWidth": 1.071,
+   "picture": "places/P01.png",
+   "pictureBox": [
+    12.601,
+    4.751,
+    16.601,
+    8.751
+   ]
+  },
+  {
+   "place": "P02",
+   "centre": [
+    21.349,
+    1.159
+   ],
+   "ends": [
+    [
+     20.762,
+     1.159
+    ],
+    [
+     21.937,
+     1.159
+    ]
+   ],
+   "claimedKind": "passage",
+   "claimedWidth": 1.175,
+   "picture": "places/P02.png",
+   "pictureBox": [
+    19.349,
+    -0.841,
+    23.349,
+    3.159
+   ]
+  },
+  {
+   "place": "P03",
+   "centre": [
+    14.287,
+    1.109
+   ],
+   "ends": [
+    [
+     13.887,
+     1.109
+    ],
+    [
+     14.687,
+     1.109
+    ]
+   ],
+   "claimedKind": "passage",
+   "claimedWidth": 0.8,
+   "picture": "places/P03.png",
+   "pictureBox": [
+    12.287,
+    -0.891,
+    16.287,
+    3.109
+   ]
+  },
+  {
+   "place": "P04",
+   "centre": [
+    20.512,
+    6.634
+   ],
+   "ends": [
+    [
+     20.512,
+     6.084
+    ],
+    [
+     20.512,
+     7.184
+    ]
+   ],
+   "claimedKind": "door",
+   "claimedWidth": 1.1,
+   "picture": "places/P04.png",
+   "pictureBox": [
+    18.512,
+    4.634,
+    22.512,
+    8.634
+   ]
+  },
+  {
+   "place": "P05",
+   "centre": [
+    21.112,
+    3.359
+   ],
+   "ends": [
+    [
+     20.712,
+     3.359
+    ],
+    [
+     21.512,
+     3.359
+    ]
+   ],
+   "claimedKind": "door",
+   "claimedWidth": 0.8,
+   "picture": "places/P05.png",
+   "pictureBox": [
+    19.112,
+    1.359,
+    23.112,
+    5.359
+   ]
+  },
+  {
+   "place": "P06",
+   "centre": [
+    14.284,
+    11.209
+   ],
+   "ends": [
+    [
+     12.904,
+     11.209
+    ],
+    [
+     15.665,
+     11.209
+    ]
+   ],
+   "claimedKind": "passage",
+   "claimedWidth": 2.761,
+   "picture": "places/P06.png",
+   "pictureBox": [
+    12.084,
+    9.009,
+    16.484,
+    13.409
+   ]
+  },
+  {
+   "place": "P07",
+   "centre": [
+    9.462,
+    2.072
+   ],
+   "ends": [
+    [
+     9.462,
+     0.959
+    ],
+    [
+     9.462,
+     3.184
+    ]
+   ],
+   "claimedKind": "door",
+   "claimedWidth": 2.225,
+   "picture": "places/P07.png",
+   "pictureBox": [
+    7.462,
+    0.072,
+    11.462,
+    4.072
+   ]
+  },
+  {
+   "place": "P08",
+   "centre": [
+    8.679,
+    5.156
+   ],
+   "ends": [
+    [
+     8.129,
+     5.156
+    ],
+    [
+     9.229,
+     5.156
+    ]
+   ],
+   "claimedKind": "door",
+   "claimedWidth": 1.1,
+   "picture": "places/P08.png",
+   "pictureBox": [
+    6.679,
+    3.156,
+    10.679,
+    7.156
+   ]
+  },
+  {
+   "place": "P09",
+   "centre": [
+    19.674,
+    1.159
+   ],
+   "ends": [
+    [
+     19.087,
+     1.159
+    ],
+    [
+     20.262,
+     1.159
+    ]
+   ],
+   "claimedKind": "passage",
+   "claimedWidth": 1.175,
+   "picture": "places/P09.png",
+   "pictureBox": [
+    17.674,
+    -0.841,
+    21.674,
+    3.159
+   ]
+  },
+  {
+   "place": "P10",
+   "centre": [
+    21.347,
+    0.859
+   ],
+   "ends": [
+    [
+     20.847,
+     0.859
+    ],
+    [
+     21.847,
+     0.859
+    ]
+   ],
+   "claimedKind": "door",
+   "claimedWidth": 1.0,
+   "picture": "places/P10.png",
+   "pictureBox": [
+    19.347,
+    -1.141,
+    23.347,
+    2.859
+   ]
+  },
+  {
+   "place": "P11",
+   "centre": [
+    16.137,
+    3.259
+   ],
+   "ends": [
+    [
+     15.237,
+     3.259
+    ],
+    [
+     17.037,
+     3.259
+    ]
+   ],
+   "claimedKind": "door",
+   "claimedWidth": 1.8,
+   "picture": "places/P11.png",
+   "pictureBox": [
+    14.137,
+    1.259,
+    18.137,
+    5.259
+   ]
+  },
+  {
+   "place": "P12",
+   "centre": [
+    11.562,
+    4.198
+   ],
+   "ends": [
+    [
+     11.562,
+     3.697
+    ],
+    [
+     11.562,
+     4.698
+    ]
+   ],
+   "claimedKind": "door",
+   "claimedWidth": 1.001,
+   "picture": "places/P12.png",
+   "pictureBox": [
+    9.562,
+    2.198,
+    13.562,
+    6.198
+   ]
+  },
+  {
+   "place": "P13",
+   "centre": [
+    13.019,
+    7.044
+   ],
+   "ends": [
+    [
+     12.669,
+     7.042
+    ],
+    [
+     13.368,
+     7.047
+    ]
+   ],
+   "claimedKind": "passage",
+   "claimedWidth": 0.699,
+   "picture": "places/P13.png",
+   "pictureBox": [
+    11.019,
+    5.044,
+    15.019,
+    9.044
+   ]
+  },
+  {
+   "place": "P14",
+   "centre": [
+    16.612,
+    1.159
+   ],
+   "ends": [
+    [
+     16.187,
+     1.159
+    ],
+    [
+     17.037,
+     1.159
+    ]
+   ],
+   "claimedKind": "door",
+   "claimedWidth": 0.85,
+   "picture": "places/P14.png",
+   "pictureBox": [
+    14.612,
+    -0.841,
+    18.612,
+    3.159
+   ]
+  },
+  {
+   "place": "P15",
+   "centre": [
+    14.187,
+    3.259
+   ],
+   "ends": [
+    [
+     13.287,
+     3.259
+    ],
+    [
+     15.087,
+     3.259
+    ]
+   ],
+   "claimedKind": "door",
+   "claimedWidth": 1.8,
+   "picture": "places/P15.png",
+   "pictureBox": [
+    12.187,
+    1.259,
+    16.187,
+    5.259
+   ]
+  },
+  {
+   "place": "P16",
+   "centre": [
+    14.124,
+    5.136
+   ],
+   "ends": [
+    [
+     13.137,
+     5.136
+    ],
+    [
+     15.112,
+     5.136
+    ]
+   ],
+   "claimedKind": "passage",
+   "claimedWidth": 1.975,
+   "picture": "places/P16.png",
+   "pictureBox": [
+    12.124,
+    3.136,
+    16.124,
+    7.136
+   ]
+  },
+  {
+   "place": "P17",
+   "centre": [
+    7.454,
+    10.834
+   ],
+   "ends": [
+    [
+     7.454,
+     10.284
+    ],
+    [
+     7.454,
+     11.384
+    ]
+   ],
+   "claimedKind": "door",
+   "claimedWidth": 1.1,
+   "picture": "places/P17.png",
+   "pictureBox": [
+    5.454,
+    8.834,
+    9.454,
+    12.834
+   ]
+  },
+  {
+   "place": "P18",
+   "centre": [
+    22.812,
+    6.434
+   ],
+   "ends": [
+    [
+     22.812,
+     6.034
+    ],
+    [
+     22.812,
+     6.834
+    ]
+   ],
+   "claimedKind": "door",
+   "claimedWidth": 0.8,
+   "picture": "places/P18.png",
+   "pictureBox": [
+    20.812,
+    4.434,
+    24.812,
+    8.434
+   ]
+  },
+  {
+   "place": "P19",
+   "centre": [
+    12.365,
+    6.751
+   ],
+   "ends": [
+    [
+     12.012,
+     6.751
+    ],
+    [
+     12.719,
+     6.751
+    ]
+   ],
+   "claimedKind": "passage",
+   "claimedWidth": 0.708,
+   "picture": "places/P19.png",
+   "pictureBox": [
+    10.365,
+    4.751,
+    14.365,
+    8.751
+   ]
+  },
+  {
+   "place": "P20",
+   "centre": [
+    16.946,
+    11.197
+   ],
+   "ends": [
+    [
+     16.1,
+     11.197
+    ],
+    [
+     17.792,
+     11.197
+    ]
+   ],
+   "claimedKind": "passage",
+   "claimedWidth": 1.692,
+   "picture": "places/P20.png",
+   "pictureBox": [
+    14.946,
+    9.197,
+    18.946,
+    13.197
+   ]
+  },
+  {
+   "place": "P21",
+   "centre": [
+    7.454,
+    2.784
+   ],
+   "ends": [
+    [
+     7.454,
+     2.234
+    ],
+    [
+     7.454,
+     3.334
+    ]
+   ],
+   "claimedKind": "door",
+   "claimedWidth": 1.1,
+   "picture": "places/P21.png",
+   "pictureBox": [
+    5.454,
+    0.784,
+    9.454,
+    4.784
+   ]
+  },
+  {
+   "place": "P22",
+   "centre": [
+    20.512,
+    4.809
+   ],
+   "ends": [
+    [
+     20.512,
+     4.409
+    ],
+    [
+     20.512,
+     5.209
+    ]
+   ],
+   "claimedKind": "door",
+   "claimedWidth": 0.8,
+   "picture": "places/P22.png",
+   "pictureBox": [
+    18.512,
+    2.809,
+    22.512,
+    6.809
+   ]
+  },
+  {
+   "place": "P23",
+   "centre": [
+    19.677,
+    0.859
+   ],
+   "ends": [
+    [
+     19.177,
+     0.859
+    ],
+    [
+     20.177,
+     0.859
+    ]
+   ],
+   "claimedKind": "door",
+   "claimedWidth": 1.0,
+   "picture": "places/P23.png",
+   "pictureBox": [
+    17.677,
+    -1.141,
+    21.677,
+    2.859
+   ]
+  },
+  {
+   "place": "P24",
+   "centre": [
+    12.087,
+    3.259
+   ],
+   "ends": [
+    [
+     11.712,
+     3.259
+    ],
+    [
+     12.462,
+     3.259
+    ]
+   ],
+   "claimedKind": "door",
+   "claimedWidth": 0.75,
+   "picture": "places/P24.png",
+   "pictureBox": [
+    10.087,
+    1.259,
+    14.087,
+    5.259
+   ]
+  }
+ ]
+}

@@ -1,0 +1,19 @@
+suite_revit              key  16  detected  16  matched   8  right   7  recall 0.5  precision 0.5  RIGHT 0.438  door: 7/15  passage: 0/1  (optional 21/26 found)
+    missed SR-01 door at [7.454, 2.784] w 1.1 pocket (cavity) sliding door, leaf 1.00 m
+    missed SR-02 door at [7.454, 10.834] w 1.1 pocket (cavity) sliding door, leaf 1.00 m
+    missed SR-03 door at [9.462, 2.072] w 2.225 bi-fold door, 4 panels (drawn folded)
+    missed SR-04 door at [8.679, 5.156] w 1.1 pocket (cavity) sliding door, leaf 1.00 m
+    missed SR-08 passage at [14.124, 5.136] w 1.975 doorless opening with a drawn head (dashed face lines across)
+    missed SR-11 door at [20.512, 6.634] w 1.1 pocket (cavity) sliding door, leaf 1.00 m
+    missed SR-15 door at [19.677, 0.859] w 1.0 hinged single, leaf 0.93 m (UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM)
+    missed SR-16 door at [21.347, 0.859] w 1.0 hinged single, leaf 0.93 m (UNIT_DOOR_SWING_1_SOLID - D01_1000X2250MM)
+    extra  suite_revit-003 passage at [14.284, 11.209] w 2.761
+    extra  suite_revit-005 passage at [13.019, 7.044] w 0.699
+    extra  suite_revit-008 passage at [14.287, 1.109] w 0.8
+    extra  suite_revit-011 passage at [12.365, 6.751] w 0.708
+    extra  suite_revit-012 passage at [14.601, 6.751] w 1.071
+    extra  suite_revit-014 passage at [16.946, 11.197] w 1.692
+    extra  suite_revit-016 passage at [19.674, 1.159] w 1.175
+    extra  suite_revit-017 passage at [21.349, 1.159] w 1.175
+    wrong  SR-10~suite_revit-022 kind door/door width 0.8/0.7 ends 0.05
+TOTAL key 16 detected 16 matched 8 right 7  recall 0.5  precision 0.5  RIGHT 0.438  (gate: >= 0.80)
