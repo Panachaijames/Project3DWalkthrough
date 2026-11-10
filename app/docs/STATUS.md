@@ -340,9 +340,7 @@ grid lines to within a millimetre, and all 86 openings are found where the proto
 2. **Rooms and slabs** (your choice of 10 Nov, started that day): floors made from the wall network, so the house's
    glass living area, the suite's centre and the tower's outer rooms get their floor (most of the failing walk probes go
    with them). Then **stairs you can climb**.
-3. **Box editing** after that: rename and recolour furniture kinds, move pieces between kinds, add boxes by hand; then
-   the real furniture models, finishes and lights.
-4. **A second round of fixes for the door finder.** The 3D team's new suite drawing was tested on 10 Nov as a drawing
+3. **A second round of fixes for the door finder** (your choice of 10 Nov: after the floors and stairs, before the box editing). The 3D team's new suite drawing was tested on 10 Nov as a drawing
    the finder had never seen (its answer key made by separate labellers who never saw the finder's output, then checked
    by two blind auditors): **7 of its 16 doorways came out right (44 %; the goal is 80 %)**, and 8 openings were
    reported that are not there. The main cause is known: this kind of Revit export draws the wall's lines on across the
@@ -352,6 +350,8 @@ grid lines to within a millimetre, and all 86 openings are found where the proto
    and give an opening that is not there the kind "not an opening". (The Check step cannot add a door by hand.) The full
    result, with a marked plan: `detector\blind_run_suite_revit\README.md` and `result_marked.png` beside it. A drawing
    from another office would still be the stronger test.
+4. **Box editing** after that: rename and recolour furniture kinds, move pieces between kinds, add boxes by hand; then
+   the real furniture models, finishes and lights.
 5. For you: ask the 3D team to export Revit files with the walls on their own layer.
 
 ## Decisions
@@ -364,8 +364,8 @@ the Floors step now rather than with the box editing, because without them the h
 thin items more than its settings; say if you would rather have them moved to the box editing.
 
 Settled by you on 10 Nov: the suite's furniture count (6 % over the prototype's, against a wish of 5 %) is accepted as
-it is; rooms and slabs with climbable stairs come next, then the box editing; the new suite drawing is the openings
-detector's fifth drawing.
+it is; rooms and slabs with climbable stairs come next, then a second round of fixes for the door finder (after its
+44 % on the new suite drawing, the fifth drawing it had not seen), then the box editing.
 
 Open: nothing.
 
