@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Starts the API: uvicorn walkthrough_api.main:app on 127.0.0.1 from the venv, cwd app/ (DESIGN.md 2).
-//   node tools/run-api.mjs --port 8710 [--reload] [--data <dir>] [--copy-data-from <dir>] [--seed-fresh]
+//   node tools/run-api.mjs --port 8710 [--reload (refused on Windows)] [--data <dir>] [--copy-data-from <dir>] [--seed-fresh]
 // WALKTHROUGH_DATA_DIR is `data` (app/data) unless set in the environment or given with --data. With --copy-data-from,
 // the --data folder is first replaced by a fresh copy of that folder: Playwright's web server for the web specs uses it
 // to serve a temp copy of app/data (Playwright starts web servers before globalSetup; DESIGN.md 18.42). With
@@ -16,6 +16,16 @@ import path from 'node:path';
 import { APP, PROTOTYPES, parseArgs, pyEnv, requireFreePort, venvPython } from './lib.mjs';
 
 const args = parseArgs(process.argv.slice(2), { flags: ['port', 'data', 'copy-data-from'], switches: ['reload', 'seed-fresh'] });
+if (args.reload && process.platform === 'win32') {
+  // npm run dev no longer passes --reload (10 Nov 2026): on Windows uvicorn restarts its server with a CTRL_C_EVENT,
+  // which reaches every program in the same terminal, this script included (its SIGINT handler then ends uvicorn), so
+  // in the owner's PowerShell one saved .py file stopped the API, the web server and npm itself, and a terminal of its
+  // own would not help (docs/upload/contract-issues/UI.md, UI-5). Refused rather than dropped: parseArgs ignores
+  // unknown switches, so a dropped --reload would be accepted and silently do nothing.
+  console.error('run-api: --reload does not work on Windows: uvicorn restarts its server with a Ctrl+C sent to the '
+    + 'whole terminal, which stops this script and the API with it. Stop the API with Ctrl+C and start it again instead.');
+  process.exit(2);
+}
 const port = Number(args.port ?? 8710);
 if (!Number.isInteger(port) || port <= 0) { console.error(`run-api: bad --port ${args.port}`); process.exit(2); }
 await requireFreePort(port, 'run-api');

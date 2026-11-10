@@ -116,7 +116,7 @@ nothing here uses 93xx - 94xx.
 
 | Command | Does |
 |---|---|
-| `npm run dev` | API on 127.0.0.1:8710 and the web app on 127.0.0.1:5710 together (Ctrl+C stops both) |
+| `npm run dev` | API on 127.0.0.1:8710 and the web app on 127.0.0.1:5710 together (Ctrl+C stops both); the API does not reload on code changes (no `--reload` since 10 Nov 2026, `docs/upload/contract-issues/UI.md` UI-5): restart it after an API change |
 | `npm run seed` | rebuilds `data/` from the prototype folders (saved heights kept unless `--reset-overrides`) |
 | `npm run build` | typecheck, `dist/web/`, the offline template and one offline HTML per version |
 | `npm run build:offline:template` | `dist/offline-template/viewer-template.html` (one file) |

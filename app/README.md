@@ -41,6 +41,11 @@ too).
 
 Open http://127.0.0.1:5710 (use 127.0.0.1, not localhost). The API's own page is http://127.0.0.1:8710/docs.
 
+`npm run dev` does not restart the API by itself when its code changes (since 10 Nov 2026: on Windows that restart
+stopped the whole app in the owner's PowerShell window, their check of 10 Nov). After an update, stop it with Ctrl+C and
+run `npm run dev` again; if it then says a port is in use, wait a few seconds and run it again. `npm run dev` also works
+from the project folder above `app\` (a small `package.json` there forwards it).
+
 ## Tests
 
 ```

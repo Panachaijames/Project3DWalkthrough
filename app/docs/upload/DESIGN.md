@@ -165,13 +165,18 @@ fixture settings, whose floor keys are the prototypes' (`L1`/`L2`, `ground`/`upp
   min running plus up to 30 min queued): it kills its child and exits, writing `interrupted` if the folder still exists. A fresh e2e seed
   that replaces the data folder therefore never leaves a worker holding the machine lock; the e2e global teardown also
   cancels open runs through the API.
-* **API restart** (`npm run dev` runs uvicorn `--reload`): the worker is a separate process (`CREATE_NEW_PROCESS_GROUP |
-  CREATE_NO_WINDOW`) and owns its state, so a running build carries on. On start-up the API marks `interrupted` every
-  `queued` / `running` run whose worker is gone (pid dead, or a different creation time), and every run that has a
-  `spec.json`, no `job.json`, is older than 60 s and whose `launch.json` pid is not alive (or that has no
-  `launch.json`); Build runs it again. **After Ctrl+C on `npm run dev`** the worker never sees the Ctrl+C (its own
-  process group); whether the dev tool's tree kill reaches it is not promised, so the run ends `done`, `cancelled` or
-  `interrupted`, and the next start-up shows which.
+* **API restart** (`npm run dev` has no uvicorn `--reload` since 10 Nov: on Windows its restart is a `CTRL_C_EVENT` to
+  every program in the terminal, and it stopped the whole app, UI-5; after an API change the owner presses Ctrl+C and
+  runs `npm run dev` again): the worker is a separate process (`CREATE_NEW_PROCESS_GROUP | CREATE_NO_WINDOW`) and owns
+  its state, so a running build carries on. On start-up the API marks `interrupted` every `queued` / `running` run whose
+  worker is gone (pid dead, or a different creation time), and every run that has a `spec.json`, no `job.json`, is
+  older than 60 s and whose `launch.json` pid is not alive (or that has no `launch.json`); Build runs it again. A run
+  whose worker still lives is followed and ends as the worker writes it. **After Ctrl+C on `npm run dev`** the worker
+  never sees the Ctrl+C (CREATE_NO_WINDOW gives it a console of its own); `run-api.mjs` ends uvicorn at once (Node's
+  `child.kill` is TerminateProcess on Windows), so concurrently's `taskkill /T /F`, which comes after, no longer finds
+  the worker below it and the build normally finishes (checked in real consoles on 10 Nov, UI-5). A tree kill while the
+  API still runs does end it (concurrently `-k` ends the API side that way when the web server stops first), so this is
+  not promised: the run ends `done`, `cancelled` or `interrupted`, and the next start-up shows which.
 * Errors: `JobRecord.error { code, message, step }` with the codes of `upload-contracts.ts` `RunErrorCode`; messages are
   plain sentences naming files by their upload names, never a server path.
 
@@ -1389,7 +1394,7 @@ Each step writes its own `docs/contract-issues/<U0..U7, UI>.md`; the integration
 | Hostile or huge drawings (C parser, ezdxf, quadratic detector) | child processes in Job Objects with time and memory caps, one run at a time, output size cap, pickles only ours, text as text |
 | Handles change on a Revit re-export: remembered fixes miss | element id, then geometry signature; unmatched fixes flagged, never silently dropped |
 | The detector's held-out score is 72 % on the tower | every doubtful opening flagged; the opening editor; the fifth drawing still decides the gate |
-| Uvicorn `--reload` or Ctrl+C during a run | the worker owns its state; `interrupted` and run again |
+| Ctrl+C on `npm run dev`, or the API ending, during a run | the worker owns its state and has its own console: it normally finishes (`done`); when a tree kill reaches it (concurrently `-k` after the web server stopped, Playwright's teardown), `interrupted` and run again. No `--reload` in `npm run dev` since 10 Nov (UI-5) |
 | 16 GB with the dev servers, Edge and a build | one run at a time machine-wide, OpenBLAS threads 1, 4 GB caps; builders' heavy tests share the lock |
 | Uploaded versions break the e2e counts or are overwritten by the seed | fresh seeded e2e store; the seed refuses uploaded versions |
 | Wrong units, wrong alignment | door votes and staff confirmation; per-gridline method with a spread; two points |

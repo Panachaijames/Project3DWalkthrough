@@ -74,7 +74,7 @@ and that includes Python bytecode: anything that imports or runs prototype Pytho
 | Script | Command | Does |
 |---|---|---|
 | `dev` | `concurrently -k -n api,web -c blue,green "npm:dev:api" "npm:dev:web"` | API on 8710 and the web app on 5710, one command, both stop together |
-| `dev:api` | `node tools/run-api.mjs --port 8710 --reload` | uvicorn `walkthrough_api.main:app` from the venv, data `app/data` |
+| `dev:api` | `node tools/run-api.mjs --port 8710` | uvicorn `walkthrough_api.main:app` from the venv, data `app/data`; no `--reload` since 10 Nov 2026 (on Windows its restart is a Ctrl+C to the whole terminal and stopped `npm run dev`: docs/upload/contract-issues/UI.md, UI-5): after an API change, Ctrl+C and `npm run dev` again |
 | `dev:web` | `npm run dev -w @walkthrough/web` | `vite --port 5710 --strictPort` on 127.0.0.1, proxy `/api` -> `http://127.0.0.1:8710` |
 | `build` | `npm run typecheck && npm run build:web && npm run build:offline` | everything that ships to `dist/` |
 | `build:web` | `npm run build -w @walkthrough/web` | `vite build` -> `dist/web/` |
@@ -100,7 +100,8 @@ Workspace scripts: `packages/viewer`: `test` = `vitest run`, `typecheck` = `tsc 
 `PYTHONPATH=services/api`, `PYTHONIOENCODING=utf-8`, `PYTHONUTF8=1`, `PYTHONDONTWRITEBYTECODE=1`, and passes its arguments
 through; it exits with Python's code. `tools/run-api.mjs` does the same for `-m uvicorn walkthrough_api.main:app --host
 127.0.0.1 --port <p> [--reload --reload-dir services/api/walkthrough_api]` and sets `WALKTHROUGH_DATA_DIR` (default
-`data`) unless set. Scripts that read prototype Python (the CSV goldens, the provisional fixtures, the prototype tests at
+`data`) unless set; it refuses `--reload` on Windows (since 10 Nov 2026: uvicorn's restart there is a Ctrl+C to the
+whole terminal, which stops `run-api.mjs` too: docs/upload/contract-issues/UI.md, UI-5). Scripts that read prototype Python (the CSV goldens, the provisional fixtures, the prototype tests at
 integration) run with the **system** Python 3.14.3 and `-B`: `furniture/furniture_kit.py` imports shapely, which the
 venv does not have.
 
@@ -218,7 +219,7 @@ reads a fixture through `node:fs`, so the typecheck gate covers that case from t
 | fastapi | 0.150.0 (2026-10-19) | released in a burst (0.142 - 0.162 between 7 and 23 Oct); fallback 0.142.4 (7 Oct) if the scaffold finds a fault |
 | starlette | 1.9.0 (2026-10-18) | fastapi needs `>= 0.46.0` |
 | pydantic / pydantic-core | 2.14.1 / 2.50.1 (2026-10-11) | cp314 win_amd64 wheel exists |
-| uvicorn | 0.54.0 (2026-09-25) | plain, no `[standard]` (StatReload on Windows) |
+| uvicorn | 0.54.0 (2026-09-25) | plain, no `[standard]` (no watchfiles: `--reload` would use StatReload; unused since 10 Nov, section 2) |
 | pytest | 9.1.1 (2026-06-19) | 9.2.0 is 27 Oct |
 | httpx / httpcore | 0.28.1 / 1.0.9 | FastAPI's TestClient. Starlette 1.9 prefers httpx2 and warns: the warning is filtered in pytest config |
 | jsonschema | 4.26.0 (2026-01-07) | runtime: the seed and the store validate every model against the schema |

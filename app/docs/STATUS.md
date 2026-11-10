@@ -79,6 +79,13 @@ in the PowerShell window. Nothing new needs installing: the converter and the bu
 Uploads and drafts are kept in `app\data`; the converted DXFs go to a cache folder,
 `C:\Users\DWP2\AppData\Local\walkthrough\cache`.
 
+Since 10 Nov, `npm run dev` no longer restarts the app's server by itself when its code changes: on Windows that restart
+stopped the whole app in your PowerShell window (your check of 10 Nov, see *What failed*). So after an update, stop the
+app with **Ctrl+C** and start it again with `npm run dev`; if it says a port is in use, wait a few seconds and try again.
+When you press Ctrl+C, PowerShell shows two "Terminate batch job (Y/N)?" lines and its prompt comes back at once:
+nothing needs typing. A build that is running when you stop the app finishes on its own; when the app is back it shows
+as done (or, if the builder could not finish, as interrupted: then build again).
+
 ## Your path through the app (final check, 9 Nov)
 
 Run in Edge on `npm run dev`, through the screens only (nothing typed into the API), on a copy of the store. The real
@@ -236,6 +243,14 @@ dates, and the same two `__pycache__` folders from October (none new). Two notes
 4. **A slip in the wording of the gap report:** `docs/upload/GAPS.md` said the version's Max script differs from the 27
    Oct file "in its 13 profile lines"; it is 8 lines replaced by 11 (the counting script skipped removed comment lines).
    The byte-for-byte checks of the scripts were right. Corrected after the check, in GAPS.md and in `UR.md`.
+5. **The app stopped by itself during your check of 10 Nov: fixed the same day.** The check gave one of the server's
+   code files a new date while the app ran; the server restarted itself to load it, and on Windows that restart also
+   stopped the web server and npm, so the whole app stopped and PowerShell's prompt came back. My own checks had run
+   without a real terminal window, where this cannot happen. `npm run dev` no longer restarts the server by itself (see
+   *How to start it*). Two separate checks in real terminal windows confirmed the fix: the old setup stopped exactly as
+   in your window; the new one keeps running when code files change; Ctrl+C stops everything within a second; and a
+   build or a reading that is running when you stop the app finishes by itself and shows as done after a restart
+   (`docs/upload/contract-issues/UI.md`, UI-5).
 
 ## Known gaps
 

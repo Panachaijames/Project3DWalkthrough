@@ -76,10 +76,24 @@ change, says where a frozen or another step's file changed, and records what the
   a re-drawn project. Recorded, no change.
 * **UI-4, units on a Revit export (information):** `presidential suite_layout.dwg` says inches and its doors say
   millimetres (7 to 0), so `runBuild` answers 409 `units_unconfirmed` until the Files step's Confirm, as U-7.4 designs.
-* **UI-5, the headless reload (information):** `npm run dev`'s uvicorn `--reload` stops its server with `CTRL_C_EVENT`
-  on Windows; in this session (no console) the event never reached the server, so a reload during a build run logged
-  "Reloading..." but kept the old server, and the run ended `done`. The worker is its own process group, so a reload in
-  the owner's terminal leaves it running (U-3.4); the start-up marking of runs whose worker is gone is U5's tested path.
+* **UI-5, the reload in a real terminal stopped the whole app (fixed 10 Nov; was "the headless reload", information):**
+  `npm run dev`'s uvicorn `--reload` stops its server with `CTRL_C_EVENT` on Windows. In this session (no console) the
+  event never reached the server, so a reload during a build run logged "Reloading..." but kept the old server, and the
+  run ended `done`. In the owner's PowerShell (their check of 10 Nov) the event reached every program in the terminal:
+  one `.py` file with a new date stopped the API, the web server and npm (both npm scripts asked "Terminate batch job
+  (Y/N)?", concurrently ended the web side, the prompt came back, nothing restarted). **Fix:** `dev:api` no longer
+  passes `--reload` (`app/package.json`, frozen after the scaffold, changed on the owner's report) and
+  `tools/run-api.mjs` refuses `--reload` on Windows (exit 2): the restart's Ctrl+C also reaches `run-api.mjs`, whose
+  SIGINT handler ends uvicorn, so a terminal of its own would not help either. After an API change: Ctrl+C, then
+  `npm run dev`. **Checked the same day in real consoles** (hidden console windows, Ctrl+C sent with
+  `GenerateConsoleCtrlEvent`, and once through a pseudo-terminal as Windows Terminal sends it), by two agents with
+  separate harnesses on a temp copy of the store: the old pair with `--reload` died as in the owner's window (ports free
+  within 3 s, nothing came back); `npm run dev` from the project folder and from `app/` kept both servers and the same
+  API processes through new dates on three `.py` files and an edit-and-restore; Ctrl+C (also twice) freed both ports in
+  under a second, and in PowerShell no prompt waits (in cmd.exe one waits for Y); Ctrl+C during a bank build run and
+  during the reading: the worker (no console, its own process group) carried on, and after `npm run dev` the run was
+  adopted and ended `done`; with the worker gone before the restart, the start-up marked it `interrupted` and "read
+  the drawings again" worked. A second `npm run dev` while one runs stops at the port check without touching the store.
 
 ## 4. The integration runs (9 Nov 2026; details in the step's report and `docs/upload/GAPS.md`)
 

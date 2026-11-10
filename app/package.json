@@ -13,7 +13,7 @@
   },
   "scripts": {
     "dev": "concurrently -k -n api,web -c blue,green \"npm:dev:api\" \"npm:dev:web\"",
-    "dev:api": "node tools/run-api.mjs --port 8710 --reload",
+    "dev:api": "node tools/run-api.mjs --port 8710",
     "dev:web": "npm run dev -w @walkthrough/web",
     "build": "npm run typecheck && npm run build:web && npm run build:offline",
     "build:web": "npm run build -w @walkthrough/web",
