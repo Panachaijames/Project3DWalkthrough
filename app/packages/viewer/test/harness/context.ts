@@ -189,7 +189,7 @@ function buildNaively(model: BuiltModel, pres: ResolvedPresentation, scene: Scen
     scene.add(group);
     const rec: FloorRecord = {
       key: f.key, name: f.name, level: f.level, modelLevel: f.level, wallHeight: f.wallHeight, stack: f.stack ?? 'main',
-      group, colliders: [], walkables: [], surfaces: [], late: [], rise: [],          // surfaces: the rooms scaffold's placeholder (R4 fills it)
+      group, colliders: [], walkables: [], surfaces: [], late: [], rise: [],          // surfaces (v2): the slabs, treads and landings of a model with stairways
     };
     built.floors.push(rec);
     built.fitted[f.key] = [];
@@ -204,11 +204,24 @@ function buildNaively(model: BuiltModel, pres: ResolvedPresentation, scene: Scen
         mesh.name = `${f.key} floor plate`;
         group.add(mesh);
         rec.walkables.push(mesh);
+        if (model.stairways !== undefined) rec.surfaces.push(mesh);
         rec.late.push(mesh);
         built.toggleObjects.plates.push(mesh);
         if (p.plinth) built.plinths.push(mesh);
         continue;
       }
+      if (p.kind === 'tread' || p.kind === 'landing') {
+        // v2 (rooms step R4), naive like the rest: one single-sided mesh per tread or landing, walked on, never a
+        // collider, no storey scaling (the real ones are core/build.ts and core/heights.ts)
+        const g = extrude(p.o, p.h, p.z0, p.z1, f.level);
+        const mesh = bvh(new Mesh(g, material('tread', () => new MeshStandardMaterial({ color: new Color(style.color), roughness: 0.85, side: FrontSide }))));
+        mesh.name = `${f.key} tread:storey`;
+        mesh.userData.steps = true;
+        group.add(mesh);
+        if (model.stairways !== undefined) rec.surfaces.push(mesh);
+        continue;
+      }
+      if (p.kind === 'ceiling') continue;                            // v2: not drawn by the naive context
       const fit = fitOf(p);
       const g = extrude(p.o, p.h, p.z0, p.z1, f.level);
       let cx = 0, cy = 0;

@@ -3,6 +3,10 @@
 // itself), from the prototypes: build_replay.js applySettings (the floor group's home position, the wall scale about the
 // floor level), each page's applySettings (the Walk level) and the house page's (the plinth that keeps its foot on the
 // ground, fitPieces: lintel heads that stay where they are, panes and sills cut at the wall top). Then bus 'settings'.
+// BuiltModel v2 (rooms/DESIGN.md R-9.6; rooms step R4): fit 'storey' (treads, landings, the wall pieces cut under a stair)
+// scales about its floor's level by the storey ratio S = (L(to) - L(from)) / (L0(to) - L0(from)) of its stairway's two
+// floors, so a changed level keeps the stair climbable and the cut walls under it. Ceilings are in the floor's group and
+// in no rise list: they keep their height above their floor's level (the `fixed` rule).
 import type { BufferGeometry, Mesh } from 'three';
 import type { CreateHeights, FloorRecord, FloorSettings, HeightsApi, SettingsMap } from '../contracts';
 import { fitDataOf } from './build';
@@ -74,6 +78,16 @@ export const createHeights: CreateHeights = ctx => {
       }
       for (const sheet of ctx.pictures?.sheets ?? []) {        // the plan picture lies on its floor
         if (sheet.userData.key === f.key) sheet.position.y = L - L0;
+      }
+    }
+    // fit 'storey', once every level is known (the upper floor of a stairway may come later in the list)
+    for (const f of ctx.floors) {
+      for (const r of f.rise) {
+        if (r.fit !== 'storey') continue;
+        const to = ctx.floorByKey.get(String(r.mesh.userData.stairTo));
+        const span = to ? to.modelLevel - f.modelLevel : 0;
+        const S = to && span > EPS ? Math.max(0.01, (settings[to.key]!.level - settings[f.key]!.level) / span) : 1;
+        for (const obj of [r.mesh, r.edges]) if (obj) { obj.scale.y = S; obj.position.y = f.modelLevel * (1 - S); }
       }
     }
     ctx.bus.emit('settings', { settings: JSON.parse(JSON.stringify(settings)) as SettingsMap });

@@ -9,10 +9,19 @@
 //  3. one mesh per slab part (`<key> floor plate`, FrontSide, polygonOffset -1), walkable and late;
 //  4. stairs (late): tread strips, faint lines above, 0.15 m panels;
 //  5. the ground plane (presentation.groundPlane), in no floor.
+// BuiltModel v2 (rooms/DESIGN.md R-9; rooms step R4):
+//  * treads and landings: one mesh per floor (`<key> tread:storey`; one more per upper floor when stairways of one floor
+//    rise to different floors), FrontSide so that a ray starting inside a block passes out of it, never a collider, listed
+//    in FloorRecord.surfaces with the floor's slabs when the model has `stairways` (the foot-based walker stands on them);
+//  * fit 'storey' (treads, landings, the wall pieces cut under a stair): a rise item of that fit whose mesh carries
+//    userData.stairTo, the stairway's upper floor (core/heights.ts scales it with the storey);
+//  * ceilings: one merged mesh per floor (`<key> ceilings`), the down-facing face only, FrontSide, no edges, no BVH, not a
+//    collider, late; userData.ceiling (core/visibility.ts shows it in Walk and Ghost only, with the Ceilings tick).
 // The floor groups and the ground plane are not added to a scene here (viewer.ts does that).
 import {
   BufferGeometry, Color, DoubleSide, EdgesGeometry, Float32BufferAttribute, FrontSide, Group, LineBasicMaterial,
-  LineSegments, MathUtils, Mesh, MeshBasicMaterial, MeshStandardMaterial, PlaneGeometry, type MeshStandardMaterialParameters,
+  LineSegments, MathUtils, Mesh, MeshBasicMaterial, MeshStandardMaterial, Path, PlaneGeometry, Shape, ShapeGeometry, Vector2,
+  type MeshStandardMaterialParameters,
 } from 'three';
 import { mergeGeometries, toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { BuildScene, BuiltScene, FitMode, FloorRecord, Part, PartStyle } from '../contracts';
@@ -112,7 +121,29 @@ function lines(a: number[], y: number): BufferGeometry {
   return g;
 }
 
+/** The down-facing face of a ceiling part at its underside (level + z0): plan (x, y) -> three.js (x, z = -y), normal -y. */
+function ceilingFace(p: Part, level: number): BufferGeometry {
+  const shape = new Shape(p.o.map(([x, y]) => new Vector2(x, y)));
+  for (const hole of p.h) shape.holes.push(new Path(hole.map(([x, y]) => new Vector2(x, y))));
+  const g = new ShapeGeometry(shape, 1);
+  g.rotateX(-Math.PI / 2);                                   // faces up
+  g.translate(0, level + p.z0, 0);
+  const index = g.getIndex();
+  if (index) {                                               // turn every triangle over: it faces down
+    const a = index.array;
+    for (let i = 0; i + 2 < a.length; i += 3) { const k = a[i + 1]!; a[i + 1] = a[i + 2]!; a[i + 2] = k; }
+    index.needsUpdate = true;
+  }
+  const normal = g.getAttribute('normal');
+  for (let i = 0; i < normal.count; i++) normal.setXYZ(i, 0, -1, 0);
+  g.deleteAttribute('uv');
+  return g;
+}
+
 export const buildScene: BuildScene = (model, presentation) => {
+  // v2: the foot-based walker is on when the model has `stairways` (R-9.1); only then are the surfaces listed
+  const climbing = model.stairways !== undefined;
+  const stairTo = new Map<string, string>((model.stairways ?? []).map(s => [s.id, s.to]));
   const crease = presentation.creaseAngle;
   const bounds: PlanBounds = planBounds(model.parts.filter(p => p.kind !== 'slab'));
   const delayOf = (o: Part['o']) => { const [cx, cy] = ringCentre(o); return sweepDelay(cx, cy, bounds); };
@@ -124,24 +155,36 @@ export const buildScene: BuildScene = (model, presentation) => {
     group.name = f.key;
     const rec: FloorRecord = {
       key: f.key, name: f.name, level, modelLevel: level, wallHeight: f.wallHeight, stack: f.stack ?? 'main',
-      // surfaces: a placeholder of the rooms scaffold (R0); R4 lists the slab, tread and landing meshes (R-9.2)
+      // surfaces (v2): the slab meshes and the tread mesh, filled below when the model has stairways (R-9.2)
       group, colliders: [], walkables: [], surfaces: [], late: [], rise: [],
     };
     built.floors.push(rec);
     const fitted: Mesh[] = (built.fitted[f.key] = []);
 
     // 1. the non-slab parts, merged per mesh group and fit
-    const groups = new Map<string, { style: PartStyle; fit: FitMode; parts: Part[] }>();
+    const groups = new Map<string, { style: PartStyle; fit: FitMode; parts: Part[]; steps: boolean; to?: string }>();
+    const ceilings: Part[] = [];
+    let firstTo: string | undefined;
     for (const p of model.parts) {
       if (p.floor !== f.key || p.kind === 'slab') continue;
-      const style = presentation.partStyles[p.kind];
-      const fit = fitOf(p);
-      const name = `${style.mesh}:${fitName(fit)}`;
+      if (p.kind === 'ceiling') { ceilings.push(p); continue; }
+      // treads and landings are one mesh (the tread's style); a storey part scales with its stairway's upper floor
+      const steps = p.kind === 'tread' || p.kind === 'landing';
+      const style = presentation.partStyles[steps ? 'tread' : p.kind];
+      const to = p.stair !== undefined ? stairTo.get(p.stair) : undefined;
+      let fit = fitOf(p);
+      if (steps && to !== undefined) fit = 'storey';
+      else if (fit === 'storey' && to === undefined) fit = p.follow ? 'scale' : 'fixed';   // no stairway to scale with
+      let name = `${style.mesh}:${fitName(fit)}`;
+      if (fit === 'storey') {
+        firstTo ??= to;
+        if (to !== firstTo) name += `:${to}`;
+      }
       let entry = groups.get(name);
-      if (!entry) groups.set(name, (entry = { style, fit, parts: [] }));
+      if (!entry) groups.set(name, (entry = { style, fit, parts: [], steps, ...(fit === 'storey' && to !== undefined ? { to } : {}) }));
       entry.parts.push(p);
     }
-    for (const [name, { style, fit, parts }] of groups) {
+    for (const [name, { style, fit, parts, steps, to }] of groups) {
       const geos = parts.map(p => extrudePart(p, level, delayOf(p.o)));
       const merged = mergeAll(geos, `${f.key} ${name}`);
       const g = toCreasedNormals(merged, MathUtils.degToRad(crease));
@@ -160,10 +203,17 @@ export const buildScene: BuildScene = (model, presentation) => {
       const mesh = new Mesh(g, partMaterial(style));
       mesh.name = `${f.key} ${name}`;
       mesh.renderOrder = style.renderOrder ?? 0;
+      if (to !== undefined) mesh.userData.stairTo = to;
+      if (steps) {
+        // single-sided (outward faces): a ray that starts inside a block passes out of it (R-9.2)
+        (mesh.material as MeshStandardMaterial).side = FrontSide;
+        mesh.userData.steps = true;
+        mesh.userData.floor = f.key;
+      }
       // Walked on or over (collider false: decks) means lying on the floor plate, which is drawn in front by its own
       // polygonOffset (-1, 3. below): such parts go in front of it again (-2, as the plan pictures), or the suite's 2 cm
       // terrace decks vanish under the plate (integration: seen in the prototype / app screenshots, DESIGN.md 18.13).
-      if (style.collider === false) {
+      if (style.collider === false && !steps) {
         const m = mesh.material as MeshStandardMaterial;
         m.polygonOffset = true; m.polygonOffsetFactor = -2; m.polygonOffsetUnits = -2;
       }
@@ -171,7 +221,8 @@ export const buildScene: BuildScene = (model, presentation) => {
       edges.name = `${mesh.name} edges`;
       withBvh(mesh);
       group.add(mesh, edges);
-      if (style.collider !== false) rec.colliders.push(mesh);
+      if (steps) { if (climbing) rec.surfaces.push(mesh); }      // walked on, never a collider
+      else if (style.collider !== false) rec.colliders.push(mesh);
       if (style.glass) built.toggleObjects.glass.push(mesh, edges);
       if (style.single) built.toggleObjects.single.push(mesh, edges);
       rec.rise.push({ mesh, edges, scales: fit === 'scale', fit });
@@ -206,9 +257,25 @@ export const buildScene: BuildScene = (model, presentation) => {
       mesh.userData.floor = f.key;
       group.add(mesh);
       rec.walkables.push(mesh);
+      if (climbing) rec.surfaces.push(mesh);
       rec.late.push(mesh);
       built.toggleObjects.plates.push(mesh);
       if (p.plinth) built.plinths.push(mesh);
+    }
+
+    // 3b. the ceilings (v2): one mesh per floor, seen from below only; Walk and Ghost only (core/visibility.ts)
+    if (ceilings.length) {
+      const style = presentation.partStyles.ceiling;
+      const geos = ceilings.map(p => ceilingFace(p, level));
+      const merged = mergeAll(geos, `${f.key} ceilings`);
+      geos.forEach(x => x.dispose());
+      const mesh = new Mesh(merged, new MeshStandardMaterial({ color: new Color(style.color), roughness: style.roughness ?? 0.95, side: FrontSide }));
+      mesh.name = `${f.key} ceilings`;
+      mesh.userData.ceiling = true;
+      mesh.userData.floor = f.key;
+      mesh.visible = false;                                    // Orbit at first; visibility.applyToggles decides
+      group.add(mesh);
+      rec.late.push(mesh);
     }
 
     // 4. the stairs (all shown at the end of the replay)

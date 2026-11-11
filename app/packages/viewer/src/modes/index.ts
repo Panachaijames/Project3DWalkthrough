@@ -16,8 +16,8 @@ import { installInput } from './input';
 import { createPhotos } from './photo';
 import { createProbe } from './probe';
 import {
-  clamp, createState, D2R, DT_CAP, EYE_MAX, EYE_MIN, FLOOR_TOLERANCE, FRAMES, FREE_FROM_BUTTON, FREE_MIN_ROOM, finite, GHOST_FAST,
-  GHOST_ON_FLOOR, LENS_MAX, LENS_MIN, NEAR_FIRST_PERSON, RUN_SPEED, SHOT_DELAY, STICK_DEAD, WALK_SPEED,
+  clamp, createState, D2R, DT_CAP, EYE_EASE, EYE_MAX, EYE_MIN, FLOOR_TOLERANCE, FRAMES, FREE_FROM_BUTTON, FREE_MIN_ROOM, finite,
+  GHOST_FAST, GHOST_ON_FLOOR, isClimbing, LENS_MAX, LENS_MIN, NEAR_FIRST_PERSON, RUN_SPEED, SHOT_DELAY, STICK_DEAD, WALK_SPEED,
 } from './state';
 import { buildUi, createHud } from './ui';
 import { createWalker } from './walk';
@@ -49,7 +49,17 @@ export const installModes: InstallModes = (ctx: ViewerContext) => {
   const s = createState(ctx);
   const orbitNear = camera.near;
   camera.rotation.order = 'YXZ';
-  const walk = createWalker(s);
+  // A model with `stairways` walks on its feet (rooms/DESIGN.md R-9.1): slabs, treads and landings, from s.foot. Any
+  // other model keeps today's walker, and s.foot is then always the current floor's level.
+  const slab = new Map(ctx.model.floors.map(f => [f.key, f.slabThickness]));
+  const walk = isClimbing(ctx.model)
+    ? createWalker(s, {
+      floors,
+      thickness: f => slab.get(f.key) ?? 0.25,
+      height: f => ctx.heights?.settings[f.key]?.height ?? f.wallHeight,
+      floorChanged: () => hud.updateHud(),                // the HUD, the floor buttons and `modechange` follow (R-9.3)
+    })
+    : createWalker(s);
   const proj = createProjection(ctx, s);
   const ui = buildUi(ctx, s);
   const stack = (f: FloorRecord) => stackOf(floors, f);
@@ -72,8 +82,10 @@ export const installModes: InstallModes = (ctx: ViewerContext) => {
     if (s.mode === 'walk') {
       s.floor = f;
       const p = walk.startPoint(f, s.pos);
-      s.pos.set(p.x, f.level + s.eye, p.z);
+      s.foot = f.level;                                   // a teleport: the foot at the level, the eye not eased
+      s.pos.set(p.x, s.foot + s.eye, p.z);
       walk.findFree(s.pos); walk.faceOpen();
+      walk.settle();
     } else {
       s.pos.y += f.level - here().level; s.floor = f;
     }
@@ -85,7 +97,8 @@ export const installModes: InstallModes = (ctx: ViewerContext) => {
   }
 
   // -------------------------------------------------------------- modes
-  function setMode(m: ViewMode, opt: { floor?: FloorRecord; point?: { x: number; z: number } } = {}) {
+  /** opt.foot (climbing only): the height of the tread or landing that was double-clicked; the walker stands on it. */
+  function setMode(m: ViewMode, opt: { floor?: FloorRecord; point?: { x: number; z: number }; foot?: number } = {}) {
     const from = s.mode;
     if (m === from && !opt.point) return;
     // Locked (the build replay is on): Orbit only. The prototype's UI could not get here (the panel is hidden, the keys,
@@ -106,20 +119,39 @@ export const installModes: InstallModes = (ctx: ViewerContext) => {
         s.pitch = Math.asin(Math.max(-1, Math.min(1, dir.y)));
       } else {
         const start = walk.startPoint(s.floor, opt.point || controls.target);
-        s.pos.set(start.x, s.floor.level + s.eye, start.z);
-        walk.findFree(s.pos, opt.point ? FREE_MIN_ROOM : FREE_FROM_BUTTON);    // from a button: somewhere with room around you
+        if (walk.climbing && opt.point && finite(opt.foot)) {
+          // a double-click on a tread or landing: the foot on it, where it was clicked (R-9.5)
+          s.foot = opt.foot;
+          s.pos.set(start.x, s.foot + s.eye, start.z);
+          walk.nameFloor();
+        } else {
+          s.foot = s.floor.level;
+          s.pos.set(start.x, s.foot + s.eye, start.z);
+          walk.findFree(s.pos, opt.point ? FREE_MIN_ROOM : FREE_FROM_BUTTON);  // from a button: somewhere with room around you
+        }
         s.pitch = 0;
         walk.faceOpen();
       }
     } else if (from === 'ghost' && m === 'walk') {
       // Land on the floor below you; from far outside, start in the middle of that floor.
-      s.floor = floorAtHeight(floors, s.floor, s.pos.y - GHOST_ON_FLOOR);
-      const p = walk.startPoint(s.floor, s.pos);
-      s.pos.set(p.x, s.floor.level + s.eye, p.z); walk.findFree(s.pos);
+      const below = floorAtHeight(floors, s.floor, s.pos.y - GHOST_ON_FLOOR);
+      // Climbing: on the highest surface under the eye - 0.30 m, any floor's plate, tread or landing of the stack (R-9.5).
+      const land = walk.surfaceUnder(s.pos, s.pos.y - GHOST_ON_FLOOR, below);
+      if (land && land.steps) {
+        s.floor = land.floor; s.foot = land.y; s.pos.y = s.foot + s.eye;
+        walk.nameFloor();
+      } else {
+        s.floor = land ? land.floor : below;
+        const p = walk.startPoint(s.floor, s.pos);
+        s.foot = s.floor.level;
+        s.pos.set(p.x, s.foot + s.eye, p.z); walk.findFree(s.pos);
+      }
     } else if (from === 'walk' && m === 'walk' && opt.point) {
       s.floor = opt.floor || s.floor;
-      s.pos.set(opt.point.x, s.floor.level + s.eye, opt.point.z); walk.findFree(s.pos); walk.faceOpen();
+      s.foot = s.floor.level;
+      s.pos.set(opt.point.x, s.foot + s.eye, opt.point.z); walk.findFree(s.pos); walk.faceOpen();
     }
+    if (m === 'walk') walk.settle();
     if (m === 'orbit') {
       if (typeof document !== 'undefined' && document.pointerLockElement === ctx.canvas) document.exitPointerLock();
       camera.near = orbitNear;
@@ -152,8 +184,16 @@ export const installModes: InstallModes = (ctx: ViewerContext) => {
     if (s.mode === 'walk') {
       const d = new Vector3(-Math.sin(s.yaw), 0, -Math.cos(s.yaw)).multiplyScalar(fwdIn).addScaledVector(right, sideIn);
       const mag = Math.min(1, d.length());
-      if (mag > 0) walk.walkMove(d.setLength(mag * (fast ? RUN_SPEED : WALK_SPEED) * dt));
-      s.pos.y = s.floor.level + s.eye;
+      if (walk.climbing) {
+        walk.restart();                                   // a test wrote the position: from the floor's level (R-9.8)
+        if (mag > 0) walk.walkMove(d.setLength(mag * (fast ? RUN_SPEED : WALK_SPEED) * dt));
+        // The eye eases toward foot + eye (time constant 0.1 s): no 17 cm jump per step (R-9.4). The physics uses the foot.
+        const gap = s.foot + s.eye - s.pos.y;
+        s.pos.y = Math.abs(gap) < 5e-4 ? s.foot + s.eye : s.pos.y + gap * (1 - Math.exp(-dt / EYE_EASE));
+      } else {
+        if (mag > 0) walk.walkMove(d.setLength(mag * (fast ? RUN_SPEED : WALK_SPEED) * dt));
+        s.pos.y = s.floor.level + s.eye;
+      }
     } else {
       const upIn = (k.has('Space') || k.has('KeyE') ? 1 : 0) - (k.has('KeyC') || k.has('KeyQ') ? 1 : 0) + s.vert;
       const cp = Math.cos(s.pitch);
@@ -207,6 +247,14 @@ export const installModes: InstallModes = (ctx: ViewerContext) => {
   ctx.disposer.add(ctx.bus.on('resize', () => {
     try { proj.applyProjection(); hud.updateHud(); hud.syncCamPanel(); } catch (err) { report(err); }
   }));
+
+  // Build settings moved a level while walking on the feet: the foot follows the surface it stood on (R-9.6).
+  if (walk.climbing) {
+    ctx.disposer.add(ctx.bus.on('settings', () => {
+      if (s.mode !== 'walk') return;
+      try { walk.reground(); s.pos.y = s.foot + s.eye; proj.applyCamera(); hud.updateHud(); } catch (err) { report(err); }
+    }));
+  }
 
   proj.applyProjection(); hud.updateHud(); hud.syncCamPanel();
   const probe = createProbe(ctx, s, walk, proj.applyCamera);

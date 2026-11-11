@@ -36,6 +36,7 @@ export const installTestHook: InstallTestHook = (ctx, viewer) => {
     FL[f.key] = {
       key: f.key, name: f.name, level: f.modelLevel, group: f.group,
       colliders: f.colliders, walkables: f.walkables, late: f.late, rise: f.rise,
+      surfaces: f.surfaces,                               // v2: what the foot-based walker stands on ([] on an old model)
     };
     rise[f.key] = f.rise;
     groups[f.key] = f.group;

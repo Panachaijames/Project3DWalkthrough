@@ -31,7 +31,7 @@ export function ours(e: { target: EventTarget | null }, root: Node): boolean {
 }
 
 export interface InputDeps {
-  setMode(m: ViewMode, opt?: { floor?: FloorRecord; point?: { x: number; z: number } }): void;
+  setMode(m: ViewMode, opt?: { floor?: FloorRecord; point?: { x: number; z: number }; foot?: number }): void;
   changeFloor(step: 1 | -1): void;
   /** Takes a photo; a failure is reported (the handlers never leave a rejected promise behind). */
   photo(): void;
@@ -142,10 +142,19 @@ export function installInput(ctx: ViewerContext, s: ModesState, ui: ModesUi, wal
     ray.setFromCamera(new Vector2((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1), ctx.camera);
     ray.far = Infinity;
     const vis = ctx.floors.filter(f => f.group.visible);
-    const targets: Object3D[] = vis.flatMap(f => (f.walkables.filter(m => m.visible) as Object3D[]).concat(walk.visibleColliders(f)));
+    // Climbing: the treads and landings too (surfaces that are not floor plates; none on a model without stairways).
+    const stepsOf = (f: FloorRecord): Object3D[] => f.surfaces.filter(m => m.userData.steps === true && m.visible);
+    const targets: Object3D[] = vis.flatMap(f => (f.walkables.filter(m => m.visible) as Object3D[]).concat(walk.visibleColliders(f), stepsOf(f)));
     const hit = targets.length ? ray.intersectObjects(targets, false)[0] : null;
-    let floor = hit ? vis.find(f => (f.walkables as Object3D[]).includes(hit.object) || (f.colliders as Object3D[]).includes(hit.object)) : undefined;
+    let floor = hit ? vis.find(f => (f.walkables as Object3D[]).includes(hit.object) || (f.colliders as Object3D[]).includes(hit.object)
+      || (f.surfaces as Object3D[]).includes(hit.object)) : undefined;
     let point: { x: number; z: number } | null = hit ? hit.point : null;
+    if (hit && floor && hit.object.userData.steps === true) {
+      // A double-click on a tread or landing puts the foot on it (R-9.5): the surface under the point that was hit.
+      const land = walk.surfaceUnder(hit.point, hit.point.y + 0.05, floor);
+      d.setMode('walk', { floor, point: hit.point, foot: land ? land.y : hit.point.y });
+      return;
+    }
     if (!point) {
       floor = vis.sort((a, b) => a.level - b.level)[0] || ctx.floors[0];
       const p = new Vector3();
@@ -193,7 +202,7 @@ export function installInput(ctx: ViewerContext, s: ModesState, ui: ModesUi, wal
   on(ui.camClose, 'click', () => d.openCam(false));
   on(ui.lens, 'input', () => d.setLens(ui.lens.value));
   for (const b of ui.presets) on(b, 'click', () => d.setLens(b.getAttribute('data-mm') ?? ''));
-  on(ui.eye, 'input', () => { s.eye = Number(ui.eye.value); if (s.mode === 'walk') s.pos.y = s.floor.level + s.eye; d.applyCamera(); d.syncCamPanel(); });
+  on(ui.eye, 'input', () => { s.eye = Number(ui.eye.value); if (s.mode === 'walk') s.pos.y = s.foot + s.eye; d.applyCamera(); d.syncCamPanel(); });
   on(ui.tilt, 'input', () => { s.pitch = Number(ui.tilt.value) * D2R; d.clampPitch(); d.applyCamera(); d.syncCamPanel(); });
   on(ui.straight, 'change', () => { s.straight = ui.straight.checked; d.clampPitch(); d.applyCamera(); d.syncCamPanel(); });
   // Lists hand the keyboard back to the viewer once a choice is made.

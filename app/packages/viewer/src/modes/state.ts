@@ -46,6 +46,30 @@ export const PROBE_STEP = 0.05;
 /** probe.open / probe.crosses reach (m) and height. */
 export const PROBE_OPEN_FAR = 30;
 
+// -------------------------------------------------------------------------------------------------------- Climbing
+// rooms/DESIGN.md R-9.10 (the D-13 "Climbing" row): only for a model with `stairways`; the rows above do not change.
+/** The highest step taken up and the deepest taken down (m). */
+export const STEP_UP = 0.25;
+export const STEP_DOWN = 0.30;
+/** The ground ray starts this far above the foot and ends STEP_DOWN below it; the first surface it meets decides. */
+export const GROUND_RAY_FROM = 1.0;
+/** No ground under the next centre: the ray is tried again this far along the move. */
+export const GAP_BRIDGE = 0.08;
+/** The head ray: from foot + HEAD_FROM up to foot + eye + HEAD_ABOVE_EYE, against the surfaces. */
+export const HEAD_FROM = 0.30;
+export const HEAD_ABOVE_EYE = 0.30;
+/** The body rays meet the colliders of every floor whose height range overlaps [foot, foot + BODY_SPAN]. */
+export const BODY_SPAN = 2.0;
+/** The floor named is the nearest level; it changes once the foot is this far past mid-storey. */
+export const FLOOR_HYSTERESIS = 0.20;
+/** The eye eases toward foot + eye with this time constant (s); never on a teleport or in a probe call. */
+export const EYE_EASE = 0.1;
+/** A tolerance of the step window (m): a riser of exactly 0.25 m is climbed. */
+export const STEP_EPS = 1e-4;
+
+/** The foot-based walker is on when the model has `stairways`, even an empty list (R-9.1). */
+export const isClimbing = (model: { stairways?: unknown } | null | undefined): boolean => !!model && model.stairways !== undefined;
+
 // ----------------------------------------------------------------------------------------------------------- Ghost
 export const GHOST_SPEED = 6;
 export const GHOST_SPEED_MIN = 0.5;
@@ -106,16 +130,18 @@ export const STICK_KNOB = 0.6;
 export const STICK_DEAD = 0.15;
 
 /** The prototype's `s` (ModesState), with its starting values. `touch` from the device's pointer. */
-export function createState(ctx: Pick<ViewerContext, 'camera' | 'floors'>): ModesState {
+export function createState(ctx: Pick<ViewerContext, 'camera' | 'floors'> & { model?: { stairways?: unknown } | null }): ModesState {
   const coarse = typeof matchMedia === 'function' && matchMedia('(pointer: coarse)').matches;
+  // The foot (rooms/DESIGN.md R-9.2): the walker's own state when the model climbs; otherwise always the current floor's
+  // level, whatever is written (the old walker never reads it, and `s.foot + s.eye` is then today's `level + eye`).
+  const climbing = isClimbing(ctx.model);
+  let foot = ctx.floors[0]!.level;
   return {
     mode: 'orbit',
     floor: ctx.floors[0]!,
     pos: new Vector3(),
-    // A placeholder of the rooms scaffold (R0): the old walker's feet are always at the current floor's level. R4 makes
-    // the foot the walker's own state (rooms/DESIGN.md R-9.2).
-    get foot() { return this.floor.level; },
-    set foot(_value: number) { /* R4 */ },
+    get foot() { return climbing ? foot : this.floor.level; },
+    set foot(value: number) { if (climbing && Number.isFinite(value)) foot = value; },
     yaw: 0,
     pitch: 0,
     eye: EYE,
