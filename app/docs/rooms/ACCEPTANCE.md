@@ -265,7 +265,7 @@ reports of 9 Nov, and the checks use those.
 
 | Drawing | Stair | Must / should | Expected |
 |---|---|---|---|
-| house | main stair | must | climbable `ground` → `upper`, 21 risers, riser 0.186 ± 0.002 m, kind `L`, 1 landing, the bottom within 0.3 m of (20.40, 21.15), direction from the walking line; the upper plan's drawing adds no stair and no flag |
+| house | main stair | must | climbable `ground` → `upper`, 21 risers, riser 0.186 ± 0.002 m, kind `L`, 1 landing, riser 1's middle (the walking line's second point, `walk[1]`) within 0.3 m of (20.40, 21.15) (decided 11 Nov, R2.md D-1: the stairway's `bottom` is the walking line's first point, 1.0 m before riser 1, as R-8.5 defines it), direction from the walking line; the upper plan's drawing adds no stair and no flag |
 | bank | main stair | must | climbable `L1` → `L2`, 21 risers, riser 0.176 ± 0.002 m, 3 landings, matched across the two files, direction from L2's word and arrow (and L1's cut) |
 | tower | stair A | should | climbable `L29` → `L30`, 20 risers, 0.200 ± 0.002 m, kind `U`; the gap report gives the storey heights that would fit (2.80 – 4.20 m) |
 | tower | stair B | must | lines, a `stair` flag naming the riser height and the storey that would fit |
