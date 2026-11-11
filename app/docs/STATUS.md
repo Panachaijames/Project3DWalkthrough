@@ -340,16 +340,28 @@ grid lines to within a millimetre, and all 86 openings are found where the proto
 2. **Rooms and slabs** (your choice of 10 Nov, started that day): floors made from the wall network, so the house's
    glass living area, the suite's centre and the tower's outer rooms get their floor (most of the failing walk probes go
    with them). Then **stairs you can climb**.
-3. **A second round of fixes for the door finder** (your choice of 10 Nov: after the floors and stairs, before the box editing). The 3D team's new suite drawing was tested on 10 Nov as a drawing
-   the finder had never seen (its answer key made by separate labellers who never saw the finder's output, then checked
-   by two blind auditors): **7 of its 16 doorways came out right (44 %; the goal is 80 %)**, and 8 openings were
-   reported that are not there. The main cause is known: this kind of Revit export draws the wall's lines on across the
-   doorways (all four pocket doors are hidden that way) and has the furniture on the wall layer. With those lines left
-   out, the same finder gets 14 of 16. Nothing is fixed yet. Until then the Check step has two tools for it: select the
-   lines drawn across a doorway that has no door and set them aside (Delete), then **Rebuild**, and the door is found;
-   and give an opening that is not there the kind "not an opening". (The Check step cannot add a door by hand.) The full
-   result, with a marked plan: `detector\blind_run_suite_revit\README.md` and `result_marked.png` beside it. A drawing
-   from another office would still be the stronger test.
+3. **A second round of fixes for the door finder** (your choice of 10 Nov: after the floors and stairs, before the box
+   editing). The 3D team's new suite drawing was tested on 10 Nov as a drawing the finder had never seen (its answer
+   key made by separate labellers who never saw the finder's output, then checked by two blind auditors): **7 of its 16
+   doorways came out right (44 %; the goal is 80 %)**, and 8 openings were reported that are not there. The main cause
+   is known: this kind of Revit export draws the wall's lines on across the doorways (all four pocket doors are hidden
+   that way) and has the furniture on the wall layer. Nothing is fixed yet. The full result, with a marked plan:
+   `detector\blind_run_suite_revit\README.md` and `result_marked.png` beside it. A drawing from another office would
+   still be the stronger test.
+
+   **Until then, the Check step repairs it by hand.** Checked on this drawing on 11 Nov through the app's own builder
+   and the Check step's own picking code (not yet by hand in the browser):
+   * **A doorway that got no door:** select the lines drawn across it, **Set aside** (Delete), **Rebuild**. With this
+     drawing's 15 such lines set aside, 14 of the 16 doorways come out right: all four pocket doors, both unit doors and
+     the hinged door that was too narrow. Each rebuild took about 10 s.
+   * **An opening that is not there:** give it the kind **Not an opening**. All 8 false ones went and nothing else
+     changed.
+   * The folding door and the wide doorless opening stay missed: the Check step cannot add a door by hand.
+
+   Three things to know when doing it: (1) nothing on the screen says a door is missing, so look for a wall filled
+   across a door symbol; (2) zoom well in before clicking a wall line (the plan opens small, and a flag's round marker
+   takes the click first; for a false opening use **Edit the opening** on its flag card); (3) pick the lines one at a
+   time with Shift, or use **A layer in a box**; a plain dragged box in **One item** mode takes the door symbol too.
 4. **Box editing** after that: rename and recolour furniture kinds, move pieces between kinds, add boxes by hand; then
    the real furniture models, finishes and lights.
 5. For you: ask the 3D team to export Revit files with the walls on their own layer.
