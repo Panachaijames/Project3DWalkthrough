@@ -187,8 +187,12 @@ def assemble(floors, X, parts_geo, built, log) -> dict:
     rooms_out = []
     for k, B in built.items():
         for r in B['rooms']:
+            # the new rule's names carry their area as a number (R-3.4: the written area, comma decimals read, else the
+            # room's area when the name is alone in its room); the old rule reads the number off the tag line, as before
+            area = r['areaValue'] if 'areaValue' in r else (
+                float(re.match(r'[\d.]+', r['area']).group()) if r['area'] and re.match(r'[\d.]+', r['area']) else None)
             rooms_out.append({'floor': k, 'name': r['name'], 'label': r['name'] + (f" · {r['area']}" if r['area'] else ''),
-                              'area': float(re.match(r'[\d.]+', r['area']).group()) if r['area'] and re.match(r'[\d.]+', r['area']) else None,
+                              'area': area,
                               'x': R3(r['x'] - cx), 'y': R3(r['y'] - cy),
                               **({'space': r['space']} if r.get('space') else {})})   # v2: the room the name belongs to
     flat = lambda segs, nd=3: [round(v - (cx if i % 2 == 0 else cy), nd) for s in segs for i, v in enumerate(s)]  # noqa: E731
@@ -235,8 +239,8 @@ def assemble(floors, X, parts_geo, built, log) -> dict:
         'furnitureKinds': furn_kinds, 'furniture': furniture,
     }
     if X.options.get('slabs') == 'network':
-        # BuiltModel v2 (docs/rooms/DESIGN.md R-12.1): `stairways` (always, [] when no stair climbs: the v2 mark) and
-        # `spaces`, in the model frame. The tracer's wiring, by the rooms scaffold R0; R1 owns it.
+        # BuiltModel v2 (docs/rooms/DESIGN.md R-12.1, R-3.4, R-8.5): `stairways` (always, [] when no stair climbs: the
+        # v2 mark) from R2's StairsResult, and `spaces`, one record per room, named or not, in the model frame.
         pt = lambda p: [R3(p[0] - cx), R3(p[1] - cy)]  # noqa: E731
         model['stairways'] = [{**sw, 'bottom': pt(sw['bottom']), 'top': pt(sw['top']), 'walk': [pt(p) for p in sw['walk']]}
                               for B in built.values() for sw in B.get('stairways') or []]

@@ -180,3 +180,14 @@ def facts(floors, A, built, X, align_reps, replay_floors) -> dict:
         'furniturePieces': len(A['furniture']),
         'furnitureKinds': len(A['furn_kinds']),
     }
+
+
+def rooms_facts(built, A, X) -> dict:
+    """contracts.ReplayFactsRooms: the facts the new rule adds for the replay's captions (docs/rooms/DESIGN.md R-11,
+    R-12.3): the rooms and the named rooms per floor, the stairs you can climb, whether ceilings were made. The new
+    report keys themselves (`rooms`, `slab`, `stairways`, `stairClash` per floor; `fixes.closings / rooms / stairs`)
+    are made where their data is: network.plate_of, slabs.cut_slab and bank.build_floors_network, in each floor's own
+    sheet frame like every row above; build() adds them to the floor's report."""
+    return {'rooms': {key: {'spaces': B['report']['rooms']['spaces'], 'named': B['report']['rooms']['named']}
+                      for key, B in built.items()},
+            'climbable': len(A['model']['stairways']), 'ceilings': bool(X.new_rule['ceilings'])}

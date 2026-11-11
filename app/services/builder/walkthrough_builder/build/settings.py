@@ -6,10 +6,11 @@ arithmetic: the browser sends `0` for a typed `0.00` (JSON.stringify(0) is "0"),
 `3.7` and `1.0`, and the prototype's R3 keeps an int an int, so without this the golden breaks. Missing optional parts
 take the bank's defaults (U-10.4). The settings given are never changed: a coerced deep copy is returned.
 
-The rooms milestone (docs/rooms/DESIGN.md R-1.2, R-12.4; wired by its scaffold R0 for the tracer, owned by R1): the
-three options `slabs`, `ceilings`, `stairs`, a missing key filled with the OLD rule (contracts.OLD_RULES), so every
-settings document of before builds exactly as it did; `floors[].ceilingHeight` (None: the default rule); and the three
-new fix lists `closings`, `rooms`, `stairs` kept (their points coerced), empty when missing.
+The rooms milestone (docs/rooms/DESIGN.md R-1.2, R-6.2, R-12.4; owner R1): the three options `slabs`, `ceilings`,
+`stairs`, a missing key filled with the OLD rule (contracts.OLD_RULES), so every settings document of before builds
+exactly as it did; `floors[].ceilingHeight` (None: the default rule; read only with the new rule); the three new fix
+lists `closings`, `rooms`, `stairs` kept (their points coerced, their choices checked, a missing choice = the plain
+one), empty when missing; and a set-aside's `floorPast` as a bool (missing: false, the line still bounds the floor).
 """
 from __future__ import annotations
 
@@ -25,6 +26,10 @@ FURNITURE = {'heights': {}, 'bases': {}, 'words': {}, 'skip': [], 'minSize': 0.0
 OPTIONS = {'revitWallTypes': 'auto', 'parapets': 'auto', 'objectClosures': True, 'liftShafts': True, 'plinth': 'auto',
            'outlineWalls': 'off', 'offset': 'auto', **OLD_RULES}
 RULE_VALUES = {'slabs': ('closed-rooms', 'network'), 'ceilings': ('off', 'auto'), 'stairs': ('lines', 'climb')}
+#: the choices of the new fixes (R-6.2): field -> (allowed, what a missing one means)
+FIX_CHOICES = {'closings': {'use': (('line', 'none'), 'line')},
+               'rooms': {'slab': (('auto', 'none', 'floor'), 'auto'), 'ceiling': (('auto', 'none'), 'auto')},
+               'stairs': {'use': (('auto', 'lines', 'climb'), 'auto')}}
 
 
 def _f(v, what):
@@ -105,9 +110,25 @@ def coerce(settings: dict) -> dict:
         o['a'], o['b'] = _vec(o['a'], 'fixes.closings.a'), _vec(o['b'], 'fixes.closings.b')
     for o in fx.get('rooms') or []:
         o['at'] = _vec(o['at'], 'fixes.rooms.at')
+        name = o.get('name')
+        if name is not None and not isinstance(name, str):
+            raise BuildError('bad_settings', f'fixes.rooms.name is not text: {name!r}')
+        o['name'] = (name or '').strip() or None
     for o in fx.get('stairs') or []:
         o['at'] = _vec(o['at'], 'fixes.stairs.at')
         o['bottom'] = _vec(o['bottom'], 'fixes.stairs.bottom') if o.get('bottom') is not None else None
+    for kind, fields in FIX_CHOICES.items():
+        for o in fx.get(kind) or []:
+            for field, (allowed, default) in fields.items():
+                v = o.get(field)
+                if v is None:
+                    v = default
+                if v not in allowed:
+                    raise BuildError('bad_settings', f'fixes.{kind}.{field} is {v!r}; it is one of {", ".join(allowed)}')
+                o[field] = v
+    for o in fx.get('setAside') or []:
+        if isinstance(o, dict) and 'floorPast' in o:
+            o['floorPast'] = bool(o['floorPast'])
     s['fixes'] = {'setAside': list(fx.get('setAside') or []), 'openings': list(fx.get('openings') or []),
                   'outlineEdges': list(fx.get('outlineEdges') or []),
                   'closings': list(fx.get('closings') or []), 'rooms': list(fx.get('rooms') or []),

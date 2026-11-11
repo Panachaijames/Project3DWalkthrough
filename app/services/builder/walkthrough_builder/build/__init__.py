@@ -54,6 +54,10 @@ class Context:
         #: set by bank.build_floors_network (options.slabs 'network'): { fixes: the three new fix lists' rows,
         #: ceilings: bool, pairs }; None with the old rule
         self.new_rule: dict | None = None
+        #: the rooms milestone (docs/rooms/DESIGN.md R-2.1 point 7, R-6.2): floor key -> { shift: the floor's alignment
+        #: shift (a fix's sheet point + shift = the build frame), aside: the lines staff set aside that still bound the
+        #: floor, read and shifted like the floor's own items }. Filled by prepare_floors; build/network.py reads it.
+        self.floor_info: dict[str, dict] = {}
 
 
 def _read_json(path) -> dict | None:
@@ -108,8 +112,8 @@ def prepare_floors(ctx: BuildContext, log=None, progress=None) -> Floors:
     floor_source = {f['key']: f['source'] for f in floors_cfg}
 
     # 2. set-asides first (U-10.6), then the two readings per floor (U-9.1)
-    kept, setaside_rows, setaside_keys = FX.set_aside({sha: caches[sha]['items'] for sha in order}, k_of,
-                                                      S['fixes']['setAside'], floor_source)
+    kept, setaside_rows, setaside_keys, removed = FX.set_aside_split({sha: caches[sha]['items'] for sha in order}, k_of,
+                                                                     S['fixes']['setAside'], floor_source)
     readings = {}
     for sha in order:
         fl = [f for f in floors_cfg if f['source'] == sha]
@@ -157,6 +161,26 @@ def prepare_floors(ctx: BuildContext, log=None, progress=None) -> Floors:
                 F['sheetShift'] = None
     seconds['align'] = round(time.perf_counter() - t0, 2)
     progress('align', 1.0)
+
+    # the rooms milestone (R-2.1 point 7): a line staff set aside is not built and not read by the door finder, but it
+    # still bounds the floor unless its record says "the floor runs past it". The wall network reads these lines like
+    # the floor's own (scaled, with roles and line types, shifted with the floor). Nothing is read with the old rule.
+    for F in floors:
+        X.floor_info[F['cfg']['key']] = {'shift': F['shift'], 'aside': []}
+    if S['options']['slabs'] == 'network':
+        for sha in order:
+            bound = FX.bounding_aside(removed[sha], S['fixes']['setAside'])
+            if not bound:
+                continue
+            tag = I.tagger([f for f in floors_cfg if f['source'] == sha], k_of[sha])
+            for F in floors:
+                if F['source'] != sha:
+                    continue
+                key = F['cfg']['key']
+                its = I.floor_items(bound, [i for i, d in enumerate(bound) if tag(d) == key], k_of[sha], X.role_of,
+                                    caches[sha]['layers'])
+                I.shift_items(its, *F['shift'])
+                X.floor_info[key]['aside'] = its
 
     # 4. the detector per floor, on the per-item reading of the kept items (sheet metres, before the shift)
     tmp = Path(ctx['tmpDir'])
@@ -297,9 +321,7 @@ def build(ctx: BuildContext, log, progress) -> BuildResult:
     facts = RP.facts(floors, A, built, X, align_reps, replay_floors)
     if X.new_rule is not None:                               # the new rule (contracts.FixesReportRooms, ReplayFactsRooms)
         report['fixes'].update(X.new_rule['fixes'])
-        facts.update(rooms={key: {'spaces': built[key]['report']['rooms']['spaces'],
-                                  'named': built[key]['report']['rooms']['named']} for key in built},
-                     climbable=len(A['model']['stairways']), ceilings=X.new_rule['ceilings'])
+        facts.update(RP.rooms_facts(built, A, X))
     seconds['total'] = round(time.perf_counter() - t_all, 2)
     log(f'built: {len(A["model"]["parts"])} parts, {len(A["openings"])} openings, {len(A["furniture"])} furniture boxes, '
         f'offset ({cx}, {cy}) in {seconds["total"]:.1f} s')

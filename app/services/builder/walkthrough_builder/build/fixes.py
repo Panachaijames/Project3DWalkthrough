@@ -17,6 +17,16 @@
 3. Outline edges (`fixes.outlineEdges`): an accepted suggestion (the same edge within 0.05 m) becomes a wall or glass
    segment before the cut (build/outline.py).
 Coordinates of fixes are sheet metres (a source's own frame, before any alignment shift).
+
+The rooms milestone (docs/rooms/DESIGN.md R-2.1 point 7, R-6.2, R-6.3; owner R1), with options.slabs 'network':
+4. A line staff set aside still bounds the floor (`set_aside_split` hands the removed items back, `bounding_aside`
+   picks those that still bound) unless its record says `floorPast: true` ("the floor runs past it").
+5. Closing fixes (`fixes.closings`): `use: 'line'` is a line staff drew (a 2 cm strip in the network, each end
+   extended to the network within 0.5 m: network.network_of); `use: 'none'` leaves out the app's bridge or doorway
+   closing whose two ends lie within 0.3 m of a and b (`removed_closings`); none there: the fix is unmatched.
+6. Room fixes (`fixes.rooms`): `room_target` finds what the point names: the room containing it; else the unfloored
+   area containing it; else the room within 0.5 m; else, for "floor here", the fenced face containing it; else the fix
+   is unmatched. These fixes are points and lines, not item keys, so they survive a re-export with other handles.
 """
 from __future__ import annotations
 
@@ -184,8 +194,18 @@ def set_aside(sources: Mapping[str, list[dict]], k_of: Mapping[str, float], refs
               floor_source: Mapping[str, str]) -> tuple[dict[str, list[dict]], list[dict], dict[str, list[str]]]:
     """sources: sha1 -> cache items. -> (sha1 -> the items kept, FixesReport.setAside rows, floor -> the keys set aside).
     Each ref is matched on its own source when that is one of the build's, else on its floor's source."""
+    kept, rows, keys_by_floor, _removed = set_aside_split(sources, k_of, refs, floor_source)
+    return kept, rows, keys_by_floor
+
+
+def set_aside_split(sources: Mapping[str, list[dict]], k_of: Mapping[str, float], refs: list[dict],
+                    floor_source: Mapping[str, str]):
+    """set_aside, and what it removed: -> (kept, rows, keys by floor, sha1 -> [(item, [the indices of the refs that
+    removed it])] in cache order). The rooms milestone reads the removed lines back into the wall network (R-2.1
+    point 7)."""
     index = {sha: SourceIndex(its, k_of[sha]) for sha, its in sources.items()}
     gone: dict[str, set[int]] = {sha: set() for sha in sources}
+    by_ref: dict[str, dict[int, list[int]]] = {sha: {} for sha in sources}
     rows, keys_by_floor = [], {}
     for fi, ref in enumerate(refs):
         sha = ref.get('source')
@@ -197,13 +217,61 @@ def set_aside(sources: Mapping[str, list[dict]], k_of: Mapping[str, float], refs
             continue
         by, idx, amb = match_ref(index[sha], ref, same)
         gone[sha].update(idx)
+        for i in idx:
+            by_ref[sha].setdefault(i, []).append(fi)
         rows.append({'fix': fi, 'matchedBy': by, 'items': len(idx), 'ambiguous': amb,
                      'key': index[sha].items[idx[0]].get('k') if idx else None})
         if idx:
             keys_by_floor.setdefault(ref.get('floor'), []).extend(
                 k for k in (index[sha].items[i].get('k') for i in idx) if k)
     kept = {sha: ([d for i, d in enumerate(its) if i not in gone[sha]] if gone[sha] else its) for sha, its in sources.items()}
-    return kept, rows, keys_by_floor
+    removed = {sha: [(its[i], by_ref[sha][i]) for i in sorted(gone[sha])] for sha, its in sources.items()}
+    return kept, rows, keys_by_floor, removed
+
+
+def bounding_aside(removed: list, refs: list[dict]) -> list[dict]:
+    """The set-aside items of one source that still bound the floor (R-2.1 point 7): every removed item, unless a
+    set-aside record that removed it says `floorPast` ("the floor runs past it"). removed: set_aside_split's rows of
+    the source. The items are the cache's own (unscaled): the caller reads them into its floors."""
+    return [d for d, fis in removed if not any(bool(refs[fi].get('floorPast')) for fi in fis)]
+
+
+# ------------------------------------------------------------------------------------- closings and rooms (R-6.2, R-6.3)
+REMOVE_REACH = 0.3  # m: a removed closing's two ends lie within this of the fix's a and b
+ROOM_NEAR = 0.5     # m: a room fix whose point is in no room and no unfloored area takes the room within this
+
+
+def floor_fixes(fixes: Mapping | None, name: str, floor: str) -> list[tuple[int, dict]]:
+    """[(index in settings.fixes[name], the fix)] of one floor."""
+    return [(k, f) for k, f in enumerate((fixes or {}).get(name) or []) if f.get('floor') == floor]
+
+
+def removed_closings(closings: list[dict], a, b) -> list[dict]:
+    """The app's closings (bridges, doorway closings: { a, b }) a `use: 'none'` fix names: both ends within 0.3 m of the
+    fix's a and b, in either order."""
+    return [c for c in closings if (math.dist(c['a'], a) <= REMOVE_REACH and math.dist(c['b'], b) <= REMOVE_REACH)
+            or (math.dist(c['a'], b) <= REMOVE_REACH and math.dist(c['b'], a) <= REMOVE_REACH)]
+
+
+def room_target(pt, spaces: list[dict], unfloored: list[dict], fenced: list, slab: str):
+    """What a room fix at the point `pt` (shapely, build frame) applies to (R-6.3) -> ('room', the space) |
+    ('unfloored', the area) | ('fenced', the face) | (None, None): the room containing the point; else the unfloored
+    area containing it; else the room within 0.5 m; else, with slab 'floor', the fenced face (a face of the network
+    plus railings with no door) containing it."""
+    room = next((s for s in spaces if s['poly'].contains(pt)), None)
+    if room is not None:
+        return 'room', room
+    area = next((u for u in unfloored if u['poly'].contains(pt)), None)
+    if area is not None:
+        return 'unfloored', area
+    near = sorted((round(s['poly'].distance(pt), 4), i) for i, s in enumerate(spaces))
+    if near and near[0][0] <= ROOM_NEAR:
+        return 'room', spaces[near[0][1]]
+    if slab == 'floor':
+        face = next((t for t in fenced if t.contains(pt)), None)
+        if face is not None:
+            return 'fenced', face
+    return None, None
 
 
 # ---------------------------------------------------------------------------------------------------- openings

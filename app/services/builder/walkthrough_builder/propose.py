@@ -30,14 +30,20 @@ import unicodedata
 
 from . import areas as A
 from . import names, roles
+from .contracts import NEW_RULES
 
 DEFAULTS ={'doorHead': 2.1, 'windowSill': 0.9, 'windowHead': 2.1, 'railingHeight': 1.1, 'slabThickness': 0.25,
             'singleLineHeight': 1.0}
 FURNITURE = {'heights': {}, 'bases': {}, 'words': {}, 'skip': [], 'minSize': 0.08, 'minDepth': None, 'looseLayers': [],
              'pieceLayer': 'insert'}
+#: The rooms milestone (docs/rooms/DESIGN.md R-1.2, R-1.3): the proposal writes the NEW rules (floor plates from the
+#: wall network, ceilings, stairs you can climb), so every new draft gets them; a recipe that carries the three keys,
+#: old or new, is kept as it is (`_dict_like`). The builder's own OPTIONS (build/settings.py) fill the OLD rules for
+#: a missing key, on purpose: the two dicts differ.
 OPTIONS = {'revitWallTypes': 'auto', 'parapets': 'auto', 'objectClosures': True, 'liftShafts': True, 'plinth': 'auto',
-           'outlineWalls': 'off', 'offset': 'auto'}
-FIXES = {'setAside': [], 'openings': [], 'outlineEdges': []}
+           'outlineWalls': 'off', 'offset': 'auto', **NEW_RULES}
+#: the three new fix lists (R-6.2) are carried over from a recipe like the old ones (empty in a new proposal)
+FIXES = {'setAside': [], 'openings': [], 'outlineEdges': [], 'closings': [], 'rooms': [], 'stairs': []}
 LEVEL_STEP = 3.0
 WALL_HEIGHT = 3.0
 PAD = 0.5

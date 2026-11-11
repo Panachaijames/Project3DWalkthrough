@@ -146,7 +146,7 @@ Plate0 per floor (before holes and before the 3 cm edge, closed outlines filled;
 | house upper | 423.0 | 453.3 | 454.3 | 431 | 497 | 435 – 460 |
 | tower L29 | 430.9 | 856.8 | 856.8 | 814 | 885 | 840 – 875 |
 | tower L30 | 536.4 | 740.9 | 740.9 | 704 | 772 | 725 – 765 |
-| old suite | 108.6 | 416.4 | 421.7, plus 69 – 93 of terrace | 400 | 660 | 480 – 560 |
+| old suite | 108.6 | 416.4 | 421.7, plus 53.2 of terrace (within 3 m², decided 11 Nov: R1.md D-3) | 400 | 660 | 460 – 480 |
 | new suite (layer 0 as wall; should) | 170.9 | 247.0 | 274.0 | 260 | 284 | 262 – 280 |
 
 * **"At least"** is 95 % of the trial's plate0 on the floors this milestone exists for (the trial's figure, so the bound
@@ -194,7 +194,7 @@ reports of 9 Nov, and the checks use those.
 
 | Drawing | Probes |
 |---|---|
-| house | `ground-004`, `ground-006`, `ground-018`, `ground-034`, `upper glass 44` |
+| house | `ground-004`, `ground-006`, `ground-018`, `upper glass 44` (`ground-034`, a garden gate in a free-standing wall with no floor on either side, was taken out on 11 Nov: R1.md D-2; it stays in the walk report as "outdoors, no floor") |
 | old suite | `suite-025` |
 | tower | `L29-001`, `L29-016`, `L29-025`, `L29-028`, `L30-033`, `L30-032`, `L30 glass 24`, `L30 glass 26` |
 | new suite (should) | no door probe ends with "no start: no floor" |
@@ -217,8 +217,10 @@ reports of 9 Nov, and the checks use those.
 * **The named pairs of the trial** (unit and heavy): the bank's `TOILET 3.2` stays in the 3.1 m² room it stands in;
   `FEMALE TOILET 6.4` stays in its 3.3 m² face and the F/C room keeps one name; the old suite's `Steam 3m2` stays in
   its 2.8 m² room; `Foyer 10m2` and `Massage Room 9m2` do not both go to one room.
-* **Every drawn name keeps its label where the designer wrote it.** The bank's new-rule version shows 18 labels at the
-  drawing's positions, in the viewer and as 3ds Max text objects, and its version counts 18 rooms, as today. The hall
+* **Every drawn name keeps its label where the designer wrote it.** The bank's new-rule version shows 23 labels at the
+  drawing's positions, in the viewer and as 3ds Max text objects, and its version counts 23 rooms: today's 18 plus
+  `ATM` (three times), `BA` and `BE`, which R-3.2 keeps as names where today's 4-letter limit dropped them (decided 11
+  Nov, R1.md D-1: no letter limit keeps `BAR` and drops `ATM`). The 18 of today stand where they stand today. The hall
   with `CSO 5PAX`, `WAITING AREA` and `FOR 1 PAX` shows three labels and one `room-names` flag (info).
 * A name carrying its area ("Bar 7,6m2") gives the name "Bar" and keeps "Bar · 7,6m2" as its label. Comma decimals are
   read; no name keeps a trailing area.
