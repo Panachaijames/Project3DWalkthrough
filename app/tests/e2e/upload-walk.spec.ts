@@ -25,6 +25,19 @@
 //     npx playwright test -c tests/e2e/playwright.config.ts --project=e2e tests/e2e/upload-walk.spec.ts
 // (WT_SERVE=none: no server is needed; an empty WT_SERVE works in Git Bash, but PowerShell drops an empty variable and the
 // config then starts the API and the web server.)
+//
+// The rooms milestone (R7, 11 Nov 2026; docs/rooms/ACCEPTANCE.md RA-2, RA-6, 2.4). The eight old uploaded versions run
+// as before (their reports compare with docs/rooms/reference/upload-walk-9nov/ check by check). The new-rule versions
+// (a model with `stairways`) run the same checks from their own store and offline folder (WT_UPLOAD_DATA_DIR,
+// WT_UPLOAD_OFFLINE_DIR) and, with
+//   WT_ROOMS_PROBES        1 (fixtures/rooms/keys/probes.json) or the path of a probes key,
+// one check more per file: the walk probes that found no floor at their start on 9 Nov, found again by floor and sheet
+// point (ids are running counts and may have moved): on each side that had no floor there must now be floor 0.4 - 0.9 m
+// in front of the opening (the key's grade: "must" fails the test, "should" records), and the walk from there is
+// recorded for docs/rooms/GAPS.md, which classes the ones that still fail for another reason. A probe a decision took
+// out of RA-6 is recorded, not judged (the house's ground-034: a garden gate with no floor either side, R1.md D-2). A file
+// of an old-rule version, or of a drawing the key does not hold, records why it was not judged. Without WT_ROOMS_PROBES
+// that check is not defined, so a plain run is the upload milestone's.
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -44,6 +57,11 @@ const FILES: string[] = DIR
   ? (existsSync(DIR) ? readdirSync(DIR).filter(f => f.toLowerCase().endsWith('.html')).sort().map(f => path.join(DIR, f)) : [])
   : [path.join(APP, 'dist', 'offline', 'bank-sampeng-v2.html')];
 const QUERY = '?build=0&nodownload=1&test=1';
+
+const PROBES_KEY = !process.env.WT_ROOMS_PROBES ? null
+  : process.env.WT_ROOMS_PROBES === '1' ? path.join(APP, 'fixtures', 'rooms', 'keys', 'probes.json') : path.resolve(process.env.WT_ROOMS_PROBES);
+/** Probes taken out of RA-6 by a decision: recorded, not judged (drawing -> 9 Nov ids). */
+const NOT_JUDGED: Record<string, string[]> = { house: ['ground-034'] };
 
 const baseOf = (file: string) => path.basename(file).replace(/\.html$/i, '');
 const projectOf = (base: string) => base.replace(/-v\d+$/, '');
@@ -264,7 +282,99 @@ for (const file of FILES) {
       info.annotations.push({ type: 'glass', description: `${probes.length} probe walks, ${parts.length} random glass parts walked (${parts.filter(g => g.ok).length} stop you)` });
       judge(file, info, 'glass', failures, { probes: probes.length, parts });
     });
+
+    if (PROBES_KEY) {
+      test(`${name}: RA-6: the probes that found no floor on 9 Nov stand on floor now (a new-rule version of a drawing in the key)`, async ({ page }, info) => {
+        test.setTimeout(300_000);
+        expect(existsSync(PROBES_KEY), `${PROBES_KEY} (WT_ROOMS_PROBES)`).toBe(true);
+        const key = JSON.parse(readFileSync(PROBES_KEY, 'utf8'));
+        await open(page, file);
+        await setFurniture(page, false);
+        const facts = await page.evaluate(() => {
+          const h = (window as any).__host;
+          let projectId: string | null = null;
+          try { projectId = JSON.parse(document.getElementById('wtv-data')!.textContent ?? '').version.projectId; } catch { projectId = null; }
+          return { newRule: 'stairways' in h.model, source: (h.model.source ?? []) as string[], offset: (h.model.offset ?? [0, 0]) as [number, number], projectId };
+        });
+        // the drawing: the key's project id, or the same source file names as its *-rooms settings fixture
+        const drawing = Object.keys(key.drawings).find(d => {
+          if (key.drawings[d].project === facts.projectId) return true;
+          const fx = path.join(APP, 'fixtures', 'upload', 'settings', `${d}-rooms.json`);
+          if (!existsSync(fx)) return false;
+          const names = (JSON.parse(readFileSync(fx, 'utf8')).sources as { name: string }[]).map(s => s.name).sort();
+          return JSON.stringify(names) === JSON.stringify([...facts.source].sort());
+        }) ?? null;
+        if (!facts.newRule || !drawing) {
+          const why = !facts.newRule ? 'an old-rule version (no stairways): not judged' : 'no drawing of the key: not judged';
+          record(file, 'ra6', { judged: false, why, ...facts });
+          info.annotations.push({ type: 'RA-6', description: why });
+          return;
+        }
+        const d = key.drawings[drawing], skip = new Set(NOT_JUDGED[drawing] ?? []);
+        const results: any[] = [];
+        for (const f of await floorsOf(page)) {
+          const mine = (d.probes as any[]).filter(q => q.floor === f.key);
+          if (!mine.length) continue;
+          expect(await walkOn(page, f.key)).toBe(f.key);
+          results.push(...await keyProbes(page, mine, facts.offset));
+        }
+        const failures = results.filter(r => !skip.has(r.id9Nov) && !r.standsOnFloor).map(r => ({ probe: r.id9Nov, found: r.found, sides: r.sides }));
+        const detail = { drawing, grade: d.grade, notJudged: [...skip], results };
+        record(file, 'ra6', { judged: true, ok: failures.length === 0, failures, detail });
+        info.annotations.push({ type: 'RA-6', description: `${drawing} (${d.grade}): ${results.length - failures.length} of ${results.length} probes stand on floor; ${JSON.stringify(results.map(r => [r.id9Nov, r.found?.id ?? null, r.sides.map((s: any) => s.walk)]))}`.slice(0, 1500) });
+        if (d.grade === 'must') expect(failures, `${name} RA-6`).toEqual([]);
+      });
+    }
   });
+}
+
+/**
+ * The probes of the RA-6 key on the floor you are on: each found again by its sheet point (the model point is the sheet
+ * point less the model's offset and less its floor's `sheetShift`, the floor's own place on a sheet that holds several
+ * plans; an opening of its floor, or a glass probe, within 0.1 m), then, for every side that had
+ * no floor on 9 Nov, the floor 0.4 - 0.9 m in front of it (every 0.1 m) and the walk from the first start spot with room
+ * (as doorWalks: 0.9, 0.7, 0.55, 0.45, 0.4 m back, clearance 0.25 m): a door is walked through (metres past its line), a
+ * glass probe walked at (metres short of the glass).
+ */
+function keyProbes(page: Page, probes: any[], offset: [number, number]): Promise<any[]> {
+  return page.evaluate(({ probes, offset }) => {
+    const w = window as any, v = w.__viewer, s = v.state, keep = s.pos.clone(), out: any[] = [];
+    const r2 = (x: number) => Math.round(x * 100) / 100;
+    for (const q of probes) {
+      const shift = ((w.__host.model.floors as any[]).find(f => f.key === q.floor)?.sheetShift ?? [0, 0]) as number[];
+      const mx = q.at[0] - offset[0] - shift[0]!, my = q.at[1] - offset[1] - shift[1]!;
+      const pool = q.kind === 'glass' ? (w.__host.probes as any[]) : (w.__host.openings as any[]);
+      let found: any = null, best = 0.1;
+      for (const o of pool) {
+        if (o.floor !== q.floor) continue;
+        const dd = Math.hypot(o.x - mx, o.y - my);
+        if (dd <= best) { best = dd; found = o; }
+      }
+      const sides: any[] = [];
+      for (const side of q.sides as number[]) {
+        const nx = q.n[0] * side, ny = q.n[1] * side, floorAt: number[] = [];
+        for (let k = 4; k <= 9; k++) {
+          s.pos.x = mx + nx * k / 10; s.pos.z = -(my + ny * k / 10);
+          if (v.probe.onFloor()) floorAt.push(k / 10);
+        }
+        let walk: number | string = 'no start';
+        for (const back of [0.9, 0.7, 0.55, 0.45, 0.4]) {
+          s.pos.x = mx + nx * back; s.pos.z = -(my + ny * back);
+          if (!v.probe.onFloor() || v.probe.clearance() < 0.25) continue;
+          const deg = Math.atan2(nx, -ny) * 180 / Math.PI;                    // toward the opening (-side * n)
+          v.probe.walk(deg, q.kind === 'glass' ? 2.0 : back * 2);
+          const past = (s.pos.x - mx) * -nx + (-s.pos.z - my) * -ny;          // past the opening's line (glass: < 0, short of it)
+          walk = r2(q.kind === 'glass' ? -past : past);
+          break;
+        }
+        sides.push({ side, floorAt, walk, ...(q.kind === 'glass' ? { glassOk: typeof walk === 'number' && walk > 0.1 && walk < 0.6 } : { through: typeof walk === 'number' && walk > 0.3 }) });
+      }
+      out.push({ id9Nov: q.id9Nov, kind: q.kind, floor: q.floor, model: [r2(mx), r2(my)], found: found ? { id: found.id ?? null, d: r2(best) } : null,
+        sides, standsOnFloor: sides.every(x => x.floorAt.length > 0) });
+    }
+    s.pos.copy(keep);
+    return out;
+  }, { probes, offset });
 }
 
 /**

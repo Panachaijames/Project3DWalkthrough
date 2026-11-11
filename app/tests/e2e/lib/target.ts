@@ -3,6 +3,11 @@
 //   E2E_TARGET=prototype:     the prototype pages, with their selectors and the shim (lib/prototype-shim.ts), so each
 //                             builder proves the port of its checks before the app exists.
 // Checks of behaviour this design changes on purpose are tagged @app-only; the config skips them on the prototype target.
+// The rooms milestone (docs/rooms/WORK_BREAKDOWN.md R7; owner R7 since then): the new versions' store and offline folder
+// (ROOMS_*, roomsFiles, makeRoomsOffline, oldPagePath) at the end of the file; everything above is unchanged.
+import { spawnSync } from 'node:child_process';
+import { existsSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import type { Locator, Page } from '@playwright/test';
@@ -57,7 +62,8 @@ type Sel = string;
 export interface SelectorMap {
   root: Sel; panel: Sel; hint: Sel; legend: Sel; room: Sel; error: Sel; heading: Sel; intro: Sel; stampMeta: Sel;
   floorButton(key: 'all' | string): Sel; floorButtons: Sel;
-  toggle(name: 'plates' | 'glass' | 'rooms' | 'single' | 'picture'): Sel;
+  /** 'ceilings': the rooms milestone's tick (R-9.7), only on a version with ceilings; the prototypes have none. */
+  toggle(name: 'plates' | 'glass' | 'rooms' | 'single' | 'picture' | 'ceilings'): Sel;
   modeButton(mode: 'orbit' | 'walk' | 'ghost'): Sel; cameraBtn: Sel;
   hud: Sel; hudText: Sel; hudCamera: Sel; exit: Sel; cross: Sel;
   cameraPanel: Sel; cameraClose: Sel; lens: Sel; lensValue: Sel; lensPreset(mm: number): Sel; eye: Sel; eyeValue: Sel;
@@ -223,4 +229,70 @@ export async function waitReady(page: Page, timeoutMs = 60_000): Promise<void> {
 export async function openVersion(page: Page, v: VersionKey, query = '?build=0&nodownload=1&test=1'): Promise<void> {
   await page.goto(pageUrl(v, query));
   await waitReady(page);
+}
+
+// ------------------------------------------------------------------------- the rooms milestone's versions (R7, 11 Nov 2026)
+// The new versions are BuiltModel v2 (a `stairways` key; docs/rooms/DESIGN.md R-9.1) and live in temp folders, never in
+// app/data or dist/:
+//   * the synthetic ones (the reference building and the three stair models of fixtures/models): made by
+//     makeRoomsOffline() into <WT_TMP>/rooms (tools/rooms/make-fixture-store.mjs --stairs, then make-offline.mjs with the
+//     template of roomsTemplate());
+//   * the real new-rule versions (the smoke step's house and bank, the tower): every .html of WT_ROOMS_OFFLINE_DIR (for
+//     upload-walk.spec.ts on them, its own WT_UPLOAD_OFFLINE_DIR and WT_UPLOAD_DATA_DIR name the folder and the store).
+// The old versions (no `stairways`) of the same viewer: oldPagePath(), WT_OFFLINE_DIR or dist/offline as the other specs.
+
+/** Everything a run writes (the e2e config's WT_TMP). */
+export const TMP = process.env.WT_TMP ?? path.join(os.tmpdir(), 'wt-e2e');
+/** The real new-rule offline files, or null: then the synthetic ones of makeRoomsOffline(). */
+export const ROOMS_OFFLINE_DIR = process.env.WT_ROOMS_OFFLINE_DIR ? path.resolve(process.env.WT_ROOMS_OFFLINE_DIR) : null;
+/** Where makeRoomsOffline() puts the synthetic versions' store and offline files. */
+export const ROOMS_TMP = path.join(TMP, 'rooms');
+/** The synthetic versions, as make-fixture-store.mjs --stairs saves them (one version each). */
+export const ROOMS_SYNTHETIC = ['rooms-reference', 'stairs-straight', 'stairs-l', 'stairs-u'] as const;
+
+/** The offline template: WT_OFFLINE_TEMPLATE, else <WT_TMP>/offline-template (a builder's own build), else dist's. */
+export function roomsTemplate(): string {
+  const own = path.join(TMP, 'offline-template', 'viewer-template.html');
+  return process.env.WT_OFFLINE_TEMPLATE ?? (existsSync(own) ? own : path.join(APP, 'dist', 'offline-template', 'viewer-template.html'));
+}
+
+function run(what: string, cmd: string, args: string[]): void {
+  const r = spawnSync(cmd, args, { cwd: APP, encoding: 'utf8', shell: false, env: { ...process.env, PYTHONIOENCODING: 'utf-8' } });
+  if (r.error || r.status !== 0) throw new Error(`${what} failed (${r.error?.message ?? `exit ${r.status}`}):\n${r.stdout ?? ''}\n${r.stderr ?? ''}`);
+}
+
+/**
+ * The synthetic versions' offline files, made afresh into <WT_TMP>/rooms/{store,offline} (a store of their own, never
+ * app/data; nothing in dist/). With no template anywhere (roomsTemplate), the template is built into
+ * <WT_TMP>/offline-template first (vite --outDir, as make-e2e-offline.mjs). Returns the files, in ROOMS_SYNTHETIC order.
+ */
+export function makeRoomsOffline(): { store: string; dir: string; files: string[] } {
+  const store = path.join(ROOMS_TMP, 'store'), dir = path.join(ROOMS_TMP, 'offline');
+  let template = roomsTemplate();
+  if (!existsSync(template)) {
+    const out = path.join(TMP, 'offline-template');
+    run('the offline template', process.execPath, [path.join(APP, 'node_modules', 'vite', 'bin', 'vite.js'), 'build', '-c', 'packages/viewer/vite.offline.config.ts', '--outDir', out, '--emptyOutDir']);
+    template = path.join(out, 'viewer-template.html');
+  }
+  rmSync(ROOMS_TMP, { recursive: true, force: true });
+  mkdirSync(ROOMS_TMP, { recursive: true });
+  run('make-fixture-store', process.execPath, [path.join(APP, 'tools', 'rooms', 'make-fixture-store.mjs'), '--out', store, '--stairs']);
+  run('make-offline', process.execPath, [path.join(APP, 'packages', 'viewer', 'scripts', 'make-offline.mjs'), '--data', store, '--template', template, '--out', dir]);
+  const files = ROOMS_SYNTHETIC.map(id => path.join(dir, `${id}-v1.html`));
+  for (const f of files) if (!existsSync(f)) throw new Error(`make-offline wrote no ${f}`);
+  return { store, dir, files };
+}
+
+/** The rooms versions' files: every .html of WT_ROOMS_OFFLINE_DIR (sorted), else the synthetic ones (made by makeRoomsOffline). */
+export function roomsFiles(): string[] {
+  if (ROOMS_OFFLINE_DIR) {
+    return existsSync(ROOMS_OFFLINE_DIR) ? readdirSync(ROOMS_OFFLINE_DIR).filter(f => f.toLowerCase().endsWith('.html')).sort().map(f => path.join(ROOMS_OFFLINE_DIR, f)) : [];
+  }
+  return ROOMS_SYNTHETIC.map(id => path.join(ROOMS_TMP, 'offline', `${id}-v1.html`));
+}
+
+/** An old (seeded) version's offline file made with this viewer: WT_OFFLINE_DIR, else dist/offline (as structure.spec.ts). */
+export function oldPagePath(v: VersionKey): string {
+  const ref = VERSIONS[v], name = `${ref.projectId}-v${ref.version}.html`;
+  return process.env.WT_OFFLINE_DIR ? path.join(path.resolve(process.env.WT_OFFLINE_DIR), name) : path.join(APP, 'dist', 'offline', name);
 }

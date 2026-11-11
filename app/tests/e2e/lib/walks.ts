@@ -419,3 +419,118 @@ export function installPageHelpers(page: Page): Promise<boolean> {
     return true;
   });
 }
+
+// ---------------------------------------------------------------------------------- stairs (rooms milestone, R7, 11 Nov)
+export interface StairPiece {
+  /** The walking-line point this piece walks to (plan m), and where the walker ended (plan m). */
+  to: [number, number]; at: [number, number];
+  /** probe.crosses from where the walker stood at the piece's start to `to` (docs/rooms/contract-issues/R4.md D-1). */
+  crosses: boolean;
+  walked: number; moves: number; foot: number; floor: string;
+}
+export interface StairWalk {
+  stair: string; dir: 'up' | 'down';
+  /** The stairway's lower and upper floors and their walk levels. */
+  from: string; to: string; lower: number; upper: number;
+  start: { x: number; y: number; foot: number; floor: string };
+  pieces: StairPiece[];
+  /** The extra metres walked on past the last point of the line (`on`), and how far they went. */
+  on: number; onWalked: number;
+  end: { x: number; y: number; foot: number; floor: string; ground: number | null; eye: number };
+  /** Metres past the last riser walked over: up, past the top riser's middle (walk[n-2]); down, past riser 1's (walk[1]). */
+  past: number;
+  /** The largest rise and drop of the foot over one 5 cm move, and the number of moves. */
+  maxRise: number; maxDrop: number; moves: number;
+  /** The floor named after each change, in order (from s.floor at every move). */
+  named: string[];
+  /** The public modechange events fired during the walk. */
+  modechange: { mode: string; floor: string }[];
+}
+
+/**
+ * Walk each climbable stairway (or the one named) along its walking line with probe.walk in 5 cm moves (R4.md section 5):
+ * up = goToFloor(from), the position written to walk[0] (the first probe call puts the foot on the floor's level), then
+ * piece by piece to walk[1] ... walk[n-1], each heading taken from where the walker is now (a piece can overshoot by up
+ * to 5 cm), probe.crosses asked at each piece's start, then `on` metres on (default 1.0) along the line's last direction;
+ * down = goToFloor(to), walk[n-1], then walk[n-2] ... walk[0] (`on` default 0). start 'here': no teleport, the walk
+ * goes on from where the walker is, to the next point of the line ahead of it (after a keyboard start). `pieces` stops
+ * after that many pieces of the line (a walk that ends up the stair; `on` is then 0). The position is never written
+ * between the pieces (that would be a teleport to the floor's level, N-9). `rise`: stop as soon as the foot has risen
+ * that many metres above where it started (also a walk that ends up the stair; `on` is then 0). Needs a model with
+ * `stairways`.
+ */
+export function stairWalks(page: Page, opts: { stair?: string; dir?: 'up' | 'down'; on?: number; start?: 'line' | 'here'; pieces?: number; rise?: number } = {}): Promise<StairWalk[]> {
+  return page.evaluate(({ stair, dir, on, start, pieces, rise }) => {
+    const w = window as any, v = w.__viewer, s = v.state, model = w.__host.model;
+    const r3 = (x: number) => Math.round(x * 1000) / 1000;
+    const levelOf = (key: string) => w.__host.floors.find((f: any) => f.key === key).level as number;
+    const plan = (): [number, number] => [s.pos.x, -s.pos.z];
+    const out: any[] = [];
+    for (const st of (model.stairways ?? []) as any[]) {
+      if (stair && st.id !== stair) continue;
+      const line: [number, number][] = dir === 'up' ? st.walk : [...st.walk].reverse();
+      const events: any[] = [];
+      const off = w.__walkthrough.viewer.on('modechange', (e: any) => events.push({ mode: e.mode, floor: e.floor }));
+      let maxRise = 0, maxDrop = 0, moves = 0;
+      const named: string[] = [];
+      const step = (deg: number) => {                        // one 5 cm move, the foot read before and after
+        const f0 = s.foot;
+        v.probe.walk(deg, 0.05);
+        const d = s.foot - f0; moves++;
+        if (d > maxRise) maxRise = d;
+        if (-d > maxDrop) maxDrop = -d;
+        if (named[named.length - 1] !== s.floor.key) named.push(s.floor.key);
+      };
+      const headingTo = (x: number, y: number) => { const dx = x - s.pos.x, dy = y + s.pos.z; return { deg: Math.atan2(-dx, dy) * 180 / Math.PI, len: Math.hypot(dx, dy) }; };
+      if (v.mode !== 'walk') v.setMode('walk');
+      let first = 1;
+      if (start === 'here') {
+        // the segment of the line nearest to the walker: go on to its far end
+        let best = Infinity;
+        const [px, py] = plan();
+        for (let i = 0; i + 1 < line.length; i++) {
+          const [ax, ay] = line[i]!, [bx, by] = line[i + 1]!, L2 = (bx - ax) ** 2 + (by - ay) ** 2;
+          const t = L2 > 0 ? Math.max(0, Math.min(1, ((px - ax) * (bx - ax) + (py - ay) * (by - ay)) / L2)) : 0;
+          const d = Math.hypot(px - (ax + t * (bx - ax)), py - (ay + t * (by - ay)));
+          if (d < best) { best = d; first = i + 1; }
+        }
+      } else {
+        v.goToFloor(dir === 'up' ? st.from : st.to);
+        s.pos.x = line[0]![0]; s.pos.z = -line[0]![1];
+      }
+      const foot0 = v.probe.foot();                          // after a written position: the floor's level (R-9.8)
+      named.push(s.floor.key);
+      const begin = { x: r3(s.pos.x), y: r3(-s.pos.z), foot: r3(foot0), floor: s.floor.key };
+      const last = pieces ? Math.min(line.length - 1, first - 1 + pieces) : line.length - 1;
+      const done: any[] = [];
+      const risen = () => !!rise && s.foot - foot0 >= rise;
+      for (let i = first; i <= last && !risen(); i++) {
+        const [tx, ty] = line[i]!;
+        const crosses = !!v.probe.crosses(s.pos.x, s.pos.z, tx, -ty);
+        const { deg, len } = headingTo(tx, ty), p0 = plan(), m0 = moves;
+        for (let t = 0; t < len - 1e-9 && !risen(); t += 0.05) step(deg);
+        const p1 = plan();
+        done.push({ to: [tx, ty], at: [r3(p1[0]), r3(p1[1])], crosses, walked: r3(Math.hypot(p1[0] - p0[0], p1[1] - p0[1])), moves: moves - m0, foot: r3(s.foot), floor: s.floor.key });
+      }
+      const extra = pieces || rise ? 0 : (on ?? (dir === 'up' ? 1.0 : 0));
+      let onWalked = 0;
+      if (extra > 0) {
+        const a = line[line.length - 2]!, b = line[line.length - 1]!, L = Math.hypot(b[0] - a[0], b[1] - a[1]);
+        const deg = Math.atan2(-(b[0] - a[0]) / L, (b[1] - a[1]) / L) * 180 / Math.PI, p0 = plan();
+        for (let t = 0; t < extra - 1e-9; t += 0.05) step(deg);
+        const p1 = plan(); onWalked = r3(Math.hypot(p1[0] - p0[0], p1[1] - p0[1]));
+      }
+      // past the last riser walked over, along the line's direction there
+      const k = dir === 'up' ? st.walk.length - 2 : 1, kk = dir === 'up' ? st.walk.length - 1 : 0;
+      const [rx, ry] = st.walk[k], [qx, qy] = st.walk[kk], RL = Math.hypot(qx - rx, qy - ry), [ex, ey] = plan();
+      const past = ((ex - rx) * (qx - rx) + (ey - ry) * (qy - ry)) / (RL || 1);
+      off();
+      out.push({
+        stair: st.id, dir, from: st.from, to: st.to, lower: r3(levelOf(st.from)), upper: r3(levelOf(st.to)), start: begin, pieces: done,
+        on: extra, onWalked, end: { x: r3(ex), y: r3(ey), foot: r3(s.foot), floor: s.floor.key, ground: v.probe.ground() === null ? null : r3(v.probe.ground()), eye: r3(s.pos.y) },
+        past: r3(past), maxRise: r3(maxRise), maxDrop: r3(maxDrop), moves, named, modechange: events,
+      });
+    }
+    return out;
+  }, { stair: opts.stair ?? null, dir: opts.dir ?? 'up', on: opts.on ?? null, start: opts.start ?? 'line', pieces: opts.pieces ?? 0, rise: opts.rise ?? 0 });
+}
