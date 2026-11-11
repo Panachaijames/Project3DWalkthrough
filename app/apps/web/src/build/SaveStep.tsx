@@ -14,9 +14,12 @@ import { Input } from '@/components/ui/input';
 import { ApiError } from '@/api/client';
 import { getProjectQueryKey, listBuildsQueryKey, listOfficesOptions, listProjectsQueryKey } from '@/api/generated/@tanstack/react-query.gen';
 import { saveBuild } from '@/api/generated/sdk.gen';
+import type { BuildOverlay } from '@/upload/contracts';
+import { rawQueryOptions } from '@/upload/raw';
 import { errorReason, formatDate, formatNumber } from '@/lib/format';
 import { useBuildContext } from './context';
 import { OfficeSelect } from './OfficeSelect';
+import { RoomCounts } from './RoomsPanels';
 import { setOffice } from './settingsEdit';
 
 /** The default label (U-2 5f): '4 Nov 2026: built from I1201.dwg, I1202.dwg'. */
@@ -29,6 +32,8 @@ export function SaveStep() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const offices = useQuery(listOfficesOptions());
+  // rooms milestone: the three counts per floor, from the overlay (R5.md D-3)
+  const overlay = useQuery(rawQueryOptions<BuildOverlay>(detail.result?.urls.overlay, detail.result?.runId ?? ''));
   const [label, setLabel] = useState(() => defaultLabel(detail.sourceNames));
   const [carry, setCarry] = useState(true);
   const [remember, setRemember] = useState(true);
@@ -95,6 +100,7 @@ export function SaveStep() {
         <p>{`${formatNumber(result.counts.floors)} floor${result.counts.floors === 1 ? '' : 's'}, ${formatNumber(result.counts.parts)} parts, ${formatNumber(result.counts.openings)} openings, ${formatNumber(result.counts.furniture)} furniture pieces, ${formatNumber(result.counts.rooms)} rooms`}</p>
         <p data-testid="save-flags">{result.flags.check ? `${formatNumber(result.flags.check)} flags left to check (of ${formatNumber(result.flags.total)})` : 'No flags left to check'}</p>
         <p>Model-data stamp <span className="font-mono" data-testid="save-stamp">{result.stamp}</span></p>
+        <RoomCounts overlay={overlay.data} result={result} />
       </section>
       {latest >= 1 && (
         <label className="flex items-center gap-2 text-sm">

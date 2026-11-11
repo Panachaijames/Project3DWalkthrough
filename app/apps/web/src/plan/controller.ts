@@ -4,13 +4,18 @@
 // tooltip (text only), and a redraw on requestAnimationFrame only when something changed. Owner U7.
 // Delete is not handled here: the key bubbles to the page, whose check step sets the selection aside (PlanCanvasProps
 // has no set-aside callback; U7.md).
+// The rooms milestone (docs/rooms/DESIGN.md R-6.2, R-6.4, R-12.6; R6): the tools 'draw-line' (two clicks, each end
+// snapped as 'pick-point' snaps; Esc or a tool change drops the first end) and 'rooms' (a click goes to a stair, then to
+// one of the app's closings, then to a room, else reports the point), `show`, the rooms' area in the hover text, and
+// the test hook `window.__plan` (testHook()).
 import type { Vec2 } from '@walkthrough/viewer';
 import type { Bbox, LayerRole } from '@/upload/contracts';
 import { coveredBox, coveredEntries, isAnchor, planData, TYPE_NAMES, type PlanData, type QBox } from './decode';
 import { drawFrame, type Ctx, type Scene } from './draw';
-import { boxKeys, buildGrid, clickKey, dist2PointSegment, nearest, type Grid, type Mode } from './hit';
-import type { PlanCanvasProps } from './index';
-import { areaBox, localBox, localDiff, localFlags, localOverlay } from './overlay';
+import { d2Polyline, polyContains, ringContains } from './geom';
+import { boxKeys, buildGrid, clickKey, dist2PointSegment, entriesInBox, nearest, type Grid, type Mode } from './hit';
+import type { PlanCanvasProps, PlanShow, PlanTestHook } from './index';
+import { areaBox, localBox, localDiff, localFlags, localOverlay, type LocalSpace } from './overlay';
 import { buildLayerPaths, pathOfEntries, textAnchors, type LayerPath, type PathSink } from './paths';
 import { boxFromScreen, clamp, fitView, panBy, sameView, scaleLimits, toLocal, toScreen, wheelFactor, zoomAt, type Size, type View } from './view';
 import { FLAG_RADIUS } from './colours';
@@ -53,13 +58,16 @@ export class PlanController {
   private paths: LayerPath<P>[] | null = null;
   private texts = new Map<number, number[]>();
   private roles: LayerRole[] = [];
-  private scene: Omit<Scene<P>, 'data' | 'paths' | 'texts' | 'roles' | 'band' | 'pickMark'> = {
+  private scene: Omit<Scene<P>, 'data' | 'paths' | 'texts' | 'roles' | 'band' | 'pickMark' | 'lineStart' | 'lineEnd'> = {
     area: null, highlight: null, overlay: null, flags: [], diff: null, selected: null, selectedBoxes: [], setAside: null,
-    setAsideBoxes: [], builtAside: null, builtAsideBoxes: [],
+    setAsideBoxes: [], builtAside: null, builtAsideBoxes: [], show: SHOW_ALL,
   };
   private drag: Drag | null = null;
   private band: [number, number, number, number] | null = null;
   private pickMark: [number, number] | null = null;
+  /** The tool 'draw-line': its first end (quanta) after the first click, and where the pointer is. */
+  private lineStart: [number, number] | null = null;
+  private lineEnd: [number, number] | null = null;
   private lastLayer: number | null = null;
   private hoverAt: [number, number] | null = null;
   private hoverKey = '';
@@ -135,7 +143,13 @@ export class PlanController {
       sc.setAside = path; sc.setAsideBoxes = boxes;
       dirty = true;
     }
-    if (!prev || prev.tool !== p.tool) { this.canvas.style.cursor = cursorOf(p.tool); this.cancelDrag(); }
+    const show = showOf(p.show);
+    if (!sameShow(show, sc.show)) { sc.show = show; dirty = true; }
+    if (!prev || prev.tool !== p.tool) {
+      this.canvas.style.cursor = cursorOf(p.tool);
+      this.cancelDrag();
+      if (this.lineStart) { this.lineStart = this.lineEnd = null; dirty = true; }
+    }
     const fsig = p.focus ? p.focus.join(',') : '';
     if (fsig !== this.focusSig) { this.focusSig = fsig; if (p.focus) this.wantFit = true; }
     if (this.wantFit) dirty = this.fitNow() || dirty;
@@ -216,6 +230,7 @@ export class PlanController {
     if (!this.paths) this.paths = buildLayerPaths(this.data, this.makePath);
     const sc: Scene<P> = {
       ...this.scene, data: this.data, paths: this.paths, texts: this.texts, roles: this.roles, band: this.band, pickMark: this.pickMark,
+      lineStart: this.lineStart, lineEnd: this.lineEnd,
     };
     drawFrame(this.ctx, sc, this.view, this.size, this.dpr, DRAW);
     const ms = performance.now() - t0;
@@ -276,6 +291,66 @@ export class PlanController {
     return best;
   }
 
+  // ------------------------------------------------------------------------------------------- rooms milestone picks
+  /** The stair under a local point: its outline holds it, or its outline or walking line is within PICK_PX. */
+  stairAt(qx: number, qy: number): string | null {
+    const ov = this.scene.overlay;
+    if (!ov || !this.view) return null;
+    const r2 = (PICK_PX / this.view.s) ** 2;
+    let best: string | null = null, bestD = Infinity;
+    for (const st of ov.stairs) {
+      if (ringContains(st.outline, qx, qy)) return st.id;
+      const ring = [...st.outline, st.outline[0]!, st.outline[1]!];
+      const d = Math.min(d2Polyline(ring, qx, qy), st.walk ? d2Polyline(st.walk, qx, qy) : Infinity);
+      if (d <= r2 && d < bestD) { best = st.id; bestD = d; }
+    }
+    return best;
+  }
+
+  /** The index (in overlay.closings) of the app's closing (a bridge or a doorway closing, not a staff line) within
+   *  PICK_PX of a local point. */
+  closingAt(qx: number, qy: number): number | null {
+    const ov = this.scene.overlay;
+    if (!ov || !this.view) return null;
+    const r2 = (PICK_PX / this.view.s) ** 2;
+    let best: number | null = null, bestD = r2;
+    for (const c of ov.closings) {
+      if (c.kind === 'staff') continue;
+      const d = dist2PointSegment(qx, qy, c.a[0], c.a[1], c.b[0], c.b[1]);
+      if (d <= bestD) { best = c.index; bestD = d; }
+    }
+    return best;
+  }
+
+  /** The room (overlay space) that holds a local point. */
+  spaceAt(qx: number, qy: number): LocalSpace | null {
+    const ov = this.scene.overlay;
+    if (!ov) return null;
+    for (const r of ov.spaces) {
+      if (qx < r.box[0] || qx > r.box[2] || qy < r.box[1] || qy > r.box[3]) continue;
+      if (polyContains(r.o, r.h, qx, qy)) return r;
+    }
+    return null;
+  }
+
+  /** The nearest drawn vertex of ANY item within PICK_PX (the draw-line tool: a wall corner is often nearer to another
+   *  item's edge than to its own), else the point itself; quanta. */
+  snapVertex(px: number, py: number): [number, number] {
+    const v = this.view!;
+    const [qx, qy] = toLocal(v, this.size, px, py);
+    const r = PICK_PX / v.s;
+    const d = this.data;
+    let best: [number, number] = [qx, qy], bestD = r * r;
+    for (const e of entriesInBox(d, this.gridNow(), [qx - r, qy - r, qx + r, qy + r], 'touch')) {
+      const f = d.first[e]!, c = d.count[e]!;
+      for (let k = f; k < f + c; k++) {
+        const x = d.pts[2 * k]!, y = d.pts[2 * k + 1]!, dd = (x - qx) ** 2 + (y - qy) ** 2;
+        if (dd <= bestD) { best = [x, y]; bestD = dd; }
+      }
+    }
+    return best;
+  }
+
   /** A click at a screen point with the props' tool and pick mode (what a pointer up without a drag does). */
   click(px: number, py: number, mods: { shift?: boolean; ctrl?: boolean; alt?: boolean } = {}): void {
     const p = this.props;
@@ -288,6 +363,27 @@ export class PlanController {
       return;
     }
     if (p.tool === 'draw-box') return;
+    if (p.tool === 'draw-line') {
+      const q = this.snapVertex(px, py);
+      const a = this.lineStart;
+      if (!a) { this.lineStart = q; this.lineEnd = null; this.requestDraw(); return; }
+      this.lineStart = this.lineEnd = null;
+      this.requestDraw();
+      if (a[0] === q[0] && a[1] === q[1]) return;                       // a line of no length
+      p.onLine?.(this.data.toSheet(a[0], a[1]), this.data.toSheet(q[0], q[1]));
+      return;
+    }
+    if (p.tool === 'rooms') {
+      const [qx, qy] = toLocal(this.view, this.size, px, py);
+      const stair = this.stairAt(qx, qy);
+      if (stair !== null && p.onStair) { p.onStair(stair); return; }
+      const closing = this.closingAt(qx, qy);
+      if (closing !== null && p.onClosing) { p.onClosing(closing); return; }
+      const space = this.spaceAt(qx, qy);
+      if (space && p.onSpace) { p.onSpace(space.id); return; }
+      p.onPoint?.(this.data.toSheet(qx, qy));
+      return;
+    }
     const flag = this.flagAt(px, py);
     if (flag !== null && p.onFlag) { p.onFlag(flag); return; }
     const opening = this.openingAt(px, py);
@@ -374,7 +470,12 @@ export class PlanController {
   private onMove(e: PointerEvent): void {
     const [x, y] = this.local(e);
     const g = this.drag;
-    if (!g) { this.hoverAt = [x, y]; this.scheduleHover(); return; }
+    if (!g) {
+      this.hoverAt = [x, y];
+      this.scheduleHover();
+      if (this.lineStart && this.view) { this.lineEnd = toLocal(this.view, this.size, x, y); this.requestDraw(); }
+      return;
+    }
     if (g.id !== e.pointerId) return;
     g.x = x; g.y = y;
     const moved = Math.hypot(x - g.x0, y - g.y0) >= DRAG_PX;
@@ -433,6 +534,7 @@ export class PlanController {
       case 'f': case 'F': case '0': case 'Home': this.fit(); break;
       case 'Escape':
         if (this.drag) this.cancelDrag();
+        else if (this.lineStart) { this.lineStart = this.lineEnd = null; this.requestDraw(); }
         else if (this.props.selected.size) this.props.onSelect?.([], 'replace');
         break;
       default: return;
@@ -463,11 +565,35 @@ export class PlanController {
       this.report(null);
       return;
     }
+    // rooms milestone: the room under the pointer with its area (R-12.6), when the rooms are shown
+    const [qx, qy] = this.view ? toLocal(this.view, this.size, x, y) : [0, 0];
+    const room = this.scene.show.rooms && this.view ? this.spaceAt(qx, qy) : null;
+    const roomLine = room ? roomText(room) : null;
     const e = this.entryAt(x, y);
-    if (e < 0) { this.hover(null); return; }
+    if (e < 0) {
+      if (roomLine) { this.tipShow(x, y, [roomLine]); this.report(null); return; }
+      this.hover(null);
+      return;
+    }
     const d = this.data, layer = d.layerNames[d.layer[e]!]!, type = d.type[e]!, key = d.keys[e]!;
-    this.tipShow(x, y, [layer, `${TYPE_NAMES[type] ?? type} · ${key}`]);
+    this.tipShow(x, y, roomLine ? [layer, `${TYPE_NAMES[type] ?? type} · ${key}`, roomLine] : [layer, `${TYPE_NAMES[type] ?? type} · ${key}`]);
     this.report({ layer, type, key });
+  }
+
+  // ------------------------------------------------------------------------------------------------------ test hook
+  /** window.__plan (rooms R-12.6): sheet points to page pixels, and the rooms and stairs of the overlay on screen. */
+  testHook(): PlanTestHook {
+    return {
+      toPage: (pt: Vec2) => {
+        if (this.disposed || !this.view || !Array.isArray(pt)) return null;
+        const s = this.sheetToScreen(pt[0], pt[1]);
+        if (!s || s[0] < 0 || s[1] < 0 || s[0] > this.size.w || s[1] > this.size.h) return null;
+        const r = this.canvas.getBoundingClientRect();
+        return [r.left + s[0], r.top + s[1]];
+      },
+      spaces: () => (this.scene.overlay?.spaces ?? []).map(r => ({ id: r.id, name: r.name, area: r.area, at: r.sheetAt })),
+      stairs: () => (this.scene.overlay?.stairs ?? []).map(s => ({ id: s.id, state: s.state, at: s.sheetAt })),
+    };
   }
 
   private hover(info: null): void {
@@ -523,5 +649,16 @@ const DRAW = {
 
 export function cursorOf(tool: PlanCanvasProps['tool']): string {
   return tool === 'pan' ? 'grab' : tool === 'select' ? 'default' : 'crosshair';
+}
+
+/** `show` missing: everything (index.ts). */
+export const SHOW_ALL: PlanShow = { rooms: true, plate: true, furniture: true };
+const showOf = (s: PlanShow | undefined): PlanShow => (s ? { rooms: s.rooms !== false, plate: s.plate !== false, furniture: s.furniture !== false } : SHOW_ALL);
+const sameShow = (a: PlanShow, b: PlanShow) => a.rooms === b.rooms && a.plate === b.plate && a.furniture === b.furniture;
+
+/** A room's hover line: its name (or "Room"), its area, "no ceiling" when it has none (R-6.4). Drawing text: text only. */
+export function roomText(r: Pick<LocalSpace, 'name' | 'area' | 'ceiling'>): string {
+  const area = `${(Math.round(r.area * 10) / 10).toFixed(1)} m²`;
+  return `${r.name || 'Room'} · ${area}${r.ceiling ? '' : ' · no ceiling'}`;
 }
 

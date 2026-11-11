@@ -1,22 +1,39 @@
 // The Check step's diff (docs/upload/DESIGN.md U-12.4): this build against the previous build of the draft and against the
 // latest version; the counts that changed (per floor), openings added / removed / changed, furniture by kind, rooms added
 // and removed; a toggle draws added parts green and removed ones red on the plan. Room names are text.
+// The rooms milestone (docs/rooms/DESIGN.md R-6.4; R3.md D-2, decided): a floor whose plate a Rebuild made smaller by
+// 2 m2 or more is the first row of the list, whatever floor is on screen (TID.lostFloor), and the diff's new keys are
+// shown with their names ("rooms closed", "plate area (m2)", "stairs you can climb"), not as raw keys.
 import type { BuildDiff, DiffBody } from '@/upload/contracts';
 import { Checkbox } from '@/components/ui/checkbox';
+import { cn } from '@/lib/utils';
 import { NativeSelect } from './fields';
+import { TID } from './testids';
 
 export const AGAINST_TEXT = { 'previous-run': 'the previous build', version: 'the latest version' } as const;
 
 export interface DiffRow { floor: string; what: string; before: number; after: number }
 
-/** The counts that changed, floor by floor, then the furniture by kind (floor ''). */
+/** The diff's count keys of the rooms milestone (out/diff.py, R3.md section 5) and their names on the screen. */
+export const PLATE_KEY = 'plate area (m2)';
+export const COUNT_NAMES: Record<string, string> = {
+  'rooms closed': 'Rooms closed',
+  [PLATE_KEY]: 'Floor plate (m²)',
+  'stairs you can climb': 'Stairs you can climb',
+};
+/** A floor counts as lost when its plate is at least this much smaller (R-6.4). */
+export const LOST_M2 = 2;
+export const isLostFloor = (r: DiffRow) => r.what === PLATE_KEY && r.before - r.after >= LOST_M2 - 1e-9;
+
+/** The counts that changed, floor by floor (a lost floor's plate row first, R-6.4), then the furniture by kind (floor ''). */
 export function diffRows(body: DiffBody): DiffRow[] {
   const rows: DiffRow[] = [];
   for (const [floor, counts] of Object.entries(body.counts)) {
     for (const [what, [before, after]] of Object.entries(counts)) if (before !== after) rows.push({ floor, what, before, after });
   }
   for (const [kind, [before, after]] of Object.entries(body.furnitureByKind)) if (before !== after) rows.push({ floor: '', what: `furniture: ${kind}`, before, after });
-  return rows;
+  // the builder already orders a lost floor first (R3.md D-2); sorted here too, as JavaScript reorders integer-like keys
+  return [...rows.filter(isLostFloor), ...rows.filter(r => !isLostFloor(r))];
 }
 
 /** Nothing changed against this side. */
@@ -39,7 +56,8 @@ export function DiffPanel({ diff, against, onAgainst, draw, onDraw, floor }: Dif
   if (!diff.against.length) return <p className="text-sm text-muted-foreground" data-testid="diff-panel" data-empty="">The first build of a new project: nothing to compare with.</p>;
   const side = diff.against[Math.min(against, diff.against.length - 1)]!;
   const body = side.diff;
-  const rows = diffRows(body).filter(r => !floor || !r.floor || r.floor === floor);
+  // a lost floor is listed whatever floor is on screen (R-6.4: "the first row of the list of changes")
+  const rows = diffRows(body).filter(r => !floor || !r.floor || r.floor === floor || isLostFloor(r));
   const ops = (list: { floor: string }[]) => list.filter(o => !floor || o.floor === floor).length;
   const same = sameAs(body);
   return (
@@ -62,11 +80,16 @@ export function DiffPanel({ diff, against, onAgainst, draw, onDraw, floor }: Dif
             <table className="w-full text-xs">
               <thead className="text-left text-muted-foreground"><tr><th className="font-medium">Floor</th><th className="font-medium">What</th><th className="font-medium">Before</th><th className="font-medium">Now</th></tr></thead>
               <tbody>
-                {rows.map((r, i) => (
-                  <tr key={i} className="border-t" data-testid="diff-row" data-floor={r.floor} data-what={r.what}>
-                    <td>{r.floor}</td><td>{r.what}</td><td className="tabular-nums">{r.before}</td><td className="tabular-nums">{r.after}</td>
-                  </tr>
-                ))}
+                {rows.map((r, i) => {
+                  const lost = i === 0 && isLostFloor(r);
+                  return (
+                    <tr key={i} className={cn('border-t', lost && 'bg-amber-50 font-medium')} data-testid={lost ? TID.lostFloor : 'diff-row'} data-floor={r.floor}
+                      data-key={lost ? r.floor : undefined} data-what={r.what}>
+                      <td>{r.floor}</td><td>{lost ? `${COUNT_NAMES[r.what]}: floor lost` : COUNT_NAMES[r.what] ?? r.what}</td>
+                      <td className="tabular-nums">{r.before}</td><td className="tabular-nums">{r.after}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           )}

@@ -3,6 +3,8 @@
 // known wall points: the wall corners of the seeded models, which lie on the drawings' wall lines), a layer highlight
 // changes the pixels, click and box selection pick the expected keys (worked out here by brute force from the fixture
 // files), the house sheet redraws within the budget (A-10: under 50 ms at 1400 x 880), at device pixel ratio 1 and 2.
+// The rooms milestone (R6; docs/rooms/ACCEPTANCE.md 2.4): the overlay's rooms, holes, unfloored areas, stairs and
+// closings drawn, the three ticks, and the canvas's test hook (the section "rooms" below).
 //   WT_WEB_PORT=5737 WT_API_PORT=8737 WT_TMP="$TEMP/wt-u7" WT_SERVE=web WT_SKIP_STORE_CHECK=1 \
 //     npx playwright test -c tests/e2e/playwright.config.ts --project=e2e tests/e2e/plan-canvas.spec.ts
 // (Without WT_SERVE the config starts the API as well; this spec needs only the web server.)
@@ -10,6 +12,7 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { gunzipSync } from 'node:zlib';
 import { expect, test, type Page } from '@playwright/test';
+import { insideOf, referenceOverlay, referencePlan } from '../../apps/web/test/mock-api/rooms';
 import { timedDescribe } from './lib/fps';
 import { APP } from './lib/target';
 
@@ -331,6 +334,154 @@ for (const dpr of [1, 2]) {
     });
   });
 }
+
+// ======================================================================================================== rooms (R6)
+// The rooms milestone (docs/rooms/ACCEPTANCE.md 2.4 R6, RA-12 point 1's pixel checks): pixel probes on the house-rooms
+// overlay over the house's plan (a room tint, a hatched hole, the furniture boxes; each tick switches its layer off),
+// and on the reference building's overlay over the mock's plan of it (the dashed doorway closing and the climbable
+// stair's walking line, drawn whatever the ticks say); the canvas's test hook window.__plan turns sheet points into
+// clicks for the tools Rooms and stairs and Draw a line. The overlays are read here, in Node, and handed to the harness.
+const HOUSE_ROOMS = readJson('fixtures/upload/overlay/house-rooms.overlay.json');
+const SHOW = (rooms: boolean, plate: boolean, furniture: boolean) => ({ rooms, plate, furniture });
+const tinted = (p: number[]) => p[2]! - p[0]! >= 10 && p[2]! >= 225 && p[0]! < 248;
+const hatchy = (p: number[]) => Math.abs(p[0]! - p[1]!) < 25 && Math.abs(p[1]! - p[2]!) < 25 && lum(p) >= 95 && lum(p) <= 228;
+const yellowish = (p: number[]) => p[0]! - p[2]! >= 20 && p[1]! - p[2]! >= 12 && lum(p) > 170;
+const closingInk = (p: number[]) => p[0]! - p[2]! > 70 && p[1]! - p[2]! > 30 && p[0]! > 100;
+const stairInk = (p: number[]) => p[1]! - p[0]! > 35 && p[1]! - p[2]! > 15;
+const count = (px: number[][] | null, f: (p: number[]) => boolean) => (px ?? []).filter(f).length;
+const hook = <T>(page: Page, fn: string, arg?: unknown) => page.evaluate(([f, a]) => {
+  const h = (window as any).__plan;
+  return h ? h[f as string](a) : null;
+}, [fn, arg] as const) as Promise<T>;
+
+test.describe('rooms milestone (R6): the overlay\'s rooms, plate, stairs and closings', () => {
+  test('house-rooms, upper floor: rooms tinted, furniture boxes (and the holes inside its area hatched); each tick switches its layer off', async ({ page }) => {
+    const { problems } = await open(page, 'sukhumvit');
+    const upper = HOUSE_ROOMS.floors.find((f: any) => f.key === 'upper');
+    await H.set(page, { overlayFloor: upper, focus: upper.area.bbox });
+    await H.timeRedraw(page, 2);
+    const spaces = await hook<{ id: string; area: number; at: [number, number] }[]>(page, 'spaces');
+    expect(spaces, 'window.__plan (the web server sets VITE_WTV_TEST_HOOK=1)').not.toBeNull();
+    expect(spaces.map(s => s.id)).toEqual(upper.spaces.map((s: any) => s.id));
+    const big = spaces.filter(s => s.area >= 8);
+    expect(big.length).toBeGreaterThanOrEqual(8);
+    // the provisional (tracer) fixture writes the upper floor's holes and stairs in the build frame, 74 m off the sheet
+    // (R1.md N-11; contract-issues/R6.md): only holes inside the floor's area are probed here (none until RI-0 replaces
+    // the fixture); the reference building's upper floor always is (next test)
+    const [ax0, ay0, ax1, ay1] = upper.area.bbox as number[];
+    const holes = upper.holes.map((h: any) => insideOf(h.o, h.h)).filter(([x, y]: [number, number]) => x >= ax0! && x <= ax1! && y >= ay0! && y <= ay1!);
+    const pieces = upper.furniture.filter((f: any) => f.w >= 0.6 && f.d >= 0.6).slice(0, 12);
+    expect(pieces.length).toBeGreaterThanOrEqual(5);
+    const measure = async () => ({
+      rooms: await Promise.all(big.map(async s => count(await H.pixels(page, s.at[0], s.at[1], 3), tinted))),
+      holes: await Promise.all(holes.map(async ([x, y]: [number, number]) => count(await H.pixels(page, x, y, 6), hatchy))),
+      furniture: await Promise.all(pieces.map(async (f: any) => count(await H.pixels(page, f.x, f.y, 2), yellowish))),
+    });
+    const all = await measure();
+    const note = JSON.stringify(all);
+    expect(all.rooms.filter(n => n >= 20).length, note).toBeGreaterThanOrEqual(Math.ceil(big.length * 0.6));
+    expect(all.furniture.filter(n => n >= 12).length, note).toBeGreaterThanOrEqual(Math.ceil(pieces.length * 0.6));
+
+    await H.set(page, { show: SHOW(false, true, true) });
+    const noRooms = await measure();
+    expect(noRooms.rooms.filter(n => n >= 20).length, JSON.stringify(noRooms)).toBeLessThanOrEqual(Math.floor(big.length * 0.1));
+    await H.set(page, { show: SHOW(true, false, true) });
+    const noPlate = await measure();
+    noPlate.holes.forEach((n, i) => expect(n, JSON.stringify(noPlate)).toBeLessThanOrEqual(all.holes[i]! - 8));
+    await H.set(page, { show: SHOW(true, true, false) });
+    const noFurniture = await measure();
+    expect(noFurniture.furniture.filter(n => n >= 12).length, JSON.stringify(noFurniture)).toBeLessThanOrEqual(Math.floor(pieces.length * 0.1));
+    await H.set(page, { show: SHOW(true, true, true) });
+    expect((await measure()).rooms).toEqual(all.rooms);
+    expect(problems()).toEqual([]);
+  });
+
+  test('the reference building, upper floor: the stair well and the void are hatched; the Floor plate tick takes them away', async ({ page }) => {
+    const { problems } = await open(page, 'bank1');
+    const upper = referenceOverlay().floors[1]!;
+    const roles = (readJson('fixtures/rooms/settings.reference.json') as { layers: Record<string, string> }).layers;
+    await page.evaluate(([j, r]) => (window as any).__planHarness.loadJson(j, r), [referencePlan('d'.repeat(40), 1), roles] as const);
+    await H.set(page, { overlayFloor: upper });
+    await H.timeRedraw(page, 2);
+    const holes = upper.holes!.map(h => insideOf(h.o, h.h));
+    expect(holes.length).toBe(2);
+    const hatch = async () => Promise.all(holes.map(async ([x, y]) => count(await H.pixels(page, x, y, 6), hatchy)));
+    const on = await hatch();
+    await H.set(page, { show: SHOW(true, false, true) });
+    const off = await hatch();
+    on.forEach((n, i) => expect(n, `on ${on} off ${off}`).toBeGreaterThanOrEqual(off[i]! + 8));
+    await H.set(page, { show: SHOW(true, true, true) });
+    expect(await hatch()).toEqual(on);
+    expect(problems()).toEqual([]);
+  });
+
+  test('the reference building: the doorway closing is dashed, the climbable stair has its walking line, whatever the ticks', async ({ page }) => {
+    const { problems } = await open(page, 'bank1');
+    const ground = referenceOverlay().floors[0]!;
+    const roles = (readJson('fixtures/rooms/settings.reference.json') as { layers: Record<string, string> }).layers;
+    await page.evaluate(([j, r]) => (window as any).__planHarness.loadJson(j, r), [referencePlan('c'.repeat(40), 0), roles] as const);
+    await H.set(page, { overlayFloor: ground });
+    await H.timeRedraw(page, 2);
+    const c = ground.closings![0]!;
+    const samples: number[] = [];
+    for (let k = 0; k <= 40; k++) {
+      const t = 0.1 + (0.8 * k) / 40;
+      const px = await H.pixels(page, c.a[0] + (c.b[0] - c.a[0]) * t, c.a[1] + (c.b[1] - c.a[1]) * t, 0);
+      samples.push(count(px, closingInk));
+    }
+    const inked = samples.filter(n => n > 0).length;
+    expect(inked, samples.join('')).toBeGreaterThanOrEqual(8);                     // drawn
+    expect(inked, samples.join('')).toBeLessThanOrEqual(36);                       // with gaps: dashed
+    const walk = ground.stairs!.find(s => s.state === 'climb')!.walk!;
+    const mids = walk.slice(1).map((p, i) => [(p[0] + walk[i]![0]) / 2, (p[1] + walk[i]![1]) / 2] as [number, number]);
+    const onLine = async () => (await Promise.all(mids.map(async ([x, y]) => count(await H.pixels(page, x, y, 1), stairInk)))).filter(n => n > 0).length;
+    expect(await onLine()).toBeGreaterThanOrEqual(Math.ceil(mids.length * 0.6));
+    await H.set(page, { show: SHOW(false, false, false) });
+    expect(await onLine()).toBeGreaterThanOrEqual(Math.ceil(mids.length * 0.6));
+    const again: number[] = [];
+    for (let k = 0; k <= 40; k++) {
+      const t = 0.1 + (0.8 * k) / 40;
+      again.push(count(await H.pixels(page, c.a[0] + (c.b[0] - c.a[0]) * t, c.a[1] + (c.b[1] - c.a[1]) * t, 0), closingInk));
+    }
+    expect(again.filter(n => n > 0).length).toBeGreaterThanOrEqual(8);
+    expect(problems()).toEqual([]);
+  });
+
+  test('window.__plan turns sheet points into clicks: Rooms and stairs reports the room, the stair, the closing, the point; Draw a line its two ends', async ({ page }) => {
+    const { problems } = await open(page, 'bank1');
+    const ground = referenceOverlay().floors[0]!;
+    const roles = (readJson('fixtures/rooms/settings.reference.json') as { layers: Record<string, string> }).layers;
+    await page.evaluate(([j, r]) => (window as any).__planHarness.loadJson(j, r), [referencePlan('c'.repeat(40), 0), roles] as const);
+    await H.set(page, { overlayFloor: ground, tool: 'rooms' });
+    const spaces = await hook<{ id: string; at: [number, number] }[]>(page, 'spaces');
+    const stairs = await hook<{ id: string; state: string; at: [number, number] }[]>(page, 'stairs');
+    expect(stairs.map(s => [s.id, s.state])).toEqual([['S1', 'climb'], ['ground-ST2', 'lines']]);
+    const clickAt = async (pt: [number, number]) => {
+      const p = await hook<[number, number] | null>(page, 'toPage', pt);
+      expect(p, `${pt} is on the canvas`).not.toBeNull();
+      await page.mouse.click(p![0], p![1]);
+    };
+    await H.clear(page);
+    await clickAt(spaces.find(s => s.id === 'ground-R002')!.at);
+    await clickAt(stairs[1]!.at);
+    const c = ground.closings![0]!;
+    await clickAt([(c.a[0] + c.b[0]) / 2, (c.a[1] + c.b[1]) / 2]);
+    await clickAt(insideOf(ground.unfloored![0]!.o));
+    const ev = (await H.events(page)).filter(e => ['space', 'stair', 'closing', 'point'].includes(e.type));
+    expect(ev.slice(0, 3)).toEqual([{ type: 'space', id: 'ground-R002' }, { type: 'stair', id: 'ground-ST2' }, { type: 'closing', index: 0 }]);
+    expect(ev[3]?.type).toBe('point');
+    await H.set(page, { tool: 'draw-line' });
+    await H.clear(page);
+    const m = ground.unfloored![0]!.mouth!;
+    await clickAt(m[0]);
+    await clickAt(m[1]);
+    const line = (await H.events(page)).filter(e => e.type === 'line');
+    expect(line.length).toBe(1);
+    expect(Math.hypot(line[0].a[0] - m[0][0], line[0].a[1] - m[0][1])).toBeLessThan(0.15);
+    expect(Math.hypot(line[0].b[0] - m[1][0], line[0].b[1] - m[1][1])).toBeLessThan(0.15);
+    expect(problems()).toEqual([]);
+  });
+});
 
 // ======================================================================================================== the budget
 timedDescribe('redraw budget (A-10)', () => {

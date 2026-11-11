@@ -1,11 +1,17 @@
 // The Check step's flag list (docs/upload/DESIGN.md U-12.2, U-12.3): every flag of the floor with its severity, title and
 // detail (drawing text: shown as text), and what can be done from it: show it on the plan, select the items it is about,
 // edit an opening, accept or refuse an outline suggestion (wall / glass / refuse), give a grey furniture family a kind.
+// The rooms milestone (docs/rooms/DESIGN.md R-6.1, R-6.4; R6): "Close it here" and "It is outdoors" on a slab-gap flag
+// (the first only with a mouth), "Not a doorway: one room" on a doorway flag, the "waiting for Rebuild" mark of a fix a
+// card wrote, and the hint under an old-rule plate-dropped flag while the draft is built the earlier way.
 import { Crosshair, MousePointerClick, PencilLine } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import type { Flag, FlagKind, OutlineEdgeFix } from '@/upload/contracts';
 import { cn } from '@/lib/utils';
+import { WaitingMark } from './RoomsPanels';
+import { RULES_EARLIER_TEXT, USE_NEW_TEXT } from './settingsEdit';
+import { TID } from './testids';
 
 export const FLAG_KIND_TEXT: Record<FlagKind, string> = {
   opening: 'Opening to check',
@@ -22,8 +28,8 @@ export const FLAG_KIND_TEXT: Record<FlagKind, string> = {
   'fix-unmatched': 'A fix that matched nothing',
   'detector-skipped': 'Detector rule skipped',
   slow: 'Slow floor',
-  // The rooms milestone's kinds (docs/rooms/DESIGN.md R-6.1): placeholder texts of the scaffold R0, so that every kind
-  // has one; R6 writes the cards, their texts and buttons.
+  // The rooms milestone's kinds (docs/rooms/DESIGN.md R-6.1; the scaffold's words, kept by R6: the cards show the
+  // builder's own title and sentence under them)
   'slab-gap': 'No floor beside the walls',
   'room-open': 'Room not closed',
   'room-names': 'Several names in one room',
@@ -33,6 +39,18 @@ export const FLAG_KIND_TEXT: Record<FlagKind, string> = {
   'stair-clash': 'Walls cut under a stair',
   'hole-skipped': 'Void mark not cut',
 };
+
+/** The rooms milestone's buttons and marks on the flag cards (R-6.1, R-6.4). */
+export interface FlagRoomsActions {
+  /** The fix a card already wrote, and whether it waits for a Rebuild. */
+  fixOf: (flag: Flag) => { what: 'line' | 'none' | 'outdoors'; waiting: boolean } | null;
+  onCloseHere: (flag: Flag) => void;
+  onOutdoors: (flag: Flag) => void;
+  onNotDoorway: (flag: Flag) => void;
+  /** The draft is built the earlier way: the hint under an old-rule plate-dropped flag, with its button. */
+  earlier: boolean;
+  onUseNew: () => void;
+}
 
 export interface FlagListProps {
   flags: Flag[];
@@ -45,15 +63,18 @@ export interface FlagListProps {
   onOpening?: (openingId: string) => void;
   onOutline?: (flag: Flag, as: OutlineEdgeFix['as']) => void;
   onFamily?: (family: string) => void;
+  rooms?: FlagRoomsActions;
 }
 
-export function FlagList({ flags, outlineOf, disabled, activeId, onShow, onSelectKeys, onOpening, onOutline, onFamily }: FlagListProps) {
+export function FlagList({ flags, outlineOf, disabled, activeId, onShow, onSelectKeys, onOpening, onOutline, onFamily, rooms }: FlagListProps) {
   if (!flags.length) return <p className="text-sm text-muted-foreground" data-testid="flag-list-empty">No flags on this floor.</p>;
   const ordered = [...flags].sort((a, b) => (a.severity === b.severity ? 0 : a.severity === 'check' ? -1 : 1));
   return (
     <ul className="grid gap-1.5" data-testid="flag-list">
       {ordered.map(f => {
         const outline = (f.kind === 'outline-wall' || f.kind === 'outline-glass') && f.ref.edge ? outlineOf?.(f) ?? null : null;
+        const fix = rooms && (f.kind === 'slab-gap' || f.kind === 'doorway') ? rooms.fixOf(f) : null;
+        const mouth = !!f.ref.a && !!f.ref.b;
         return (
           <li
             key={f.id}
@@ -97,7 +118,26 @@ export function FlagList({ flags, outlineOf, disabled, activeId, onShow, onSelec
               {f.kind === 'grey-furniture' && f.ref.family && onFamily && (
                 <Button size="sm" variant="ghost" className="h-7" onClick={() => onFamily(f.ref.family!)} data-testid="flag-family">Give it a kind</Button>
               )}
+              {rooms && f.kind === 'slab-gap' && mouth && (
+                <Button size="sm" className="h-7" variant={fix?.what === 'line' ? 'default' : 'outline'} disabled={disabled || !!fix}
+                  onClick={() => rooms.onCloseHere(f)} data-testid={TID.flagCloseHere}>Close it here</Button>
+              )}
+              {rooms && f.kind === 'slab-gap' && (
+                <Button size="sm" className="h-7" variant={fix?.what === 'outdoors' ? 'default' : 'outline'} disabled={disabled || !!fix}
+                  onClick={() => rooms.onOutdoors(f)} data-testid={TID.flagOutdoors}>It is outdoors</Button>
+              )}
+              {rooms && f.kind === 'doorway' && mouth && (
+                <Button size="sm" className="h-7" variant={fix?.what === 'none' ? 'default' : 'outline'} disabled={disabled || !!fix}
+                  onClick={() => rooms.onNotDoorway(f)} data-testid={TID.flagNotDoorway}>Not a doorway: one room</Button>
+              )}
+              {fix?.waiting && <WaitingMark />}
             </div>
+            {rooms?.earlier && f.kind === 'plate-dropped' && (
+              <div className="flex flex-wrap items-center gap-2 rounded bg-amber-50 p-2 text-xs" data-testid={TID.flagEarlierHint}>
+                <span className="min-w-0 flex-1">{RULES_EARLIER_TEXT}</span>
+                <Button size="sm" className="h-7" disabled={disabled} onClick={rooms.onUseNew}>{USE_NEW_TEXT}</Button>
+              </div>
+            )}
           </li>
         );
       })}

@@ -49,9 +49,11 @@ export function PlanCanvasView(props: PlanCanvasProps): JSX.Element {
     ro?.observe(w);
     window.addEventListener('resize', measure);
     measure();
-    setPlanTestHook(EMPTY_PLAN_HOOK);                   // rooms R-12.6: the scaffold's placeholder; R6 gives the canvas's own
+    const hook = controller.testHook();                 // rooms R-12.6: window.__plan (only with VITE_WTV_TEST_HOOK)
+    setPlanTestHook(hook);
     return () => {
-      setPlanTestHook(null);
+      // another canvas may have installed its own since (a step change mounts the next before this one goes)
+      if (typeof window === 'undefined' || window.__plan === hook || window.__plan === EMPTY_PLAN_HOOK) setPlanTestHook(null);
       ro?.disconnect();
       window.removeEventListener('resize', measure);
       controller.dispose();

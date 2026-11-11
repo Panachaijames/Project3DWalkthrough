@@ -28,11 +28,13 @@ export interface NumberFieldProps {
   help?: ReactNode;
   unit?: string;
   testId?: string;
+  /** `data-key` on the input (rooms milestone: the Heights panel's ceiling height names its floor). */
+  dataKey?: string;
   className?: string;
 }
 
 /** A metre value: typed as text ('3.7', '3,7', '0'), committed on Enter or blur. */
-export function NumberField({ value, onCommit, allowEmpty = false, disabled, placeholder, label, help, unit = 'm', testId, className }: NumberFieldProps) {
+export function NumberField({ value, onCommit, allowEmpty = false, disabled, placeholder, label, help, unit = 'm', testId, dataKey, className }: NumberFieldProps) {
   const id = useId();
   const [text, setText] = useState(showNumber(value));
   const focused = useRef(false);
@@ -52,12 +54,13 @@ export function NumberField({ value, onCommit, allowEmpty = false, disabled, pla
         disabled={disabled}
         placeholder={placeholder}
         data-testid={testId}
+        data-key={dataKey}
         onChange={e => setText(e.target.value)}
         onFocus={() => { focused.current = true; }}
         onBlur={() => { focused.current = false; commit(); }}
         onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); commit(); } }}
       />
-      {unit && <span className="text-xs text-muted-foreground">{unit}</span>}
+      {unit &&<span className="text-xs text-muted-foreground">{unit}</span>}
     </div>
   );
   return label === undefined ? input : <FieldRow label={label} help={help} htmlFor={id} className={className}>{input}</FieldRow>;

@@ -118,6 +118,7 @@ export class FakeCtx {
   setTransform = (...a: number[]) => { this.transforms.push(a); this.calls.push(['setTransform', ...a]); };
   fillRect = this.rec('fillRect'); beginPath = this.rec('beginPath'); moveTo = this.rec('moveTo'); lineTo = this.rec('lineTo');
   closePath = this.rec('closePath'); rect = this.rec('rect'); arc = this.rec('arc'); setLineDash = this.rec('setLineDash');
+  clip = this.rec('clip');
   stroke = (...a: unknown[]) => { this.calls.push(['stroke', ...a]); };
   fill = (...a: unknown[]) => { this.calls.push(['fill', ...a]); };
   fillText = (t: string, ...a: unknown[]) => { this.texts.push(t); this.calls.push(['fillText', t, ...a]); };

@@ -12,10 +12,23 @@ import { randomBytes } from 'node:crypto';
 import path from 'node:path';
 import { gunzipSync, gzipSync } from 'node:zlib';
 import type * as C from '../../src/upload/contracts';
+import { NEW_RULES, OLD_RULES } from '../../src/upload/contracts';
 import type { VersionDetail } from '../../src/api/generated/types.gen';
 import { FIXTURES_DIR, PROTOTYPES_DIR, readBytes, readJson, type MockVersionSource } from './fixtures';
 import { error, file, json, JSON_TYPE, noContent, sha1Hex, validation, type MockRequest, type MockResponse } from './http';
+import { referenceDrawing, referenceFloorOf, referencePlan, referenceSettings, referenceSuggestions, roomsOverlayFor } from './rooms';
 import { syntheticConversion, syntheticDrawing, syntheticPlan, syntheticSuggestions } from './synthetic';
+
+// The rooms milestone (docs/rooms/DESIGN.md R-1.2, R-1.3; R5.md section 1), as the API: every new draft gets NEW_RULES
+// (revision 0, the proposal, and a recipe whose options name none of the three keys); a settings document without a key
+// means the old rule, written out at the save; the old floor plates with ceilings or climbable stairs answer 422. The
+// reference building's two DXFs read as rooms.ts's plan, and its builds get the rooms overlay (rooms.ts).
+const RULE_KEYS = ['slabs', 'ceilings', 'stairs'] as const;
+export const carriesRules = (o: Partial<C.BuilderOptions> | undefined) => RULE_KEYS.some(k => o?.[k] !== undefined);
+const withNewRules = (s: C.BuildSettings): C.BuildSettings => ({ ...s, options: { ...s.options, ...NEW_RULES } });
+const withOldDefaults = (s: C.BuildSettings): C.BuildSettings => ({
+  ...s, options: { ...s.options, slabs: s.options.slabs ?? OLD_RULES.slabs, ceilings: s.options.ceilings ?? OLD_RULES.ceilings, stairs: s.options.stairs ?? OLD_RULES.stairs },
+});
 
 const F = (...p: string[]) => path.join(FIXTURES_DIR, ...p);
 const P = (...p: string[]) => path.join(PROTOTYPES_DIR, ...p);
@@ -296,8 +309,10 @@ export function createUploadMock(host: UploadHost): UploadMock {
     const fx = fixtureOf(b, sha1);
     const units = b.read.get(sha1)?.units ?? 'mm';
     const over = config.drawingFixture[sha1];
-    return cached(`drawing:${sha1}:${s.name}:${units}:${over ?? fx?.drawing ?? 'synthetic'}`, () => {
-      const d = over || fx ? clone(readJson(over ?? fx!.drawing) as C.DrawingRead) : syntheticDrawing(s);
+    const rf = !over ? referenceFloorOf(s) : -1;
+    return cached(`drawing:${sha1}:${s.name}:${units}:${over ?? fx?.drawing ?? (rf >= 0 ? `reference${rf}` : 'synthetic')}`, () => {
+      const d = rf >= 0 ? referenceDrawing(s, referencePlan(sha1, rf))
+        : over || fx ? clone(readJson(over ?? fx!.drawing) as C.DrawingRead) : syntheticDrawing(s);
       d.source = { sha1, name: s.name };
       if (units !== d.units.used) d.units = { ...d.units, used: units, verdict: d.units.declared === units ? 'agree' : 'votes-win' };
       return d;
@@ -306,8 +321,10 @@ export function createUploadMock(host: UploadHost): UploadMock {
   function planOf(b: BuildRec, sha1: string): Buffer {
     const fx = fixtureOf(b, sha1);
     const units = b.read.get(sha1)?.units ?? 'mm';
-    return cached(`plan:${sha1}:${units}:${fx?.plan ?? 'synthetic'}`, () => {
-      const p = fx ? JSON.parse(gunzipSync(readBytes(fx.plan)).toString('utf8')) as C.PlanGeometry : syntheticPlan(sha1);
+    const rf = referenceFloorOf(srcRec(b, sha1));
+    return cached(`plan:${sha1}:${units}:${fx?.plan ?? (rf >= 0 ? `reference${rf}` : 'synthetic')}`, () => {
+      const p = fx ? JSON.parse(gunzipSync(readBytes(fx.plan)).toString('utf8')) as C.PlanGeometry
+        : rf >= 0 ? referencePlan(sha1, rf) : syntheticPlan(sha1);
       p.source = sha1;
       p.units = units;
       return gzipSync(Buffer.from(JSON.stringify(p), 'utf8'), { level: 6 });
@@ -315,7 +332,31 @@ export function createUploadMock(host: UploadHost): UploadMock {
   }
 
   // ------------------------------------------------------------------------------------------------ the proposal
+  /** The reference building's floor of every source of the build, or null when one is not of it. */
+  const referenceFloors = (b: BuildRec): number[] | null => {
+    const fl = b.sources.map(sha => referenceFloorOf(srcRec(b, sha)));
+    return fl.length && fl.every(i => i >= 0) ? fl : null;
+  };
   function proposal(b: BuildRec): C.BuildSettings {
+    const ref = referenceFloors(b);
+    if (ref) {
+      // the reference building: its own settings, pointed at this build's sources (and the new rules: they carry them)
+      const s = referenceSettings();
+      const names = host.projectName(b.projectId);
+      return withNewRules({
+        ...s,
+        office: projectOffices.get(b.projectId) ?? null,
+        project: names && !RESERVED_IDS.includes(b.projectId) ? { ...s.project, name: names.name, shortName: names.shortName, projectNo: names.projectNo } : s.project,
+        sources: b.sources.map((sha, i) => ({ ...s.sources[ref[i]!]!, sha1: sha, name: srcRec(b, sha).name, units: b.read.get(sha)?.units ?? 'mm' })),
+        floors: s.floors.filter((_, fi) => ref.includes(fi)).map(f => {
+          const fi = s.floors.indexOf(f);
+          return { ...f, source: b.sources[ref.indexOf(fi)]! };
+        }),
+      });
+    }
+    return withNewRules(bankProposal(b));
+  }
+  function bankProposal(b: BuildRec): C.BuildSettings {
     const base = readJson(BUILD_FILES.proposal) as C.BuildSettings;
     const srcs = b.sources.map(sha => srcRec(b, sha));
     const allDxf = srcs.every(s => s.kind === 'dxf');
@@ -354,7 +395,8 @@ export function createUploadMock(host: UploadHost): UploadMock {
     const out: Record<string, C.LayerSuggestion> = {};
     for (const sha of b.sources) {
       const s = srcRec(b, sha);
-      const fromFile = s.kind === 'dxf' ? syntheticSuggestions() : (readJson(BUILD_FILES.suggestions) as C.LayerSuggestions).layers;
+      const fromFile = referenceFloorOf(s) >= 0 ? referenceSuggestions()
+        : s.kind === 'dxf' ? syntheticSuggestions() : (readJson(BUILD_FILES.suggestions) as C.LayerSuggestions).layers;
       for (const [k, v] of Object.entries(fromFile)) if (!(k in out)) out[k] = clone(v);
     }
     return out;
@@ -413,7 +455,8 @@ export function createUploadMock(host: UploadHost): UploadMock {
     if (!b.runs.some(r => r.info.kind === 'prepare' && r.info.status === 'done')) return;
     b.suggestions = suggestionsOf(b);
     if (b.startFrom) {
-      const s = clone(b.startFrom.settings);
+      // a recipe that names none of the three keys was written before the milestone: the new rules (R-1.3)
+      const s = carriesRules(b.startFrom.settings.options) ? clone(b.startFrom.settings) : withNewRules(clone(b.startFrom.settings));
       s.sources = b.sources.map(sha => {
         const prev = s.sources.find(x => x.sha1 === sha);
         const r = srcRec(b, sha);
@@ -584,6 +627,10 @@ export function createUploadMock(host: UploadHost): UploadMock {
 
   // ------------------------------------------------------------------------------------------- overlay and diff
   function overlayOf(b: BuildRec, r: ResultRec): C.BuildOverlay {
+    if (referenceFloors(b)) {
+      const o = roomsOverlayFor(r.settings, sha => referenceFloorOf(srcRec(b, sha)));
+      return { ...o, flags: [...o.flags, ...clone(config.extraFlags)] };
+    }
     const bank = readJson(BUILD_FILES.overlay) as C.BuildOverlay;
     const floors = r.settings.floors.map((f, i) => {
       const of = clone(bank.floors[i % bank.floors.length]!);
@@ -635,6 +682,23 @@ export function createUploadMock(host: UploadHost): UploadMock {
     if (s.fixes.setAside.length > 20_000) out.push({ path: 'fixes/setAside', message: 'at most 20,000 set-asides' });
     if (s.sources.some(x => x.units === null)) out.push({ path: 'sources', message: 'every source needs its units' });
     if (s.office !== null && !/^[a-z0-9][a-z0-9-]{1,62}$/.test(s.office)) out.push({ path: 'office', message: 'not an office id' });
+    // the rooms milestone (R-1.2, R-12.4; R5.md section 1)
+    const o = s.options ?? ({} as C.BuilderOptions);
+    if ((o.slabs ?? 'closed-rooms') === 'closed-rooms') {
+      const msg = 'ceilings and climbable stairs need floor plates from the wall network';
+      if (o.ceilings === 'auto') out.push({ path: 'options/ceilings', message: msg });
+      if (o.stairs === 'climb') out.push({ path: 'options/stairs', message: msg });
+    }
+    s.floors.forEach((f, i) => {
+      const c = f.ceilingHeight;
+      if (c !== null && c !== undefined && !(c >= 0.5 && c <= 20)) out.push({ path: `floors/${i}/ceilingHeight`, message: 'a ceiling height is 0.5 - 20 m' });
+    });
+    const others = s.fixes.openings.length + s.fixes.outlineEdges.length + (s.fixes.closings ?? []).length + (s.fixes.rooms ?? []).length + (s.fixes.stairs ?? []).length;
+    if (others > 5000) out.push({ path: 'fixes', message: 'at most 5,000 other fixes' });
+    (s.fixes.rooms ?? []).forEach((r, i) => {
+      // eslint-disable-next-line no-control-regex
+      if (r.name !== null && (Array.from(r.name).length > 200 || /[\u0000-\u001f\u007f-\u009f]/.test(r.name))) out.push({ path: `fixes/rooms/${i}/name`, message: 'a room name is one line of at most 200 characters' });
+    });
     return out;
   }
 
@@ -649,6 +713,13 @@ export function createUploadMock(host: UploadHost): UploadMock {
         ...s.fixes,
         openings: s.fixes.openings.map(o => floorsOf.has(o.floor) ? { ...o, a: [r(o.a[0]), r(o.a[1])], b: [r(o.b[0]), r(o.b[1])] } : o),
         outlineEdges: s.fixes.outlineEdges.map(o => floorsOf.has(o.floor) ? { ...o, a: [r(o.a[0]), r(o.a[1])], b: [r(o.b[0]), r(o.b[1])] } : o),
+        // the rooms milestone's fixes are points too (R-6.3: adopt.rescale)
+        ...(s.fixes.closings ? { closings: s.fixes.closings.map(o => floorsOf.has(o.floor) ? { ...o, a: [r(o.a[0]), r(o.a[1])] as C.ClosingFix['a'], b: [r(o.b[0]), r(o.b[1])] as C.ClosingFix['b'] } : o) } : {}),
+        ...(s.fixes.rooms ? { rooms: s.fixes.rooms.map(o => floorsOf.has(o.floor) ? { ...o, at: [r(o.at[0]), r(o.at[1])] as C.RoomFix['at'] } : o) } : {}),
+        ...(s.fixes.stairs ? {
+          stairs: s.fixes.stairs.map(o => floorsOf.has(o.floor)
+            ? { ...o, at: [r(o.at[0]), r(o.at[1])] as C.StairFix['at'], bottom: o.bottom ? [r(o.bottom[0]), r(o.bottom[1])] as C.StairFix['at'] : null } : o),
+        } : {}),
       },
     };
   }
@@ -786,10 +857,15 @@ export function createUploadMock(host: UploadHost): UploadMock {
   function newBuild(pid: string, list: string[], from: C.BuildRecord['from'], startFrom: BuildRec['startFrom']): BuildRec {
     const t = now();
     const base = readJson(BUILD_FILES.proposal) as C.BuildSettings;
+    // revision 0 shows the rules the draft will have (R5.md N-1): a recipe's own when it names them, else the new ones
+    const rules = startFrom && carriesRules(startFrom.settings.options) ? startFrom.settings.options : NEW_RULES;
     const b: BuildRec = {
       id: buildId(), projectId: pid, createdAt: t, updatedAt: t, status: 'open', sources: list.slice(), from, savedVersion: null,
       layersReviewedAt: null, revision: 0,
-      settings: { ...clone(base), sources: list.map(sha => { const s = sourcesOf(pid).get(sha)!; return { sha1: sha, name: s.name, kind: s.kind, units: null, unitsConfirmed: false }; }), floors: [], layers: {} },
+      settings: {
+        ...clone(base), options: { ...base.options, slabs: rules.slabs ?? OLD_RULES.slabs, ceilings: rules.ceilings ?? OLD_RULES.ceilings, stairs: rules.stairs ?? OLD_RULES.stairs },
+        sources: list.map(sha => { const s = sourcesOf(pid).get(sha)!; return { sha1: sha, name: s.name, kind: s.kind, units: null, unitsConfirmed: false }; }), floors: [], layers: {},
+      },
       startFrom, runs: [], read: new Map(), suggestions: {}, results: [],
     };
     buildsOf(pid).set(b.id, b);
@@ -812,7 +888,8 @@ export function createUploadMock(host: UploadHost): UploadMock {
     if (!upd || typeof upd !== 'object' || !upd.settings) return validation(['body', 'settings'], 'Field required', 'missing');
     const issues = settingsIssues(upd.settings, b);
     if (issues.length) return error(422, 'invalid_settings', 'The settings cannot be used as they are.', { issues });
-    let next = upd.settings;
+    // a missing key of the three options is the old rule, written out at the save (R-1.3)
+    let next = withOldDefaults(upd.settings);
     const changed: string[] = [];
     for (const src of next.sources) {
       const old = b.settings.sources.find(x => x.sha1 === src.sha1);

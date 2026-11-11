@@ -11,12 +11,14 @@ import { Button } from '@/components/ui/button';
 import { ViewerHost } from '@/components/ViewerHost';
 import { ApiError, apiUrl } from '@/api/client';
 import { cancelBuildRun, runBuild } from '@/api/generated/sdk.gen';
-import type { BuildDetail, BuildResultInfo, DrawingRead } from '@/upload/contracts';
+import type { BuildDetail, BuildOverlay, BuildResultInfo, DrawingRead } from '@/upload/contracts';
 import { draftViewerOptions, toDraftViewerProject } from '@/upload/draftViewerProject';
 import { rawQueryOptions } from '@/upload/raw';
 import { errorReason, formatNumber } from '@/lib/format';
 import { sourceToken, useBuildContext } from './context';
 import { PreBuildChecklist } from './PreBuildChecklist';
+import { RoomCounts } from './RoomsPanels';
+import { RulesLine } from './RulesLine';
 import { RunPanel } from './RunPanel';
 import { checklist } from './steps';
 
@@ -96,7 +98,9 @@ export function isRunInProgress(err: unknown): boolean {
 }
 
 export function BuildStep() {
-  const { detail, settings, saverState, setDetail, refresh, goto, projectId, buildId } = useBuildContext();
+  const { detail, settings, saverState, setDetail, refresh, goto, projectId, buildId, editable } = useBuildContext();
+  // rooms milestone: the three counts per floor come from the overlay the API serves (R5.md D-3)
+  const overlay = useQuery(rawQueryOptions<BuildOverlay>(detail.result?.urls.overlay, detail.result?.runId ?? ''));
   const [busy, setBusy] = useState<'run' | 'cancel' | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [preview, setPreview] = useState(false);
@@ -142,6 +146,7 @@ export function BuildStep() {
   return (
     <div className="grid gap-4 xl:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]" data-testid="build-step">
       <section className="grid content-start gap-3">
+        {!saved && <RulesLine settings={settings} editable={editable} />}
         {!saved && <PreBuildChecklist items={items} onStep={goto} />}
         {!saved && (
           <div className="flex flex-wrap items-center gap-3">
@@ -186,6 +191,7 @@ export function BuildStep() {
               {result.flags.total ? `${formatNumber(result.flags.total)} flags, ${formatNumber(result.flags.check)} to check on the Check step` : 'No flags'}
             </p>
             <ResultTable result={result} />
+            <RoomCounts overlay={overlay.data} result={result} />
             <img src={apiUrl(result.urls.topview)} alt="Top view of the draft" className="w-full rounded border bg-white" data-testid="result-topview" key={result.runId} />
           </div>
         ) : (

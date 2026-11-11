@@ -14,9 +14,12 @@
 import { createElement, useEffect, useState, type JSX } from 'react';
 import { createRoot } from 'react-dom/client';
 import { flushSync } from 'react-dom';
-import { decodePlan, PlanCanvas, type DecodedPlan, type PickMode, type PlanCanvasProps } from '@/plan';
+import { decodePlan, PlanCanvas, type DecodedPlan, type PickMode, type PlanCanvasProps, type PlanShow } from '@/plan';
 import { controllerOf } from '@/plan/controller';
-import type { Bbox, BuildOverlay, BuildSettings, DiffBody, FloorArea, LayerRole, PlanGeometry } from '@/upload/contracts';
+import type { Bbox, BuildOverlay, BuildSettings, DiffBody, FloorArea, LayerRole, OverlayFloor, PlanGeometry } from '@/upload/contracts';
+// The rooms milestone (R6; tests/e2e/plan-canvas.spec.ts "rooms"): loadJson(plan, roles) shows a plan the spec read in
+// Node (the mock's reference-building plan); set({ overlayFloor, show }) gives the canvas a whole overlay floor (the
+// house-rooms or the reference overlay, read in Node) and the three ticks; the canvas's own test hook is window.__plan.
 import bankPlanUrl from '../../../../fixtures/upload/plan/bank1.plan.json.gz?url';
 import housePlanUrl from '../../../../fixtures/upload/plan/sukhumvit.plan.json.gz?url';
 import bankOverlayJson from '../../../../fixtures/upload/overlay/bank.overlay.json';
@@ -40,6 +43,9 @@ export interface Changes {
   setAside?: string[];
   focus?: Bbox | null;
   diff?: DiffBody | null;
+  /** Rooms milestone: a whole overlay floor (no flags), and the ticks. */
+  overlayFloor?: OverlayFloor | null;
+  show?: PlanShow;
 }
 
 interface HarnessEvent { type: string; [k: string]: unknown }
@@ -112,6 +118,12 @@ function baseProps(plan: DecodedPlan, roles: Record<string, LayerRole>): PlanCan
     onOpening: id => { events.push({ type: 'opening', id }); },
     onFlag: id => { events.push({ type: 'flag', id }); },
     onHover: info => { events.push({ type: 'hover', info }); },
+    // rooms milestone (R6)
+    onLine: (a, b) => { events.push({ type: 'line', a, b }); },
+    onSpace: id => { events.push({ type: 'space', id }); },
+    onStair: id => { events.push({ type: 'stair', id }); },
+    onClosing: index => { events.push({ type: 'closing', index }); },
+    onPoint: p => { events.push({ type: 'point', p }); },
   };
 }
 
@@ -128,6 +140,15 @@ const harness = {
     settings = spec.settings;
     events.length = 0;
     render(baseProps(plan, settings.layers));
+    await frames(3);
+    return harness.info();
+  },
+  /** Shows a plan given as JSON with these roles (rooms milestone: the mock's reference-building plan). */
+  async loadJson(json: PlanGeometry, roles: Record<string, LayerRole>) {
+    const plan = decodePlan(json);
+    settings = { floors: [], layers: roles } as unknown as BuildSettings;
+    events.length = 0;
+    render(baseProps(plan, roles));
     await frames(3);
     return harness.info();
   },
@@ -148,6 +169,8 @@ const harness = {
       p.overlay = c.overlay === null ? null : OVERLAY.floors.find(f => f.key === c.overlay) ?? null;
       p.flags = c.overlay === null ? [] : OVERLAY.flags;
     }
+    if (c.overlayFloor !== undefined) { p.overlay = c.overlayFloor; p.flags = []; }
+    if (c.show !== undefined) p.show = c.show;
     if (c.selected) p.selected = new Set(c.selected);
     if (c.setAside) p.setAside = new Set(c.setAside);
     if (c.focus !== undefined) p.focus = c.focus;

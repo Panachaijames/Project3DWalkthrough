@@ -1,7 +1,8 @@
 // The Build page's six steps (docs/upload/DESIGN.md U-2 screen 5, U-14.3): which are reachable, and the pre-build
-// checklist. Pure functions of the BuildDetail and the settings on screen.
+// checklist. Pure functions of the BuildDetail and the settings on screen. The rooms milestone (R-12.6) adds the
+// checklist's warning line when the draft is built the earlier way, and the API's refusals of its settings.
 import type { BuildDetail, BuildSettings, RunInfo, Units } from '@/upload/contracts';
-import { floorIssues, furnitureIssues, namingIssues, UNIT_NAMES, UNITS } from './settingsEdit';
+import { floorIssues, furnitureIssues, namingIssues, roomsIssues, rulesOf, RULES_EARLIER_TEXT, UNIT_NAMES, UNITS } from './settingsEdit';
 
 export const STEPS = ['files', 'layers', 'floors', 'build', 'check', 'save'] as const;
 export type StepId = (typeof STEPS)[number];
@@ -105,7 +106,7 @@ export function checklist(d: BuildDetail, s: BuildSettings | null,
     }
   });
   const seen = new Set(out.map(i => i.text));
-  for (const issue of [...floorIssues(s), ...namingIssues(s), ...furnitureIssues(s)]) {
+  for (const issue of [...floorIssues(s), ...namingIssues(s), ...furnitureIssues(s), ...roomsIssues(s)]) {
     if (seen.has(issue.message)) continue;
     seen.add(issue.message);
     out.push({ id: `issue:${issue.path}`, step: 'floors', text: issue.message, level: 'block' });
@@ -114,8 +115,13 @@ export function checklist(d: BuildDetail, s: BuildSettings | null,
     if (src.conversion?.verdict === 'loss') out.push({ id: `loss:${src.sha1}`, step: 'files', text: `${src.name}: ${LOSS_WARNING}`, level: 'warn' });
     if (src.conversion?.verdict === 'failed') out.push({ id: `failed:${src.sha1}`, step: 'files', text: `${src.name} could not be converted`, level: 'block' });
   }
+  // the rooms milestone (R-12.6): the same sentence as the line on the Floors, Build and Check steps, last, a warning
+  if (rulesOf(s) === 'earlier') out.push({ id: RULES_ITEM, step: 'floors', text: RULES_EARLIER_TEXT, level: 'warn' });
   return out;
 }
+
+/** The checklist item that says the draft is built the earlier way (rooms R-12.6; its line carries TID.checklistRules). */
+export const RULES_ITEM = 'rules';
 
 /** What to change after a failed run (RunErrorCode, U-3.4 / contracts section 3), in a plain sentence. A reading run
  *  (prepare) that stopped is read again from the Files step, not built (UR, V3-4). */

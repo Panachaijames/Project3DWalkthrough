@@ -12,9 +12,10 @@ import { CLOSE_TO_WALLS, roleHelp, roleLabel, ROLES } from '@/build/roles';
 import { defaultLabel } from '@/build/SaveStep';
 import {
   addFloor, addSetAside, boxArea, confirmUnits, defaultWallHeight, floorIssues, itemRef, moveFloor, namingIssues, parseNumber,
-  removeFloor, restoreSetAside, roleOf, setFurnitureWord, setOpeningFix, setOutlineEdge, setRoles, setUnits, updateFloor,
+  removeFloor, restoreSetAside, roleOf, RULES_EARLIER_TEXT, setFurnitureWord, setOpeningFix, setOutlineEdge, setRoles, setRules,
+  setUnits, updateFloor,
 } from '@/build/settingsEdit';
-import { checklist, errorAdvice, LOSS_WARNING, reachable, rereadText } from '@/build/steps';
+import { checklist, errorAdvice, LOSS_WARNING, reachable, rereadText, RULES_ITEM } from '@/build/steps';
 import { projectIdProblem, slugify } from '@/lib/slug';
 import { decodePlan, type DecodedPlan } from '@/plan';
 import type { BuildDetail, BuildSettings, DiffBody, DrawingRead, PlanGeometry } from '@/upload/contracts';
@@ -167,7 +168,10 @@ describe('steps and the pre-build checklist (U-14.3)', () => {
   });
 
   it('clear for the bank fixture', () => {
-    expect(checklist(detailWith({}), BANK)).toEqual([]);
+    // changed on purpose by the rooms milestone (R6): the fixture names none of the three rule keys, so it is built the
+    // earlier way and the checklist says so in its one warning line (R-12.6); with the new rules it is clear
+    expect(checklist(detailWith({}), BANK)).toEqual([{ id: RULES_ITEM, step: 'floors', text: RULES_EARLIER_TEXT, level: 'warn' }]);
+    expect(checklist(detailWith({}), setRules('new')(BANK))).toEqual([]);
   });
 
   it('units not confirmed, Layers not seen, a floor with no wall height, no source, an empty area: each blocks and names its step', () => {
@@ -189,7 +193,7 @@ describe('steps and the pre-build checklist (U-14.3)', () => {
   it('a conversion loss warns, never blocks; a source read again blocks with "Reading <file> again in <units>..."', () => {
     const sha = BANK.sources[0]!.sha1;
     const src = { sha1: sha, name: 'suite.dwg', bytes: 1, kind: 'dwg' as const, conversion: { verdict: 'loss' as const, notes: [], lostInModelSpace: 8254 }, units: null, urls: null };
-    const items = checklist(detailWith({ sources: [src] }), BANK);
+    const items = checklist(detailWith({ sources: [src] }), setRules('new')(BANK));     // the new rules: no rules line (R6)
     expect(items).toEqual([{ id: `loss:${sha}`, step: 'files', text: `suite.dwg: ${LOSS_WARNING}`, level: 'warn' }]);
     expect(LOSS_WARNING).toBe('parts of the drawing were lost in conversion; export a DXF from AutoCAD for a complete build');
     const s = setUnits(sha, 'in')(BANK);

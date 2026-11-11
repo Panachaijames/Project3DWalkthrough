@@ -14,7 +14,7 @@ import { FURNITURE_KINDS as KINDS_OF_COMPONENT, kindOfFamily as kindOfComponent 
 import {
   familyForm, furnitureIssues, FURNITURE_KINDS, kindOfFamily, setFurnitureLimits, setFurnitureWord,
 } from '@/build/settingsEdit';
-import { checklist } from '@/build/steps';
+import { checklist, RULES_ITEM } from '@/build/steps';
 import type { BuildDetail, BuildSettings } from '@/upload/contracts';
 import { FIXTURES_DIR } from '../mock-api/fixtures';
 
@@ -130,8 +130,10 @@ describe('the furniture size limits (U-10.4 minSize, minDepth)', () => {
       { path: 'furniture/minSize', message: 'the smallest piece is 0 - 10 m' },
       { path: 'furniture/minDepth', message: 'the smallest depth is 0 - 10 m' },
     ]);
-    expect(checklist(detail(BANK), BANK)).toEqual([]);
-    expect(checklist(detail(bad), bad).map(i => [i.step, i.level, i.text])).toEqual([
+    // rooms milestone (R6, on purpose): the fixture is built the earlier way, which the checklist's last line says
+    const notRules = (i: { id: string }) => i.id !== RULES_ITEM;
+    expect(checklist(detail(BANK), BANK).filter(notRules)).toEqual([]);
+    expect(checklist(detail(bad), bad).filter(notRules).map(i => [i.step, i.level, i.text])).toEqual([
       ['floors', 'block', 'the smallest piece is 0 - 10 m'],
       ['floors', 'block', 'the smallest depth is 0 - 10 m'],
     ]);

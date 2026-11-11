@@ -5,7 +5,12 @@
 // kind, head, sill; an outline suggestion -> wall / glass / refuse; grey furniture families -> a kind; floor heights and
 // the project's heights; Rebuild (the screen keeps the last result while it runs). Keyboard: Esc clears the selection,
 // Delete sets it aside. Locked while a source is read again. Keys, layers and flag texts are drawing text: text only.
+// The rooms milestone (docs/rooms/DESIGN.md R-6.2, R-6.4, R-12.6; R6): the line that says which way the draft is built;
+// the ticks Rooms, Floor plate, Furniture; the counts in the page; the tools Draw a line and Rooms and stairs with the
+// room and stair panels; the flag cards' buttons; "Fixes on this floor" with Remove; the fixes waiting for a Rebuild
+// drawn on the plan (plan/marks.ts) and marked; the set-aside tick "The floor runs past it"; the ceiling height.
 import { useQuery } from '@tanstack/react-query';
+import type { Vec2 } from '@walkthrough/viewer';
 import { EyeOff, Hammer, Maximize2, RotateCcw, Search, X, ZoomIn, ZoomOut } from 'lucide-react';
 import { useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -13,7 +18,8 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { runBuild } from '@/api/generated/sdk.gen';
-import { PlanCanvas, type DecodedPlan, type PickMode } from '@/plan';
+import { PlanCanvas, type DecodedPlan, type PickMode, type PlanShow } from '@/plan';
+import { hasMarks, withMarks } from '@/plan/marks';
 import type { Bbox, BuildDetail, BuildDiff, BuildOverlay, Flag, FlagKind, ItemRef, OpeningFix, SetAside } from '@/upload/contracts';
 import { rawQueryOptions } from '@/upload/raw';
 import { errorReason, formatNumber } from '@/lib/format';
@@ -22,14 +28,23 @@ import { isRunInProgress, STARTED_ELSEWHERE } from './BuildStep';
 import { useBuildContext, useLockText, usePlan } from './context';
 import { DiffPanel } from './DiffPanel';
 import { NativeSelect, NumberField } from './fields';
-import { FLAG_KIND_TEXT, FlagList } from './FlagList';
+import { FLAG_KIND_TEXT, FlagList, type FlagRoomsActions } from './FlagList';
 import { FurnitureWords } from './FurnitureWords';
 import { OpeningEditor } from './OpeningEditor';
+import { CheckCounts, FixesList, RoomPanel, ShowTicks, StairPanel, type RoomTarget } from './RoomsPanels';
+import { closeHereFix, fixMarks, flagFix, notDoorwayFix, outdoorsFix, pointIn, sameEnds, stairFixFor } from './roomsFixes';
+import { RulesLine } from './RulesLine';
 import { RunPanel } from './RunPanel';
 import {
-  addSetAside, asideOf, itemRef, restoreSetAside, roleOf, setDefaults, setFurnitureWord, setOpeningFix, setOutlineEdge,
-  updateFloor,
+  addClosing, addSetAside, asideOf, closingsOf, defaultCeilingHeight, itemRef, removeClosing, restoreSetAside, roleOf, rulesOf,
+  setDefaults, setFloorPast, setFurnitureWord, setOpeningFix, setOutlineEdge, setRoomFix, setRules, setStairFix, updateFloor,
 } from './settingsEdit';
+import { CHECK_TOOLS, TID, type CheckTool } from './testids';
+
+/** The tool select's words (CHECK_TOOLS' order). */
+export const CHECK_TOOL_TEXT: Record<CheckTool, string> = { pan: 'Pan', select: 'Select', 'draw-line': 'Draw a line', rooms: 'Rooms and stairs' };
+export const DRAW_LINE_HINT = 'Draw a line: click its two ends (each snaps to a drawn corner within 6 px); Esc drops the first end.';
+export const ROOMS_TOOL_HINT = 'Rooms and stairs: click a stair, one of the app\'s dashed closings, or a room; or a place with no room.';
 
 export const TYPE_NAMES = ['line', 'closed line', 'solid fill', 'pattern fill', 'text', 'block'];
 const FIND_LIMIT = 50;
@@ -104,7 +119,9 @@ export const ASIDE_ROW = 26;
 export const ASIDE_VIEW = 160;
 export const WINDOW_ASIDE = 100;
 
-function SetAsideList({ refs, editable, onRestore }: { refs: SetAside[]; editable: boolean; onRestore: (key: string) => void }) {
+function SetAsideList({ refs, editable, onRestore, onFloorPast }: {
+  refs: SetAside[]; editable: boolean; onRestore: (key: string) => void; onFloorPast?: (key: string, on: boolean) => void;
+}) {
   const [top, setTop] = useState(0);
   const windowed = refs.length > WINDOW_ASIDE;
   const first = windowed ? Math.max(0, Math.floor(top / ASIDE_ROW) - 5) : 0;
@@ -118,6 +135,12 @@ function SetAsideList({ refs, editable, onRestore }: { refs: SetAside[]; editabl
           <li key={r.key} className="flex items-center gap-2" style={{ height: ASIDE_ROW }} data-testid="set-aside-row" data-key={r.key}>
             <span className="font-mono">{r.key}</span>
             <span className="min-w-0 flex-1 truncate text-muted-foreground">{r.layer}</span>
+            {onFloorPast && (
+              <label className="flex shrink-0 items-center gap-1" title="The floor runs past this line: it no longer bounds a room">
+                <Checkbox checked={!!r.floorPast} disabled={!editable} onCheckedChange={v => onFloorPast(r.key, v === true)} data-testid={TID.setAsideFloorPast} />
+                The floor runs past it
+              </label>
+            )}
             <Button size="sm" variant="ghost" className="h-6" disabled={!editable} onClick={() => onRestore(r.key)} data-testid="restore-one">Restore</Button>
           </li>
         ))}
@@ -145,7 +168,12 @@ export function CheckStep() {
   const { plan, loading } = usePlan(src);
   const index = useMemo(() => (plan ? keyIndex(plan) : new Map<string, number>()), [plan]);
 
-  const [tool, setTool] = useState<'pan' | 'select'>('select');
+  const [tool, setTool] = useState<CheckTool>('select');
+  const [show, setShow] = useState<PlanShow>({ rooms: true, plate: true, furniture: true });
+  const [roomTarget, setRoomTarget] = useState<RoomTarget | null>(null);
+  const [stairId, setStairId] = useState<string | null>(null);
+  /** The stair whose bottom tread is being picked ("This is the bottom", then one pick). */
+  const [stairPick, setStairPick] = useState<string | null>(null);
   const [pick, setPick] = useState<PickMode>('item');
   const [selected, setSelected] = useState<ReadonlySet<string>>(new Set());
   const [focus, setFocus] = useState<Bbox | null>(null);
@@ -214,9 +242,47 @@ export function CheckStep() {
     if (key && keys.length) change(restoreSetAside(key, keys));
     setSelected(new Set());
   };
+  // ---- the rooms milestone: the fixes of R-6.2 written from the tools, the panels and the flag cards
+  const stale = !!result?.stale;
+  const marks = useMemo(() => (settings && key && ofloor ? fixMarks(settings, key, ofloor, stale) : null), [settings, key, ofloor, stale]);
+  const canvasOverlay = useMemo(() => (ofloor && marks && hasMarks(marks) ? withMarks(ofloor, marks) : ofloor), [ofloor, marks]);
+  const closePanels = () => { setRoomTarget(null); setStairId(null); setStairPick(null); };
+  const onLine = (a: Vec2, b: Vec2) => { if (key) change(addClosing({ floor: key, a, b, use: 'line' })); };
+  /** A click on one of the app's closings: it is taken out (one room), or put back when it was. */
+  const onClosing = (index: number) => {
+    const c = ofloor?.closings?.[index];
+    if (!c || !key || !settings || c.kind === 'staff') return;
+    const was = closingsOf(settings).find(f => f.floor === key && f.use === 'none' && sameEnds(f.a, f.b, c.a, c.b, 0.3));
+    change(was ? removeClosing(was) : addClosing({ floor: key, a: c.a, b: c.b, use: 'none' }));
+  };
+  const onSpace = (id: string) => {
+    const sp = ofloor?.spaces?.find(s => s.id === id);
+    if (!sp) return;
+    setStairId(null); setStairPick(null);
+    setRoomTarget({ id, at: pointIn(sp.o, sp.h) });
+  };
+  const onPoint = (pt: Vec2) => { setStairId(null); setStairPick(null); setRoomTarget({ id: '', at: [Math.round(pt[0] * 1000) / 1000, Math.round(pt[1] * 1000) / 1000] }); };
+  const onStair = (id: string) => { setRoomTarget(null); setStairPick(null); setStairId(id); };
+  const onBottom = (p: Vec2) => {
+    const st = ofloor?.stairs?.find(s => s.id === stairPick);
+    setStairPick(null);
+    if (!st || !key || !settings) return;
+    const fix = stairFixFor(settings, key, ofloor, st.id);
+    change(setStairFix({ floor: key, at: fix?.at ?? pointIn(st.outline), bottom: p, use: fix?.use ?? 'auto' }, fix?.at ?? null));
+  };
+  const flagActions: FlagRoomsActions = {
+    fixOf: f => flagFix(f, settings, ofloor, stale),
+    onCloseHere: f => { const fx = closeHereFix(f); if (fx) change(addClosing(fx)); },
+    onOutdoors: f => { const fx = outdoorsFix(f, ofloor); if (fx) change(setRoomFix(fx)); },
+    onNotDoorway: f => { const fx = notDoorwayFix(f); if (fx) change(addClosing(fx)); },
+    earlier: !!settings && rulesOf(settings) === 'earlier',
+    onUseNew: () => change(setRules('new')),
+  };
+  const canvasTool = stairPick ? 'pick-point' as const : tool;
+
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).closest('input, select, textarea')) return;
-    if (e.key === 'Escape') { setSelected(new Set()); setOpening(null); }
+    if (e.key === 'Escape') { setSelected(new Set()); setOpening(null); closePanels(); }
     else if ((e.key === 'Delete' || e.key === 'Backspace') && editable && selectedFree.length) { e.preventDefault(); setAside(); }
   };
   const rebuild = async () => {
@@ -255,21 +321,22 @@ export function CheckStep() {
     <div className="grid gap-4 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]" data-testid="check-step" onKeyDown={onKeyDown}>
       <section className="grid min-w-0 content-start gap-2">
         {lock && <Alert data-testid="check-locked"><AlertDescription>{lock}</AlertDescription></Alert>}
+        <RulesLine settings={settings} editable={editable} />
         <div className="flex flex-wrap items-center gap-2">
           <div className="flex flex-wrap gap-1" role="tablist" aria-label="Floor">
             {floorKeys.map(k => {
               const f = result.floors.find(x => x.key === k);
               return (
                 <Button key={k} size="sm" role="tab" aria-selected={k === key} variant={k === key ? 'default' : 'outline'} data-testid="check-floor" data-key={k}
-                  onClick={() => { setFloorKey(k); setSelected(new Set()); setOpening(null); setFocus(null); }}>
+                  onClick={() => { setFloorKey(k); setSelected(new Set()); setOpening(null); setFocus(null); closePanels(); }}>
                   {f?.name ?? k}
                 </Button>
               );
             })}
           </div>
-          <NativeSelect aria-label="Tool" value={tool} onChange={e => setTool(e.target.value === 'pan' ? 'pan' : 'select')} data-testid="check-tool">
-            <option value="select">Select</option>
-            <option value="pan">Pan</option>
+          <NativeSelect aria-label="Tool" value={tool} data-testid={TID.checkTool}
+            onChange={e => { const v = e.target.value as CheckTool; setTool(CHECK_TOOLS.includes(v) ? v : 'select'); setStairPick(null); }}>
+            {(['select', 'pan', 'draw-line', 'rooms'] as const).map(t => <option key={t} value={t}>{CHECK_TOOL_TEXT[t]}</option>)}
           </NativeSelect>
           <NativeSelect aria-label="Pick" value={pick} onChange={e => setPick(e.target.value as PickMode)} data-testid="pick-mode">
             {PICK_MODES.map(m => <option key={m.mode} value={m.mode}>{m.text}</option>)}
@@ -287,6 +354,15 @@ export function CheckStep() {
             <Button size="sm" variant="ghost" onClick={() => setSelected(new Set())} data-testid="clear-selection"><X aria-hidden="true" />Clear</Button>
           )}
         </div>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <ShowTicks show={show} onShow={setShow} />
+          <CheckCounts of={ofloor} />
+        </div>
+        {(tool === 'draw-line' || tool === 'rooms' || stairPick) && (
+          <p className="text-xs font-medium text-amber-800" data-testid={tool === 'draw-line' && !stairPick ? TID.drawLineHint : 'rooms-tool-hint'}>
+            {stairPick ? 'Click the stair\'s bottom tread on the plan.' : tool === 'draw-line' ? DRAW_LINE_HINT : ROOMS_TOOL_HINT}
+          </p>
+        )}
         <div className="flex flex-wrap items-center justify-between gap-2" data-testid="canvas-help">
           <p className="text-xs text-muted-foreground">{CANVAS_HINT}</p>
           <div className="flex items-center gap-1">
@@ -308,17 +384,24 @@ export function CheckStep() {
               plan={plan}
               roleOf={i => roleOf(settings, plan.layers[i] ?? '')}
               area={ofloor?.area ?? setting?.area ?? null}
-              overlay={ofloor}
+              overlay={canvasOverlay}
               flags={canvasFlags}
               selected={selected}
               setAside={setAsideKeys}
               diff={drawDiff ? diffBody : null}
-              tool={tool}
+              tool={canvasTool}
               pick={pick}
               focus={focus}
+              show={show}
               onSelect={select}
               onOpening={id => setOpening(id)}
               onFlag={id => { setActiveFlag(id); const f = flags.find(x => x.id === id); if (f?.ref.keys) select(f.ref.keys, 'replace'); }}
+              onPick={onBottom}
+              onLine={onLine}
+              onSpace={onSpace}
+              onStair={onStair}
+              onClosing={onClosing}
+              onPoint={onPoint}
             />
           ) : (
             <p className="p-4 text-sm text-muted-foreground">{loading ? 'Loading the plan...' : 'No plan to show.'}</p>
@@ -369,10 +452,25 @@ export function CheckStep() {
           <OpeningEditor floor={key} opening={editing} fix={fixOf(editing)} disabled={!editable}
             onApply={fix => { change(setOpeningFix(fix)); setOpening(null); }} onClose={() => setOpening(null)} />
         )}
+        {roomTarget && key && settings && (
+          <RoomPanel key={`${roomTarget.id}:${roomTarget.at.join(',')}`} floor={key} target={roomTarget} settings={settings} of={ofloor} stale={stale}
+            editable={editable} onClose={() => setRoomTarget(null)} />
+        )}
+        {stairId && key && settings && (
+          <StairPanel floor={key} stairId={stairId} settings={settings} of={ofloor} stale={stale} editable={editable} picking={stairPick === stairId}
+            onPickBottom={() => setStairPick(stairPick === stairId ? null : stairId)} onClose={() => { setStairId(null); setStairPick(null); }} />
+        )}
         <section className="grid gap-2" data-testid="set-aside-list">
           <h4 className="text-sm font-semibold">{`Set aside on this floor (${formatNumber(setAsideRefs.length)})`}</h4>
-          {setAsideRefs.length > 0 && <SetAsideList refs={setAsideRefs} editable={editable} onRestore={k => restore([k])} />}
+          {setAsideRefs.length > 0 && (
+            <SetAsideList refs={setAsideRefs} editable={editable} onRestore={k => restore([k])}
+              onFloorPast={settings && rulesOf(settings) === 'new' && key ? (k, on) => change(setFloorPast(key, k, on)) : undefined} />
+          )}
         </section>
+        {settings && key && (
+          <FixesList settings={settings} floor={key} of={ofloor} stale={stale} editable={editable}
+            onShow={at => setFocus([at[0] - 3, at[1] - 3, at[0] + 3, at[1] + 3])} />
+        )}
         {flags.length > 0 && (
           <div className="flex flex-wrap items-center gap-2 text-sm" data-testid="flag-filter">
             <span className="font-semibold">{`Flags (${formatNumber(listed.length)} of ${formatNumber(flags.length)})`}</span>
@@ -396,6 +494,7 @@ export function CheckStep() {
           onOpening={id => setOpening(id)}
           onOutline={(f, as) => { if (key && f.ref.edge) change(setOutlineEdge({ floor: key, a: f.ref.edge[0], b: f.ref.edge[1], as })); }}
           onFamily={setFamily}
+          rooms={flagActions}
         />
         {settings && (
           <FurnitureWords families={greyFamilies} settings={settings} disabled={!editable} focus={family}
@@ -410,6 +509,9 @@ export function CheckStep() {
               <NumberField label="Door head (project)" value={settings.defaults.doorHead} disabled={!editable} testId="check-door-head" onCommit={v => change(setDefaults({ doorHead: v ?? settings.defaults.doorHead }))} />
               <NumberField label="Railing height" value={settings.defaults.railingHeight} disabled={!editable} testId="check-railing" onCommit={v => change(setDefaults({ railingHeight: v ?? settings.defaults.railingHeight }))} />
               <NumberField label="Single-line height" value={settings.defaults.singleLineHeight} disabled={!editable} testId="check-single-line" onCommit={v => change(setDefaults({ singleLineHeight: v ?? settings.defaults.singleLineHeight }))} />
+              <NumberField label={`${setting.name}: ceiling height`} value={setting.ceilingHeight ?? null} allowEmpty disabled={!editable}
+                placeholder={String(defaultCeilingHeight(settings, floorIndex) ?? 'none')} testId={TID.heightsCeiling} dataKey={setting.key}
+                onCommit={v => change(updateFloor(floorIndex, { ceilingHeight: v }))} />
             </div>
           </section>
         )}

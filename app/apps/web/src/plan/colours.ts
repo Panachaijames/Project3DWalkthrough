@@ -77,6 +77,32 @@ export const DIFF_ADDED = '#2da44e';
 export const DIFF_REMOVED = '#cf222e';
 export const LABEL = { font: '11px system-ui, sans-serif', colour: '#24292f', halo: 'rgba(255,255,255,0.9)' };
 
+// ---- the rooms milestone (docs/rooms/DESIGN.md R-6.4, R-12.6; R6): rooms, the plate's holes, unfloored areas, stairs,
+// closings and the fixes waiting for a Rebuild. Hatches are screen-pixel spaced lines clipped to their area.
+/** Rooms: tinted, outlined. */
+export const ROOM_FILL = '#3d7be0';
+export const ROOM_ALPHA = 0.13;
+export const ROOM_EDGE: Stroke = { colour: '#2f6fd6', alpha: 0.85, width: 1.2 };
+/** A hole of the plate (stair well, shaft, void, "no floor"): hatched grey. */
+export const HOLE_HATCH: Stroke = { colour: '#57606a', alpha: 0.75, width: 1 };
+/** An unfloored area: hatched orange, its mouth dashed. */
+export const UNFLOORED_HATCH: Stroke = { colour: '#f08c00', alpha: 0.7, width: 1 };
+export const MOUTH: Stroke = { colour: '#f08c00', alpha: 1, width: 2.5 };
+/** An area answered "it is outdoors" (built, or waiting): hatched grey-blue. */
+export const OUTDOORS_HATCH: Stroke = { colour: '#8c959f', alpha: 0.8, width: 1 };
+export const HATCH_PX = 8;
+/** Stairs: the outline, the walking line and the arrow at the bottom; a stair kept as lines is dashed. */
+export const STAIR_OUTLINE: Stroke = { colour: '#1a7f37', alpha: 0.9, width: 1.2 };
+export const STAIR_WALK: Stroke = { colour: '#1a7f37', alpha: 1, width: 2.5 };
+/** The app's closings (bridges, doorway closings): short dashed lines; a staff closing line: solid. */
+export const CLOSING_APP: Stroke = { colour: '#9a6700', alpha: 1, width: 2.5 };
+export const CLOSING_STAFF: Stroke = { colour: '#fd7e14', alpha: 1, width: 2.5 };
+/** A fix waiting for a Rebuild: dashed orange; a removed closing struck through in red. */
+export const WAITING: Stroke = { colour: '#f76707', alpha: 1, width: 2.5 };
+export const STRUCK: Stroke = { colour: '#cf222e', alpha: 1, width: 2 };
+/** The first end of a line being drawn and the line to the pointer. */
+export const LINE_DRAFT: Stroke = { colour: '#f76707', alpha: 0.9, width: 1.5 };
+
 /** The stroke of a layer whose role is `role` (an unknown value is drawn as `other`). */
 export function roleStroke(role: LayerRole | string): Stroke {
   return ROLE_STROKE[role as LayerRole] ?? ROLE_STROKE.other;

@@ -8,6 +8,8 @@
 // from), the project defaults and the build options (outline-wall suggestions, how furniture pieces are read, the
 // furniture size limits, the offset with its Reset: U-10.4, U-10.5, U-9.6; UR, V2-1; the size limits after the final
 // check of 9 Nov). Locked while a source is read again (U-7.4). Names from the drawing are text.
+// The rooms milestone (docs/rooms/DESIGN.md R-5.1, R-12.6): the line that says which way the draft is built, each floor's
+// ceiling height (placeholder: the default), and the fold "Earlier build rules" with its two controls.
 import { ArrowDown, ArrowUp, Crosshair, Plus, SquareDashed, Trash2 } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -20,10 +22,13 @@ import { useBuildContext, useDrawing, useLockText, usePlan } from './context';
 import { FieldRow, NativeSelect, NumberField, TextField } from './fields';
 import { OfficeSelect } from './OfficeSelect';
 import { WALL_ROLES } from './roles';
+import { RulesLine } from './RulesLine';
 import {
-  addFloor, boxArea, defaultWallHeight, floorIssues, furnitureIssues, moveFloor, namingIssues, removeFloor, roleOf, round3,
-  setDefaults, setFurnitureLimits, setOffice, setOptions, setPieceLayer, setProject, updateFloor, DEFAULT_MATCH, DEFAULT_PAD,
+  addFloor, boxArea, ceilingsOn, defaultCeilingHeight, defaultWallHeight, floorIssues, furnitureIssues, moveFloor, namingIssues,
+  removeFloor, roleOf, roomsIssues, round3, rulesOf, setCeilings, setDefaults, setFurnitureLimits, setOffice, setOptions,
+  setPieceLayer, setProject, setRules, updateFloor, DEFAULT_MATCH, DEFAULT_PAD,
 } from './settingsEdit';
+import { TID } from './testids';
 
 export const PAD_HELP = 'how far outside the box a line may reach';
 export const MATCH_HELP = 'all: a line must lie wholly inside; any: one point inside is enough, for a plan that touches its neighbours';
@@ -167,6 +172,8 @@ function FloorCard({ index, floor, settings, editable, selected, onSelect, tool,
         <NumberField label="Door head" value={floor.doorHead} allowEmpty placeholder={String(settings.defaults.doorHead)} disabled={!editable} testId="floor-door-head" onCommit={v => set({ doorHead: v })} />
         <NumberField label="Window sill" value={floor.windowSill} allowEmpty placeholder={String(settings.defaults.windowSill)} disabled={!editable} testId="floor-window-sill" onCommit={v => set({ windowSill: v })} />
         <NumberField label="Window head" value={floor.windowHead} allowEmpty placeholder={String(settings.defaults.windowHead)} disabled={!editable} testId="floor-window-head" onCommit={v => set({ windowHead: v })} />
+        <NumberField label="Ceiling height" value={floor.ceilingHeight ?? null} allowEmpty placeholder={ceilingPlaceholder(settings, index)} disabled={!editable}
+          testId={TID.ceilingHeight} help={ceilingsOn(settings) ? undefined : CEILINGS_OFF_HELP} onCommit={v => set({ ceilingHeight: v })} />
       </div>
 
       <details className="text-sm" data-testid="level-tags">
@@ -236,6 +243,44 @@ function FloorCard({ index, floor, settings, editable, selected, onSelect, tool,
         </div>
       )}
     </article>
+  );
+}
+
+/** The ceiling height's placeholder: the default of R-5.1, or a word when there is none. */
+export function ceilingPlaceholder(settings: BuildSettings, index: number): string {
+  const d = defaultCeilingHeight(settings, index);
+  return d === null ? 'none' : String(d);
+}
+export const CEILINGS_OFF_HELP = 'not used now: ceilings are off';
+export const EARLIER_RULES_HELP = 'the earlier way: a floor plate only where walls close a room, no ceilings, stairs as lines';
+
+/** The fold "Earlier build rules" (R-12.6), closed by default: one choice for the three options, and ceilings on / off
+ *  with the new floor plates. */
+function EarlierRules({ settings, editable }: { settings: BuildSettings; editable: boolean }) {
+  const { change } = useBuildContext();
+  const rules = rulesOf(settings);
+  return (
+    <details className="rounded-lg border bg-background p-3 text-sm" data-testid={TID.earlierRules}>
+      <summary className="cursor-pointer text-xs font-medium text-muted-foreground">Earlier build rules</summary>
+      <div className="mt-3 grid gap-3 md:grid-cols-2">
+        <FieldRow label="Floor plates, ceilings and stairs" help={rules === 'earlier' ? EARLIER_RULES_HELP : undefined} className="min-w-0">
+          <NativeSelect className="w-full min-w-0" value={rules} disabled={!editable} data-testid={TID.rulesChoice}
+            onChange={e => change(setRules(e.target.value === 'earlier' ? 'earlier' : 'new'))}>
+            <option value="new">as built now</option>
+            <option value="earlier">the earlier way</option>
+          </NativeSelect>
+        </FieldRow>
+        {rules === 'new' && (
+          <FieldRow label="Ceilings" className="min-w-0">
+            <NativeSelect className="w-full min-w-0" value={settings.options.ceilings === 'auto' ? 'on' : 'off'} disabled={!editable}
+              data-testid={TID.ceilingsChoice} onChange={e => change(setCeilings(e.target.value === 'on'))}>
+              <option value="on">on</option>
+              <option value="off">off</option>
+            </NativeSelect>
+          </FieldRow>
+        )}
+      </div>
+    </details>
   );
 }
 
@@ -350,7 +395,7 @@ export function FloorsStep() {
   const drawing = useDrawing(sheetSrc);
 
   if (!settings) return <p className="text-sm text-muted-foreground" data-testid="floors-step">Reading the drawings...</p>;
-  const issues = floorIssues(settings);
+  const issues = [...floorIssues(settings), ...roomsIssues(settings)];
 
   const proposalsFor = (sha1: string | undefined): Proposal[] => {
     if (!sha1) return [];
@@ -407,6 +452,7 @@ export function FloorsStep() {
         {lock && (
           <Alert data-testid="floors-locked"><AlertDescription>{lock}</AlertDescription></Alert>
         )}
+        <RulesLine settings={settings} editable={editable} />
         {floors.map((f, i) => (
           <FloorCard
             key={i}
@@ -434,6 +480,7 @@ export function FloorsStep() {
             {issues.map(i => <li key={i.path + i.message}>{i.message}</li>)}
           </ul>
         )}
+        <EarlierRules settings={settings} editable={editable} />
         <ProjectDetails settings={settings} editable={editable} />
       </section>
 

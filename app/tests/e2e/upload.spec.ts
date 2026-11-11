@@ -12,6 +12,9 @@
 // digit; FurnGroup: after a small letter): both grey, each given a kind with its select, the rebuild gives each its kind
 // and no flag is left for them (real API only: the mock serves the bank's overlay). Projects made here use ids e2e-*
 // (U-15.3).
+// The rooms milestone (docs/rooms/ACCEPTANCE.md RA-12 point 5; R6 changed this on purpose): the A-7 test merges only the
+// fixture's layers, floors and furniture into the draft's settings, reads the draft's options (the new rules), chooses
+// "the earlier way" in the Floors step's fold, reads them again (the old rules), and keeps its byte-for-byte checks.
 //
 // U6 alone, against the mock API and the fake viewer (Git Bash, from app/):
 //   WT_WEB_PORT=5736 WT_API_PORT=8736 WT_TMP="$TEMP/wt-u6" WT_SERVE=web WT_SKIP_STORE_CHECK=1 VITE_FAKE_VIEWER=1 \
@@ -20,8 +23,9 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
+import { sel, TID } from '../../apps/web/src/build/testids';
 import { formatDate } from '../../apps/web/src/lib/format';
-import type { BuildOverlay, BuildSettings } from '../../apps/web/src/upload/contracts';
+import { NEW_RULES, OLD_RULES, type BuildOverlay, type BuildSettings } from '../../apps/web/src/upload/contracts';
 import { backend, download, facts, MOCK_API, useApi, viewerReady } from '../../apps/web/test/e2e/web-kit';
 import {
   BANK_DWGS, buildIdOf, getBuild, GREY_FAMILIES, itemInBlock, itemOn, makeGreyFamilyDxf, makeHostileDxf, planOf,
@@ -110,13 +114,18 @@ test('A-7: the staff path from a new project to a saved version (the bank\'s two
   expect([saved.settings!.layers['A-DETL'], saved.settings!.layers['A-FLOR'], saved.settings!.layers['E-COMM']]).toEqual(['ignore', 'ignore', 'other']);
   const fixture = JSON.parse(readFileSync(path.join(FIXTURES_DIR, 'upload', 'settings', 'bank.json'), 'utf8')) as BuildSettings;
   const byName = new Map(saved.sources.map(s => [s.name, s.sha1]));
+  // the rooms milestone (docs/rooms/ACCEPTANCE.md RA-12 point 5; R6): a new draft is built the new way; the fixture's
+  // layers, floors and furniture are merged into the draft's settings, never its options (the fixture has none of the
+  // three keys: put whole, it would make the draft the earlier way behind the screens' back)
+  expect(saved.settings!.options).toMatchObject(NEW_RULES);
   const mapped: BuildSettings = {
-    ...fixture,
-    office: saved.settings!.office,
-    sources: fixture.sources.map(s => ({ ...s, sha1: byName.get(s.name)! })),
+    ...saved.settings!,
+    layers: fixture.layers,
+    furniture: fixture.furniture,
     floors: fixture.floors.map(f => ({ ...f, source: byName.get(fixture.sources.find(s => s.sha1 === f.source)!.name)! })),
   };
   expect(mapped.office).toBe('e2e-revit');
+  expect(mapped.options).toMatchObject(NEW_RULES);
   await putBuildSettings(request, projectId, buildId, mapped);
   await page.reload();
   await expect(page.locator('[data-testid=layer-row][data-layer="A-DETL"] [data-testid=role-select]')).toHaveValue('other');
@@ -129,6 +138,16 @@ test('A-7: the staff path from a new project to a saved version (the bank\'s two
   await page.locator('[data-testid=floor-card][data-index="1"] [data-testid=floor-level]').press('Enter');
   await expect(page.getByTestId('floor-issues')).toHaveCount(0);
   await settingsSaved(page);
+  // the rooms milestone (RA-12 point 5): the options read before (new), "the earlier way" chosen in the fold "Earlier
+  // build rules", the options read again (old): this build keeps every byte-for-byte check against version 2
+  expect((await getBuild(request, projectId, buildId)).settings!.options).toMatchObject(NEW_RULES);
+  await expect(page.locator(sel(TID.rulesLine))).toHaveAttribute('data-rules', 'new');
+  await page.locator(`${sel(TID.earlierRules)} > summary`).click();
+  await page.locator(sel(TID.rulesChoice)).selectOption('earlier');
+  await settingsSaved(page);
+  expect((await getBuild(request, projectId, buildId)).settings!.options).toMatchObject(OLD_RULES);
+  await expect(page.locator(sel(TID.rulesLine))).toHaveAttribute('data-rules', 'earlier');
+  await expect(page.locator(sel(TID.ceilingsChoice))).toHaveCount(0);
 
   // Build: the checklist clear, progress seen, done
   await goStep(page, 'build');
