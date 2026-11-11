@@ -63,10 +63,21 @@ EXTRA_KINDS = {
     'deck': ('Decks', 'Deck', 'diffuse:(color 176 138 92)'),
     'post': ('Posts', 'Post', 'diffuse:(color 111 97 83)'),
 }
+# BuiltModel v2 (docs/rooms/DESIGN.md R-10, R-12.1): PLACEHOLDERS by the rooms scaffold R0, so that the tracer's whole
+# chain writes a script (services/builder/tests/test_r_tracer.py). Kept apart from EXTRA_KINDS, whose every kind the
+# upload milestone's tests expect in their model. R3 writes the real thing: the Ceilings layers hidden after Build, the
+# storey statement after each tread, landing and cut-wall part, the notes.
+V2_KINDS = {
+    'tread': ('Treads', 'Tread', 'diffuse:(color 185 199 180)'),
+    'landing': ('Landings', 'Landing', 'diffuse:(color 185 199 180)'),
+    'ceiling': ('Ceilings', 'Ceiling', 'diffuse:(color 236 236 232)'),
+}
+#: every kind outside the bank's eleven: written only when the model uses it
+OTHER_KINDS = {**EXTRA_KINDS, **V2_KINDS}
 PLURAL = {'wall': 'walls', 'column': 'columns', 'lintel': 'lintels', 'sill': 'sills', 'parapet': 'parapets', 'glass': 'glass',
           'mullion': 'mullions', 'railing': 'railings', 'single': 'single-line pieces', 'step': 'stair steps', 'slab': 'slabs',
           'pane': 'panes', 'balustrade': 'balustrades', 'low': 'low walls', 'builtin': 'built-ins', 'deck': 'decks',
-          'post': 'posts'}
+          'post': 'posts', 'tread': 'stair treads', 'landing': 'stair landings', 'ceiling': 'ceilings'}
 UNIT_WORDS = {'mm': 'mm', 'cm': 'cm', 'm': 'm', 'in': 'inches', 'ft': 'feet'}
 
 PLACEHOLDER = re.compile(r'__([A-Z0-9]+(?:_[A-Z0-9]+)*)__')
@@ -420,7 +431,7 @@ def _check_parts(M: dict, PX: str, FI: dict, ox: float, oy: float) -> tuple[list
     plinth_level = {f['key']: f['level'] for f in M['floors']}
     for part in M['parts']:
         kind, fl = part['kind'], part['floor']
-        if kind not in KINDS and kind not in EXTRA_KINDS:
+        if kind not in KINDS and kind not in OTHER_KINDS:
             problems.append(f'unknown kind {kind}')
             continue
         if fl not in FI:
@@ -462,7 +473,7 @@ def _check_parts(M: dict, PX: str, FI: dict, ox: float, oy: float) -> tuple[list
             z0 = -plinth_level[fl]
         calls.append(f'    {PX}_part #{kind} "{name}" {arr(loops)} {num(z0)} {num(part["z1"])} {follow} {FI[fl]} {pt(c)} '
                      f'{pt(mn)} {pt(mx)}')
-    used = [k for k in EXTRA_KINDS if any(k == kk for _, kk in count)]
+    used = [k for k in OTHER_KINDS if any(k == kk for _, kk in count)]
     return calls, problems, count, used
 
 
@@ -496,7 +507,7 @@ def _rooms(M: dict, PX: str, FI: dict, ox: float, oy: float) -> list[str]:
 
 def _follow_keep(M: dict) -> tuple[str, str]:
     """What "Update levels and heights" does to this model's parts (the hotel's sentence, every profile)."""
-    kinds_seen = list(dict.fromkeys(p['kind'] for p in M['parts'] if p['kind'] in KINDS or p['kind'] in EXTRA_KINDS))
+    kinds_seen = list(dict.fromkeys(p['kind'] for p in M['parts'] if p['kind'] in KINDS or p['kind'] in OTHER_KINDS))
     follows = {k: {bool(p.get('follow')) for p in M['parts'] if p['kind'] == k} for k in kinds_seen}
     follow_txt = words([PLURAL[k] + (' (those marked to)' if len(follows[k]) > 1 else '') for k in kinds_seen
                         if True in follows[k]]) or 'no part'
@@ -614,8 +625,8 @@ def maxscript(model_bytes: bytes, profile: dict, *, date: str | None = None, sou
         'BUILTBY': profile['builtBy'], 'DATE': profile.get('date') or date or '',
         'CONVERTED': _converted(sources, converter),
         'PICTURES': '\n'.join(_pictures(M, FLOORS)) if profile['pictures'] else '',
-        'EXTRACASES': '\n'.join(f'        #{k}: #("{EXTRA_KINDS[k][0]}", "{EXTRA_KINDS[k][1]}")' for k in extra),
-        'EXTRAMATS': '\n'.join(f'    append __PX___mats (standardMaterial name:"__PX__ {EXTRA_KINDS[k][1]}" {EXTRA_KINDS[k][2]})'
+        'EXTRACASES': '\n'.join(f'        #{k}: #("{OTHER_KINDS[k][0]}", "{OTHER_KINDS[k][1]}")' for k in extra),
+        'EXTRAMATS': '\n'.join(f'    append __PX___mats (standardMaterial name:"__PX__ {OTHER_KINDS[k][1]}" {OTHER_KINDS[k][2]})'
                                for k in extra),
     }
     if not values['DATE']:

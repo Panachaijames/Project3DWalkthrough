@@ -1,0 +1,7 @@
+{
+  "format": "rooms-key/1",
+  "drawing": "house",
+  "settings": "fixtures/upload/settings/house-rooms.json",
+  "note": "Empty at the scaffold. R1: one point per room of the house's east building (docs/rooms/WORK_BREAKDOWN.md).",
+  "floors": {}
+}

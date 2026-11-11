@@ -17,9 +17,24 @@ Fixtures:
     two workers on one lock.
 Every test runs with WALKTHROUGH_DATA_DIR and WALKTHROUGH_CACHE_DIR under WT_TMP (set here when the run did not set them)
 and pytest's tmp folders under WT_TMP\\pytest.
+
+The rooms milestone (docs/rooms/WORK_BREAKDOWN.md R0 item 10; added by its scaffold R0, frozen again):
+  * marker `acceptance`: the costliest runs (every door undone, the two-process builds). Tests marked so are DESELECTED
+    unless WT_ACCEPTANCE=1, so a plain run skips nothing.
+  * `ref_r0`: R0's reference folder (WT_REF_R0, default %TEMP%\\wt-r0\\ref): the new suite read by the app's reader.
+  * WT_INTEGRATION=1: a missing reference fails instead of skipping (`ref`, `ref_r0`).
+  * session fixtures, each built ONCE per run with the machine run lock held while it builds (so the tests that use
+    them need no `heavy` mark for the build itself; mark a test `heavy` when it builds again in the test):
+      `bank_rooms`, `house_rooms`, `suite_rooms`, `tower_rooms`, `suite_revit_rooms`: the new-rule build of a
+        reference drawing with fixtures/upload/settings/<name>-rooms.json -> { name, settings, sources, res, logs,
+        tmp, project } (rooms_kit.rooms_build). Shared by R1's and R2's tests and RI's golden: READ ONLY, copy before
+        you change anything;
+      `reference_building`: the reference building's two plans made at test time and read by the app's reader, with
+        the settings its fixtures were built with -> { plan, settings, sources, dir } (rooms_kit.reference_plan).
 """
 from __future__ import annotations
 
+import json
 import os
 import shutil
 import sys
@@ -29,6 +44,7 @@ from pathlib import Path
 import pytest
 
 import kit
+import rooms_kit
 from walkthrough_builder import oslock
 
 
@@ -38,6 +54,8 @@ def pytest_configure(config: pytest.Config) -> None:
     os.environ.setdefault('WALKTHROUGH_DATA_DIR', str(kit.RUN / 'data'))
     os.environ.setdefault('WALKTHROUGH_CACHE_DIR', str(kit.RUN / 'cache'))
     sys.dont_write_bytecode = True
+    config.addinivalue_line('markers', 'acceptance: the costliest runs of the rooms milestone (every door undone, the '
+                                       'two-process builds); deselected unless WT_ACCEPTANCE=1')
     for p in (os.environ['WALKTHROUGH_DATA_DIR'], os.environ['WALKTHROUGH_CACHE_DIR']):
         if Path(p).resolve() == (kit.APP / 'data').resolve():
             raise pytest.UsageError('WALKTHROUGH_DATA_DIR / CACHE_DIR must not be app/data in a test (WORK_BREAKDOWN 0)')
@@ -48,6 +66,11 @@ def pytest_collection_modifyitems(items: list[pytest.Item]) -> None:
         if item.get_closest_marker('heavy') and item.get_closest_marker('worker'):
             raise pytest.UsageError(f'{item.nodeid}: a test is `heavy` or `worker`, never both (the run lock belongs to '
                                     f'the process that holds it; ACCEPTANCE 2.1)')
+    if not kit.ACCEPTANCE:                                    # deselected, not skipped: a plain run skips nothing
+        drop = [item for item in items if item.get_closest_marker('acceptance')]
+        if drop:
+            drop[0].config.hook.pytest_deselected(items=drop)
+            items[:] = [item for item in items if item.get_closest_marker('acceptance') is None]
 
 
 @pytest.fixture(autouse=True)
@@ -90,11 +113,70 @@ def worker(request: pytest.FixtureRequest) -> WorkerKit:
 
 @pytest.fixture(scope='session')
 def ref() -> Path:
-    """WT_REF (default %TEMP%\\wt-u0\\ref): the scaffold's make:reference output. Read-only."""
+    """WT_REF (default %TEMP%\\wt-u0\\ref): the scaffold's make:reference output. Read-only. Missing: the test is
+    skipped, or fails under WT_INTEGRATION=1 (docs/rooms/DESIGN.md R-13)."""
     if not (kit.REF / 'manifest.json').exists():
-        pytest.skip(f'no reference folder at {kit.REF} (WT_REF): the scaffold makes it with '
-                    f'`npm run make:reference -- --out %TEMP%\\wt-u0\\ref`')
+        kit.missing_reference(f'no reference folder at {kit.REF} (WT_REF): the scaffold makes it with '
+                              f'`npm run make:reference -- --out %TEMP%\\wt-u0\\ref`')
     return kit.REF
+
+
+@pytest.fixture(scope='session')
+def ref_r0() -> Path:
+    """WT_REF_R0 (default %TEMP%\\wt-r0\\ref): the rooms scaffold's reference folder, the new suite read by the app's
+    reader (cache layout of U-4.2). Read-only. Missing: skipped, or failed under WT_INTEGRATION=1."""
+    if not (kit.REF_R0 / 'suite-revit' / 'manifest.json').exists():
+        kit.missing_reference(f'no new-suite reader cache at {kit.REF_R0}\\suite-revit (WT_REF_R0): make it with `node '
+                              f'tools/run-builder-py.mjs tools/rooms/make-suite-cache.py`')
+    return kit.REF_R0
+
+
+def _rooms_build(name: str, ref: Path, tmp_path_factory: pytest.TempPathFactory) -> dict:
+    tmp = tmp_path_factory.mktemp(f'rooms-{name}')
+    with oslock.hold():                                       # the machine run lock while the session's build runs
+        return rooms_kit.rooms_build(name, ref, tmp)
+
+
+@pytest.fixture(scope='session')
+def bank_rooms(ref: Path, tmp_path_factory: pytest.TempPathFactory) -> dict:
+    """The bank built once with bank-rooms.json (the new rules). Read only."""
+    return _rooms_build('bank', ref, tmp_path_factory)
+
+
+@pytest.fixture(scope='session')
+def house_rooms(ref: Path, tmp_path_factory: pytest.TempPathFactory) -> dict:
+    """The house built once with house-rooms.json. Read only."""
+    return _rooms_build('house', ref, tmp_path_factory)
+
+
+@pytest.fixture(scope='session')
+def suite_rooms(ref: Path, tmp_path_factory: pytest.TempPathFactory) -> dict:
+    """The old suite built once with suite-rooms.json (about 1 GB and a minute at its worst). Read only."""
+    return _rooms_build('suite', ref, tmp_path_factory)
+
+
+@pytest.fixture(scope='session')
+def tower_rooms(ref: Path, tmp_path_factory: pytest.TempPathFactory) -> dict:
+    """The tower built once with tower-rooms.json. Read only."""
+    return _rooms_build('tower', ref, tmp_path_factory)
+
+
+@pytest.fixture(scope='session')
+def suite_revit_rooms(ref: Path, ref_r0: Path, tmp_path_factory: pytest.TempPathFactory) -> dict:
+    """The new suite built once with suite-revit-rooms.json, from R0's reader cache. Read only."""
+    return _rooms_build('suite-revit', ref, tmp_path_factory)
+
+
+@pytest.fixture(scope='session')
+def reference_building(tmp_path_factory: pytest.TempPathFactory) -> dict:
+    """The reference building (ACCEPTANCE 2.5): its two plans made at test time and read by the app's reader, and the
+    BuildSettings its fixtures were built with -> { plan, settings, sources, dir }. Read only."""
+    out = tmp_path_factory.mktemp('rooms-reference')
+    plan = rooms_kit.reference_plan(out)
+    s = json.loads((kit.ROOMS_FIXTURES / 'settings.reference.json').read_text(encoding='utf-8'))
+    assert [x['sha1'] for x in s['sources']] == [x['sha1'] for x in plan['sources']], \
+        'the reference drawings are not the bytes fixtures/rooms/settings.reference.json names'
+    return {'plan': plan, 'settings': s, 'sources': plan['sources'], 'dir': out}
 
 
 @pytest.fixture

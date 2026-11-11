@@ -169,7 +169,7 @@ describe('createPanel: the ticks', () => {
     expect(ctx.visibility.toggles.glass).toBe(false);
     ctx.visibility.setToggle('picture', true);                     // e.g. viewer.setToggle or ?picture=1
     expect(tick('picture').checked).toBe(true);
-    ctx.bus.emit('toggles', { toggles: { plates: false, glass: true, rooms: true, single: true, picture: false } });
+    ctx.bus.emit('toggles', { toggles: { plates: false, glass: true, rooms: true, single: true, picture: false, ceilings: true } });
     expect([tick('plates').checked, tick('glass').checked, tick('picture').checked]).toEqual([false, true, false]);
   });
 

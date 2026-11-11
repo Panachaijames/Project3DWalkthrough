@@ -189,7 +189,8 @@ def assemble(floors, X, parts_geo, built, log) -> dict:
         for r in B['rooms']:
             rooms_out.append({'floor': k, 'name': r['name'], 'label': r['name'] + (f" · {r['area']}" if r['area'] else ''),
                               'area': float(re.match(r'[\d.]+', r['area']).group()) if r['area'] and re.match(r'[\d.]+', r['area']) else None,
-                              'x': R3(r['x'] - cx), 'y': R3(r['y'] - cy)})
+                              'x': R3(r['x'] - cx), 'y': R3(r['y'] - cy),
+                              **({'space': r['space']} if r.get('space') else {})})   # v2: the room the name belongs to
     flat = lambda segs, nd=3: [round(v - (cx if i % 2 == 0 else cy), nd) for s in segs for i, v in enumerate(s)]  # noqa: E731
 
     # Rule 12: the furniture boxes, worked out in drawing coordinates, merged floor by floor, then into the model frame.
@@ -233,6 +234,24 @@ def assemble(floors, X, parts_geo, built, log) -> dict:
         'rooms': rooms_out, 'openings': openings, 'probes': probes, 'colliderSkins': skins,
         'furnitureKinds': furn_kinds, 'furniture': furniture,
     }
+    if X.options.get('slabs') == 'network':
+        # BuiltModel v2 (docs/rooms/DESIGN.md R-12.1): `stairways` (always, [] when no stair climbs: the v2 mark) and
+        # `spaces`, in the model frame. The tracer's wiring, by the rooms scaffold R0; R1 owns it.
+        pt = lambda p: [R3(p[0] - cx), R3(p[1] - cy)]  # noqa: E731
+        model['stairways'] = [{**sw, 'bottom': pt(sw['bottom']), 'top': pt(sw['top']), 'walk': [pt(p) for p in sw['walk']]}
+                              for B in built.values() for sw in B.get('stairways') or []]
+        spaces = []
+        for k, B in built.items():
+            for s in B.get('spaces') or []:
+                rings = clean([s['poly']], 0.5, cx, cy)
+                if not rings: continue
+                r = max(rings, key=lambda q: Polygon(q['o'], q['h']).area)
+                spaces.append({'id': s['id'], 'floor': k, **r, 'area': s['area'], 'name': s['name'], 'names': list(s['names']),
+                               'source': s['source'], 'ceiling': s['ceiling']})
+        model['spaces'] = spaces
+        kept = {s['id'] for s in spaces}
+        for r in rooms_out:
+            if r.get('space') not in kept: r.pop('space', None)
 
     summary = {'floors': {}, 'doorHeads': [], 'offset': [cx, cy]}
     for F in floors:

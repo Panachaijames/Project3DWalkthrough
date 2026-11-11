@@ -1,0 +1,3 @@
+{"name": "suite-revit-prep", "project": "suite-revit",
+ "create": {"name": "Presidential suite (Revit export, 9 Nov)", "shortName": "Suite Revit", "id": "suite-revit", "office": "dwp-revit"},
+ "files": ["presidential suite_layout.dwg"], "from": null, "stopAfterPrepare": true}

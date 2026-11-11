@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://walkthrough.local/schemas/built-model-1.json",
-  "title": "BuiltModel v1",
-  "description": "The one model format the viewer reads (app/docs/DESIGN.md section 5). It is the format of bank_test/src/bank_model.json and hotel_test/src/hotel_model.json, which are valid v1 byte for byte; the suite and the house are converted to it by the seed. Plan coordinates are metres in the model frame (drawing coordinates minus `offset`); three.js maps plan (x, y) to (x, z = -y). Heights z0 / z1 are metres above the level of the part's floor. The format carries no version field: the version lives in the version sidecar (version.json: modelFormat 'built-model/1'). Cross-references (floor keys, furniture kinds, supports, approach ids) are checked by the parsers (parseBuiltModel in the viewer, hand-written TypeScript with no validator library at run time; walkthrough_api.builtmodel in the API), not by this schema: DESIGN.md 5.6. The schema compiles with ajv 8 in strict mode (Ajv2020) and with Python jsonschema (Draft 2020-12).",
+  "$id": "https://walkthrough.local/schemas/built-model-2.json",
+  "title": "BuiltModel v2",
+  "description": "The one model format the viewer reads (app/docs/DESIGN.md section 5). It is the format of bank_test/src/bank_model.json and hotel_test/src/hotel_model.json, which are valid v1 byte for byte; the suite and the house are converted to it by the seed. Plan coordinates are metres in the model frame (drawing coordinates minus `offset`); three.js maps plan (x, y) to (x, z = -y). Heights z0 / z1 are metres above the level of the part's floor. The format carries no version field: the version lives in the version sidecar (version.json: modelFormat 'built-model/1' or 'built-model/2'). v2 (the rooms milestone, app/docs/rooms/DESIGN.md R-12.1) only adds optional things, and no v1 field changes meaning, so every v1 model is a valid v2 model: the part kinds tread, landing and ceiling, the part fit 'storey' and the part's `stair`, the top-level `stairways` and `spaces`, and `rooms[].space`. A model is v2 when it has the `stairways` key (an empty list when no stair climbs): that key switches the viewer's foot-based walker on. Cross-references (floor keys, furniture kinds, supports, approach ids) are checked by the parsers (parseBuiltModel in the viewer, hand-written TypeScript with no validator library at run time; walkthrough_api.builtmodel in the API), not by this schema: DESIGN.md 5.6. The schema compiles with ajv 8 in strict mode (Ajv2020) and with Python jsonschema (Draft 2020-12).",
   "type": "object",
   "additionalProperties": false,
   "required": ["project", "shortName", "source", "units", "offset", "photoName", "maxPrefix", "floors", "railingHeight", "singleLineHeight", "doorHeadDefault", "parts", "stairs", "voids", "closures", "stairOutlines", "rooms", "openings", "probes", "colliderSkins"],
@@ -36,7 +36,9 @@
     "probes": { "type": "array", "items": { "$ref": "#/$defs/probe" } },
     "colliderSkins": { "type": "object", "$ref": "#/$defs/perFloor", "additionalProperties": { "type": "array", "items": { "$ref": "#/$defs/skin" } } },
     "furnitureKinds": { "type": "array", "items": { "$ref": "#/$defs/furnitureKind" }, "description": "Only the kinds that occur, in the kinds table's order (furniture/README.md)." },
-    "furniture": { "type": "array", "items": { "$ref": "#/$defs/furniturePiece" } }
+    "furniture": { "type": "array", "items": { "$ref": "#/$defs/furniturePiece" } },
+    "stairways": { "type": "array", "items": { "$ref": "#/$defs/stairway" }, "description": "v2 (optional): the stairs that can be climbed in Walk. Present in every model built with the new rule (empty when no stair climbs): its presence marks a v2 model. Ids unique." },
+    "spaces": { "type": "array", "items": { "$ref": "#/$defs/space" }, "description": "v2 (optional): the rooms with their outlines, named or not. `rooms` stays what it is in v1: the drawn names, one label each. Ids unique." }
   },
   "$defs": {
     "floorKey": { "type": "string", "pattern": "^[A-Za-z0-9_]{1,32}$", "description": "Letters, digits and underscore only: replay captions name floors as {<key>level} / {<key>height}." },
@@ -64,8 +66,8 @@
       }
     },
     "partKind": {
-      "enum": ["wall", "column", "lintel", "sill", "parapet", "glass", "pane", "mullion", "railing", "balustrade", "single", "step", "low", "builtin", "deck", "post", "slab"],
-      "description": "bank/hotel kinds: wall column lintel sill parapet glass mullion railing single step slab; v1 extensions for the converted models: pane (house window panes), balustrade low builtin deck post (presidential suite). How each kind is drawn: DESIGN.md 5.4."
+      "enum": ["wall", "column", "lintel", "sill", "parapet", "glass", "pane", "mullion", "railing", "balustrade", "single", "step", "low", "builtin", "deck", "post", "slab", "tread", "landing", "ceiling"],
+      "description": "bank/hotel kinds: wall column lintel sill parapet glass mullion railing single step slab; v1 extensions for the converted models: pane (house window panes), balustrade low builtin deck post (presidential suite); v2: tread and landing (a climbable stair's step and landing solids: walked on, never colliders; each names its stairway in `stair`) and ceiling (a ceiling plate, shown in Walk and Ghost only). How each kind is drawn: DESIGN.md 5.4, rooms/DESIGN.md R-9."
     },
     "part": {
       "type": "object",
@@ -80,7 +82,8 @@
         "o": { "$ref": "#/$defs/ring" },
         "h": { "$ref": "#/$defs/rings" },
         "label": { "type": "string", "description": "What the builder called it (an opening id, a Revit type name, 'mullion', ...)." },
-        "fit": { "enum": ["top", "clip"], "description": "v1 extension (optional): how the part answers a wall-height change instead of scaling. 'top': z0 stays and z1 becomes the new wall top (the part vanishes when the wall is no higher than z0): the house's lintels and the panes that reach the wall top. 'clip': z0 and z1 stay, cut off at the new wall top: the house's sills and other panes." },
+        "fit": { "enum": ["top", "clip", "storey"], "description": "v1 extension (optional): how the part answers a wall-height change instead of scaling. 'top': z0 stays and z1 becomes the new wall top (the part vanishes when the wall is no higher than z0): the house's lintels and the panes that reach the wall top. 'clip': z0 and z1 stay, cut off at the new wall top: the house's sills and other panes. v2 'storey': the part scales with its stairway's storey (the level difference of the stairway's `from` and `to` floors) when Build settings change a level: treads, landings and the wall pieces cut under a stair, which name their stairway in `stair`." },
+        "stair": { "type": "string", "minLength": 1, "description": "v2 (optional): the id of the stairway the part belongs to (treads, landings, wall pieces cut under a stair). The part lies on that stairway's `from` floor. Every tread and landing has one." },
         "plinth": { "type": "boolean", "description": "v1 extension (optional, slabs only): the slab stands on the ground (z0 = -level): when Build settings change the floor's level it stretches so its foot stays at y = 0 (the house's ground plate)." }
       }
     },
@@ -127,8 +130,46 @@
         "label": { "type": "string", "description": "Shown over the model (as text, never as HTML)." },
         "area": { "type": ["number", "null"], "description": "m2; bigger rooms keep their label's spot when labels would overlap." },
         "x": { "type": "number" }, "y": { "type": "number" },
-        "callout": { "type": "boolean" }
+        "callout": { "type": "boolean" },
+        "space": { "type": "string", "minLength": 1, "description": "v2 (optional): the id of the space (room) this drawn name belongs to, on the same floor; absent when it belongs to none." }
       }
+    },
+    "stairway": {
+      "type": "object",
+      "required": ["id", "from", "to", "kind", "risers", "riser", "going", "width", "bottom", "top", "walk", "direction", "treads", "landings"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "description": "Unique in the model ('S1'); parts name it in `stair`." },
+        "from": { "$ref": "#/$defs/floorKey", "description": "The lower floor: the stair's treads and landings are parts of this floor." },
+        "to": { "$ref": "#/$defs/floorKey", "description": "A higher floor of the same stack, usually the next." },
+        "kind": { "type": "string", "description": "'straight', 'L', 'U' or another word for its shape (display and tests)." },
+        "risers": { "type": "integer", "minimum": 2 },
+        "riser": { "type": "number", "exclusiveMinimum": 0, "description": "Riser height (m): the level difference of `to` and `from` divided by `risers`." },
+        "going": { "type": "number", "exclusiveMinimum": 0, "description": "Tread depth (m)." },
+        "width": { "type": "number", "exclusiveMinimum": 0, "description": "The median riser length of the narrowest flight (m)." },
+        "bottom": { "$ref": "#/$defs/vec2", "description": "The first point of `walk`, on the lower floor." },
+        "top": { "$ref": "#/$defs/vec2", "description": "The last point of `walk`, on the upper floor." },
+        "walk": { "type": "array", "items": { "$ref": "#/$defs/vec2" }, "minItems": 2, "description": "The walking line, bottom to top: from 1.0 m before the first riser, through the middle of each flight and landing, to 1.0 m past the last riser (model frame)." },
+        "direction": { "type": "string", "description": "How the bottom end was found: 'word', 'arrow', 'cut', 'floors', 'staff' ..." },
+        "treads": { "type": "integer", "minimum": 1 },
+        "landings": { "type": "integer", "minimum": 0 }
+      },
+      "description": "v2: a stair that can be climbed in Walk (rooms/DESIGN.md R-8.5). Read by the viewer's climbing switch, the stair probe and the replay's facts. Builders may add evidence fields: extra properties are allowed."
+    },
+    "space": {
+      "type": "object",
+      "required": ["id", "floor", "o", "h", "area", "name", "names", "source", "ceiling"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "description": "Unique in the model; rooms[].space names it." },
+        "floor": { "$ref": "#/$defs/floorKey" },
+        "o": { "$ref": "#/$defs/ring" },
+        "h": { "$ref": "#/$defs/rings" },
+        "area": { "type": "number", "minimum": 0, "description": "m2, to 0.1." },
+        "name": { "type": "string", "description": "The room's own name; '' when it has none. Drawing or staff text: shown as text only." },
+        "names": { "type": "array", "items": { "type": "string" }, "description": "Every drawn name in the room." },
+        "source": { "enum": ["network", "outline", "staff"], "description": "What closed it: the wall network, a drawn room outline, or a staff fix." },
+        "ceiling": { "type": "boolean", "description": "false when staff marked the room 'no ceiling'." }
+      },
+      "description": "v2: one room (rooms/DESIGN.md R-3.4): a face of the wall network of at least 1 m2 whose edge is at least half structure. Read by nothing in the viewer in this milestone."
     },
     "opening": {
       "type": "object",

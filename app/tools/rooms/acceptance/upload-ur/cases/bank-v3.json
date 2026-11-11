@@ -1,0 +1,4 @@
+{"name": "bank-v3", "project": "bank-sampeng", "create": null,
+ "files": ["I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg", "I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg"],
+ "from": null, "settings": {"fixture": "bank"},
+ "save": {"label": "bank v3 re-upload (A-1 b)", "carryHeights": true, "rememberMapping": false}}

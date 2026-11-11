@@ -180,15 +180,23 @@ def test_an_id_with_a_dangling_or_double_hyphen_is_refused(api: TestClient, want
 
 # =============================================================================================================== V3-10
 def test_the_additive_check_compares_with_the_foundation() -> None:
-    """`node tools/check-openapi-additive.mjs` with no --base compares the API with the foundation's baseline commit, not
-    with HEAD (which holds the milestone itself since 12921b9, so it compared the API with itself)."""
+    """`node tools/check-openapi-additive.mjs` never compares the API with HEAD (which held the upload milestone itself
+    since 12921b9, so it compared the API with itself). Since the rooms milestone (docs/rooms/DESIGN.md R-12.5; its
+    scaffold R0) the default base is 66b4c06, the API before that milestone, and the foundation's baseline commit is
+    `--base 9eb2d58`: both must pass."""
     node = shutil.which('node')
     if node is None:
         pytest.skip('node is not on PATH')
     r = subprocess.run([node, 'tools/check-openapi-additive.mjs'], cwd=APP, capture_output=True, text=True,
                        encoding='utf-8', timeout=300)
     assert r.returncode == 0, (r.stdout + r.stderr)[-2000:]
-    assert 'ok (additive against 9eb2d5819784472821ad6a8b0c11eba642a27d0b)' in r.stdout
+    assert 'ok (additive against 66b4c063edaf2fa77d81b93c47ec93e4467ba9cd)' in r.stdout
+    # the 37 operations and 69 schemas of before the rooms milestone, not the document compared with itself (72 now)
+    assert 'openapi: 37 old operations and 69 old schemas unchanged' in r.stdout
+    r = subprocess.run([node, 'tools/check-openapi-additive.mjs', '--base', '9eb2d58'], cwd=APP, capture_output=True,
+                       text=True, encoding='utf-8', timeout=300)
+    assert r.returncode == 0, (r.stdout + r.stderr)[-2000:]
+    assert 'ok (additive against 9eb2d58)' in r.stdout
     # the foundation's 13 operations, not the milestone's 37 compared with themselves
     assert 'openapi: 13 old operations and 18 old schemas unchanged' in r.stdout
 

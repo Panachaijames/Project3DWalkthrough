@@ -201,12 +201,31 @@ def test_new_settings_from_the_environment(tmp_path: Path) -> None:
 
 
 # ------------------------------------------------------------------------------------------------- models and records
-@pytest.mark.parametrize('name', ['bank', 'house', 'suite', 'tower', 'small'])
+def with_rooms_defaults(raw: dict) -> dict:
+    """A settings document as the API gives it back since the rooms milestone (docs/rooms/DESIGN.md R-1.2, R-12.4;
+    its scaffold R0): a key of that milestone that is missing is filled with the old rule, None, False or an empty list."""
+    from walkthrough_api.models_upload import OLD_RULES
+    s = copy.deepcopy(raw)
+    s['options'] = {**OLD_RULES, **s['options']}
+    s['floors'] = [{'ceilingHeight': None, **f} for f in s['floors']]
+    s['fixes'] = {'closings': [], 'rooms': [], 'stairs': [], **s['fixes'],
+                  'setAside': [{'floorPast': False, **x} for x in s['fixes']['setAside']]}
+    return s
+
+
+@pytest.mark.parametrize('name', ['bank', 'house', 'suite', 'tower', 'small',
+                                  # the saved versions' recipes (no key of the rooms milestone) and the new-rule fixtures
+                                  'recipes/house', 'recipes/suite', 'recipes/tower', 'recipes/suite-revit',
+                                  'bank-rooms', 'house-rooms', 'suite-rooms', 'tower-rooms', 'suite-revit-rooms'])
 def test_settings_fixtures_validate(name: str) -> None:
     raw = (FX / 'settings' / f'{name}.json').read_bytes()
     assert check_file.issues('settings', raw) == []
     s = BuildSettings.model_validate_json(raw)
-    assert json.loads(s.model_dump_json()) == json.loads(raw)                # nothing lost or renamed on a round trip
+    # nothing lost or renamed on a round trip; the rooms milestone's missing keys come back with their defaults
+    assert json.loads(s.model_dump_json()) == with_rooms_defaults(json.loads(raw))
+    old = name.split('/')[-1] in ('bank', 'house', 'suite', 'tower', 'small', 'suite-revit')
+    assert (s.options.slabs, s.options.ceilings, s.options.stairs) == (
+        ('closed-rooms', 'off', 'lines') if old else ('network', 'auto', 'climb'))
 
 
 def test_settings_refuse_what_the_contract_does_not_name() -> None:

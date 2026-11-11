@@ -1,0 +1,341 @@
+{
+  "format": "probes-key/1",
+  "note": "The walk probes of 9 Nov 2026 that found no floor at their start (ACCEPTANCE RA-6). `at` is the opening's or the glass probe's point on the sheet (m), `n` its normal, `sides` the sides that had no floor: the plate must hold the point at + side * d * n, d = 0.4 ... 0.9 m. `id9Nov` is the running id of that day and may have moved since. By tools/rooms/make-keys.py.",
+  "drawings": {
+    "house": {
+      "project": "house-upload",
+      "version": 1,
+      "stamp": "1c07bfeef580",
+      "grade": "must",
+      "report": "docs/rooms/reference/upload-walk-9nov/house-upload-v1.json",
+      "probes": [
+        {
+          "id9Nov": "ground-004",
+          "kind": "door",
+          "floor": "ground",
+          "at": [
+            24.023,
+            14.434
+          ],
+          "n": [
+            0.0,
+            1.0
+          ],
+          "sides": [
+            -1
+          ],
+          "width": 5.25
+        },
+        {
+          "id9Nov": "ground-006",
+          "kind": "door",
+          "floor": "ground",
+          "at": [
+            29.523,
+            14.434
+          ],
+          "n": [
+            0.0,
+            1.0
+          ],
+          "sides": [
+            -1
+          ],
+          "width": 5.25
+        },
+        {
+          "id9Nov": "ground-018",
+          "kind": "door",
+          "floor": "ground",
+          "at": [
+            32.273,
+            12.857
+          ],
+          "n": [
+            1.0,
+            0.0
+          ],
+          "sides": [
+            -1
+          ],
+          "width": 2.904
+        },
+        {
+          "id9Nov": "ground-034",
+          "kind": "door",
+          "floor": "ground",
+          "at": [
+            53.123,
+            7.303
+          ],
+          "n": [
+            0.998,
+            -0.058
+          ],
+          "sides": [
+            -1,
+            1
+          ],
+          "width": 0.902
+        },
+        {
+          "id9Nov": "upper glass 44",
+          "kind": "glass",
+          "floor": "upper",
+          "at": [
+            107.085,
+            23.746
+          ],
+          "n": [
+            -1.0,
+            0.0
+          ],
+          "sides": [
+            1
+          ],
+          "what": "curtain-wall glass"
+        }
+      ]
+    },
+    "suite": {
+      "project": "suite-upload",
+      "version": 1,
+      "stamp": "205e9c2c46e8",
+      "grade": "must",
+      "report": "docs/rooms/reference/upload-walk-9nov/suite-upload-v1.json",
+      "probes": [
+        {
+          "id9Nov": "suite-025",
+          "kind": "door",
+          "floor": "suite",
+          "at": [
+            187.683,
+            -3486.905
+          ],
+          "n": [
+            -0.866,
+            0.5
+          ],
+          "sides": [
+            -1,
+            1
+          ],
+          "width": 1.1
+        }
+      ]
+    },
+    "tower": {
+      "project": "tower-upload",
+      "version": 1,
+      "stamp": "91414f408cb2",
+      "grade": "must",
+      "report": "docs/rooms/reference/upload-walk-9nov/tower-upload-v1.json",
+      "probes": [
+        {
+          "id9Nov": "L29-001",
+          "kind": "door",
+          "floor": "L29",
+          "at": [
+            12.617,
+            -53.83
+          ],
+          "n": [
+            -1.0,
+            0.0
+          ],
+          "sides": [
+            -1,
+            1
+          ],
+          "width": 1.88
+        },
+        {
+          "id9Nov": "L29-016",
+          "kind": "door",
+          "floor": "L29",
+          "at": [
+            22.109,
+            -45.165
+          ],
+          "n": [
+            -1.0,
+            0.0
+          ],
+          "sides": [
+            -1,
+            1
+          ],
+          "width": 1.0
+        },
+        {
+          "id9Nov": "L29-025",
+          "kind": "door",
+          "floor": "L29",
+          "at": [
+            23.586,
+            -50.195
+          ],
+          "n": [
+            0.0,
+            1.0
+          ],
+          "sides": [
+            -1,
+            1
+          ],
+          "width": 1.955
+        },
+        {
+          "id9Nov": "L29-028",
+          "kind": "door",
+          "floor": "L29",
+          "at": [
+            16.916,
+            -45.915
+          ],
+          "n": [
+            0.0,
+            1.0
+          ],
+          "sides": [
+            -1,
+            1
+          ],
+          "width": 1.0
+        },
+        {
+          "id9Nov": "L30-033",
+          "kind": "door",
+          "floor": "L30",
+          "at": [
+            22.086,
+            -45.95
+          ],
+          "n": [
+            0.0,
+            1.0
+          ],
+          "sides": [
+            -1,
+            1
+          ],
+          "width": 1.955
+        },
+        {
+          "id9Nov": "L30-032",
+          "kind": "glass",
+          "floor": "L30",
+          "at": [
+            18.599,
+            -49.715
+          ],
+          "n": [
+            -1.0,
+            0.0
+          ],
+          "sides": [
+            1
+          ],
+          "what": "window pane"
+        },
+        {
+          "id9Nov": "L30 glass 24",
+          "kind": "glass",
+          "floor": "L30",
+          "at": [
+            18.715,
+            -46.72
+          ],
+          "n": [
+            -1.0,
+            0.0
+          ],
+          "sides": [
+            1
+          ],
+          "what": "curtain-wall glass"
+        },
+        {
+          "id9Nov": "L30 glass 26",
+          "kind": "glass",
+          "floor": "L30",
+          "at": [
+            -0.876,
+            -33.499
+          ],
+          "n": [
+            0.996,
+            -0.087
+          ],
+          "sides": [
+            1
+          ],
+          "what": "curtain-wall glass"
+        }
+      ]
+    },
+    "suite-revit": {
+      "project": "suite-revit",
+      "version": 1,
+      "stamp": "1d90d91ef949",
+      "grade": "should",
+      "report": "docs/rooms/reference/upload-walk-9nov/suite-revit-v1.json",
+      "probes": [
+        {
+          "id9Nov": "L1-004",
+          "kind": "door",
+          "floor": "L1",
+          "at": [
+            24.437,
+            0.934
+          ],
+          "n": [
+            0.0,
+            1.0
+          ],
+          "sides": [
+            -1,
+            1
+          ],
+          "width": 0.9
+        },
+        {
+          "id9Nov": "L1-008",
+          "kind": "door",
+          "floor": "L1",
+          "at": [
+            20.564,
+            4.809
+          ],
+          "n": [
+            1.0,
+            -0.009
+          ],
+          "sides": [
+            -1,
+            1
+          ],
+          "width": 0.7
+        },
+        {
+          "id9Nov": "L1-010",
+          "kind": "door",
+          "floor": "L1",
+          "at": [
+            11.511,
+            4.197
+          ],
+          "n": [
+            -1.0,
+            0.009
+          ],
+          "sides": [
+            -1,
+            1
+          ],
+          "width": 0.9
+        }
+      ]
+    }
+  }
+}

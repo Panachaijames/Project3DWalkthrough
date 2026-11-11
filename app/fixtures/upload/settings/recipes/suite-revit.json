@@ -1,0 +1,110 @@
+{
+  "format": "build-settings/1",
+  "office": "dwp-revit",
+  "project": {
+    "photoName": "Suite-Revit",
+    "maxPrefix": "PSRE",
+    "maxFileName": "Presidential_suite_Revit_export_9_Nov.ms",
+    "name": "Presidential suite (Revit export, 9 Nov)",
+    "shortName": "Suite Revit",
+    "projectNo": null,
+    "exportedFrom": "Revit"
+  },
+  "sources": [
+    {
+      "sha1": "9e84e27fef67773b73ec8ef42bc25f65a5f1c52c",
+      "name": "presidential suite_layout.dwg",
+      "kind": "dwg",
+      "units": "mm",
+      "unitsConfirmed": true
+    }
+  ],
+  "layers": {
+    "0": "other",
+    "A-ANNO-DIMS": "ignore",
+    "A-ANNO-IDEN": "room-name",
+    "A-ANNO-NOTE": "ignore",
+    "A-DETL": "other",
+    "A-DETL-GENF": "other",
+    "A-DOOR": "door",
+    "A-DOOR-FRAM": "door",
+    "A-DOOR-HDLN": "door",
+    "A-FLOR": "other",
+    "A-GENM": "furniture",
+    "A-GENM-HDLN": "other",
+    "A-GLAZ-CURT": "glass",
+    "A-GLAZ-CWMG": "glass",
+    "A-WALL": "wall",
+    "A-WALL-PATT": "wall",
+    "Defpoints": "other",
+    "E-LITE-EQPM": "light",
+    "G-ANNO-TEXT": "room-name",
+    "G-IMPT": "other",
+    "I-FURN": "furniture",
+    "I-FURN-CHAR": "furniture",
+    "I-WALL-HATT": "other",
+    "ID-LOOSE": "other",
+    "ID-LOOSE2": "other",
+    "M-EQPM": "other",
+    "M_Arredi": "furniture",
+    "P-SANR-FIXT": "furniture",
+    "Q-CASE": "furniture",
+    "Q-CASE-HDLN": "furniture",
+    "Q-SPCQ": "furniture",
+    "S-COLS": "column",
+    "S-STRS": "stair",
+    "S-STRS-MBND": "stair-above"
+  },
+  "floors": [
+    {
+      "key": "L1",
+      "name": "Level 1",
+      "source": "9e84e27fef67773b73ec8ef42bc25f65a5f1c52c",
+      "area": {
+        "kind": "wholeFile"
+      },
+      "level": 0.0,
+      "wallHeight": 3.0,
+      "slabThickness": null,
+      "doorHead": null,
+      "windowSill": null,
+      "windowHead": null,
+      "align": {
+        "method": "auto"
+      }
+    }
+  ],
+  "defaults": {
+    "doorHead": 2.1,
+    "windowSill": 0.9,
+    "windowHead": 2.1,
+    "railingHeight": 1.1,
+    "slabThickness": 0.25,
+    "singleLineHeight": 1.0
+  },
+  "furniture": {
+    "heights": {},
+    "bases": {},
+    "words": {},
+    "skip": [],
+    "minSize": 0.08,
+    "minDepth": null,
+    "looseLayers": [],
+    "pieceLayer": "insert"
+  },
+  "vocabulary": {},
+  "options": {
+    "revitWallTypes": "auto",
+    "parapets": "auto",
+    "objectClosures": true,
+    "liftShafts": true,
+    "plinth": "auto",
+    "outlineWalls": "off",
+    "offset": "auto"
+  },
+  "fixes": {
+    "setAside": [],
+    "openings": [],
+    "outlineEdges": []
+  }
+}

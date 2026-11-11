@@ -182,3 +182,103 @@ model and stages are `fixtures/models/bank-v2.model.json` and `fixtures/stages/b
 | `runs/bank-prepare/out/sources/6551bdc6f0cff4e31e83b68a55d22cf42703029a/plan.json.gz` | `0c81727c9c9c512ab757190269bfe8aefb2cec33` |
 | `runs/bank-prepare/out/suggestions.json` | `e79eab9027aaf098c91e77d1d56f070c7655ffcc` |
 | `runs/bank-prepare/run.json` | `9480f399ec17f146d309056b4e352fcb55243f1f` |
+
+## The rooms milestone (made by its scaffold R0 on 11 Nov 2026; docs/rooms/ACCEPTANCE.md 2.5)
+
+Read-only for the builders, as everything here. Owners after the scaffold (docs/rooms/WORK_BREAKDOWN.md): R1 the
+`*-rooms.json` settings and `rooms/keys/house.json`; R2 `tools/rooms/make-stair-dxf.py`; R5 the FakeJobRunner fixtures;
+RI `rooms/keys/suite.json` and the smoke step's replacement of the provisional overlay. Everything derived from the
+reference building is frozen with its tool.
+
+### The reference building (`node tools/run-builder-py.mjs tools/rooms/make-reference-building.py fixtures` and `stairs`)
+
+One synthetic building, drawn and described in `tools/rooms/make-reference-building.py`: two floors of 3.00 m; an L
+stair S1 of 16 risers with nosing pairs, risers 1 - 12 on the ground plan (UP, a break line) and 12 - 16 on the upper
+plan (DN); a second, straight stair drawn with no word, arrow or break line; a 2.9 m opening with no door in an outside
+wall (the garage: an unfloored area with a mouth); a door-sized gap of 1.2 m between two wall ends (a doorway closing);
+an X void upstairs and an X mark on the lowest floor; a terrace fenced by railings; two names in one room; a cupboard
+wall under the stair (a clash cut). Its plans are DXFs made at test time (`... make-reference-building.py dxf <dir>`;
+the root `.gitignore` ignores `*.dxf`): `services/builder/tests/rooms_kit.py` `reference_plan()` and conftest's
+`reference_building`. The fixtures were built through the app's reader and `build()`, the walls and openings by the
+unchanged code and the real door finder, the rooms, plates, holes and stairs from the building's own definition by the
+rules of DESIGN R-8 (the tool's text says how). They are the contract for R1 - R7: the builder's output must equal the
+model's treads, landings, well and stairway within 1 mm (ACCEPTANCE RA-9).
+
+| File | What | sha1 |
+|---|---|---|
+| `models/rooms-reference.model.json` | BuiltModel v2: 1 stairway (L, 16 risers of 0.188 m, 14 treads, 1 landing), 3 spaces, 2 ceilings, a wall piece cut under the stair; stamp `2da587ccc0bd` | `2da587ccc0bd67932d17b0b77afd884388b87447` |
+| `presentation/rooms-reference.json` | its Presentation, as U4's `out/presentation.py` writes it | `eab1b408eb323328b55bf4cb3253b1bf66daedc2` |
+| `stages/rooms-reference.stages.json` | its ReplayData | `7fdb4c8c648863740474a8a61062727f5d933311` |
+| `rooms/settings.reference.json` | the BuildSettings it was built with (the two DXFs by sha1, the three options at their new values) | `a712632175fffb8ccb19da57d01f3c146e30c016` |
+| `rooms/build-result.reference.json` | contracts.BuildResult with every new report key: `floors[*].rooms / slab / stairways / stairClash`, `fixes.closings / rooms / stairs`, `replay.facts.rooms / climbable / ceilings` (timings zero) | `323cfd31d34b673f22b5c24e5b0de94ce6c503c6` |
+| `rooms/overlay.reference.json` | BuildOverlay with the new floor fields (`spaces`, `holes`, `stairs`, `closings`, `unfloored`, sheet m) and the new flags `slab-gap`, `room-open`, `room-names`, `doorway`, `stair`, `stair-clash`, `hole-skipped`, written by the tool from the report with the texts of DESIGN R-6.1 (R3 writes the real overlay code against it) | `834717346f08031de12cee00b48853888b7fb66e` |
+| `rooms/flags.every-kind.json` | one Flag of each of the eight new kinds: the seven above and a hand-written `stairs-none` (a building whose stair climbs raises none) | `88bf1aa2cf3fc3133eff8d5a7037e55e63c84fc3` |
+| `models/stairs-straight.model.json` | BuiltModel v2 of `make-stair-dxf.py straight`: 16 risers, 15 treads | `82782e23410ff6c5db831a45d4e928d4d2aef235` |
+| `models/stairs-L.model.json` | BuiltModel v2 of `make-stair-dxf.py L`: 7 + 9 risers, 14 treads, 1 landing | `93a941986e7be68ebfb52235d566290efe1c6394` |
+| `models/stairs-U.model.json` | BuiltModel v2 of `make-stair-dxf.py U`: 8 + 8 risers, 14 treads, 1 half landing | `8338824651a6c07fb56f8c7b71d5e53d4adb16cd` |
+
+`rooms/runs/reference-build/` is a FakeJobRunner run folder of that build, in the format of `upload/runs/` (`run.json`
+names each output's bytes, `job.json` their sizes and sha1s; `services/builder/tests/test_r_fixtures.py` checks it):
+
+| File | What | sha1 |
+|---|---|---|
+| `rooms/runs/reference-build/job.json` | run folder | `a11f8b7c1824d6a8beacefe43ed4bcea2edb067e` |
+| `rooms/runs/reference-build/out/Rooms_reference.ms` | run folder | `58beeb372c3efa91157d032d9ec473d95b833d57` |
+| `rooms/runs/reference-build/out/diff.json` | run folder | `975b4b76be497b7ee8eee52fd95b32fc2140b3fd` |
+| `rooms/runs/reference-build/out/inputs.json` | run folder | `873a26603082c958c193f0c10f11941e8d7dd17e` |
+| `rooms/runs/reference-build/out/openings.json` | run folder | `07d1e3edd71125c9bfa4de17069699759d057d4a` |
+| `rooms/runs/reference-build/out/pieces.json` | run folder | `e83771137ffd8eab4056cd23198e16326bbf1fa2` |
+| `rooms/runs/reference-build/out/report.json` | run folder | `fa668dfc20373106c2bff9bca1cfdb3d31be5531` |
+| `rooms/runs/reference-build/out/topview.png` | run folder | `a53f432f680c7d6aa586bc6a6f01e3d457675531` |
+| `rooms/runs/reference-build/run.json` | run folder | `b5939cfdf6abf0b7a65f626c4518e32878b7ffc7` |
+
+A tiny store with the reference building as one saved version (and, with `--stairs`, the three stair models) is made at
+test time, never committed: `node tools/rooms/make-fixture-store.mjs --out <dir> [--stairs]`.
+
+The row shapes of the new report keys are these fixtures' (the builder's `contracts.py` types them only as lists):
+`rooms.open` `{ name, at }`; `rooms.several` `{ space, names }`; `slab.holes` `{ what, area, at, o, cut, why? }` (`cut: false`
+with `why` = a mark that was not cut); `slab.unfloored` `{ area, at, o, mouth, answered }`; `slab.closings`
+`{ kind, a, b, width }`; `slab.dropped` `{ area, at, why }`; `stairways` `{ id, state, why, text, severity, at, outline, walk,
+bottom, to, risers, riser }`; `stairClash` `{ stair, kind, label, area, z1, at }`; `fixes.closings / rooms / stairs`
+`{ fix, matched }`. Points are sheet metres.
+
+### Settings, the provisional overlay, the old-rule outputs, the keys
+
+| File | What | sha1 |
+|---|---|---|
+| `upload/settings/bank-rooms.json` | `settings/bank.json` plus the three options at their new values (`node tools/run-builder-py.mjs tools/rooms/make-rooms-settings.py`) | `97350b392413ea35122bf8f191c4cc04fbaf671c` |
+| `upload/settings/house-rooms.json` | `settings/house.json` plus the options and the ceiling heights 3.00 / 2.90 m | `7aa6468f4262ddc6462eab1b8f7aee4fe797d227` |
+| `upload/settings/suite-rooms.json` | `settings/suite.json` plus the options | `4bbcc2ac7a1930a3c572837e0a600645be9db785` |
+| `upload/settings/tower-rooms.json` | `settings/tower.json` plus the options | `c03168fc2d5652ab505973ca5a9250d58df4b8ae` |
+| `upload/settings/suite-revit-rooms.json` | `settings/recipes/suite-revit.json` with layer 0 set to wall, nothing set aside, plus the options | `9b1888c022d268c6b44dfd11ee75e7798a3b4dfc` |
+| `upload/settings/recipes/house.json` | the `project-data.json` of the upload acceptance store's `house-upload` v1 (model `1c07bfeef580`): no key of this milestone | `0c8168301ce3fd4a3c0e376cff2b04af7fe0250f` |
+| `upload/settings/recipes/suite.json` | the same of `suite-upload` v1 (`205e9c2c46e8`) | `5da2fccf57f6ba46e8a8c52d908f530c6ef42ca6` |
+| `upload/settings/recipes/tower.json` | the same of `tower-upload` v1 (`91414f408cb2`) | `0d6a427e9381a687471f96bb9a2630d004a64a40` |
+| `upload/settings/recipes/suite-revit.json` | the same of `suite-revit` v1 (`1d90d91ef949`), the A-12 run | `faf0f4d04301f8f50665fbe261c95a045f80ebb4` |
+| `upload/overlay/house-rooms.overlay.json` | **PROVISIONAL**: the house built with `house-rooms.json` by the scaffold's TRACER (not the real rules) with the new floor fields and flags added from its report (`node tools/run-builder-py.mjs tools/rooms/make-house-rooms-overlay.py`); the smoke step (WORK_BREAKDOWN RI-0) replaces it | `26860278556301361168a6ee20838b80c60f4a79` |
+| `rooms/old-rule.sha1.json` | the sha1 of every output of the five old-rule builds, recorded from the builder of `66b4c06` (`services/builder/tests/test_r_old_rule.py`); frozen | `c0b7bf53f499773998f278d2a3c0251f68060d5c` |
+| `rooms/keys/bank.json` | each of the bank's 18 room tags with its own point on the sheet (`node tools/run-builder-py.mjs tools/rooms/make-keys.py`) | `7dfacd23c53e2b8392b3f4917fb73484c76ca112` |
+| `rooms/keys/probes.json` | the walk probes of 9 Nov that had no floor at their start, by floor, sheet point, normal and side (ACCEPTANCE RA-6) | `cc4702d765b33fc98ab0b3754306e11d7e4f541f` |
+| `rooms/keys/house.json` | empty: R1 writes one point per room of the house's east building | `d606b05592f7b3e99c3de0ae6869ff95e6be2cbf` |
+| `rooms/keys/suite.json` | empty: RI picks the old suite's 16 key points | `7d3f8995abd4ba0fd6078e192605d4a75ad74b2e` |
+
+### models/broken/: the v2 cases (`node tools/make-broken-fixtures.mjs`, one per rule of DESIGN R-12.1)
+
+| File | What | sha1 |
+|---|---|---|
+| `models/broken/cross/v2-duplicate-space-id.json` | see `models/broken/expected.json` for the path each is rejected at | `2c426f8712b6bde703a6de35ae63e986cdf0b027` |
+| `models/broken/cross/v2-duplicate-stairway-id.json` | see `models/broken/expected.json` for the path each is rejected at | `6a2e8cb93af6e909f7ac5da7b2ddc1a354bb17c7` |
+| `models/broken/cross/v2-part-stair-on-another-floor.json` | see `models/broken/expected.json` for the path each is rejected at | `6a1cad7733a83a89fe0ebf66439a165ea7330248` |
+| `models/broken/cross/v2-part-unknown-stairway.json` | see `models/broken/expected.json` for the path each is rejected at | `d6272102f3004ded6bc9bd62f6c7e1ec07022844` |
+| `models/broken/cross/v2-room-space-on-another-floor.json` | see `models/broken/expected.json` for the path each is rejected at | `0128f24aacaf855e0dc3affff2c33eb4ec33f540` |
+| `models/broken/cross/v2-room-unknown-space.json` | see `models/broken/expected.json` for the path each is rejected at | `ebdf6ba544e1f69bb556ff70cfeae7329b20b45a` |
+| `models/broken/cross/v2-space-unknown-floor.json` | see `models/broken/expected.json` for the path each is rejected at | `b80424892a1c4d18b3a30568f112e3765594244f` |
+| `models/broken/cross/v2-stairway-not-above.json` | see `models/broken/expected.json` for the path each is rejected at | `e3d49e1f3bd14c691bbc0b379394951f17d27398` |
+| `models/broken/cross/v2-stairway-other-stack.json` | see `models/broken/expected.json` for the path each is rejected at | `0f1238da0d2eba32b59852175da00f2aa3388e1b` |
+| `models/broken/cross/v2-stairway-unknown-floor.json` | see `models/broken/expected.json` for the path each is rejected at | `87321d9f3b51061729bd662aa262d20e16eb5531` |
+| `models/broken/cross/v2-tread-without-stair.json` | see `models/broken/expected.json` for the path each is rejected at | `ac126442f43007001e7c31188e81d069f9798ced` |
+| `models/broken/schema/v2-walk-one-point.json` | see `models/broken/expected.json` for the path each is rejected at | `6bf611b3b448845593c47dfcffeaaa9247b767e5` |
+
+Also by the scaffold, outside this folder: `packages/viewer/test/fixtures/walk-parity.json` (the walk-parity golden, with
+its recorder `packages/viewer/test/tools/record-walk-parity.ts`) and `docs/rooms/reference/` (`versions.sha1`,
+`acc-9nov.versions.sha1`, `outside.txt`, `upload-walk-9nov/`).

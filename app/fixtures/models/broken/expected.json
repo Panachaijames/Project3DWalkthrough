@@ -1,6 +1,7 @@
 {
   "rule": "Every checker must reject each file with an issue at `path` (JSON Pointer; it may report more): parseBuiltModel (viewer: \"throws\" = ModelError; \"warns\" = console.warn and the furniture leniency of DESIGN.md 5.6), ajv (schema cases) and walkthrough_api.builtmodel.validate (the API rejects every file, the furniture cases included). A missing property is reported at its parent object (as ajv and jsonschema do); a duplicate at its later occurrence.",
   "base": "fixtures/models/bank-v2.model.json",
+  "v2Base": "the same model with stairways [S1: L1 to L2], a tread and a landing of S1 (the last two parts), spaces [L1-R1, L2-R1] and the first drawn name of L1 in L1-R1 (the v2-* cases; docs/rooms/DESIGN.md R-12.1)",
   "madeBy": "node tools/make-broken-fixtures.mjs",
   "cases": {
     "schema/wrong-type.json": {
@@ -74,6 +75,78 @@
       "kind": "cross",
       "viewer": "warns",
       "fault": "furnitureKinds[0].count is one more than its pieces"
+    },
+    "schema/v2-walk-one-point.json": {
+      "path": "/stairways/0/walk",
+      "kind": "schema",
+      "viewer": "throws",
+      "fault": "stairways[0].walk has one point (a walking line has at least 2)"
+    },
+    "cross/v2-stairway-unknown-floor.json": {
+      "path": "/stairways/0/to",
+      "kind": "cross",
+      "viewer": "throws",
+      "fault": "stairways[0].to is \"L9\", which the model does not have"
+    },
+    "cross/v2-stairway-not-above.json": {
+      "path": "/stairways/0/to",
+      "kind": "cross",
+      "viewer": "throws",
+      "fault": "stairways[0].to is its own from floor (to must be above from)"
+    },
+    "cross/v2-stairway-other-stack.json": {
+      "path": "/stairways/0/to",
+      "kind": "cross",
+      "viewer": "throws",
+      "fault": "floors[1] is in another stack (\"annex\"): stairways[0] would leave its stack"
+    },
+    "cross/v2-duplicate-stairway-id.json": {
+      "path": "/stairways/1/id",
+      "kind": "cross",
+      "viewer": "throws",
+      "fault": "stairways[1] repeats the id of stairways[0] (the later occurrence is reported)"
+    },
+    "cross/v2-part-unknown-stairway.json": {
+      "path": "/parts/124/stair",
+      "kind": "cross",
+      "viewer": "throws",
+      "fault": "parts[124] (a tread) names the stairway \"S9\", which the model does not have"
+    },
+    "cross/v2-part-stair-on-another-floor.json": {
+      "path": "/parts/124/stair",
+      "kind": "cross",
+      "viewer": "throws",
+      "fault": "parts[124] (a tread of S1, which rises from L1) is on L2"
+    },
+    "cross/v2-tread-without-stair.json": {
+      "path": "/parts/125",
+      "kind": "cross",
+      "viewer": "throws",
+      "fault": "parts[125] (a landing) names no stairway (a missing property is reported at its parent object)"
+    },
+    "cross/v2-duplicate-space-id.json": {
+      "path": "/spaces/1/id",
+      "kind": "cross",
+      "viewer": "throws",
+      "fault": "spaces[1] repeats the id of spaces[0] (the later occurrence is reported)"
+    },
+    "cross/v2-space-unknown-floor.json": {
+      "path": "/spaces/1/floor",
+      "kind": "cross",
+      "viewer": "throws",
+      "fault": "spaces[1] is on floor \"L9\", which the model does not have"
+    },
+    "cross/v2-room-unknown-space.json": {
+      "path": "/rooms/0/space",
+      "kind": "cross",
+      "viewer": "throws",
+      "fault": "rooms[0].space names no space"
+    },
+    "cross/v2-room-space-on-another-floor.json": {
+      "path": "/rooms/0/space",
+      "kind": "cross",
+      "viewer": "throws",
+      "fault": "rooms[0] (a name on L1) names a space of L2"
     }
   }
 }

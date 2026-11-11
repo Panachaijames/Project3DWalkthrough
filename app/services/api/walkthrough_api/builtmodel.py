@@ -1,6 +1,8 @@
-"""BuiltModel v1 validation for the API and the seed (DESIGN.md 5.6): the schema (schema/built-model.schema.json,
-identical to docs/) with jsonschema, then the cross-reference rules, strict (the furniture rules included). Issue paths are
-JSON Pointers (/parts/12/z1), the same as the viewer's parseBuiltModel and ajv report.
+"""BuiltModel v1 and v2 validation for the API and the seed (DESIGN.md 5.6; docs/rooms/DESIGN.md R-12.1): the schema
+(schema/built-model.schema.json, identical to docs/) with jsonschema, then the cross-reference rules, strict (the
+furniture rules included). Issue paths are JSON Pointers (/parts/12/z1), the same as the viewer's parseBuiltModel and ajv
+report. The v2 rules (stairways, spaces, a part's `stair`, a name's `space`) were written by the rooms scaffold R0
+together with the schema and the viewer's parse.ts: the three checkers change together.
 
 Conventions (fixtures/models/broken/expected.json, DESIGN.md 18.49): a missing property is reported at its parent object
 (as jsonschema and ajv do); a repeated id at its LATER occurrence (/openings/5/id). The rules run only on a model that
@@ -149,6 +151,53 @@ def rule_issues(m: dict[str, Any]) -> list[ModelIssue]:
         if o['id'] in opening_ids:
             add(f'/openings/{i}/id', f'opening id {o["id"]!r} is used twice')
         opening_ids.add(o['id'])
+
+    # BuiltModel v2 (docs/rooms/DESIGN.md R-12.1): stairways rise within one stack; a part's `stair` names a stairway and
+    # the part lies on that stairway's `from` floor; every tread and landing has one; stairway and space ids are unique;
+    # a drawn name's `space` names a space of its own floor. (`walk` has at least 2 points: the schema.)
+    stack_of = {f['key']: f.get('stack', 'main') for f in m['floors']}
+    level_of = {f['key']: f['level'] for f in m['floors']}
+    stair_from: dict[str, str] = {}
+    for i, s in enumerate(m.get('stairways') or []):
+        if s['id'] in stair_from:
+            add(f'/stairways/{i}/id', f'stairway id {s["id"]!r} is used twice')
+        else:
+            stair_from[s['id']] = s['from']
+        if s['from'] not in keys:
+            add(f'/stairways/{i}/from', f'unknown floor {s["from"]!r}')
+        if s['to'] not in keys:
+            add(f'/stairways/{i}/to', f'unknown floor {s["to"]!r}')
+        elif s['from'] in keys:
+            if stack_of[s['to']] != stack_of[s['from']]:
+                add(f'/stairways/{i}/to', f'{s["to"]!r} is not in the stack of {s["from"]!r}')
+            elif not level_of[s['to']] > level_of[s['from']]:
+                add(f'/stairways/{i}/to', f'{s["to"]!r} is not above {s["from"]!r}')
+    for i, p in enumerate(m['parts']):
+        if 'stair' not in p:
+            if p['kind'] in ('tread', 'landing'):
+                add(f'/parts/{i}', f'a {p["kind"]} must name its stairway (stair)')
+            continue
+        if p['stair'] not in stair_from:
+            add(f'/parts/{i}/stair', f'unknown stairway {p["stair"]!r}')
+        elif stair_from[p['stair']] != p['floor']:
+            add(f'/parts/{i}/stair', f'stairway {p["stair"]!r} rises from {stair_from[p["stair"]]!r}, but the part is '
+                                     f'on {p["floor"]!r}')
+    space_floor: dict[str, str] = {}
+    for i, s in enumerate(m.get('spaces') or []):
+        if s['floor'] not in keys:
+            add(f'/spaces/{i}/floor', f'unknown floor {s["floor"]!r}')
+        if s['id'] in space_floor:
+            add(f'/spaces/{i}/id', f'space id {s["id"]!r} is used twice')
+        else:
+            space_floor[s['id']] = s['floor']
+    for i, r in enumerate(m['rooms']):
+        if 'space' not in r:
+            continue
+        if r['space'] not in space_floor:
+            add(f'/rooms/{i}/space', f'unknown space {r["space"]!r}')
+        elif space_floor[r['space']] != r['floor']:
+            add(f'/rooms/{i}/space', f'space {r["space"]!r} is on {space_floor[r["space"]]!r}, but the name is on '
+                                     f'{r["floor"]!r}')
 
     if 'furniture' in m or 'furnitureKinds' in m:
         kinds = m.get('furnitureKinds') or []

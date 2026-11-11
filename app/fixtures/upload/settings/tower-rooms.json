@@ -1,0 +1,127 @@
+{
+  "format": "build-settings/1",
+  "office": null,
+  "project": {
+    "name": "Tower, levels 29 and 30",
+    "shortName": "Tower",
+    "projectNo": null,
+    "photoName": "Tower-L29-L30",
+    "maxPrefix": "TW",
+    "maxFileName": "Tower_L29_L30.ms",
+    "exportedFrom": "Revit"
+  },
+  "sources": [
+    {
+      "sha1": "74b8bf5be1037bc1d1c46a8a5d98ca4ffced4284",
+      "name": "L29.dwg",
+      "kind": "dwg",
+      "units": "mm",
+      "unitsConfirmed": true
+    },
+    {
+      "sha1": "2d9b1db8e50311826dfc93f87aabf3324e83c362",
+      "name": "L30.dwg",
+      "kind": "dwg",
+      "units": "mm",
+      "unitsConfirmed": true
+    }
+  ],
+  "layers": {
+    "0": "other",
+    "A-AREA": "room-outline",
+    "A-DETL": "ignore",
+    "A-DETL-GENF": "other",
+    "A-DETL-GENF-HDLN": "other",
+    "A-DETL-MEDM": "door",
+    "A-DOOR": "door",
+    "A-DOOR-FRAM": "door",
+    "A-DOOR-HDLN": "door",
+    "A-FLOR": "ignore",
+    "A-FLOR-PATT": "ignore",
+    "A-GENM": "furniture",
+    "A-GLAZ-CURT": "glass",
+    "A-WALL": "wall",
+    "A-WALL-PATT": "wall",
+    "E-DATA": "ignore",
+    "E-LITE-EQPM": "light",
+    "I-FURN": "furniture",
+    "L-PLNT": "furniture",
+    "P-SANR-FIXT": "furniture",
+    "Q-CASE": "furniture",
+    "S-COLS": "column",
+    "S-STRS": "stair",
+    "S-STRS-MBND": "stair-above"
+  },
+  "floors": [
+    {
+      "key": "L29",
+      "name": "Level 29",
+      "source": "74b8bf5be1037bc1d1c46a8a5d98ca4ffced4284",
+      "area": {
+        "kind": "wholeFile"
+      },
+      "level": 0.0,
+      "wallHeight": 4.0,
+      "slabThickness": null,
+      "doorHead": null,
+      "windowSill": null,
+      "windowHead": null,
+      "align": {
+        "method": "auto"
+      }
+    },
+    {
+      "key": "L30",
+      "name": "Level 30",
+      "source": "2d9b1db8e50311826dfc93f87aabf3324e83c362",
+      "area": {
+        "kind": "wholeFile"
+      },
+      "level": 4.0,
+      "wallHeight": 4.0,
+      "slabThickness": null,
+      "doorHead": null,
+      "windowSill": null,
+      "windowHead": null,
+      "align": {
+        "method": "origin"
+      }
+    }
+  ],
+  "defaults": {
+    "doorHead": 2.1,
+    "windowSill": 0.9,
+    "windowHead": 2.1,
+    "railingHeight": 1.1,
+    "slabThickness": 0.25,
+    "singleLineHeight": 1.0
+  },
+  "furniture": {
+    "heights": {},
+    "bases": {},
+    "words": {},
+    "skip": [],
+    "minSize": 0.08,
+    "minDepth": null,
+    "looseLayers": [],
+    "pieceLayer": "insert"
+  },
+  "vocabulary": {},
+  "options": {
+    "revitWallTypes": "auto",
+    "parapets": "auto",
+    "objectClosures": true,
+    "liftShafts": true,
+    "plinth": "auto",
+    "outlineWalls": "off",
+    "offset": "auto",
+    "slabs": "network",
+    "ceilings": "auto",
+    "stairs": "climb"
+  },
+  "fixes": {
+    "setAside": [],
+    "openings": [],
+    "outlineEdges": []
+  }
+}

@@ -871,31 +871,256 @@ def lift_shafts(plate, E_cells, recs):
 
 
 # ---------------------------------------------------------------------------------------------------- build every floor
+def floor_walls(F, X):
+    """One floor after its openings and walls (contracts.FloorBuilt; docs/rooms/DESIGN.md R-12.3), extracted by the
+    rooms scaffold R0 from the 'build every floor' loop with no change in behaviour: the openings cut, the closures,
+    the railings, the walls, parapets and columns, today's stair reading and today's plate (before its voids).
+
+    `parts` are the floor's parts in the model's order up to the single-line parts (contracts.PartGeo rows; the
+    railings, steps and slabs follow in the caller, since which railings stay depends on the plate). `rails` are all
+    the railing pieces found. What the rest of the old loop reads besides is left in F['fw'] (Wc, Gc, closures, GWc,
+    SCc, POc, runs, cols, rails_dropped, rails_dropped_polys, plate_dropped, H). F['index'] and F['storey'] (the height
+    to the next floor's level, else the wall height) are set by build_floors and by build.prepare_floors."""
+    fc = F['cfg']; key, top = fc['key'], fc['wallHeight']
+    fi, H = F['index'], F['storey']
+    DEF = X.DEF
+    recs, Wc, Gc, Sc, extra, GWc, SCc, POc = build_openings(F, X)
+    closures = []
+    if X.options['objectClosures']:
+        closures = object_closures(F, unary_union(F['W']).difference(unary_union(F['screens']).buffer(0.001)) if F['screens'] else unary_union(F['W']), recs)
+    Wc = unary_union([Wc] + [c['poly'] for c in closures]).difference(unary_union([c['poly'] for c in closures])) if closures else Wc
+    rails, rails_dropped, rails_dropped_polys = railings_of(F, unary_union([Wc] + [c['poly'] for c in closures]))
+    walls = [p for p in polys(Wc) if p.area > 0.004]
+    fills = unary_union(F['fills'])
+    run_parapets = X.options['parapets'] != 'off' and F['solid_fills'] > 0     # U-10.5: only where walls carry solid fills
+    parapets = parapets_of(walls, fills, rails) if run_parapets else []
+    cols = [p for p in walls if not F['COL'].is_empty and p.intersection(F['COL']).area >= 0.9 * p.area]
+    runs = [p for p in walls if not any(p is q for q in cols) and not any(p is q for q in parapets)]
+    S = stairs_of(F, H, X)
+    lowest = fi == 0
+    E_walls = [Wc, Gc] + [x[1] for x in extra] + [g['pane'] for g in GWc] + SCc + [p['poly'] for p in POc] + \
+              [c['poly'] for c in closures]
+    plate, plate_report, plate_dropped = plates_of(E_walls, rails + parapets, recs, S['stairs'], lowest)
+    parts = []
+
+    def add(kind, p, z0, z1, follow, label, ex):
+        parts.append({'floor': key, 'kind': kind, 'poly': p, 'z0': z0, 'z1': z1, 'follow': follow, 'label': label, 'extra': ex})
+    for p in runs: add('wall', p, 0.0, top, True, None, {})
+    for p in cols: add('column', p, 0.0, top, True, None, {})
+    for p in parapets: add('parapet', p, 0.0, DEF['railingHeight'], False, 'parapet', {})
+    for c in closures: add('wall', c['poly'], 0.0, top, True, f"closure ({c['object']})", {})
+    for p in polys(Gc):
+        if p.area > 0.0005: add('glass', p, 0.0, top, True, None, {})
+    for g in GWc:
+        for p in polys(g['pane']):
+            if p.area > 0.0002: add('glass', p, 0.0, g['height'] or top, g['height'] is None, g['type'], {})
+    for s in SCc:
+        for p in polys(s):
+            if p.area > 0.0002: add('glass', p, 0.0, top, True, 'glass screen', {})
+    for p in F['SCR']:                                   # the screen role: never cut (U-10.5)
+        add('glass', p, 0.0, top, True, 'screen', {})
+    for pst in POc:
+        for p in polys(pst['poly']):
+            if p.area > 0.0002: add('mullion', p, 0.0, pst['height'] or top, pst['height'] is None, 'frame post', {})
+    for kind, p, z0, z1, follow, label in extra: add(kind, p, z0, z1, follow, label, {})
+    singles = [p for p in polys(Sc) if p.area > 0.002]
+    for p in singles: add('single', p, 0.0, DEF['singleLineHeight'], False, None, {'_single': True})
+    F['fw'] = {'Wc': Wc, 'Gc': Gc, 'closures': closures, 'GWc': GWc, 'SCc': SCc, 'POc': POc, 'runs': runs, 'cols': cols,
+               'rails_dropped': rails_dropped, 'rails_dropped_polys': rails_dropped_polys, 'plate_dropped': plate_dropped,
+               'H': H}
+    return {'key': key, 'index': fi, 'level': fc['level'], 'top': top, 'lowest': lowest, 'items': F['items'],
+            'parts': parts, 'e_walls': E_walls, 'recs': recs, 'rails': rails, 'parapets': parapets, 'singles': singles,
+            'old_plate': plate, 'old_report': plate_report, 'old_stairs': S}
+
+
+def part_rows(parts):
+    """contracts.PartGeo rows -> the parts_geo rows of build_floors: (floor key, kind, polygon, z0, z1, follow, label,
+    extra keys)."""
+    return [(p['floor'], p['kind'], p['poly'], p['z0'], p['z1'], p['follow'], p['label'], p['extra']) for p in parts]
+
+
+def storeys(floors):
+    """Sets what floor_walls reads on each floor's working dict: its index and the height to the next floor's level
+    (the top floor: its wall height)."""
+    for fi, F in enumerate(floors):
+        fc = F['cfg']
+        F['index'] = fi
+        F['storey'] = (floors[fi + 1]['cfg']['level'] - fc['level']) if fi + 1 < len(floors) else fc['wallHeight']
+
+
+def _ring(g):
+    """A polygon's outline as [[x, y], ...] (sheet m, 3 decimals, the last point not repeated); [] for anything else."""
+    return [[R3(x), R3(y)] for x, y in list(g.exterior.coords)[:-1]] if g is not None and g.geom_type == 'Polygon' else []
+
+
+def apply_cuts(fb, stairs):
+    """The clash cuts (docs/rooms/DESIGN.md R-8.3) of the stairs rising from this floor, applied to fb['parts'] in
+    place -> the report's stairClash rows. Each contracts.StairCut names a part of this floor by its index and the piece
+    of its footprint under the stair: that piece gets the cut's z1 (the lowest underside over it), `follow: false`,
+    `fit: 'storey'` and its stairway's id, or is dropped when it would be 0.05 m high or less; the rest of the part is
+    unchanged. THE TRACER's wiring by the rooms scaffold R0 (R1 owns it)."""
+    by_part = collections.defaultdict(list)
+    for sb in stairs['built']:
+        for c in sb['cuts']:
+            if c['floor'] == fb['key']:
+                by_part[c['part']].append((sb['stairway']['id'], c))
+    rows, out = [], []
+    for i, p in enumerate(fb['parts']):
+        if i not in by_part:
+            out.append(p)
+            continue
+        rest, under = p['poly'], []
+        for sid, c in by_part[i]:
+            foot = c['footprint'].intersection(p['poly'])
+            if foot.is_empty: continue
+            rest = rest.difference(foot)
+            kept = c['z1'] - p['z0'] > 0.05
+            if kept:
+                under += [{**p, 'poly': q, 'z1': R3(c['z1']), 'follow': False, 'extra': {**p['extra'], 'fit': 'storey', 'stair': sid}}
+                          for q in polys(foot) if q.area > 0.0005]
+            at = foot.representative_point()
+            rows.append({'stair': sid, 'kind': p['kind'], 'label': p['label'], 'area': round(foot.area, 2),
+                         'z1': R3(c['z1']) if kept else None, 'at': [R3(at.x), R3(at.y)]})
+        out += [{**p, 'poly': q} for q in polys(rest) if q.area > 0.0005] + under
+    fb['parts'] = out
+    return rows
+
+
+def build_floors_network(floors, X, log):
+    """options.slabs 'network' (docs/rooms/DESIGN.md R-12.3): the three passes -> (parts_geo, built), and X.new_rule
+    (what the model and the report need besides: the fix rows, whether ceilings were made).
+
+      1. per floor: floor_walls (openings and walls, as today), then network_of, plate_of, find_stairs;
+      2. across floors: build_stairs;
+      3. per floor: cut_slab (the wells, the kept stair voids), ceilings_of, and the floor's parts in the model's order
+         (walls ... singles, railings, treads and landings, slabs, ceilings).
+
+    THE TRACER's wiring, by the rooms scaffold R0: R1 owns this branch (the clash cuts applied to the parts, terraces,
+    X holes, the fixes ...). `built[key]` has every key of the old loop, so model.py and report.py read it as before,
+    plus `spaces`, `stairways` and `report` (the floor's contracts.FloorUploadReportRooms keys). With stairs 'climb' no
+    two-riser `step` part is made and every stair line that did not become a tread stays a line."""
+    from . import ceilings as CE
+    from . import network as NW
+    from . import rooms as RM
+    from . import slabs as SL
+    from . import stairs_build as SB
+    from . import stairs_read as SR
+    fixes = X.settings['fixes']
+    DEF = X.DEF
+    climb = X.options['stairs'] == 'climb'
+    with_ceilings = X.options['ceilings'] == 'auto'
+    storeys(floors)
+    fbs, nets, plate0, unfloored, slab_rep, found = [], {}, {}, {}, {}, {}
+    for F in floors:                                         # pass 1, per floor
+        fb = floor_walls(F, X)
+        key = fb['key']
+        fbs.append(fb)
+        nets[key] = NW.network_of(fb, fixes, X)
+        plate0[key], unfloored[key], slab_rep[key] = NW.plate_of(fb, nets[key], fixes, X)
+        found[key] = SR.find_stairs(fb, nets[key], fixes, X)
+    stairs = SB.build_stairs(fbs, found, nets, plate0, fixes, X)      # pass 2, across floors
+    clash = {fb['key']: apply_cuts(fb, stairs) for fb in fbs}         # pass 3 starts: the clash cuts (R-8.3)
+    cut = {fb['key']: SL.cut_slab(fb, nets[fb['key']], plate0[fb['key']], stairs, fixes, X) for fb in fbs}    # pass 3
+    parts_geo, built = [], {}
+    n_ceilings = 0
+    for fi, (F, fb) in enumerate(zip(floors, fbs)):
+        key, w, S, net = fb['key'], F['fw'], fb['old_stairs'], nets[fb['key']]
+        slab_parts, voids, slab_cut = cut[key]
+        plates = [p['poly'] for p in slab_parts]
+        plate_u = unary_union(plates) if plates else Polygon()
+        rails, rails_off = fb['rails'], []
+        if not fb['lowest']:
+            rails_off = [r for r in rails if r.intersection(plate_u).area < 0.5 * r.area]
+            rails = [r for r in rails if not any(r is q for q in rails_off)]
+        mine = [sb for sb in stairs['built'] if sb['stairway']['from'] == key]
+        ceilings = []
+        if with_ceilings:
+            above = cut[fbs[fi + 1]['key']][1] if fi + 1 < len(fbs) else []
+            headroom = [sb['headroom'] for sb in mine if sb['headroom'] is not None]
+            ceilings = CE.ceilings_of(fb, net, plate0[key], unary_union([v for _, v in above]) if above else None,
+                                      unary_union(headroom) if headroom else None, X)
+            n_ceilings += len(ceilings)
+        parts_geo.extend(part_rows(fb['parts']))             # walls, columns, parapets, closures, glass, posts, lintels, singles
+        for p in rails: parts_geo.append((key, 'railing', p, 0.0, DEF['railingHeight'], False, None, {}))
+        if not climb:
+            for poly, z0, z1, label in S['steps']: parts_geo.append((key, 'step', poly, z0, z1, False, label, {}))
+        for sb in mine: parts_geo.extend(part_rows(sb['treads'] + sb['landings']))
+        parts_geo.extend(part_rows(slab_parts))
+        parts_geo.extend(part_rows(ceilings))
+        rooms, skipped, skipped_at = rooms_of(F, X)
+        homeless, several = RM.name_rooms(net['spaces'], rooms)
+        lines = S.get('lines') or []
+        n_below = len(stair_lines(F, 'stair'))
+        if climb:                                            # the lines that became treads are gone; the others stay lines
+            used = {i for sb in stairs['built'] for i in sb['linesUsed'].get(key, [])}
+            keep_b = [i for i in range(min(n_below, len(lines))) if i not in used]
+            keep_a = [i for i in range(n_below, len(lines)) if i not in used]
+        else:
+            keep_b, keep_a = S['below'], S['above']
+        near_floor = (lambda ls: True) if fb['lowest'] else (lambda ls: plate_u.buffer(0.02).contains(ls))  # noqa: E731
+        below = [list(lines[i].coords[0]) + list(lines[i].coords[-1]) for i in keep_b if near_floor(lines[i])]
+        above_lines = [list(lines[i].coords[0]) + list(lines[i].coords[-1]) for i in keep_a if near_floor(lines[i])]
+        rows = []
+        for sb in mine:
+            sw = sb['stairway']
+            outline = unary_union([t['poly'] for t in sb['treads'] + sb['landings']]).convex_hull
+            at = outline.representative_point()
+            rows.append({'id': sw['id'], 'state': 'climb', 'why': None, 'text': None, 'severity': None, 'at': [R3(at.x), R3(at.y)],
+                         'outline': _ring(outline), 'walk': [[R3(x), R3(y)] for x, y in sw['walk']],
+                         'bottom': [R3(sw['bottom'][0]), R3(sw['bottom'][1])], 'to': sw['to'], 'risers': sw['risers'],
+                         'riser': sw['riser']})
+        for sl in stairs['left']:
+            if sl['floor'] != key: continue
+            rows.append({'id': sl['id'], 'state': 'lines', 'why': sl['why'], 'text': sl['text'], 'severity': sl['severity'],
+                         'at': [R3(sl['at'][0]), R3(sl['at'][1])], 'outline': _ring(sl['outline']), 'walk': None, 'bottom': None,
+                         'to': None, 'risers': sl['risers'], 'riser': None})
+        report = {'rooms': {'spaces': len(net['spaces']), 'named': sum(1 for s in net['spaces'] if s['name']), 'shapes': net['shapes'],
+                            'open': [{'name': r['name'], 'at': [R3(r['x']), R3(r['y'])]} for r in homeless],
+                            'several': [{'space': s['id'], 'names': list(s['names'])} for s in several]},
+                  'slab': {**slab_rep[key], 'holes': slab_cut['holes'], 'dropped': slab_cut['dropped'],
+                           'unfloored': [{'area': round(u['area'], 1), 'at': [R3(u['at'][0]), R3(u['at'][1])],
+                                          'o': _ring(u['poly']), 'answered': u['answered'],
+                                          'mouth': [[R3(x), R3(y)] for x, y in u['mouth']] if u['mouth'] else None}
+                                         for u in unfloored[key]],
+                           'closings': [{'kind': c['kind'], 'a': [R3(c['a'][0]), R3(c['a'][1])], 'b': [R3(c['b'][0]), R3(c['b'][1])],
+                                         'width': R3(c['width'])} for c in net['closings']]},
+                  'stairways': rows, 'stairClash': clash[key]}
+        built[key] = {'recs': fb['recs'], 'rooms': rooms, 'skipped': skipped, 'skipped_at': skipped_at, 'plates': plates,
+                      'rails': rails, 'rails_dropped': w['rails_dropped'], 'rails_dropped_polys': w['rails_dropped_polys'],
+                      'rails_off': len(rails_off), 'rails_off_polys': rails_off, 'runs': w['runs'], 'cols': w['cols'],
+                      'parapets': fb['parapets'], 'closures': w['closures'], 'voids': voids, 'plate_report': fb['old_report'],
+                      'plate_dropped': [], 'stairs': below, 'above': above_lines, 'S': {**S, 'steps': []} if climb else S,
+                      'GWc': w['GWc'], 'screens': w['SCc'], 'posts': w['POc'], 'stairs_all_below': n_below,
+                      'stairs_all_above': len(stair_lines(F, 'stair-above')),
+                      'spaces': net['spaces'], 'stairways': [sb['stairway'] for sb in mine], 'report': report}
+        log(f"{key}: {len(w['runs'])} wall runs, {len(w['cols'])} columns, {len(rails)} railing pieces, {len(rooms)} room names, "
+            f"{len(net['spaces'])} rooms, plate {sum(p.area for p in plates):.1f} m2 (the earlier rule: {fb['old_plate'].area:.1f}), "
+            f"{len(voids)} holes, {len(mine)} stairs you can climb, {len(ceilings)} ceiling pieces")
+    X.new_rule = {'fixes': {'closings': [{'fix': k, 'matched': False} for k, _ in enumerate(fixes.get('closings') or [])],
+                            'rooms': [{'fix': k, 'matched': False} for k, _ in enumerate(fixes.get('rooms') or [])],
+                            'stairs': stairs['fixes']},
+                  'ceilings': n_ceilings > 0, 'pairs': stairs['pairs']}
+    return parts_geo, built
+
+
 def build_floors(floors, X, log):
     """The prototype's 'build every floor' loop -> (parts_geo, built). parts_geo rows: (floor key, kind, polygon, z0,
-    z1, follow, label, extra keys)."""
+    z1, follow, label, extra keys). With options.slabs 'closed-rooms' (the old rule, and every settings document
+    without the key) each floor is floor_walls() and then exactly what the loop did before the rooms milestone; with
+    'network' the three passes of build_floors_network."""
+    if X.options.get('slabs') == 'network':
+        return build_floors_network(floors, X, log)
+    storeys(floors)
     parts_geo, built = [], {}
     DEF = X.DEF
-    for fi, F in enumerate(floors):
-        fc = F['cfg']; key, top = fc['key'], fc['wallHeight']
-        H = (floors[fi + 1]['cfg']['level'] - fc['level']) if fi + 1 < len(floors) else top
-        recs, Wc, Gc, Sc, extra, GWc, SCc, POc = build_openings(F, X)
-        closures = []
-        if X.options['objectClosures']:
-            closures = object_closures(F, unary_union(F['W']).difference(unary_union(F['screens']).buffer(0.001)) if F['screens'] else unary_union(F['W']), recs)
-        Wc = unary_union([Wc] + [c['poly'] for c in closures]).difference(unary_union([c['poly'] for c in closures])) if closures else Wc
-        rails, rails_dropped, rails_dropped_polys = railings_of(F, unary_union([Wc] + [c['poly'] for c in closures]))
-        walls = [p for p in polys(Wc) if p.area > 0.004]
-        fills = unary_union(F['fills'])
-        run_parapets = X.options['parapets'] != 'off' and F['solid_fills'] > 0     # U-10.5: only where walls carry solid fills
-        parapets = parapets_of(walls, fills, rails) if run_parapets else []
-        cols = [p for p in walls if not F['COL'].is_empty and p.intersection(F['COL']).area >= 0.9 * p.area]
-        runs = [p for p in walls if not any(p is q for q in cols) and not any(p is q for q in parapets)]
-        S = stairs_of(F, H, X)
-        lowest = fi == 0
-        E_walls = [Wc, Gc] + [x[1] for x in extra] + [g['pane'] for g in GWc] + SCc + [p['poly'] for p in POc] + \
-                  [c['poly'] for c in closures]
-        plate, plate_report, plate_dropped = plates_of(E_walls, rails + parapets, recs, S['stairs'], lowest)
+    for F in floors:
+        fc = F['cfg']; key = fc['key']
+        fb = floor_walls(F, X)
+        w = F['fw']
+        recs, rails, parapets, S, lowest = fb['recs'], fb['rails'], fb['parapets'], fb['old_stairs'], fb['lowest']
+        E_walls, plate, plate_report, plate_dropped = fb['e_walls'], fb['old_plate'], fb['old_report'], w['plate_dropped']
+        Wc, Gc, closures, GWc, SCc, POc, runs, cols = (w[k] for k in ('Wc', 'Gc', 'closures', 'GWc', 'SCc', 'POc', 'runs', 'cols'))
+        rails_dropped, rails_dropped_polys = w['rails_dropped'], w['rails_dropped_polys']
         voids = []
         if not lowest:
             E_cells = unary_union(E_walls + [r['span'] for r in recs])
@@ -917,26 +1142,7 @@ def build_floors(floors, X, log):
         slab_z0, slab_extra = -F['slabThickness'], {}
         if F.get('plinth'):                                  # U-9.5: the lowest floor above 0 stands on the ground
             slab_z0, slab_extra = -fc['level'], {'plinth': True}
-        for p in runs: parts_geo.append((key, 'wall', p, 0.0, top, True, None, {}))
-        for p in cols: parts_geo.append((key, 'column', p, 0.0, top, True, None, {}))
-        for p in parapets: parts_geo.append((key, 'parapet', p, 0.0, DEF['railingHeight'], False, 'parapet', {}))
-        for c in closures: parts_geo.append((key, 'wall', c['poly'], 0.0, top, True, f"closure ({c['object']})", {}))
-        for p in polys(Gc):
-            if p.area > 0.0005: parts_geo.append((key, 'glass', p, 0.0, top, True, None, {}))
-        for g in GWc:
-            for p in polys(g['pane']):
-                if p.area > 0.0002: parts_geo.append((key, 'glass', p, 0.0, g['height'] or top, g['height'] is None, g['type'], {}))
-        for s in SCc:
-            for p in polys(s):
-                if p.area > 0.0002: parts_geo.append((key, 'glass', p, 0.0, top, True, 'glass screen', {}))
-        for p in F['SCR']:                                   # the screen role: never cut (U-10.5)
-            parts_geo.append((key, 'glass', p, 0.0, top, True, 'screen', {}))
-        for pst in POc:
-            for p in polys(pst['poly']):
-                if p.area > 0.0002: parts_geo.append((key, 'mullion', p, 0.0, pst['height'] or top, pst['height'] is None, 'frame post', {}))
-        for kind, p, z0, z1, follow, label in extra: parts_geo.append((key, kind, p, z0, z1, follow, label, {}))
-        for p in polys(Sc):
-            if p.area > 0.002: parts_geo.append((key, 'single', p, 0.0, DEF['singleLineHeight'], False, None, {'_single': True}))
+        parts_geo.extend(part_rows(fb['parts']))             # walls, columns, parapets, closures, glass, posts, lintels, singles
         for p in rails: parts_geo.append((key, 'railing', p, 0.0, DEF['railingHeight'], False, None, {}))
         for poly, z0, z1, label in S['steps']: parts_geo.append((key, 'step', poly, z0, z1, False, label, {}))
         for p in plates: parts_geo.append((key, 'slab', p, slab_z0, 0.0, False, None, slab_extra))

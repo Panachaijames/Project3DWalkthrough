@@ -5,11 +5,17 @@ window heights, offsets, pads, boxes, fix points) and `int()` on the mm furnitur
 arithmetic: the browser sends `0` for a typed `0.00` (JSON.stringify(0) is "0"), the bank's model bytes carry `0.0`,
 `3.7` and `1.0`, and the prototype's R3 keeps an int an int, so without this the golden breaks. Missing optional parts
 take the bank's defaults (U-10.4). The settings given are never changed: a coerced deep copy is returned.
+
+The rooms milestone (docs/rooms/DESIGN.md R-1.2, R-12.4; wired by its scaffold R0 for the tracer, owned by R1): the
+three options `slabs`, `ceilings`, `stairs`, a missing key filled with the OLD rule (contracts.OLD_RULES), so every
+settings document of before builds exactly as it did; `floors[].ceilingHeight` (None: the default rule); and the three
+new fix lists `closings`, `rooms`, `stairs` kept (their points coerced), empty when missing.
 """
 from __future__ import annotations
 
 import copy
 
+from ..contracts import OLD_RULES
 from .errors import BuildError
 
 DEFAULTS = {'doorHead': 2.1, 'windowSill': 0.9, 'windowHead': 2.1, 'railingHeight': 1.1, 'slabThickness': 0.25,
@@ -17,7 +23,8 @@ DEFAULTS = {'doorHead': 2.1, 'windowSill': 0.9, 'windowHead': 2.1, 'railingHeigh
 FURNITURE = {'heights': {}, 'bases': {}, 'words': {}, 'skip': [], 'minSize': 0.08, 'minDepth': None, 'looseLayers': [],
              'pieceLayer': 'insert'}
 OPTIONS = {'revitWallTypes': 'auto', 'parapets': 'auto', 'objectClosures': True, 'liftShafts': True, 'plinth': 'auto',
-           'outlineWalls': 'off', 'offset': 'auto'}
+           'outlineWalls': 'off', 'offset': 'auto', **OLD_RULES}
+RULE_VALUES = {'slabs': ('closed-rooms', 'network'), 'ceilings': ('off', 'auto'), 'stairs': ('lines', 'climb')}
 
 
 def _f(v, what):
@@ -60,6 +67,11 @@ def coerce(settings: dict) -> dict:
     op = {**OPTIONS, **(s.get('options') or {})}
     if op['offset'] != 'auto':
         op['offset'] = _vec(op['offset'], 'options.offset')
+    for k, allowed in RULE_VALUES.items():
+        if op[k] not in allowed:
+            raise BuildError('bad_settings', f'options.{k} is {op[k]!r}; it is one of {", ".join(allowed)}')
+    if op['slabs'] == 'closed-rooms' and (op['ceilings'] != 'off' or op['stairs'] != 'lines'):
+        raise BuildError('bad_settings', 'ceilings and climbable stairs need floor plates from the wall network')
     s['options'] = op
     s['vocabulary'] = dict(s.get('vocabulary') or {})
     floors = s.get('floors') or []
@@ -69,6 +81,8 @@ def coerce(settings: dict) -> dict:
         f['wallHeight'] = _f(f.get('wallHeight'), f'{w}.wallHeight')
         for k in ('slabThickness', 'doorHead', 'windowSill', 'windowHead'):
             f[k] = _opt_f(f.get(k), f'{w}.{k}')
+        if op['slabs'] == 'network':                       # read only with the new rule (an old-rule floor is as before)
+            f['ceilingHeight'] = _opt_f(f.get('ceilingHeight'), f'{w}.ceilingHeight')
         a = f.get('area') or {'kind': 'wholeFile'}
         if a.get('kind') == 'box':
             a = {'kind': 'box', 'bbox': [_f(v, f'{w}.area.bbox') for v in a['bbox']], 'pad': _f(a.get('pad', 0.0), f'{w}.area.pad'),
@@ -87,8 +101,17 @@ def coerce(settings: dict) -> dict:
         o['head'], o['sill'] = _opt_f(o.get('head'), 'fixes.openings.head'), _opt_f(o.get('sill'), 'fixes.openings.sill')
     for o in fx.get('outlineEdges') or []:
         o['a'], o['b'] = _vec(o['a'], 'fixes.outlineEdges.a'), _vec(o['b'], 'fixes.outlineEdges.b')
+    for o in fx.get('closings') or []:
+        o['a'], o['b'] = _vec(o['a'], 'fixes.closings.a'), _vec(o['b'], 'fixes.closings.b')
+    for o in fx.get('rooms') or []:
+        o['at'] = _vec(o['at'], 'fixes.rooms.at')
+    for o in fx.get('stairs') or []:
+        o['at'] = _vec(o['at'], 'fixes.stairs.at')
+        o['bottom'] = _vec(o['bottom'], 'fixes.stairs.bottom') if o.get('bottom') is not None else None
     s['fixes'] = {'setAside': list(fx.get('setAside') or []), 'openings': list(fx.get('openings') or []),
-                  'outlineEdges': list(fx.get('outlineEdges') or [])}
+                  'outlineEdges': list(fx.get('outlineEdges') or []),
+                  'closings': list(fx.get('closings') or []), 'rooms': list(fx.get('rooms') or []),
+                  'stairs': list(fx.get('stairs') or [])}
     return s
 
 

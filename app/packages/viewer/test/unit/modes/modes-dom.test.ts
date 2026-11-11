@@ -818,7 +818,7 @@ describe('ModesApi shape', { timeout: 60_000 }, () => {
     const api: ModesApi = modes;
     expect(Object.keys(api).sort()).toEqual(['applyAddress', 'changeFloor', 'goToFloor', 'lock', 'mode', 'openCam', 'probe', 'setMode', 'state', 'takePhoto', 'tick'].sort());
     expect(api.mode).toBe('orbit');
-    expect(Object.keys(api.probe).sort()).toEqual(['camera', 'clearance', 'crosses', 'onFloor', 'open', 'visible', 'walk']);
+    expect(Object.keys(api.probe).sort()).toEqual(['camera', 'clearance', 'crosses', 'foot', 'ground', 'onFloor', 'open', 'visible', 'walk']);
     expect(api.probe.camera().dir).toHaveLength(3);
   });
 });

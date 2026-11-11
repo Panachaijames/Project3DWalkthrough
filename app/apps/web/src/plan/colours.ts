@@ -58,6 +58,8 @@ export const PART_FILL: Readonly<Record<PartKind, string>> = {
   wall: '#8a7f70', column: '#6b5d4f', lintel: '#b3a796', sill: '#b3a796', parapet: '#9c8f7d', glass: '#5fa8cf',
   mullion: '#5d6b74', railing: '#6f6a75', single: '#e0a458', step: '#8fa889', slab: '#d4d8d2', pane: '#7cc0e0',
   balustrade: '#6f6a75', low: '#a39a8c', builtin: '#a3876a', deck: '#b59a76', post: '#5d6b74',
+  // BuiltModel v2 kinds: placeholders of the rooms scaffold (R0); R6 draws stairs and ceilings its own way
+  tread: '#7d9a78', landing: '#9bb394', ceiling: '#e9e7e0',
 };
 export const PART_ALPHA = 0.5;
 export const SLAB_EDGE: Stroke = { colour: '#4d7c5b', alpha: 0.9, width: 1.2 };

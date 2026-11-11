@@ -15,6 +15,13 @@
 // Units: metres. "Sheet" coordinates = the drawing's own coordinates in metres (DXF units x the unit factor), per source.
 // Drawing text (layer, block, family, file, room and floor names, evidence strings, flag texts) is UNTRUSTED: DOM text
 // only (React text nodes, textContent, canvas fillText), never HTML.
+//
+// The rooms milestone (app/docs/rooms/DESIGN.md R-12.4; its scaffold R0, 11 Nov 2026) added, every member OPTIONAL
+// (a missing key is the old rule or an empty list, so every settings document and fixture of before still type-checks):
+// FloorSetup.ceilingHeight, BuilderOptions.slabs / ceilings / stairs, SetAside.floorPast, Fixes.closings / rooms / stairs
+// (ClosingFix, RoomFix, StairFix), OverlayFloor.spaces / holes / stairs / closings / unfloored, eight flag kinds, four
+// Flag.ref members, the build report's new floor keys (FloorReportRooms), and the two rule sets OLD_RULES and NEW_RULES:
+// the file's only run-time values (import them as values; everything else is a type).
 // =====================================================================================================================
 
 import type { FloorKey, PartKind, Vec2, VersionCounts } from '@walkthrough/viewer';
@@ -88,6 +95,8 @@ export interface FloorSetup {
   windowHead: number | null;
   /** Ignored on floors[0] (the reference). */
   align: FloorAlign;
+  /** Rooms milestone: m above the level, 0.5 - 20; null or absent: the default rule (R-5.1). Read only with ceilings 'auto'. */
+  ceilingHeight?: number | null;
 }
 
 export interface BuildDefaults {
@@ -143,7 +152,19 @@ export interface BuilderOptions {
   outlineWalls: 'off' | 'suggest';
   /** auto: the bank rule (centre of all slabs, 3 decimals), unless project-settings.json pins one (U-9.6). */
   offset: 'auto' | Vec2;
+  /** Rooms milestone (R-1.2). A missing key is the old rule. 'network': floor plates from the wall network, rooms, names,
+   *  holes, flags and fixes (R-2 - R-4, R-6); 'closed-rooms': a plate only where walls close a room. */
+  slabs?: 'closed-rooms' | 'network';
+  /** 'auto': ceilings (R-5); needs slabs 'network'. A missing key is 'off'. */
+  ceilings?: 'off' | 'auto';
+  /** 'climb': stairs you can climb (R-7, R-8); needs slabs 'network'. A missing key is 'lines'. */
+  stairs?: 'lines' | 'climb';
 }
+
+/** The three rooms-milestone options at their old values: what a missing key means (R-1.2). */
+export const OLD_RULES = { slabs: 'closed-rooms', ceilings: 'off', stairs: 'lines' } as const;
+/** The three options as every new draft gets them (R-1.3). */
+export const NEW_RULES = { slabs: 'network', ceilings: 'auto', stairs: 'climb' } as const;
 
 /** A drawing item, as staff picked it on the plan (U-7.2 for the key and signatures, U-10.6 for matching). Every field is
  *  copied from the plan geometry's entry for the key (PlanGeometry.items: sig, rsig, eid), never derived in the browser. */
@@ -163,7 +184,12 @@ export interface ItemRef {
   layer: string;
 }
 
-export interface SetAside extends ItemRef { note: string }
+export interface SetAside extends ItemRef {
+  note: string;
+  /** Rooms milestone (R-2.1 point 7): true = the floor runs past the line (it no longer bounds a room). Default false:
+   *  a set-aside line is not built and not read by the door finder, but still bounds the floor. */
+  floorPast?: boolean;
+}
 
 /** Matched to a detected opening by geometry (U-10.6); a and b in sheet m as detected. */
 export interface OpeningFix {
@@ -179,10 +205,26 @@ export interface OpeningFix {
 /** An outline suggestion staff accepted or refused (sheet m). */
 export interface OutlineEdgeFix { floor: FloorKey; a: Vec2; b: Vec2; as: 'wall' | 'glass' | 'none' }
 
+/** Rooms milestone (R-6.2), sheet m. 'line': a closing line staff drew (a 2 cm strip added to the wall network; it builds
+ *  nothing). 'none': leave out the app's bridge or doorway closing whose two ends lie within 0.3 m of a and b. */
+export interface ClosingFix { floor: FloorKey; a: Vec2; b: Vec2; use: 'line' | 'none' }
+/** Rooms milestone (R-6.2): the room (or the unfloored area) that contains `at` (sheet m). name: at most 200 characters,
+ *  text only, null = no name given. slab 'none': no floor here (a hole), or "it is outdoors" for an unfloored area;
+ *  'floor': floor here. ceiling 'none': no ceiling. */
+export interface RoomFix { floor: FloorKey; at: Vec2; name: string | null; slab: 'auto' | 'none' | 'floor'; ceiling: 'auto' | 'none' }
+/** Rooms milestone (R-6.2, R-7.6): the stair whose outline contains `at` (sheet m). bottom: a point on its bottom tread
+ *  (it decides the direction) or null. 'lines': keep it as lines; 'climb': build it although its riser is outside
+ *  0.14 - 0.21 m (up to 0.25 m). */
+export interface StairFix { floor: FloorKey; at: Vec2; bottom: Vec2 | null; use: 'auto' | 'lines' | 'climb' }
+
 export interface Fixes {
   setAside: SetAside[];
   openings: OpeningFix[];
   outlineEdges: OutlineEdgeFix[];
+  /** Rooms milestone: absent = none. The cap of 5,000 "other fixes" (U-13.2) counts these three lists too. */
+  closings?: ClosingFix[];
+  rooms?: RoomFix[];
+  stairs?: StairFix[];
 }
 
 /** The build's whole recipe. Stored as builds/<id>/settings.json (inside BuildSettingsFile) while a draft is open and as
@@ -619,11 +661,28 @@ export interface OverlayFloor {
   rooms: { name: string; x: number; y: number }[];
   /** Items the build set aside (matched fixes). */
   setAside: string[];
+  // Rooms milestone (R-12.4): all optional, absent with the old rule; sheet m.
+  /** The rooms with their outlines (BuiltModel.spaces, in sheet coordinates). */
+  spaces?: { id: string; name: string; names: string[]; area: number; o: Vec2[]; h: Vec2[][]; ceiling: boolean; source: 'network' | 'outline' | 'staff' }[];
+  /** The holes cut in the plate; `what` as voids[].what ('stair well', 'stair', 'lift shaft', 'shaft', 'void', 'no floor'). */
+  holes?: { what: string; o: Vec2[]; h: Vec2[][] }[];
+  /** Every stair group: built climbable ('climb', with its walking line) or kept as lines ('lines', with why and the flag's text). */
+  stairs?: {
+    id: string; state: 'climb' | 'lines'; why: string | null; text: string | null; outline: Vec2[]; walk: Vec2[] | null;
+    bottom: Vec2 | null; to: FloorKey | null; risers: number | null; riser: number | null;
+  }[];
+  /** The 2 cm strips added to the wall network: staff closing lines, the app's bridges and doorway closings. `fix`: the
+   *  index into fixes.closings of a staff line. */
+  closings?: { kind: 'staff' | 'bridge' | 'doorway'; a: Vec2; b: Vec2; fix?: number }[];
+  /** Places beside the walls with no floor that are nearly closed; mouth: the two ends of the opening, or null. */
+  unfloored?: { area: number; o: Vec2[]; mouth: [Vec2, Vec2] | null; answered: boolean }[];
 }
 
 export type FlagKind =
   | 'opening' | 'single-line' | 'lost' | 'outline-wall' | 'outline-glass' | 'grey-furniture' | 'rail-left-out'
-  | 'room-label' | 'plate-dropped' | 'alignment' | 'units' | 'fix-unmatched' | 'detector-skipped' | 'slow';
+  | 'room-label' | 'plate-dropped' | 'alignment' | 'units' | 'fix-unmatched' | 'detector-skipped' | 'slow'
+  // rooms milestone (R-6.1)
+  | 'slab-gap' | 'room-open' | 'room-names' | 'doorway' | 'stair' | 'stairs-none' | 'stair-clash' | 'hole-skipped';
 
 export interface Flag {
   /** Stable for the same drawing and settings: <kind>:<floor>:<12 hex of what it is about>. */
@@ -643,7 +702,21 @@ export interface Flag {
     family?: string;
     fix?: number;
     edge?: [Vec2, Vec2];
+    /** Rooms milestone: a space id; a stair id; the two ends of a mouth or of a doorway closing (sheet m). */
+    room?: string;
+    stair?: string;
+    a?: Vec2;
+    b?: Vec2;
   };
+}
+
+/** out/report.json (build) -> versions/<n>/source/build-report.json, floors[<key>]: the keys the new rule adds to a
+ *  floor's report (rooms milestone, R-12.3, R-12.4; absent with the old rule). The lists' rows are the builder's. */
+export interface FloorReportRooms {
+  rooms?: { spaces: number; named: number; shapes: number; open: unknown[]; several: unknown[] };
+  slab?: { ring: number; terraces: number; old: number; plate: number; holes: unknown[]; unfloored: unknown[]; closings: unknown[]; dropped: unknown[] };
+  stairways?: unknown[];
+  stairClash?: unknown[];
 }
 
 /** out/diff.json (build): this build against the previous build of the draft and against the latest version (U-12.4),

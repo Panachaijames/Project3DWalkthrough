@@ -1,0 +1,3 @@
+{"name": "xx-probe", "project": "xx-probe",
+ "create": {"name": "Presidential xx (intake only)", "shortName": "Suite xx", "id": "xx-probe"},
+ "files": ["layout presidential xx.dwg"], "from": null, "stopAfterPrepare": true}

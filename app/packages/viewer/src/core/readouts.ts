@@ -51,6 +51,21 @@ export const createReadouts: CreateReadouts = ctx => {
       const hit = first(key, far);
       return hit ? { d: hit.distance, name: hit.object.name } : null;
     },
+    // The rooms scaffold's placeholder (R0; R4 owns it, rooms/DESIGN.md R-9.8): the highest surface of the floor's stack
+    // under (x, y), from h0 above the level. FloorRecord.surfaces is empty until R4 fills it, so this is null for now.
+    groundAt(key, x, y, h0 = 3.0) {
+      const f = ctx.floorByKey.get(key);
+      if (!f) return null;
+      const surfaces = ctx.floors.filter(g => g.stack === f.stack).flatMap(g => g.surfaces).filter(m => m.visible);
+      if (!surfaces.length) return null;
+      for (const m of surfaces) m.updateWorldMatrix(true, false);
+      origin.set(x, f.level + h0, -y); dir.set(0, -1, 0);
+      ray.set(origin, dir);
+      ray.near = 0;
+      ray.far = h0 + 8;
+      const hit = ray.intersectObjects(surfaces, false)[0];
+      return hit ? h0 - hit.distance : null;
+    },
   };
   return api;
 };

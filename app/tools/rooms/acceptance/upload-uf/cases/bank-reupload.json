@@ -1,0 +1,5 @@
+{"name": "bank-reupload", "project": "bank-reupload",
+ "create": {"name": "Bangkok Bank, Sampeng Branch", "shortName": "Bank branch", "id": "bank-reupload", "newOfficeName": "Acceptance Revit"},
+ "files": ["I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg", "I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg"],
+ "from": null, "settings": {"fixture": "bank"},
+ "save": {"label": "bank re-upload (A-1 a)", "carryHeights": true, "rememberMapping": true}}

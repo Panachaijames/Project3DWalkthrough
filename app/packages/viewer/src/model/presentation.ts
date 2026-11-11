@@ -55,14 +55,15 @@ export const DEFAULT_TICK_LABELS: Record<ToggleName, string> & { pictureTitle: s
   rooms: 'Room names',
   single: 'Single-line items',
   picture: 'Plan picture',
+  ceilings: 'Ceilings',
   pictureTitle: "Each floor's source picture, laid on its floor plate at the model's scale and position",
 };
 export const DEFAULT_ACCENT = '#2f6f8f';
 export const DEFAULT_CREASE_ANGLE = 25;
 export const DEFAULT_CAMERA_FAR = 600;
 export const DEFAULT_FLOOR_BUTTON_ALL = 'Both floors';
-export const DEFAULT_TOGGLES: Record<ToggleName, boolean> = { plates: true, glass: true, rooms: true, single: true, picture: false };
-const TOGGLES: readonly ToggleName[] = ['plates', 'glass', 'rooms', 'single', 'picture'];
+export const DEFAULT_TOGGLES: Record<ToggleName, boolean> = { plates: true, glass: true, rooms: true, single: true, picture: false, ceilings: true };
+const TOGGLES: readonly ToggleName[] = ['plates', 'glass', 'rooms', 'single', 'picture', 'ceilings'];
 
 // ------------------------------------------------------------------------------------------------------------- checks
 type Obj = Record<string, unknown>;

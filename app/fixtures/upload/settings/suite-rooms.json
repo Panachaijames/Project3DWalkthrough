@@ -1,0 +1,168 @@
+{
+  "format": "build-settings/1",
+  "office": null,
+  "project": {
+    "name": "Presidential suite",
+    "shortName": "Presidential suite",
+    "projectNo": null,
+    "photoName": "Presidential",
+    "maxPrefix": "PS",
+    "maxFileName": "Presidential_Suite.ms",
+    "exportedFrom": null
+  },
+  "sources": [
+    {
+      "sha1": "b3f0dec93d1f636166a7573ab00ed1c5cc898a81",
+      "name": "layout presidential test.dwg",
+      "kind": "dwg",
+      "units": "mm",
+      "unitsConfirmed": true
+    }
+  ],
+  "layers": {
+    "0": "other",
+    "1VinaPVC-Hatch": "ignore",
+    "A-1.Netcat - tuong": "wall",
+    "A-1.Netthay": "other",
+    "A-1.Netthay - manh": "other",
+    "A-2. Noi That - bo": "ignore",
+    "A-2.Noi That": "furniture",
+    "A-4. Cay": "furniture",
+    "A-4. Cay (goccay)": "furniture",
+    "A-4. Dim": "other",
+    "A-DETL-GENF": "ignore",
+    "A-Hatch thiet bi": "ignore",
+    "A-HatchVatlieu": "ignore",
+    "A-Text": "room-name",
+    "A.Cot 1": "column",
+    "Defpoints": "room-outline",
+    "KT-Lancan": "railing",
+    "KT_BIEN DAM RED": "ignore",
+    "KT_BIEN PHAO GREEN": "ignore",
+    "KT_BIEN SAN BLUE": "ignore",
+    "TG_Name": "room-name",
+    "Xr_SDC_DD_ID-Level41-Arch wall$0$DA-DOOR-WIND": "other",
+    "Xr_SDC_DD_ID-Level41-Arch wall$0$KT-Cua": "other",
+    "Xr_SDC_DD_ID-Level41-Arch wall$0$KT-Hatch": "other",
+    "Xr_SDC_DD_ID-MUR.JS-Furniture$0$DA-FURN-OTLN": "other",
+    "Xr_SDC_DD_ID-PCS-Fur$0$DA-SANR-FIXT": "furniture",
+    "Xr_SDC_DD_ID-PCS-ID wall$0$DA-DOOR-WIND": "door",
+    "Xr_SDC_DD_ID-PCS-ID wall$0$DA-LATT-OTLN": "other",
+    "Xr_SDC_DD_ID-PCS-ID wall$0$DA-WALL-FNSH": "other",
+    "Xr_SDC_DD_ID-PRS-Fur$0$DA-ELEV-PEN1": "other",
+    "Xr_SDC_DD_ID-PRS-Fur$0$DA-FACILITIES": "furniture",
+    "Xr_SDC_DD_ID-PRS-Fur$0$DA-LEVEL-LIGHT": "furniture",
+    "Xr_SDC_DD_ID-PRS-Fur$0$DA-LOOSE-FURN": "furniture",
+    "Xr_SDC_DD_ID-PRS-ID wall$0$DA-ANNO-DIMS": "ignore",
+    "Xr_SDC_DD_ID-PRS-ID wall$0$DA-DOOR-WIND": "door",
+    "Xr_SDC_DD_ID-PRS-ID wall$0$DA-ELEV-PEN1": "other",
+    "Xr_SDC_DD_ID-PRS-ID wall$0$DA-FLOR-PATT": "ignore",
+    "Xr_SDC_DD_ID-PRS-ID wall$0$DA-SANR": "furniture",
+    "Xr_SDC_DD_ID-PRS-ID wall$0$DA-WALL-FNSH": "other",
+    "Xr_SDC_DD_ID-PRS-ID wall$0$DA-WALL-FULL": "other",
+    "Xr_SDC_DD_ID-ROS-Fur$0$DA-ANNO-DIMS": "ignore",
+    "washbasin$0$HLD - A - Hatch": "ignore"
+  },
+  "floors": [
+    {
+      "key": "suite",
+      "name": "Suite (FL-01)",
+      "source": "b3f0dec93d1f636166a7573ab00ed1c5cc898a81",
+      "area": {
+        "kind": "box",
+        "bbox": [
+          174.840173,
+          -3508.518094,
+          209.056439,
+          -3480.305594
+        ],
+        "pad": 0.0,
+        "match": "any"
+      },
+      "level": 0.0,
+      "wallHeight": 3.0,
+      "slabThickness": null,
+      "doorHead": 2.1,
+      "windowSill": null,
+      "windowHead": null,
+      "align": {
+        "method": "auto"
+      }
+    }
+  ],
+  "defaults": {
+    "doorHead": 2.1,
+    "windowSill": 0.9,
+    "windowHead": 2.1,
+    "railingHeight": 1.1,
+    "slabThickness": 0.25,
+    "singleLineHeight": 1.0
+  },
+  "furniture": {
+    "heights": {
+      "plant": 2500.0,
+      "curtain": 2700.0
+    },
+    "bases": {},
+    "words": {
+      "plant": [
+        "jdlkasdjkla"
+      ],
+      "sofa": [
+        "sdhsdfhsdfh",
+        "TZSUCAI-30",
+        "A$C2b06494e",
+        "A$Cfa141486"
+      ],
+      "tall-cabinet": [
+        "*U1636",
+        "*U1637"
+      ],
+      "sanitary": [
+        "sdfhsdfhsdfh"
+      ],
+      "appliance": [
+        "A$C632aa080"
+      ],
+      "curtain": [
+        "A$C86fb51a5"
+      ],
+      "seat": [
+        "A$C1919ec32"
+      ],
+      "table": [
+        "A$Cf34708b2"
+      ],
+      "lamp": [
+        "L_02"
+      ]
+    },
+    "skip": [
+      "áhahsfhsdfh"
+    ],
+    "minSize": 0.08,
+    "minDepth": null,
+    "looseLayers": [
+      "A-2.Noi That"
+    ],
+    "pieceLayer": "drawn"
+  },
+  "vocabulary": {},
+  "options": {
+    "revitWallTypes": "auto",
+    "parapets": "auto",
+    "objectClosures": true,
+    "liftShafts": true,
+    "plinth": "auto",
+    "outlineWalls": "off",
+    "offset": "auto",
+    "slabs": "network",
+    "ceilings": "auto",
+    "stairs": "climb"
+  },
+  "fixes": {
+    "setAside": [],
+    "openings": [],
+    "outlineEdges": []
+  }
+}

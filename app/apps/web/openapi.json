@@ -986,6 +986,16 @@
       "BuilderOptions": {
         "additionalProperties": false,
         "properties": {
+          "ceilings": {
+            "default": "off",
+            "description": "'auto': ceilings (R-5); needs slabs 'network'.",
+            "enum": [
+              "off",
+              "auto"
+            ],
+            "title": "Ceilings",
+            "type": "string"
+          },
           "liftShafts": {
             "title": "Liftshafts",
             "type": "boolean"
@@ -1048,6 +1058,26 @@
             ],
             "title": "Revitwalltypes",
             "type": "string"
+          },
+          "slabs": {
+            "default": "closed-rooms",
+            "description": "Rooms milestone (R-1.2); a missing key is the old rule. 'network': floor plates from the wall network, with rooms, names, holes, flags and fixes.",
+            "enum": [
+              "closed-rooms",
+              "network"
+            ],
+            "title": "Slabs",
+            "type": "string"
+          },
+          "stairs": {
+            "default": "lines",
+            "description": "'climb': stairs you can climb (R-7, R-8); needs slabs 'network'.",
+            "enum": [
+              "lines",
+              "climb"
+            ],
+            "title": "Stairs",
+            "type": "string"
           }
         },
         "required": [
@@ -1067,6 +1097,61 @@
         "description": "An empty JSON object (U-5.2).",
         "properties": {},
         "title": "CancelBuildRequest",
+        "type": "object"
+      },
+      "ClosingFix": {
+        "additionalProperties": false,
+        "description": "Rooms milestone (R-6.2), sheet m. 'line': a closing line staff drew; 'none': leave out the app's bridge or\ndoorway closing whose two ends lie within 0.3 m of a and b.",
+        "properties": {
+          "a": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "A",
+            "type": "array"
+          },
+          "b": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "B",
+            "type": "array"
+          },
+          "floor": {
+            "description": "Floor key, ^[A-Za-z0-9_]{1,32}$.",
+            "title": "Floor",
+            "type": "string"
+          },
+          "use": {
+            "enum": [
+              "line",
+              "none"
+            ],
+            "title": "Use",
+            "type": "string"
+          }
+        },
+        "required": [
+          "floor",
+          "a",
+          "b",
+          "use"
+        ],
+        "title": "ClosingFix",
         "type": "object"
       },
       "CompleteUploadRequest": {
@@ -1145,6 +1230,14 @@
       "Fixes": {
         "additionalProperties": false,
         "properties": {
+          "closings": {
+            "description": "Rooms milestone; a missing key is no fix. The cap of 5,000 other fixes counts these too.",
+            "items": {
+              "$ref": "#/components/schemas/ClosingFix"
+            },
+            "title": "Closings",
+            "type": "array"
+          },
           "openings": {
             "items": {
               "$ref": "#/components/schemas/OpeningFix"
@@ -1159,11 +1252,25 @@
             "title": "Outlineedges",
             "type": "array"
           },
+          "rooms": {
+            "items": {
+              "$ref": "#/components/schemas/RoomFix"
+            },
+            "title": "Rooms",
+            "type": "array"
+          },
           "setAside": {
             "items": {
               "$ref": "#/components/schemas/SetAside"
             },
             "title": "Setaside",
+            "type": "array"
+          },
+          "stairs": {
+            "items": {
+              "$ref": "#/components/schemas/StairFix"
+            },
+            "title": "Stairs",
             "type": "array"
           }
         },
@@ -1419,6 +1526,18 @@
               }
             ],
             "title": "Area"
+          },
+          "ceilingHeight": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "m above the level, 0.5 - 20; null: the default rule (rooms R-5.1). Read only with ceilings 'auto'.",
+            "title": "Ceilingheight"
           },
           "doorHead": {
             "anyOf": [
@@ -2328,6 +2447,70 @@
         "title": "ProjectSummary",
         "type": "object"
       },
+      "RoomFix": {
+        "additionalProperties": false,
+        "description": "Rooms milestone (R-6.2): the room, or the unfloored area, that contains `at` (sheet m).",
+        "properties": {
+          "at": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "At",
+            "type": "array"
+          },
+          "ceiling": {
+            "enum": [
+              "auto",
+              "none"
+            ],
+            "title": "Ceiling",
+            "type": "string"
+          },
+          "floor": {
+            "description": "Floor key, ^[A-Za-z0-9_]{1,32}$.",
+            "title": "Floor",
+            "type": "string"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "At most 200 characters, text only; null: no name given.",
+            "title": "Name"
+          },
+          "slab": {
+            "description": "'none': no floor here (or: it is outdoors); 'floor': floor here.",
+            "enum": [
+              "auto",
+              "none",
+              "floor"
+            ],
+            "title": "Slab",
+            "type": "string"
+          }
+        },
+        "required": [
+          "floor",
+          "at",
+          "name",
+          "slab",
+          "ceiling"
+        ],
+        "title": "RoomFix",
+        "type": "object"
+      },
       "RunBuildRequest": {
         "additionalProperties": false,
         "description": "An empty JSON object: a state change is never a simple cross-site request (U-5.2).",
@@ -2617,6 +2800,12 @@
             "title": "Floor",
             "type": "string"
           },
+          "floorPast": {
+            "default": false,
+            "description": "Rooms milestone (R-2.1 point 7): true = the floor runs past the line. Default: a set-aside line still bounds the floor.",
+            "title": "Floorpast",
+            "type": "boolean"
+          },
           "key": {
             "description": "Nested handle key, e.g. \"BA/2C4/1F3\"; an INSERT key covers its whole subtree.",
             "title": "Key",
@@ -2763,6 +2952,71 @@
           "unitsConfirmed"
         ],
         "title": "SourceSetting",
+        "type": "object"
+      },
+      "StairFix": {
+        "additionalProperties": false,
+        "description": "Rooms milestone (R-6.2, R-7.6): the stair whose outline contains `at` (sheet m).",
+        "properties": {
+          "at": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "At",
+            "type": "array"
+          },
+          "bottom": {
+            "anyOf": [
+              {
+                "maxItems": 2,
+                "minItems": 2,
+                "prefixItems": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ],
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "A point on the bottom tread (it decides the direction), or null.",
+            "title": "Bottom"
+          },
+          "floor": {
+            "description": "Floor key, ^[A-Za-z0-9_]{1,32}$.",
+            "title": "Floor",
+            "type": "string"
+          },
+          "use": {
+            "description": "'lines': keep it as lines; 'climb': build it although its riser is outside 0.14 - 0.21 m (up to 0.25 m).",
+            "enum": [
+              "auto",
+              "lines",
+              "climb"
+            ],
+            "title": "Use",
+            "type": "string"
+          }
+        },
+        "required": [
+          "floor",
+          "at",
+          "bottom",
+          "use"
+        ],
+        "title": "StairFix",
         "type": "object"
       },
       "UploadPartResult": {

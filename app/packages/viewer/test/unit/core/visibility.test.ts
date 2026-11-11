@@ -34,11 +34,11 @@ describe('visibility: ticks', { timeout: 60_000 }, () => {
     const ctx = kitContext('house');
     const seen = vi.fn();
     ctx.bus.on('toggles', seen);
-    expect(ctx.visibility.toggles).toEqual({ plates: true, glass: true, rooms: true, single: true, picture: false });
+    expect(ctx.visibility.toggles).toEqual({ plates: true, glass: true, rooms: true, single: true, picture: false, ceilings: true });
     ctx.visibility.setToggle('glass', false);
     expect(ctx.built.toggleObjects.glass.every(o => !o.visible)).toBe(true);
     expect(ctx.built.toggleObjects.plates.every(o => o.visible)).toBe(true);
-    expect(seen).toHaveBeenLastCalledWith({ toggles: { plates: true, glass: false, rooms: true, single: true, picture: false } });
+    expect(seen).toHaveBeenLastCalledWith({ toggles: { plates: true, glass: false, rooms: true, single: true, picture: false, ceilings: true } });
     ctx.visibility.setToggle('single', false);
     ctx.visibility.setToggle('plates', false);
     expect([...ctx.built.toggleObjects.single, ...ctx.built.toggleObjects.plates].every(o => !o.visible)).toBe(true);

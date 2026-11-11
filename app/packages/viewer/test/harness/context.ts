@@ -64,7 +64,7 @@ export interface TestContext extends ViewerContext {
 }
 
 const DEFAULT_LABELS = {
-  plates: 'Floor plates', glass: 'Glass', rooms: 'Room names', single: 'Single-line items', picture: 'Plan picture',
+  plates: 'Floor plates', glass: 'Glass', rooms: 'Room names', single: 'Single-line items', picture: 'Plan picture', ceilings: 'Ceilings',
   pictureTitle: "Each floor's source picture, laid on its floor plate at the model's scale and position",
 };
 
@@ -85,7 +85,7 @@ export function naivePresentation(p: Presentation | undefined, model: BuiltModel
     partStyles: styles,
     creaseAngle: p?.creaseAngle ?? 25,
     groundPlane: p?.groundPlane ?? null,
-    toggles: { plates: true, glass: true, rooms: true, single: true, picture: false, ...(p?.toggles ?? {}) },
+    toggles: { plates: true, glass: true, rooms: true, single: true, picture: false, ceilings: true, ...(p?.toggles ?? {}) },
   };
 }
 
@@ -189,7 +189,7 @@ function buildNaively(model: BuiltModel, pres: ResolvedPresentation, scene: Scen
     scene.add(group);
     const rec: FloorRecord = {
       key: f.key, name: f.name, level: f.level, modelLevel: f.level, wallHeight: f.wallHeight, stack: f.stack ?? 'main',
-      group, colliders: [], walkables: [], late: [], rise: [],
+      group, colliders: [], walkables: [], surfaces: [], late: [], rise: [],          // surfaces: the rooms scaffold's placeholder (R4 fills it)
     };
     built.floors.push(rec);
     built.fitted[f.key] = [];
@@ -368,6 +368,7 @@ export function makeTestContext(o: TestContextOptions): TestContext {
     },
     has: name => name === 'rooms' ? model.rooms.length > 0
       : name === 'picture' ? Object.keys(model.pictureFrame ?? {}).length > 0
+      : name === 'ceilings' ? false                      // no ceiling meshes in the naive scene (the rooms scaffold's placeholder)
       : built.toggleObjects[name].length > 0,
   };
   const settings: SettingsMap = Object.fromEntries(model.floors.map(f => [f.key, { level: f.level, height: f.wallHeight } satisfies FloorSettings]));
@@ -405,6 +406,14 @@ export function makeTestContext(o: TestContextOptions): TestContext {
       return hit ? { d: hit.distance, name: hit.object.name } : null;
     },
     cast: (key, p, d, far) => { const hit = first(key, new Vector3(...p), new Vector3(...d).normalize(), far); return hit ? { d: hit.distance, name: hit.object.name } : null; },
+    // the rooms scaffold's placeholder (rooms/DESIGN.md R-9.8): the floor plate under (x, y), from h0 above the level
+    groundAt: (key, x, y, h0 = 3.0) => {
+      const f = floorByKey.get(key);
+      if (!f) return null;
+      ray.set(new Vector3(x, f.level + h0, -y), new Vector3(0, -1, 0)); ray.far = h0 + 8;
+      const hit = ray.intersectObjects([...f.surfaces, ...f.walkables].filter(m => m.visible), false)[0];
+      return hit ? h0 - hit.distance : null;
+    },
   };
 
   // loop
@@ -444,7 +453,7 @@ export function makeTestContext(o: TestContextOptions): TestContext {
   root.append(panelEl);
   const panel: PanelApi = { el: panelEl, slot: name => slots.get(name)!, markFloors: () => {} };
   const modesState: ModesState = {
-    mode: 'orbit', floor: built.floors[0]!, pos: new Vector3(), yaw: 0, pitch: 0, eye: 1.6, lens: 24, orbitLens: 33, straight: false,
+    mode: 'orbit', floor: built.floors[0]!, pos: new Vector3(), foot: built.floors[0]!.level, yaw: 0, pitch: 0, eye: 1.6, lens: 24, orbitLens: 33, straight: false,
     ghostSpeed: 6, keys: new Set(), saved: null, drag: null, dragMoved: false, frame: '3:2', size: 1920, grid: false, camOpen: false,
     last: 0, touch: false, stick: { id: null, x: 0, y: 0 }, vert: 0, locked: false,
   };
@@ -453,6 +462,7 @@ export function makeTestContext(o: TestContextOptions): TestContext {
     state: modesState,
     probe: {
       open: () => 0, clearance: () => 0, onFloor: () => false, crosses: () => false, walk: () => 0,
+      foot: () => modesState.foot, ground: () => null,
       visible: () => built.floors.filter(f => f.group.visible).map(f => f.key),
       camera: () => { const d = camera.getWorldDirection(new Vector3()); return { x: camera.position.x, y: camera.position.y, z: camera.position.z, fov: camera.fov, rx: camera.rotation.x, offsetY: camera.view?.offsetY ?? null, dir: [d.x, d.y, d.z] }; },
     },

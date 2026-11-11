@@ -1,0 +1,4 @@
+{"name": "tower", "project": "tower-upload",
+ "create": {"name": "Tower, levels 29 and 30", "shortName": "Tower", "id": "tower-upload", "office": "acceptance-revit"},
+ "files": ["L29.dwg", "L30.dwg"], "from": null, "settings": {"fixture": "tower"},
+ "save": {"label": "tower upload (A-5)", "carryHeights": true, "rememberMapping": false}}

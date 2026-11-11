@@ -96,11 +96,11 @@ describe('resolvePresentation', () => {
     const r = resolvePresentation(parsePresentation({ documentTitle: 'T', heading: 'H', intro: [], legend: { layout: 'lines', items: [] },
       camera: { kind: 'fitSlabs', away: [1, 2, 3], targetY: 2.5, panForPanel: true } }), model);
     expect(r.floorButtons).toEqual({ all: 'Both floors', labels: Object.fromEntries(model.floors.map(f => [f.key, f.name])) });
-    expect(r.labels).toEqual({ plates: 'Floor plates', glass: 'Glass', rooms: 'Room names', single: 'Single-line items', picture: 'Plan picture',
+    expect(r.labels).toEqual({ plates: 'Floor plates', glass: 'Glass', rooms: 'Room names', single: 'Single-line items', picture: 'Plan picture', ceilings: 'Ceilings',
       pictureTitle: "Each floor's source picture, laid on its floor plate at the model's scale and position" });
     expect(r.camera).toEqual({ kind: 'fitSlabs', away: [1, 2, 3], targetY: 2.5, panForPanel: true, far: 600 });
     expect(Object.keys(r.partStyles).sort()).toEqual(Object.keys(DEFAULT_PART_STYLES).sort());
-    expect(r.toggles).toEqual({ plates: true, glass: true, rooms: true, single: true, picture: false });
+    expect(r.toggles).toEqual({ plates: true, glass: true, rooms: true, single: true, picture: false, ceilings: true });
   });
 
   it('is idempotent: a resolved presentation resolves to itself', () => {

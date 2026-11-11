@@ -29,9 +29,21 @@ from walkthrough_builder import contracts
 SETTINGS = kit.UPLOAD_FIXTURES / 'settings'
 GOLDEN_MODEL = 'c3a9408304a240b83c36f5c5c53db56b50a72c64'
 GOLDEN_CSV = 'b528bb2320ef4a5e04ad3c1ad1e04ee09af67861'
-CACHE_OF = {'bank': ['bank1', 'bank2'], 'house': ['sukhumvit'], 'suite': ['presidential'], 'tower': ['l29', 'l30']}
+CACHE_OF = {'bank': ['bank1', 'bank2'], 'house': ['sukhumvit'], 'suite': ['presidential'], 'tower': ['l29', 'l30'],
+            'suite-revit': ['suite-revit']}
 DRAWING_FIXTURE = {'bank1': kit.UPLOAD_FIXTURES / 'drawing' / 'bank1.drawing.json',
                    'sukhumvit': kit.UPLOAD_FIXTURES / 'drawing' / 'sukhumvit.drawing.json'}
+#: caches that are the app reader's own (items.pkl with the keys `k`, drawing.json, the conversion report), in R0's
+#: reference folder kit.REF_R0 in the cache layout of U-4.2: cache name -> source sha1 (rooms milestone, scaffold R0)
+READER_CACHE = {'suite-revit': kit.NEW_SUITE_SHA1}
+
+
+def reader_cache(cache: str) -> Path:
+    """The read folder of a drawing the app's reader read into R0's reference folder:
+    <REF_R0>/<cache>/<sha1>/read-<rv>-<units> (tools/rooms/make-suite-cache.py; its manifest names the folder)."""
+    root = kit.REF_R0 / cache
+    man = json.loads((root / 'manifest.json').read_text(encoding='utf-8'))
+    return root / man['sha1'] / man['read']
 
 
 def settings(name: str) -> dict:
@@ -68,9 +80,16 @@ def run_build(s: dict, sources: list[dict], tmp: Path, project_id: str = 'test')
 
 
 def ref_sources(name: str, s: dict, ref: Path, *, drawings: dict | None = None) -> list[dict]:
-    """The SourceContexts of an acceptance drawing over the reference caches (prims.pkl: the reader's oracle)."""
+    """The SourceContexts of an acceptance drawing over the reference caches (prims.pkl: the reader's oracle; the new
+    suite: the app reader's own items.pkl, drawing.json and conversion report in kit.REF_R0)."""
     out = []
     for src, cache in zip(s['sources'], CACHE_OF[name]):
+        if cache in READER_CACHE:
+            d = reader_cache(cache)
+            conv = d.parent / 'libredwg-0.14' / 'conversion.json'
+            out.append(source_ctx(src['sha1'], src['name'], d / 'items.pkl', drawing=d / 'drawing.json',
+                                  conversion=conv if conv.is_file() else None))
+            continue
         dr = (drawings or {}).get(cache) or DRAWING_FIXTURE.get(cache)
         out.append(source_ctx(src['sha1'], src['name'], ref / 'proj' / 'detector' / cache / 'prims.pkl', drawing=dr))
     return out

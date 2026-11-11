@@ -69,7 +69,7 @@ describe('makeReplayObjects / unmakeReplayObjects', () => {
   const data = stages('bank-v2');
   const floor = (key: string, level: number): ReplayFloorRt => {
     const group = new Group();
-    const rec = { key, name: key, level, modelLevel: level, wallHeight: 3.7, stack: 'main', group, colliders: [], walkables: [], late: [], rise: [] } as FloorRecord;
+    const rec = { key, name: key, level, modelLevel: level, wallHeight: 3.7, stack: 'main', group, colliders: [], walkables: [], surfaces: [], late: [], rise: [] } as FloorRecord;
     const sf = data.floors[key]!;
     return {
       rec, key, name: key, level, height: 3.7, sheet: sf.sheet, lines: sf.lines, pieces: sf.pieces, rings: sf.rings,

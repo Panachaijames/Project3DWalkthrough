@@ -16,13 +16,21 @@ key is never written as null.
 
 Frozen after the scaffold U0 (a change moves openapi.json and the generated client): a defect goes in your own
 docs/upload/contract-issues/U<n>.md.
+
+The rooms milestone (docs/rooms/DESIGN.md R-12.4, R-12.5; its scaffold R0, 11 Nov 2026; frozen again after it) added,
+every field OPTIONAL with a default, so a settings document of before still validates and comes back with the old
+values: FloorSetup.ceilingHeight (None), BuilderOptions.slabs / ceilings / stairs (OLD_RULES), SetAside.floorPast
+(False), Fixes.closings / rooms / stairs ([]; ClosingFix, RoomFix, StairFix), the overlay's spaces / holes / stairs /
+closings / unfloored (absent with the old rule), eight flag kinds, four Flag.ref keys, three part kinds, and the two
+rule sets OLD_RULES and NEW_RULES. Fields with defaults do not split the schemas into -Input and -Output (FastAPI 0.150,
+pydantic 2.14; checked on these models by R0).
 """
 from __future__ import annotations
 
 from typing import Annotated, Any, Literal
 
 from pydantic import ConfigDict, Field, model_validator
-from typing_extensions import TypedDict
+from typing_extensions import Required, TypedDict
 
 from .models import ApiModel, VersionCounts
 
@@ -48,9 +56,18 @@ RunErrorCode = Literal[
     'cancelled', 'interrupted', 'internal',
 ]
 FlagKind = Literal['opening', 'single-line', 'lost', 'outline-wall', 'outline-glass', 'grey-furniture', 'rail-left-out',
-                   'room-label', 'plate-dropped', 'alignment', 'units', 'fix-unmatched', 'detector-skipped', 'slow']
+                   'room-label', 'plate-dropped', 'alignment', 'units', 'fix-unmatched', 'detector-skipped', 'slow',
+                   # the rooms milestone (docs/rooms/DESIGN.md R-6.1)
+                   'slab-gap', 'room-open', 'room-names', 'doorway', 'stair', 'stairs-none', 'stair-clash',
+                   'hole-skipped']
 PartKind = Literal['wall', 'column', 'lintel', 'sill', 'parapet', 'glass', 'mullion', 'railing', 'single', 'step', 'slab',
-                   'pane', 'balustrade', 'low', 'builtin', 'deck', 'post']
+                   'pane', 'balustrade', 'low', 'builtin', 'deck', 'post',
+                   'tread', 'landing', 'ceiling']                                     # BuiltModel v2 (rooms R-12.1)
+
+#: The three options of the rooms milestone at their old values: what a missing key means (docs/rooms/DESIGN.md R-1.2).
+OLD_RULES: dict[str, str] = {'slabs': 'closed-rooms', 'ceilings': 'off', 'stairs': 'lines'}
+#: The three options as every new draft gets them (R-1.3).
+NEW_RULES: dict[str, str] = {'slabs': 'network', 'ceilings': 'auto', 'stairs': 'climb'}
 LevelLevel = Literal['info', 'warn', 'error']
 
 STRICT = ConfigDict(**ApiModel.model_config, extra='forbid')
@@ -128,6 +145,8 @@ class FloorSetup(StrictModel):
     window_sill: float | None
     window_head: float | None
     align: FloorAlign = Field(description='Ignored on floors[0] (the reference).')
+    ceiling_height: float | None = Field(default=None, description='m above the level, 0.5 - 20; null: the default '
+                                                                   "rule (rooms R-5.1). Read only with ceilings 'auto'.")
 
 
 class BuildDefaults(StrictModel):
@@ -176,6 +195,12 @@ class BuilderOptions(StrictModel):
     outline_walls: Literal['off', 'suggest']
     offset: Literal['auto'] | Vec2 = Field(description='auto: the bank rule (centre of all slabs, 3 decimals), unless '
                                                        'project-settings.json pins one (U-9.6).')
+    slabs: Literal['closed-rooms', 'network'] = Field(
+        default='closed-rooms', description="Rooms milestone (R-1.2); a missing key is the old rule. 'network': floor "
+                                            'plates from the wall network, with rooms, names, holes, flags and fixes.')
+    ceilings: Literal['off', 'auto'] = Field(default='off', description="'auto': ceilings (R-5); needs slabs 'network'.")
+    stairs: Literal['lines', 'climb'] = Field(default='lines', description="'climb': stairs you can climb (R-7, R-8); "
+                                                                           "needs slabs 'network'.")
 
 
 class ItemRef(StrictModel):
@@ -190,6 +215,8 @@ class ItemRef(StrictModel):
 
 class SetAside(ItemRef):
     note: str
+    floor_past: bool = Field(default=False, description='Rooms milestone (R-2.1 point 7): true = the floor runs past '
+                                                        'the line. Default: a set-aside line still bounds the floor.')
 
 
 class OpeningFix(StrictModel):
@@ -209,10 +236,42 @@ class OutlineEdgeFix(StrictModel):
     as_: Literal['wall', 'glass', 'none'] = Field(alias='as')
 
 
+class ClosingFix(StrictModel):
+    """Rooms milestone (R-6.2), sheet m. 'line': a closing line staff drew; 'none': leave out the app's bridge or
+    doorway closing whose two ends lie within 0.3 m of a and b."""
+    floor: FloorKey
+    a: Vec2
+    b: Vec2
+    use: Literal['line', 'none']
+
+
+class RoomFix(StrictModel):
+    """Rooms milestone (R-6.2): the room, or the unfloored area, that contains `at` (sheet m)."""
+    floor: FloorKey
+    at: Vec2
+    name: str | None = Field(description='At most 200 characters, text only; null: no name given.')
+    slab: Literal['auto', 'none', 'floor'] = Field(description="'none': no floor here (or: it is outdoors); 'floor': "
+                                                               'floor here.')
+    ceiling: Literal['auto', 'none']
+
+
+class StairFix(StrictModel):
+    """Rooms milestone (R-6.2, R-7.6): the stair whose outline contains `at` (sheet m)."""
+    floor: FloorKey
+    at: Vec2
+    bottom: Vec2 | None = Field(description='A point on the bottom tread (it decides the direction), or null.')
+    use: Literal['auto', 'lines', 'climb'] = Field(description="'lines': keep it as lines; 'climb': build it although "
+                                                               'its riser is outside 0.14 - 0.21 m (up to 0.25 m).')
+
+
 class Fixes(StrictModel):
     set_aside: list[SetAside]
     openings: list[OpeningFix]
     outline_edges: list[OutlineEdgeFix]
+    closings: list[ClosingFix] = Field(default_factory=list, description='Rooms milestone; a missing key is no fix. The '
+                                                                         'cap of 5,000 other fixes counts these too.')
+    rooms: list[RoomFix] = Field(default_factory=list)
+    stairs: list[StairFix] = Field(default_factory=list)
 
 
 class BuildSettings(StrictModel):
@@ -691,6 +750,52 @@ class OverlayRoom(StrictModel):
     y: float
 
 
+class OverlaySpace(StrictModel):
+    id: str
+    name: str
+    names: list[str]
+    area: float
+    o: list[Vec2]
+    h: list[list[Vec2]]
+    ceiling: bool
+    source: Literal['network', 'outline', 'staff']
+
+
+class OverlayHole(StrictModel):
+    what: str
+    o: list[Vec2]
+    h: list[list[Vec2]]
+
+
+class OverlayStair(StrictModel):
+    id: str
+    state: Literal['climb', 'lines']
+    why: str | None
+    text: str | None
+    outline: list[Vec2]
+    walk: list[Vec2] | None
+    bottom: Vec2 | None
+    to: FloorKey | None
+    risers: int | None
+    riser: float | None
+
+
+class OverlayClosing(TypedDict, total=False):
+    """{ kind, a, b, fix? }: `fix` (the index into fixes.closings of a staff line) is optional and never null."""
+    __pydantic_config__ = ConfigDict(extra='forbid')  # type: ignore[misc]
+    kind: Required[Literal['staff', 'bridge', 'doorway']]
+    a: Required[Vec2]
+    b: Required[Vec2]
+    fix: int
+
+
+class OverlayUnfloored(StrictModel):
+    area: float
+    o: list[Vec2]
+    mouth: tuple[Vec2, Vec2] | None
+    answered: bool
+
+
 class OverlayFloor(StrictModel):
     key: FloorKey
     source: Sha1
@@ -702,6 +807,13 @@ class OverlayFloor(StrictModel):
     furniture: list[OverlayFurniture]
     rooms: list[OverlayRoom]
     set_aside: list[str]
+    # The rooms milestone (R-12.4), sheet m: each key optional and never null; absent with the old rule. (A field typed
+    # as a list with the default None: a missing key passes, an explicit null does not.)
+    spaces: list[OverlaySpace] = None            # type: ignore[assignment]
+    holes: list[OverlayHole] = None              # type: ignore[assignment]
+    stairs: list[OverlayStair] = None            # type: ignore[assignment]
+    closings: list[OverlayClosing] = None        # type: ignore[assignment]
+    unfloored: list[OverlayUnfloored] = None     # type: ignore[assignment]
 
 
 class FlagRef(TypedDict, total=False):
@@ -711,6 +823,11 @@ class FlagRef(TypedDict, total=False):
     family: str
     fix: int
     edge: tuple[Vec2, Vec2]
+    # the rooms milestone: a space id; a stair id; the two ends of a mouth or of a doorway closing (sheet m)
+    room: str
+    stair: str
+    a: Vec2
+    b: Vec2
 
 
 class Flag(StrictModel):

@@ -10,7 +10,7 @@ import type { LayerRole } from '@/upload/contracts';
 const ALL_ROLES: LayerRole[] = ['wall', 'column', 'glass', 'window', 'door', 'screen', 'stair', 'stair-above', 'railing',
   'furniture', 'room-name', 'room-outline', 'level', 'grid', 'light', 'other', 'ignore'];
 const PART_KINDS: PartKind[] = ['wall', 'column', 'lintel', 'sill', 'parapet', 'glass', 'mullion', 'railing', 'single', 'step', 'slab',
-  'pane', 'balustrade', 'low', 'builtin', 'deck', 'post'];
+  'pane', 'balustrade', 'low', 'builtin', 'deck', 'post', 'tread', 'landing', 'ceiling'];
 
 describe('colours per role', () => {
   it('every one of the 17 roles has a colour, an alpha and a width', () => {

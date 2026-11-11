@@ -11,7 +11,7 @@
 import type { CreatePanel, FloorKey, PanelApi, PanelSlot, ToggleName, ViewMode } from '../contracts';
 import { el } from './dom';
 
-const TOGGLES: ToggleName[] = ['plates', 'glass', 'rooms', 'single', 'picture'];
+const TOGGLES: ToggleName[] = ['plates', 'glass', 'rooms', 'single', 'picture', 'ceilings'];   // ceilings: shown once visibility.has it (R4)
 
 export const createPanel: CreatePanel = ctx => {
   const pres = ctx.presentation;

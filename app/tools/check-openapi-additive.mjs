@@ -9,21 +9,34 @@
 //     name must still be there with identical text;
 //  3. the two copies of each contract file are identical: docs/contracts.ts = packages/viewer/src/contracts.ts and
 //     docs/upload/upload-contracts.ts = apps/web/src/upload/contracts.ts.
-// Exits 1 listing what moved. `--base <rev>` compares with another commit (default: the foundation's baseline commit
-// 9eb2d58, the API before the upload milestone; UR, V3-10: the default was HEAD, which holds the milestone itself since
-// commit 12921b9, so the check compared the API with itself and could not fail).
+// Exits 1 listing what moved. `--base <rev>` compares with another commit. The default is 66b4c06, the API before the
+// rooms milestone (docs/rooms/DESIGN.md R-12.5; before that milestone the default was the foundation's baseline commit
+// 9eb2d58, which still passes: `--base 9eb2d58`. UR, V3-10: the default was once HEAD, which held the milestone itself,
+// so the check compared the API with itself and could not fail).
+//
+// The rooms milestone's one more additive case (R-12.5; tools/openapi-additive-rules.mjs, tested on hand-made pairs in
+// packages/viewer/test/unit/scaffold/openapi-additive.test.ts): an existing component schema may gain a property that
+// is NOT required (every old property, its `required` list and every other key deep-equal), and an interface or object
+// type of the generated client may gain OPTIONAL members (every other member's text identical).
+//
+// `--openapi <file>` checks that document instead of apps/web/openapi.json, and then only part 1 runs (for tests of the
+// rule itself: a required property added, or a property's type changed, must fail).
 //   node tools/check-openapi-additive.mjs
+//   node tools/check-openapi-additive.mjs --base 9eb2d58
 import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { isDeepStrictEqual } from 'node:util';
 import ts from 'typescript';
 import { APP, parseArgs } from './lib.mjs';
+import { schemaChange, symbolChange } from './openapi-additive-rules.mjs';
 
-const args = parseArgs(process.argv.slice(2), { flags: ['base'] });
-/** "Baseline: prototypes, plan and the application foundation (4 Nov 2026)": the API the milestone must only add to. */
+const args = parseArgs(process.argv.slice(2), { flags: ['base', 'openapi'] });
+/** "Baseline: prototypes, plan and the application foundation (4 Nov 2026)": the API the upload milestone only added to. */
 export const FOUNDATION = '9eb2d5819784472821ad6a8b0c11eba642a27d0b';
-const BASE = args.base ?? FOUNDATION;
+/** The API before the rooms milestone (main, 10 Nov 2026): what this milestone must only add to. */
+export const BEFORE_ROOMS = '66b4c063edaf2fa77d81b93c47ec93e4467ba9cd';
+const BASE = args.base ?? BEFORE_ROOMS;
 const problems = [];
 const notes = [];
 
@@ -35,7 +48,7 @@ const filesAtBase = dir => git('ls-tree', '-r', '--name-only', BASE, '--', dir).
 // ---------------------------------------------------------------------------------------------------- 1. openapi.json
 const OPENAPI = 'apps/web/openapi.json';
 const oldDoc = JSON.parse(atBase(OPENAPI));
-const newDoc = JSON.parse(readFileSync(path.join(APP, OPENAPI), 'utf8'));
+const newDoc = JSON.parse(readFileSync(args.openapi ? path.resolve(args.openapi) : path.join(APP, OPENAPI), 'utf8'));
 let oldOps = 0;
 for (const [p, item] of Object.entries(oldDoc.paths ?? {})) {
   const now = newDoc.paths?.[p];
@@ -47,14 +60,18 @@ for (const [p, item] of Object.entries(oldDoc.paths ?? {})) {
   }
 }
 const oldSchemas = oldDoc.components?.schemas ?? {};
+const grown = [];
 for (const [name, schema] of Object.entries(oldSchemas)) {
   const now = newDoc.components?.schemas?.[name];
-  if (!now) problems.push(`openapi: component schema ${name} is gone`);
-  else if (!isDeepStrictEqual(schema, now)) problems.push(`openapi: component schema ${name} changed`);
+  if (!now) { problems.push(`openapi: component schema ${name} is gone`); continue; }
+  const why = schemaChange(schema, now);
+  if (why) problems.push(`openapi: component schema ${name}: ${why}`);
+  else if (!isDeepStrictEqual(schema, now)) grown.push(name);
 }
 const newOps = Object.values(newDoc.paths ?? {}).reduce((n, item) => n + Object.keys(item).length, 0);
-notes.push(`openapi: ${oldOps} old operations and ${Object.keys(oldSchemas).length} old schemas unchanged; ${newOps} operations, `
-  + `${Object.keys(newDoc.components?.schemas ?? {}).length} schemas now`);
+notes.push(`openapi: ${oldOps} old operations and ${Object.keys(oldSchemas).length} old schemas unchanged`
+  + (grown.length ? ` (${grown.length} of them gained optional properties: ${grown.join(', ')})` : '')
+  + `; ${newOps} operations, ${Object.keys(newDoc.components?.schemas ?? {}).length} schemas now`);
 
 // ---------------------------------------------------------------------------------------- 2. generated client by symbol
 function exportsOf(fileName, text) {
@@ -90,22 +107,28 @@ function exportsOf(fileName, text) {
 
 const GEN = 'apps/web/src/api/generated';
 let symbols = 0;
-for (const rel of filesAtBase(GEN)) {
+const widened = [];
+for (const rel of args.openapi ? [] : filesAtBase(GEN)) {
   const abs = path.join(APP, rel);
   if (!existsSync(abs)) { problems.push(`generated: ${rel} is gone`); continue; }
   const before = exportsOf(rel, atBase(rel));
   const after = exportsOf(rel, readFileSync(abs, 'utf8'));
   for (const [key, text] of before) {
     symbols++;
-    if (!after.has(key)) problems.push(`generated: ${rel}: ${key} is gone`);
-    else if (after.get(key) !== text) problems.push(`generated: ${rel}: ${key} changed`);
+    if (!after.has(key)) { problems.push(`generated: ${rel}: ${key} is gone`); continue; }
+    const why = symbolChange(text, after.get(key));
+    if (why) problems.push(`generated: ${rel}: ${key}: ${why}`);
+    else if (after.get(key) !== text) widened.push(key.replace(/^\w+ /, ''));
   }
 }
-notes.push(`generated: ${symbols} previously exported symbols compared in ${filesAtBase(GEN).length} files`);
+if (!args.openapi) {
+  notes.push(`generated: ${symbols} previously exported symbols compared in ${filesAtBase(GEN).length} files`
+    + (widened.length ? ` (${widened.length} gained optional members: ${widened.join(', ')})` : ''));
+}
 
 // ------------------------------------------------------------------------------------------------ 3. the contract copies
-for (const [a, b] of [['docs/contracts.ts', 'packages/viewer/src/contracts.ts'],
-                      ['docs/upload/upload-contracts.ts', 'apps/web/src/upload/contracts.ts']]) {
+for (const [a, b] of args.openapi ? [] : [['docs/contracts.ts', 'packages/viewer/src/contracts.ts'],
+                                         ['docs/upload/upload-contracts.ts', 'apps/web/src/upload/contracts.ts']]) {
   const pa = path.join(APP, a), pb = path.join(APP, b);
   if (!existsSync(pa) || !existsSync(pb)) { problems.push(`copies: ${existsSync(pa) ? b : a} is missing`); continue; }
   if (!readFileSync(pa).equals(readFileSync(pb))) problems.push(`copies: ${a} and ${b} differ`);

@@ -40,6 +40,29 @@ DRAWINGS = {
 #: how long a `worker` test waits for its run, queue time included (seconds)
 WORKER_TIMEOUT_S = float(os.environ.get('WT_WORKER_TIMEOUT', '1800'))
 
+# ---------------------------------------------------------------- the rooms milestone (docs/rooms; scaffold R0, frozen)
+ROOMS_FIXTURES = FIXTURES / 'rooms'
+ROOMS_DOCS = APP / 'docs' / 'rooms'
+#: R0's reference folder (shared, read-only): the new suite read by the app's reader, <REF_R0>/suite-revit in the cache
+#: layout of U-4.2 (`node tools/run-builder-py.mjs tools/rooms/make-suite-cache.py` makes it again)
+REF_R0 = Path(os.environ.get('WT_REF_R0') or Path(tempfile.gettempdir()) / 'wt-r0' / 'ref')
+#: the fifth drawing (the 3D team's Revit export of 9 Nov 2026) and its sha1
+NEW_SUITE = 'presidential suite_layout.dwg'
+NEW_SUITE_SHA1 = '9e84e27fef67773b73ec8ef42bc25f65a5f1c52c'
+#: WT_INTEGRATION=1: a missing reference or worker FAILS instead of skipping (docs/rooms/DESIGN.md R-13)
+INTEGRATION = os.environ.get('WT_INTEGRATION') == '1'
+#: WT_ACCEPTANCE=1: the costliest runs (every door undone, the two-process builds); tests marked `acceptance` are
+#: deselected without it (conftest.py), so a plain run skips nothing
+ACCEPTANCE = os.environ.get('WT_ACCEPTANCE') == '1'
+
+
+def missing_reference(what: str) -> None:
+    """A reference folder is not there: the test fails under WT_INTEGRATION=1 and is skipped otherwise."""
+    import pytest
+    if INTEGRATION:
+        pytest.fail(f'{what} (WT_INTEGRATION=1: a missing reference fails, it does not skip)')
+    pytest.skip(what)
+
 
 def child_env(**extra: str) -> dict[str, str]:
     """The environment of a Python child of a test: the builder's (U-3.5), with PYTHONPATH=services/builder."""
@@ -50,9 +73,15 @@ def child_env(**extra: str) -> dict[str, str]:
     return env
 
 
-def python_child(code: str, *args: str, env: dict[str, str] | None = None, **popen) -> subprocess.Popen:
-    """Starts `python -B -P -c code args...` (the builder Python) with pipes for stdout and stderr, text mode."""
-    return subprocess.Popen([sys.executable, '-B', '-P', '-c', code, *args], env=env or child_env(),
+def python_child(code: str, *args: str, env: dict[str, str] | None = None, hashseed: int | None = None,
+                 **popen) -> subprocess.Popen:
+    """Starts `python -B -P -c code args...` (the builder Python) with pipes for stdout and stderr, text mode.
+    `hashseed` sets PYTHONHASHSEED for the child: the two-process builds of the rooms milestone run the same build with
+    two different seeds and compare bytes (docs/rooms/DESIGN.md R-13; `rooms_child_build` in rooms_kit.py)."""
+    env = dict(env or child_env())
+    if hashseed is not None:
+        env['PYTHONHASHSEED'] = str(hashseed)
+    return subprocess.Popen([sys.executable, '-B', '-P', '-c', code, *args], env=env,
                             stdin=subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
                             encoding='utf-8', **popen)
 

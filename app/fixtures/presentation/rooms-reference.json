@@ -1,0 +1,46 @@
+{
+  "documentTitle": "Reference",
+  "heading": "Reference building",
+  "intro": [
+    {
+      "text": "Built from 2 drawings (rooms-reference-ground.dxf and rooms-reference-upper.dxf): walls from the wall layers, glass from the glass layers, and 3 doors, 0 windows and 0 passages from the openings detector. Levels +0.00 / +3.00 m. No AI used."
+    }
+  ],
+  "accent": "#2f6f8f",
+  "legend": {
+    "layout": "inline",
+    "items": [
+      {
+        "colour": "#e3ddd3",
+        "text": "Walls and lintels"
+      },
+      {
+        "colour": "#6f6a75",
+        "text": "Railings"
+      },
+      {
+        "colour": "#b9c7b4",
+        "text": "Stairs"
+      },
+      {
+        "colour": "#d4d8d2",
+        "text": "Floor plates"
+      }
+    ]
+  },
+  "floorButtons": {
+    "all": "Both floors"
+  },
+  "camera": {
+    "kind": "fitSlabs",
+    "away": [
+      11.96,
+      12.19,
+      14.49
+    ],
+    "targetY": 2.5,
+    "panForPanel": true,
+    "far": 600.0
+  },
+  "groundPlane": null
+}

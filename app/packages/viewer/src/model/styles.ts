@@ -26,4 +26,10 @@ export const DEFAULT_PART_STYLES: Record<PartKind, PartStyle> = {
   // Slabs: one mesh per slab part, their own material (roughness 0.95, polygonOffset -1 / -1, FrontSide), no edges drawn,
   // walkable rather than a collider.
   slab: { color: '#d4d8d2', edge: '#d4d8d2', mesh: 'slab', roughness: 0.95, collider: false },
+  // BuiltModel v2 (rooms/DESIGN.md R-9.2, R-9.7). PLACEHOLDERS of the rooms scaffold (R0), so that every kind has a style:
+  // treads and landings are walked on, never colliders; ceilings are no colliders either. R4 gives them their meshes
+  // (the surfaces, the per-floor ceiling mesh shown in Walk and Ghost only).
+  tread: { color: '#cdc6b8', edge: '#8d8474', mesh: 'tread', collider: false },
+  landing: { color: '#cdc6b8', edge: '#8d8474', mesh: 'landing', collider: false },
+  ceiling: { color: '#f4f3ef', edge: '#f4f3ef', mesh: 'ceiling', roughness: 0.95, collider: false },
 };

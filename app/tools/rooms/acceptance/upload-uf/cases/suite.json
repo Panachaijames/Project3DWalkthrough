@@ -1,0 +1,4 @@
+{"name": "suite", "project": "suite-upload",
+ "create": {"name": "Presidential suite", "shortName": "Presidential suite", "id": "suite-upload"},
+ "files": ["layout presidential test.dwg"], "from": null, "settings": {"fixture": "suite"},
+ "save": {"label": "suite upload (A-5)", "carryHeights": true, "rememberMapping": false}}

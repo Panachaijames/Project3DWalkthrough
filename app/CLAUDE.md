@@ -264,3 +264,102 @@ Nothing of the foundation's 57x0 - 5726, 87x0 - 8726, 47x0 - 4726, 97x0 - 9726, 
 | `node tools/run-builder-py.mjs tools/upload/check-derived-mapping.py` | each settings fixture's derived detector mapping against `detector/output/` |
 | `node tools/run-builder-py.mjs tools/upload/make-fixtures.py [--only <part>]` | re-makes `fixtures/upload/` (scaffold tool) |
 | `node tools/run-api.mjs --port <p> --data <dir> --seed-fresh` | serves a freshly seeded store (the e2e config does this; refuses `app/data`) |
+
+---
+
+# The rooms milestone (10 - 11 Nov 2026): rooms and slabs, then stairs you can climb
+
+Design: `docs/rooms/DESIGN.md` (cited R-n), `docs/rooms/ACCEPTANCE.md` (RA-1 ... RA-18), `docs/rooms/WORK_BREAKDOWN.md`
+(owners, ports; its section 0 binds every step). Contract issues: `docs/rooms/contract-issues/<R0 ... R7, RI, RR>.md`, each
+step its own. Everything above still holds; this adds:
+
+* **Git**: the folder is a repository now, the branch is `milestone-rooms`. No step commits, switches branches, stashes
+  or pushes; the main session commits. `git show`, `git diff` and `git status` are fine.
+* **Never start a server on 5710 or 8710** (the owner's `npm run dev`). **Never write `app/data`** (the owner's store)
+  and never the default cache: `WALKTHROUGH_DATA_DIR=<WT_TMP>\data`, `WALKTHROUGH_CACHE_DIR=<WT_TMP>\cache`. Browser specs
+  run with `WT_DATA_DIR` and `WT_OFFLINE_DIR` on a freshly seeded temp store; a project a spec makes has an `e2e-` id.
+* **No reload**: `npm run dev` and `node tools/run-api.mjs` do not reload the API when its code changes. After a change
+  to `services/api/**`, stop your server and start it again: a check made before the restart tested the old code.
+  Builder code needs no restart (the worker is a new process for every build); the web dev server still hot-reloads.
+* **Nobody writes `dist/` while the builders run in parallel.** A builder that needs the viewer template builds it into
+  its own temp folder (`--outDir`, as `packages/viewer/test/harness/core/make-e2e-offline.mjs:5-9`).
+* **The new rules switch on through three options** (`BuildSettings.options.slabs / ceilings / stairs`). A missing key is
+  the old rule (`OLD_RULES`: `closed-rooms`, `off`, `lines`); every new draft gets `NEW_RULES` (`network`, `auto`,
+  `climb`). Both sets are named once in each contract (both TypeScript copies, `models_upload.py`,
+  `walkthrough_builder/contracts.py`). A model is BuiltModel v2 when it has the `stairways` key.
+* **Nothing old moves.** `services/builder/tests/test_r_old_rule.py` pins every output file of the five old-rule builds
+  (`fixtures/rooms/old-rule.sha1.json`); `packages/viewer/test/unit/modes/walk-parity.test.ts` pins how the six old
+  models walk (`test/fixtures/walk-parity.json`, within 1e-9 m). Both stay green after every change; nobody edits them
+  or records them again. The door finder is frozen (`test_vendor.py`).
+* **The tracer** (R-12.3): `build/network.py`, `rooms.py`, `slabs.py`, `xmarks.py`, `ceilings.py` (R1's) and
+  `build/stairs_read.py`, `stairs_build.py` (R2's) are thin but working, wired into `bank.build_floors_network` behind
+  `slabs: 'network'`. `services/builder/tests/test_r_tracer.py` builds `make-stair-dxf.py straight` through the app's
+  reader, `build()`, the outputs and the API's checks: it stays green while the bodies are replaced.
+* **The reference building** (`tools/rooms/make-reference-building.py`) and everything derived from it are the contract
+  (`fixtures/README.md`, the rooms section): the builder's output must equal its model's treads, landings, well and
+  stairway within 1 mm.
+* **Shared and read-only**: `WT_REF` (`%TEMP%\wt-u0\ref`), `WT_REF_R0` (`%TEMP%\wt-r0\ref`: the new suite read by the
+  app's reader; `node tools/run-builder-py.mjs tools/rooms/make-suite-cache.py` makes it again), the copy of the upload
+  acceptance store `%TEMP%\wt-r0\acc-9nov`, and `docs/rooms/reference/**`.
+* **`WT_INTEGRATION=1`**: a missing reference or worker fails instead of skipping. **`WT_ACCEPTANCE=1`**: runs the tests
+  marked `acceptance` (every door undone, the two-process builds, `upload-walk` on 13 files); without it they are
+  deselected, so a plain run skips nothing.
+* **Frozen after the scaffold R0, for everyone** (besides the contracts of R-12.7, which R0 changed once): `services/
+  builder/tests/{conftest, kit, rooms_kit, test_contracts, test_u3_helpers, test_r_old_rule, test_r_tracer,
+  test_r_fixtures}.py`, `fixtures/rooms/old-rule.sha1.json`, `package.json`, `tools/make-broken-fixtures.mjs`,
+  `tools/check-openapi-additive.mjs` and its rules, `tools/rooms/make-reference-building.py` and what is derived from it
+  (`fixtures/models/{rooms-reference, stairs-*}.model.json`, `fixtures/rooms/**` except `keys/{house, suite}.json`),
+  `apps/web/src/build/testids.ts`, the signatures of `apps/web/src/plan/index.ts`, `apps/web/test/rooms-testids.test.ts`,
+  the parity golden, its recorder and its test, `docs/rooms/reference/**`.
+
+## Ports and temp folders (docs/rooms/WORK_BREAKDOWN.md section 1)
+
+Nothing of 5710 - 5739 / 8710 - 8739 / 4710 - 4739 / 9710 - 9739, nothing of the prototypes' 93xx - 94xx.
+
+| Step | Web dev / harness | API | Preview | CDP | `WT_TMP` |
+|---|---|---|---|---|---|
+| R0 scaffold | 5740 | 8740 | 4740 | 9740 | `%TEMP%\wt-r0` |
+| R1 network, rooms, slabs, ceilings | 5741 | 8741 | 4741 | 9741 | `%TEMP%\wt-r1` |
+| R2 stairs | 5742 | 8742 | 4742 | 9742 | `%TEMP%\wt-r2` |
+| R3 outputs | 5743 | 8743 | 4743 | 9743 | `%TEMP%\wt-r3` |
+| R4 viewer | 5744 | 8744 | 4744 | 9744 | `%TEMP%\wt-r4` |
+| R5 API | 5745 | 8745 | 4745 | 9745 | `%TEMP%\wt-r5` |
+| R6 staff app, plan canvas and their specs | 5746 | 8746 (mock) | 4746 | 9746 | `%TEMP%\wt-r6` |
+| R7 viewer browser tests | 5747 | 8747 | 4747 | 9747 | `%TEMP%\wt-r7` |
+| RI integration | 5748 (the owner's path), the e2e config's 5711 / 8711 | 8748 | 4748 | 9748 | `%TEMP%\wt-ri` |
+| RR review and fix | 5749 | 8749 | 4749 | 9749 | `%TEMP%\wt-rr` |
+
+## Who owns what in this milestone (docs/rooms/WORK_BREAKDOWN.md; read anything, write only what you own)
+
+* **R1** `walkthrough_builder/build/{network, rooms, slabs, xmarks, ceilings}.py`, `build/__init__.py`, the
+  `slabs: 'network'` branch of `build/bank.py` (`build_floors_network`, `apply_cuts`; `floor_walls` and the
+  `'closed-rooms'` loop untouched), `build/{model, settings, fixes, report}.py`, `propose.py`,
+  `services/builder/tests/test_r1_*.py`, `fixtures/upload/settings/*-rooms.json`, `fixtures/rooms/keys/house.json`.
+* **R2** `build/{stairs_read, stairs_build}.py`, `tests/test_r2_*.py`, `tools/rooms/make-stair-dxf.py`.
+* **R3** `walkthrough_builder/out/**`, `fixtures/upload/max-texts/upload.json`, `tools/upload/gap-report.py`,
+  `tests/test_r3_*.py`.
+* **R4** `packages/viewer/src/**` except `furniture/**` and `contracts.ts`; `packages/viewer/test/**` except the parity
+  golden, its recorder and its test.
+* **R5** `services/api/walkthrough_api/**` except `models.py`, `models_upload.py`, `store/base.py`'s records and the
+  route decorators; `services/api/tests/**`.
+* **R6** `apps/web/src/**` except `src/api/generated/**`, `src/upload/contracts.ts`, `src/build/testids.ts` and the
+  signatures of `src/plan/index.ts`; `apps/web/test/**` except the scaffold's contract tests;
+  `tests/e2e/{rooms, plan-canvas}.spec.ts` and the change in `tests/e2e/upload.spec.ts`.
+* **R7** `tests/e2e/stairs.spec.ts`, the `stairWalks` addition to `tests/e2e/lib/walks.ts`, `tests/e2e/lib/target.ts`,
+  `tests/e2e/upload-walk.spec.ts`.
+* **RI** integration; `services/builder/tests/test_r_rooms_golden.py`, `fixtures/rooms/keys/suite.json`,
+  `docs/rooms/GAPS.md`, the new steps of `tools/rooms/acceptance/run.mjs`. **RR** review and fix.
+
+## Commands added (from `app/`)
+
+| Command | Does |
+|---|---|
+| `node tools/run-builder-py.mjs tools/rooms/make-stair-dxf.py <variant>\|all <dir>` | the synthetic stair drawings (straight, L, U, two-floor, no-direction, down-up-pair, split-level), one DXF per floor and a manifest of what was drawn and what is expected |
+| `node tools/run-builder-py.mjs tools/rooms/make-reference-building.py dxf <dir>` | the reference building's two plans and its manifest (`fixtures` and `stairs` re-make the frozen fixtures: the scaffold's, not for builders) |
+| `node tools/rooms/make-fixture-store.mjs --out <dir> [--stairs]` | a tiny store holding the reference building as one saved version (the browser specs' store) |
+| `node tools/rooms/reference.mjs versions\|outside --check` | every saved version of `app/data` and every file outside `app/` is as it was when the milestone started |
+| `node tools/rooms/reference.mjs store <dir> --check docs/rooms/reference/acc-9nov.versions.sha1` | the same for the upload acceptance store's copy |
+| `node tools/rooms/acceptance/run.mjs --list` / `[--only ...] [--tmp <dir>]` | the upload milestone's acceptance scripts, pointed at your temp folder and ports, one JSON result (RI adds the new steps) |
+| `node tools/check-openapi-additive.mjs [--base 9eb2d58]` | additive against `66b4c06` (the default: the API before this milestone) or the foundation |
+| `node tools/run-builder-py.mjs tools/rooms/make-suite-cache.py` | the new suite's reader cache into `%TEMP%\wt-r0\ref\suite-revit` |
+| `WT_ACCEPTANCE=1 npm run test:builder` | also the tests marked `acceptance` |

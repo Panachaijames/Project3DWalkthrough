@@ -124,7 +124,8 @@ export const buildScene: BuildScene = (model, presentation) => {
     group.name = f.key;
     const rec: FloorRecord = {
       key: f.key, name: f.name, level, modelLevel: level, wallHeight: f.wallHeight, stack: f.stack ?? 'main',
-      group, colliders: [], walkables: [], late: [], rise: [],
+      // surfaces: a placeholder of the rooms scaffold (R0); R4 lists the slab, tread and landing meshes (R-9.2)
+      group, colliders: [], walkables: [], surfaces: [], late: [], rise: [],
     };
     built.floors.push(rec);
     const fitted: Mesh[] = (built.fitted[f.key] = []);

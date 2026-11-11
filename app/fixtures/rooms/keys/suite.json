@@ -1,0 +1,7 @@
+{
+  "format": "rooms-key/1",
+  "drawing": "suite",
+  "settings": "fixtures/upload/settings/suite-rooms.json",
+  "note": "Empty at the scaffold. RI: 16 key points of the old suite (docs/rooms/WORK_BREAKDOWN.md).",
+  "floors": {}
+}

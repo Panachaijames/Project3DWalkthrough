@@ -1,0 +1,208 @@
+{
+  "file": "C:\\Users\\DWP2\\AppData\\Local\\Temp\\wt-uf\\offline\\suite-upload-v1.html",
+  "should": true,
+  "loads": {
+    "meta": "205e9c2c46e8",
+    "canvas": 1,
+    "error": false,
+    "projectId": "suite-upload",
+    "version": 1,
+    "stamp": "205e9c2c46e8",
+    "maxScript": "Presidential_Suite.ms",
+    "requests": [],
+    "problems": [],
+    "maxScriptFile": "C:\\Users\\DWP2\\AppData\\Local\\Temp\\wt-uf\\acc\\data\\projects\\suite-upload\\versions\\1\\downloads\\Presidential_Suite.ms",
+    "maxScriptStamp": "205e9c2c46e8"
+  },
+  "start": {
+    "ok": true,
+    "failures": [],
+    "detail": {
+      "camera": "fitSlabs",
+      "canvas": [
+        0,
+        0,
+        1400,
+        880
+      ],
+      "panel": [
+        12,
+        12,
+        372,
+        828
+      ],
+      "free": [
+        372,
+        0,
+        1400,
+        880
+      ],
+      "corners": 334
+    }
+  },
+  "floors": {
+    "ok": true,
+    "failures": [],
+    "detail": {
+      "floors": [
+        {
+          "key": "suite",
+          "level": 0
+        }
+      ],
+      "buttons": 0
+    }
+  },
+  "walls": {
+    "ok": true,
+    "failures": [],
+    "detail": [
+      {
+        "floor": "suite",
+        "tried": 40,
+        "wentThrough": 0,
+        "endedInsideWall": 0
+      }
+    ]
+  },
+  "doors": {
+    "ok": false,
+    "failures": [
+      {
+        "id": "suite-025",
+        "kind": "door",
+        "exterior": false,
+        "fwd": "no start",
+        "fwdTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 9
+          }
+        ],
+        "back": "no start",
+        "backTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 1.41
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 1.85
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 1.74
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 1.67
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 1.63
+          }
+        ],
+        "ok": false
+      }
+    ],
+    "detail": {
+      "doors": 15,
+      "passages": [
+        {
+          "id": "suite-001",
+          "ok": true,
+          "fwd": "no start",
+          "back": 0.05
+        },
+        {
+          "id": "suite-002",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        },
+        {
+          "id": "suite-004",
+          "ok": true,
+          "fwd": "no start",
+          "back": 0.11
+        },
+        {
+          "id": "suite-006",
+          "ok": false,
+          "fwd": -0.45,
+          "back": "no start"
+        },
+        {
+          "id": "suite-008",
+          "ok": false,
+          "fwd": "no start",
+          "back": "no start"
+        },
+        {
+          "id": "suite-017",
+          "ok": true,
+          "fwd": "no start",
+          "back": 0.11
+        },
+        {
+          "id": "suite-018",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        },
+        {
+          "id": "suite-019",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        },
+        {
+          "id": "suite-021",
+          "ok": true,
+          "fwd": 0.05,
+          "back": "no start"
+        },
+        {
+          "id": "suite-022",
+          "ok": true,
+          "fwd": 0.19,
+          "back": "no start"
+        }
+      ]
+    }
+  },
+  "glass": {
+    "ok": true,
+    "failures": [],
+    "detail": {
+      "probes": 0,
+      "parts": []
+    }
+  }
+}

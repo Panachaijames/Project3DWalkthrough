@@ -112,6 +112,10 @@ export function createState(ctx: Pick<ViewerContext, 'camera' | 'floors'>): Mode
     mode: 'orbit',
     floor: ctx.floors[0]!,
     pos: new Vector3(),
+    // A placeholder of the rooms scaffold (R0): the old walker's feet are always at the current floor's level. R4 makes
+    // the foot the walker's own state (rooms/DESIGN.md R-9.2).
+    get foot() { return this.floor.level; },
+    set foot(_value: number) { /* R4 */ },
     yaw: 0,
     pitch: 0,
     eye: EYE,

@@ -33,7 +33,7 @@ from .detect import detect
 from .errors import BuildError
 from .model import assemble
 
-__all__ = ['build', 'BuildError']
+__all__ = ['build', 'prepare_floors', 'BuildError']
 
 
 class Context:
@@ -51,6 +51,9 @@ class Context:
         self.DEFAULT_HEAD = self.DEF['doorHead']
         self.named: list[float] = []
         self.source_names: list[str] = []
+        #: set by bank.build_floors_network (options.slabs 'network'): { fixes: the three new fix lists' rows,
+        #: ceilings: bool, pairs }; None with the old rule
+        self.new_rule: dict | None = None
 
 
 def _read_json(path) -> dict | None:
@@ -62,8 +65,20 @@ def _read_json(path) -> dict | None:
     return json.loads(p.read_text(encoding='utf-8'))
 
 
-def build(ctx: BuildContext, log, progress) -> BuildResult:
-    t_all = time.perf_counter()
+class Floors(list):
+    """What prepare_floors returns: the floors' working dicts, lowest first (each ready for bank.floor_walls), with
+    everything else the preparation made as attributes: X (the Context), S (the coerced settings), seconds, t_walls
+    (when step 5 started), src_ctx, det, det_out, sugg_by, align_reps, setaside_rows, open_rows, edge_rows."""
+
+
+def prepare_floors(ctx: BuildContext, log=None, progress=None) -> Floors:
+    """Steps 1 - 5 of build(): the settings, the sources, the set-asides, the floors' readings, the alignment, the
+    detector with the opening fixes, and the bank builder's reading of each floor. Extracted from build() by the rooms
+    scaffold R0 with no change in behaviour (docs/rooms/DESIGN.md R-12.3), so that the network and the stairs can be
+    tested on a floor without the rest of the build: `floors = prepare_floors(ctx)`, then
+    `bank.floor_walls(floors[i], floors.X)`."""
+    log = log or (lambda _m: None)
+    progress = progress or (lambda _s, _f: None)
     seconds: dict[str, float] = {}
     spec = ctx['spec']
     S = ST.coerce(spec['settings'])
@@ -224,6 +239,20 @@ def build(ctx: BuildContext, log, progress) -> BuildResult:
         f'({"most common in the names" if X.DOMINANT else "project default"}) unless their floor gives one')
 
     seconds['walls'] = round(time.perf_counter() - t0, 2)
+    BK.storeys(floors)                                   # what floor_walls reads: each floor's index and storey height
+    out = Floors(floors)
+    out.X, out.S, out.seconds, out.t_walls = X, S, seconds, t0
+    out.src_ctx, out.det, out.det_out, out.sugg_by, out.align_reps = src_ctx, det, det_out, sugg_by, align_reps
+    out.setaside_rows, out.open_rows, out.edge_rows = setaside_rows, open_rows, edge_rows
+    return out
+
+
+def build(ctx: BuildContext, log, progress) -> BuildResult:
+    t_all = time.perf_counter()
+    floors = prepare_floors(ctx, log, progress)
+    X, seconds, t0 = floors.X, floors.seconds, floors.t_walls
+    src_ctx, det, det_out, sugg_by, align_reps = floors.src_ctx, floors.det, floors.det_out, floors.sugg_by, floors.align_reps
+    setaside_rows, open_rows, edge_rows = floors.setaside_rows, floors.open_rows, floors.edge_rows
 
     # 6. openings, walls, stairs, railings, plates
     t1 = time.perf_counter()
@@ -254,6 +283,8 @@ def build(ctx: BuildContext, log, progress) -> BuildResult:
         report_floors[key] = RP.floor_report(F, A, built[key], det[key], align_reps[i],
                                              RP.lost_inserts(conv, F['cfg']['area']),
                                              OL.public(sugg_by.get(key, [])), s)
+        if 'report' in built[key]:                           # the new rule's keys (contracts.FloorUploadReportRooms)
+            report_floors[key].update(built[key]['report'])
         frames[key] = {'source': F['source'], 'toSheet': [cx - s[0], cy - s[1]], 'area': F['cfg']['area']}
         replay_floors[key] = RP.replay_floor(F, A, sheet[key])
     door_from = {'name': 'name', 'floor': 'floor', 'most common': 'drawing', 'default': 'default', 'fix': 'fix'}
@@ -263,13 +294,19 @@ def build(ctx: BuildContext, log, progress) -> BuildResult:
         'fixes': {'setAside': setaside_rows, 'openings': open_rows, 'outlineEdges': edge_rows},
         'doorHeadsFrom': {o['id']: door_from.get(o['headFrom'], o['headFrom']) for o in A['openings'] if o['kind'] == 'door'},
     }
+    facts = RP.facts(floors, A, built, X, align_reps, replay_floors)
+    if X.new_rule is not None:                               # the new rule (contracts.FixesReportRooms, ReplayFactsRooms)
+        report['fixes'].update(X.new_rule['fixes'])
+        facts.update(rooms={key: {'spaces': built[key]['report']['rooms']['spaces'],
+                                  'named': built[key]['report']['rooms']['named']} for key in built},
+                     climbable=len(A['model']['stairways']), ceilings=X.new_rule['ceilings'])
     seconds['total'] = round(time.perf_counter() - t_all, 2)
     log(f'built: {len(A["model"]["parts"])} parts, {len(A["openings"])} openings, {len(A["furniture"])} furniture boxes, '
         f'offset ({cx}, {cy}) in {seconds["total"]:.1f} s')
     return {
         'model': A['model'],
         'report': report,
-        'replay': {'floors': replay_floors, 'facts': RP.facts(floors, A, built, X, align_reps, replay_floors)},
+        'replay': {'floors': replay_floors, 'facts': facts},
         'detector': det_out,
         'placements': placements,
         'floors_frame': frames,

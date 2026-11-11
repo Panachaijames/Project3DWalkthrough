@@ -1,0 +1,156 @@
+{
+  "format": "rooms-key/1",
+  "drawing": "bank",
+  "settings": "fixtures/upload/settings/bank-rooms.json",
+  "note": "Each room tag's own point: the insertion point of its text in the drawing (sheet m, the floor's own file). Every name must belong to the room that holds its point (ACCEPTANCE RA-7: 18 of 18). From fixtures/upload/build-result.bank.json by tools/rooms/make-keys.py.",
+  "floors": {
+    "L1": [
+      {
+        "name": "TOILET",
+        "label": "TOILET · 3.2 m²",
+        "at": [
+          -4.523,
+          -7.895
+        ]
+      },
+      {
+        "name": "LIFT HALL",
+        "label": "LIFT HALL · 6.1 m²",
+        "at": [
+          -0.886,
+          -7.771
+        ]
+      },
+      {
+        "name": "TOILET",
+        "label": "TOILET · 2.6 m²",
+        "at": [
+          1.787,
+          8.264
+        ]
+      },
+      {
+        "name": "MO 4 PAX",
+        "label": "MO 4 PAX",
+        "at": [
+          -0.499,
+          -1.462
+        ]
+      },
+      {
+        "name": "MEEETING 4 PAX",
+        "label": "MEEETING 4 PAX · 8.2 m²",
+        "at": [
+          1.9,
+          5.669
+        ]
+      },
+      {
+        "name": "MANAGER",
+        "label": "MANAGER · 11.4 m²",
+        "at": [
+          -1.835,
+          3.002
+        ]
+      },
+      {
+        "name": "F/C",
+        "label": "F/C · 3.9 m²",
+        "at": [
+          -4.402,
+          6.275
+        ]
+      }
+    ],
+    "L2": [
+      {
+        "name": "LIFT HALL",
+        "label": "LIFT HALL · 6.0 m²",
+        "at": [
+          -0.649,
+          -7.768
+        ]
+      },
+      {
+        "name": "PANTRY",
+        "label": "PANTRY · 3.9 m²",
+        "at": [
+          -4.63,
+          -7.768
+        ]
+      },
+      {
+        "name": "F/C",
+        "label": "F/C · 5.5 m²",
+        "at": [
+          -0.026,
+          8.339
+        ]
+      },
+      {
+        "name": "MALE TOILET",
+        "label": "MALE TOILET · 4.7 m²",
+        "at": [
+          -1.159,
+          10.781
+        ]
+      },
+      {
+        "name": "FEMALE TOILET",
+        "label": "FEMALE TOILET · 6.4 m²",
+        "at": [
+          -3.795,
+          10.781
+        ]
+      },
+      {
+        "name": "RACK",
+        "label": "RACK · 7.3 m²",
+        "at": [
+          -4.54,
+          8.125
+        ]
+      },
+      {
+        "name": "CSO 5PAX",
+        "label": "CSO 5PAX",
+        "at": [
+          -0.263,
+          -0.565
+        ]
+      },
+      {
+        "name": "WAITING AREA",
+        "label": "WAITING AREA",
+        "at": [
+          3.848,
+          -4.566
+        ]
+      },
+      {
+        "name": "MINI BAR / WEALTH ROOM",
+        "label": "MINI BAR / WEALTH ROOM",
+        "at": [
+          3.196,
+          1.479
+        ]
+      },
+      {
+        "name": "FOR 1 PAX",
+        "label": "FOR 1 PAX",
+        "at": [
+          -0.136,
+          5.205
+        ]
+      },
+      {
+        "name": "BOH",
+        "label": "BOH",
+        "at": [
+          -4.959,
+          1.36
+        ]
+      }
+    ]
+  }
+}

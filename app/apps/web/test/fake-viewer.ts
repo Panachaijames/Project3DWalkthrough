@@ -260,7 +260,7 @@ export const createViewer: CreateViewer = (container, project, options = {}) => 
   let mode: ViewMode = 'orbit';
   let floorKey: FloorKey = model.floors[0]?.key ?? '';
   let phase: ReplayPhase = 'off';
-  const toggles: Record<ToggleName, boolean> = { plates: true, glass: true, rooms: true, single: true, picture: false };
+  const toggles: Record<ToggleName, boolean> = { plates: true, glass: true, rooms: true, single: true, picture: false, ceilings: true };
   let disposed = false;
   let n = 0;
 

@@ -1,0 +1,113 @@
+{
+  "format": "build-settings/1",
+  "office": null,
+  "project": {
+    "name": "Reference building",
+    "shortName": "Reference",
+    "projectNo": null,
+    "photoName": "Rooms-reference",
+    "maxPrefix": "RF",
+    "maxFileName": "Rooms_reference.ms",
+    "exportedFrom": null
+  },
+  "sources": [
+    {
+      "sha1": "bb03630db69d0aa7dddbac2102f295dad242b307",
+      "name": "rooms-reference-ground.dxf",
+      "kind": "dxf",
+      "units": "mm",
+      "unitsConfirmed": true
+    },
+    {
+      "sha1": "81de2ed040febec435c0aa99d0e44f0e87f52f59",
+      "name": "rooms-reference-upper.dxf",
+      "kind": "dxf",
+      "units": "mm",
+      "unitsConfirmed": true
+    }
+  ],
+  "layers": {
+    "0": "other",
+    "A-WALL": "wall",
+    "A-WALL-PATT": "wall",
+    "A-DOOR": "door",
+    "A-AREA-IDEN": "room-name",
+    "A-FLOR-HRAL": "railing",
+    "A-FLOR-OTLN": "other",
+    "S-GRID": "grid",
+    "S-GRID-IDEN": "grid",
+    "S-STRS": "stair"
+  },
+  "floors": [
+    {
+      "key": "ground",
+      "name": "Ground floor",
+      "source": "bb03630db69d0aa7dddbac2102f295dad242b307",
+      "area": {
+        "kind": "wholeFile"
+      },
+      "level": 0.0,
+      "wallHeight": 3.0,
+      "slabThickness": null,
+      "doorHead": null,
+      "windowSill": null,
+      "windowHead": null,
+      "align": {
+        "method": "auto"
+      }
+    },
+    {
+      "key": "upper",
+      "name": "Upper floor",
+      "source": "81de2ed040febec435c0aa99d0e44f0e87f52f59",
+      "area": {
+        "kind": "wholeFile"
+      },
+      "level": 3.0,
+      "wallHeight": 3.0,
+      "slabThickness": null,
+      "doorHead": null,
+      "windowSill": null,
+      "windowHead": null,
+      "align": {
+        "method": "auto"
+      }
+    }
+  ],
+  "defaults": {
+    "doorHead": 2.1,
+    "windowSill": 0.9,
+    "windowHead": 2.1,
+    "railingHeight": 1.1,
+    "slabThickness": 0.25,
+    "singleLineHeight": 1.0
+  },
+  "furniture": {
+    "heights": {},
+    "bases": {},
+    "words": {},
+    "skip": [],
+    "minSize": 0.08,
+    "minDepth": null,
+    "looseLayers": [],
+    "pieceLayer": "insert"
+  },
+  "vocabulary": {},
+  "options": {
+    "revitWallTypes": "auto",
+    "parapets": "auto",
+    "objectClosures": true,
+    "liftShafts": true,
+    "plinth": "auto",
+    "outlineWalls": "off",
+    "offset": "auto",
+    "slabs": "network",
+    "ceilings": "auto",
+    "stairs": "climb"
+  },
+  "fixes": {
+    "setAside": [],
+    "openings": [],
+    "outlineEdges": []
+  }
+}

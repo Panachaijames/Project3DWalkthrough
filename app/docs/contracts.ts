@@ -6,7 +6,7 @@
 // type is the named alias, checked by test/contracts.test-d.ts). Builders never edit contracts.ts: a change needs the
 // architect (DESIGN.md section 18) and goes to app/docs/contracts.ts first.
 //
-// Sections: 1 BuiltModel v1 . 2 ReplayData v1 . 3 Presentation v1 . 4 store files . 5 viewer public API .
+// Sections: 1 BuiltModel v1 / v2 . 2 ReplayData v1 . 3 Presentation v1 . 4 store files . 5 viewer public API .
 //           6 context and core . 7 UI . 8 modes . 9 furniture . 10 replay . 11 offline payload . 12 test hook
 // Units: metres; plan (x, y) maps to three.js (x, z = -y); heights z0 / z1 above the floor level unless said otherwise.
 // =====================================================================================================================
@@ -18,7 +18,9 @@ import type {
 import type { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 // =====================================================================================================================
-// 1. BuiltModel v1 (app/docs/built-model.schema.json; DESIGN.md section 5)
+// 1. BuiltModel v1 and v2 (app/docs/built-model.schema.json; DESIGN.md section 5; rooms/DESIGN.md R-12.1)
+//    v2 (the rooms milestone, 11 Nov 2026) only adds optional things: every v1 model is a valid v2 model. A model is v2
+//    when it has the `stairways` key; version.json then says modelFormat 'built-model/2'.
 // =====================================================================================================================
 
 /** ^[A-Za-z0-9_]{1,32}$ (captions name floors as {<key>level}). */
@@ -33,7 +35,8 @@ export type FlatSegments = number[];
 export type PartKind =
   | 'wall' | 'column' | 'lintel' | 'sill' | 'parapet' | 'glass' | 'mullion' | 'railing' | 'single' | 'step' | 'slab' // bank / hotel
   | 'pane'                                                                                                          // house (v1 extension)
-  | 'balustrade' | 'low' | 'builtin' | 'deck' | 'post';                                                             // suite (v1 extension)
+  | 'balustrade' | 'low' | 'builtin' | 'deck' | 'post'                                                              // suite (v1 extension)
+  | 'tread' | 'landing' | 'ceiling';                                                                                // v2: stairs you climb, ceilings
 
 export interface BuiltFloor {
   key: FloorKey;
@@ -49,8 +52,12 @@ export interface BuiltFloor {
   sheetShift?: Vec2;
 }
 
-/** How a part answers a wall-height change H0 -> H (DESIGN.md 5.5). Derived: fit ?? (follow ? 'scale' : 'fixed'). */
-export type FitMode = 'scale' | 'fixed' | 'top' | 'clip';
+/**
+ * How a part answers a wall-height change H0 -> H (DESIGN.md 5.5). Derived: fit ?? (follow ? 'scale' : 'fixed').
+ * v2 'storey': the part scales with its stairway's storey, S = (L(to) - L(from)) / (L0(to) - L0(from)), when Build settings
+ * change a level (treads, landings and the wall pieces cut under a stair; rooms/DESIGN.md R-9.6).
+ */
+export type FitMode = 'scale' | 'fixed' | 'top' | 'clip' | 'storey';
 
 export interface Part {
   floor: FloorKey;
@@ -62,10 +69,12 @@ export interface Part {
   o: Ring;
   h: Ring[];
   label?: string;
-  /** v1 extension (house): 'top' = z0 stays, z1 becomes the wall top; 'clip' = kept, cut off at the wall top. */
-  fit?: 'top' | 'clip';
+  /** v1 extension (house): 'top' = z0 stays, z1 becomes the wall top; 'clip' = kept, cut off at the wall top. v2: 'storey'. */
+  fit?: 'top' | 'clip' | 'storey';
   /** v1 extension (house ground plate, slabs only): its foot stays at y = 0 when the level changes. */
   plinth?: boolean;
+  /** v2: the id of the stairway the part belongs to (treads, landings, cut wall pieces); it lies on that stairway's `from` floor. */
+  stair?: string;
 }
 
 export interface StairLines {
@@ -88,6 +97,42 @@ export interface Room {
   /** Drawing text: inserted with textContent only. */
   label: string;
   area: number | null; x: number; y: number; callout?: boolean;
+  /** v2: the id of the space (room) this drawn name belongs to, on the same floor; absent when it belongs to none. */
+  space?: string;
+  [extra: string]: unknown;
+}
+/** v2: a stair that can be climbed in Walk (rooms/DESIGN.md R-8.5). Coordinates in the model frame. */
+export interface Stairway {
+  id: string;
+  /** The lower floor (the treads and landings are its parts) and a higher floor of the same stack. */
+  from: FloorKey; to: FloorKey;
+  /** 'straight', 'L', 'U' ... */
+  kind: string;
+  risers: number;
+  /** Riser height (m) = (level(to) - level(from)) / risers. */
+  riser: number;
+  going: number;
+  width: number;
+  /** The first and the last point of `walk`. */
+  bottom: Vec2; top: Vec2;
+  /** The walking line, bottom to top: at least 2 points. */
+  walk: Vec2[];
+  /** How the bottom end was found: 'word', 'arrow', 'cut', 'floors', 'staff' ... */
+  direction: string;
+  treads: number;
+  landings: number;
+  [extra: string]: unknown;
+}
+/** v2: one room with its outline, named or not (rooms/DESIGN.md R-3.4). Read by nothing in the viewer in this milestone. */
+export interface Space {
+  id: string; floor: FloorKey; o: Ring; h: Ring[];
+  /** m2, to 0.1. */
+  area: number;
+  /** The room's own name ('' when none) and every drawn name in it. Drawing or staff text: textContent only. */
+  name: string; names: string[];
+  source: 'network' | 'outline' | 'staff';
+  /** false when staff marked the room "no ceiling". */
+  ceiling: boolean;
   [extra: string]: unknown;
 }
 export interface Opening {
@@ -141,6 +186,10 @@ export interface BuiltModel {
   colliderSkins: Record<FloorKey, ColliderSkin[]>;
   furnitureKinds?: FurnitureKind[];
   furniture?: FurniturePiece[];
+  /** v2. Present in every model built with the new rule, [] when no stair climbs: its presence switches the foot-based walker on (R-9.1). */
+  stairways?: Stairway[];
+  /** v2. */
+  spaces?: Space[];
 }
 
 // =====================================================================================================================
@@ -216,7 +265,8 @@ export interface PartStyle {
   single?: boolean;
 }
 
-export type ToggleName = 'plates' | 'glass' | 'rooms' | 'single' | 'picture';
+/** 'ceilings' (v2, default on): shown only when the model has ceiling parts; ceilings show in Walk and Ghost only (R-9.7). */
+export type ToggleName = 'plates' | 'glass' | 'rooms' | 'single' | 'picture' | 'ceilings';
 
 export interface Presentation {
   /** The offline page's <title>. */
@@ -297,7 +347,8 @@ export interface VersionMeta {
   createdAt: string;
   sourceKind: SourceKind;
   sourceFiles: string[];
-  modelFormat: 'built-model/1';
+  /** 'built-model/2' when the model has the `stairways` key (rooms/DESIGN.md R-12.2). */
+  modelFormat: 'built-model/1' | 'built-model/2';
   /** 40 hex: sha1 of versions/<n>/model.json. */
   modelSha1: string;
   /** 12 hex: the model-data stamp shared with the 3ds Max script. */
@@ -556,7 +607,13 @@ export interface FloorRecord {
   stack: string;
   group: Group;
   colliders: Mesh[];
+  /** The floor plates (slabs) only, for every reader of before the rooms milestone. */
   walkables: Mesh[];
+  /**
+   * v2 (rooms/DESIGN.md R-9.2): what the foot-based walker stands on: the meshes of the slab, tread and landing parts.
+   * Treads and landings are never colliders. Empty for a model without stairways (the old walker reads `walkables`).
+   */
+  surfaces: Mesh[];
   /** Shown at the end of the replay (floor plates, stairs, furniture boxes). */
   late: Object3D[];
   rise: RiseItem[];
@@ -625,6 +682,12 @@ export interface ReadoutsApi {
   rayHit(floor: FloorKey, x: number, y: number, h: number, dx: number, dy: number, far?: number): { d: number; name: string } | null;
   /** World-space ray (the house page's cast): from p along d up to far, visible colliders of the floor. */
   cast(floor: FloorKey, p: Vec3, d: Vec3, far: number): { d: number; name: string } | null;
+  /**
+   * v2 (rooms/DESIGN.md R-9.8): the height above the floor's level of the highest surface (slab, tread or landing of the
+   * floor's stack) under plan (x, y), looking down from h0 (default 3.0) above the level, or null. downHit keeps reading
+   * colliders.
+   */
+  groundAt(floor: FloorKey, x: number, y: number, h0?: number): number | null;
 }
 
 export interface ResolvedOptions {
@@ -743,6 +806,11 @@ export interface ModesState {
   mode: ViewMode;
   floor: FloorRecord;
   pos: Vector3;
+  /**
+   * v2 (rooms/DESIGN.md R-9.2): the height of the walker's feet above the datum (m); the eye is foot + eye. On a model
+   * without stairways it is always the current floor's level (the old walker never reads it).
+   */
+  foot: number;
   yaw: number;
   pitch: number;
   eye: number;
@@ -767,13 +835,24 @@ export interface ModesState {
   camWanted?: boolean;
 }
 
-/** Read-outs for tests (window.__viewer.probe), exactly the prototype's. */
+/**
+ * Read-outs for tests (window.__viewer.probe), exactly the prototype's, plus foot and ground (v2).
+ * With climbing on (a model with stairways; rooms/DESIGN.md R-9.8): a probe call starts from where the test put the
+ * walker. When state.pos.x / z differ from where the walker last put them, onFloor, clearance, open, crosses and walk first
+ * put the foot back on the current floor's level (a teleport). Probe calls never ease the eye. `onFloor` means ground
+ * within the step window; `walk` returns the horizontal distance walked (the same as before on flat floors). Models without
+ * stairways are not touched.
+ */
 export interface ModesProbe {
   open(deg?: number): number;
   clearance(): number;
   onFloor(): boolean;
   crosses(x0: number, z0: number, x1: number, z1: number): boolean;
   walk(deg: number, metres: number): number;
+  /** v2: the height of the walker's feet above the datum (m). */
+  foot(): number;
+  /** v2: the height above the datum of the surface under the walker (within the step window), or null. */
+  ground(): number | null;
   visible(): FloorKey[];
   camera(): { x: number; y: number; z: number; fov: number; rx: number; offsetY: number | null; dir: Vec3 };
 }
@@ -947,6 +1026,8 @@ export interface TestHookFloor {
   /** The MODEL level (the prototypes' FL records). */
   level: number;
   group: Group; colliders: Mesh[]; walkables: Mesh[]; late: Object3D[]; rise: RiseItem[];
+  /** v2: FloorRecord.surfaces (optional here: a page of before the rooms milestone has none). */
+  surfaces?: Mesh[];
 }
 export interface TestHookHost {
   FL: Record<FloorKey, TestHookFloor>;

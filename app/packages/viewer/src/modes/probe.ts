@@ -24,6 +24,10 @@ export function createProbe(ctx: Pick<ViewerContext, 'camera' | 'floors'>, s: Mo
       applyCamera();
       return s.pos.distanceTo(start);
     },
+    // Placeholders of the rooms scaffold (R0; R4 owns them, rooms/DESIGN.md R-9.8): the old walker's feet are at the
+    // floor's level, and the ground under it is that level where there is floor.
+    foot: () => s.foot,
+    ground: () => (walk.onFloor(s.pos, s.floor) ? s.floor.level : null),
     visible: () => ctx.floors.filter(f => f.group.visible).map(f => f.key),
     camera: () => ({
       x: camera.position.x, y: camera.position.y, z: camera.position.z, fov: camera.fov, rx: camera.rotation.x,

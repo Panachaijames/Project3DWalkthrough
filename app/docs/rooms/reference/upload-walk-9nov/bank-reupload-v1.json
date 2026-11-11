@@ -1,0 +1,406 @@
+{
+  "file": "C:\\Users\\DWP2\\AppData\\Local\\Temp\\wt-uf\\offline\\bank-reupload-v1.html",
+  "should": false,
+  "loads": {
+    "meta": "c3a9408304a2",
+    "canvas": 1,
+    "error": false,
+    "projectId": "bank-reupload",
+    "version": 1,
+    "stamp": "c3a9408304a2",
+    "maxScript": "Bangkok_Bank_Sampeng.ms",
+    "requests": [],
+    "problems": [],
+    "maxScriptFile": "C:\\Users\\DWP2\\AppData\\Local\\Temp\\wt-uf\\acc\\data\\projects\\bank-reupload\\versions\\1\\downloads\\Bangkok_Bank_Sampeng.ms",
+    "maxScriptStamp": "c3a9408304a2"
+  },
+  "start": {
+    "ok": true,
+    "failures": [],
+    "detail": {
+      "camera": "fitSlabs",
+      "canvas": [
+        0,
+        0,
+        1400,
+        880
+      ],
+      "panel": [
+        12,
+        12,
+        372,
+        828
+      ],
+      "free": [
+        372,
+        0,
+        1400,
+        880
+      ],
+      "corners": 108
+    }
+  },
+  "floors": {
+    "ok": true,
+    "failures": [],
+    "detail": {
+      "floors": [
+        {
+          "key": "L1",
+          "level": 0
+        },
+        {
+          "key": "L2",
+          "level": 3.7
+        }
+      ],
+      "buttons": 3
+    }
+  },
+  "walls": {
+    "ok": true,
+    "failures": [],
+    "detail": [
+      {
+        "floor": "L1",
+        "tried": 40,
+        "wentThrough": 0,
+        "endedInsideWall": 0
+      },
+      {
+        "floor": "L2",
+        "tried": 40,
+        "wentThrough": 0,
+        "endedInsideWall": 0
+      }
+    ]
+  },
+  "doors": {
+    "ok": true,
+    "failures": [],
+    "detail": {
+      "doors": 39,
+      "passages": [
+        {
+          "id": "L1-003",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        },
+        {
+          "id": "L1-023",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        },
+        {
+          "id": "L2-017",
+          "ok": true,
+          "fwd": 0.5,
+          "back": 0.55
+        }
+      ]
+    }
+  },
+  "glass": {
+    "ok": true,
+    "failures": [],
+    "detail": {
+      "probes": 30,
+      "parts": [
+        {
+          "part": "part 15",
+          "floor": "L1",
+          "at": [
+            4.842,
+            4.08
+          ],
+          "sides": [
+            {
+              "side": -1,
+              "stoppedAt": 0.3,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        },
+        {
+          "part": "part 19",
+          "floor": "L1",
+          "at": [
+            3.591,
+            -4.114
+          ],
+          "sides": [
+            {
+              "side": 1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            },
+            {
+              "side": -1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        },
+        {
+          "part": "part 51",
+          "floor": "L1",
+          "at": [
+            5.025,
+            -5.129
+          ],
+          "sides": [
+            {
+              "side": -1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        },
+        {
+          "part": "part 41",
+          "floor": "L1",
+          "at": [
+            4.898,
+            1.274
+          ],
+          "sides": [
+            {
+              "side": 1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        },
+        {
+          "part": "part 40",
+          "floor": "L1",
+          "at": [
+            4.961,
+            -2.082
+          ],
+          "sides": [
+            {
+              "side": -1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        },
+        {
+          "part": "part 18",
+          "floor": "L1",
+          "at": [
+            3.536,
+            1.803
+          ],
+          "sides": [
+            {
+              "side": 1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            },
+            {
+              "side": -1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        },
+        {
+          "part": "part 23",
+          "floor": "L1",
+          "at": [
+            0.818,
+            -6.618
+          ],
+          "sides": [
+            {
+              "side": 1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            },
+            {
+              "side": -1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        },
+        {
+          "part": "part 17",
+          "floor": "L1",
+          "at": [
+            -0.589,
+            2.391
+          ],
+          "sides": [
+            {
+              "side": 1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            },
+            {
+              "side": -1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        },
+        {
+          "part": "part 27",
+          "floor": "L1",
+          "at": [
+            3.536,
+            4.23
+          ],
+          "sides": [
+            {
+              "side": 1,
+              "stoppedAt": 0.55,
+              "ok": true,
+              "judged": true
+            },
+            {
+              "side": -1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        },
+        {
+          "part": "part 33",
+          "floor": "L1",
+          "at": [
+            1.014,
+            -9.476
+          ],
+          "sides": [
+            {
+              "side": -1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        },
+        {
+          "part": "part 76",
+          "floor": "L2",
+          "at": [
+            3.214,
+            3.308
+          ],
+          "sides": [
+            {
+              "side": 1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            },
+            {
+              "side": -1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        },
+        {
+          "part": "part 79",
+          "floor": "L2",
+          "at": [
+            1.444,
+            -1.583
+          ],
+          "sides": [
+            {
+              "side": 1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            },
+            {
+              "side": -1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        },
+        {
+          "part": "part 78",
+          "floor": "L2",
+          "at": [
+            1.444,
+            1.7
+          ],
+          "sides": [
+            {
+              "side": 1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            },
+            {
+              "side": -1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        },
+        {
+          "part": "part 77",
+          "floor": "L2",
+          "at": [
+            3.317,
+            -3.82
+          ],
+          "sides": [
+            {
+              "side": 1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            },
+            {
+              "side": -1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        }
+      ]
+    }
+  }
+}

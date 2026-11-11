@@ -71,7 +71,7 @@ test('the hotel: both plan pictures read before ready, the Plan picture tick off
   const errors = await open(page, '?project=hotel&build=0&nodownload=1');
   const off = await page.evaluate(async () => ({ ready: await window.__host!.pictures!.ready, sheets: window.__host!.pictures!.objs.map(m => [m.name, m.visible]),
     toggles: window.__walkthrough!.viewer.getToggles() }));
-  expect(off).toEqual({ ready: [true, true], sheets: [['F1 plan picture', false], ['F2 plan picture', false]], toggles: { plates: true, glass: true, rooms: true, single: true, picture: false } });
+  expect(off).toEqual({ ready: [true, true], sheets: [['F1 plan picture', false], ['F2 plan picture', false]], toggles: { plates: true, glass: true, rooms: true, single: true, picture: false, ceilings: true } });
   await page.goto('/core/viewer.html?project=hotel&build=0&nodownload=1&picture=1');
   await page.waitForFunction(() => window.__core?.status === 'ready');
   await page.waitForFunction(() => window.__host!.pictures!.objs.every(m => m.visible));
@@ -197,5 +197,5 @@ test('the start-up order: with stages the replay starts on its settings screen (
     expect(r.viewer).toBe('settings');
     expect(r.labels).toBe(0);                                                  // labels only when the replay is done
   }
-  expect(r.toggles).toEqual({ plates: true, glass: true, rooms: true, single: true, picture: false });
+  expect(r.toggles).toEqual({ plates: true, glass: true, rooms: true, single: true, picture: false, ceilings: true });
 });

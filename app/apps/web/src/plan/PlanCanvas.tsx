@@ -5,7 +5,7 @@
 import { useLayoutEffect, useRef, useState, type CSSProperties, type JSX } from 'react';
 import { PlanController } from './controller';
 import type { Ctx } from './draw';
-import type { PlanCanvasProps } from './index';
+import { EMPTY_PLAN_HOOK, setPlanTestHook, type PlanCanvasProps } from './index';
 
 /** Whether this environment gives a 2D canvas context. */
 export function canDraw2d(): boolean {
@@ -49,7 +49,9 @@ export function PlanCanvasView(props: PlanCanvasProps): JSX.Element {
     ro?.observe(w);
     window.addEventListener('resize', measure);
     measure();
+    setPlanTestHook(EMPTY_PLAN_HOOK);                   // rooms R-12.6: the scaffold's placeholder; R6 gives the canvas's own
     return () => {
+      setPlanTestHook(null);
       ro?.disconnect();
       window.removeEventListener('resize', measure);
       controller.dispose();

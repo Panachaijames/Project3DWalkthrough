@@ -1,0 +1,147 @@
+{
+  "format": "flag-examples/1",
+  "note": "One Flag of each kind the rooms milestone adds (docs/rooms/DESIGN.md R-6.1). Seven are the reference building's own (fixtures/rooms/overlay.reference.json); `stairs-none` is written by hand, since a building whose stair climbs raises none. Made by tools/rooms/make-reference-building.py.",
+  "flags": [
+    {
+      "id": "slab-gap:ground:dcfcb2174872",
+      "kind": "slab-gap",
+      "floor": "ground",
+      "severity": "check",
+      "title": "No floor beside the walls",
+      "detail": "About 20 m2 beside the walls has no floor: the walls do not close here.",
+      "at": [
+        10.35,
+        8.9
+      ],
+      "bbox": [
+        7.03,
+        4.6,
+        11.8,
+        8.8
+      ],
+      "ref": {
+        "a": [
+          8.9,
+          8.9
+        ],
+        "b": [
+          11.8,
+          8.9
+        ]
+      }
+    },
+    {
+      "id": "room-open:ground:6538be300f6d",
+      "kind": "room-open",
+      "floor": "ground",
+      "severity": "check",
+      "title": "GARAGE: its room is not closed",
+      "detail": "GARAGE: its room is not closed (a gap in its walls). Close the gap or place the name.",
+      "at": [
+        9.0,
+        6.6
+      ],
+      "bbox": null,
+      "ref": {}
+    },
+    {
+      "id": "room-names:ground:bf6cdd379dcb",
+      "kind": "room-names",
+      "floor": "ground",
+      "severity": "info",
+      "title": "2 names in one room",
+      "detail": "2 names in one room: an open-plan room, or a wall between them is missing.",
+      "at": [
+        3.585,
+        4.5
+      ],
+      "bbox": null,
+      "ref": {
+        "room": "ground-R001"
+      }
+    },
+    {
+      "id": "doorway:ground:edd676842bfb",
+      "kind": "doorway",
+      "floor": "ground",
+      "severity": "info",
+      "title": "A gap closed as a doorway",
+      "detail": "A gap of 1.20 m between two wall ends was closed as a doorway: no door was found here.",
+      "at": [
+        7.0,
+        6.2
+      ],
+      "bbox": null,
+      "ref": {
+        "a": [
+          7.0,
+          5.6
+        ],
+        "b": [
+          7.0,
+          6.8
+        ]
+      }
+    },
+    {
+      "id": "stair:ground:05c4f6a12e10",
+      "kind": "stair",
+      "floor": "ground",
+      "severity": "check",
+      "title": "Stair kept as lines",
+      "detail": "Stair at (3.1, 8.0): kept as lines: which end is the bottom was not found.",
+      "at": [
+        3.1,
+        8.0
+      ],
+      "bbox": null,
+      "ref": {
+        "stair": "ground-ST2"
+      }
+    },
+    {
+      "id": "stairs-none:ground:abf9099652b6",
+      "kind": "stairs-none",
+      "floor": "ground",
+      "severity": "check",
+      "title": "No stair can be climbed",
+      "detail": "No stair between Ground floor and Upper floor can be climbed. Stair at (3.1, 8.0): kept as lines: which end is the bottom was not found.",
+      "at": [
+        3.1,
+        8.0
+      ],
+      "bbox": null,
+      "ref": {}
+    },
+    {
+      "id": "stair-clash:ground:511b7f00afa7",
+      "kind": "stair-clash",
+      "floor": "ground",
+      "severity": "info",
+      "title": "Walls cut under a stair",
+      "detail": "1 wall piece of Ground floor under the stair was cut to the stair's underside.",
+      "at": [
+        3.35,
+        4.08
+      ],
+      "bbox": null,
+      "ref": {
+        "stair": "S1"
+      }
+    },
+    {
+      "id": "hole-skipped:ground:93f862b0254d",
+      "kind": "hole-skipped",
+      "floor": "ground",
+      "severity": "info",
+      "title": "A void mark was not cut",
+      "detail": "An X marks a void on the lowest floor: not cut.",
+      "at": [
+        10.5,
+        1.5
+      ],
+      "bbox": null,
+      "ref": {}
+    }
+  ]
+}

@@ -1,0 +1,693 @@
+{
+  "file": "C:\\Users\\DWP2\\AppData\\Local\\Temp\\wt-uf\\offline\\tower-upload-v1.html",
+  "should": true,
+  "loads": {
+    "meta": "91414f408cb2",
+    "canvas": 1,
+    "error": false,
+    "projectId": "tower-upload",
+    "version": 1,
+    "stamp": "91414f408cb2",
+    "maxScript": "Tower_L29_L30.ms",
+    "requests": [],
+    "problems": [],
+    "maxScriptFile": "C:\\Users\\DWP2\\AppData\\Local\\Temp\\wt-uf\\acc\\data\\projects\\tower-upload\\versions\\1\\downloads\\Tower_L29_L30.ms",
+    "maxScriptStamp": "91414f408cb2"
+  },
+  "start": {
+    "ok": true,
+    "failures": [],
+    "detail": {
+      "camera": "fitSlabs",
+      "canvas": [
+        0,
+        0,
+        1400,
+        880
+      ],
+      "panel": [
+        12,
+        12,
+        372,
+        771.015625
+      ],
+      "free": [
+        372,
+        0,
+        1400,
+        880
+      ],
+      "corners": 2586
+    }
+  },
+  "floors": {
+    "ok": true,
+    "failures": [],
+    "detail": {
+      "floors": [
+        {
+          "key": "L29",
+          "level": 0
+        },
+        {
+          "key": "L30",
+          "level": 4
+        }
+      ],
+      "buttons": 3
+    }
+  },
+  "walls": {
+    "ok": true,
+    "failures": [],
+    "detail": [
+      {
+        "floor": "L29",
+        "tried": 40,
+        "wentThrough": 0,
+        "endedInsideWall": 0
+      },
+      {
+        "floor": "L30",
+        "tried": 40,
+        "wentThrough": 0,
+        "endedInsideWall": 0
+      }
+    ]
+  },
+  "doors": {
+    "ok": false,
+    "failures": [
+      {
+        "id": "L29-001",
+        "kind": "door",
+        "exterior": false,
+        "fwd": "no start",
+        "fwdTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 1.33
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 2.85
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 2.85
+          }
+        ],
+        "back": "no start",
+        "backTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 1.33
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 2.85
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 2.85
+          }
+        ],
+        "ok": false
+      },
+      {
+        "id": "L29-016",
+        "kind": "door",
+        "exterior": false,
+        "fwd": "no start",
+        "fwdTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 1.2
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 0.93
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 0.72
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 0.66
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 1
+          }
+        ],
+        "back": "no start",
+        "backTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 0.71
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 0.71
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 0.71
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 0.66
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 0.71
+          }
+        ],
+        "ok": false
+      },
+      {
+        "id": "L29-025",
+        "kind": "door",
+        "exterior": false,
+        "fwd": "no start",
+        "fwdTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 1.38
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 2.02
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 2.02
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 2.02
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 2.02
+          }
+        ],
+        "back": "no start",
+        "backTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 1.43
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 1.43
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 1.43
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 1.43
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 1.43
+          }
+        ],
+        "ok": false
+      },
+      {
+        "id": "L29-026",
+        "kind": "door",
+        "exterior": false,
+        "fwd": -0.1,
+        "back": -0.55,
+        "ok": false
+      },
+      {
+        "id": "L29-028",
+        "kind": "door",
+        "exterior": false,
+        "fwd": "no start",
+        "fwdTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 0.7
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 0.7
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 0.7
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 0.66
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 0.7
+          }
+        ],
+        "back": "no start",
+        "backTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 1.04
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 0.93
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 0.72
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 0.66
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 0.99
+          }
+        ],
+        "ok": false
+      },
+      {
+        "id": "L30-033",
+        "kind": "door",
+        "exterior": false,
+        "fwd": "no start",
+        "fwdTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 1.38
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 9
+          }
+        ],
+        "back": "no start",
+        "backTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 2.99
+          }
+        ],
+        "ok": false
+      },
+      {
+        "id": "L30-034",
+        "kind": "door",
+        "exterior": false,
+        "fwd": -0.1,
+        "back": -0.55,
+        "ok": false
+      }
+    ],
+    "detail": {
+      "doors": 44,
+      "passages": [
+        {
+          "id": "L29-007",
+          "ok": true,
+          "fwd": 0.55,
+          "back": 0.5
+        },
+        {
+          "id": "L29-008",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        },
+        {
+          "id": "L29-017",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        },
+        {
+          "id": "L29-018",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        },
+        {
+          "id": "L29-019",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        },
+        {
+          "id": "L29-020",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        },
+        {
+          "id": "L29-022",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        },
+        {
+          "id": "L30-004",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        },
+        {
+          "id": "L30-007",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        },
+        {
+          "id": "L30-008",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        },
+        {
+          "id": "L30-009",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        },
+        {
+          "id": "L30-010",
+          "ok": true,
+          "fwd": 0.15,
+          "back": "no start"
+        },
+        {
+          "id": "L30-014",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        },
+        {
+          "id": "L30-022",
+          "ok": true,
+          "fwd": 0.1,
+          "back": "no start"
+        },
+        {
+          "id": "L30-023",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        },
+        {
+          "id": "L30-024",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        },
+        {
+          "id": "L30-028",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        },
+        {
+          "id": "L30-029",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        },
+        {
+          "id": "L30-031",
+          "ok": true,
+          "fwd": 0.9,
+          "back": 0.9
+        }
+      ]
+    }
+  },
+  "glass": {
+    "ok": false,
+    "failures": [
+      {
+        "probe": "L30-032",
+        "side": 1,
+        "stoppedAt": null,
+        "ahead": null
+      },
+      {
+        "probe": "L30 glass 19",
+        "side": 1,
+        "stoppedAt": 0.65,
+        "ahead": "L30 solid:follow at 0.33 m"
+      },
+      {
+        "probe": "L30 glass 24",
+        "side": 1,
+        "stoppedAt": null,
+        "ahead": null
+      },
+      {
+        "probe": "L30 glass 26",
+        "side": 1,
+        "stoppedAt": null,
+        "ahead": null
+      }
+    ],
+    "detail": {
+      "probes": 13,
+      "parts": [
+        {
+          "part": "part 67",
+          "floor": "L29",
+          "at": [
+            -0.568,
+            -0.507
+          ],
+          "sides": [
+            {
+              "side": -1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        },
+        {
+          "part": "part 65",
+          "floor": "L29",
+          "at": [
+            -8.778,
+            -0.507
+          ],
+          "sides": [
+            {
+              "side": 1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            },
+            {
+              "side": -1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        },
+        {
+          "part": "part 46",
+          "floor": "L29",
+          "at": [
+            9.387,
+            11.924
+          ],
+          "sides": [
+            {
+              "side": 1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        },
+        {
+          "part": "part 68",
+          "floor": "L29",
+          "at": [
+            -0.568,
+            -3.307
+          ],
+          "sides": [
+            {
+              "side": -1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        },
+        {
+          "part": "part 66",
+          "floor": "L29",
+          "at": [
+            -8.778,
+            -3.307
+          ],
+          "sides": [
+            {
+              "side": 1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            },
+            {
+              "side": -1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        },
+        {
+          "part": "part 155",
+          "floor": "L30",
+          "at": [
+            -16.01,
+            -8.707
+          ],
+          "sides": [
+            {
+              "side": 1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        },
+        {
+          "part": "part 153",
+          "floor": "L30",
+          "at": [
+            -16.133,
+            -10.115
+          ],
+          "sides": [
+            {
+              "side": -1,
+              "stoppedAt": 0.35,
+              "ok": true,
+              "judged": true
+            }
+          ],
+          "ok": true
+        }
+      ]
+    }
+  }
+}

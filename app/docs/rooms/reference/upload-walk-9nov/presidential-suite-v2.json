@@ -1,0 +1,285 @@
+{
+  "file": "C:\\Users\\DWP2\\AppData\\Local\\Temp\\wt-uf\\offline\\presidential-suite-v2.html",
+  "should": true,
+  "loads": {
+    "meta": "467d3f8444c0",
+    "canvas": 1,
+    "error": false,
+    "projectId": "presidential-suite",
+    "version": 2,
+    "stamp": "467d3f8444c0",
+    "maxScript": "Presidential_Suite.ms",
+    "requests": [],
+    "problems": [],
+    "maxScriptFile": "C:\\Users\\DWP2\\AppData\\Local\\Temp\\wt-uf\\acc\\data\\projects\\presidential-suite\\versions\\2\\downloads\\Presidential_Suite.ms",
+    "maxScriptStamp": "467d3f8444c0"
+  },
+  "start": {
+    "ok": true,
+    "failures": [],
+    "detail": {
+      "camera": "fitSlabs",
+      "canvas": [
+        0,
+        0,
+        1400,
+        880
+      ],
+      "panel": [
+        12,
+        12,
+        372,
+        643.28125
+      ],
+      "free": [
+        372,
+        0,
+        1400,
+        880
+      ],
+      "corners": 396
+    }
+  },
+  "floors": {
+    "ok": true,
+    "failures": [],
+    "detail": {
+      "floors": [
+        {
+          "key": "suite",
+          "level": 0
+        }
+      ],
+      "buttons": 0
+    }
+  },
+  "walls": {
+    "ok": false,
+    "failures": [
+      {
+        "floor": "suite",
+        "tried": 0,
+        "wentThrough": 0,
+        "endedInsideWall": 0
+      }
+    ],
+    "detail": [
+      {
+        "floor": "suite",
+        "tried": 0,
+        "wentThrough": 0,
+        "endedInsideWall": 0
+      }
+    ]
+  },
+  "doors": {
+    "ok": false,
+    "failures": [
+      {
+        "id": "suite-004",
+        "kind": "door",
+        "exterior": false,
+        "fwd": "no start",
+        "fwdTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 0.4
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 0.4
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 0.4
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 0.4
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 0.41
+          }
+        ],
+        "back": "no start",
+        "backTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 0.88
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 0.64
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 0.64
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 0.64
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 0.64
+          }
+        ],
+        "ok": false
+      },
+      {
+        "id": "suite-008",
+        "kind": "door",
+        "exterior": false,
+        "fwd": "no start",
+        "fwdTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 9
+          }
+        ],
+        "back": "no start",
+        "backTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 9
+          }
+        ],
+        "ok": false
+      },
+      {
+        "id": "suite-010",
+        "kind": "door",
+        "exterior": false,
+        "fwd": "no start",
+        "fwdTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 2.98
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 2.98
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 2.98
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 2.98
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 2.98
+          }
+        ],
+        "back": "no start",
+        "backTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 9
+          }
+        ],
+        "ok": false
+      }
+    ],
+    "detail": {
+      "doors": 9,
+      "passages": [
+        {
+          "id": "suite-001",
+          "ok": true,
+          "fwd": 0.45,
+          "back": 0.4
+        }
+      ]
+    }
+  },
+  "glass": {
+    "ok": true,
+    "failures": [],
+    "detail": {
+      "probes": 0,
+      "parts": []
+    }
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "format": "old-rule-outputs/1",
+  "base": "66b4c06",
+  "builderTree": "a1b28b22625549d335c1aeca53a808397cb19d4d",
+  "builtAt": "2026-11-09T12:00:00Z",
+  "note": "sha1 of every output of the five old-rule builds; written by test_r_old_rule.py from the builder of the base commit (docs/rooms/DESIGN.md R-13). Frozen.",
+  "builds": {
+    "bank": {
+      "settings": "fixtures/upload/settings/bank.json",
+      "project": "bank-sampeng",
+      "diffAgainst": "bank-v1",
+      "stamp": "c3a9408304a2",
+      "maxFileName": "Bangkok_Bank_Sampeng.ms",
+      "files": {
+        "model.json": "c3a9408304a240b83c36f5c5c53db56b50a72c64",
+        "stages.json": "2cb07b6180a2994904fbace9f223163c306909e8",
+        "presentation.json": "6bc0d37ec9125bf69337652cb15682ed53151794",
+        "overlay.json": "261b249572e2b7346f7324b97e35e7d94360a15a",
+        "diff.json": "23b9689151dd262bfc1826e1643dbed4dab5ba79",
+        "topview.png": "f084b556503c4d5959e02d1dd55e84c607800775",
+        "openings.json": "1bf67e04e4f467446efd7483bfc5a43d91473bf4",
+        "pieces.json": "a417dba74cd4fa202bab4770f94e70f2a8544e5d",
+        "maxscript": "7a0925d8a1014ae4f59a4b4937c96b1207911534",
+        "flags": "9739206ba85ef03e9402b0d106565570d6a25ac4",
+        "report": "4ab52fb413a59cb3e61cd4d26adf51b0e12e0768",
+        "furniture.csv": "b528bb2320ef4a5e04ad3c1ad1e04ee09af67861"
+      }
+    },
+    "house": {
+      "settings": "fixtures/upload/settings/recipes/house.json",
+      "project": "house-upload",
+      "diffAgainst": "house",
+      "stamp": "1c07bfeef580",
+      "maxFileName": "Sukhumvit_House.ms",
+      "files": {
+        "model.json": "1c07bfeef580d5a15de15a5dbdc303e4269dfc91",
+        "stages.json": "89ea05e7bbd58db3e729649f471478ceaf3b816a",
+        "presentation.json": "02cd642f70ca3e6ce7f5f6ccc2e89246f2a29958",
+        "overlay.json": "071f2d1cf464d3543a9ec8c2272e8eed6e7117bb",
+        "diff.json": "c4622b0fe2ff4d9be5c13a2b08755e9723a0daa6",
+        "topview.png": "19d1f8d6246f6212d714f4d963560335f0a1cdb8",
+        "openings.json": "f7bc69125a5880bcedf57e1581254c613f328c2b",
+        "pieces.json": "bcde96bd2a4a5e9e78ae1addbf52a9ed5b8c6053",
+        "maxscript": "6a46189cd10b1f8a7baa7f8b2fa6944707b57aa8",
+        "flags": "8207663a34355982753627cb8c842db47d90428c",
+        "report": "da50766fe56e633c25801b8929f2e6e91eb7663a",
+        "furniture.csv": "5ebe79e4c341c9a4f3b53b4c55fe1867259e44f8"
+      }
+    },
+    "suite": {
+      "settings": "fixtures/upload/settings/recipes/suite.json",
+      "project": "suite-upload",
+      "diffAgainst": "suite",
+      "stamp": "205e9c2c46e8",
+      "maxFileName": "Presidential_Suite.ms",
+      "files": {
+        "model.json": "205e9c2c46e8be96b150bbafae0d195baa12a370",
+        "stages.json": "e6eea530bd3851371eb475c43bc5163e776d62d9",
+        "presentation.json": "4add577a0c115c75d817370386447b22992365df",
+        "overlay.json": "8098abfce6e54463be36581f5ee522ecba765377",
+        "diff.json": "4b54838c13166add9380c2631ee26e8ff060c58c",
+        "topview.png": "620f9f7f1c2b02d5bfc1857f0b9a0297d41d61ef",
+        "openings.json": "203e0008cb08d977231a2c01f98b7fe5029b8121",
+        "pieces.json": "71ad6de7eae32c62ce3e73d9d1057b5bc8499b60",
+        "maxscript": "af579c51bb4375734dff39a7a5fdf18fb973112e",
+        "flags": "54d8709b030521b30d3996f1e9881997482f4ef1",
+        "report": "5997f95fae4648d6d193211a34d3048caa50e88b",
+        "furniture.csv": "f39f5f709f50a8dabb4cb4a70570322a17f9716c"
+      }
+    },
+    "tower": {
+      "settings": "fixtures/upload/settings/recipes/tower.json",
+      "project": "tower-upload",
+      "diffAgainst": null,
+      "stamp": "91414f408cb2",
+      "maxFileName": "Tower_L29_L30.ms",
+      "files": {
+        "model.json": "91414f408cb2757bbe2c0e6e121415158635eb06",
+        "stages.json": "d39dcbbd1a6e212895060a193c0708fbb522f885",
+        "presentation.json": "9c21c6e3ba9e02ae56fd349fe57e22ee568ec9a5",
+        "overlay.json": "c072ee8c5fc1996897b54f7bce8a47e14a9ac08d",
+        "diff.json": "975b4b76be497b7ee8eee52fd95b32fc2140b3fd",
+        "topview.png": "a6fc18f7a121734c42508340beda6541ca54e8ea",
+        "openings.json": "96ae18377ab1cdf5271b89d5859c8cce192345e0",
+        "pieces.json": "1dc3ca0d71a6b1304644a9a29f1617dd24d88fdf",
+        "maxscript": "5cbf6d8cddfeccfbe3fdf7265022238c5ebbdfb4",
+        "flags": "783cf6f4d0a60fb83f33d02c4e8523b45d0f51a7",
+        "report": "97d7b64f336eb2e0464f6cab89683eea35406559",
+        "furniture.csv": "8949ec63bd853622d29c453dd83ae2455a8b372b"
+      }
+    },
+    "suite-revit": {
+      "settings": "fixtures/upload/settings/recipes/suite-revit.json",
+      "project": "suite-revit",
+      "diffAgainst": null,
+      "stamp": "1d90d91ef949",
+      "maxFileName": "Presidential_suite_Revit_export_9_Nov.ms",
+      "files": {
+        "model.json": "1d90d91ef949c8a554e68b2ec3c8b9326df66d30",
+        "stages.json": "3dcbe53d040d680d4776a180754839daadc4614a",
+        "presentation.json": "5f89f4548c4270f1e825edbb66d8a3631526145d",
+        "overlay.json": "fd0a146396a081cb30627a7ab86ceeaddb086577",
+        "diff.json": "975b4b76be497b7ee8eee52fd95b32fc2140b3fd",
+        "topview.png": "61c39e5eeddbfbdde86f3d084fb179f081b050a0",
+        "openings.json": "c57193399be4c0c7cb074f863b65b792f2484d59",
+        "pieces.json": "f0ec489446e6db7609295e31c2049487930979b3",
+        "maxscript": "eb678e5c82e44abe592346dbdd71946de660780d",
+        "flags": "8ab1c9dd3724489a3d1bcc38ae0507c5d724a1c5",
+        "report": "94a7b7582a2ec4e70a0c93a98f51c1f82b940822",
+        "furniture.csv": "b1db5407075a44ded170a1ef8d1e38f32e3dd60c"
+      }
+    }
+  }
+}

@@ -48,7 +48,7 @@ describe('createEventBus', () => {
     const after = vi.fn();
     bus.on('toggles', () => { throw new Error('boom'); });
     bus.on('toggles', after);
-    const payload = { toggles: { plates: true, glass: true, rooms: true, single: true, picture: false } };
+    const payload = { toggles: { plates: true, glass: true, rooms: true, single: true, picture: false, ceilings: true } };
     expect(() => bus.emit('toggles', payload)).toThrow('boom');
     expect(after).toHaveBeenCalledTimes(1);
     bus.on('toggles', () => { throw new Error('two'); });

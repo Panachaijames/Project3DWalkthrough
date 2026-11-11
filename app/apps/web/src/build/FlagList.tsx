@@ -22,6 +22,16 @@ export const FLAG_KIND_TEXT: Record<FlagKind, string> = {
   'fix-unmatched': 'A fix that matched nothing',
   'detector-skipped': 'Detector rule skipped',
   slow: 'Slow floor',
+  // The rooms milestone's kinds (docs/rooms/DESIGN.md R-6.1): placeholder texts of the scaffold R0, so that every kind
+  // has one; R6 writes the cards, their texts and buttons.
+  'slab-gap': 'No floor beside the walls',
+  'room-open': 'Room not closed',
+  'room-names': 'Several names in one room',
+  doorway: 'Gap closed as a doorway',
+  stair: 'Stair kept as lines',
+  'stairs-none': 'No stair can be climbed',
+  'stair-clash': 'Walls cut under a stair',
+  'hole-skipped': 'Void mark not cut',
 };
 
 export interface FlagListProps {

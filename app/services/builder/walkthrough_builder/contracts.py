@@ -14,7 +14,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from pathlib import Path
-from typing import TypedDict
+from typing import Any, TypedDict
 
 Vec2 = list[float]                      # [x, y]
 
@@ -198,8 +198,234 @@ def write_outputs(result: BuildResult, ctx: BuildContext, log: Log) -> dict[str,
     return impl(result, ctx, log)
 
 
+# ============================================================================================ the rooms milestone (R0)
+# docs/rooms/DESIGN.md R-12.3, field for field (tests/test_contracts.py reads that block): the calls between the wall
+# network (R1) and the stairs (R2), who do not talk, and the report keys the new rule adds. Scaffold R0; frozen.
+# Geometry is shapely, in sheet metres after alignment. `total=False` subclasses carry the new report keys, so a report
+# of the old rule keeps exactly the keys of fixtures/upload/build-result.bank.json (NotRequired does nothing at run time
+# under `from __future__ import annotations`).
+
+#: The three options of the rooms milestone at their old values: what a missing key means (R-1.2). The builder fills
+#: these for missing keys; the proposal and the API's adopt write NEW_RULES (R-1.3).
+OLD_RULES: dict[str, str] = {'slabs': 'closed-rooms', 'ceilings': 'off', 'stairs': 'lines'}
+#: The three options as every new draft gets them.
+NEW_RULES: dict[str, str] = {'slabs': 'network', 'ceilings': 'auto', 'stairs': 'climb'}
+
+
+class PartGeo(TypedDict):               # one part before the model frame (today's parts_geo row, named)
+    floor: str
+    kind: str
+    poly: Any
+    z0: float
+    z1: float
+    follow: bool
+    label: str                          # or None: no label
+    extra: dict                         # extra keys of the model's part ('stair', 'fit', 'plinth'); '_'-keys stay inside
+
+
+class FloorBuilt(TypedDict):            # one floor after openings and walls: bank.floor_walls()
+    key: str
+    index: int
+    level: float
+    top: float                          # the wall height
+    lowest: bool
+    items: list                         # the floor's per-item reading
+    parts: list                         # [PartGeo] up to the single-line parts, in the model's order
+    e_walls: list                       # everything built that bounds a space (walls, glass, panes, posts, closures)
+    recs: list                          # the opening records (each with its `span`)
+    rails: list                         # every railing piece found
+    parapets: list
+    singles: list                       # the single-line parts' polygons
+    old_plate: Any                      # today's plate (the old rule's, before its voids)
+    old_report: dict                    # today's plate report { kept, dropped }
+    old_stairs: dict                    # today's stair reading (bank.stairs_of)
+
+
+class Closing(TypedDict):               # a 2 cm strip added to the network
+    kind: str                           # 'bridge' | 'doorway' | 'staff'
+    a: tuple
+    b: tuple
+    width: float
+
+
+class Unfloored(TypedDict):
+    poly: Any
+    area: float
+    at: tuple
+    mouth: Any
+    answered: bool
+
+
+class SpaceGeo(TypedDict):
+    id: str
+    poly: Any
+    area: float
+    at: tuple
+    source: str
+    name: str
+    names: list
+    ceiling: bool
+
+
+class NetworkResult(TypedDict):         # R1, pass 1
+    N: Any
+    closings: list
+    faces: list
+    spaces: list
+    shapes: int
+    ring: Any
+
+
+class FlightFound(TypedDict):
+    risers: list
+    going: float
+    width: float
+    sense: str                          # 'leaves' | 'arrives' | ''
+    lines: list
+
+
+class StairFound(TypedDict):            # R2, pass 1, per floor
+    id: str
+    floor: str
+    flights: list
+    landings: list
+    outline: Any
+    hull: Any
+    floorEnd: Any
+    lines: list
+
+
+class StairCut(TypedDict):
+    floor: str
+    part: int
+    footprint: Any
+    z1: float
+
+
+class StairBuilt(TypedDict):            # R2, pass 2: a climbable stair
+    stairway: dict
+    treads: list
+    landings: list
+    wellOf: dict
+    headroom: Any
+    arrival: Any
+    cuts: list
+    linesUsed: dict
+
+
+class StairLeft(TypedDict):             # R2, pass 2: a stair group kept as lines
+    id: str
+    floor: str
+    why: str
+    text: str
+    severity: str
+    at: tuple
+    outline: Any
+    keptVoid: Any
+    risers: int
+
+
+class StairsResult(TypedDict):
+    built: list
+    left: list
+    pairs: list
+    fixes: list
+
+
+class FloorRoomsReport(TypedDict):
+    spaces: int
+    named: int
+    shapes: int
+    open: list
+    several: list
+
+
+class FloorSlabReport(TypedDict):
+    ring: float
+    terraces: float
+    old: float
+    plate: float
+    holes: list
+    unfloored: list
+    closings: list
+    dropped: list
+
+
+class FloorUploadReportRooms(FloorUploadReport, total=False):   # the keys the new rule adds; absent with the old rule
+    rooms: FloorRoomsReport
+    slab: FloorSlabReport
+    stairways: list
+    stairClash: list
+
+
+class FixesReportRooms(FixesReport, total=False):
+    closings: list
+    rooms: list
+    stairs: list
+
+
+class ReplayFactsRooms(ReplayFacts, total=False):
+    rooms: dict
+    climbable: int
+    ceilings: bool
+
+
+def prepare_floors(ctx, log: Log | None = None, progress: Progress | None = None) -> list:
+    """R0: steps 1 - 5 of build() (out of build(), no change in behaviour) -> the floors' working dicts, each ready for
+    floor_walls; the list carries what the rest of the build needs as attributes (.X the builder's context, .S the
+    settings, .det ...; build/__init__.py Floors)."""
+    from .build import prepare_floors as impl
+    return impl(ctx, log, progress)
+
+
+def floor_walls(F, X) -> FloorBuilt:
+    """R0: one floor after its openings and walls (out of bank.py's 'build every floor' loop, no change)."""
+    from .build.bank import floor_walls as impl
+    return impl(F, X)
+
+
+def network_of(fb, fixes, X) -> NetworkResult:
+    """R1, pass 1: the wall network of a floor with its closings, faces, rooms and ring (R-2, R-3)."""
+    from .build.network import network_of as impl
+    return impl(fb, fixes, X)
+
+
+def plate_of(fb, net, fixes, X) -> tuple:
+    """R1, pass 1: (plate0, [Unfloored], FloorSlabReport): the plate before its holes (R-4.1)."""
+    from .build.network import plate_of as impl
+    return impl(fb, net, fixes, X)
+
+
+def find_stairs(fb, net, fixes, X) -> list:
+    """R2, pass 1: [StairFound] of a floor (R-7)."""
+    from .build.stairs_read import find_stairs as impl
+    return impl(fb, net, fixes, X)
+
+
+def build_stairs(floors, found, nets, plate0, fixes, X) -> StairsResult:
+    """R2, pass 2, across floors (R-7.5, R-8). floors: [FloorBuilt]; found: {floor key: [StairFound]}; nets: {floor
+    key: NetworkResult}; plate0: {floor key: geometry}."""
+    from .build.stairs_build import build_stairs as impl
+    return impl(floors, found, nets, plate0, fixes, X)
+
+
+def cut_slab(fb, net, plate0, stairs, fixes, X) -> tuple:
+    """R1, pass 3: ([PartGeo] the slab parts, the voids, the report) of a floor (R-4.3, R-4.4)."""
+    from .build.slabs import cut_slab as impl
+    return impl(fb, net, plate0, stairs, fixes, X)
+
+
+def ceilings_of(fb, net, plate0, holes_above, headroom, X) -> list:
+    """R1, pass 3: [PartGeo] the ceiling parts of a floor (R-5)."""
+    from .build.ceilings import ceilings_of as impl
+    return impl(fb, net, plate0, holes_above, headroom, X)
+
+
 #: Every TypedDict of this module by name (tests/test_contracts.py walks the fixtures against them).
 TYPES: dict[str, type] = {t.__name__: t for t in (
     ReadResult, ConvertResult, SourceContext, BuildContext, AlignReport, SingleLine, OutlineSuggestion,
     FloorUploadReport, FixesReport, BuildReport, DetectorRecordOut, ReplayFacts, ReplayFloor, ReplayInput, BuildResult,
+    PartGeo, FloorBuilt, Closing, Unfloored, SpaceGeo, NetworkResult, FlightFound, StairFound, StairCut, StairBuilt,
+    StairLeft, StairsResult, FloorRoomsReport, FloorSlabReport, FloorUploadReportRooms, FixesReportRooms,
+    ReplayFactsRooms,
 )}

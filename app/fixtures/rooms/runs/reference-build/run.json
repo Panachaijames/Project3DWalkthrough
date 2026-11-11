@@ -1,0 +1,40 @@
+{
+  "format": "fake-run/1",
+  "kind": "build",
+  "runId": "0002-build",
+  "outputs": {
+    "model.json": {
+      "fixture": "fixtures/models/rooms-reference.model.json"
+    },
+    "stages.json": {
+      "fixture": "fixtures/stages/rooms-reference.stages.json"
+    },
+    "presentation.json": {
+      "fixture": "fixtures/presentation/rooms-reference.json"
+    },
+    "report.json": {
+      "file": "out/report.json"
+    },
+    "overlay.json": {
+      "fixture": "fixtures/rooms/overlay.reference.json"
+    },
+    "diff.json": {
+      "file": "out/diff.json"
+    },
+    "openings.json": {
+      "file": "out/openings.json"
+    },
+    "pieces.json": {
+      "file": "out/pieces.json"
+    },
+    "topview.png": {
+      "file": "out/topview.png"
+    },
+    "Rooms_reference.ms": {
+      "file": "out/Rooms_reference.ms"
+    },
+    "inputs.json": {
+      "file": "out/inputs.json"
+    }
+  }
+}

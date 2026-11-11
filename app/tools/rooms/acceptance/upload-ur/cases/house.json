@@ -1,0 +1,4 @@
+{"name": "house", "project": "house-upload",
+ "create": {"name": "Test Sukhumvit Residence", "shortName": "Sukhumvit house", "id": "house-upload"},
+ "files": ["Test Sukhumvit Residence.dwg"], "from": null, "settings": {"fixture": "house"},
+ "save": {"label": "house upload (A-5)", "carryHeights": true, "rememberMapping": false}}

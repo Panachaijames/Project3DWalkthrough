@@ -3,7 +3,9 @@
 // Owner: builder A.
 //
 // parseBuiltModel mirrors app/docs/built-model.schema.json rule for rule (structure, types, enums, patterns, the closed
-// objects), then the cross-reference rules of 5.6. Issue paths are JSON Pointers, as ajv and the API's jsonschema give them:
+// objects), then the cross-reference rules of 5.6 and, for BuiltModel v2, of rooms/DESIGN.md R-12.1 (written by the rooms
+// scaffold R0 together with the schema and the API's builtmodel.py: the three checkers change together). Issue paths are
+// JSON Pointers, as ajv and the API's jsonschema give them:
 // a wrong value at its own path (/parts/3/z1), a missing or extra property at its parent object (/floors/1), a duplicate at
 // its later occurrence (/openings/5/id). Any schema issue, and any cross-reference issue outside the furniture, throws a
 // ModelError listing every issue. The furniture rules (kind in furnitureKinds, `on` names a piece, approach ids are opening
@@ -92,7 +94,7 @@ const perFloor = (value: Check): Check => (v, p, out) => {
 // ------------------------------------------------------------------------------------------------- the schema ($defs)
 export const FLOOR_KEY = /^[A-Za-z0-9_]{1,32}$/;
 export const PART_KINDS = ['wall', 'column', 'lintel', 'sill', 'parapet', 'glass', 'pane', 'mullion', 'railing', 'balustrade',
-  'single', 'step', 'low', 'builtin', 'deck', 'post', 'slab'] as const;
+  'single', 'step', 'low', 'builtin', 'deck', 'post', 'slab', 'tread', 'landing', 'ceiling'] as const;
 
 const floorKey = pattern(FLOOR_KEY);
 const vec2 = tuple(num, num);
@@ -116,7 +118,7 @@ const part = object({
   required: ['floor', 'kind', 'z0', 'z1', 'follow', 'o', 'h'],
   props: {
     floor: floorKey, kind: oneOf(PART_KINDS), z0: num, z1: num, follow: bool, o: ring, h: rings, label: str,
-    fit: oneOf(['top', 'clip']), plinth: bool,
+    fit: oneOf(['top', 'clip', 'storey']), plinth: bool, stair: nonEmpty,
   },
 });
 const stairLines = object({ closed: true, required: ['below', 'above'], props: { below: flatSegments, above: flatSegments, panels: flatSegments } });
@@ -129,7 +131,24 @@ const stairOutline = object({
 });
 const room = object({
   required: ['floor', 'name', 'label', 'area', 'x', 'y'],
-  props: { floor: floorKey, name: str, label: str, area: numOrNull, x: num, y: num, callout: bool },
+  props: { floor: floorKey, name: str, label: str, area: numOrNull, x: num, y: num, callout: bool, space: nonEmpty },
+});
+const intAtLeast = (min: number): Check => (v, p, out) => { if (!isInt(v)) issue(out, p, 'must be integer'); else if (v < min) issue(out, p, `must be >= ${min}`); };
+// BuiltModel v2 (rooms/DESIGN.md R-8.5, R-3.4): open objects, as the openings are
+const stairway = object({
+  required: ['id', 'from', 'to', 'kind', 'risers', 'riser', 'going', 'width', 'bottom', 'top', 'walk', 'direction', 'treads', 'landings'],
+  props: {
+    id: nonEmpty, from: floorKey, to: floorKey, kind: str, risers: intAtLeast(2), riser: positive, going: positive, width: positive,
+    bottom: vec2, top: vec2, walk: arrayOf(vec2, 2), direction: str, treads: intAtLeast(1), landings: intAtLeast(0),
+  },
+});
+const space = object({
+  required: ['id', 'floor', 'o', 'h', 'area', 'name', 'names', 'source', 'ceiling'],
+  props: {
+    id: nonEmpty, floor: floorKey, o: ring, h: rings,
+    area: (v, p, out) => { if (!isNum(v)) issue(out, p, 'must be number'); else if (v < 0) issue(out, p, 'must be >= 0'); },
+    name: str, names: arrayOf(str), source: oneOf(['network', 'outline', 'staff']), ceiling: bool,
+  },
 });
 const opening = object({
   required: ['id', 'floor', 'kind', 'x', 'y', 'nx', 'ny', 'width'],
@@ -194,6 +213,7 @@ const builtModel = object({
     closures: perFloor(arrayOf(closure)), stairOutlines: perFloor(arrayOf(stairOutline)), rooms: arrayOf(room),
     openings: arrayOf(opening), probes: arrayOf(probe), colliderSkins: perFloor(arrayOf(skin)),
     furnitureKinds: arrayOf(furnitureKind), furniture: arrayOf(furniturePiece),
+    stairways: arrayOf(stairway), spaces: arrayOf(space),
   },
 });
 
@@ -236,6 +256,43 @@ export function crossIssues(m: BuiltModel): { strict: ModelIssue[]; furniture: M
   }
   const ids = m.openings.map(o => o.id), openingIds = new Set(ids);
   ids.forEach((id, i) => { if (ids.indexOf(id) !== i) issue(strict, `/openings/${i}/id`, `duplicate opening id '${id}'`); });
+
+  // BuiltModel v2 (rooms/DESIGN.md R-12.1): stairways rise within one stack; a part's `stair` names a stairway and the part
+  // lies on that stairway's `from` floor; every tread and landing has one; stairway and space ids are unique; a drawn name's
+  // `space` names a space of its own floor. (`walk` has at least 2 points: the schema.)
+  const stackOf = new Map(m.floors.map(f => [f.key, f.stack ?? 'main'])), levelOf = new Map(m.floors.map(f => [f.key, f.level]));
+  const stairFrom = new Map<string, string>();
+  (m.stairways ?? []).forEach((s, i) => {
+    if (stairFrom.has(s.id)) issue(strict, `/stairways/${i}/id`, `duplicate stairway id '${s.id}'`);
+    else stairFrom.set(s.id, s.from);
+    if (!known.has(s.from)) issue(strict, `/stairways/${i}/from`, `no floor '${s.from}'`);
+    if (!known.has(s.to)) issue(strict, `/stairways/${i}/to`, `no floor '${s.to}'`);
+    else if (known.has(s.from)) {
+      if (stackOf.get(s.to) !== stackOf.get(s.from)) issue(strict, `/stairways/${i}/to`, `'${s.to}' is not in the stack of '${s.from}'`);
+      else if (!(levelOf.get(s.to)! > levelOf.get(s.from)!)) issue(strict, `/stairways/${i}/to`, `'${s.to}' is not above '${s.from}'`);
+    }
+  });
+  m.parts.forEach((p, i) => {
+    if (p.stair === undefined) {
+      if (p.kind === 'tread' || p.kind === 'landing') issue(strict, `/parts/${i}`, `a ${p.kind} must name its stairway (stair)`);
+      return;
+    }
+    const from = stairFrom.get(p.stair);
+    if (from === undefined) issue(strict, `/parts/${i}/stair`, `no stairway '${p.stair}'`);
+    else if (from !== p.floor) issue(strict, `/parts/${i}/stair`, `stairway '${p.stair}' rises from '${from}', but the part is on '${p.floor}'`);
+  });
+  const spaceFloor = new Map<string, string>();
+  (m.spaces ?? []).forEach((s, i) => {
+    if (!known.has(s.floor)) issue(strict, `/spaces/${i}/floor`, `no floor '${s.floor}'`);
+    if (spaceFloor.has(s.id)) issue(strict, `/spaces/${i}/id`, `duplicate space id '${s.id}'`);
+    else spaceFloor.set(s.id, s.floor);
+  });
+  m.rooms.forEach((r, i) => {
+    if (r.space === undefined) return;
+    const on = spaceFloor.get(r.space);
+    if (on === undefined) issue(strict, `/rooms/${i}/space`, `no space '${r.space}'`);
+    else if (on !== r.floor) issue(strict, `/rooms/${i}/space`, `space '${r.space}' is on '${on}', but the name is on '${r.floor}'`);
+  });
 
   if (m.furniture) {
     const kinds = new Set((m.furnitureKinds ?? []).map(k => k.key));

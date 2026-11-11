@@ -26,6 +26,20 @@
 //   crossed in red, the overlay's built set-asides in grey. `flags` and `diff`: the overlay's floor's (all with no
 //   overlay). `area`: a box is lit, the rest dimmed. `focus`: the view fits it whenever its value changes.
 // * onHover reports the item under the pointer (null when none); the tooltip shows the layer, type and key.
+//
+// The rooms milestone (docs/rooms/DESIGN.md R-6.4, R-12.6). The SIGNATURES below were added by its scaffold R0 and are
+// final; R6 writes the bodies in the private files. Until then the two new tools pan on a drag and report nothing, the
+// new overlay fields are not drawn, `show` is not read, and the test hook answers with nothing.
+// * tool 'draw-line': two clicks report a line through onLine(a, b), sheet m; each end snaps to a drawn vertex within
+//   6 px, as 'pick-point' does. tool 'rooms' ("Rooms and stairs"): a click goes to a stair (onStair, the overlay's stair
+//   id), then to one of the app's closings (onClosing, its index in overlay.closings), then to a room (onSpace, the
+//   overlay's space id), else it reports the point (onPoint, sheet m). 'pick-point' is reused for a stair's bottom tread.
+// * `show`: what is drawn of the overlay: the rooms (outlined and tinted, with their area in the hover text), the plate
+//   (its outline, its holes hatched, the unfloored areas hatched orange with their mouth dashed) and the furniture.
+//   Missing: everything. The stairs (walking line, an arrow at the bottom) and the app's closings (short dashed lines)
+//   are always drawn.
+// * the test hook `window.__plan` (PlanTestHook; only when VITE_WTV_TEST_HOOK is '1'): a spec turns a sheet point into
+//   a click with toPage(), and reads the rooms and stairs the canvas shows.
 import { createElement, type JSX } from 'react';
 import type { Vec2 } from '@walkthrough/viewer';
 import type { Bbox, DiffBody, Flag, FloorArea, LayerRole, OverlayFloor, PlanGeometry, Sha1, Units } from '@/upload/contracts';
@@ -53,16 +67,54 @@ export interface PlanCanvasProps {
   selected: ReadonlySet<string>;                      // item keys
   setAside: ReadonlySet<string>;
   diff?: DiffBody | null;
-  tool: 'pan' | 'select' | 'pick-point' | 'draw-box';
+  tool: PlanTool;
   pick?: PickMode;                                    // default 'item' (U-12.1)
   focus?: Bbox | null;                                // zoom to it when it changes
+  show?: PlanShow;                                    // rooms R-12.6; missing: everything is shown
   onSelect?(keys: string[], mode: 'replace' | 'add' | 'toggle'): void;
   onPick?(p: Vec2): void;
   onBox?(bbox: Bbox): void;
   onOpening?(id: string): void;
   onFlag?(id: string): void;
   onHover?(info: { layer: string; type: number; key: string } | null): void;
+  onLine?(a: Vec2, b: Vec2): void;                    // 'draw-line': the two ends, sheet m (rooms R-6.2)
+  onSpace?(id: string): void;                         // 'rooms': a click inside a room (OverlayFloor.spaces[].id)
+  onStair?(id: string): void;                         // 'rooms': a click on a stair (OverlayFloor.stairs[].id)
+  onClosing?(index: number): void;                    // 'rooms': a click on one of the app's closings (its index)
+  onPoint?(pt: Vec2): void;                           // 'rooms': a click where there is no room, sheet m
 }
+/** The canvas tools: the upload milestone's four, and the rooms milestone's 'draw-line' and 'rooms' (R-12.6). */
+export type PlanTool = 'pan' | 'select' | 'pick-point' | 'draw-box' | 'draw-line' | 'rooms';
+/** The Check step's three ticks above the plan (R-12.6): Rooms, Floor plate, Furniture. */
+export interface PlanShow { rooms: boolean; plate: boolean; furniture: boolean }
+
+/** `window.__plan` (rooms R-12.6): the plan canvas's test hook, installed by the mounted canvas only when
+ *  VITE_WTV_TEST_HOOK is '1' (the e2e web server sets it) and removed when it unmounts. Points are sheet metres. */
+export interface PlanTestHook {
+  /** Where the canvas draws a sheet point now, in page pixels (a mouse event's clientX / clientY); null when the
+   *  point is outside the canvas or nothing is drawn yet. */
+  toPage(sheetPoint: Vec2): Vec2 | null;
+  /** The rooms of the overlay floor on screen: id, name, area (m2) and a point inside each. */
+  spaces(): { id: string; name: string; area: number; at: Vec2 }[];
+  /** The stairs of the overlay floor on screen: id, state and a point inside each outline. */
+  stairs(): { id: string; state: 'climb' | 'lines'; at: Vec2 }[];
+}
+declare global {
+  interface Window { __plan?: PlanTestHook }
+}
+/** True when the page was built or served with VITE_WTV_TEST_HOOK=1. */
+export const PLAN_TEST_HOOK: boolean = import.meta.env.VITE_WTV_TEST_HOOK === '1';
+
+/** Installs `hook` as window.__plan, or removes it (null). Does nothing without VITE_WTV_TEST_HOOK. The mounted canvas
+ *  calls it (PlanCanvas.tsx). */
+export function setPlanTestHook(hook: PlanTestHook | null): void {
+  if (!PLAN_TEST_HOOK || typeof window === 'undefined') return;
+  if (hook) window.__plan = hook;
+  else delete window.__plan;
+}
+
+/** The scaffold's hook: it answers with nothing. R6 replaces it with the canvas's own. */
+export const EMPTY_PLAN_HOOK: PlanTestHook = { toPage: () => null, spaces: () => [], stairs: () => [] };
 
 /** The plan canvas (U-12.1): see the notes at the top of this file. */
 export function PlanCanvas(props: PlanCanvasProps): JSX.Element {

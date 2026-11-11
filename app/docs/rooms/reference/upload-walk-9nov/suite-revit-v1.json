@@ -1,0 +1,278 @@
+{
+  "file": "C:\\Users\\DWP2\\AppData\\Local\\Temp\\wt-uf\\offline\\suite-revit-v1.html",
+  "should": true,
+  "loads": {
+    "meta": "1d90d91ef949",
+    "canvas": 1,
+    "error": false,
+    "projectId": "suite-revit",
+    "version": 1,
+    "stamp": "1d90d91ef949",
+    "maxScript": "Presidential_suite_Revit_export_9_Nov.ms",
+    "requests": [],
+    "problems": [],
+    "maxScriptFile": "C:\\Users\\DWP2\\AppData\\Local\\Temp\\wt-uf\\acc\\data\\projects\\suite-revit\\versions\\1\\downloads\\Presidential_suite_Revit_export_9_Nov.ms",
+    "maxScriptStamp": "1d90d91ef949"
+  },
+  "start": {
+    "ok": true,
+    "failures": [],
+    "detail": {
+      "camera": "fitSlabs",
+      "canvas": [
+        0,
+        0,
+        1400,
+        880
+      ],
+      "panel": [
+        12,
+        12,
+        372,
+        643.28125
+      ],
+      "free": [
+        372,
+        0,
+        1400,
+        880
+      ],
+      "corners": 396
+    }
+  },
+  "floors": {
+    "ok": true,
+    "failures": [],
+    "detail": {
+      "floors": [
+        {
+          "key": "L1",
+          "level": 0
+        }
+      ],
+      "buttons": 0
+    }
+  },
+  "walls": {
+    "ok": true,
+    "failures": [],
+    "detail": [
+      {
+        "floor": "L1",
+        "tried": 40,
+        "wentThrough": 0,
+        "endedInsideWall": 0
+      }
+    ]
+  },
+  "doors": {
+    "ok": false,
+    "failures": [
+      {
+        "id": "L1-004",
+        "kind": "door",
+        "exterior": false,
+        "fwd": "no start",
+        "fwdTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 0.4
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 0.4
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 0.4
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 0.4
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 0.41
+          }
+        ],
+        "back": "no start",
+        "backTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 0.88
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 0.64
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 0.64
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 0.64
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 0.64
+          }
+        ],
+        "ok": false
+      },
+      {
+        "id": "L1-008",
+        "kind": "door",
+        "exterior": false,
+        "fwd": "no start",
+        "fwdTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 9
+          }
+        ],
+        "back": "no start",
+        "backTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 9
+          }
+        ],
+        "ok": false
+      },
+      {
+        "id": "L1-010",
+        "kind": "door",
+        "exterior": false,
+        "fwd": "no start",
+        "fwdTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 2.98
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 2.98
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 2.98
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 2.98
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 2.98
+          }
+        ],
+        "back": "no start",
+        "backTries": [
+          {
+            "back": 0.9,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.7,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.55,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.45,
+            "onFloor": false,
+            "clearance": 9
+          },
+          {
+            "back": 0.4,
+            "onFloor": false,
+            "clearance": 9
+          }
+        ],
+        "ok": false
+      }
+    ],
+    "detail": {
+      "doors": 9,
+      "passages": [
+        {
+          "id": "L1-001",
+          "ok": true,
+          "fwd": 0.4,
+          "back": 0.35
+        }
+      ]
+    }
+  },
+  "glass": {
+    "ok": true,
+    "failures": [],
+    "detail": {
+      "probes": 0,
+      "parts": []
+    }
+  }
+}

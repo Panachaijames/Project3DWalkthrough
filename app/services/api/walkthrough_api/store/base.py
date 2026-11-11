@@ -185,7 +185,8 @@ class VersionMeta(Record):
     created_at: str
     source_kind: SourceKind
     source_files: list[str]
-    model_format: Literal['built-model/1'] = MODEL_FORMAT
+    # 'built-model/2' when the model has the `stairways` key (docs/rooms/DESIGN.md R-12.2; create_version decides, R5)
+    model_format: Literal['built-model/1', 'built-model/2'] = MODEL_FORMAT
     model_sha1: str
     stamp: str
     stamp_source: str

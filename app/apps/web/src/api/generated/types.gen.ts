@@ -597,6 +597,12 @@ export type BuildUrls = {
  */
 export type BuilderOptions = {
     /**
+     * Ceilings
+     *
+     * 'auto': ceilings (R-5); needs slabs 'network'.
+     */
+    ceilings?: 'off' | 'auto';
+    /**
      * Liftshafts
      */
     liftShafts: boolean;
@@ -629,6 +635,18 @@ export type BuilderOptions = {
      * Revitwalltypes
      */
     revitWallTypes: 'auto' | 'off';
+    /**
+     * Slabs
+     *
+     * Rooms milestone (R-1.2); a missing key is the old rule. 'network': floor plates from the wall network, with rooms, names, holes, flags and fixes.
+     */
+    slabs?: 'closed-rooms' | 'network';
+    /**
+     * Stairs
+     *
+     * 'climb': stairs you can climb (R-7, R-8); needs slabs 'network'.
+     */
+    stairs?: 'lines' | 'climb';
 };
 
 /**
@@ -638,6 +656,39 @@ export type BuilderOptions = {
  */
 export type CancelBuildRequest = {
     [key: string]: never;
+};
+
+/**
+ * ClosingFix
+ *
+ * Rooms milestone (R-6.2), sheet m. 'line': a closing line staff drew; 'none': leave out the app's bridge or
+ * doorway closing whose two ends lie within 0.3 m of a and b.
+ */
+export type ClosingFix = {
+    /**
+     * A
+     */
+    a: [
+        number,
+        number
+    ];
+    /**
+     * B
+     */
+    b: [
+        number,
+        number
+    ];
+    /**
+     * Floor
+     *
+     * Floor key, ^[A-Za-z0-9_]{1,32}$.
+     */
+    floor: string;
+    /**
+     * Use
+     */
+    use: 'line' | 'none';
 };
 
 /**
@@ -701,6 +752,12 @@ export type ErrorResponse = {
  */
 export type Fixes = {
     /**
+     * Closings
+     *
+     * Rooms milestone; a missing key is no fix. The cap of 5,000 other fixes counts these too.
+     */
+    closings?: Array<ClosingFix>;
+    /**
      * Openings
      */
     openings: Array<OpeningFix>;
@@ -709,9 +766,17 @@ export type Fixes = {
      */
     outlineEdges: Array<OutlineEdgeFix>;
     /**
+     * Rooms
+     */
+    rooms?: Array<RoomFix>;
+    /**
      * Setaside
      */
     setAside: Array<SetAside>;
+    /**
+     * Stairs
+     */
+    stairs?: Array<StairFix>;
 };
 
 /**
@@ -848,6 +913,12 @@ export type FloorSetup = {
     } & FloorAreaWholeFile) | ({
         kind: 'box';
     } & FloorAreaBox);
+    /**
+     * Ceilingheight
+     *
+     * m above the level, 0.5 - 20; null: the default rule (rooms R-5.1). Read only with ceilings 'auto'.
+     */
+    ceilingHeight?: number | null;
     /**
      * Doorhead
      *
@@ -1413,6 +1484,43 @@ export type ProjectSummary = {
 };
 
 /**
+ * RoomFix
+ *
+ * Rooms milestone (R-6.2): the room, or the unfloored area, that contains `at` (sheet m).
+ */
+export type RoomFix = {
+    /**
+     * At
+     */
+    at: [
+        number,
+        number
+    ];
+    /**
+     * Ceiling
+     */
+    ceiling: 'auto' | 'none';
+    /**
+     * Floor
+     *
+     * Floor key, ^[A-Za-z0-9_]{1,32}$.
+     */
+    floor: string;
+    /**
+     * Name
+     *
+     * At most 200 characters, text only; null: no name given.
+     */
+    name: string | null;
+    /**
+     * Slab
+     *
+     * 'none': no floor here (or: it is outdoors); 'floor': floor here.
+     */
+    slab: 'auto' | 'none' | 'floor';
+};
+
+/**
  * RunBuildRequest
  *
  * An empty JSON object: a state change is never a simple cross-site request (U-5.2).
@@ -1583,6 +1691,12 @@ export type SetAside = {
      */
     floor: string;
     /**
+     * Floorpast
+     *
+     * Rooms milestone (R-2.1 point 7): true = the floor runs past the line. Default: a set-aside line still bounds the floor.
+     */
+    floorPast?: boolean;
+    /**
      * Key
      *
      * Nested handle key, e.g. "BA/2C4/1F3"; an INSERT key covers its whole subtree.
@@ -1680,6 +1794,42 @@ export type SourceSetting = {
      * false while the reader's verdict was 'votes-win' or 'unknown' and staff have not confirmed: runBuild refuses.
      */
     unitsConfirmed: boolean;
+};
+
+/**
+ * StairFix
+ *
+ * Rooms milestone (R-6.2, R-7.6): the stair whose outline contains `at` (sheet m).
+ */
+export type StairFix = {
+    /**
+     * At
+     */
+    at: [
+        number,
+        number
+    ];
+    /**
+     * Bottom
+     *
+     * A point on the bottom tread (it decides the direction), or null.
+     */
+    bottom: [
+        number,
+        number
+    ] | null;
+    /**
+     * Floor
+     *
+     * Floor key, ^[A-Za-z0-9_]{1,32}$.
+     */
+    floor: string;
+    /**
+     * Use
+     *
+     * 'lines': keep it as lines; 'climb': build it although its riser is outside 0.14 - 0.21 m (up to 0.25 m).
+     */
+    use: 'auto' | 'lines' | 'climb';
 };
 
 /**
