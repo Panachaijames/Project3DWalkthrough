@@ -10,8 +10,10 @@ Coordinates. ACCEPTANCE gives points in sheet metres after alignment (the build 
 ground plan's frame): `aligned()` turns one into the model frame. The answer keys and the report's rows are in each
 floor's own sheet frame: `own()`.
 
-Two assertions wait for a decision (docs/rooms/contract-issues/R1.md): D-1 (the bank's 18 labels) and D-2 (the probe
-ground-034). They are strict xfails: the day the decision changes the code or the criterion, they say so.
+Two assertions waited for a decision (docs/rooms/contract-issues/R1.md), settled by the main session on 11 Nov and put in
+by RI (docs/rooms/contract-issues/RI.md): D-1, the bank counts 23 labels (test_ra7_the_banks_labels_as_built pins them;
+the strict xfail for 18 is gone); D-2, the probe ground-034 is out of RA-6's must list and is checked as outdoors with no
+floor on either side (test_ra6_ground_034_is_outdoors_with_no_floor, in place of its two strict xfails).
 The stairs are R2's: nothing here depends on which stairs climb (a well, today's void or neither over a stair).
 """
 from __future__ import annotations
@@ -35,7 +37,7 @@ KEYS = kit.ROOMS_FIXTURES / 'keys'
 PLATE = {('bank', 'L1'): (None, 243, 234, 241), ('bank', 'L2'): (None, 307, 293, 303),
          ('house', 'ground'): (483, 545, 495, 530), ('house', 'upper'): (431, 497, 435, 460),
          ('tower', 'L29'): (814, 885, 840, 875), ('tower', 'L30'): (704, 772, 725, 765),
-         ('suite', 'suite'): (400, 660, 480, 560), ('suite-revit', 'L1'): (260, 284, 262, 280)}
+         ('suite', 'suite'): (400, 660, 460, 480), ('suite-revit', 'L1'): (260, 284, 262, 280)}   # old suite: R1.md D-3
 TODAY = {('bank', 'L1'): 235.3, ('bank', 'L2'): 295.4}
 MUST = ('bank', 'house', 'suite', 'tower')               # the new suite's rows are shoulds, by position
 
@@ -353,15 +355,18 @@ def test_ra5_the_suites_have_no_x_hole_and_every_hole_is_a_void_record(builds) -
 
 
 # --------------------------------------------------------------------------------------------- RA-6: the missing floors
+#: R1.md D-2 (decided 11 Nov): out of RA-6's must list, checked as outdoors by test_ra6_ground_034_is_outdoors_with_no_floor
+OUTDOORS = ('house', 'ground-034')
+
+
 def probe_rows():
     out = []
     for name, d in load(KEYS / 'probes.json')['drawings'].items():
         for p in d['probes']:
+            if (name, p['id9Nov']) == OUTDOORS:
+                continue
             for side in p['sides']:
-                waits = name == 'house' and p['id9Nov'] == 'ground-034'
-                out.append(pytest.param(name, p, side, id=f'{name}-{p["id9Nov"].replace(" ", "_")}{"+" if side > 0 else "-"}',
-                                        marks=[pytest.mark.xfail(strict=True, reason='R1.md D-2: ground-034 is a garden gate in a '
-                                                                 'free-standing wall; nothing drawn encloses either side')] if waits else []))
+                out.append(pytest.param(name, p, side, id=f'{name}-{p["id9Nov"].replace(" ", "_")}{"+" if side > 0 else "-"}'))
     return out
 
 
@@ -377,6 +382,21 @@ def test_ra6_the_probes_of_9_nov_stand_on_the_plate(name, probe, side, builds) -
         assert any(on_plate), f'no floor 0.4 - 0.9 m in front of {probe["id9Nov"]}'
     if name == 'tower' or (name, key) == ('house', 'upper'):
         assert any(space_at(b, key, at(d)) is not None for d in (0.6, 0.9, 1.2, 1.5, 2.0, 2.5)), 'a room behind the opening'
+
+
+def test_ra6_ground_034_is_outdoors_with_no_floor(builds) -> None:
+    """R1.md D-2 (decided 11 Nov, RA-6): ground-034 is a garden gate in a free-standing wall, out of RA-6's must list; it
+    stays in the walk report as "outdoors, no floor". So on both sides: no plate 0.4 - 0.9 m in front of it and no room
+    behind it (nothing drawn encloses either side). The day a rule floors it, this says so."""
+    name, pid = OUTDOORS
+    b = builds[name]
+    probe = next(p for p in load(KEYS / 'probes.json')['drawings'][name]['probes'] if p['id9Nov'] == pid)
+    key = probe['floor']
+    assert sorted(probe['sides']) == [-1, 1]
+    for side in probe['sides']:
+        at = lambda d: own(b, key, (probe['at'][0] + side * d * probe['n'][0], probe['at'][1] + side * d * probe['n'][1]))  # noqa: E731,B023
+        assert not any(plate(b, key).contains(Point(at(d))) for d in (0.4, 0.5, 0.6, 0.7, 0.8, 0.9)), (pid, side, 'floor')
+        assert all(space_at(b, key, at(d)) is None for d in (0.6, 0.9, 1.2, 1.5, 2.0, 2.5)), (pid, side, 'a room')
 
 
 # -------------------------------------------------------------------------------------------------------- RA-7: names
@@ -399,15 +419,9 @@ def test_ra7_the_banks_named_pairs(builds) -> None:
     assert sum(1 for r in rooms if r.get('space') == hall['id']) == 3, 'three labels'
 
 
-@pytest.mark.xfail(strict=True, reason='R1.md D-1: R-3.2 keeps short names, so ATM (three times), BA and BE on Level 1 are '
-                                       'names too: 23 labels, not the 18 of today')
-def test_ra7_the_bank_shows_18_labels(builds) -> None:
-    """RA-7: "The bank's new-rule version shows 18 labels ... and its version counts 18 rooms, as today"."""
-    assert len(model(builds['bank'])['rooms']) == 18
-
-
 def test_ra7_the_banks_labels_as_built(builds) -> None:
-    """What is built today (R1.md D-1): the 18 names of the key, and the five short ones the room-name layer carries."""
+    """RA-7 as decided on 11 Nov (R1.md D-1): 23 labels, the 18 names of the key and the five short ones the room-name
+    layer carries (ATM three times, BA, BE)."""
     rooms = model(builds['bank'])['rooms']
     assert len(rooms) == 23
     key = load(KEYS / 'bank.json')['floors']
@@ -562,4 +576,4 @@ def test_the_shoulds_are_reported(builds) -> None:
     d.mkdir(parents=True, exist_ok=True)
     (d / 'shoulds.json').write_text(json.dumps(out, indent=1, ensure_ascii=False), encoding='utf-8')
     assert out['writtenAreas']['bank']['within15'] >= 8, "RA-4: at least 8 of the bank's 12 written areas within 15 %"
-    assert sum(1 for v in out['plate'].values() if v['inside']) >= 7, 'RA-4: the should ranges (the old suite is under its own: R1.md D-3)'
+    assert sum(1 for v in out['plate'].values() if v['inside']) >= 7, 'RA-4: the should ranges (the old suite\'s is 460 - 480 since R1.md D-3)'

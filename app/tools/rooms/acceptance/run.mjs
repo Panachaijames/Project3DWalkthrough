@@ -46,8 +46,24 @@ const OLD_STEPS = [
   { name: 'e2e', script: 'upload-ur/e2e.sh', what: 'every browser spec, the walk checks on the acceptance store' },
   { name: 'proto-tests', script: 'upload-ur/proto-tests.mjs', what: "the prototypes' own tests, one at a time under the Edge lock" },
 ];
-/** RI's: the steps this milestone adds. */
-const NEW_STEPS = [];
+/** RI's: the steps this milestone adds (tools/rooms/acceptance/rooms/; each run from app/ with WT_TMP = <tmp>). The new
+ * steps' store is <tmp>/data, a copy of R0's copy of the upload milestone's store (%TEMP%\wt-r0\acc-9nov, made by
+ * `rooms-builds` when missing), so one store holds the eight old versions and the new ones; the old `acceptance` step
+ * keeps its own freshly seeded store under <tmp>/acc. */
+const R = 'tools/rooms/acceptance/rooms';
+const NEW_STEPS = [
+  { name: 'rooms-builds', run: ['bash', `${R}/builds.sh`],
+    what: 'the five drawings with the new rule, the tower and the new suite with their single lines set aside, RA-13 (served API, real worker)' },
+  { name: 'rooms-offline', run: ['bash', `${R}/offline.sh`], what: 'the offline file of each new-rule version (dist template)' },
+  { name: 'rooms-walks', run: ['bash', `${R}/walks.sh`],
+    what: 'upload-walk with RA-6\'s probes and stairs.spec (RA-8, RA-10, RA-14 fpsGpu) on the new-rule files, in Edge' },
+  { name: 'rooms-node', run: ['bash', `${R}/node.sh`], what: 'climb.test.ts on the real new-rule models, with the times (RA-10, RA-14)' },
+  { name: 'rooms-golden', run: ['bash', `${R}/golden.sh`],
+    what: 'WT_ACCEPTANCE=1: test_r_rooms_golden.py (RA-15, two processes) and every door undone (RA-18)' },
+  { name: 'rooms-checks', run: ['node', 'tools/run-builder-py.mjs', `${R}/checks.py`],
+    what: 'the result of RA-1 - RA-18 from the records into <tmp>/rooms-result.json (GAPS.md is written from it)' },
+  { name: 'reference-checks', run: ['bash', `${R}/reference.sh`], what: 'outside.txt, versions.sha1, no new __pycache__ (RA-2, RA-16)' },
+].map(s => ({ ...s, kind: 'new' }));
 
 function args(argv) {
   const a = { only: null, tmp: path.join(os.tmpdir(), 'wt-ri', 'acceptance'), api: 8748, web: 5748, out: null, list: false, dry: false };
@@ -68,7 +84,9 @@ function args(argv) {
 
 /** The text of one of the upload milestone's scripts, pointed at <tmp>, this checkout and these ports. */
 export function retarget(text, { set, tmp, api, web }) {
-  const W = bashPath(tmp), dir = bashPath(path.join(HERE, set));
+  // RI: <tmp> as C:/... (Git Bash takes it, and so does a Windows Python given it inside `python -c` code, as
+  // acc-checks.sh's A-9 print does; a /c/... path there is not found)
+  const W = posix(tmp), dir = bashPath(path.join(HERE, set));
   return text
     .replaceAll(/"\$W\/scripts\//g, `"${dir}/`)
     .replaceAll(/\$W\/acc\/cases/g, `${dir}/cases`)
@@ -95,7 +113,30 @@ function main() {
   for (const d of ['scripts', 'logs', 'acc']) mkdirSync(path.join(a.tmp, d), { recursive: true });
   const result = { format: 'rooms-acceptance/1', startedAt: new Date().toISOString(), finishedAt: null, tmp: posix(a.tmp),
     ports: { api: a.api, web: a.web }, dryRun: a.dry, steps: [] };
-  const save = () => { mkdirSync(path.dirname(a.out), { recursive: true }); writeFileSync(a.out, `${JSON.stringify(result, null, 2)}\n`); };
+  // RI: with --only, the rows of the other steps already in the result file are kept (one result file for a run made in
+  // parts); the rows of the steps run now are replaced.
+  if (a.only && !a.dry) {
+    try {
+      const prev = JSON.parse(readFileSync(a.out, 'utf8'));
+      if (prev.format === result.format) {
+        result.startedAt = prev.startedAt ?? result.startedAt;
+        result.steps = (prev.steps ?? []).filter(r => !a.only.includes(r.name));
+      }
+    } catch { /* no result file yet */ }
+  }
+  const save = () => {
+    mkdirSync(path.dirname(a.out), { recursive: true });
+    if (a.only && !a.dry) {                     // RI: another runner with --only may have written its rows meanwhile
+      try {
+        const now = JSON.parse(readFileSync(a.out, 'utf8'));
+        const theirs = (now.steps ?? []).filter(r => !a.only.includes(r.name));
+        const order = [...OLD_STEPS, ...NEW_STEPS].map(s => s.name);
+        result.steps = [...theirs, ...result.steps.filter(r => a.only.includes(r.name))]
+          .sort((x, y) => order.indexOf(x.name) - order.indexOf(y.name));
+      } catch { /* none yet */ }
+    }
+    writeFileSync(a.out, `${JSON.stringify(result, null, 2)}\n`);
+  };
   let failed = 0;
   for (const s of steps) {
     if (a.only && !a.only.includes(s.name)) continue;

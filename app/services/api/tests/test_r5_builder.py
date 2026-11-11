@@ -8,10 +8,11 @@ and R2's rules (landed on 11 Nov: the tracer built no stair on the real drawings
 The house (RA-1) takes three builds of the drawing (old, new, old again) and four prepares; the bank one new-rule build;
 the reference building one.
 
-Until R1 - R3 land they run only under WT_INTEGRATION=1 (as test_u5_builder.py did in the upload milestone): the
-builder's out/** is being written in parallel (R3), and a plain `npm run test:api` must not depend on its state. Without
-the flag they are DESELECTED (conftest.py, marker `rooms_worker`), so a plain run skips nothing. The integration step
-RI turns RUN_WITHOUT_THE_FLAG on once R1 - R3 have landed."""
+Until R1 - R3 landed they ran only under WT_INTEGRATION=1 (as test_u5_builder.py did in the upload milestone): the
+builder's out/** was being written in parallel (R3). Without the flag they were DESELECTED (conftest.py, marker
+`rooms_worker`), so a plain run skipped nothing. R1 - R3 have landed: the integration step RI turned
+RUN_WITHOUT_THE_FLAG on (contract-issues/R5.md D-1, RI.md), so they run in every `npm run test:api` and fail, not skip,
+under WT_INTEGRATION=1 when the worker is missing."""
 from __future__ import annotations
 
 import hashlib
@@ -29,9 +30,9 @@ from walkthrough_api.models_upload import NEW_RULES, OLD_RULES
 
 pytestmark = [pytest.mark.builder, pytest.mark.rooms_worker]
 
-#: False until R1 - R3 have landed: the tests here run only under WT_INTEGRATION=1 (deselected otherwise, conftest.py).
-#: The integration step RI turns it on (docs/rooms/contract-issues/R5.md).
-RUN_WITHOUT_THE_FLAG = False
+#: Was False until R1 - R3 had landed (the tests ran only under WT_INTEGRATION=1, deselected otherwise, conftest.py).
+#: Turned on by the integration step RI (docs/rooms/contract-issues/R5.md D-1).
+RUN_WITHOUT_THE_FLAG = True
 
 P = '/api/projects'
 SAVE = {'label': 'rooms milestone', 'carryHeights': True, 'rememberMapping': False}
@@ -43,8 +44,10 @@ HOUSE_OLD_STAMP = '1c07bfeef580'
 #: RA-3 / RA-1: a point of the house's living room, on the ground plan's sheet (m), which the old rule leaves unfloored.
 LIVING_ROOM = (26.2, 11.1)
 #: RA-12 point 4: the bank's new-rule model must equal the reference RI pins in services/builder/tests/
-#: test_r_rooms_golden.py (RA-15). Not pinned yet (the rules may still move until RI); RI writes its sha1 here.
-BANK_NEW_RULE_SHA1: str | None = None
+#: test_r_rooms_golden.py (RA-15). Pinned by RI (11 Nov, provisional with the references; contract-issues/R5.md D-2):
+#: the bank built through this API and the real worker with the defaults (= bank-rooms.json), stamp 54ef1ac240bb, the
+#: same as R7's build of 11 Nov through the API on 8747. A move during the review is explained in contract-issues/RR.md.
+BANK_NEW_RULE_SHA1: str | None = '54ef1ac240bbfa1421b0b49026ec26c16e3d1eed'
 
 
 def rules(settings: dict) -> dict:

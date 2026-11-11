@@ -836,7 +836,9 @@ The report gains `fixes.closings / rooms / stairs` rows `{ fix, matched }`.
   reports the point. In the existing Select tool a click still goes to a flag, an opening, then the nearest drawn item
   (`plan/controller.ts:291-301`), so items inside rooms can still be set aside.
 * **A lost floor comes first**: when a Rebuild makes a floor's plate smaller by 2 m² or more, that is the first row of
-  the Check step's list of what changed.
+  the Check step's list of what changed. The plate is compared with the holes cut on purpose added back (a stair well, a
+  shaft, a marked void, a "no floor" room: the floor's `voids`), so only floor lost at the outline comes first; the
+  diff's `plate area (m2)` row shows that figure (contract-issues/R3.md D-3, decided 11 Nov).
 
 ---
 
@@ -1066,9 +1068,12 @@ flag (info) gives the count. The collider skins follow, since they are made from
 
 ```ts
 { id: 'S1', from: 'ground', to: 'upper', kind: 'L', risers: 21, riser: 0.186, going: 0.30, width: 1.20,
-  bottom: [x, y], top: [x, y], walk: [[x, y], ...], direction: 'arrow', treads: 20, landings: 1 }
+  bottom: [x, y], top: [x, y], walk: [[x, y], ...], direction: 'arrow', treads: 19, landings: 1 }
 ```
 
+* **`treads` and `landings`** count the stairway's `tread` and `landing` parts: tread j lies between riser j and riser
+  j + 1 and a landing takes a tread's place, so 21 risers with one landing are 19 treads (contract-issues/R0.md item 1,
+  as the fixtures and R2 count; settled by RI).
 * **Coordinates** are in the model frame. `to` is a higher floor of the same stack, usually the next.
 * **`width`** is the median riser length of the narrowest flight.
 * **`walk`** runs from a point 1.0 m before riser 1, on the lower floor, through the middle of each flight and landing
@@ -1159,8 +1164,11 @@ version so far walk as before. A walk-parity golden proves it (R-13).
 ### R-9.5 Teleports and landings
 
 * **Ghost → Walk** lands on the highest surface under the eye − 0.30 m (any floor's plate, tread or landing of the
-  stack). The floor becomes that surface's floor.
-* **A double-click** on a tread or landing puts the foot on it.
+  stack). On a plate the floor becomes that plate's own floor (then `findFree`, as today); on a tread or landing the
+  floor is named from the foot (the nearest level, with the 0.20 m hysteresis of R-9.3), since every tread is a part of
+  the lower floor and its own floor would name the lower floor one riser under the upper slab (contract-issues/R4.md
+  D-2, decided 11 Nov).
+* **A double-click** on a tread or landing puts the foot on it; the floor is named the same way.
 * **`?floor=` and the floor buttons** put the foot at the level.
 * **`findFree`** never puts the walker on a tread: it looks for room on the floor's plate, as today.
 
@@ -1237,8 +1245,10 @@ version so far walk as before. A walk-parity golden proves it (R-13).
   holes) + **Extrude** (mesh output) + Smooth; **Collapse** gives Editable Mesh, **never Editable Poly**. Slabs with
   their holes already work this way (`#slab`, holes as splines). Furniture is untouched: Box primitives on their kind
   layers, so the furniture round trip can still tell furniture by its Box.
-* **New kinds in `EXTRA_KINDS`** (`maxscript.py:58-65`), each written only when the model uses it, so the `bank-27oct`
-  and `hotel-2nov` goldens cannot move:
+* **New kinds beside `EXTRA_KINDS`** (`V2_KINDS`, read with `EXTRA_KINDS` through `OTHER_KINDS`; `maxscript.py:58-65`:
+  `test_u4_maxscript.py` expects every kind of `EXTRA_KINDS` in its v1 test model; contract-issues/R3.md D-1, decided 11
+  Nov), each written only when the model uses it, after the v1 extra kinds, so the `bank-27oct` and `hotel-2nov`
+  goldens cannot move:
 
 | Kind | Layer suffix | Material |
 |---|---|---|

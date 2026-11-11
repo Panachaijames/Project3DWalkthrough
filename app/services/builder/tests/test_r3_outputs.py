@@ -257,11 +257,31 @@ def test_the_replay_presentation_and_diff_of_a_new_rule_build(name, outputs):
         for fl in model['floors']:
             row = counts[fl['key']]
             assert row[df.ROOMS_CLOSED] == [0, sum(1 for s in model['spaces'] if s['floor'] == fl['key'])]
-            assert row[df.PLATE_AREA][1] == df.plate_area(model, fl['key'])
+            assert row[df.PLATE_AREA][1] == df.plate_area(model, fl['key'], holes_back=True)
         assert counts[model['stairways'][0]['from']][df.CLIMBABLE] == [0, 1]
     else:
         assert d['against'] == []
     assert any('outputs written' in x for x in o['logs'])
+
+
+def test_a_hole_cut_on_purpose_is_no_lost_floor(outputs):
+    """R3.md D-3 (decided 11 Nov, put in by RI): the holes the new rule cuts on purpose are added back before a lost
+    floor is judged. The bank's Level 1 (its lift shaft is cut now) and the house's upper floor (the double-height living
+    room and the stair hall) have plates 2 m2 or more smaller than their old-rule versions' with the holes taken out,
+    and neither comes first: their floors keep the model's order and their plate row is not first."""
+    for name, key in (('bank', 'L1'), ('house', 'upper')):
+        o = outputs(name)
+        model = o['build']['res']['model']
+        before = load(AGAINST[name])
+        whats = [v['what'] for v in model['voids'][key]]
+        assert ('lift shaft' in whats) if name == 'bank' else ({'void', 'stair well'} <= set(whats)), (name, whats)
+        assert df.plate_area(before, key) - df.plate_area(model, key) >= df.LOST_FLOOR, 'the plate less its holes is smaller'
+        counts = load(o['written']['diff.json'])['against'][0]['diff']['counts']
+        b, a = counts[key][df.PLATE_AREA]
+        assert (b, a) == (df.plate_area(before, key, holes_back=True), df.plate_area(model, key, holes_back=True))
+        assert b - a < df.LOST_FLOOR, (name, key, b, a)
+        assert list(counts) == [f['key'] for f in model['floors']], (name, list(counts))
+        assert list(counts[key])[0] != df.PLATE_AREA, (name, key)
 
 
 def test_the_reference_overlay_against_the_frozen_fixture(outputs):

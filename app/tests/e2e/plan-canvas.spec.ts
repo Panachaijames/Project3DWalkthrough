@@ -365,11 +365,13 @@ test.describe('rooms milestone (R6): the overlay\'s rooms, plate, stairs and clo
     expect(spaces.map(s => s.id)).toEqual(upper.spaces.map((s: any) => s.id));
     const big = spaces.filter(s => s.area >= 8);
     expect(big.length).toBeGreaterThanOrEqual(8);
-    // the provisional (tracer) fixture writes the upper floor's holes and stairs in the build frame, 74 m off the sheet
-    // (R1.md N-11; contract-issues/R6.md): only holes inside the floor's area are probed here (none until RI-0 replaces
-    // the fixture); the reference building's upper floor always is (next test)
+    // the provisional (tracer) fixture wrote the upper floor's holes and stairs in the build frame, 74 m off the sheet
+    // (R1.md N-11; contract-issues/R6.md D-3): only holes inside the floor's area are probed here. RI re-made the fixture
+    // with the real rules, every field in the floor's sheet metres (RI.md), so every hole of the upper floor is probed
     const [ax0, ay0, ax1, ay1] = upper.area.bbox as number[];
     const holes = upper.holes.map((h: any) => insideOf(h.o, h.h)).filter(([x, y]: [number, number]) => x >= ax0! && x <= ax1! && y >= ay0! && y <= ay1!);
+    expect(holes.length, 'every hole lies inside the floor\'s area').toBe(upper.holes.length);
+    expect(holes.length).toBeGreaterThanOrEqual(1);
     const pieces = upper.furniture.filter((f: any) => f.w >= 0.6 && f.d >= 0.6).slice(0, 12);
     expect(pieces.length).toBeGreaterThanOrEqual(5);
     const measure = async () => ({

@@ -1,13 +1,14 @@
-"""fixtures/upload/overlay/house-rooms.overlay.json: PROVISIONAL (docs/rooms/ACCEPTANCE.md 2.5). Scaffold R0.
+"""fixtures/upload/overlay/house-rooms.overlay.json (docs/rooms/ACCEPTANCE.md 2.5). Scaffold R0; re-made by RI.
 
     node tools/run-builder-py.mjs tools/rooms/make-house-rooms-overlay.py [--ref <WT_REF>] [--tmp <dir>] [--check]
 
-The house built with fixtures/upload/settings/house-rooms.json by THE TRACER (not the real rules: its rooms are every
-face of today's walls and spans, its plate is today's plate and the ring, no stair of the house climbs), written by
-U4's overlay writer, with the new floor fields of DESIGN R-12.4 (spaces, holes, stairs, closings, unfloored) and the new
-flags added from the build's report by tools/rooms/make-reference-building.py's `overlay_rooms`. It gives the staff
-app's screens (R6) and the API's checks (R5) a real drawing's overlay of the new shape before the real rules exist.
-The smoke step (WORK_BREAKDOWN RI-0) replaces it with the overlay of the real build.
+The house built with fixtures/upload/settings/house-rooms.json by build(), written by the builder's own overlay writer.
+At R0 that was THE TRACER (its rooms every face of today's walls and spans, its plate today's plate and the ring, no
+stair of the house climbing), with the new floor fields of DESIGN R-12.4 (spaces, holes, stairs, closings, unfloored)
+and the new flags added from the build's report by tools/rooms/make-reference-building.py's `overlay_rooms`: a
+PROVISIONAL fixture for the staff app's screens (R6) and the API's checks (R5) before the real rules existed. The
+integration step RI (11 Nov, after R1 - R7; WORK_BREAKDOWN RI-0, R6.md D-3) re-made it with the real rules (R1's and
+R2's) and R3's out/overlay.py, which writes the new fields and flags itself, every one in the floor's sheet metres.
 
 The house is read from the reference cache (WT_REF, default %TEMP%\\wt-u0\\ref: the prototype prims.pkl of the
 Sukhumvit drawing) with fixtures/upload/drawing/sukhumvit.drawing.json, as the builder's tests read it.
@@ -55,7 +56,9 @@ def main(argv: list[str]) -> int:
     with oslock.hold():
         res = build(ctx, lambda _m: None, lambda _s, _f: None)
     written = REF.write_outputs(res, ctx)
-    ov = REF.overlay_rooms(json.loads(written['overlay.json'].read_bytes()), res)
+    ov = json.loads(written['overlay.json'].read_bytes())
+    if not all('spaces' in fl for fl in ov['floors']):      # before R3's out/overlay.py wrote the new fields and flags
+        ov = REF.overlay_rooms(ov, res)
     data = REF.compact(ov)
     kinds = {}
     for f in ov['flags']:

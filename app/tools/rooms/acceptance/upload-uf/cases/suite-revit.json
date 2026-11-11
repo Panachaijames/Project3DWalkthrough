@@ -1,3 +1,3 @@
 {"name": "suite-revit", "project": "suite-revit", "continueFrom": "suite-revit-prep", "settings": {"proposal": true},
- "edit": "C:/Users/DWP2/AppData/Local/Temp/wt-uf/acc/cases/edit_a12.py",
+ "edit": "edit_a12.py",
  "save": {"label": "A-12: presidential suite, Revit export of 9 Nov (new project)", "carryHeights": true, "rememberMapping": false}}

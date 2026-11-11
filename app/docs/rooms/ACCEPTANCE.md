@@ -243,7 +243,8 @@ reports of 9 Nov, and the checks use those.
   * over a room marked "no ceiling".
 * Every ceiling lies at least 2 cm under the slab above, and no two ceiling parts overlap.
 * In Edge (`tests/e2e/stairs.spec.ts`), with the house's new-rule offline file:
-  * in Walk, a ray up from the middle of a room hits a ceiling mesh at the ceiling height;
+  * in Walk, a ray up from the middle of a room hits the ceiling's underside, at the ceiling height less the 2 cm plate
+    (the viewer draws a ceiling as its underside only, at `level + z0`; decided 11 Nov, R7.md D-2);
   * in Orbit, the ceiling meshes are not visible;
   * the Ceilings tick hides them in Walk;
   * the old versions' panels show no Ceilings tick.
@@ -307,7 +308,9 @@ files of the house's and the bank's new-rule versions (and the tower's, should).
 * **Up**: start on the lower floor at `walk[0]`, foot at that floor's level ± 0.01 m; walk each segment of `walk` with
   `probe.walk` (5 cm steps), then 1.0 m on. Pass when the foot is at the upper floor's level ± 0.02 m (it rose by 3.90 m
   on the house, 3.70 m on the bank), the floor buttons and `modechange` name the upper floor, the walker is 0.5 m or
-  more past the last riser, and `probe.crosses` along each segment is never true.
+  more past the last riser, and `probe.crosses` along each segment, asked when the walker stands at the segment's
+  start, is never true (decided 11 Nov, R4.md D-1: `crosses` is measured from the foot where the walker stands, and a
+  wall piece cut under a flight lies under the walking line by design).
 * **Down**: the reverse path, ending on the lower floor's level ± 0.02 m and naming it.
 * **By keyboard**: W is held only until the foot has risen three risers (the frame rate of software-drawn Edge is not
   part of the test); the probe finishes the climb.
@@ -561,7 +564,8 @@ The numbers go into `GAPS.md`.
 * **The v2 broken-model corpus**: `fixtures/models/broken/` (one case per new rule, written by R0 with the three
   checkers).
 * **The house-rooms overlay**: `fixtures/upload/overlay/house-rooms.overlay.json`, provisional from the trial, replaced
-  at the smoke step (WORK_BREAKDOWN RI-0).
+  at the smoke step (WORK_BREAKDOWN RI-0): re-made by RI on 11 Nov from a real new-rule build of the house, every field
+  in the floor's sheet metres (contract-issues/RI.md).
 * **The old-rule outputs**: `fixtures/rooms/old-rule.sha1.json`.
 * **The answer keys**: `fixtures/rooms/keys/{bank,probes,house,suite}.json`.
 * **The walk-parity golden**: `packages/viewer/test/fixtures/walk-parity.json`, with the script that made it

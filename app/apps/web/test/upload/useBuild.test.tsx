@@ -63,7 +63,9 @@ describe('useBuild', () => {
     const r = mock.handle({ method: 'POST', path: `/api/projects/bank-sampeng/builds/${b.id}/run`, body: '{}' });
     expect(r.status).toBe(202);
     await act(async () => { out.current!.set(JSON.parse(r.body.toString('utf8')) as BuildDetail); });
-    expect(out.current!.active).toBe(true);
+    // TanStack Query tells the hook of the new cache data on its own schedule (a timeout), which may land after act():
+    // wait for it rather than read it at once (a race that failed 2 runs in 3 on 11 Nov; contract-issues/RI.md)
+    await waitFor(() => out.current?.active === true);
     await waitFor(() => out.current?.detail?.result !== null && out.current?.detail?.run?.kind === 'build' && out.current.detail.run.status === 'done');
     expect(out.current!.detail!.result!.runId).toMatch(/-build$/);
     await v.unmount();

@@ -11,9 +11,11 @@ gives [before, after] for each part kind, each opening kind, `furniture` and `ro
 
 The rooms milestone (docs/rooms/DESIGN.md R-3.4, R-6.4): when either side is a BuiltModel v2 (it has `stairways`),
 `counts[floor]` also gives, when either side has any, `rooms closed` (its `spaces`), `plate area (m2)` (the slabs with
-their holes, to 0.1 m2) and `stairs you can climb` (the stairways rising from the floor); names are compared as before. A
-floor whose plate is LOST_FLOOR m2 or more smaller comes first in `counts`, its plate row first, so the first row of the
-list of changes is the lost floor (R-6.4). Two v1 models give the same bytes as before.
+their holes, and the holes cut on purpose added back: the floor's `voids` records, so a stair well, a shaft, a marked
+void or a "no floor" room is no lost floor; to 0.1 m2; contract-issues/R3.md D-3, put in by RI) and `stairs you can
+climb` (the stairways rising from the floor); names are compared as before. A floor whose plate is LOST_FLOOR m2 or more
+smaller comes first in `counts`, its plate row first, so the first row of the list of changes is the lost floor (R-6.4;
+the web app's DiffPanel judges the same row the same way). Two v1 models give the same bytes as before.
 """
 from __future__ import annotations
 
@@ -34,8 +36,11 @@ LOST_FLOOR = 2.0
 ROOMS_CLOSED, PLATE_AREA, CLIMBABLE = 'rooms closed', 'plate area (m2)', 'stairs you can climb'
 
 
-def plate_area(model: dict, floor: str) -> float:
-    """The area of a floor's slabs with their holes (m2, to 0.1); 0.0 without slabs."""
+def plate_area(model: dict, floor: str, holes_back: bool = False) -> float:
+    """The area of a floor's slabs with their holes (m2, to 0.1); 0.0 without slabs. With `holes_back`, the holes cut on
+    purpose are added back (`_holes_back`: the floor's `voids` records, i.e. stair wells, kept stair voids, shafts, marked
+    voids, "no floor"): the floor at its outline, what the diff's `plate area (m2)` row shows and a lost floor is judged
+    by (R3.md D-3, decided 11 Nov)."""
     from shapely.geometry import Polygon
     from shapely.ops import unary_union
     polys = []
@@ -49,7 +54,32 @@ def plate_area(model: dict, floor: str) -> float:
         g = g if g.is_valid else g.buffer(0)
         if not g.is_empty:
             polys.append(g)
-    return round(unary_union(polys).area, 1) + 0.0 if polys else 0.0
+    if not polys:
+        return 0.0
+    plate = unary_union(polys)
+    area = _holes_back(plate, (model.get('voids') or {}).get(floor) or []) if holes_back else plate.area
+    return round(area, 1) + 0.0
+
+
+def _holes_back(plate, voids: list) -> float:
+    """The area of `plate` with every hole that holds a void record's point filled, plus the recorded area of each void
+    whose point lies in no hole (a void at the plate's edge is a notch, not a hole). Two voids in one hole (a stair well
+    inside a marked void) are counted once; a hole that holds no void's point (floor that is not there) stays a hole."""
+    from shapely.geometry import Point, Polygon
+    from shapely.ops import unary_union
+    pts = [Point(v['x'], v['y']) for v in voids]
+    used: set[int] = set()
+    filled = []
+    for p in getattr(plate, 'geoms', [plate]):
+        keep = []
+        for ring in p.interiors:
+            h = Polygon(ring)
+            inside = [i for i, q in enumerate(pts) if h.contains(q)]
+            used.update(inside)
+            if not inside:
+                keep.append(ring)
+        filled.append(Polygon(p.exterior, keep))
+    return unary_union(filled).area + sum(float(v.get('area') or 0.0) for i, v in enumerate(voids) if i not in used)
 
 
 def _rooms_counts(after: dict, before: dict, floors: list[str], counts: dict) -> dict:
@@ -57,7 +87,7 @@ def _rooms_counts(after: dict, before: dict, floors: list[str], counts: dict) ->
     for fl in floors:
         c = counts[fl]
         for key, of in ((ROOMS_CLOSED, lambda m: sum(1 for s in m.get('spaces') or [] if s['floor'] == fl)),     # noqa: B023
-                        (PLATE_AREA, lambda m: plate_area(m, fl)),                                             # noqa: B023
+                        (PLATE_AREA, lambda m: plate_area(m, fl, holes_back=True)),                            # noqa: B023
                         (CLIMBABLE, lambda m: sum(1 for s in m.get('stairways') or [] if s['from'] == fl))):  # noqa: B023
             pair = [of(before), of(after)]
             if any(pair):

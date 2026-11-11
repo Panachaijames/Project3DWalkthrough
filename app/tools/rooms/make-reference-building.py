@@ -18,9 +18,12 @@ against (a defect goes in your own docs/rooms/contract-issues file).
             (a FakeJobRunner run folder: run.json, job.json, out/).
 `stairs`    fixtures/models/stairs-{straight,L,U}.model.json: the v2 models of make-stair-dxf.py's three drawings, for
             the walker's tests.
-`--check`   writes nothing and exits 1 when a file on disk differs. (It holds at R0's state of the builder: the
-            fixtures pass through the tracer's wiring in build/bank.py and build/model.py, which R1 rewrites. After
-            that the fixtures stand as they are; this tool is the record of how they were made.)
+`--check`   writes nothing and exits 1 when a file on disk differs. (It held at R0's state of the builder: the
+            fixtures passed through the tracer's wiring in build/bank.py and build/model.py, which R1 rewrote. The
+            integration step RI re-made `fixtures` and `stairs` with this tool on 11 Nov, after R1 - R7, so that what the
+            real code now writes from the same definition (the rooms' areas, the stair outlines and the summary's stairs
+            block, R3's outputs) is in them: docs/rooms/contract-issues/RI.md lists every file that moved and why. Since
+            then `--check` holds again; the overlay is out/overlay.py's own, which writes the new fields and flags.)
 
 THE BUILDING (sheet metres; drawn in millimetres). Two floors of 3.00 m, 12 x 9 m, 0.2 m walls drawn as solid fills.
   ground   HALL (x 0.2 - 6.9): two names in it, LIVING and DINING; the entrance door in the south wall.
@@ -659,7 +662,9 @@ def reference_files(tmp: Path) -> dict[str, bytes]:
     s = settings_of(manifest, PROJECT)
     res, ctx = build_with(reference_truth(), s, sources, tmp / 'build', PROJECT_ID)
     written = write_outputs(res, ctx)
-    ov = overlay_rooms(json.loads(written['overlay.json'].read_bytes()), res)
+    ov = json.loads(written['overlay.json'].read_bytes())
+    if not all('spaces' in fl for fl in ov['floors']):      # RI (11 Nov): out/overlay.py (R3) writes the new fields and
+        ov = overlay_rooms(ov, res)                          # flags itself now; overlay_rooms is how R0 made them before
     files = {
         f'models/{NAME}.model.json': written['model.json'].read_bytes(),
         f'presentation/{NAME}.json': written['presentation.json'].read_bytes(),

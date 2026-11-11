@@ -146,7 +146,7 @@ small `fb8e7283ab205c8e49ecc057f6019c1e9fd2f6d0`, hostile `7d2193d20052ac4171e42
 | `mappings/dwp-revit.json` | OfficeMapping after the bank is saved for office dwp-revit (every bank layer by normalised name) | `484a50a4b84e8d2dfed5ded65081503e771c8a00` |
 | `max-texts/bank-27oct.json` | MaxTexts profile (format max-texts/1, U4's final; U4-4): the bank's verbatim header, tooltip, placed-at and datum lines; with it the generator gives `bank_test/Bangkok_Bank_Sampeng.ms` byte for byte (golden only) | `b04a506c29b8391084bf11c143908035a23817c8` |
 | `max-texts/hotel-2nov.json` | MaxTexts profile (U4's final): with it the generator gives `hotel_test/Hotel_Lobby.ms` byte for byte (golden only) | `c203796254960cf6c95c83c849250c5eada5dc93` |
-| `max-texts/upload.json` | MaxTexts profile `upload` (U4's final, U-11.5): read AT RUN TIME by every build's Max script, so it ships with the app (U4-4) | `1877c600203afc9fbafbfd2fefb3d7aad6f79955` |
+| `max-texts/upload.json` | MaxTexts profile `upload` (U4's final, U-11.5): read AT RUN TIME by every build's Max script, so it ships with the app (U4-4); the rooms milestone's R3 added the `stairs` and `ceilings` notes (sha1 updated by RI) | `4d4ef2dbb195abf52c33b46d64efdbbfaf76ea6b` |
 | `overlay/bank.overlay.json` | BuildOverlay of the bank from the v2 model and the detector records (sheet m = model + offset), with the opening, room-label and plate flags the data raise | `01893517d1be77a958ef1cf7bd843084731fcf1c` |
 | `plan/bank1.plan.json.gz` | PlanGeometry of I1201 made by U2's `read_source` (nested keys, sig / rsig / eid per entry; gzip, mtime 0): equal to the scaffold's provisional one | `9c7c8ef6a338ebe1ada0913f143750861599e9a3` |
 | `plan/sukhumvit.plan.json.gz` | PlanGeometry of the house made by U2's `read_source` (re-made 9 Nov): two ATTRIB keys now carry their source handle | `96a5b105feb1be774735619a356a9faeea92298d` |
@@ -188,7 +188,13 @@ model and stages are `fixtures/models/bank-v2.model.json` and `fixtures/stages/b
 Read-only for the builders, as everything here. Owners after the scaffold (docs/rooms/WORK_BREAKDOWN.md): R1 the
 `*-rooms.json` settings and `rooms/keys/house.json`; R2 `tools/rooms/make-stair-dxf.py`; R5 the FakeJobRunner fixtures;
 RI `rooms/keys/suite.json` and the smoke step's replacement of the provisional overlay. Everything derived from the
-reference building is frozen with its tool.
+reference building is frozen with its tool. **Re-made once by the integration step RI (11 Nov 2026, after R1 - R7)**
+with the same tools and the same definition, so that what the real code now writes is in them: the rooms' areas, the
+stair outlines and the summary's stairs block (R1's `build/model.py` and `bank.py`, contract-issues/R1.md 4.1), R3's
+outputs (the finish caption, the Max script, the top view; R3.md 4), and the run folder's `job.json` and this file's
+sha1s with them; the house-rooms overlay from a real new-rule build. `docs/rooms/contract-issues/RI.md` lists every
+file that moved and why. The overlay, the flags, the presentation, the settings and the other run-folder files did not
+move.
 
 ### The reference building (`node tools/run-builder-py.mjs tools/rooms/make-reference-building.py fixtures` and `stairs`)
 
@@ -206,30 +212,30 @@ model's treads, landings, well and stairway within 1 mm (ACCEPTANCE RA-9).
 
 | File | What | sha1 |
 |---|---|---|
-| `models/rooms-reference.model.json` | BuiltModel v2: 1 stairway (L, 16 risers of 0.188 m, 14 treads, 1 landing), 3 spaces, 2 ceilings, a wall piece cut under the stair; stamp `2da587ccc0bd` | `2da587ccc0bd67932d17b0b77afd884388b87447` |
+| `models/rooms-reference.model.json` | BuiltModel v2: 1 stairway (L, 16 risers of 0.188 m, 14 treads, 1 landing), 3 spaces, 2 ceilings, a wall piece cut under the stair; stamp `bfcd621e0a22` | `bfcd621e0a22de68a0b1e36bcf8242cd54d1343d` |
 | `presentation/rooms-reference.json` | its Presentation, as U4's `out/presentation.py` writes it | `eab1b408eb323328b55bf4cb3253b1bf66daedc2` |
-| `stages/rooms-reference.stages.json` | its ReplayData | `7fdb4c8c648863740474a8a61062727f5d933311` |
+| `stages/rooms-reference.stages.json` | its ReplayData | `fab0e3e55ea5dced749980d2df96307f05859f93` |
 | `rooms/settings.reference.json` | the BuildSettings it was built with (the two DXFs by sha1, the three options at their new values) | `a712632175fffb8ccb19da57d01f3c146e30c016` |
-| `rooms/build-result.reference.json` | contracts.BuildResult with every new report key: `floors[*].rooms / slab / stairways / stairClash`, `fixes.closings / rooms / stairs`, `replay.facts.rooms / climbable / ceilings` (timings zero) | `323cfd31d34b673f22b5c24e5b0de94ce6c503c6` |
-| `rooms/overlay.reference.json` | BuildOverlay with the new floor fields (`spaces`, `holes`, `stairs`, `closings`, `unfloored`, sheet m) and the new flags `slab-gap`, `room-open`, `room-names`, `doorway`, `stair`, `stair-clash`, `hole-skipped`, written by the tool from the report with the texts of DESIGN R-6.1 (R3 writes the real overlay code against it) | `834717346f08031de12cee00b48853888b7fb66e` |
+| `rooms/build-result.reference.json` | contracts.BuildResult with every new report key: `floors[*].rooms / slab / stairways / stairClash`, `fixes.closings / rooms / stairs`, `replay.facts.rooms / climbable / ceilings` (timings zero) | `c94e2f664666e3e433aa462e5782f0f762120f9b` |
+| `rooms/overlay.reference.json` | BuildOverlay with the new floor fields (`spaces`, `holes`, `stairs`, `closings`, `unfloored`, sheet m) and the new flags `slab-gap`, `room-open`, `room-names`, `doorway`, `stair`, `stair-clash`, `hole-skipped`, written by the tool from the report with the texts of DESIGN R-6.1 (R3 wrote the real overlay code against it; since RI the tool takes `out/overlay.py`'s own, the same bytes) | `834717346f08031de12cee00b48853888b7fb66e` |
 | `rooms/flags.every-kind.json` | one Flag of each of the eight new kinds: the seven above and a hand-written `stairs-none` (a building whose stair climbs raises none) | `88bf1aa2cf3fc3133eff8d5a7037e55e63c84fc3` |
-| `models/stairs-straight.model.json` | BuiltModel v2 of `make-stair-dxf.py straight`: 16 risers, 15 treads | `82782e23410ff6c5db831a45d4e928d4d2aef235` |
-| `models/stairs-L.model.json` | BuiltModel v2 of `make-stair-dxf.py L`: 7 + 9 risers, 14 treads, 1 landing | `93a941986e7be68ebfb52235d566290efe1c6394` |
-| `models/stairs-U.model.json` | BuiltModel v2 of `make-stair-dxf.py U`: 8 + 8 risers, 14 treads, 1 half landing | `8338824651a6c07fb56f8c7b71d5e53d4adb16cd` |
+| `models/stairs-straight.model.json` | BuiltModel v2 of `make-stair-dxf.py straight`: 16 risers, 15 treads | `f9e2f8952cf5c107861b98c64f9632988192f8b1` |
+| `models/stairs-L.model.json` | BuiltModel v2 of `make-stair-dxf.py L`: 7 + 9 risers, 14 treads, 1 landing | `85d27c8623cca441fc24288d94406d56bca36a52` |
+| `models/stairs-U.model.json` | BuiltModel v2 of `make-stair-dxf.py U`: 8 + 8 risers, 14 treads, 1 half landing | `bb2e29818643e3eca938963c24b4c6012dbf38d9` |
 
 `rooms/runs/reference-build/` is a FakeJobRunner run folder of that build, in the format of `upload/runs/` (`run.json`
 names each output's bytes, `job.json` their sizes and sha1s; `services/builder/tests/test_r_fixtures.py` checks it):
 
 | File | What | sha1 |
 |---|---|---|
-| `rooms/runs/reference-build/job.json` | run folder | `a11f8b7c1824d6a8beacefe43ed4bcea2edb067e` |
-| `rooms/runs/reference-build/out/Rooms_reference.ms` | run folder | `58beeb372c3efa91157d032d9ec473d95b833d57` |
+| `rooms/runs/reference-build/job.json` | run folder | `ecd256d0819cec2b0762494607dbde71d2b939b5` |
+| `rooms/runs/reference-build/out/Rooms_reference.ms` | run folder | `bdc63917a3730cd09a512fe5bcb6d0ee7fe5a0bb` |
 | `rooms/runs/reference-build/out/diff.json` | run folder | `975b4b76be497b7ee8eee52fd95b32fc2140b3fd` |
 | `rooms/runs/reference-build/out/inputs.json` | run folder | `873a26603082c958c193f0c10f11941e8d7dd17e` |
 | `rooms/runs/reference-build/out/openings.json` | run folder | `07d1e3edd71125c9bfa4de17069699759d057d4a` |
 | `rooms/runs/reference-build/out/pieces.json` | run folder | `e83771137ffd8eab4056cd23198e16326bbf1fa2` |
-| `rooms/runs/reference-build/out/report.json` | run folder | `fa668dfc20373106c2bff9bca1cfdb3d31be5531` |
-| `rooms/runs/reference-build/out/topview.png` | run folder | `a53f432f680c7d6aa586bc6a6f01e3d457675531` |
+| `rooms/runs/reference-build/out/report.json` | run folder | `36024e0bd4a15d8f6a385cd4cbdc0645534b1a71` |
+| `rooms/runs/reference-build/out/topview.png` | run folder | `578948481a1ea6ce85125d60333ce9643a5a2647` |
 | `rooms/runs/reference-build/run.json` | run folder | `b5939cfdf6abf0b7a65f626c4518e32878b7ffc7` |
 
 A tiny store with the reference building as one saved version (and, with `--stairs`, the three stair models) is made at
@@ -242,7 +248,7 @@ with `why` = a mark that was not cut); `slab.unfloored` `{ area, at, o, mouth, a
 bottom, to, risers, riser }`; `stairClash` `{ stair, kind, label, area, z1, at }`; `fixes.closings / rooms / stairs`
 `{ fix, matched }`. Points are sheet metres.
 
-### Settings, the provisional overlay, the old-rule outputs, the keys
+### Settings, the house-rooms overlay, the old-rule outputs, the keys
 
 | File | What | sha1 |
 |---|---|---|
@@ -255,12 +261,12 @@ bottom, to, risers, riser }`; `stairClash` `{ stair, kind, label, area, z1, at }
 | `upload/settings/recipes/suite.json` | the same of `suite-upload` v1 (`205e9c2c46e8`) | `5da2fccf57f6ba46e8a8c52d908f530c6ef42ca6` |
 | `upload/settings/recipes/tower.json` | the same of `tower-upload` v1 (`91414f408cb2`) | `0d6a427e9381a687471f96bb9a2630d004a64a40` |
 | `upload/settings/recipes/suite-revit.json` | the same of `suite-revit` v1 (`1d90d91ef949`), the A-12 run | `faf0f4d04301f8f50665fbe261c95a045f80ebb4` |
-| `upload/overlay/house-rooms.overlay.json` | **PROVISIONAL**: the house built with `house-rooms.json` by the scaffold's TRACER (not the real rules) with the new floor fields and flags added from its report (`node tools/run-builder-py.mjs tools/rooms/make-house-rooms-overlay.py`); the smoke step (WORK_BREAKDOWN RI-0) replaces it | `26860278556301361168a6ee20838b80c60f4a79` |
+| `upload/overlay/house-rooms.overlay.json` | the house built with `house-rooms.json` by the real rules (R1's and R2's) and written by `out/overlay.py` (R3's), every field in the floor's sheet metres (`node tools/run-builder-py.mjs tools/rooms/make-house-rooms-overlay.py`; re-made by RI, WORK_BREAKDOWN RI-0, R6.md D-3: the scaffold's was the tracer's, provisional): ground 22 rooms, 7 stairs (S1 climbs); upper 24 rooms, 4 holes | `8338f2d50da8ab80715918485579cc6358030be6` |
 | `rooms/old-rule.sha1.json` | the sha1 of every output of the five old-rule builds, recorded from the builder of `66b4c06` (`services/builder/tests/test_r_old_rule.py`); frozen | `c0b7bf53f499773998f278d2a3c0251f68060d5c` |
 | `rooms/keys/bank.json` | each of the bank's 18 room tags with its own point on the sheet (`node tools/run-builder-py.mjs tools/rooms/make-keys.py`) | `7dfacd23c53e2b8392b3f4917fb73484c76ca112` |
 | `rooms/keys/probes.json` | the walk probes of 9 Nov that had no floor at their start, by floor, sheet point, normal and side (ACCEPTANCE RA-6) | `cc4702d765b33fc98ab0b3754306e11d7e4f541f` |
-| `rooms/keys/house.json` | empty: R1 writes one point per room of the house's east building | `d606b05592f7b3e99c3de0ae6869ff95e6be2cbf` |
-| `rooms/keys/suite.json` | empty: RI picks the old suite's 16 key points | `7d3f8995abd4ba0fd6078e192605d4a75ad74b2e` |
+| `rooms/keys/house.json` | one point per room of the house's east building, written by R1 (R1.md 1.1; the scaffold's was empty) | `f3b8e2c650bef72164a30f4a10d0854690d091f9` |
+| `rooms/keys/suite.json` | the old suite's 16 names, each with a point in the room the drawing means, picked once by RI from the plot of the drawing (its room outlines on Defpoints and the written areas; RA-7) | `b45dbdc49ea342173c49935d7a9c71e59502dc65` |
 
 ### models/broken/: the v2 cases (`node tools/make-broken-fixtures.mjs`, one per rule of DESIGN R-12.1)
 

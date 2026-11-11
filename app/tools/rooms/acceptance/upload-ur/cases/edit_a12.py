@@ -21,6 +21,9 @@ def edit(s, b):
     s['layers']['M_Arredi'] = 'furniture'
     for src in s['sources']:            # the Files step's Confirm: the doors say mm (7 against 0), the header inches
         src['unitsConfirmed'] = True
+    # RI (rooms milestone, R5.md D-4): a new draft now gets the new rules; these two cases rebuild the upload
+    # milestone's old stamps, so the edit writes the old rules (OLD_RULES) out
+    s['options'].update({'slabs': 'closed-rooms', 'ceilings': 'off', 'stairs': 'lines'})
     assert len(s['floors']) == 1, s['floors']
     s['floors'][0]['level'] = 0.0
     s['floors'][0]['wallHeight'] = 3.0

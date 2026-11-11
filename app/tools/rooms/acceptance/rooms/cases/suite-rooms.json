@@ -1,0 +1,1 @@
+{"name": "suite-rooms", "project": "suite-rooms", "create": {"name": "Presidential suite (new rule)", "shortName": "Suite (rooms)", "id": "suite-rooms"}, "files": ["layout presidential test.dwg"], "from": null, "settings": {"fixture": "suite-rooms"}, "save": {"label": "RI acceptance: suite-rooms (rooms milestone, new rule)", "carryHeights": true, "rememberMapping": false}}

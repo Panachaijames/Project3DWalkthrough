@@ -51,7 +51,8 @@ export const TID = {
 
   // ---- Check step: the tools. The existing select `check-tool` gains the values 'draw-line' and 'rooms'.
   checkTool: 'check-tool',
-  /** The hint shown while a line is being drawn (after the first click). */
+  /** The hint shown while the tool Draw a line is on; the canvas itself marks the first end after the first click
+   *  (contract-issues/R6.md D-2, reworded by RI). */
   drawLineHint: 'draw-line-hint',
 
   // ---- Check step: the room panel (a click in a room, or where there is no room, with the tool Rooms and stairs)

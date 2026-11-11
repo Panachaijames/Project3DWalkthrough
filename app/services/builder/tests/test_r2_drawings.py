@@ -135,17 +135,13 @@ def test_ra9_the_house_main_stair_climbs(stages) -> None:
         ('ground', 'upper', 21, 'L', 1, 19, 'arrow')
     assert abs(sw['riser'] - 0.186) <= 0.002
     check_solid(st, sb)
+    # RA-9 as decided on 11 Nov (R2.md D-1): riser 1's middle, walk[1], within 0.3 m of (20.40, 21.15); `bottom` is the
+    # walking line's first point, 1.0 m before riser 1 (R-8.5). The strict xfail on `bottom` was removed by RI.
     assert math.dist(sw['walk'][1], (20.40, 21.15)) <= 0.3, "riser 1's middle"
     upper = row_at(st['found']['upper'], 23.0, 23.7)
     assert all(s['id'] != upper['id'] for s in st['stairs']['left']), "the upper plan's drawing adds no stair and no flag"
     assert len(st['stairs']['built']) == 1 and st['stairs']['pairs'] == []
     assert sb['linesUsed']['ground'] and sb['linesUsed']['upper']
-
-
-@pytest.mark.xfail(strict=True, reason='R2.md D-1: RA-9 puts the stairway\'s bottom within 0.3 m of (20.40, 21.15), which is '
-                   'riser 1; by R-8.5 the record\'s bottom is the first point of the walking line, 1.0 m before riser 1')
-def test_ra9_the_house_bottom_as_ra9_writes_it(stages) -> None:
-    assert math.dist(built_of(stages('house'))['stairway']['bottom'], (20.40, 21.15)) <= 0.3
 
 
 def test_ra9_the_house_other_stairs_stay_lines(stages) -> None:

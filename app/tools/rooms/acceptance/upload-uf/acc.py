@@ -175,8 +175,10 @@ def finish_case(api: Api, case: dict, b: dict, out: Path, out_root: Path, rec: d
         raise RuntimeError(f'build ended {b["run"]["status"]}: {b["run"].get("error")}')
     if case.get('fixes'):
         ov = json.loads((out / 'build1' / 'overlay.json').read_bytes())
-        plans = {p.name.split('.')[0]: json.loads(gzip.decompress(p.read_bytes()))
-                 for p in (out / 'prepare').glob('*.plan.json.gz')}
+        plans = {}                      # RI (rooms milestone): the API may serve the plan unzipped (<sha>.plan.json)
+        for p in (out / 'prepare').glob('*.plan.json*'):
+            raw = p.read_bytes()
+            plans[p.name.split('.')[0]] = json.loads(gzip.decompress(raw) if raw[:2] == bytes((31, 139)) else raw)
         b = api.get(b['url']).json()
         s2 = module(case['fixes']).fixes(json.loads(json.dumps(b['settings'])), b, ov, plans)
         b = build_once(api, b, s2, out, 'build2', rec)
@@ -283,6 +285,9 @@ def main() -> int:
     ok = True
     for c in a.cases:
         case = load(c)
+        for k in ('edit', 'fixes'):     # RI (rooms milestone, R0.md item 0): a relative path is the case file's folder's
+            if case.get(k) and not Path(case[k]).is_absolute():
+                case[k] = str(Path(c).resolve().parent / case[k])
         t = time.monotonic()
         print(f'== {case["name"]}', flush=True)
         rec = run_case(api, Path(a.store), case, Path(a.out))

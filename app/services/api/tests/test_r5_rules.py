@@ -362,7 +362,7 @@ def test_a_v2_build_saves_as_built_model_2(data_copy: Path, template_file: Path)
         model_raw = (FIXTURES / 'models' / 'rooms-reference.model.json').read_bytes()
         m = json.loads(model_raw)
         res = b['result']
-        assert res['stamp'] == '2da587ccc0bd' and res['counts']['rooms'] == len(m['rooms'])
+        assert res['stamp'] == 'bfcd621e0a22' and res['counts']['rooms'] == len(m['rooms'])   # RI re-made the fixture (RI.md)
         assert [(f['key'], f['rooms']) for f in res['floors']] == \
             [(f['key'], sum(1 for r in m['rooms'] if r['floor'] == f['key'])) for f in m['floors']]
         overlay = read_json(FIXTURES / 'rooms' / 'overlay.reference.json')
@@ -371,7 +371,7 @@ def test_a_v2_build_saves_as_built_model_2(data_copy: Path, template_file: Path)
         r = api.post(f'{b["url"]}/save', json=SAVE)
         assert r.status_code == 201, r.text[:400]
         v = r.json()
-        assert v['stamp'] == '2da587ccc0bd' and v['counts']['rooms'] == len(m['rooms'])
+        assert v['stamp'] == 'bfcd621e0a22' and v['counts']['rooms'] == len(m['rooms'])
         vdir = data_copy / 'projects' / b['projectId'] / 'versions' / '1'
         assert load(vdir / 'version.json')['modelFormat'] == 'built-model/2'
         assert (vdir / 'model.json').read_bytes() == model_raw

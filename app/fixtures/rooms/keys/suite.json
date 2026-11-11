@@ -2,6 +2,137 @@
   "format": "rooms-key/1",
   "drawing": "suite",
   "settings": "fixtures/upload/settings/suite-rooms.json",
-  "note": "Empty at the scaffold. RI: 16 key points of the old suite (docs/rooms/WORK_BREAKDOWN.md).",
-  "floors": {}
+  "note": "The old suite's 16 names, each with a point in the room the drawing means (sheet m, the drawing's own frame; ACCEPTANCE RA-7, a should: at least 13 of 16 names belong to the room that holds their point). Picked once by RI on 11 Nov 2026 from the plot of the drawing: its lines by layer role and its room outlines (layer Defpoints), matched to each name by place and by the area the name writes; a name with no drawn outline (Steam, Shower, Toilet) takes the walled cell that holds it. The builder's own rooms were not used to pick. `what` says why.",
+  "floors": {
+    "suite": [
+      {
+        "name": "Tổ hợp Khách Ăn",
+        "at": [
+          193.72,
+          -3495.15
+        ],
+        "what": "the drawn room outline (layer Defpoints, the drawing's room-outline role) of 152.6 m2 that holds the name (written 153 m2): the living and dining hall"
+      },
+      {
+        "name": "YOGA",
+        "at": [
+          200.13,
+          -3486.98
+        ],
+        "what": "the drawn room outline (layer Defpoints, the drawing's room-outline role) of 31.3 m2 that holds the name (no area written): the north-east room with the gym equipment"
+      },
+      {
+        "name": "Massage Room",
+        "at": [
+          204.42,
+          -3498.76
+        ],
+        "what": "the drawn room outline (layer Defpoints, the drawing's room-outline role) of 9.0 m2 (written 9 m2) east of the name, which stands 1.3 m outside it in the hall"
+      },
+      {
+        "name": "Powder",
+        "at": [
+          203.75,
+          -3493.43
+        ],
+        "what": "the drawn room outline (layer Defpoints, the drawing's room-outline role) of 1.9 m2 that holds the name (written 1.8 m2)"
+      },
+      {
+        "name": "Steam",
+        "at": [
+          200.9,
+          -3498.8
+        ],
+        "what": "the walled cell of about 3 m2 that holds the name (no drawn outline; written 3 m2)"
+      },
+      {
+        "name": "Sauna",
+        "at": [
+          203.77,
+          -3500.35
+        ],
+        "what": "the drawn room outline (layer Defpoints, the drawing's room-outline role) of 3.0 m2 that holds the name (written 3 m2)"
+      },
+      {
+        "name": "Shower",
+        "at": [
+          200.2,
+          -3500.4
+        ],
+        "what": "the walled cell with rounded corners that holds the name (no drawn outline; written 2.3 m2)"
+      },
+      {
+        "name": "Toilet",
+        "at": [
+          202.4,
+          -3501.9
+        ],
+        "what": "the walled cell with the WC that holds the name (no drawn outline; written 2.7 m2)"
+      },
+      {
+        "name": "Jacuzi",
+        "at": [
+          194.6,
+          -3504.6
+        ],
+        "what": "the tub drawn inside the drawn outline (layer Defpoints, the drawing's room-outline role) of 47.7 m2 (the master bedroom), with no walls of its own; the name stands beside it"
+      },
+      {
+        "name": "Master Bedroom",
+        "at": [
+          191.68,
+          -3503.94
+        ],
+        "what": "the drawn room outline (layer Defpoints, the drawing's room-outline role) of 47.7 m2 (written 47 m2) south of the name, which stands 0.9 m outside it in the hall"
+      },
+      {
+        "name": "Walk-in Closet",
+        "at": [
+          196.46,
+          -3503.52
+        ],
+        "what": "the drawn room outline (layer Defpoints, the drawing's room-outline role) of 8.5 m2 (written 8.5 m2) east of the name, which stands inside the bedroom's outline"
+      },
+      {
+        "name": "Foyer",
+        "at": [
+          204.41,
+          -3495.15
+        ],
+        "what": "the drawn room outline (layer Defpoints, the drawing's room-outline role) of 10.7 m2 (written 10 m2) between the two double doors, east of the name, which stands 1.3 m outside it in the hall"
+      },
+      {
+        "name": "Bar",
+        "at": [
+          201.4,
+          -3491.74
+        ],
+        "what": "the drawn room outline (layer Defpoints, the drawing's room-outline role) of 7.7 m2 that holds the name (written 7.6 m2)"
+      },
+      {
+        "name": "Kitchen",
+        "at": [
+          203.34,
+          -3490.43
+        ],
+        "what": "the drawn room outline (layer Defpoints, the drawing's room-outline role) of 14.2 m2 with the sinks and counters (written 14 m2); the name stands inside the bar's outline"
+      },
+      {
+        "name": "Study & Meeting Room",
+        "at": [
+          192.8,
+          -3486.32
+        ],
+        "what": "the drawn room outline (layer Defpoints, the drawing's room-outline role) of 56.4 m2 (written 56 m2) with the meeting table; the name stands on its west corner"
+      },
+      {
+        "name": "GYM&YOGA",
+        "at": [
+          200.13,
+          -3486.98
+        ],
+        "what": "the drawn room outline (layer Defpoints, the drawing's room-outline role) of 31.3 m2 (written 33 m2), the north-east room with the gym equipment; the name stands inside the study's outline, 1.8 m west of it"
+      }
+    ]
+  }
 }

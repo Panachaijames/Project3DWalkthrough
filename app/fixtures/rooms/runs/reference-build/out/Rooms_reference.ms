@@ -1,5 +1,5 @@
 -- REFERENCE BUILDING / built by the walkthrough app from "rooms-reference-ground.dxf + rooms-reference-upper.dxf", 11 Nov 2026
--- Same model as the version in the walkthrough app (model data 2da587ccc0bd). Floor levels +0.00 / +3.00 m, wall heights 3.00 / 3.00 m.
+-- Same model as the version in the walkthrough app (model data bfcd621e0a22). Floor levels +0.00 / +3.00 m, wall heights 3.00 / 3.00 m.
 -- The drawings were DXF exported by its own program; drawing units mm.
 -- Placed at the drawing's own coordinates in metres (to line up with the drawings imported in metres), or centred on
 -- the origin if you untick that box in the script's window.
@@ -9,7 +9,14 @@
 --   * Editable Mesh: tick "Collapse to Editable Mesh" before Build, or press "Collapse all now" later.
 -- Each object's pivot is at the middle of its own outline, on its base. Layers per level and kind (RF_ground_Walls ...).
 -- "Update levels and heights" sets the tops of the walls (those marked to) and lintels to their level's wall height and keeps
--- the stair treads, the stair landings, the slabs, the ceilings and the railings at their own heights (only parts marked to follow the wall height change).
+-- the slabs, the ceilings and the railings at their own heights (only parts marked to follow the wall height change).
+-- Stairs: 16 risers of 0.188 m, 14 treads and 1 landing.
+-- Treads and landings are on RF_<level>_Treads and _Landings, on the level the stair rises from; the walls
+-- cut under a flight stay on _Walls. "Update levels and heights" scales each stair, and the walls cut under it,
+-- with its storey (their user property RF_storey is the level the stair rises to), so a stair still meets
+-- the floor above.
+-- Ceilings are on hidden layers RF_<level>_Ceilings: switch them on for interior views. A ceiling keeps its
+-- height above its level when the levels change.
 -- Each part is checked as it is built (closed solid, height, position). A part that fails is kept on layer
 -- RF_Check_Failed and listed in the MAXScript Listener; the rest is still built.
 -- Build sets System Units to metres. Nothing in an existing scene is changed: run it in a NEW EMPTY scene.
@@ -47,7 +54,7 @@ fn RF_makeMaterials =
     append RF_mats (standardMaterial name:"RF Step" diffuse:(color 185 199 180))
     append RF_mats (standardMaterial name:"RF Tread" diffuse:(color 185 199 180))
     append RF_mats (standardMaterial name:"RF Landing" diffuse:(color 185 199 180))
-    append RF_mats (standardMaterial name:"RF Ceiling" diffuse:(color 236 236 232))
+    append RF_mats (standardMaterial name:"RF Ceiling" diffuse:(color 244 243 239))
 )
 fn RF_num v = ((v as string) as float)
 -- The outline's knots are relative to c, the middle of the outline; the node is then moved to c, so that is its pivot.
@@ -170,6 +177,21 @@ fn RF_updateLevels newLevels newHeights =
     (
         local fi = (RF_num (getUserProp o "RF_floor")) as integer
         local base = RF_num (getUserProp o "RF_base")
+        local up = getUserProp o "RF_storey"
+        if up != undefined do
+        (
+            local ui = (RF_num up) as integer
+            local d0 = RF_levels[ui] - RF_levels[fi]
+            local d1 = newLevels[ui] - newLevels[fi]
+            if d0 > 0 and d1 > 0 do
+            (
+                local s = d1 / (d0 as float)
+                local ex = RF_extrudeOf o
+                if ex == undefined then skipped += 1 else ex.amount = ex.amount * s
+                base = base * s
+                setUserProp o "RF_base" base
+            )
+        )
         o.pos.z = newLevels[fi] + base
         if ((getUserProp o "RF_follow") as string) == "true" do
         (
@@ -205,25 +227,41 @@ fn RF_build =
     local t0 = timeStamp()
     RF_part #wall "RF_ground_Wall_001" #(#([(-0.0500),(-0.1500)],[0.0500,(-0.1500)],[0.0500,0.1500],[(-0.0500),0.1500])) 0.0000 3.0000 true 1 [3.3500,3.3300] [3.3000,3.1800] [3.4000,3.4800]
     RF_part #wall "RF_ground_Wall_002" #(#([(-0.0500),0.6000],[(-0.0500),(-0.6000)],[0.0500,(-0.6000)],[0.0500,0.6000])) 0.0000 2.0620 false 1 [3.3500,4.0800] [3.3000,3.4800] [3.4000,4.6800]
+    setUserProp RF_nodes[RF_nodes.count] "RF_storey" 2
     RF_part #wall "RF_ground_Wall_003" #(#([4.4500,4.3000],[4.4500,4.5000],[(-4.4500),4.5000],[(-4.4500),(-4.5000)],[0.0500,(-4.5000)],[0.0500,(-4.3000)],[(-4.2500),(-4.3000)],[(-4.2500),4.3000],[2.5200,4.3000],[2.5200,2.3000],[2.5800,2.3000],[2.5800,4.3000])) 0.0000 3.0000 true 1 [4.4500,4.5000] [0.0000,0.0000] [8.9000,9.0000]
     RF_part #wall "RF_ground_Wall_004" #(#([(-1.6000),(-4.3000)],[(-1.6000),(-3.3000)],[(-1.8000),(-3.3000)],[(-1.8000),(-4.3000)],[(-3.3000),(-4.3000)],[(-3.3000),(-4.5000)],[3.3000,(-4.5000)],[3.3000,4.5000],[3.1000,4.5000],[3.1000,0.1000],[(-1.6700),0.1000],[(-1.6700),1.1000],[(-1.7300),1.1000],[(-1.7300),0.1000],[(-1.8000),0.1000],[(-1.8000),(-2.4000)],[(-1.6000),(-2.4000)],[(-1.6000),(-0.1000)],[3.1000,(-0.1000)],[3.1000,(-4.3000)])) 0.0000 3.0000 true 1 [8.7000,4.5000] [5.4000,0.0000] [12.0000,9.0000]
     RF_part #lintel "RF_ground_Lintel_001_ground-001" #(#([0.4490,(-0.1000)],[0.4490,0.1000],[(-0.4490),0.1000],[(-0.4490),(-0.1000)])) 2.1000 3.0000 true 1 [4.9500,0.1000] [4.5010,0.0000] [5.3990,0.2000]
     RF_part #lintel "RF_ground_Lintel_002_ground-002" #(#([0.1000,0.4490],[(-0.1000),0.4490],[(-0.1000),(-0.4490)],[0.1000,(-0.4490)])) 2.1000 3.0000 true 1 [7.0000,1.6500] [6.9000,1.2010] [7.1000,2.0990]
     RF_part #tread "RF_ground_Tread_001_stair S1 tread 1" #(#([0.6000,(-0.1400)],[0.6000,0.1400],[(-0.6000),0.1400],[(-0.6000),(-0.1400)])) 0.0000 0.1880 false 1 [1.2000,1.9400] [0.6000,1.8000] [1.8000,2.0800]
+    setUserProp RF_nodes[RF_nodes.count] "RF_storey" 2
     RF_part #tread "RF_ground_Tread_002_stair S1 tread 2" #(#([0.6000,(-0.1400)],[0.6000,0.1400],[(-0.6000),0.1400],[(-0.6000),(-0.1400)])) 0.0000 0.3750 false 1 [1.2000,2.2200] [0.6000,2.0800] [1.8000,2.3600]
+    setUserProp RF_nodes[RF_nodes.count] "RF_storey" 2
     RF_part #tread "RF_ground_Tread_003_stair S1 tread 3" #(#([0.6000,(-0.1400)],[0.6000,0.1400],[(-0.6000),0.1400],[(-0.6000),(-0.1400)])) 0.1880 0.5620 false 1 [1.2000,2.5000] [0.6000,2.3600] [1.8000,2.6400]
+    setUserProp RF_nodes[RF_nodes.count] "RF_storey" 2
     RF_part #tread "RF_ground_Tread_004_stair S1 tread 4" #(#([0.6000,(-0.1400)],[0.6000,0.1400],[(-0.6000),0.1400],[(-0.6000),(-0.1400)])) 0.3750 0.7500 false 1 [1.2000,2.7800] [0.6000,2.6400] [1.8000,2.9200]
+    setUserProp RF_nodes[RF_nodes.count] "RF_storey" 2
     RF_part #tread "RF_ground_Tread_005_stair S1 tread 5" #(#([0.6000,(-0.1400)],[0.6000,0.1400],[(-0.6000),0.1400],[(-0.6000),(-0.1400)])) 0.5620 0.9380 false 1 [1.2000,3.0600] [0.6000,2.9200] [1.8000,3.2000]
+    setUserProp RF_nodes[RF_nodes.count] "RF_storey" 2
     RF_part #tread "RF_ground_Tread_006_stair S1 tread 6" #(#([0.6000,(-0.1400)],[0.6000,0.1400],[(-0.6000),0.1400],[(-0.6000),(-0.1400)])) 0.7500 1.1250 false 1 [1.2000,3.3400] [0.6000,3.2000] [1.8000,3.4800]
+    setUserProp RF_nodes[RF_nodes.count] "RF_storey" 2
     RF_part #tread "RF_ground_Tread_007_stair S1 tread 8" #(#([0.1400,(-0.6000)],[0.1400,0.6000],[(-0.1400),0.6000],[(-0.1400),(-0.6000)])) 1.1250 1.5000 false 1 [1.9400,4.0800] [1.8000,3.4800] [2.0800,4.6800]
+    setUserProp RF_nodes[RF_nodes.count] "RF_storey" 2
     RF_part #tread "RF_ground_Tread_008_stair S1 tread 9" #(#([0.1400,(-0.6000)],[0.1400,0.6000],[(-0.1400),0.6000],[(-0.1400),(-0.6000)])) 1.3120 1.6880 false 1 [2.2200,4.0800] [2.0800,3.4800] [2.3600,4.6800]
+    setUserProp RF_nodes[RF_nodes.count] "RF_storey" 2
     RF_part #tread "RF_ground_Tread_009_stair S1 tread 10" #(#([0.1400,(-0.6000)],[0.1400,0.6000],[(-0.1400),0.6000],[(-0.1400),(-0.6000)])) 1.5000 1.8750 false 1 [2.5000,4.0800] [2.3600,3.4800] [2.6400,4.6800]
+    setUserProp RF_nodes[RF_nodes.count] "RF_storey" 2
     RF_part #tread "RF_ground_Tread_010_stair S1 tread 11" #(#([0.1400,(-0.6000)],[0.1400,0.6000],[(-0.1400),0.6000],[(-0.1400),(-0.6000)])) 1.6880 2.0620 false 1 [2.7800,4.0800] [2.6400,3.4800] [2.9200,4.6800]
+    setUserProp RF_nodes[RF_nodes.count] "RF_storey" 2
     RF_part #tread "RF_ground_Tread_011_stair S1 tread 12" #(#([0.1400,(-0.6000)],[0.1400,0.6000],[(-0.1400),0.6000],[(-0.1400),(-0.6000)])) 1.8750 2.2500 false 1 [3.0600,4.0800] [2.9200,3.4800] [3.2000,4.6800]
+    setUserProp RF_nodes[RF_nodes.count] "RF_storey" 2
     RF_part #tread "RF_ground_Tread_012_stair S1 tread 13" #(#([0.1400,(-0.6000)],[0.1400,0.6000],[(-0.1400),0.6000],[(-0.1400),(-0.6000)])) 2.0620 2.4380 false 1 [3.3400,4.0800] [3.2000,3.4800] [3.4800,4.6800]
+    setUserProp RF_nodes[RF_nodes.count] "RF_storey" 2
     RF_part #tread "RF_ground_Tread_013_stair S1 tread 14" #(#([0.1400,(-0.6000)],[0.1400,0.6000],[(-0.1400),0.6000],[(-0.1400),(-0.6000)])) 2.2500 2.6250 false 1 [3.6200,4.0800] [3.4800,3.4800] [3.7600,4.6800]
+    setUserProp RF_nodes[RF_nodes.count] "RF_storey" 2
     RF_part #tread "RF_ground_Tread_014_stair S1 tread 15" #(#([0.1650,(-0.6000)],[0.1650,0.6000],[(-0.1650),0.6000],[(-0.1650),(-0.6000)])) 2.4380 2.8120 false 1 [3.9250,4.0800] [3.7600,3.4800] [4.0900,4.6800]
+    setUserProp RF_nodes[RF_nodes.count] "RF_storey" 2
     RF_part #landing "RF_ground_Landing_001_stair S1 landing 7" #(#([0.6000,0.6000],[(-0.6000),0.6000],[(-0.6000),(-0.6000)],[0.6000,(-0.6000)])) 1.1630 1.3120 false 1 [1.2000,4.0800] [0.6000,3.4800] [1.8000,4.6800]
+    setUserProp RF_nodes[RF_nodes.count] "RF_storey" 2
     RF_part #slab "RF_ground_Slab_001" #(#([(-6.0300),(-4.5300)],[6.0300,(-4.5300)],[6.0300,4.5300],[5.7700,4.5300],[5.7700,0.1300],[1.0600,0.1300],[1.0600,4.2700],[2.9300,4.2700],[2.9300,4.5300],[(-6.0300),4.5300])) (-0.2500) 0.0000 false 1 [6.0000,4.5000] [(-0.0300),(-0.0300)] [12.0300,9.0300]
     RF_part #ceiling "RF_ground_Ceiling_001_ceiling" #(#([(-6.0000),4.5000],[(-6.0000),(-4.5000)],[6.0000,(-4.5000)],[6.0000,4.5000],[5.8000,4.5000],[5.8000,0.1000],[1.0300,0.1000],[1.0300,4.3000],[2.9000,4.3000],[2.9000,4.5000]),#([0.0000,(-1.7000)],[0.0000,(-3.7000)],[(-2.6000),(-3.7000)],[(-2.6000),(-1.7000)]),#([(-5.4500),(-1.9100)],[(-5.4500),0.2300],[(-1.9600),0.2300],[(-1.9600),(-1.0700)],[(-4.1500),(-1.0700)],[(-4.1500),(-1.9100)])) 2.6800 2.7000 false 1 [6.0000,4.5000] [0.0000,0.0000] [12.0000,9.0000]
     RF_part #wall "RF_upper_Wall_001" #(#([(-3.5500),(-4.5000)],[3.5500,(-4.5000)],[3.5500,(-3.3000)],[3.3500,(-3.3000)],[3.3500,(-4.3000)],[(-3.3500),(-4.3000)],[(-3.3500),4.3000],[3.3500,4.3000],[3.3500,(-2.4000)],[3.5500,(-2.4000)],[3.5500,4.5000],[(-3.5500),4.5000])) 0.0000 3.0000 true 2 [3.5500,4.5000] [0.0000,0.0000] [7.1000,9.0000]
@@ -231,6 +269,11 @@ fn RF_build =
     RF_part #railing "RF_upper_Railing_001" #(#([(-2.4245),(-2.1500)],[(-2.4245),(-2.2500)],[2.3745,(-2.2500)],[2.3745,(-2.2000)],[2.4245,(-2.2000)],[2.4245,2.2000],[2.3745,2.2000],[2.3745,2.2500],[(-2.4245),2.2500],[(-2.4245),2.1500],[2.3245,2.1500],[2.3245,(-2.1500)])) 0.0000 1.1000 false 2 [9.5255,2.3000] [7.1010,0.0500] [11.9500,4.5500]
     RF_part #slab "RF_upper_Slab_001" #(#([5.9800,(-4.4300)],[5.9800,0.0300],[1.1800,0.0300],[1.1800,4.5300],[(-5.9800),4.5300],[(-5.9800),(-4.5300)],[1.1800,(-4.5300)],[1.1800,(-4.4300)]),#([(-2.5510),(-1.6990)],[0.0510,(-1.6990)],[0.0510,(-3.7010)],[(-2.5510),(-3.7000)]),#([(-4.0990),(-1.0710)],[(-4.0990),(-1.9110)],[(-5.4000),(-1.9110)],[(-5.4010),0.2300],[(-1.9100),0.2310],[(-1.9100),(-1.0710)])) (-0.2500) 0.0000 false 2 [5.9500,4.5000] [(-0.0300),(-0.0300)] [11.9300,9.0300]
     RF_part #ceiling "RF_upper_Ceiling_001_ceiling" #(#([3.5500,4.5000],[(-3.5500),4.5000],[(-3.5500),(-4.5000)],[3.5500,(-4.5000)])) 2.6800 2.7000 false 2 [3.5500,4.5000] [0.0000,0.0000] [7.1000,9.0000]
+    for f in RF_floorNames do
+    (
+        local ly = LayerManager.getLayerFromName ("RF_" + f + "_Ceilings")
+        if ly != undefined do ly.isHidden = true
+    )
     RF_lines "RF_ground_Stairs" #(#([(-2.1000),(-0.6000)],[(-2.1000),0.6000]),#([(-1.8200),(-0.6000)],[(-1.8200),0.6000]),#([(-1.5400),(-0.6000)],[(-1.5400),0.6000]),#([(-1.2600),(-0.6000)],[(-1.2600),0.6000]),#([(-0.9800),(-0.6000)],[(-0.9800),0.6000]),#([(-0.7000),(-0.6000)],[(-0.7000),0.6000]),#([(-0.4200),(-0.6000)],[(-0.4200),0.6000]),#([(-0.1400),(-0.6000)],[(-0.1400),0.6000]),#([0.1400,(-0.6000)],[0.1400,0.6000]),#([0.4200,(-0.6000)],[0.4200,0.6000]),#([0.7000,(-0.6000)],[0.7000,0.6000]),#([0.9800,(-0.6000)],[0.9800,0.6000]),#([1.2600,(-0.6000)],[1.2600,0.6000]),#([1.5400,(-0.6000)],[1.5400,0.6000]),#([1.8200,(-0.6000)],[1.8200,0.6000]),#([2.1000,(-0.6000)],[2.1000,0.6000]),#([(-2.1000),(-0.6000)],[2.1000,(-0.6000)]),#([(-2.1000),0.6000],[2.1000,0.6000])) 1 [3.1000,8.0000] "Stairs"
     RF_room "LIVING" [3.0000,5.8000] 1
     RF_room "DINING" [5.2000,2.6000] 1
@@ -243,7 +286,7 @@ fn RF_build =
     (RF_layer "RF_Datums").addNode origin
     setUserProp origin "Source" "rooms-reference-ground.dxf + rooms-reference-upper.dxf, DXF exported by its own program; drawing units mm, model in metres"
     setUserProp origin "Levels" ("floor levels " + (RF_levels as string) + " m, wall heights " + (RF_heights as string) + " m")
-    setUserProp origin "Built" "by the walkthrough app, 11 Nov 2026 (model data 2da587ccc0bd)"
+    setUserProp origin "Built" "by the walkthrough app, 11 Nov 2026 (model data bfcd621e0a22)"
     viewport.setType #view_iso_user
     select RF_nodes
     max zoomext sel all
@@ -266,6 +309,8 @@ rollout RF_UI "Reference" width:340
     checkbox cm "Collapse to Editable Mesh (no live modifiers)" checked:false
     button build "BUILD THE MODEL" width:310 height:32
     label note1 "Parts stay live: spline + Extrude (mesh) + Smooth." align:#left
+    label note2 "Ceilings are on hidden layers RF_<level>_Ceilings:" align:#left
+    label note3 "switch them on for interior views." align:#left
     group "After the build"
     (
         button upd "Update levels and heights" width:300

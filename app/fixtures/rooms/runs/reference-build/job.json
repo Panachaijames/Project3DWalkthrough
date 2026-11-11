@@ -125,20 +125,20 @@
   "error": null,
   "outputs": {
     "model.json": {
-      "bytes": 9636,
-      "sha1": "2da587ccc0bd67932d17b0b77afd884388b87447"
+      "bytes": 9553,
+      "sha1": "bfcd621e0a22de68a0b1e36bcf8242cd54d1343d"
     },
     "stages.json": {
-      "bytes": 10353,
-      "sha1": "7fdb4c8c648863740474a8a61062727f5d933311"
+      "bytes": 10392,
+      "sha1": "fab0e3e55ea5dced749980d2df96307f05859f93"
     },
     "presentation.json": {
       "bytes": 983,
       "sha1": "eab1b408eb323328b55bf4cb3253b1bf66daedc2"
     },
     "report.json": {
-      "bytes": 5413,
-      "sha1": "fa668dfc20373106c2bff9bca1cfdb3d31be5531"
+      "bytes": 5446,
+      "sha1": "36024e0bd4a15d8f6a385cd4cbdc0645534b1a71"
     },
     "overlay.json": {
       "bytes": 7936,
@@ -157,12 +157,12 @@
       "sha1": "e83771137ffd8eab4056cd23198e16326bbf1fa2"
     },
     "topview.png": {
-      "bytes": 44986,
-      "sha1": "a53f432f680c7d6aa586bc6a6f01e3d457675531"
+      "bytes": 46644,
+      "sha1": "578948481a1ea6ce85125d60333ce9643a5a2647"
     },
     "Rooms_reference.ms": {
-      "bytes": 20277,
-      "sha1": "58beeb372c3efa91157d032d9ec473d95b833d57"
+      "bytes": 22600,
+      "sha1": "bdc63917a3730cd09a512fe5bcb6d0ee7fe5a0bb"
     },
     "inputs.json": {
       "bytes": 1663,

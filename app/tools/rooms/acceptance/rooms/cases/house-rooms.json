@@ -1,0 +1,1 @@
+{"name": "house-rooms", "project": "house-rooms", "create": {"name": "Test Sukhumvit Residence (new rule)", "shortName": "House (rooms)", "id": "house-rooms"}, "files": ["Test Sukhumvit Residence.dwg"], "from": null, "settings": {"fixture": "house-rooms"}, "save": {"label": "RI acceptance: house-rooms (rooms milestone, new rule)", "carryHeights": true, "rememberMapping": false}}

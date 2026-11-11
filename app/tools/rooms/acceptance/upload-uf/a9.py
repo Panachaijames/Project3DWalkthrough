@@ -107,7 +107,17 @@ def main() -> int:
         c = acc.wait(api, c['url'], {})
         rec['reuploadPrepareSeconds'] = round(time.monotonic() - t, 2)
         assert c['run']['status'] == 'done', c['run']
-        rec['reuploadFixesEqual'] = c['settings']['fixes'] == s2['fixes']
+        # RI (rooms milestone, R5.md D-4): the API now gives back six fix lists (closings, rooms, stairs as []); the three
+        # lists of before the milestone are the ones this case put, and the three new ones must be empty. A set-aside
+        # also comes back with the rooms milestone's `floorPast: false` (its default, R-2.1 point 7) filled in.
+        old = ('setAside', 'openings', 'outlineEdges')
+
+        def three(fixes: dict) -> dict:
+            out = {k: fixes.get(k) for k in old}
+            out['setAside'] = [{**x, 'floorPast': x.get('floorPast', False)} for x in out['setAside'] or []]
+            return out
+        rec['reuploadFixesEqual'] = three(c['settings']['fixes']) == three(s2['fixes'])
+        rec['reuploadNewFixLists'] = {k: v for k, v in c['settings']['fixes'].items() if k not in old}
         rec['reuploadLayersReviewedAt'] = c.get('layersReviewedAt')
         c = acc.build_once(api, c, c['settings'], out, 'build3', rec)
         assert c['run']['status'] == 'done', c['run']

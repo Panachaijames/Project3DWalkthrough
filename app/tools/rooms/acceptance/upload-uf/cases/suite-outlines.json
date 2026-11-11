@@ -1,5 +1,5 @@
 {"name": "suite-outlines", "project": "suite-outlines",
  "create": {"name": "Presidential suite", "shortName": "Presidential suite", "id": "suite-outlines"},
  "files": ["layout presidential test.dwg"], "from": null, "settings": {"fixture": "suite"},
- "edit": "C:/Users/DWP2/AppData/Local/Temp/wt-uf/acc/cases/edit_outlines.py", "acceptOutlines": true,
+ "edit": "edit_outlines.py", "acceptOutlines": true,
  "save": {"label": "suite upload, outline suggestions accepted (A-5)", "carryHeights": true, "rememberMapping": false}}
