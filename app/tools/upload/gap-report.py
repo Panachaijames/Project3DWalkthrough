@@ -23,6 +23,18 @@ first entry whose floor and metric match). --walk (A-6) gives the walk checks of
 {"probes": [...]}, of {floor, kind, id, passed, detail}; the failing ones are listed with a class column the same way.
 Floors are matched by key, else by their order. Drawing names are quoted as they are (markdown text; | escaped).
 Read only: nothing is written but --out.
+
+The rooms milestone (docs/rooms/ACCEPTANCE.md RA-3 - RA-6; R3). When either model is a BuiltModel v2 (it has
+`stairways`), each floor's table gains the rows of RA-3 - RA-5: rooms closed, rooms named, names in no room, rooms with
+several names (RA-3); plate0, terraces, unfloored areas and the closings from the build report (RA-4); the holes by what,
+with their areas (RA-5); the stairs you can climb and those kept as lines. The build report is read from the version
+folder (`source/build-report.json`, or `report.json` beside the model of a run's out folder) or --report / --proto-report.
+Then a section "Storeys and stairs" per pair of floors next to each other: the storey, and the window of storeys that
+fits every stair read between them (risers x 0.14 - 0.21 m, R-7.6; the climbable ones from the model, the ones kept as
+lines from the report): a storey outside its window (the tower's, 4.00 m against 2.80 - 3.78 m) is a gap row.
+--probes <fixtures/rooms/keys/probes.json> --drawing <house|suite|tower|suite-revit> (RA-6): for each probe of that
+drawing, whether the upload's plate holds a point 0.4 - 0.9 m in front of it on each side that had no floor; a probe
+that still has none is a gap row. With two v1 models and none of these options the section is what it was.
 """
 from __future__ import annotations
 
@@ -42,11 +54,103 @@ MATCH_DIST = 0.2           # m, opening centres
 CLASSES = ('option now', 'option later', 'check-and-fix now', 'check-and-fix later', 'accepted difference', 'to classify')
 WALL_KINDS = ('wall', 'column', 'parapet')
 GLASS_KINDS = ('glass', 'pane')
+#: a riser that a stair you can climb may have (m; docs/rooms/DESIGN.md R-7.6)
+RISER = (0.14, 0.21)
+#: RA-6: the plate must hold a point this far in front of a probe (m)
+PROBE_DEPTHS = (0.4, 0.5, 0.6, 0.7, 0.8, 0.9)
 
 
 def load_model(d: Path) -> dict:
     p = d / 'model.json' if d.is_dir() else d
     return json.loads(p.read_bytes().decode('utf-8'))
+
+
+def load_report(d: Path, given: Path | None = None) -> dict | None:
+    """The build report of a version folder (source/build-report.json) or of a run's out folder (report.json beside the
+    model), or `given`; None when there is none."""
+    folder = d if d.is_dir() else d.parent
+    for p in ([given] if given else []) + [folder / 'source' / 'build-report.json', folder / 'report.json']:
+        if p is not None and p.is_file():
+            return json.loads(p.read_bytes().decode('utf-8'))
+    return None
+
+
+def is_v2(m: dict) -> bool:
+    return 'stairways' in m
+
+
+def rooms_metrics(m: dict, rep: dict | None, floor: str) -> dict:
+    """RA-3 - RA-5 of one floor: from the model, and from its build report when there is one."""
+    spaces = [s for s in m.get('spaces') or [] if s['floor'] == floor]
+    names = [r for r in m['rooms'] if r['floor'] == floor]
+    fr = ((rep or {}).get('floors') or {}).get(floor) or {}
+    slab = fr.get('slab') or {}
+    holes: dict[str, list[float]] = {}
+    for v in (m.get('voids') or {}).get(floor) or []:
+        holes.setdefault(str(v.get('what')), []).append(float(v.get('area') or 0.0))
+    unf = slab.get('unfloored') or []
+    lines_rows = [r for r in fr.get('stairways') or [] if r.get('state') == 'lines']
+    return {
+        'rooms closed': len(spaces),
+        'rooms named': sum(1 for s in spaces if s.get('name')),
+        'names in no room': sum(1 for r in names if not r.get('space')) if is_v2(m) else '-',
+        'rooms with several names': sum(1 for s in spaces if len(s.get('names') or []) > 1),
+        'enclosed shapes left out': (fr.get('rooms') or {}).get('shapes', '-'),
+        'plate0 (m2)': f'{slab["plate"]:.1f}' if 'plate' in slab else '-',
+        'terraces (m2)': f'{slab["terraces"]:.1f}' if 'terraces' in slab else '-',
+        'unfloored areas': f'{len(unf)} ({sum(u.get("area") or 0 for u in unf):.1f} m2)' if slab else '-',
+        'closings (doorway / bridge / staff)': ' / '.join(str(sum(1 for c in slab.get('closings') or [] if c.get('kind') == k))
+                                                          for k in ('doorway', 'bridge', 'staff')) if slab else '-',
+        'holes': '; '.join(f'{w} {len(a)} ({sum(a):.2f} m2)' for w, a in sorted(holes.items())) or 'none',
+        'stairs you can climb': sum(1 for s in m.get('stairways') or [] if s['from'] == floor),
+        'stairs kept as lines': len(lines_rows) if fr.get('stairways') is not None else '-',
+    }
+
+
+def storey_windows(m: dict, rep: dict | None) -> list[dict]:
+    """Per pair of floors next to each other (one stack, by level): the storey and the window of storeys that fits
+    every stair read between them: the climbable stairways (the model) and the stairs kept as lines whose riser does not
+    fit (the report: their risers counted on the two plans). Empty for a model with no stair read."""
+    reps = (rep or {}).get('floors') or {}
+    stacks: dict[str, list[dict]] = {}
+    for f in m['floors']:
+        stacks.setdefault(f.get('stack') or 'main', []).append(f)
+    out = []
+    for fs in stacks.values():
+        fs = sorted(fs, key=lambda f: f['level'])
+        for lo, hi in zip(fs, fs[1:]):
+            stairs = [(s['id'], int(s['risers']), 'climb') for s in m.get('stairways') or []
+                      if s['from'] == lo['key'] and s['to'] == hi['key']]
+            stairs += [(r['id'], int(r['risers']), 'lines') for r in (reps.get(lo['key']) or {}).get('stairways') or []
+                       if r.get('state') == 'lines' and r.get('why') == 'the riser does not fit' and r.get('risers')]
+            if not stairs:
+                continue
+            a = max(n * RISER[0] for _, n, _ in stairs)
+            b = min(n * RISER[1] for _, n, _ in stairs)
+            storey = round(hi['level'] - lo['level'], 3)
+            out.append({'from': lo['key'], 'to': hi['key'], 'storey': storey, 'window': [round(a, 2), round(b, 2)] if a <= b else None,
+                        'stairs': [{'id': i, 'risers': n, 'state': st, 'fits': n * RISER[0] - 1e-9 <= storey <= n * RISER[1] + 1e-9}
+                                   for i, n, st in stairs]})
+    return out
+
+
+def probe_rows(m: dict, key: dict, drawing: str) -> list[dict]:
+    """RA-6: each probe of `drawing` in the answer key (fixtures/rooms/keys/probes.json): does the plate (slabs, sheet m)
+    hold a point 0.4 - 0.9 m in front of it, on each side that had no floor?"""
+    d = (key.get('drawings') or {}).get(drawing)
+    if d is None:
+        raise ValueError(f'the probes key has no drawing {drawing!r} (it has {", ".join(key.get("drawings") or {})})')
+    from shapely.geometry import Point
+    out = []
+    for p in d['probes']:
+        fl = p['floor'] if any(f['key'] == p['floor'] for f in m['floors']) else None
+        plate = union(m, fl, ('slab',), ground_only=False) if fl else Polygon()
+        sides = {}
+        for s in p['sides']:
+            sides[s] = any(plate.contains(Point(p['at'][0] + s * dd * p['n'][0], p['at'][1] + s * dd * p['n'][1])) for dd in PROBE_DEPTHS)
+        out.append({'id': p['id9Nov'], 'floor': p['floor'], 'kind': p.get('kind'), 'grade': d.get('grade', 'must'), 'sides': sides,
+                    'passed': fl is not None and all(sides.values())})
+    return out
 
 
 def to_sheet(m: dict) -> dict[str, tuple[float, float]]:
@@ -128,7 +232,13 @@ def classify(rows: list[dict], classes: list[dict]) -> None:
             raise ValueError(f'class {r["class"]!r} is not one of {", ".join(CLASSES)}')
 
 
-def report(proto: dict, up: dict, *, title: str, classes: list[dict], walk: list[dict] | None) -> tuple[str, dict]:
+def _difference(a, b) -> str:
+    return f'{b - a:+d}' if isinstance(a, int) and isinstance(b, int) and not isinstance(a, bool) else '-'
+
+
+def report(proto: dict, up: dict, *, title: str, classes: list[dict], walk: list[dict] | None,
+           proto_report: dict | None = None, up_report: dict | None = None,
+           probes: tuple[dict, str] | None = None) -> tuple[str, dict]:
     lines = [f'## {md(title)}', '',
              f'Prototype: {md(proto.get("project"))} ({len(proto["floors"])} floor(s), {len(proto["parts"])} parts); '
              f'upload: {md(up.get("project"))} ({len(up["floors"])} floor(s), {len(up["parts"])} parts). Drawing '
@@ -161,6 +271,10 @@ def report(proto: dict, up: dict, *, title: str, classes: list[dict], walk: list
         rows.append(('plate area (m2)', f'{a["plate"].area:.2f}', f'{b["plate"].area:.2f}', f'sym. difference {sym["plate"]:.2f}'))
         names_a, names_b = Counter(a['rooms']), Counter(b['rooms'])
         rows.append(('rooms', len(a['rooms']), len(b['rooms']), f'{sum((names_a & names_b).values())} names matched'))
+        rooms_b = None
+        if is_v2(proto) or is_v2(up):                  # the rooms milestone: RA-3 - RA-5 (information rows)
+            rooms_a, rooms_b = rooms_metrics(proto, proto_report, pk), rooms_metrics(up, up_report, uk)
+            rows += [(k, rooms_a[k], rooms_b[k], _difference(rooms_a[k], rooms_b[k])) for k in rooms_b]
         for k in sorted(set(a['furniture']) | set(b['furniture'])):
             rows.append((f'furniture: {k}', a['furniture'][k], b['furniture'][k], b['furniture'][k] - a['furniture'][k]))
         lines += ['| Metric | Prototype | Upload | Difference |', '|---|---|---|---|']
@@ -189,6 +303,39 @@ def report(proto: dict, up: dict, *, title: str, classes: list[dict], walk: list
         summary['floors'][name] = {'wallArea': [round(a['walls'].area, 2), round(b['walls'].area, 2)],
                                    'wallSymDiff': round(sym['walls'], 2), 'openingsMatched': matched,
                                    'plateSymDiff': round(sym['plate'], 2)}
+        if rooms_b is not None:
+            summary['floors'][name]['rooms'] = rooms_b
+    if is_v2(up):                                      # the stairs against the storeys (the tower's window, R2.md N-13)
+        windows = storey_windows(up, up_report)
+        lines += ['### Storeys and stairs (upload)', '']
+        if windows:
+            lines += ['| Floors | Storey (m) | Storeys that fit every stair (m) | Stairs read |', '|---|---|---|---|']
+            for w in windows:
+                win = f'{w["window"][0]:.2f} - {w["window"][1]:.2f}' if w['window'] else 'none: the stairs disagree'
+                st = ', '.join(f'{s["id"]} {s["risers"]} risers ({"climbable" if s["state"] == "climb" else "kept as lines"}'
+                               f'{"" if s["fits"] else ", does not fit"})' for s in w['stairs'])
+                lines.append(f'| {md(w["from"])} - {md(w["to"])} | {w["storey"]:.2f} | {win} | {md(st)} |')
+                if w['window'] is None or not (w['window'][0] - 1e-9 <= w['storey'] <= w['window'][1] + 1e-9):
+                    gaps.append({'floor': w['from'], 'metric': 'storey window', 'prototype': '-', 'upload': f'{w["storey"]:.2f}',
+                                 'difference': f'outside {win}'})
+        else:
+            lines.append('No stair was read between two floors.')
+        lines.append('')
+        summary['storeyWindows'] = windows
+    if probes is not None:                             # RA-6: the probes that had no floor at their start
+        rows_p = probe_rows(up, probes[0], probes[1])
+        lines += [f'### Probes that had no floor on 9 Nov (RA-6, {md(probes[1])})', '',
+                  f'{sum(1 for p in rows_p if p["passed"])} of {len(rows_p)} stand on the plate.', '',
+                  '| Probe | Floor | Grade | Sides on the plate (0.4 - 0.9 m in front) |', '|---|---|---|---|']
+        for p in rows_p:
+            sides = ', '.join(f'{s:+d}: {"floor" if ok else "no floor"}' for s, ok in p['sides'].items())
+            lines.append(f'| {md(p["id"])} | {md(p["floor"])} | {md(p["grade"])} | {md(sides)} |')
+            if not p['passed']:
+                gaps.append({'floor': p['floor'], 'metric': f'probe {p["id"]}', 'prototype': '-', 'upload': 'no floor',
+                             'difference': sides})
+        lines.append('')
+        summary['probes'] = {'total': len(rows_p), 'passed': sum(1 for p in rows_p if p['passed']),
+                             'failing': [p['id'] for p in rows_p if not p['passed']]}
     classify(gaps, classes)
     lines += ['### Differences', '']
     if gaps:
@@ -224,6 +371,11 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument('--walk', type=Path, help="the uploaded version's walk checks (JSON)")
     ap.add_argument('--out', type=Path, help='write the section here instead of printing it')
     ap.add_argument('--json', action='store_true', help='also print a one-line JSON summary on stderr')
+    ap.add_argument('--report', type=Path, help="the upload's build report (default: source/build-report.json or report.json "
+                                                'in its folder)')
+    ap.add_argument('--proto-report', type=Path, help="the prototype's build report, when it has one")
+    ap.add_argument('--probes', type=Path, help='RA-6: fixtures/rooms/keys/probes.json (with --drawing)')
+    ap.add_argument('--drawing', help='RA-6: the drawing of the probes key (house, suite, tower, suite-revit)')
     a = ap.parse_args(argv)
     try:
         proto, up = load_model(a.prototype), load_model(a.upload)
@@ -232,8 +384,13 @@ def main(argv: list[str] | None = None) -> int:
         if a.walk:
             w = json.loads(a.walk.read_text(encoding='utf-8'))
             walk = w['probes'] if isinstance(w, dict) else w
+        if bool(a.probes) != bool(a.drawing):
+            raise ValueError('--probes and --drawing go together')
+        probes = (json.loads(a.probes.read_text(encoding='utf-8')), a.drawing) if a.probes else None
         title = a.title or f'{a.upload.name or a.upload} against {a.prototype.name or a.prototype}'
-        text, summary = report(proto, up, title=title, classes=classes, walk=walk)
+        text, summary = report(proto, up, title=title, classes=classes, walk=walk,
+                               proto_report=load_report(a.prototype, a.proto_report), up_report=load_report(a.upload, a.report),
+                               probes=probes)
     except (OSError, ValueError, KeyError) as exc:
         print(f'gap-report: {exc}', file=sys.stderr)
         return 2

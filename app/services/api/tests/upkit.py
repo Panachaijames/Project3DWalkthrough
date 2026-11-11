@@ -16,6 +16,9 @@ from kit import APP, PROTOTYPES
 from walkthrough_api.jsonio import dumps_pretty
 
 FX = APP / 'fixtures' / 'upload'
+#: The rooms milestone's FakeJobRunner run folders (fixtures/README.md, the rooms section): `reference-build` is a build
+#: of the reference building, a BuiltModel v2 with a stairway, spaces, ceilings and every new report key and flag.
+ROOMS_RUNS = APP / 'fixtures' / 'rooms' / 'runs'
 BANK1 = PROTOTYPES / 'I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg'
 BANK2 = PROTOTYPES / 'I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg'
 SHA1 = '459d40fc230607ffe35e2ee9d443cd2b0105dc36'
@@ -39,10 +42,13 @@ class FakeJobRunner:
     """Answers a run at once from the fixtures of fixtures/upload/runs/bank-<kind>/: copies the outputs its spec asks for
     into out/ (a one-source prepare: that source only, no suggestions), the Max script under the spec's maxFileName,
     and writes job.json. `mode`: done | running | queued | silent (writes nothing). `mutate[name]` changes an output's
-    bytes (None leaves it out). `alive()` is false only for DEAD_PID, so a record naming it is a gone worker."""
+    bytes (None leaves it out). `alive()` is false only for DEAD_PID, so a record naming it is a gone worker.
+    `build_run` (the rooms milestone, step R5): the folder a build run is answered from; default the bank's
+    (fixtures/upload/runs/bank-build), `ROOMS_RUNS / 'reference-build'` for the reference building's v2 build."""
 
-    def __init__(self, mode: str = 'done') -> None:
+    def __init__(self, mode: str = 'done', build_run: Path | None = None) -> None:
         self.mode = mode
+        self.build_run = build_run if build_run is not None else FX / 'runs' / 'bank-build'
         self.mutate: dict[str, Callable[[bytes], bytes | None]] = {}
         self.started: list[Path] = []
         self.cancelled: list[Path] = []
@@ -73,7 +79,7 @@ class FakeJobRunner:
             return
         spec = load(run_dir / 'spec.json')
         kind = spec['kind']
-        folder = FX / 'runs' / ('bank-prepare' if kind == 'prepare' else 'bank-build')
+        folder = FX / 'runs' / 'bank-prepare' if kind == 'prepare' else self.build_run
         run, job = load(folder / 'run.json'), load(folder / 'job.json')
         shas = [s['sha1'] for s in spec['sources']]
         read = set(spec['only'] or shas)

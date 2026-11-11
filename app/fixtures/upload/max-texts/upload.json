@@ -1,7 +1,7 @@
 {
   "format": "max-texts/1",
   "profile": "upload",
-  "_what": "A MaxTexts profile of the one 3ds Max generator (services/builder/walkthrough_builder/out/maxscript.py; docs/upload/DESIGN.md U-11.5). Owner U4. Fields: date (null: the build's date), titleSuffix (after the upper-case project name, __TITLE__), builtBy, page, frame (__BUILTBY__, __PAGE__, __FRAME__), header (the leading comment block; a line __PLACEDAT__ is replaced by placedAt, a line __NOTES__ by the notes whose condition holds: always | revitGlass | pictures | furniture | steps), tooltip (the placement tick box's), datumSource (the datum's Source property), datumExtra (whole MAXScript lines after the datum's Levels property), rolloutSuffix (after the short name in the window's title), pictures (one datum Picture line per floor from model.pictureFrame). Placeholders the generator computes for every profile: __TITLE__ __PROJECT__ __SHORT__ __SOURCE__ __SHA__ __LEVELTXT__ __HEIGHTTXT__ __PX__ __FLOOR1__ __DATE__ __BUILTBY__ __PAGE__ __FRAME__ __FOLLOWTXT__ __KEEPTXT__ __STAIRTXT__ __AXISTXT__ __DOORTXT__ __SCALETXT__ __CONVERTED__. This one is the default for every uploaded version: the date is the build's, no \"(test)\".",
+  "_what": "A MaxTexts profile of the one 3ds Max generator (services/builder/walkthrough_builder/out/maxscript.py; docs/upload/DESIGN.md U-11.5). Owner U4. Fields: date (null: the build's date), titleSuffix (after the upper-case project name, __TITLE__), builtBy, page, frame (__BUILTBY__, __PAGE__, __FRAME__), header (the leading comment block; a line __PLACEDAT__ is replaced by placedAt, a line __NOTES__ by the notes whose condition holds: always | revitGlass | pictures | furniture | steps | stairs (the model has treads or landings) | ceilings (the model has ceilings); the rooms milestone, docs/rooms/DESIGN.md R-10), tooltip (the placement tick box's), datumSource (the datum's Source property), datumExtra (whole MAXScript lines after the datum's Levels property), rolloutSuffix (after the short name in the window's title), pictures (one datum Picture line per floor from model.pictureFrame). Placeholders the generator computes for every profile: __TITLE__ __PROJECT__ __SHORT__ __SOURCE__ __SHA__ __LEVELTXT__ __HEIGHTTXT__ __PX__ __FLOOR1__ __DATE__ __BUILTBY__ __PAGE__ __FRAME__ __FOLLOWTXT__ __KEEPTXT__ __STAIRTXT__ (with treads: the stair sentence, 'Stairs: 21 risers of 0.186 m, 19 treads and 1 landing') __AXISTXT__ __DOORTXT__ __SCALETXT__ __CONVERTED__. This one is the default for every uploaded version: the date is the build's, no \"(test)\".",
   "date": null,
   "titleSuffix": "",
   "builtBy": "the walkthrough app",
@@ -34,6 +34,23 @@
       "lines": [
         "-- Glass partitions (Revit glass wall types) are their own objects on __PX___<level>_Glass, at the height their type",
         "-- name gives (2600H = 2.60 m)."
+      ]
+    },
+    {
+      "when": "stairs",
+      "lines": [
+        "-- __STAIRTXT__.",
+        "-- Treads and landings are on __PX___<level>_Treads and _Landings, on the level the stair rises from; the walls",
+        "-- cut under a flight stay on _Walls. \"Update levels and heights\" scales each stair, and the walls cut under it,",
+        "-- with its storey (their user property __PX___storey is the level the stair rises to), so a stair still meets",
+        "-- the floor above."
+      ]
+    },
+    {
+      "when": "ceilings",
+      "lines": [
+        "-- Ceilings are on hidden layers __PX___<level>_Ceilings: switch them on for interior views. A ceiling keeps its",
+        "-- height above its level when the levels change."
       ]
     }
   ],

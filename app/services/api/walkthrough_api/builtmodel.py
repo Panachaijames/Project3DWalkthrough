@@ -250,3 +250,11 @@ def validate_bytes(raw: bytes, what: str = 'model') -> dict[str, Any]:
     except JsonError as exc:
         raise ModelInvalid([ModelIssue('', f'not strict JSON: {exc}')], what) from exc
     return validate(model, what)
+
+
+def model_format(model: Any) -> str:
+    """version.json's `modelFormat` for a model (docs/rooms/DESIGN.md R-12.2; step R5): 'built-model/2' when it has the
+    `stairways` key (present in every model built with the new rules, [] when no stair climbs), else 'built-model/1'.
+    That one key is the v2 mark for the builder, create_version and the viewer: every old version, every old-rule
+    rebuild and every seeded model stay /1."""
+    return 'built-model/2' if isinstance(model, dict) and 'stairways' in model else 'built-model/1'

@@ -416,7 +416,11 @@ class LocalStore(DraftFiles):
 
         The upload milestone (docs/upload/DESIGN.md U-11.1): a `.ms` download whose line-2 stamp is not
         sha1(model.json)[:12] (seed.build.ms_stamp) is refused, checked AFTER the file-name checks; `project_data` (the
-        BuildSettings the version was built with) is written as versions/<n>/project-data.json."""
+        BuildSettings the version was built with) is written as versions/<n>/project-data.json.
+
+        The rooms milestone (docs/rooms/DESIGN.md R-12.2): version.json's `modelFormat` is 'built-model/2' when the
+        model has the `stairways` key, else 'built-model/1' (builtmodel.model_format, through seed.build.version_record).
+        The version's counts are unchanged: `rooms` still counts the drawn names (model.rooms)."""
         from ..checks import validate_presentation, validate_replay   # noqa: PLC0415 (checks imports the seed's helpers)
         from ..seed.build import ms_stamp, version_record             # noqa: PLC0415
 

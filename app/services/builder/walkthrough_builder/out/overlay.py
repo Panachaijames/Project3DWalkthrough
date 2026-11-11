@@ -24,6 +24,24 @@ furniture boxes, the room names and the keys of the items set aside. Flags (`Fla
 
 Flag ids are `<kind>:<floor or ->:<12 hex of what it is about>`: the same drawing and settings give the same ids. Every
 title and detail may quote drawing names: they are plain text for the check screen (textContent / fillText).
+
+The rooms milestone (docs/rooms/DESIGN.md R-6.1, R-12.4; R3): a floor built with the new rule (its report carries
+`slab`) gets the floor fields `spaces` (the model's, in sheet m), `holes` (the cut ones), `stairs`, `closings`,
+`unfloored` (the report's rows, already in the floor's sheet frame), and, after every flag above, its new flags:
+
+| kind | from | severity |
+| slab-gap | the walls never close round the floor (plate0 under half the walls' hull, 100 m2 short); an unfloored area of 4 m2
+|            or more that staff have not answered (with its mouth's two ends in `ref` when it has one) | check |
+| room-open | a name in no room; a closed area of over 150 m2 with no door (rooms.open) | check |
+| room-names | a room with two names or more (rooms.several) | info |
+| doorway | each doorway closing (slab.closings) | info |
+| stair | each stair group kept as lines (stairways), its own text | the row's |
+| stairs-none | two floors of a stack next to each other that no climbable stair joins (with `stairs: 'climb'`) | check |
+| stair-clash | the parts of a floor cut under a stair, one flag per stair (stairClash) | info |
+| hole-skipped | an X void on the lowest floor (info); an X shape too large to cut by itself (check) (slab.holes) | info/check |
+| fix-unmatched | also a closing, room or stair fix that matched nothing (fixes.closings / rooms / stairs) | check |
+
+`plate-dropped` is the old rule's only: a floor built with the new rule raises none (its stored text is unchanged).
 """
 from __future__ import annotations
 
@@ -119,8 +137,9 @@ def overlay(result: dict, ctx: dict) -> dict:
     report = result['report']
     settings = (ctx.get('spec') or {}).get('settings') or {}
     fixes = settings.get('fixes') or {'setAside': [], 'openings': [], 'outlineEdges': []}
-    floors, flags = [], []
+    floors, flags, rooms_flags_ = [], [], []
     model_floors = [f['key'] for f in M['floors']]
+    names = {f['key']: f['name'] for f in M['floors']}
     for fl in model_floors:
         frame = result['floors_frame'][fl]
         tx, ty = frame['toSheet']
@@ -163,14 +182,22 @@ def overlay(result: dict, ctx: dict) -> dict:
             key = fr.get('key') or fx['key']
             if fx.get('floor') == fl and fr.get('matchedBy') and fr.get('items', 0) > 0 and key not in set_aside:
                 set_aside.append(key)
+        new_rule = is_new_rule(rep)
         flags += floor_flags(fl, rep, M)
-        flags += unfloored_flags(fl, parts, slabs)
+        if not new_rule:                               # the old rule's flag (UR, V1-1); the new rule says slab-gap
+            flags += unfloored_flags(fl, parts, slabs)
         flags += room_name_flags(fl, frame['source'], slabs, settings.get('layers') or {}, _drawing_of(ctx, frame['source']))
-        floors.append({'key': fl, 'source': frame['source'], 'toSheet': [tx, ty], 'area': frame['area'], 'parts': parts,
-                       'slabs': slabs, 'openings': openings, 'furniture': furniture, 'rooms': rooms, 'setAside': set_aside})
+        floor = {'key': fl, 'source': frame['source'], 'toSheet': [tx, ty], 'area': frame['area'], 'parts': parts,
+                 'slabs': slabs, 'openings': openings, 'furniture': furniture, 'rooms': rooms, 'setAside': set_aside}
+        if new_rule:
+            floor.update(rooms_fields(fl, rep, M, sh))
+            rooms_flags_ += rooms_flags(fl, rep, M, parts, names[fl], sh)
+        floors.append(floor)
     flags += grey_furniture_flags(M, result['floors_frame'])
     flags += units_flags(ctx)
     flags += fix_flags(fixes, report.get('fixes') or {})
+    flags += rooms_flags_
+    flags += stairs_none_flags(M, report, settings)
     return {'format': 'build-overlay/1', 'floors': floors, 'flags': flags}
 
 
@@ -209,7 +236,7 @@ def floor_flags(fl: str, rep: dict, M: dict) -> list[dict]:
         out.append(flag('room-label', fl, lab, 'info', f'"{lab["text"]}" is not a room name',
                         'A text on a room-name layer that names no room (a tag or a code): left out of the rooms.',
                         [_r(lab['at'][0], 3), _r(lab['at'][1], 3)] if lab.get('at') else None))
-    for p in rep.get('platesDropped') or []:
+    for p in ([] if is_new_rule(rep) else rep.get('platesDropped') or []):     # the old rule's only (R-6.1)
         # (UR, V1-1: these are areas the bank's closing found next to the walls, outside the rooms the walls close, not
         # areas "inside a railing"; the report row says why each was left out)
         why = f' ({p["why"]})' if p.get('why') else ''
@@ -366,6 +393,199 @@ def room_name_flags(fl: str, source: str, slabs: list[dict], layers: dict, drawi
     return out
 
 
+# ------------------------------------------------------------------------------- the rooms milestone (R-6.1, R-12.4)
+#: an unfloored area is flagged from this area (m2)
+SLAB_GAP_MIN = 4.0
+#: the parts that are no wall for the "walls never close" hull (they lie inside the floor)
+NOT_WALLS = ('slab', 'ceiling', 'tread', 'landing')
+#: a stairClash row's kind in words (one, several); any other kind: '<kind> piece(s)'
+PIECE_WORDS = {'wall': ('wall piece', 'wall pieces'), 'lintel': ('lintel', 'lintels'), 'column': ('column', 'columns'),
+               'glass': ('glass piece', 'glass pieces'), 'sill': ('sill', 'sills')}
+#: why a mark was not cut -> the hole-skipped flag's severity (R1.md N-17); the other reasons are only listed
+HOLE_SKIPPED = {'the lowest floor': 'info', 'over 60 m2': 'check', 'over 30 % of the floor': 'check'}
+STAIR_KEYS = ('id', 'state', 'why', 'text', 'outline', 'walk', 'bottom', 'to', 'risers', 'riser')
+NO_STAIR_LINES = "No stair lines were found: is the stair's layer set to Stair on the Layers step?"
+
+
+def is_new_rule(rep: dict) -> bool:
+    """A floor built with the new rule: its report carries the slab (contracts.FloorUploadReportRooms)."""
+    return isinstance(rep.get('slab'), dict)
+
+
+def _xy(p) -> list[float]:
+    return [_r(p[0], 3), _r(p[1], 3)]
+
+
+def rooms_fields(fl: str, rep: dict, M: dict, sh) -> dict:
+    """OverlayFloor's fields of the new rule (R-12.4), sheet m: the rooms from the model (moved by `sh`), the holes cut,
+    the stair groups, the closings and the unfloored areas from the report's rows, which are in the floor's sheet frame
+    already (R1.md N-11)."""
+    slab = rep.get('slab') or {}
+    spaces = [{'id': s['id'], 'name': s.get('name') or '', 'names': list(s.get('names') or []), 'area': s['area'],
+               'o': [sh(q) for q in s['o']], 'h': [[sh(q) for q in h] for h in s.get('h') or []],
+               'ceiling': bool(s.get('ceiling', True)), 'source': s.get('source') or 'network'}
+              for s in M.get('spaces') or [] if s['floor'] == fl]
+    holes = [{'what': h['what'], 'o': [list(q) for q in h['o']], 'h': []} for h in slab.get('holes') or [] if h.get('cut') and h.get('o')]
+    stairs = []
+    for r in rep.get('stairways') or []:
+        s = {k: r.get(k) for k in STAIR_KEYS}
+        s['outline'] = s['outline'] or []
+        stairs.append(s)
+    closings = [{'kind': c['kind'], 'a': c['a'], 'b': c['b'], **({'fix': c['fix']} if isinstance(c.get('fix'), int) else {})}
+                for c in slab.get('closings') or []]
+    unfloored = [{'area': u['area'], 'o': u['o'], 'mouth': u.get('mouth') or None, 'answered': bool(u.get('answered'))}
+                 for u in slab.get('unfloored') or []]
+    return {'spaces': spaces, 'holes': holes, 'stairs': stairs, 'closings': closings, 'unfloored': unfloored}
+
+
+def _label_point(o: list, h: list) -> list[float] | None:
+    """A point of a room (sheet m) for its flag: the middle of its bounding box when that lies in the room, else a point
+    inside it."""
+    p = _poly(o, h)
+    if p is None:
+        return None
+    x0, y0, x1, y1 = p.bounds
+    from shapely.geometry import Point
+    mid = Point((x0 + x1) / 2, (y0 + y1) / 2)
+    q = mid if p.contains(mid) else p.representative_point()
+    return [_r(q.x, 3), _r(q.y, 3)]
+
+
+def _pieces(rows: list[dict]) -> tuple[str, int]:
+    """'4 wall pieces and 1 lintel' of stairClash rows (one row per part and cut), and their number."""
+    by: dict[str, int] = {}
+    for c in rows:
+        by[c.get('kind') or 'part'] = by.get(c.get('kind') or 'part', 0) + 1
+    words_ = [f'{n} {PIECE_WORDS.get(k, (f"{k} piece", f"{k} pieces"))[0 if n == 1 else 1]}' for k, n in by.items()]
+    text = ', '.join(words_[:-1]) + ' and ' + words_[-1] if len(words_) > 1 else words_[0]
+    return text, len(rows)
+
+
+def walls_never_close(fl: str, slab: dict, parts: list[dict]) -> dict | None:
+    """The whole floor's `slab-gap` (R-2.5): plate0 under half of the walls' convex hull and 100 m2 or more short of it
+    (the old rule's fallback, `unfloored_flags`, with the new rule's plate0)."""
+    from shapely.ops import unary_union
+    walls = [p for p in (_poly(x['o'], x['h']) for x in parts if x['kind'] not in NOT_WALLS) if p is not None]
+    if not walls:
+        return None
+    hull = unary_union(walls).convex_hull
+    plate = float(slab.get('plate') or 0.0)
+    if hull.area >= OPEN_MIN and plate < OPEN_SHARE * hull.area and hull.area - plate >= OPEN_MIN:
+        c = hull.representative_point()
+        return flag('slab-gap', fl, {'open': round(hull.area), 'plate': round(plate)}, 'check', f'{fl}: the walls do not close',
+                    f'The floor plate is {plate:.0f} m2 of the about {hull.area:.0f} m2 the walls span: check the wall and glass '
+                    f'layers on the Layers step.', [_r(c.x, 3), _r(c.y, 3)], [_r(v, 3) for v in hull.bounds])
+    return None
+
+
+def rooms_flags(fl: str, rep: dict, M: dict, parts: list[dict], floor_name: str, sh) -> list[dict]:
+    """The new flags of a floor built with the new rule (R-6.1), in this order: slab-gap, room-open, room-names,
+    doorway, stair, stair-clash, hole-skipped. Points are the report's (sheet m)."""
+    out = []
+    slab = rep.get('slab') or {}
+    rooms = rep.get('rooms') or {}
+    whole = walls_never_close(fl, slab, parts)
+    if whole is not None:
+        out.append(whole)
+    for u in slab.get('unfloored') or []:
+        if u.get('answered') or (u.get('area') or 0) < SLAB_GAP_MIN:
+            continue
+        xs, ys = [p[0] for p in u['o']], [p[1] for p in u['o']]
+        mouth = u.get('mouth')
+        a, b = (mouth[0], mouth[1]) if mouth else (None, None)
+        out.append(flag('slab-gap', fl, {'at': u['at']}, 'check', 'No floor beside the walls',
+                        f'About {u["area"]:.0f} m2 beside the walls has no floor: the walls do not close here.'
+                        + ('' if a else ' Draw a line across the gap if it is inside the building, or say it is outdoors.'),
+                        _mid(a, b) if a else _xy(u['at']), _bbox(zip(xs, ys)), {'a': a, 'b': b} if a else {}))
+    for r in rooms.get('open') or []:
+        if r.get('space'):                             # a closed area of over 150 m2 with no door (R1.md N-12)
+            out.append(flag('room-open', fl, {'space': r['space'], 'at': r['at']}, 'check', 'A closed area with no door',
+                            f'A closed area of {r.get("area") or 0:.0f} m2 with no door: is it floor?', _xy(r['at']), None,
+                            {'room': r['space']}))
+        else:                                          # a name in no room
+            out.append(flag('room-open', fl, {'name': r['name'], 'at': r['at']}, 'check', f'{r["name"]}: its room is not closed',
+                            f'{r["name"]}: its room is not closed (a gap in its walls). Close the gap or place the name.',
+                            _xy(r['at']), None, {}))
+    spaces = {s['id']: s for s in M.get('spaces') or [] if s['floor'] == fl}
+    for r in rooms.get('several') or []:
+        sp = spaces.get(r['space'])
+        at = _label_point([sh(q) for q in sp['o']], [[sh(q) for q in h] for h in sp.get('h') or []]) if sp else None
+        n = len(r['names'])
+        out.append(flag('room-names', fl, {'room': r['space']}, 'info', f'{n} names in one room',
+                        f'{n} names in one room: an open-plan room, or a wall between them is missing.', at, None,
+                        {'room': r['space']}))
+    for c in slab.get('closings') or []:
+        if c['kind'] == 'doorway':
+            out.append(flag('doorway', fl, {'a': c['a'], 'b': c['b']}, 'info', 'A gap closed as a doorway',
+                            f'A gap of {c["width"]:.2f} m between two wall ends was closed as a doorway: no door was found here.',
+                            _mid(c['a'], c['b']), None, {'a': list(c['a']), 'b': list(c['b'])}))
+    for r in rep.get('stairways') or []:
+        if r.get('state') == 'lines':
+            out.append(flag('stair', fl, {'stair': r['id']}, r.get('severity') or 'info', 'Stair kept as lines',
+                            r.get('text') or f'Stair {r["id"]}: kept as lines.', _xy(r['at']) if r.get('at') else None, None,
+                            {'stair': r['id']}))
+    by: dict[str, list[dict]] = {}
+    for c in rep.get('stairClash') or []:
+        by.setdefault(c['stair'], []).append(c)
+    for sid, rows in by.items():
+        cut = [c for c in rows if c.get('z1') is not None]
+        gone = [c for c in rows if c.get('z1') is None]   # a piece that would be 0.05 m high or less: taken out
+        if cut:
+            words_, n = _pieces(cut)
+            text = f'{words_} of {floor_name} under the stair {"was" if n == 1 else "were"} cut to the stair\'s underside.'
+            if gone:
+                w2, n2 = _pieces(gone)
+                text += f' {w2} {"was" if n2 == 1 else "were"} taken out: no room under the stair.'
+        else:
+            w2, n2 = _pieces(gone)
+            text = f'{w2} of {floor_name} under the stair {"was" if n2 == 1 else "were"} taken out: no room under the stair.'
+        out.append(flag('stair-clash', fl, {'stair': sid, 'n': len(rows)}, 'info', 'Walls cut under a stair', text,
+                        _xy(rows[0]['at']), None, {'stair': sid}))
+    for h in slab.get('holes') or []:
+        sev = None if h.get('cut') else HOLE_SKIPPED.get(h.get('why'))
+        if sev == 'info':
+            out.append(flag('hole-skipped', fl, {'at': h['at']}, 'info', 'A void mark was not cut',
+                            'An X marks a void on the lowest floor: not cut.', _xy(h['at']), None, {}))
+        elif sev == 'check':
+            xs, ys = [p[0] for p in h.get('o') or []], [p[1] for p in h.get('o') or []]
+            out.append(flag('hole-skipped', fl, {'at': h['at']}, 'check', 'A large void mark was not cut',
+                            f'An X marks {h.get("area") or 0:.0f} m2 as a void: is it one?', _xy(h['at']), _bbox(zip(xs, ys)), {}))
+    return out
+
+
+def stairs_none_flags(M: dict, report: dict, settings: dict) -> list[dict]:
+    """`stairs-none` (R-6.1): two floors of a stack next to each other that no climbable stair joins, when the build
+    climbs stairs (`stairs: 'climb'`). A stair that passes a floor joins both pairs it passes (R2.md N-16). Read from the
+    model's stairways and the floors' stairways rows: the build's own list of such pairs is not in its result. The text
+    lists the stair groups kept as lines on the lower floor (else on the upper one), each with its reason."""
+    if (settings.get('options') or {}).get('stairs') != 'climb' or 'stairways' not in M:
+        return []
+    reps = report.get('floors') or {}
+    joined = {(sw['from'], sw['to']) for sw in M.get('stairways') or []}
+    for key, rep in reps.items():
+        joined |= {(key, r['to']) for r in rep.get('stairways') or [] if r.get('state') == 'climb' and r.get('to')}
+    stacks: dict[str, list[tuple[float, int, dict]]] = {}
+    for i, f in enumerate(M['floors']):
+        stacks.setdefault(f.get('stack') or 'main', []).append((f['level'], i, f))
+    out = []
+    for fs in stacks.values():
+        fs_ = [f for _, _, f in sorted(fs, key=lambda t: (t[0], t[1]))]
+        idx = {f['key']: i for i, f in enumerate(fs_)}
+        spans = [(idx[a], idx[b]) for a, b in joined if a in idx and b in idx]
+        for i, (lo, hi) in enumerate(zip(fs_, fs_[1:])):
+            if any(a <= i and i + 1 <= b for a, b in spans):
+                continue
+            rows = [(lo['key'], r) for r in (reps.get(lo['key']) or {}).get('stairways') or [] if r.get('state') == 'lines']
+            if not rows:
+                rows = [(hi['key'], r) for r in (reps.get(hi['key']) or {}).get('stairways') or [] if r.get('state') == 'lines']
+            text = f'No stair between {lo["name"]} and {hi["name"]} can be climbed. ' + (
+                ' '.join(r.get('text') or f'Stair {r["id"]}: kept as lines.' for _, r in rows) if rows else NO_STAIR_LINES)
+            floor, at = (rows[0][0], _xy(rows[0][1]['at'])) if rows and rows[0][1].get('at') else (lo['key'], None)
+            out.append(flag('stairs-none', floor, {'from': lo['key'], 'to': hi['key']}, 'check', 'No stair can be climbed', text,
+                            at, None, {}))
+    return out
+
+
 def grey_furniture_flags(M: dict, frames: dict) -> list[dict]:
     """One info flag per family the kit could not classify (kind `other`), with its count, per floor."""
     out = []
@@ -419,6 +639,30 @@ def fix_flags(fixes: dict, rep: dict) -> list[dict]:
                             'An outline edge fix matches no suggestion',
                             'An outline edge accepted or refused in an earlier build is not suggested here: it is kept in the '
                             'settings until you drop it.', _mid(a, b), _bbox([a, b]), {'fix': i, 'edge': [list(a), list(b)]}))
+    # the rooms milestone's fixes (R-6.2, R-6.3): rows { fix, matched } of fixes.closings / rooms / stairs
+    for i, fx, fr in fix_pairs(fixes.get('closings'), rep.get('closings')):
+        if fr.get('matched'):
+            continue
+        a, b = fx.get('a') or [0, 0], fx.get('b') or [0, 0]
+        m = _mid(a, b)
+        if fx.get('use') == 'none':
+            title = 'A removed closing is no longer there'
+            detail = (f'The removed closing at ({m[0]:.2f}, {m[1]:.2f}) is no longer there: the fix is kept in the settings until '
+                      f'you drop it.')
+        else:
+            title = 'A closing line finds no floor'
+            detail = (f'The closing line at ({m[0]:.2f}, {m[1]:.2f}) is on a floor that is not in this build: it is kept in the '
+                      f'settings until you drop it.')
+        out.append(flag('fix-unmatched', fx.get('floor'), {'closing': i, 'a': a, 'b': b}, 'check', title, detail, m, _bbox([a, b]),
+                        {'fix': i, 'a': list(a), 'b': list(b)}))
+    for list_, what, title in (('rooms', 'room', 'A room fix finds no room'), ('stairs', 'stair', 'A stair fix finds no stair')):
+        for i, fx, fr in fix_pairs(fixes.get(list_), rep.get(list_)):
+            if fr.get('matched'):
+                continue
+            at = fx.get('at') or [0, 0]
+            out.append(flag('fix-unmatched', fx.get('floor'), {what: i, 'at': at}, 'check', title,
+                            f'The {what} fix at ({at[0]:.2f}, {at[1]:.2f}) finds no {what}: it is kept in the settings until you '
+                            f'drop it.', _xy(at), None, {'fix': i}))
     return out
 
 

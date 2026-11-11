@@ -365,12 +365,23 @@ def _builder_missing(jobs: JobRunner, kinds: set[str]) -> None:
 
 
 # ---------------------------------------------------------------------------------------------------- createBuild
+def _stored_build_settings(store: Store, project_id: str, build_id: str) -> Any:
+    """The `settings` object of a build's settings.json AS STORED (before the defaults are filled in), or None when it
+    cannot be read (then its rules are kept as they are)."""
+    try:
+        stored = loads_strict((store.build_dir(project_id, build_id) / 'settings.json').read_bytes())
+    except (OSError, JsonError):
+        return None
+    return stored.get('settings') if isinstance(stored, dict) else None
+
+
 def create_build(store: Store, jobs: JobRunner, settings: Settings, project_id: str, body: NewBuildRequest) -> BuildDetail:
     meta = store.get_project(project_id)
     wanted = body.from_.kind if body.from_ is not None else 'latest'
     recipe: dict[str, Any] | None = None
     from_record: FromNone | FromVersion | FromBuild = FromNone(kind='none')
     reviewed = False
+    new_rules = False                                     # a recipe whose file names none of the rooms options
     recipe_sources: list[str] = []
     if wanted in ('latest', 'version'):
         n = body.from_.version if wanted == 'version' else meta.latest_version          # type: ignore[union-attr]
@@ -383,11 +394,15 @@ def create_build(store: Store, jobs: JobRunner, settings: Settings, project_id: 
                                                         f'from uploaded drawings')
             else:
                 try:
-                    recipe = BuildSettings.model_validate(loads_strict(raw), by_alias=True, by_name=False).model_dump(
+                    stored = loads_strict(raw)
+                    recipe = BuildSettings.model_validate(stored, by_alias=True, by_name=False).model_dump(
                         mode='json', by_alias=True)
                 except (JsonError, ValidationError) as exc:
                     raise StoreError(f'projects/{project_id}/versions/{n}/project-data.json is not BuildSettings: '
                                      f'{exc}') from exc
+                # the raw file, before the defaults are filled in: written before the rooms milestone (none of the
+                # three option keys), the new draft gets the new rules (docs/rooms/DESIGN.md R-1.3)
+                new_rules = not adoption.carries_rules(stored)
                 from_record, reviewed = FromVersion(kind='version', version=n), True
     elif wanted == 'build':
         other = store.get_build(project_id, body.from_.build)                             # type: ignore[union-attr]
@@ -395,6 +410,8 @@ def create_build(store: Store, jobs: JobRunner, settings: Settings, project_id: 
         recipe_sources = list(other.sources)
         if osf.revision > 0:
             recipe = osf.settings.model_dump(mode='json', by_alias=True)
+            stored_other = _stored_build_settings(store, project_id, other.id)
+            new_rules = stored_other is not None and not adoption.carries_rules(stored_other)
             from_record, reviewed = FromBuild(kind='build', build=other.id), other.layers_reviewed_at is not None
     sha1s = body.sources
     if sha1s is None:
@@ -414,7 +431,7 @@ def create_build(store: Store, jobs: JobRunner, settings: Settings, project_id: 
 
     frame = adoption.project_frame(store, project_id)
     if recipe is not None:
-        start = adoption.recipe_settings(recipe, records, frame)
+        start = adoption.recipe_settings(recipe, records, frame, new_rules=new_rules)
     else:
         start = adoption.fresh_settings(store, project_id, records, frame)
     now = iso_utc()

@@ -18,6 +18,11 @@ every text is a plain run (`&`, `<` and Thai stay as they are; the viewer shows 
 |          rule fails on every model tried: contract issue U4-1) |
 | creaseAngle, partStyles, toggles | the viewer's defaults (left out) |
 | groundPlane | a plinth project: {size: [w + 20, d + 20] rounded up to 10 m, colour #dfe3e0}; else null |
+
+BuiltModel v2 (docs/rooms/DESIGN.md R-11): the legend row "Stairs" covers `step`, `tread` and `landing`; ceilings get no
+row (they are not seen in Orbit); the Ceilings tick keeps the viewer's own label, "Ceilings" (labels are left to the
+viewer, as every tick's); the fitSlabs camera and the ground plane are measured on the slabs, so the new, larger plates
+move them.
 """
 from __future__ import annotations
 
@@ -32,7 +37,7 @@ LEGEND = (
     (('glass', 'pane', 'balustrade'), '#9cc3d5', 'Glass'),
     (('mullion',), '#5d6b74', 'Glass frames'),
     (('railing',), '#6f6a75', 'Railings'),
-    (('step',), '#b9c7b4', 'Stairs'),
+    (('step', 'tread', 'landing'), '#b9c7b4', 'Stairs'),           # v2: treads and landings are stairs (R-11)
     (('single',), '#e0a458', 'Single-line items'),
     (('slab', 'deck'), '#d4d8d2', 'Floor plates'),
 )

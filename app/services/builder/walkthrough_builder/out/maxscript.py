@@ -25,6 +25,18 @@ Names: an object name or text that `ascii_name` reduces to nothing (Thai) falls 
 room's `room 003`, a floor's key, the project's photo name).
 Placeholders are filled in ONE pass over the template (never inside names that came from the drawing), and the template
 is checked for any placeholder left before anything is filled in.
+
+BuiltModel v2 (docs/rooms/DESIGN.md R-10; R3 of the rooms milestone), all written only when the model has them, so the
+two goldens and every old-rule script stay byte for byte:
+* the kinds `tread`, `landing`, `ceiling` (V2_KINDS: one case line and one material each, as the extra kinds);
+* after each part call of a stair's part (a tread, a landing, a wall piece cut under a flight: the parts with `stair`) one
+  statement sets the user property `__PX___storey` on that object (the index of its stairway's `to` floor); the part
+  function itself is unchanged;
+* `__STOREYFIT__` inside "Update levels and heights": a part with `__PX___storey` has its base and its Extrude amount
+  scaled by the change of its storey (new storey / old storey) before it moves, so a stair still meets the floor above;
+* after the part calls, one statement hides every `__PX___<floor>_Ceilings` layer, and the window says so
+  (`__CEILINGNOTE__`); the upload profile's notes `stairs` and `ceilings`; `__STAIRTXT__` is the stair sentence
+  ("Stairs: 21 risers of 0.186 m, ...") when the model has treads.
 """
 from __future__ import annotations
 
@@ -45,7 +57,7 @@ from ..vendor.load import load as _load_vendor
 PROFILES = Path(__file__).resolve().parents[4] / 'fixtures' / 'upload' / 'max-texts'
 PROFILE_FIELDS = ('format', 'profile', 'date', 'titleSuffix', 'builtBy', 'page', 'frame', 'header', 'placedAt', 'notes',
                   'tooltip', 'datumSource', 'datumExtra', 'rolloutSuffix', 'pictures')
-NOTE_CONDITIONS = ('always', 'revitGlass', 'pictures', 'furniture', 'steps')
+NOTE_CONDITIONS = ('always', 'revitGlass', 'pictures', 'furniture', 'steps', 'stairs', 'ceilings')
 MONTHS = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
 
 # kind -> (layer suffix, material); whether the top follows the wall height comes with each part ('follow').
@@ -63,15 +75,17 @@ EXTRA_KINDS = {
     'deck': ('Decks', 'Deck', 'diffuse:(color 176 138 92)'),
     'post': ('Posts', 'Post', 'diffuse:(color 111 97 83)'),
 }
-# BuiltModel v2 (docs/rooms/DESIGN.md R-10, R-12.1): PLACEHOLDERS by the rooms scaffold R0, so that the tracer's whole
-# chain writes a script (services/builder/tests/test_r_tracer.py). Kept apart from EXTRA_KINDS, whose every kind the
-# upload milestone's tests expect in their model. R3 writes the real thing: the Ceilings layers hidden after Build, the
-# storey statement after each tread, landing and cut-wall part, the notes.
+# ... and the BuiltModel v2 kinds (docs/rooms/DESIGN.md R-10, R-12.1), written the same way: only when the model uses
+# them. DESIGN R-10 puts them in EXTRA_KINDS; they live here because test_u4_maxscript.py:211 (frozen) expects every
+# kind of EXTRA_KINDS in its v1 test model (docs/rooms/contract-issues/R3.md). The stairs' colour of D-5.4 for treads
+# and landings; the ceiling's of R-10.
 V2_KINDS = {
     'tread': ('Treads', 'Tread', 'diffuse:(color 185 199 180)'),
     'landing': ('Landings', 'Landing', 'diffuse:(color 185 199 180)'),
-    'ceiling': ('Ceilings', 'Ceiling', 'diffuse:(color 236 236 232)'),
+    'ceiling': ('Ceilings', 'Ceiling', 'diffuse:(color 244 243 239)'),
 }
+#: the kinds a stair's storey scales (DESIGN R-10): their parts carry `stair`; wall pieces cut under a flight do too
+STAIR_KINDS = ('tread', 'landing')
 #: every kind outside the bank's eleven: written only when the model uses it
 OTHER_KINDS = {**EXTRA_KINDS, **V2_KINDS}
 PLURAL = {'wall': 'walls', 'column': 'columns', 'lintel': 'lintels', 'sill': 'sills', 'parapet': 'parapets', 'glass': 'glass',
@@ -314,6 +328,7 @@ fn __PX___updateLevels newLevels newHeights =
     (
         local fi = (__PX___num (getUserProp o "__PX___floor")) as integer
         local base = __PX___num (getUserProp o "__PX___base")
+__STOREYFIT__
         o.pos.z = newLevels[fi] + base
         if ((getUserProp o "__PX___follow") as string) == "true" do
         (
@@ -381,6 +396,7 @@ __FURN_UI__
     checkbox cm "Collapse to Editable Mesh (no live modifiers)" checked:false
     button build "BUILD THE MODEL" width:310 height:32
     label note1 "Parts stay live: spline + Extrude (mesh) + Smooth." align:#left
+__CEILINGNOTE__
     group "After the build"
     (
         button upd "Update levels and heights" width:300
@@ -420,7 +436,35 @@ createDialog __PX___UI
 '''
 
 #: placeholders that are lines of their own and vanish with their line when they have nothing to say
-BLOCKS = ('EXTRAMATS', 'EXTRACASES', 'PICTURES')
+BLOCKS = ('EXTRAMATS', 'EXTRACASES', 'PICTURES', 'STOREYFIT', 'CEILINGNOTE')
+
+#: "Update levels and heights" for a stair's part (DESIGN R-10): base and Extrude amount scaled by the change of its
+#: storey (levels[storey] - levels[floor]) before the move; the stored base follows. A collapsed part (no Extrude) keeps
+#: its height and is counted with the others that kept theirs. Nothing happens when either storey is not above 0.
+STOREYFIT = r'''        local up = getUserProp o "__PX___storey"
+        if up != undefined do
+        (
+            local ui = (__PX___num up) as integer
+            local d0 = __PX___levels[ui] - __PX___levels[fi]
+            local d1 = newLevels[ui] - newLevels[fi]
+            if d0 > 0 and d1 > 0 do
+            (
+                local s = d1 / (d0 as float)
+                local ex = __PX___extrudeOf o
+                if ex == undefined then skipped += 1 else ex.amount = ex.amount * s
+                base = base * s
+                setUserProp o "__PX___base" base
+            )
+        )'''
+#: the window's two lines when the model has ceilings (DESIGN R-10)
+CEILINGNOTE = r'''    label note2 "Ceilings are on hidden layers __PX___<level>_Ceilings:" align:#left
+    label note3 "switch them on for interior views." align:#left'''
+#: after the part calls, when the model has ceilings: every Ceilings layer off (DESIGN R-10)
+HIDE_CEILINGS = r'''    for f in __PX___floorNames do
+    (
+        local ly = LayerManager.getLayerFromName ("__PX___" + f + "_Ceilings")
+        if ly != undefined do ly.isHidden = true
+    )'''
 
 
 # ----------------------------------------------------------------------------------------------------- what is computed
@@ -429,6 +473,7 @@ def _check_parts(M: dict, PX: str, FI: dict, ox: float, oy: float) -> tuple[list
     extra kinds used, in the bank generator's order."""
     problems, calls, count = [], [], {}
     plinth_level = {f['key']: f['level'] for f in M['floors']}
+    storey_of = {sw['id']: sw.get('to') for sw in M.get('stairways') or []}       # stairway id -> the floor it rises to
     for part in M['parts']:
         kind, fl = part['kind'], part['floor']
         if kind not in KINDS and kind not in OTHER_KINDS:
@@ -473,6 +518,12 @@ def _check_parts(M: dict, PX: str, FI: dict, ox: float, oy: float) -> tuple[list
             z0 = -plinth_level[fl]
         calls.append(f'    {PX}_part #{kind} "{name}" {arr(loops)} {num(z0)} {num(part["z1"])} {follow} {FI[fl]} {pt(c)} '
                      f'{pt(mn)} {pt(mx)}')
+        if part.get('stair') is not None:              # a stair's part: its storey, on the object just made (R-10)
+            to = storey_of.get(part['stair'])
+            if to not in FI:
+                problems.append(f'{name}: its stair {part["stair"]!r} rises to no floor of the model')
+                continue
+            calls.append(f'    setUserProp {PX}_nodes[{PX}_nodes.count] "{PX}_storey" {FI[to]}')
     used = [k for k in OTHER_KINDS if any(k == kk for _, kk in count)]
     return calls, problems, count, used
 
@@ -511,7 +562,8 @@ def _follow_keep(M: dict) -> tuple[str, str]:
     follows = {k: {bool(p.get('follow')) for p in M['parts'] if p['kind'] == k} for k in kinds_seen}
     follow_txt = words([PLURAL[k] + (' (those marked to)' if len(follows[k]) > 1 else '') for k in kinds_seen
                         if True in follows[k]]) or 'no part'
-    keep_txt = words(['the ' + PLURAL[k] for k in kinds_seen if follows[k] == {False}]) or 'nothing else'
+    # treads and landings scale with their storey (the `stairs` note says so): not "kept at their own heights"
+    keep_txt = words(['the ' + PLURAL[k] for k in kinds_seen if follows[k] == {False} and k not in STAIR_KINDS]) or 'nothing else'
     return follow_txt, keep_txt
 
 
@@ -532,7 +584,30 @@ def _scale_texts(M: dict, FLOORS: list[dict]) -> dict[str, str]:
                 if drawn else 'no lift door was measured')
     scale_txt = (f"scaled from {stair_txt} (the owner's){', per axis where a picture is drawn wider than tall' if per_axis else ''}"
                  if stair_w else 'scale not measured')
-    return {'STAIRTXT': stair_txt, 'AXISTXT': axis_txt, 'DOORTXT': door_txt, 'SCALETXT': scale_txt}
+    return {'STAIRTXT': stair_sentence(M, FLOORS) or stair_txt, 'AXISTXT': axis_txt, 'DOORTXT': door_txt, 'SCALETXT': scale_txt}
+
+
+def stair_sentence(M: dict, FLOORS: list[dict]) -> str | None:
+    """The stair sentence of a model with treads (DESIGN R-10, the `stairs` note): 'Stairs: 21 risers of 0.186 m, 19
+    treads and 1 landing', each stairway from its record and its tread and landing parts (with its two floors when there
+    are several); None without treads, so every v1 model keeps the hotel's sentence."""
+    if not any(p['kind'] == 'tread' for p in M['parts']):
+        return None
+    names = {f['key']: ascii_name(f['name']) or f['key'] for f in FLOORS}
+    sws = M.get('stairways') or []
+    rows = []
+    for sw in sws:
+        mine = [p['kind'] for p in M['parts'] if p.get('stair') == sw['id']]
+        nt, nl = mine.count('tread'), mine.count('landing')
+        row = (f"{sw['risers']} risers of {sw['riser']:.3f} m, {nt} tread{'s' if nt != 1 else ''}"
+               + (f" and {nl} landing{'s' if nl != 1 else ''}" if nl else ''))
+        if len(sws) > 1:
+            row = f"{names.get(sw['from'], sw['from'])} to {names.get(sw['to'], sw['to'])}, {row}"
+        rows.append(row)
+    if not rows:
+        n = sum(1 for p in M['parts'] if p['kind'] == 'tread')
+        rows.append(f"{n} tread{'s' if n != 1 else ''}")
+    return 'Stairs: ' + '; '.join(rows)
 
 
 def _pictures(M: dict, FLOORS: list[dict]) -> list[str]:
@@ -629,14 +704,24 @@ def maxscript(model_bytes: bytes, profile: dict, *, date: str | None = None, sou
         'EXTRAMATS': '\n'.join(f'    append __PX___mats (standardMaterial name:"__PX__ {OTHER_KINDS[k][1]}" {OTHER_KINDS[k][2]})'
                                for k in extra),
     }
+    # written only when the model has a stair's parts (treads, landings, walls cut under a flight) and ceilings
+    has_storey = any(p['kind'] in STAIR_KINDS or p.get('stair') is not None for p in M['parts'])
+    has_ceilings = any(p['kind'] == 'ceiling' for p in M['parts'])
+    values['STOREYFIT'] = STOREYFIT if has_storey else ''
+    values['CEILINGNOTE'] = CEILINGNOTE if has_ceilings else ''
     if not values['DATE']:
         raise ValueError(f'profile {profile.get("profile")!r} needs the build\'s date (date=...)')
-    # the extra materials carry the prefix placeholder: fill it in their own text (they are code, not data)
-    values['EXTRAMATS'] = values['EXTRAMATS'].replace('__PX__', PX)
+    # the extra materials and the v2 blocks carry the prefix placeholder: fill it in their own text (they are code, not
+    # data)
+    for k in ('EXTRAMATS', 'STOREYFIT', 'CEILINGNOTE'):
+        values[k] = values[k].replace('__PX__', PX)
+    if has_ceilings:                                   # every Ceilings layer off once the parts are built (R-10)
+        calls = calls + [HIDE_CEILINGS.replace('__PX__', PX)]
 
     when = {'always': True, 'revitGlass': any(is_revit_glass(p) for p in M['parts']),
             'pictures': bool(M.get('pictureFrame')), 'furniture': bool(M.get('furniture')),
-            'steps': any(p['kind'] == 'step' for p in M['parts'])}
+            'steps': any(p['kind'] == 'step' for p in M['parts']),
+            'stairs': any(p['kind'] in STAIR_KINDS for p in M['parts']), 'ceilings': has_ceilings}
     head_lines = []
     for line in profile['header']:
         if line == '__PLACEDAT__':

@@ -12,9 +12,12 @@ from typing import Any
 from .builtmodel import ModelInvalid, ModelIssue, pointer
 
 STEP_KEYS = ('read', 'sort', 'align', 'pair', 'merge', 'raise', 'finish')
-TOGGLE_NAMES = ('plates', 'glass', 'rooms', 'single', 'picture')
+# contracts.ts ToggleName and PartKind, with the rooms milestone's v2 members (docs/rooms/DESIGN.md R-12.1, R-12.7: the
+# 'ceilings' toggle; the part kinds 'tread', 'landing', 'ceiling'), so a presentation's labels, toggles and partStyles may
+# name them as the viewer's parser allows (step R5)
+TOGGLE_NAMES = ('plates', 'glass', 'rooms', 'single', 'picture', 'ceilings')
 PART_KINDS = ('wall', 'column', 'lintel', 'sill', 'parapet', 'glass', 'mullion', 'railing', 'single', 'step', 'slab',
-              'pane', 'balustrade', 'low', 'builtin', 'deck', 'post')
+              'pane', 'balustrade', 'low', 'builtin', 'deck', 'post', 'tread', 'landing', 'ceiling')
 PART_STYLE_FIELDS = {'color': 'colour', 'edge': 'colour', 'mesh': 'str', 'glass': 'bool', 'see': 'num',
                      'renderOrder': 'num', 'opacity': 'num', 'roughness': 'num', 'metalness': 'num',
                      'edgeOpacity': 'num', 'collider': 'bool', 'single': 'bool'}

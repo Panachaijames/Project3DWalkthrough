@@ -2,13 +2,15 @@
 
     node tools/run-py.mjs -m walkthrough_api.check_file <kind> <path> [--model <path of model.json>]
 
-Kinds: model (BuiltModel v1: schema and D-5.6 rules), stages (ReplayData v1 against --model), presentation (Presentation
-v1 against --model), drawing, plan (gzip or plain JSON), overlay, conversion, suggestions, settings (BuildSettings, then
-settings_issues()), job, spec, launch, diff, pieces, openings (upload-contracts.ts sections 1, 3 and 4), and also api,
-office, inputs. Exit 0 and "ok" when the file passes; exit 1 listing every issue as `<path>: <message>`; exit 2 on a
-usage error. U1, U2 and U4 run it on their own outputs before integration; the API's run-done validation calls
-`issues()` in-process (U5). Raw files are validated by their JSON names only (camelCase; a snake_case key is an issue).
-Written by the scaffold U0.
+Kinds: model (BuiltModel v1 and v2: the schema, the D-5.6 rules and the rooms milestone's R-12.1 rules), stages
+(ReplayData v1 against --model), presentation (Presentation v1 against --model; its toggle and part-kind names include
+the v2 ones), drawing, plan (gzip or plain JSON), overlay (with the rooms milestone's optional floor fields spaces,
+holes, stairs, closings, unfloored and its flag kinds, R-12.4), conversion, suggestions, settings (BuildSettings, then
+settings_issues(): also the rooms milestone's combinations, ceiling heights, fix cap and room names), job, spec, launch,
+diff, pieces, openings (upload-contracts.ts sections 1, 3 and 4), and also api, office, inputs. Exit 0 and "ok" when the
+file passes; exit 1 listing every issue as `<path>: <message>`; exit 2 on a usage error. U1, U2 and U4 run it on their
+own outputs before integration; the API's run-done validation calls `issues()` in-process (U5). Raw files are validated
+by their JSON names only (camelCase; a snake_case key is an issue). Written by the scaffold U0.
 """
 from __future__ import annotations
 

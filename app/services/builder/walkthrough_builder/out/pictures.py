@@ -8,6 +8,10 @@ axes come as a row here (`squeeze=False`), which draws the same picture. For the
 `bank_test/src/bank_topview.png` (sha1 f084b556503c, the pinned matplotlib 3.11.2 and its fonts). The furniture picture
 is not made (no use in the app). Drawing text (room labels, floor names) is put on the picture as text: `$` is escaped,
 so matplotlib never reads it as mathtext.
+
+BuiltModel v2 (docs/rooms/DESIGN.md R-11): `tread` is drawn as `step` (filled green), `landing` lighter, `ceiling` not at
+all; the voids' "open: ..." texts carry the new `what` values; room texts come from `rooms[]`. A model with treads or
+landings gets a title that names them; every other model keeps the bank's title, so the bank's picture cannot move.
 """
 from __future__ import annotations
 
@@ -25,13 +29,19 @@ STY: dict[str, dict[str, Any]] = {
     'deck': dict(facecolor='#d9c3a5', edgecolor='#8a6a44', lw=0.5), 'balustrade': dict(facecolor='#3f9fd0', edgecolor='#1f6f9f', lw=0.6),
     'low': dict(facecolor='#b3a58f', edgecolor='none'), 'builtin': dict(facecolor='#a8865e', edgecolor='none'),
     'post': dict(facecolor='#4a4038', edgecolor='none'), 'pane': dict(facecolor='#6fb6e0', edgecolor='#1f6f9f', lw=0.6),
+    # BuiltModel v2 (R-11): a tread as a step, a landing lighter; a ceiling is never drawn
+    'tread': dict(facecolor='#7cc48a', edgecolor='#2e8b47', lw=0.5), 'landing': dict(facecolor='#b8dcbc', edgecolor='#2e8b47', lw=0.5),
 }
 #: the bank's drawing order, with the extra kinds slotted in where they belong (the bank has none of them)
-ORDER = ('slab', 'deck', 'step', 'single', 'railing', 'balustrade', 'parapet', 'low', 'wall', 'builtin', 'column', 'post',
-         'glass', 'pane', 'mullion', 'sill', 'lintel')
+ORDER = ('slab', 'deck', 'step', 'landing', 'tread', 'single', 'railing', 'balustrade', 'parapet', 'low', 'wall', 'builtin',
+         'column', 'post', 'glass', 'pane', 'mullion', 'sill', 'lintel')
 TITLE_TAIL = ('walls brown, lintels tan, glass blue (glass partitions bold cyan), '
               'railings purple, parapet lilac, closures red,\nstairs green (steps filled); opening numbers: doors red, windows blue, '
               'passages green; "open" = no floor (stair, lift shaft)')
+#: the title of a model with treads or landings (R-11)
+TITLE_TAIL_V2 = ('walls brown, lintels tan, glass blue (glass partitions bold cyan), '
+                 'railings purple, parapet lilac, closures red,\nstairs green (treads filled, landings light green); opening numbers: '
+                 'doors red, windows blue, passages green; "open" = no floor (stair well, stair, shaft, void)')
 OPENING_COLOUR = {'door': '#c0392b', 'window': '#1f6fb2', 'passage': '#2e8b47'}
 
 
@@ -53,6 +63,7 @@ def topview_png(model: dict) -> bytes:
     cx, cy = model['offset']
     stairs = model.get('stairs') or {}
     voids = model.get('voids') or {}
+    tail = TITLE_TAIL_V2 if any(p['kind'] in ('tread', 'landing') for p in parts) else TITLE_TAIL
     fig, axs = plt.subplots(1, len(floors), figsize=(11 * len(floors), 17), dpi=90, squeeze=False)
     try:
         for ax, F in zip(axs[0], floors):
@@ -92,7 +103,7 @@ def topview_png(model: dict) -> bytes:
                 if r['floor'] == k:
                     ax.text(r['x'] + cx, r['y'] + cy, _text(r.get('label') or r.get('name') or ''), fontsize=8, color='#1f4e79',
                             ha='center')
-            ax.set_title(f"{_text(F['name'])} ({F['level']:+.2f} m): " + TITLE_TAIL, fontsize=9)
+            ax.set_title(f"{_text(F['name'])} ({F['level']:+.2f} m): " + tail, fontsize=9)
             ax.autoscale()
             ax.set_aspect('equal')
             ax.axis('off')

@@ -8,6 +8,12 @@ outline and holes rounded to 1 cm), then, for what is left, by the same floor, k
 the nearest first, and a matched opening whose width, head, sill, subtype, lintel or wall thickness differs is listed as
 changed; furniture by kind counts; rooms by name. Outlines in the diff are in the floor's sheet metres. `counts[floor]`
 gives [before, after] for each part kind, each opening kind, `furniture` and `rooms` that either side has.
+
+The rooms milestone (docs/rooms/DESIGN.md R-3.4, R-6.4): when either side is a BuiltModel v2 (it has `stairways`),
+`counts[floor]` also gives, when either side has any, `rooms closed` (its `spaces`), `plate area (m2)` (the slabs with
+their holes, to 0.1 m2) and `stairs you can climb` (the stairways rising from the floor); names are compared as before. A
+floor whose plate is LOST_FLOOR m2 or more smaller comes first in `counts`, its plate row first, so the first row of the
+list of changes is the lost floor (R-6.4). Two v1 models give the same bytes as before.
 """
 from __future__ import annotations
 
@@ -22,6 +28,46 @@ PART_TOL = 0.011               # m: the second pass
 OPENING_TOL = 0.1              # m: centres
 OPENING_FIELDS = ('width', 'head', 'sill', 'subtype', 'lintel', 'lintelTop', 'wallThickness')
 NUM_TOL = 0.0005
+#: m2: a floor whose plate shrinks by this much or more is a lost floor (R-6.4)
+LOST_FLOOR = 2.0
+#: the v2 rows of counts[floor] (R-3.4)
+ROOMS_CLOSED, PLATE_AREA, CLIMBABLE = 'rooms closed', 'plate area (m2)', 'stairs you can climb'
+
+
+def plate_area(model: dict, floor: str) -> float:
+    """The area of a floor's slabs with their holes (m2, to 0.1); 0.0 without slabs."""
+    from shapely.geometry import Polygon
+    from shapely.ops import unary_union
+    polys = []
+    for p in model['parts']:
+        if p['floor'] != floor or p['kind'] != 'slab':
+            continue
+        try:
+            g = Polygon(p['o'], p.get('h') or [])
+        except (ValueError, TypeError):
+            continue
+        g = g if g.is_valid else g.buffer(0)
+        if not g.is_empty:
+            polys.append(g)
+    return round(unary_union(polys).area, 1) + 0.0 if polys else 0.0
+
+
+def _rooms_counts(after: dict, before: dict, floors: list[str], counts: dict) -> dict:
+    """counts with the v2 rows added, and a lost floor first (R-3.4, R-6.4)."""
+    for fl in floors:
+        c = counts[fl]
+        for key, of in ((ROOMS_CLOSED, lambda m: sum(1 for s in m.get('spaces') or [] if s['floor'] == fl)),     # noqa: B023
+                        (PLATE_AREA, lambda m: plate_area(m, fl)),                                             # noqa: B023
+                        (CLIMBABLE, lambda m: sum(1 for s in m.get('stairways') or [] if s['from'] == fl))):  # noqa: B023
+            pair = [of(before), of(after)]
+            if any(pair):
+                c[key] = pair
+    lost = [fl for fl in floors if PLATE_AREA in counts[fl] and counts[fl][PLATE_AREA][0] - counts[fl][PLATE_AREA][1] >= LOST_FLOOR - 1e-9]
+    if not lost:
+        return counts
+    out = {fl: {PLATE_AREA: counts[fl][PLATE_AREA], **{k: v for k, v in counts[fl].items() if k != PLATE_AREA}} for fl in lost}
+    out.update({fl: counts[fl] for fl in floors if fl not in lost})
+    return out
 
 
 def to_sheet(model: dict) -> dict[str, tuple[float, float]]:
@@ -153,6 +199,8 @@ def diff(after: dict, before: dict) -> dict:
             if n_r:
                 add('rooms', side, n_r)
         counts[fl] = c
+    if 'stairways' in after or 'stairways' in before:          # a BuiltModel v2 on either side (R-12.1)
+        counts = _rooms_counts(after, before, floors, counts)
     kinds = list(dict.fromkeys([f['kind'] for f in after.get('furniture') or []] + [f['kind'] for f in before.get('furniture') or []]))
     fb = Counter(f['kind'] for f in before.get('furniture') or [])
     fa = Counter(f['kind'] for f in after.get('furniture') or [])

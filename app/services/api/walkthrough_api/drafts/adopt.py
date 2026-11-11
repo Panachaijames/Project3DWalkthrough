@@ -12,8 +12,21 @@
   offset (`model.offset`). A recipe build keeps its recipe, takes the units the reads used for the files that had none,
   and adds the proposal's role for every layer the recipe does not name.
 * **Units change** (putBuildSettings): everything of that source in sheet metres is rescaled by newFactor / oldFactor
-  about the sheet origin: its floors' boxes and pads, alignment points on its sheet, and the opening and outline-edge
-  fixes of its floors (set-aside keys need nothing).
+  about the sheet origin: its floors' boxes and pads, alignment points on its sheet, and the opening, outline-edge,
+  closing, room and stair fixes of its floors (set-aside keys need nothing).
+
+**Which rules a new draft gets** (the rooms milestone, docs/rooms/DESIGN.md R-1.2, R-1.3; step R5). A settings document
+without the three keys `options.slabs / ceilings / stairs` means the OLD rules (models_upload.OLD_RULES: the pydantic
+defaults fill them, and they are written out at the next save). Every NEW draft gets the NEW rules (NEW_RULES):
+* a draft with no recipe (a new project, or a project with no saved recipe: the four seeded ones): revision 0 has them
+  (OPTIONS), and `adopt` writes them over the proposal's;
+* a draft from a saved version's recipe or another build's settings whose FILE was written before the milestone (its
+  raw JSON has none of the three keys: `carries_rules`): `recipe_settings(..., new_rules=True)` writes them into
+  revision 0, which `adopt` keeps. createBuild holds the raw file before the defaults are filled in, and is the one
+  place that looks;
+* a recipe that carries the keys, old or new or any legal mix, is kept as it is (a project put back to the earlier way
+  stays there).
+Saved versions never change; switching a draft to the earlier way is a settings save with OLD_RULES.
 """
 from __future__ import annotations
 
@@ -23,6 +36,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from .. import views
+from ..models_upload import NEW_RULES
 from ..store.base import NotFound, SourceRecord, Store
 from . import naming as names
 
@@ -32,8 +46,12 @@ DEFAULTS = {'doorHead': 2.1, 'windowSill': 0.9, 'windowHead': 2.1, 'railingHeigh
             'singleLineHeight': 1.0}
 FURNITURE = {'heights': {}, 'bases': {}, 'words': {}, 'skip': [], 'minSize': 0.08, 'minDepth': None, 'looseLayers': [],
              'pieceLayer': 'insert'}
+#: The options of a draft with no recipe. Since the rooms milestone they differ on purpose from the builder's own
+#: (build/settings.py fills the OLD rules for a missing key): every new draft gets the NEW rules (R-1.2, R-1.3).
 OPTIONS = {'revitWallTypes': 'auto', 'parapets': 'auto', 'objectClosures': True, 'liftShafts': True, 'plinth': 'auto',
-           'outlineWalls': 'off', 'offset': 'auto'}
+           'outlineWalls': 'off', 'offset': 'auto', **NEW_RULES}
+#: The three option keys of the rooms milestone (a recipe "carries the keys" when its raw file has any of them).
+RULE_KEYS = tuple(NEW_RULES)
 _PHOTO = re.compile(r'[A-Za-z0-9_.-]{1,64}')
 _PREFIX = re.compile(r'[A-Z]{2,4}')
 _MS = re.compile(r'[A-Za-z0-9_.-]{1,60}\.ms')
@@ -92,10 +110,22 @@ def fresh_settings(store: Store, project_id: str, sources: list[SourceRecord], f
     }
 
 
-def recipe_settings(recipe: dict[str, Any], sources: list[SourceRecord], frame: ProjectFrame) -> dict[str, Any]:
+def carries_rules(raw: Any) -> bool:
+    """True when a settings document AS STORED (its raw JSON, before the defaults are filled in) names any of the three
+    options of the rooms milestone: then its rules are kept as they are. A file written before the milestone names none
+    of them (R-1.3)."""
+    options = raw.get('options') if isinstance(raw, dict) else None
+    return isinstance(options, dict) and any(k in options for k in RULE_KEYS)
+
+
+def recipe_settings(recipe: dict[str, Any], sources: list[SourceRecord], frame: ProjectFrame,
+                    new_rules: bool = False) -> dict[str, Any]:
     """Revision-0 settings of a build from a version's or another build's recipe: the new sources, the floors re-pointed
-    by file name, the pinned offset when the recipe leaves it to 'auto'."""
+    by file name, the pinned offset when the recipe leaves it to 'auto'; and the NEW rules when the recipe's file was
+    written before the rooms milestone (`new_rules`, from `carries_rules` on the raw file)."""
     s = copy.deepcopy(recipe)
+    if new_rules:
+        s['options'] = {**s.get('options', {}), **NEW_RULES}
     old = {src['sha1']: src for src in recipe.get('sources', [])}
     new_by_name = {r.name: r.sha1 for r in sources}
     new = {r.sha1 for r in sources}
@@ -133,7 +163,9 @@ def _units_of(drawing: dict[str, Any] | None) -> tuple[str | None, bool]:
 def adopt(current: dict[str, Any], proposal: dict[str, Any], from_kind: str, frame: ProjectFrame,
           drawings: dict[str, dict[str, Any] | None]) -> dict[str, Any]:
     """The settings revision 1 of a build (see the module text). `current` = its revision-0 settings, `proposal` = the
-    first prepare's proposed-settings.json, `drawings` = each source's drawing.json (for units the proposal lacks)."""
+    first prepare's proposed-settings.json, `drawings` = each source's drawing.json (for units the proposal lacks).
+    A recipe build keeps its revision 0's rules (createBuild chose them); a build with no recipe gets the NEW rules
+    whatever the proposal says (a worker of before the rooms milestone, or the fake one, proposes none)."""
     proposed = {src['sha1']: src for src in proposal.get('sources', [])}
 
     def units_for(src: dict[str, Any]) -> dict[str, Any]:
@@ -158,6 +190,7 @@ def adopt(current: dict[str, Any], proposal: dict[str, Any], from_kind: str, fra
     if current.get('office') is not None or frame.office is not None:
         s['office'] = current.get('office') or frame.office
     s['sources'] = [units_for({**src, 'units': None, 'unitsConfirmed': False}) for src in current['sources']]
+    s['options'] = {**s['options'], **NEW_RULES}                # every new draft gets the new rules (R-1.3)
     if frame.offset is not None:
         s['options']['offset'] = list(frame.offset)
     if frame.latest_model is not None:                        # a seeded project: its floor keys and names
@@ -203,10 +236,19 @@ def rescale(settings: dict[str, Any], sha1: str, ratio: float) -> None:
                 if f['source'] == sha1:
                     pair[1] = _scale(pair[1], ratio)
     fixes = settings.get('fixes', {})
-    for group in ('openings', 'outlineEdges'):
+    for group in ('openings', 'outlineEdges', 'closings'):
         for fix in fixes.get(group, []):
             if fix['floor'] in keys:
                 fix['a'], fix['b'] = _scale(fix['a'], ratio), _scale(fix['b'], ratio)
+    # the rooms milestone's room and stair fixes are points too (R-6.3: "a units change rescales the points")
+    for fix in fixes.get('rooms', []):
+        if fix['floor'] in keys:
+            fix['at'] = _scale(fix['at'], ratio)
+    for fix in fixes.get('stairs', []):
+        if fix['floor'] in keys:
+            fix['at'] = _scale(fix['at'], ratio)
+            if fix.get('bottom') is not None:
+                fix['bottom'] = _scale(fix['bottom'], ratio)
 
 
 def source_records(store: Store, project_id: str, sha1s: list[str]) -> list[SourceRecord]:

@@ -6,6 +6,7 @@ changes. Nothing imports prototype Python.
 """
 from __future__ import annotations
 
+import os
 import shutil
 from collections.abc import Iterator
 from pathlib import Path
@@ -24,6 +25,26 @@ def pytest_configure(config: pytest.Config) -> None:
     # the upload milestone's integration tests: the real worker (docs/upload/ACCEPTANCE.md 2.2). They skip while the
     # builder is not built or missing, and fail instead under WT_INTEGRATION=1 (tests/builderkit.py).
     config.addinivalue_line('markers', 'builder: runs the real builder worker (never holds the machine run lock)')
+    config.addinivalue_line('markers', 'rooms_worker: the rooms milestone\'s tests with the real worker (step R5); '
+                                       'deselected without WT_INTEGRATION=1 until their module turns '
+                                       'RUN_WITHOUT_THE_FLAG on')
+
+
+def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item]) -> None:
+    """The rooms milestone's real-worker tests (test_r5_builder.py) run only under WT_INTEGRATION=1 until R1 - R3 have
+    landed (their module's RUN_WITHOUT_THE_FLAG): without it they are deselected, not skipped, so a plain run skips
+    nothing and does not depend on the state of the builder's modules being written in parallel."""
+    if os.environ.get('WT_INTEGRATION') == '1':
+        return
+    keep: list[pytest.Item] = []
+    drop: list[pytest.Item] = []
+    for item in items:
+        module = getattr(item, 'module', None)
+        off = item.get_closest_marker('rooms_worker') is not None and not getattr(module, 'RUN_WITHOUT_THE_FLAG', False)
+        (drop if off else keep).append(item)
+    if drop:
+        config.hook.pytest_deselected(items=drop)
+        items[:] = keep
 
 
 @pytest.fixture(scope='session')

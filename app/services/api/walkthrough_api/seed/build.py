@@ -22,7 +22,7 @@ from typing import Any
 from .. import builtmodel
 from ..checks import validate_presentation, validate_replay
 from ..jsonio import dumps_compact, dumps_pretty, iso_utc, loads_strict, media_type_of, sha1_hex
-from ..store.base import MODEL_FORMAT, PROJECT_FORMAT, VERSION_FORMAT, HeightOverridesFile, ProjectMeta, VersionMeta
+from ..store.base import PROJECT_FORMAT, VERSION_FORMAT, HeightOverridesFile, ProjectMeta, VersionMeta
 from ..store.local import KEPT_ON_REBUILD, LocalStore
 from . import convert_house, convert_suite, presentation, stages
 from .sources import PROJECT_SOURCE_KIND, SEED_TABLE, VersionSource, reads
@@ -50,10 +50,12 @@ def version_record(*, project_id: str, n: int, label: str, created_at: str, sour
                    model: Mapping[str, Any], model_sha1: str, stamp: str, stamp_source: str, has_stages: bool,
                    assets: Iterable[Mapping[str, Any]], max_script: str | None, presentation: Mapping[str, Any],
                    seed: Mapping[str, Any] | None) -> dict[str, Any]:
-    """version.json in the order of contracts.ts VersionMeta (checked by parsing it into the record)."""
+    """version.json in the order of contracts.ts VersionMeta (checked by parsing it into the record). `modelFormat` is
+    'built-model/2' for a model with the `stairways` key (the rooms milestone, R-12.2), else store.base.MODEL_FORMAT
+    ('built-model/1': every seeded model); builtmodel.model_format decides."""
     record: dict[str, Any] = {
         'format': VERSION_FORMAT, 'projectId': project_id, 'version': n, 'label': label, 'createdAt': created_at,
-        'sourceKind': source_kind, 'sourceFiles': list(source_files), 'modelFormat': MODEL_FORMAT,
+        'sourceKind': source_kind, 'sourceFiles': list(source_files), 'modelFormat': builtmodel.model_format(model),
         'modelSha1': model_sha1, 'stamp': stamp, 'stampSource': stamp_source,
         'counts': {'floors': len(model['floors']), 'parts': len(model['parts']), 'openings': len(model['openings']),
                    'furniture': len(model.get('furniture') or []), 'furnitureKinds': len(model.get('furnitureKinds') or []),

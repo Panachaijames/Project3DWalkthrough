@@ -10,6 +10,11 @@ back), source sha1s unique and 40 hex, the vocabulary's patterns compile (the bu
 in their 12-hex form, sills below heads, furniture heights in whole-mm range, pads and sizes not negative.
 
 Paths are JSON Pointers into the settings by their JSON (camelCase) names: /floors/1/level.
+
+The rooms milestone (docs/rooms/DESIGN.md R-1.2, R-12.4, R-12.5; step R5): `slabs: 'closed-rooms'` with `ceilings: 'auto'`
+or `stairs: 'climb'` is refused ("ceilings and climbable stairs need floor plates from the wall network"); a floor's
+`ceilingHeight` is 0.5 - 20 m or null; the cap of 5,000 other fixes counts the closing, room and stair fixes too; a room
+fix's name is at most 200 characters of one line of text (no control characters; null or blank: no name).
 """
 from __future__ import annotations
 
@@ -35,6 +40,11 @@ MIN_HEIGHT, MAX_HEIGHT = 0.05, 50.0
 MAX_LEVEL = 10_000.0
 MAX_PAD = 100.0
 MAX_ISSUES = 200
+# the rooms milestone (R-12.4)
+MIN_CEILING, MAX_CEILING = 0.5, 20.0
+MAX_ROOM_NAME = 200
+NEEDS_NETWORK = 'ceilings and climbable stairs need floor plates from the wall network'
+_CONTROL = re.compile(r'[\x00-\x1f\x7f-\x9f]')
 
 
 class SettingsIssue(TypedDict):
@@ -54,11 +64,11 @@ class _Issues:
         if len(self.out) < MAX_ISSUES:
             self.out.append({'path': path, 'message': message})
 
-    def height(self, value: float | None, path: str, what: str, low: float = MIN_HEIGHT) -> None:
+    def height(self, value: float | None, path: str, what: str, low: float = MIN_HEIGHT, high: float = MAX_HEIGHT) -> None:
         if value is None or not math.isfinite(value):
             return                                       # null: the default; non-finite: reported by the walk
-        if not low <= value <= MAX_HEIGHT:
-            self.add(path, f'{what} must be {low:g} - {MAX_HEIGHT:g} m, not {value:g}')
+        if not low <= value <= high:
+            self.add(path, f'{what} must be {low:g} - {high:g} m, not {value:g}')
 
 
 def _walk(value: Any, path: str, issues: _Issues) -> None:
@@ -161,6 +171,7 @@ def settings_issues(settings: BuildSettings, *, adopted: bool = True) -> list[Se
         issues.height(f.window_sill, at + '/windowSill', 'a window sill', low=0.0)
         if f.window_sill is not None and f.window_head is not None and f.window_sill >= f.window_head:
             issues.add(at + '/windowSill', 'the window sill must be below the window head')
+        issues.height(f.ceiling_height, at + '/ceilingHeight', 'a ceiling height', low=MIN_CEILING, high=MAX_CEILING)
         if isinstance(f.align, FloorAlignPoints):
             for j, pair in enumerate(f.align.pairs):
                 for k, point in enumerate(pair):
@@ -191,6 +202,16 @@ def settings_issues(settings: BuildSettings, *, adopted: bool = True) -> list[Se
     if fu.min_depth is not None and math.isfinite(fu.min_depth) and not 0 <= fu.min_depth <= 10:
         issues.add('/furniture/minDepth', 'the smallest depth is 0 - 10 m')
 
+    # ---- the rooms milestone's options: ceilings and climbable stairs only with the plates from the wall network
+    o = s.options
+    if o.slabs == 'closed-rooms':
+        if o.ceilings != 'off':
+            issues.add('/options/ceilings', f'{NEEDS_NETWORK}: ceilings {o.ceilings!r} needs slabs \'network\', not '
+                                            f'{o.slabs!r}')
+        if o.stairs != 'lines':
+            issues.add('/options/stairs', f'{NEEDS_NETWORK}: stairs {o.stairs!r} needs slabs \'network\', not '
+                                          f'{o.slabs!r}')
+
     # ---- vocabulary: the builder runs these patterns
     for key, pattern in s.vocabulary.items():
         try:
@@ -212,13 +233,23 @@ def settings_issues(settings: BuildSettings, *, adopted: bool = True) -> list[Se
                 issues.add(at + '/sig', 'a signature is 12 hex characters')
             if ref.rsig and not SIG.fullmatch(ref.rsig):
                 issues.add(at + '/rsig', 'a relative signature is 12 hex characters or empty')
-    others = len(fx.openings) + len(fx.outline_edges)
+    others = len(fx.openings) + len(fx.outline_edges) + len(fx.closings) + len(fx.rooms) + len(fx.stairs)
     if others > MAX_OTHER_FIXES:
-        issues.add('/fixes', f'{others:,} opening and outline fixes; at most {MAX_OTHER_FIXES:,} are taken')
-    for i, o in enumerate(fx.openings):
+        issues.add('/fixes', f'{others:,} opening, outline, closing, room and stair fixes; at most '
+                             f'{MAX_OTHER_FIXES:,} are taken')
+    for i, op in enumerate(fx.openings):
         at = _ptr('fixes', 'openings', i)
-        issues.height(o.head, at + '/head', 'an opening head')
-        issues.height(o.sill, at + '/sill', 'an opening sill', low=0.0)
-        if o.head is not None and o.sill is not None and o.sill >= o.head:
+        issues.height(op.head, at + '/head', 'an opening head')
+        issues.height(op.sill, at + '/sill', 'an opening sill', low=0.0)
+        if op.head is not None and op.sill is not None and op.sill >= op.head:
             issues.add(at + '/sill', 'the sill must be below the head')
+    for i, room in enumerate(fx.rooms):
+        name = room.name
+        if name is None:
+            continue
+        at = _ptr('fixes', 'rooms', i, 'name')
+        if len(name) > MAX_ROOM_NAME:
+            issues.add(at, f'a room name of {len(name)} characters; at most {MAX_ROOM_NAME} are taken')
+        elif _CONTROL.search(name):
+            issues.add(at, 'a room name is one line of plain text (no line breaks, tabs or control characters)')
     return issues.out

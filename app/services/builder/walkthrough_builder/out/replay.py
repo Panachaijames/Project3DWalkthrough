@@ -11,6 +11,10 @@ shaft" only when one exists, "Done: <n> levels"; every floor is named (one: its 
 more: "on 3 floors"), and the captions carry the placeholders {<key>level} and {<key>height} for every floor (D-7.3).
 No panelIntro; stepTitles, colors and layersTitle are left to the viewer's defaults (D-7.2). Drawing names (layers,
 floors, files) are quoted as text; the viewer shows them with textContent.
+
+The rooms milestone (docs/rooms/DESIGN.md R-11): with the new rule the facts carry `rooms` (per floor: the rooms closed
+and the named ones), `climbable` and `ceilings` (contracts.ReplayFactsRooms, made by the build); the finish caption adds
+"N rooms closed" and "M stairs you can climb" only when they hold. Lines, pieces and rings are unchanged.
 """
 from __future__ import annotations
 
@@ -283,6 +287,12 @@ def stages(replay: dict, model: dict, report: dict | None = None) -> dict[str, A
     done = [count(len(F), 'level'), count(n_runs, 'wall run')]
     done += [x for x, n in ((count(n_lintels, 'lintel'), n_lintels), (count(n_glass, 'glass piece'), n_glass),
                             (count(n_steps, 'stair step'), n_steps), (f"{count(n_rooms, 'room')} named", n_rooms)) if n]
+    # the new rule's facts (contracts.ReplayFactsRooms; docs/rooms/DESIGN.md R-11): said only when they hold
+    rooms_by_floor = facts.get('rooms') if isinstance(facts.get('rooms'), dict) else {}
+    n_closed = sum(int((rooms_by_floor.get(k) or {}).get('spaces') or 0) for k in keys)
+    n_climb = int(facts.get('climbable') or 0)
+    done += [x for x, n in ((f"{count(n_closed, 'room')} closed", n_closed), (f"{count(n_climb, 'stair')} you can climb", n_climb))
+             if n]
     finish += '. Done: ' + ', '.join(done) + '.'
 
     files = list(model['source'])
