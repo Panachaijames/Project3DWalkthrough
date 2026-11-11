@@ -339,7 +339,11 @@ grid lines to within a millimetre, and all 86 openings are found where the proto
    have their boxes on the Floors step (see *What failed*).
 2. **Rooms and slabs** (your choice of 10 Nov, started that day): floors made from the wall network, so the house's
    glass living area, the suite's centre and the tower's outer rooms get their floor (most of the failing walk probes go
-   with them). Then **stairs you can climb**.
+   with them). Then **stairs you can climb**. **Designed on 10 - 11 Nov** and checked by three reviewers, whose 50
+   findings are worked in: `docs/rooms/DESIGN.md` (it starts with a summary for you in plain words), `ACCEPTANCE.md`
+   (18 criteria; the house's and the bank's main stairs must climb in Walk) and `WORK_BREAKDOWN.md`. About 237 hours as
+   the plan counts them, about 160 more than the plan held for this work; the plan and the product overview say so. The
+   build is next.
 3. **A second round of fixes for the door finder** (your choice of 10 Nov: after the floors and stairs, before the box
    editing). The 3D team's new suite drawing was tested on 10 Nov as a drawing the finder had never seen (its answer
    key made by separate labellers who never saw the finder's output, then checked by two blind auditors): **7 of its 16
