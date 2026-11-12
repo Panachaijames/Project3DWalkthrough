@@ -112,7 +112,7 @@ test('the modes row, the HUD and the hint on the page (texts, selectors, flags)'
   await p.clickEl('[data-wt=modes] [data-mode=walk]');
   expect((await st(page)).mode).toBe('walk');
   expect(await visible(page, 'hud')).toBe(true);
-  expect(await textOf(page, 'hud-text')).toBe('Walk · Level 1 · drag or click to look · W A S D to move, Shift to run · PgUp / PgDn: other floor · wheel: lens 24 mm · Esc');
+  expect(await textOf(page, 'hud-text')).toBe('Walk · Level 1 · drag or click to look · W A S D to move, Shift to run, Space to jump · PgUp / PgDn: other floor · wheel: lens 24 mm · Esc');
   await expect(page.locator('[data-wt=hint]')).toHaveText('Click to capture the mouse (Esc frees it, Esc again returns to Orbit) · 1 / 2 / 3: Orbit / Walk / Ghost · P: photo');
   expect(await page.evaluate(() => document.querySelector('[data-wt=root]')!.hasAttribute('data-fp'))).toBe(true);
   expect(await pressed(page, '[data-wt=modes] [data-mode=walk]')).toBe(true);
@@ -483,7 +483,7 @@ test.describe('inside createViewer (the real core, panel, root CSS and replay)',
     await page.evaluate(() => { window.__modesViewer!.events.length = 0; });
     await p.press('Digit2');
     expect(await st(page)).toMatchObject({ mode: 'walk', floor: 'L1' });
-    expect(await textOf(page, 'hud-text')).toBe('Walk · Level 1 · drag or click to look · W A S D to move, Shift to run · PgUp / PgDn: other floor · wheel: lens 24 mm · Esc');
+    expect(await textOf(page, 'hud-text')).toBe('Walk · Level 1 · drag or click to look · W A S D to move, Shift to run, Space to jump · PgUp / PgDn: other floor · wheel: lens 24 mm · Esc');
     await expect(page.locator('[data-wt=hint]')).toHaveText('Click to capture the mouse (Esc frees it, Esc again returns to Orbit) · 1 / 2 / 3: Orbit / Walk / Ghost · P: photo');
     expect(await flagsOf(page)).toEqual(['fp']);
     expect(await pressed(page, '[data-wt=floors] [data-floor=L1]'), 'the floor buttons show the walked floor').toBe(true);
@@ -586,7 +586,7 @@ test.describe('inside createViewer (the real core, panel, root CSS and replay)',
     expect(order.slice(0, 4)).toEqual(['title', 'intro', 'shows', 'modes']);
     await p.press('Digit2');
     expect(await st(page)).toMatchObject({ mode: 'walk', floor: 'suite' });
-    expect(await textOf(page, 'hud-text')).toBe('Walk · Suite (FL-01) · drag or click to look · W A S D to move, Shift to run · PgUp / PgDn: other floor · wheel: lens 24 mm · Esc');
+    expect(await textOf(page, 'hud-text')).toBe('Walk · Suite (FL-01) · drag or click to look · W A S D to move, Shift to run, Space to jump · PgUp / PgDn: other floor · wheel: lens 24 mm · Esc');
     const after = await page.evaluate(() => {
       window.__modesViewer!.viewer!.dispose();
       window.dispatchEvent(new KeyboardEvent('keydown', { code: 'Digit3', bubbles: true }));
@@ -632,7 +632,7 @@ test.describe('per model', () => {
     expect([s.mode, s.floor]).toEqual(['walk', 'suite']);
     expect(Math.abs(s.y - 1.6)).toBeLessThan(0.01);
     expect(await probe<number>(page, 'clearance')).toBeGreaterThanOrEqual(0.5);
-    expect(await textOf(page, 'hud-text')).toBe('Walk · Suite (FL-01) · drag or click to look · W A S D to move, Shift to run · PgUp / PgDn: other floor · wheel: lens 24 mm · Esc');
+    expect(await textOf(page, 'hud-text')).toBe('Walk · Suite (FL-01) · drag or click to look · W A S D to move, Shift to run, Space to jump · PgUp / PgDn: other floor · wheel: lens 24 mm · Esc');
   });
 
   test('hotel: Walk on Floor 1 at 1.60 m; the Floor 2 button takes you to 4.50 m', async ({ page }) => {

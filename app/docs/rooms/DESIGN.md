@@ -1901,6 +1901,9 @@ and ground ray are amended in place; the rest are listed here and take precedenc
 | R-7 / R-8 stairs | the bottom point never leaves the plate; the "kept as lines" text is in the floor's own frame | BRK-5, CODE-6 |
 | R-9 the walker | the head reach fixed at 1.90 m; a floor with no slab walked at its level | CODE-2, CODE-4 |
 | R-9.7 colours | treads and landings in the legend's stairs colour `#b9c7b4`, edge `#6f8a6a`, as `step` | S15 |
+| R-7.4 rule 1 (12 Nov, the owner) | a stair word (UP / DN) is read on any layer, an ignored one too; it still counts only at a flight's end. The bank writes its "UP" on `G-ANNO-TEXT`, which the Layers step suggests ignoring | owner |
+| Furniture (12 Nov, the owner) | the new rules give the kind `seat` (Chair / stool) `blocks: false`: chairs do not stop the walker unless the viewer's "stops" tick says so; the old rule keeps the office table's `true` | owner |
+| R-9 Jump (12 Nov, the owner) | Space in Walk: a hop of 0.6 m (exact under g = 9.81 m/s², about 0.7 s); the body rays rise with it; it lands on the ground or on the top of a collider under the centre (standing on a box; walking off its edge drops back to the ground); the ground rules of the walk do not change (never over a floor's edge or into a well); a surface overhead stops it rising (`modes/walk.ts` `stepHop`, `modes/state.ts` JUMP_*) | owner |
 
 **Open after the review** (RR.md section 6): door and casement swings on the window layer close slivers of floor
 (FID-2); rounded plate in the V notches between the new suite's bays (FID-5(a)); a room fix that remembers its room, to

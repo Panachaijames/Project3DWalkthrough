@@ -211,6 +211,11 @@ def assemble(floors, X, parts_geo, built, log) -> dict:
         furniture, furn_kinds = fk.finish(furn_pieces, keys, X.FURN.get('heights'), X.FURN.get('bases'), openings)
     except ValueError as e:
         raise BuildError('bad_settings', f'the furniture settings: {e}', step='furniture') from e
+    if X.options.get('slabs') == 'network':
+        # The new rules (the owner, 12 Nov): chairs and stools do not stop the walker by default (around desks and
+        # counters they left no way through); the viewer's "stops" tick still makes them. The old rule keeps every kind
+        # as the office table says, so a version built the old way stays byte for byte.
+        furn_kinds = [{**k, 'blocks': False} if k['key'] == 'seat' else k for k in furn_kinds]
     perm = FU.finish_order(furn_pieces, keys)
     approach = {k: {'pieces': sum(1 for p in furniture if p['floor'] == k and p['approach']),
                     'openingIds': sorted({o for p in furniture if p['floor'] == k for o in p['approach']})} for k in furn_report}

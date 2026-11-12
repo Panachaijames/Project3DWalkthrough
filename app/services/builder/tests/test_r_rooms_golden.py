@@ -33,7 +33,7 @@ from walkthrough_builder import oslock
 
 NAMES = ('bank', 'house', 'suite', 'tower', 'suite-revit')
 FILES = ('model.json', 'stages.json', 'topview.png', 'maxscript', 'furniture.csv')
-BANK_NEW_RULE_SHA1 = '54ef1ac240bbfa1421b0b49026ec26c16e3d1eed'     # = services/api/tests/test_r5_builder.py's
+BANK_NEW_RULE_SHA1 = '77468e44ecd1661e4e121b9f3a9354de7773e91a'     # = services/api/tests/test_r5_builder.py's
 
 #: PROVISIONAL (RI, 11 Nov 2026): name -> {files: sha1 per FILES, floors: {key: summary row}}. Recorded with
 #: WT_RECORD_ROOMS_GOLDEN=1 from the builder of the branch at 0209ab3 plus RI-A's changes; each model equals the one the
@@ -46,13 +46,17 @@ BANK_NEW_RULE_SHA1 = '54ef1ac240bbfa1421b0b49026ec26c16e3d1eed'     # = services
 #: the stair-hall void: both lay inside the real hole, so only the hole outlines' points changed (tower 11 / 10 -> 8 / 4
 #: points per lift hole; the slab and ceiling parts' counts, every floor row below and the holes' areas are the same).
 #: The bank, the two suites, every stages.json and furniture CSV did not move.
+#: 12 Nov 2026 (the owner's three requests): the new rules give chairs and stools `blocks: false` (build/model.py), so
+#: the model.json and Max script of the four drawings with chairs moved (bank model.json 54ef1ac2.. -> 77468e44..; bank maxscript 934a1d26.. -> e560b613..; house model.json d90ccc3c.. -> 8d6e1e32..; house maxscript 66794ff4.. -> 24677869..; suite model.json ed7774c6.. -> 61be67c3..; suite maxscript 03d548b3.. -> 0dee5ffc..; tower model.json 9f95de8a.. -> 2bddcd47..; tower maxscript 8659ebdc.. -> 411ff667..).
+#: The stair words read on any layer (build/stairs_read.py) moved nothing here; the top views, stages, CSVs and every
+#: floor row are the same; the new suite has no chair and did not move.
 PINS: dict = {
     'bank': {
         'files': {
-            'model.json': '54ef1ac240bbfa1421b0b49026ec26c16e3d1eed',
+            'model.json': '77468e44ecd1661e4e121b9f3a9354de7773e91a',
             'stages.json': '40c12469a7f27866bf71e566a5163eed05be93e9',
             'topview.png': 'fe813a4b4074a037689eb2762e02544703177d97',
-            'maxscript': '934a1d26df35486f62f028102b567795c089505f',
+            'maxscript': 'e560b61383e7a5ae8e3f0251e140d983e8632bb0',
             'furniture.csv': '66f53fb2636e7f465a91c0708de22bc45a9fe6c6',
         },
         'floors': {
@@ -62,10 +66,10 @@ PINS: dict = {
     },
     'house': {
         'files': {
-            'model.json': 'd90ccc3c6e5db0eb703b648b68d9400b46de8785',
+            'model.json': '8d6e1e32ad6aaa8462452c13dda15976a8e5747c',
             'stages.json': 'd0108e3c80db088fa433beaec21dc97e400c67d8',
             'topview.png': 'f0d77602836a289101824063b67db154c7c74a52',
-            'maxscript': '66794ff4df6982d8af3906c41cae717c609f0f97',
+            'maxscript': '24677869dc73dd68e46e7c0520d6c7db8ebc8ce4',
             'furniture.csv': '5ebe79e4c341c9a4f3b53b4c55fe1867259e44f8',
         },
         'floors': {
@@ -75,10 +79,10 @@ PINS: dict = {
     },
     'suite': {
         'files': {
-            'model.json': 'ed7774c64b9b3567df9a4dbdcb8b257f84064d69',
+            'model.json': '61be67c32cf06ca005e12c2fe87e1213b876da58',
             'stages.json': '96d5858cbaf875a652070e866d1534881e31c8ce',
             'topview.png': '7224ebbc77f7237b7ffb1bafb78b0fc363f4e977',
-            'maxscript': '03d548b3f68f425b9048210219aa14dacf135a26',
+            'maxscript': '0dee5ffcc855df4b920815f4f8861acac81e744f',
             'furniture.csv': 'f39f5f709f50a8dabb4cb4a70570322a17f9716c',
         },
         'floors': {
@@ -87,10 +91,10 @@ PINS: dict = {
     },
     'tower': {
         'files': {
-            'model.json': '9f95de8a365c6a5cf9bcd953690d241f0291c053',
+            'model.json': '2bddcd47e9883f8b4e1392aae87bf1523e6f9a64',
             'stages.json': 'f52a370f7228755478806b2927cccb434a609d6c',
             'topview.png': '2cfdccca0c676f1f4cd1ffad36582f6f67e8ace4',
-            'maxscript': '8659ebdcb593d8c6a5f09c98ad81404328772650',
+            'maxscript': '411ff667dc7820976e55564fc06470051c3658b4',
             'furniture.csv': '8949ec63bd853622d29c453dd83ae2455a8b372b',
         },
         'floors': {

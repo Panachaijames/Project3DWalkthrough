@@ -133,9 +133,9 @@ describe('modes: Walk, Ghost, Orbit', { timeout: 120_000 }, () => {
     expect(flags(ctx)).toEqual(['fp']);
     expect(q('hud').style.display).toBe('flex');
     expect(q('cross').style.display).toBe('block');
-    expect(text(q('hud-text'))).toBe('Walk · Level 1 · drag or click to look · W A S D to move, Shift to run · PgUp / PgDn: other floor · wheel: lens 24 mm · Esc');
+    expect(text(q('hud-text'))).toBe('Walk · Level 1 · drag or click to look · W A S D to move, Shift to run, Space to jump · PgUp / PgDn: other floor · wheel: lens 24 mm · Esc');
     expect(q('hud-text').querySelector('b')!.textContent).toBe('Walk');
-    expect(q('hud-text').querySelector('.vm-more')!.textContent).toBe(' · drag or click to look · W A S D to move, Shift to run · PgUp / PgDn: other floor · wheel: lens 24 mm · Esc');
+    expect(q('hud-text').querySelector('.vm-more')!.textContent).toBe(' · drag or click to look · W A S D to move, Shift to run, Space to jump · PgUp / PgDn: other floor · wheel: lens 24 mm · Esc');
     expect(ctx.ui.hint.textContent).toBe('Click to capture the mouse (Esc frees it, Esc again returns to Orbit) · 1 / 2 / 3: Orbit / Walk / Ghost · P: photo');
     expect(q('modes').querySelector('[data-mode=walk]')!.getAttribute('aria-pressed')).toBe('true');
     expect(q('modes').querySelector('[data-mode=orbit]')!.getAttribute('aria-pressed')).toBe('false');
@@ -295,6 +295,30 @@ describe('keys', { timeout: 60_000 }, () => {
     key('keydown', 'Digit1');
     expect(key('keyup', 'Space').defaultPrevented).toBe(false);          // Orbit: Space is not the viewer's
     expect(ctx.ui.root.contains(tick)).toBe(true);
+  });
+
+  it('Space in Walk hops on the press itself: the eye rises about 0.6 m and comes back; a held Space is one hop; Ghost keeps Space for up', () => {
+    const { modes, s } = mount();
+    key('keydown', 'Digit2');
+    const y0 = s.pos.y;
+    let t = s.last;
+    const frames = (n: number) => { let top = -Infinity; for (let i = 0; i < n; i++) { t += 1000 / 60; modes.tick(t); top = Math.max(top, s.pos.y); } return top; };
+    key('keydown', 'Space'); key('keyup', 'Space');             // a tap between two frames is not lost
+    const top = frames(60);
+    expect(top - y0).toBeGreaterThan(0.55);
+    expect(top - y0).toBeLessThan(0.61);
+    expect(Math.abs(s.pos.y - y0)).toBeLessThan(1e-9);           // back on the floor
+    key('keydown', 'Space');
+    for (let i = 0; i < 5; i++) key('keydown', 'Space', document.body, { repeat: true });
+    frames(60);
+    key('keyup', 'Space');
+    expect(frames(10)).toBeCloseTo(y0, 9);                     // the held key gave one hop, now over
+    key('keydown', 'Digit3');
+    const g0 = s.pos.y;
+    key('keydown', 'Space'); frames(6); key('keyup', 'Space');
+    expect(s.pos.y).toBeGreaterThan(g0);                         // Ghost: Space still rises
+    key('keydown', 'Digit2');
+    expect(frames(30)).toBeLessThan(s.floor.level + s.eye + 1e-6); // and Walk starts on the floor, no hop carried over
   });
 
   it('nothing while locked; Esc while the pointer is locked does not leave Walk', () => {

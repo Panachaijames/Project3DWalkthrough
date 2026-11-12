@@ -690,9 +690,12 @@ def chain_outline(st):
 
 # ---------------------------------------------------------------------------------------------------------- direction
 def _words(fb, X) -> list:
+    """The stair words (UP / DN) of the floor, on ANY layer, an ignored one too (the owner, 12 Nov: the bank keeps its
+    "UP" on G-ANNO-TEXT, which the Layers step suggests ignoring, and its main stair then had no direction). A word only
+    counts where it stands at a flight's end (_give_words), so stray text elsewhere changes nothing."""
     out = []
     for d in fb['items']:
-        if 'text' in d and 'ins' in d and 'ignore' not in d['roles'] and X.V.is_stair_word(d['text'].strip()):
+        if 'text' in d and 'ins' in d and X.V.is_stair_word(d['text'].strip()):
             out.append({'at': (d['ins'][0], d['ins'][1]), 'up': X.V.is_up(d['text'].strip())})
     return out
 

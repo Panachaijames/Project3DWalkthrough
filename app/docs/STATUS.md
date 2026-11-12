@@ -25,7 +25,8 @@ Nothing has been put online or deployed. Everything runs on this laptop only. Th
    `npm run dev` again and open http://127.0.0.1:5710 as before.
 2. **Try it on the bank** (about 10 minutes): a **New project** from the bank's two DWGs in the project folder
    (`I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg` and `I1202 - LEVEL 2 ...`). On **Layers**, check the suggested roles (the
-   stair layer must be *stair*); on **Floors**, levels 0 and 3.70 m, walls 3.70 m (the floors, ceilings and stairs are
+   stair layer `S-STRS` must be *stair*; set `G-ANNO-TEXT` to *room name*, where the bank keeps its room names); on
+   **Floors**, levels 0 and 3.70 m, walls 3.70 m (the floors, ceilings and stairs are
    built the new way by themselves); then **Build**, look over the **Check** step and **Save**. In the viewer choose
    **Walk**, double-click on the floor at the foot of the main stair, face it and hold **W**: you climb to level 2 and
    its floor button lights up. Look up: the ceiling is there in Walk (and in Ghost), not in Orbit; the **Ceilings** tick
@@ -35,6 +36,27 @@ Nothing has been put online or deployed. Everything runs on this laptop only. Th
    v1 again** (offered until 18 Nov), set layer **0** to *wall* on **Layers**, **Build**; on **Check**, set aside the
    items of each "single line" flag (furniture drawn on layer 0) and **Rebuild**. The floor then covers the suite (about
    277 m²), and the living room is one room with its names.
+
+## Added on 12 Nov, after the milestone (your requests)
+
+* **Jump.** In **Walk**, press **Space** for a hop about 0.6 m high. While you are up, furniture lower than the hop
+  does not stop you; you can land on a chair or a table and stand on it, walk off its edge or hop down. Walls, glass and
+  railings still stop you, a hop never carries you over a floor's edge or into a stair well, and a low ceiling cuts it
+  short. It works in every version, old ones too; walking without Space is exactly as before (the eight old versions
+  were walked again probe by probe: the same as on 9 Nov).
+* **Chairs and stools no longer stop you** in Walk, in versions built from now on: around the bank's counters they left
+  no way through. The **stops** tick in the furniture panel still makes them stop you. Versions already saved keep
+  what they had.
+* **A stair's "UP" is read on any layer**, an ignored one too. Your TEST_BANK's main stair stayed as lines because the
+  bank writes its "UP" on `G-ANNO-TEXT`, which the Layers step suggests ignoring; it now climbs with your settings as
+  they are. (Set `G-ANNO-TEXT` to *room name* anyway to get the bank's room names.)
+* To see them on TEST_BANK: **New version**, **Use the files of v1 again**, **Build**, **Save**; in **Walk** the main
+  stair climbs, the chairs let you through, and **Space** hops.
+* Checked: unit tests 1033, the builder's 1067, the API with the real builder (the bank's new pinned model), 196
+  browser checks (Walk, Ghost, Orbit, the stairs, the walk checks on fifteen versions) and the viewer's own 23. The four
+  pinned new-rule models with chairs moved (their chairs' "stops"), nothing else in them; versions built the old way
+  stay byte for byte.
+* **Next, as you asked:** a **Delete** button for a project, a version and a draft, then for a single furniture box.
 
 ## What is new
 

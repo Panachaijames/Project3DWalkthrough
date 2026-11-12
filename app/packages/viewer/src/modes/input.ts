@@ -68,6 +68,8 @@ export function installInput(ctx: ViewerContext, s: ModesState, ui: ModesUi, wal
     if (s.mode === 'orbit') return;
     if (e.code === 'Escape') { if (!locked()) d.setMode('orbit'); return; }
     if (e.code === 'PageUp' || e.code === 'PageDown') { d.changeFloor(e.code === 'PageUp' ? 1 : -1); e.preventDefault(); return; }
+    // Jump (the owner, 12 Nov): one hop a press, on the press itself, so a quick tap between two frames is not lost.
+    if (e.code === 'Space' && s.mode === 'walk' && !e.repeat) walk.jump();
     s.keys.add(e.code);
     if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) e.preventDefault();
   });

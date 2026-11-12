@@ -191,7 +191,7 @@ export function createHud(ctx: ViewerContext, s: ModesState, ui: ModesUi, proj: 
       ui.cross.style.display = fp && !s.camOpen ? 'block' : 'none';
       if (s.mode === 'walk') {
         const more = s.touch ? 'drag to look · stick to move'
-          : `drag or click to look · W A S D to move, Shift to run · PgUp / PgDn: other floor · wheel: lens ${Math.round(s.lens)} mm · Esc`;
+          : `drag or click to look · W A S D to move, Shift to run, Space to jump · PgUp / PgDn: other floor · wheel: lens ${Math.round(s.lens)} mm · Esc`;
         hudText('Walk', ` · ${s.floor.name}`, more);
       } else if (s.mode === 'ghost') {
         const more = s.touch ? 'drag to look · stick to fly'

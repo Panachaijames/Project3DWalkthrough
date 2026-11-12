@@ -99,6 +99,7 @@ export const installModes: InstallModes = (ctx: ViewerContext) => {
   // -------------------------------------------------------------- modes
   /** opt.foot (climbing only): the height of the tread or landing that was double-clicked; the walker stands on it. */
   function setMode(m: ViewMode, opt: { floor?: FloorRecord; point?: { x: number; z: number }; foot?: number } = {}) {
+    walk.land();                                         // a hop never carries over a mode change or a teleport
     const from = s.mode;
     if (m === from && !opt.point) return;
     // Locked (the build replay is on): Orbit only. The prototype's UI could not get here (the panel is hidden, the keys,
@@ -187,12 +188,18 @@ export const installModes: InstallModes = (ctx: ViewerContext) => {
       if (walk.climbing) {
         walk.restart();                                   // a test wrote the position: from the floor's level (R-9.8)
         if (mag > 0) walk.walkMove(d.setLength(mag * (fast ? RUN_SPEED : WALK_SPEED) * dt));
-        // The eye eases toward foot + eye (time constant 0.1 s): no 17 cm jump per step (R-9.4). The physics uses the foot.
-        const gap = s.foot + s.eye - s.pos.y;
-        s.pos.y = Math.abs(gap) < 5e-4 ? s.foot + s.eye : s.pos.y + gap * (1 - Math.exp(-dt / EYE_EASE));
+        walk.air(dt);
+        if (walk.hopping() || walk.lift() > 0) {
+          s.pos.y = s.foot + walk.lift() + s.eye;         // in a hop, or standing on a box: the eye follows at once
+        } else {
+          // The eye eases toward foot + eye (time constant 0.1 s): no 17 cm jump per step (R-9.4). The physics uses the foot.
+          const gap = s.foot + s.eye - s.pos.y;
+          s.pos.y = Math.abs(gap) < 5e-4 ? s.foot + s.eye : s.pos.y + gap * (1 - Math.exp(-dt / EYE_EASE));
+        }
       } else {
         if (mag > 0) walk.walkMove(d.setLength(mag * (fast ? RUN_SPEED : WALK_SPEED) * dt));
-        s.pos.y = s.floor.level + s.eye;
+        walk.air(dt);
+        s.pos.y = s.floor.level + walk.lift() + s.eye;
       }
     } else {
       const upIn = (k.has('Space') || k.has('KeyE') ? 1 : 0) - (k.has('KeyC') || k.has('KeyQ') ? 1 : 0) + s.vert;

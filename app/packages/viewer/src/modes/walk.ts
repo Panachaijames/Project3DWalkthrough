@@ -15,8 +15,8 @@ import type {} from 'three-mesh-bvh';
 import type { FloorRecord, ModesState } from '../contracts';
 import {
   BODY_SPAN, CLEARANCE_DIRECTIONS, CLEARANCE_FAR, FACE_FAR, FACE_HEADINGS, FACE_KEEP, FLOOR_HYSTERESIS, FLOOR_RAY_FAR,
-  FLOOR_RAY_FROM, FREE_FAR_RINGS, FREE_MIN_ROOM, FREE_NEAR_RINGS, FREE_RING_STEP, GAP_BRIDGE, GROUND_RAY_FROM,
-  HEAD_ABOVE_EYE, HEAD_FROM, HEAD_REACH, OPEN_HEIGHT, RADIUS, RAY_HEIGHTS, RAY_OFFSETS, STEP_DOWN, STEP_EPS, STEP_UP,
+  FLOOR_RAY_FROM, FREE_FAR_RINGS, FREE_MIN_ROOM, FREE_NEAR_RINGS, FREE_RING_STEP, GAP_BRIDGE, GRAVITY, GROUND_RAY_FROM,
+  HEAD_ABOVE_EYE, HEAD_FROM, HEAD_REACH, JUMP_SPEED, OPEN_HEIGHT, RADIUS, RAY_HEIGHTS, RAY_OFFSETS, STEP_DOWN, STEP_EPS, STEP_UP,
 } from './state';
 
 /** What the foot-based walker needs beyond the state (modes/index.ts gives it when the model has `stairways`). */
@@ -79,6 +79,16 @@ export interface Walker {
    * teleport (R-9.8). True when it did.
    */
   restart(): boolean;
+  /** Jump (Space in Walk): starts a hop when standing (on the ground or on a box); true when it did. */
+  jump(): boolean;
+  /** Moves the hop on by dt seconds (gravity, a slab overhead, landing on the ground or on a box under the centre). */
+  air(dt: number): void;
+  /** How high the walker is above its ground now (0 when standing on it; a box's height when standing on the box). */
+  lift(): number;
+  /** In the air (rising or falling), not standing. */
+  hopping(): boolean;
+  /** Ends any hop at once (a mode change, a teleport). */
+  land(): void;
 }
 
 const DOWN = new Vector3(0, -1, 0);
@@ -89,15 +99,19 @@ export function createWalker(s: ModesState, climb?: ClimbDeps): Walker {
 
   const visibleColliders = (f: FloorRecord) => f.colliders.filter(m => m.visible);
 
-  function hitAhead(p: Vector3, dir: Vector3, dist: number, f: FloorRecord): Intersection | null {
+  /** The hop (Jump): how high above the ground the walker is, and how fast it is rising (m/s; < 0 falling). */
+  const hop = { lift: 0, v: 0 };
+
+  function hitAhead(p: Vector3, dir: Vector3, dist: number, f: FloorRecord, lift = 0): Intersection | null {
     const cols = visibleColliders(f);
     if (!cols.length) return null;
     const side = new Vector3(-dir.z, 0, dir.x);
     for (const h of RAY_HEIGHTS) {
       // At most 7.5 cm apart, so a partition thicker than that cannot slip between; the outer pair stays 1.5 cm inside
-      // the body's edge so that sliding along a wall you touch is not blocked by the wall itself.
+      // the body's edge so that sliding along a wall you touch is not blocked by the wall itself. In a hop the rays rise
+      // with the walker (`lift`; 0 otherwise, the walk of before line for line).
       for (const k of RAY_OFFSETS) {
-        const origin = new Vector3(p.x, f.level + h, p.z).addScaledVector(side, k * RADIUS);
+        const origin = new Vector3(p.x, f.level + lift + h, p.z).addScaledVector(side, k * RADIUS);
         ray.set(origin, dir);
         ray.far = dist + RADIUS;
         const hit = ray.intersectObjects(cols, false)[0];
@@ -183,8 +197,8 @@ export function createWalker(s: ModesState, climb?: ClimbDeps): Walker {
   function walkMove(d: Vector3): void {
     const f = s.floor, dist = d.length();
     if (!(dist > 0)) return;                            // a zero step (dt 0) moves nothing (the prototype cast NaN rays to the same end)
-    const dir = d.clone().divideScalar(dist);
-    const hit = hitAhead(s.pos, dir, dist, f);
+    const dir = d.clone().divideScalar(dist), lift = hop.lift;
+    const hit = hitAhead(s.pos, dir, dist, f, lift);
     let step = d;
     if (hit) {
       if (!hit.face) return;
@@ -195,7 +209,7 @@ export function createWalker(s: ModesState, climb?: ClimbDeps): Walker {
       if (n.dot(dir) > 0) n.negate();
       step = d.clone().addScaledVector(n, -d.dot(n));   // the part of the step along the wall
       const sl = step.length();
-      if (sl < 1e-5 || hitAhead(s.pos, step.clone().divideScalar(sl), sl, f)) return;
+      if (sl < 1e-5 || hitAhead(s.pos, step.clone().divideScalar(sl), sl, f, lift)) return;
     }
     const next = s.pos.clone().add(step);
     if (onFloor(next, f)) { s.pos.copy(next); return; }
@@ -203,14 +217,45 @@ export function createWalker(s: ModesState, climb?: ClimbDeps): Walker {
     const parts = [new Vector3(step.x, 0, 0), new Vector3(0, 0, step.z)].sort((a, b) => b.lengthSq() - a.lengthSq());
     for (const part of parts) {
       const pl = part.length();
-      if (pl < 1e-5 || hitAhead(s.pos, part.clone().divideScalar(pl), pl, f)) continue;
+      if (pl < 1e-5 || hitAhead(s.pos, part.clone().divideScalar(pl), pl, f, lift)) continue;
       const q = s.pos.clone().add(part);
       if (onFloor(q, f)) { s.pos.copy(q); return; }
     }
   }
 
+  /**
+   * The hop, dt seconds on: `base` = the ground's height (the foot, or the floor's level), `cols` = the colliders a box
+   * to stand on may be among, `blocked(lift)` = a slab overhead at that lift. Coming down, the walker stands on the top
+   * of a collider right under its centre (a chair, a table) or on its ground; a box left behind (walked off its edge)
+   * lets it fall back to the ground, never further: the ground stays the one the walk rules found.
+   */
+  function stepHop(dt: number, base: number, cols: Mesh[], blocked: (lift: number) => boolean): void {
+    if (hop.lift <= 0 && hop.v <= 0) { hop.lift = 0; hop.v = 0; return; }
+    const was = hop.lift;
+    let lift = was + hop.v * dt - GRAVITY * dt * dt / 2;               // exact under constant gravity: the same hop at any frame rate
+    hop.v -= GRAVITY * dt;
+    if (hop.v > 0 && blocked(lift)) { lift = was; hop.v = 0; }       // a slab overhead: the hop stops rising
+    if (hop.v <= 0 && cols.length) {
+      ray.set(new Vector3(s.pos.x, base + was + 0.05, s.pos.z), DOWN);
+      ray.far = was + 0.05 - Math.max(0, lift);
+      const hit = ray.far > 0 ? ray.intersectObjects(cols, false)[0] : undefined;
+      if (hit && hit.point.y - base > 1e-3) { hop.lift = hit.point.y - base; hop.v = 0; return; }
+    }
+    if (lift <= 0) { hop.lift = 0; hop.v = 0; return; }
+    hop.lift = lift;
+  }
+  function jump(): boolean {
+    if (hop.v !== 0) return false;                                      // already in the air
+    hop.v = JUMP_SPEED;
+    return true;
+  }
+  const land = () => { hop.lift = 0; hop.v = 0; };
+
   const today: Walker = {
     ray, visibleColliders, hitAhead, onFloor, clearance, findFree, openAhead, faceOpen, startPoint, walkMove,
+    jump, land, lift: () => hop.lift,
+    hopping: () => hop.v !== 0,
+    air: dt => stepHop(dt, s.floor.level, visibleColliders(s.floor), () => false),
     climbing: false,
     base: () => s.floor.level,
     bodies: () => visibleColliders(s.floor),
@@ -334,7 +379,7 @@ export function createWalker(s: ModesState, climb?: ClimbDeps): Walker {
     let g = groundRay(next.x, next.z, s.foot, f);
     if (g === null) g = groundRay(next.x + dir.x * GAP_BRIDGE, next.z + dir.z * GAP_BRIDGE, s.foot, f);   // the gap bridge
     if (g === null || g === 'high') return false;
-    if (headHit(next.x, next.z, g.y, f)) return false;
+    if (headHit(next.x, next.z, g.y + hop.lift, f)) return false;   // in a hop the head is that much higher
     s.pos.x = next.x; s.pos.z = next.z; s.foot = g.y;
     const renamed = nameFloor();
     settle();
@@ -346,7 +391,7 @@ export function createWalker(s: ModesState, climb?: ClimbDeps): Walker {
     const f = s.floor, dist = d.length();
     if (!(dist > 0)) return;
     const dir = d.clone().divideScalar(dist);
-    const hit = hitAheadAt(s.pos, dir, dist, s.foot, f);
+    const hit = hitAheadAt(s.pos, dir, dist, s.foot + hop.lift, f);
     let step = d, stepDir = dir;
     if (hit) {
       if (!hit.face) return;
@@ -359,7 +404,7 @@ export function createWalker(s: ModesState, climb?: ClimbDeps): Walker {
       const sl = step.length();
       if (sl < 1e-5) return;
       stepDir = step.clone().divideScalar(sl);
-      if (hitAheadAt(s.pos, stepDir, sl, s.foot, f)) return;
+      if (hitAheadAt(s.pos, stepDir, sl, s.foot + hop.lift, f)) return;
     }
     if (tryAt({ x: s.pos.x + step.x, z: s.pos.z + step.z }, stepDir)) return;
     // At an edge (a well, the open side of a flight, a step too high): slide along it, as today's floor edge.
@@ -368,7 +413,7 @@ export function createWalker(s: ModesState, climb?: ClimbDeps): Walker {
       const pl = part.length();
       if (pl < 1e-5) continue;
       const partDir = part.clone().divideScalar(pl);
-      if (hitAheadAt(s.pos, partDir, pl, s.foot, f)) continue;
+      if (hitAheadAt(s.pos, partDir, pl, s.foot + hop.lift, f)) continue;
       if (tryAt({ x: s.pos.x + part.x, z: s.pos.z + part.z }, partDir)) return;
     }
   }
@@ -459,12 +504,16 @@ export function createWalker(s: ModesState, climb?: ClimbDeps): Walker {
     openAhead: openAheadFromFoot,
     faceOpen: faceOpenFromFoot,
     walkMove: climbMove,
+    jump, land, lift: () => hop.lift,
+    hopping: () => hop.v !== 0,
+    air: dt => stepHop(dt, s.foot, bodiesAt(s.foot + hop.lift, s.floor), lift => headHit(s.pos.x, s.pos.z, s.foot + lift, s.floor)),
     base: () => s.foot,
     bodies: () => bodiesAt(s.foot, s.floor),
     ground: p => { const g = groundRay(p.x, p.z, s.foot, s.floor); return g !== null && g !== 'high' ? g.y : null; },
     surfaceUnder, nameFloor, settle, displaced, reground,
     restart() {
       if (!displaced()) return false;
+      land();
       s.foot = s.floor.level;
       if (s.mode === 'walk') s.pos.y = s.foot + s.eye;
       settle();

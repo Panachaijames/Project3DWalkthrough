@@ -440,6 +440,26 @@ for (const P of PROJECTS) {
       });
     }
 
+    if (P.key === 'bank-v2' && isApp) {
+      test('Space hops in Walk (the owner, 12 Nov): about 0.6 m up, back on the floor within a second; the hint says so', async ({ page }) => {
+        const p = await open(page, P.key);
+        await p.press('Digit2');
+        const y0 = (await st(page)).y;
+        expect(await page.locator('[data-wt=hud-text]').textContent()).toContain('Space to jump');
+        await p.press('Space');
+        let top = y0;
+        for (let i = 0; i < 20; i++) { await sleep(50); top = Math.max(top, (await st(page)).y); }
+        expect(top - y0, `rose ${r2(top - y0)} m`).toBeGreaterThan(0.35);    // sampled every 50 ms: near the 0.6 m peak
+        expect(top - y0).toBeLessThan(0.62);
+        // Back on the floor: in software drawing (10 - 20 fps, each frame at most 0.05 s of walk) a hop takes longer than
+        // its 0.7 s, so wait for the landing rather than a fixed time.
+        let s = await st(page);
+        for (let i = 0; i < 100 && Math.abs(s.y - y0) >= 1e-3; i++) { await sleep(50); s = await st(page); }
+        expect([s.mode, Math.abs(s.y - y0) < 1e-3]).toEqual(['walk', true]);
+        expect(exceptions(p)).toEqual([]);
+      });
+    }
+
     if (P.key === 'house') {
       test("walking at the end of a thin partition never brings you closer than the body's edge", async ({ page }) => {
         const p = await open(page, P.key);

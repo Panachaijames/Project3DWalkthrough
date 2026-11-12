@@ -71,6 +71,15 @@ export const EYE_EASE = 0.1;
 /** A tolerance of the step window (m): a riser of exactly 0.25 m is climbed. */
 export const STEP_EPS = 1e-4;
 
+// ----------------------------------------------------------------------------------------------------------- Jump
+// Space in Walk (the owner, 12 Nov). A hop of JUMP_HEIGHT under GRAVITY (about 0.7 s in the air): while up, the body
+// rays rise with it, so furniture lower than the hop does not stop the walker; walls, glass and railings still do; it
+// lands on the floor or on the top of a box it comes down on (and stands there); it never carries the walker over a
+// floor's edge or into a well (the ground rules of the walk do not change), and a slab overhead cuts it short.
+export const JUMP_HEIGHT = 0.6;
+export const GRAVITY = 9.81;
+export const JUMP_SPEED = Math.sqrt(2 * GRAVITY * JUMP_HEIGHT);
+
 /** The foot-based walker is on when the model has `stairways`, even an empty list (R-9.1). */
 export const isClimbing = (model: { stairways?: unknown } | null | undefined): boolean => !!model && model.stairways !== undefined;
 
