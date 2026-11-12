@@ -267,3 +267,83 @@ def test_the_ring_and_the_rooms_are_in_a_fixed_order() -> None:
     assert ids(a) == ids(b) and [i for i, *_ in ids(a)] == ['F1-R001', 'F1-R002', 'F1-R003']
     ys = [s['at'][1] for s in a['net']['spaces']]
     assert ys[0] > 7 and ys[1] == pytest.approx(5.0, abs=0.1) and ys[2] < 3, 'rows from the top of the plan'
+
+
+# ------------------------------------------------------------------------------------------ RR: the review's findings
+def test_a_wide_gap_in_an_outside_wall_is_asked_about() -> None:
+    """RR BRK-1: a 5 m gap in the east wall of a 10 x 8 m room (a shop front on a layer with no role): the 1.5 m disc
+    gets in, so neither the beside-a-gap nor the pocket rule sees the room, and it had no floor and no flag. It is now
+    an unfloored area with no mouth (kind 'open'): 85 % of its edge runs along walls. Staff answer with "floor here"."""
+    walls = room(0, 0, 10, 8, gaps={'E': [(1.5, 6.5)]})
+    r = run(floor(walls=walls))
+    assert not r['plate0'].contains(Point(5, 4)) and r['net']['spaces'] == []
+    assert [(u['kind'], u['mouth']) for u in r['unfloored']] == [('open', None)]
+    assert r['unfloored'][0]['poly'].contains(Point(5, 4)) and r['report']['unfloored'][0]['area'] == pytest.approx(73.0, abs=2.0)
+    fixed = run(floor(walls=walls),
+                context(fixes={'rooms': [{'floor': 'F1', 'at': [5.0, 4.0], 'name': None, 'slab': 'floor', 'ceiling': 'auto'}]}))
+    assert fixed['plate0'].contains(Point(5, 4)) and fixed['unfloored'] == []
+
+
+@pytest.mark.parametrize('side, gap, t', [(4.0, 2.4, 0.7), (4.0, 2.0, 0.6), (3.5, 2.6, 0.8)])
+def test_an_open_side_never_hides_a_pockets_mouth(side, gap, t) -> None:
+    """RR re-run (RA-18 failed on the bank's L1-018 after BRK-1): a side room whose outside door is left open is a pocket
+    (its way out is under 3 m) and also an open side (most of its edge on walls). The open side is the fallback: the
+    pocket is reported, with its mouth across the doorway, however the two areas compare. Before, the larger piece won,
+    and the open piece, which also takes in the doorway's strip in a thick wall, can be the larger one."""
+    W, H = 12.0, 8.0
+    ga, gb = H / 2 - gap / 2, H / 2 + gap / 2
+    walls = room(0, 0, W, H, t=t, gaps={'E': [(ga, gb)]}) + [box(W - side - 0.2, 0.2, W - side, H - 0.2)]
+    r = run(floor(walls=walls))
+    assert not r['plate0'].contains(Point(W - side / 2, H / 2))
+    assert [u['kind'] for u in r['unfloored']] == ['pocket']
+    door = LineString([(W - 0.1, ga), (W - 0.1, gb)])
+    assert LineString(r['unfloored'][0]['mouth']).distance(door) <= 0.3
+
+
+def test_a_notch_and_a_court_are_not_open_sides() -> None:
+    """RR BRK-1: the notch of an L-shaped plan (59 % of its edge on walls at most) and a court open on one whole side
+    (75 % when square) stay unflagged."""
+    ell = [box(0, 0, 20, 0.2), box(0, 0.2, 0.2, 12), box(0.2, 11.8, 10, 12), box(9.8, 6, 10, 11.8), box(10, 6, 20, 6.2),
+           box(19.8, 0.2, 20, 6)]
+    r = run(floor(walls=ell))
+    assert r['plate0'].contains(Point(5, 9)) and r['unfloored'] == []
+    court = [box(0, 0, 20, 0.2), box(0, 0.2, 0.2, 14), box(19.8, 0.2, 20, 14), box(0.2, 13.8, 6, 14), box(14, 13.8, 19.8, 14),
+             box(5.8, 6, 6, 13.8), box(14, 6, 14.2, 13.8), box(6, 6, 14, 6.2)]
+    r = run(floor(walls=court))
+    assert r['plate0'].contains(Point(3, 3)) and not r['plate0'].contains(Point(10, 10)) and r['unfloored'] == []
+
+
+def test_a_staff_closing_line_that_meets_no_wall_is_unmatched() -> None:
+    """RR BRK-3: a closing line drawn for a drawing that has since moved: neither end reaches the network within its
+    0.5 m extension. It is still applied as drawn (R-6.3) but its row says unmatched, so the overlay flags it. A line
+    with one end on a wall is matched."""
+    walls = room(0, 0, 10, 8)
+    fx = {'closings': [{'floor': 'F1', 'a': [30.0, 2.0], 'b': [30.0, 6.0], 'use': 'line'},
+                       {'floor': 'F1', 'a': [5.0, 0.3], 'b': [5.0, 7.0], 'use': 'line'},
+                       {'floor': 'F1', 'a': [4.0, 2.0], 'b': [6.0, 2.0], 'use': 'line'}]}
+    r = run(floor(walls=walls), context(fixes=fx))
+    assert NW.more_of(r['net'])['closingFixes'] == [{'fix': 0, 'matched': False}, {'fix': 1, 'matched': True}, {'fix': 2, 'matched': False}]
+    assert [c['fix'] for c in closings(r, 'staff')] == [0, 1, 2], 'every line is in the network, as drawn'
+
+
+def test_two_doorway_closings_never_share_a_wall_end() -> None:
+    """RR CODE-5: an end already paired gets no second closing. Three wall ends in one line, 1.0 m and 0.9 m apart
+    (a short stub between two doorways has two ends, each paired once); and with two candidates facing one end, the
+    nearer free one is taken, never an end already used."""
+    W = unary_union([box(0, 0, 2, 0.2), box(3, 0, 3.3, 0.2), box(4.2, 0, 6, 0.2)])
+    ends, _faces = NW.doorway_candidates(W, W)
+    spans_ = sorted((round(c['a'][0], 2), round(c['b'][0], 2)) for c in ends)
+    assert spans_ == [(2.0, 3.0), (3.3, 4.2)]
+    used = [round(x, 2) for c in ends for x in (c['a'][0], c['b'][0])]
+    assert len(used) == len(set(used)), 'no wall end carries two closings'
+
+
+def test_a_mouth_is_a_chord_of_3_m_and_a_stretch_of_5_m() -> None:
+    """RR CODE-7: the constants are named: the mouth's chord (the closing staff get) is 3 m or less, its free stretch
+    5 m or less (it may follow a round closing's curve)."""
+    assert (NW.MOUTH_MAX, NW.MOUTH_STRETCH) == (3.0, 5.0)
+    area = box(0, 0, 4, 4)
+    solid = unary_union([box(-0.2, -0.2, 0, 4.2), box(0, -0.2, 4.2, 0), box(0, 4, 4.2, 4.2), box(4, 0, 4.2, 0.6), box(4, 3.4, 4.2, 4)])
+    assert NW._mouth(area, solid) is not None, 'a 2.8 m mouth'
+    wide = unary_union([box(-0.2, -0.2, 0, 4.2), box(0, -0.2, 4.2, 0), box(0, 4, 4.2, 4.2), box(4, 0, 4.2, 0.3), box(4, 3.7, 4.2, 4)])
+    assert NW._mouth(area, wide) is None, 'a 3.4 m mouth is none'

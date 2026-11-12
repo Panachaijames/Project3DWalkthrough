@@ -172,7 +172,10 @@ describe('the mock API\'s new overlay fixtures (WORK_BREAKDOWN R6)', () => {
     expect(g.unfloored![0]!.answered).toBe(true);
     expect(g.spaces![0]).toMatchObject({ name: 'Living', ceiling: false });
     expect(g.stairs!.map(x => x.state)).toEqual(['climb', 'climb']);
-    expect(o.flags.map(f => f.kind)).toEqual(['room-open', 'room-names', 'stair-clash', 'hole-skipped']);
+    // the slab-gap, the doorway and the stair flags are answered; the others stay (RR: whatever the fixture holds besides,
+    // e.g. the upper floor's cut X void since the builder flags every cut X hole)
+    expect(o.flags.map(f => f.kind)).toEqual(OV.flags.map(f => f.kind).filter(k => !['slab-gap', 'doorway', 'stair'].includes(k)));
+    expect(o.flags.map(f => f.kind).slice(0, 4)).toEqual(['room-open', 'room-names', 'stair-clash', 'hole-skipped']);
     const s2 = addClosing(closeHereFix(flagOf('slab-gap'))!)(REF);
     const g2 = roomsOverlayFor(s2, sha => REF.sources.findIndex(x => x.sha1 === sha)).floors[0]!;
     expect(g2.closings!.map(c => [c.kind, c.fix])).toEqual([['doorway', undefined], ['staff', 0]]);

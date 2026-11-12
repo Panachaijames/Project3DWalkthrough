@@ -65,9 +65,14 @@ DOOR_NEAR = 0.05            # m: a terrace has a door, a passage or a doorway cl
 STAND = 0.4                 # m: standing room is a 0.8 m disc
 UNFLOORED_MIN = 4.0         # m2: an unfloored area is reported from this (R-2.5)
 UNFLOORED_CLOSE = 1.5       # m: the round closing and the erosion of the two unfloored rules
-MOUTH_MAX = 3.0             # m: a mouth is one stretch of this or less
+MOUTH_MAX = 3.0             # m: a mouth's chord (the straight line between its two ends) is this or less
+MOUTH_STRETCH = 5.0         # m: ... and the free stretch itself this or less (it may follow a round closing's curve)
 FRAME = 5.0                 # m: the frame round the floor for the pockets
+OPEN_SIDE_MIN = 10.0        # m2: an area with no floor inside the walls' hull is reported from this ...
+OPEN_SIDE_EDGE = 0.8        # ... when this share of its edge runs along the network or the plate (see _unfloored)
 BIG_ROOM = 150.0            # m2: a room over this with no opening on its edge is asked about (R-4.1)
+BIG_SHAPE = 10.0            # m2: a face of this or more that is left an enclosed shape, in no room, is asked about
+SMALL_ROOM = 4.0            # m2: a name given by distance (R-3.2 rule 4) to a room under this is asked about
 
 
 # ------------------------------------------------------------------------------------------------------ small helpers
@@ -231,12 +236,14 @@ def doorway_candidates(W, N):
     for i, e in enumerate(E):
         if i + 1 >= len(E):
             break
+        if i in used:                                      # an end already paired gets no second closing (RR CODE-5)
+            continue
         d = M[i + 1:] - M[i]
         along = d @ Nn[i]
         off = np.abs(d @ U[i])
         ok = ((Nn[i + 1:] @ Nn[i]) <= FACING) & (along >= DOORWAY[0]) & (along <= DOORWAY[1]) & \
              (off <= (Ls[i] + Ls[i + 1:]) / 2 - IN_FRONT * np.minimum(Ls[i], Ls[i + 1:]) + 1e-9)
-        idx = np.nonzero(ok)[0]
+        idx = np.array([k for k in np.nonzero(ok)[0] if i + 1 + int(k) not in used], dtype=int)
         if not len(idx):
             continue
         j = i + 1 + int(idx[np.argmin(along[idx])])
@@ -480,7 +487,8 @@ def network_of(fb, fixes, X):
     built = union(fb['e_walls'])
     spans = [r['span'] for r in fb['recs'] if r.get('span') is not None and not r['span'].is_empty]
     singles = list(fb.get('singles') or [])
-    drawn = line_strips(boundary_paths(fb['items']) + boundary_paths(info['aside']))
+    aside = line_strips(boundary_paths(info['aside']))
+    drawn = line_strips(boundary_paths(fb['items'])) + aside
     out_polys, out_open = outline_items(fb['items'])
     outlines = [p.exterior.buffer(STRIP / 2, join_style='mitre', mitre_limit=2.0) for p in out_polys] + line_strips(out_open)
     base = union([built] + spans + singles + drawn + outlines)
@@ -493,16 +501,21 @@ def network_of(fb, fixes, X):
             continue
         a, b = to_build(f['a'], shift), to_build(f['b'], shift)
         reach = [None, None]                               # where each end meets the network, when it stops short of it
+        meets = False                                      # an end lies on the network, or reaches it within 0.5 m
         if not base.is_empty:
             for i, end in enumerate((a, b)):
                 pt = Point(end)
-                if 0 < base.distance(pt) <= STAFF_REACH:
+                d = base.distance(pt)
+                meets = meets or d <= STAFF_REACH
+                if 0 < d <= STAFF_REACH:
                     q = nearest_points(pt, base)[1]
                     reach[i] = (q.x, q.y)
         path = ([reach[0]] if reach[0] else []) + [a, b] + ([reach[1]] if reach[1] else [])
         g = LineString(path).buffer(STRIP / 2, cap_style='square', join_style='mitre', mitre_limit=2.0)
         staff.append({'kind': 'staff', 'a': a, 'b': b, 'width': math.dist(a, b), 'fix': k, 'geom': g})
-        closing_rows[k] = True
+        # the line is applied as drawn (R-6.3); with neither end on the network within its 0.5 m extension it is
+        # reported unmatched and flagged: the drawing has moved under it, or its walls are gone (RR BRK-3)
+        closing_rows[k] = meets
 
     N0 = union([base] + [c['geom'] for c in staff])
     if N0.is_empty:
@@ -528,11 +541,15 @@ def network_of(fb, fixes, X):
     pieces = pieces_of(Np, doors)
     ring = ring_of(pieces)
     struct = union([built] + spans + outlines + [c['geom'] for c in staff] + [closing_geom(c) for c in doorways])
-    faces, spaces, shapes = RM.rooms_of_network(fb, pieces, struct, out_polys, union([c['geom'] for c in staff]), X)
+    faces, spaces, shapes = RM.rooms_of_network(fb, pieces, struct, out_polys, union([c['geom'] for c in staff]), X,
+                                                aside=union(aside))
     out_closings = [{'kind': c['kind'], 'a': c['a'], 'b': c['b'], 'width': c['width'], **({'fix': c['fix']} if 'fix' in c else {})}
                     for c in doorways + bridges + staff]
     net = {'N': Np, 'closings': out_closings, 'faces': faces, 'spaces': spaces, 'shapes': shapes, 'ring': ring}
     net['more'] = _more(fb, pieces, doors, doorways, spans, out_polys, struct, shift, closing_rows, mine)
+    # the faces of 10 m2 or more that are no room and part of none (RR FID-1): asked about, never lost silently
+    rooms_all = union([s['poly'] for s in spaces]).buffer(0.02) if spaces else Polygon()
+    net['more']['bigShapes'] = [f for f in faces if f.area >= BIG_SHAPE and f.intersection(rooms_all).area < 0.5 * f.area]
     return net
 
 
@@ -541,7 +558,7 @@ def _more(fb, pieces, doors, doorways, spans, out_polys, struct, shift, closing_
             'outlines': out_polys, 'struct': struct,
             'closingFixes': [{'fix': k, 'matched': bool(closing_rows.get(k, False))} for k, _ in mine],
             'terraces': [], 'fenced': [], 'floorHere': [], 'noFloor': [], 'noCeiling': [], 'unfloored': [], 'roomFixes': [],
-            'shafts': [], 'staffNames': []}
+            'shafts': [], 'staffNames': [], 'keepFloor': []}
 
 
 def more_of(net) -> dict:
@@ -551,7 +568,7 @@ def more_of(net) -> dict:
         m = net['more'] = {'key': None, 'shift': (0.0, 0.0), 'pieces': [], 'doors': [], 'doorways': [], 'spans': [],
                            'outlines': [], 'struct': Polygon(), 'closingFixes': [], 'terraces': [], 'fenced': [],
                            'floorHere': [], 'noFloor': [], 'noCeiling': [], 'unfloored': [], 'roomFixes': [], 'shafts': [],
-                           'staffNames': []}
+                           'staffNames': [], 'keepFloor': []}
     return m
 
 
@@ -596,14 +613,15 @@ def _fenced_faces(fb, net, more):
 
 def _mouth(area, solid):
     """R-2.5: the mouth of an unfloored area: the stretch of its edge that is neither network nor plate, when it is one
-    stretch of 3 m or less -> its two ends, or None."""
+    stretch of 5 m or less whose two ends are 3 m or less apart (the chord is the closing staff get) -> its two ends,
+    or None."""
     x0, y0, x1, y1 = area.bounds
     near = solid.intersection(box(x0 - 0.2, y0 - 0.2, x1 + 0.2, y1 + 0.2)).buffer(0.03)
     free = [l for l in merged_lines(area.exterior.difference(near)) if l.length > 0.05]
     if len(free) != 1:
         return None
     a, b = free[0].coords[0], free[0].coords[-1]
-    if free[0].length > MOUTH_MAX + 2.0 or math.dist(a, b) > MOUTH_MAX or math.dist(a, b) < 1e-6:
+    if free[0].length > MOUTH_STRETCH or math.dist(a, b) > MOUTH_MAX or math.dist(a, b) < 1e-6:
         return None
     return ((a[0], a[1]), (b[0], b[1]))
 
@@ -611,8 +629,9 @@ def _mouth(area, solid):
 def _unfloored(net, plate, pieces, fenced_open):
     """R-2.5: the unfloored areas beside the plate `plate`, pieces of 4 m2 or more with standing room: beside a gap (the
     parts of a 1.5 m round closing of N' plus railings, filled, that are not on the plate), pockets (the space with
-    no floor whose way out is under 3 m wide: cut off from the outside when it is shrunk by 1.5 m), and the fenced
-    areas with no door -> [(polygon, kind)] in a fixed order. `pieces`: the network with its railings (_fenced_faces).
+    no floor whose way out is under 3 m wide: cut off from the outside when it is shrunk by 1.5 m), the fenced
+    areas with no door, and the open sides (a room whose way out is wider: see below) -> [(polygon, kind)] in a fixed
+    order. `pieces`: the network with its railings (_fenced_faces).
 
     A pocket is the whole of what a 1.5 m disc coming from outside cannot reach round a cut-off core: the core grown
     back (which bulges out through the opening) and the corners and nooks beside it."""
@@ -636,16 +655,33 @@ def _unfloored(net, plate, pieces, fenced_open):
         tree = STRtree(rest) if rest else None
         beside = [rest[int(i)] for i in tree.query(back, predicate='intersects')] if tree is not None else []
         pockets = [Polygon(p.exterior) for p in polys(union([back] + beside))]
+    # an open side (RR BRK-1): a gap of over 3 m in an outside wall lets the 1.5 m disc in, so neither rule above sees
+    # the room behind it, and the room has no floor. A piece of (the network's convex hull less the network and the
+    # plate) of 10 m2 or more whose edge runs along the network or the plate for 80 % or more is such a room. (Not a
+    # share of the hull: the notch of an L-shaped plan has at most 59 % of its edge on walls, a square court open on
+    # one side 75 %; measured on the five drawings, 12 Nov: the highest are the tower's L30 notch 0.78, the old
+    # suite 0.75, the house's upper floor 0.74.)
+    open_sides = []
+    near = solid.buffer(0.06)
+    for g in polys(Np.convex_hull.difference(solid.buffer(0.02))):
+        if g.area >= OPEN_SIDE_MIN and g.exterior.intersection(near).length >= OPEN_SIDE_EDGE * g.exterior.length:
+            open_sides.append(Polygon(g.exterior))
     found = []
-    for kind, geoms in (('gap', polys(gap)), ('pocket', pockets), ('fenced', fenced_open)):
+    for kind, geoms in (('gap', polys(gap)), ('pocket', pockets), ('fenced', fenced_open), ('open', open_sides)):
         for g in geoms:
             if g.area >= UNFLOORED_MIN and not g.buffer(-STAND).is_empty:
                 found.append((g, kind))
-    # one row per place: a piece that overlaps an earlier, larger one is part of it
-    found.sort(key=lambda r: (-round(r[0].area, 3), round(r[0].bounds[0], 3), round(r[0].bounds[1], 3)))
+    # one row per place: a piece that overlaps an earlier, larger one is part of it. The open sides come last, as the
+    # fallback they are: one that the other rules' pieces cover by more than half is the place they already report,
+    # with its mouth (a doorway left open: RA-18); one that is kept takes in the smaller pieces inside it (RR re-run)
+    found.sort(key=lambda r: (r[1] == 'open', -round(r[0].area, 3), round(r[0].bounds[0], 3), round(r[0].bounds[1], 3)))
     out = []
     for g, kind in found:
-        if any(g.intersection(h).area > 0.5 * g.area for h, _ in out):
+        if kind == 'open':
+            if sum(g.intersection(h).area for h, _ in out) > 0.5 * g.area:
+                continue
+            out = [(h, k) for h, k in out if h.intersection(g).area <= 0.5 * h.area]
+        elif any(g.intersection(h).area > 0.5 * g.area for h, _ in out):
             continue
         g = g.simplify(0.02)                               # the buffers' arcs leave hundreds of points
         if g.is_valid and g.geom_type == 'Polygon' and not g.is_empty:
@@ -729,10 +765,14 @@ def plate_of(fb, net, fixes, X):
     # room within 0.5 m; else, for "floor here", the fenced face containing it; else unmatched
     spaces = net['spaces']
     rows, floor_here, no_floor, no_ceiling, names = [], [], [], [], []
+    keep_floor = []                                        # the points of the "floor here" fixes: an X hole holding one stays floor
+    x_holes = None
     for k, f in FX.floor_fixes(fixes, 'rooms', key):
         pt = Point(to_build(f['at'], shift))
         slab, ceiling, name = f.get('slab') or 'auto', f.get('ceiling') or 'auto', (f.get('name') or '').strip()
-        kind, what = FX.room_target(pt, spaces, unfloored, fenced_open, slab)
+        kind, what = FX.room_target(pt, spaces, unfloored, fenced_open, slab, ceiling, plate_a, net)
+        if slab == 'floor':
+            keep_floor.append((pt.x, pt.y))
         room = what if kind == 'room' else None
         area = what if kind == 'unfloored' else None
         target = None
@@ -759,9 +799,21 @@ def plate_of(fb, net, fixes, X):
             if ceiling == 'none':
                 no_ceiling.append(what)
             target = 'fenced'
+        elif kind == 'plate':                              # plate that is in no room (a garden sala, a balcony: RR FID-3)
+            if slab == 'none':
+                no_floor.append(what)
+            if ceiling == 'none':
+                no_ceiling.append(what)
+            target = 'plate'
+        elif slab == 'floor':                              # "it is floor" on an X hole that lies in no room (RR BRK-2)
+            if x_holes is None:
+                from . import xmarks as XM
+                x_holes = [x['poly'] for x in XM.x_marks(fb, net, X) if x['what'] != 'mark']
+            if any(h.contains(pt) for h in x_holes):
+                target = 'x hole'
         rows.append({'fix': k, 'matched': target is not None})
     more.update(terraces=terraces, fenced=fenced_open, floorHere=floor_here, noFloor=no_floor, noCeiling=no_ceiling,
-                roomFixes=rows, staffNames=names)
+                roomFixes=rows, staffNames=names, keepFloor=keep_floor)
     plate0 = _plate([plate_a] + [h['poly'] for h in floor_here]) if floor_here else plate_a
     if no_floor:
         plate0 = plate0.difference(unary_union(no_floor))

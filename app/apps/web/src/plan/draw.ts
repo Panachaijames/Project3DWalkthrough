@@ -7,8 +7,8 @@
 import {
   AREA_EDGE, BACKGROUND, BUILT_ASIDE, CLOSING_APP, CLOSING_STAFF, DIFF_ADDED, DIFF_REMOVED, DIM_VEIL, FILL_ALPHA, FLAG_COLOUR,
   FLAG_RADIUS, FURNITURE, FURNITURE_FILL, HATCH_PX, HIGHLIGHT, HIGHLIGHT_VEIL, HOLE_HATCH, LABEL, LINE_DRAFT, MOUTH, OPENING_COLOUR,
-  OPENING_WIDTH, OUTDOORS_HATCH, PART_ALPHA, PART_FILL, PATTERN_ALPHA, PICK_MARK, ROOM_ALPHA, ROOM_EDGE, ROOM_FILL, RUBBER_BAND,
-  SELECTED, SET_ASIDE, SLAB_EDGE, STAIR_OUTLINE, STAIR_WALK, STRUCK, UNFLOORED_HATCH, WAITING, roleStroke, type Stroke,
+  OPENING_WIDTH, OUTDOORS_HATCH, PART_ALPHA, PART_FILL, PATTERN_ALPHA, PICK_MARK, PICKED, PICKED_ALPHA, ROOM_ALPHA, ROOM_EDGE,
+  ROOM_FILL, RUBBER_BAND, SELECTED, SET_ASIDE, SLAB_ALPHA, SLAB_EDGE, SLAB_FILL, STAIR_OUTLINE, STAIR_WALK, STRUCK, UNFLOORED_HATCH, WAITING, roleStroke, type Stroke,
 } from './colours';
 import { T_CLOSED, T_OPEN, T_PATTERN, T_SOLID, type PlanData, type QBox } from './decode';
 import { ringBox } from './geom';
@@ -123,7 +123,11 @@ export function drawFrame<P>(ctx: Ctx, sc: Scene<P>, view: View, size: Size, dpr
   const show = sc.show;
   if (ov) {
     if (show.plate) {
-      for (const sl of ov.slabs) { polygon(ctx, sl.o, sl.h); edge(ctx, SLAB_EDGE, s, [4, 3]); ctx.stroke(); ctx.setLineDash([]); }
+      for (const sl of ov.slabs) {
+        polygon(ctx, sl.o, sl.h);
+        ctx.globalAlpha = SLAB_ALPHA; ctx.fillStyle = SLAB_FILL; ctx.fill('evenodd');      // RR (S13): a faint tint
+        edge(ctx, SLAB_EDGE, s, [4, 3]); ctx.stroke(); ctx.setLineDash([]);
+      }
       // rooms milestone: the plate's holes hatched, the unfloored areas hatched orange with their mouth dashed
       for (const h of ov.holes) { hatch(ctx, h.o, h.h, HOLE_HATCH, s, vis, 1); polygon(ctx, h.o, h.h); edge(ctx, HOLE_HATCH, s); ctx.stroke(); }
       for (const u of ov.unfloored) {
@@ -201,6 +205,15 @@ export function drawFrame<P>(ctx: Ctx, sc: Scene<P>, view: View, size: Size, dpr
         const toward: [number, number] = st ? [st.at[0], st.at[1]] : [b[0], b[1] + 1];
         arrowHead(ctx, b, toward, WAITING, s, 12);
       }
+      // RR (S13): the room or stair open in the panel, outlined strong (whatever the ticks), on top of the rest
+      const room = mk.pickedRoom ? ov.spaces.find(x => x.id === mk.pickedRoom) : undefined;
+      if (room) {
+        polygon(ctx, room.o, room.h);
+        ctx.globalAlpha = PICKED_ALPHA; ctx.fillStyle = PICKED.colour; ctx.fill('evenodd');
+        edge(ctx, PICKED, s); ctx.stroke();
+      }
+      const stair = mk.pickedStair ? ov.stairs.find(x => x.id === mk.pickedStair) : undefined;
+      if (stair) { polygon(ctx, stair.outline, []); edge(ctx, PICKED, s); ctx.stroke(); }
     }
   }
   if (sc.lineStart) {

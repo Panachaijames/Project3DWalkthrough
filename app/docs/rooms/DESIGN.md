@@ -1117,7 +1117,10 @@ version so far walk as before. A walk-parity golden proves it (R-13).
   * between `foot − 0.30` and `foot + 0.25`: the move is allowed and the foot becomes the hit's height;
   * higher than `foot + 0.25`: a step too high, the move is refused. This stops the walker at the side of a flight:
     with a ray that started at `foot + 0.25` it passed through steps 2 and 3 from the side (§0);
-  * none: an edge, the move is refused, as at today's floor edge. Never a fall.
+  * none: an edge, the move is refused, as at today's floor edge. Never a fall. *Amended after the review (RR,
+    CODE-4):* on a floor with no slab of its own (its walls never closed) in a stack that has slabs, "none" with the
+    floor's level within the step window (0.25 m up, 0.30 m down) is ground at that level, as the old walker walks such a
+    floor; further from the level (off the side of a flight) it stays an edge.
 
   Climbing from the front is unchanged: the next tread is the first surface met. Above 1.0 m the head ray takes over.
   * **Step-up** is up to 0.25 m; **step-down** is up to 0.30 m.
@@ -1126,9 +1129,12 @@ version so far walk as before. A walk-parity golden proves it (R-13).
   builder's 0.05 m lap of slab and last tread (R-8.2) already leaves no sliver; the bridge covers what rounding leaves.
   Measured on the hotel's steps, which have no lap: 3 cm is enough for a square approach (§0). The approach at 45° and
   at 70° to the top edge is a test (RA-10).
-* **The head ray** goes up from `foot + 0.30` to `foot + eye + 0.30` (1.90 m at the default eye height) against the
-  surfaces (not ceilings, not colliders); a hit refuses the move. It stops the walker under a low flight or landing. The
-  same 1.90 m keeps the bank's toilet under its landing (1.96 m clear) walkable.
+* **The head ray** goes up from `foot + 0.30` to `foot + 1.90` against the surfaces (not ceilings, not colliders); a hit
+  refuses the move. It stops the walker under a low flight or landing. The same 1.90 m keeps the bank's toilet under its
+  landing (1.96 m clear) walkable. *Amended after the review (RR, CODE-2):* the reach is fixed at 1.90 m
+  (`HEAD_REACH`), the default eye's 1.60 + 0.30; it no longer grows with the eye slider, which moves the camera only.
+  With a reach of `eye + 0.30` the walker stopped on stairs from eye 1.9 m (the builder leaves 2.10 m of headroom) and
+  could not move in a 2.7 m storey at eye 2.2 m.
 * **The body rays**: the 9 shoulder rays at `foot + 0.35` and `foot + 1.20` (`state.ts:20-22`, offsets unchanged). They
   run against the visible colliders of each floor whose height range `[level − slabThickness, level + wallHeight]`
   overlaps `[foot, foot + 2.0]`: one floor on a floor plate, two on a stair.
@@ -1231,7 +1237,7 @@ version so far walk as before. A walk-parity golden proves it (R-13).
 | step up / step down | 0.25 m / 0.30 m |
 | ground ray | from foot + 1.0 m down to foot − 0.30 m; the first surface decides |
 | gap bridge | 0.08 m along the move |
-| head ray | from foot + 0.30 m up to foot + eye + 0.30 m |
+| head ray | from foot + 0.30 m up to foot + 1.90 m, whatever the eye slider (RR) |
 | body rays | at foot + 0.35 / + 1.20 m, against the floors overlapping [foot, foot + 2.0 m] |
 | floor change | nearest level, ± 0.20 m past mid-storey |
 | eye easing | time constant 0.1 s; never in a probe call |
@@ -1873,3 +1879,30 @@ path and screens, **T** testability and integration. Rejected parts are marked.
 * The walker's ground ray from 1.0 m was not run.
 * The house's loop was judged from one plot.
 * The hours are estimates.
+
+## Amended after the independent review (12 Nov 2026)
+
+The review (RR) changed these rules; the findings, tests and measurements are in `contract-issues/RR.md`. R-9's head ray
+and ground ray are amended in place; the rest are listed here and take precedence over the text above.
+
+| Rule | Now | Finding |
+|---|---|---|
+| R-2.5 the mouth | one free stretch of 5 m or less whose ends are 3 m or less apart (it may follow a round closing's curve) | CODE-7 |
+| R-2.5 / R-6.1 an open side | a piece of (the hull of N' less the plate less N') of 10 m² or more with 80 % or more of its edge on the network or the plate raises `slab-gap` without a mouth ("draw a line across the gap, or say it is outdoors"); below 80 % it is still silent. Open sides are taken last: one that the gap, pocket and fenced pieces already cover by more than half is not reported (that place keeps its mouth); one that is reported takes in the smaller pieces inside it | BRK-1 (and the re-run's RA-18) |
+| R-2.6 doorway closings | two closings never share a wall end | CODE-5 |
+| R-3.2 rooms and set-aside lines | stretches along set-aside lines are left out of both sides of the half test; a face with under 25 % of its edge left to judge stays a shape | FID-1 |
+| R-3.2 / R-6.1 two `room-open` check flags | "A closed area is not a room" (10 m² or more in no room); "<name>: placed in a small room nearby" (a name given by distance to a room under 4 m²) | FID-1 |
+| R-4.3 X marks | an outline stretch counts as drawn only along lines within 5° of that side; a box is refused when two or more other long lines run parallel to a diagonal 5 cm or more beside it | CODE-1, BRK-2 |
+| R-4.3 / R-6.1 a cut X hole | raises an info flag "An X mark was cut as a shaft / void" (kind `hole-skipped`, empty ref) with **It is floor**, which writes a room fix with `slab: 'floor'`; an X hole with such a fix in it is not cut (`why: 'kept as floor by staff'`) | CODE-1, BRK-2 |
+| R-6.1 texts | "N names in one room" lists the names; "Climb it as drawn" over 0.25 m says why; risers with three decimals | S6, BRK-4 |
+| R-6 the Check step | **Open this stair** on a stair card; **No floor here** / **No ceiling** on plate in no room (matched to the face of N' holding the point, else to the plate less the network less the rooms); the room or stair open in the panel outlined, the plate tinted; the plan fits the chosen floor; the plan column sticky and **Show** scrolls it into view; "room names" | S1, S2, S7, S10, S13, FID-3 |
+| R-6.3 stair fixes | reach 0.5 m from the real outline of the treads and landings, which the stairways row now carries (not the hull) | CODE-3 |
+| R-6.3 closing lines | a staff closing line with neither end within 0.5 m of the network is reported unmatched ("A closing line meets no wall: has the drawing moved?"); it is still applied as drawn | BRK-3 part 1 |
+| R-7 / R-8 stairs | the bottom point never leaves the plate; the "kept as lines" text is in the floor's own frame | BRK-5, CODE-6 |
+| R-9 the walker | the head reach fixed at 1.90 m; a floor with no slab walked at its level | CODE-2, CODE-4 |
+| R-9.7 colours | treads and landings in the legend's stairs colour `#b9c7b4`, edge `#6f8a6a`, as `step` | S15 |
+
+**Open after the review** (RR.md section 6): door and casement swings on the window layer close slivers of floor
+(FID-2); rounded plate in the V notches between the new suite's bays (FID-5(a)); a room fix that remembers its room, to
+flag fixes after a drawing moved (BRK-3 part 2: a change to the frozen `RoomFix`, for the owner); a name on a terrace
+(the owner's choice).

@@ -195,7 +195,7 @@ def overlay(result: dict, ctx: dict) -> dict:
         floors.append(floor)
     flags += grey_furniture_flags(M, result['floors_frame'])
     flags += units_flags(ctx)
-    flags += fix_flags(fixes, report.get('fixes') or {})
+    flags += fix_flags(fixes, report.get('fixes') or {}, {f['key'] for f in M.get('floors') or []})
     flags += rooms_flags_
     flags += stairs_none_flags(M, report, settings)
     return {'format': 'build-overlay/1', 'floors': floors, 'flags': flags}
@@ -403,6 +403,8 @@ PIECE_WORDS = {'wall': ('wall piece', 'wall pieces'), 'lintel': ('lintel', 'lint
                'glass': ('glass piece', 'glass pieces'), 'sill': ('sill', 'sills')}
 #: why a mark was not cut -> the hole-skipped flag's severity (R1.md N-17); the other reasons are only listed
 HOLE_SKIPPED = {'the lowest floor': 'info', 'over 60 m2': 'check', 'over 30 % of the floor': 'check'}
+#: the holes that come from X marks alone (a hole joined with a lift shaft is a `lift shaft`)
+X_HOLES = ('shaft', 'void')
 STAIR_KEYS = ('id', 'state', 'why', 'text', 'outline', 'walk', 'bottom', 'to', 'risers', 'riser')
 NO_STAIR_LINES = "No stair lines were found: is the stair's layer set to Stair on the Layers step?"
 
@@ -498,7 +500,18 @@ def rooms_flags(fl: str, rep: dict, M: dict, parts: list[dict], floor_name: str,
                         + ('' if a else ' Draw a line across the gap if it is inside the building, or say it is outdoors.'),
                         _mid(a, b) if a else _xy(u['at']), _bbox(zip(xs, ys)), {'a': a, 'b': b} if a else {}))
     for r in rooms.get('open') or []:
-        if r.get('space'):                             # a closed area of over 150 m2 with no door (R1.md N-12)
+        if r.get('why') == 'not a room':               # RR FID-1: a closed area of 10 m2 or more left an enclosed shape
+            out.append(flag('room-open', fl, {'shape': r['at']}, 'check', 'A closed area is not a room',
+                            f'A closed area of {r.get("area") or 0:.0f} m2 is not counted as a room: less than half of its '
+                            f'edge is wall. Check its walls on the Layers step, or draw a closing line along its open side.',
+                            _xy(r['at']), None, {}))
+        elif r.get('why') == 'placed by distance':     # RR FID-1: a name given to a small room nearby
+            out.append(flag('room-open', fl, {'name': r['name'], 'at': r['at'], 'room': r.get('room')}, 'check',
+                            f'{r["name"]}: placed in a small room nearby',
+                            f'{r["name"]} stands in no room and was given to the nearest one, of {r.get("area") or 0:.1f} m2: is '
+                            f'that its room? If not, close the gap in its own room\'s walls.', _xy(r['at']), None,
+                            {'room': r['room']} if r.get('room') else {}))
+        elif r.get('space'):                             # a closed area of over 150 m2 with no door (R1.md N-12)
             out.append(flag('room-open', fl, {'space': r['space'], 'at': r['at']}, 'check', 'A closed area with no door',
                             f'A closed area of {r.get("area") or 0:.0f} m2 with no door: is it floor?', _xy(r['at']), None,
                             {'room': r['space']}))
@@ -512,7 +525,8 @@ def rooms_flags(fl: str, rep: dict, M: dict, parts: list[dict], floor_name: str,
         at = _label_point([sh(q) for q in sp['o']], [[sh(q) for q in h] for h in sp.get('h') or []]) if sp else None
         n = len(r['names'])
         out.append(flag('room-names', fl, {'room': r['space']}, 'info', f'{n} names in one room',
-                        f'{n} names in one room: an open-plan room, or a wall between them is missing.', at, None,
+                        f'{n} names in one room ({", ".join(str(x) for x in r["names"])}): an open-plan room, or a wall '
+                        f'between them is missing.', at, None,
                         {'room': r['space']}))
     for c in slab.get('closings') or []:
         if c['kind'] == 'doorway':
@@ -550,6 +564,14 @@ def rooms_flags(fl: str, rep: dict, M: dict, parts: list[dict], floor_name: str,
             xs, ys = [p[0] for p in h.get('o') or []], [p[1] for p in h.get('o') or []]
             out.append(flag('hole-skipped', fl, {'at': h['at']}, 'check', 'A large void mark was not cut',
                             f'An X marks {h.get("area") or 0:.0f} m2 as a void: is it one?', _xy(h['at']), _bbox(zip(xs, ys)), {}))
+        elif h.get('cut') and h.get('what') in X_HOLES:
+            # every X hole that was cut is asked about (RR BRK-2): staff answer "it is floor" with a room fix
+            # { at: the flag's at, slab: 'floor' }. The kind is hole-skipped's and the ref is empty (the flag kinds and
+            # the ref's keys are frozen): the info severity with a bbox, and the title, tell it from the lowest floor's.
+            xs, ys = [p[0] for p in h.get('o') or []], [p[1] for p in h.get('o') or []]
+            out.append(flag('hole-skipped', fl, {'at': h['at'], 'cut': True}, 'info', f'An X mark was cut as a {h["what"]}',
+                            f'An X marks {h.get("area") or 0:.1f} m2 as a {h["what"]}: it was cut out of the floor. If it is '
+                            f'floor, say so.', _xy(h['at']), _bbox(zip(xs, ys)), {}))
     return out
 
 
@@ -611,7 +633,7 @@ def fix_pairs(fixes: list | None, reports: list | None):
             yield i, fixes[i], fr
 
 
-def fix_flags(fixes: dict, rep: dict) -> list[dict]:
+def fix_flags(fixes: dict, rep: dict, floors=None) -> list[dict]:
     """fix-unmatched: a remembered fix that matched nothing in this drawing, or more than one item (U-10.6)."""
     out = []
     for i, fx, fr in fix_pairs(fixes.get('setAside'), rep.get('setAside')):
@@ -649,6 +671,10 @@ def fix_flags(fixes: dict, rep: dict) -> list[dict]:
             title = 'A removed closing is no longer there'
             detail = (f'The removed closing at ({m[0]:.2f}, {m[1]:.2f}) is no longer there: the fix is kept in the settings until '
                       f'you drop it.')
+        elif floors is not None and fx.get('floor') in floors:      # neither end reaches a wall (RR BRK-3)
+            title = 'A closing line meets no wall'
+            detail = (f'The closing line at ({m[0]:.2f}, {m[1]:.2f}) meets no wall at either end: has the drawing moved? '
+                      f'It is kept in the settings until you drop it.')
         else:
             title = 'A closing line finds no floor'
             detail = (f'The closing line at ({m[0]:.2f}, {m[1]:.2f}) is on a floor that is not in this build: it is kept in the '

@@ -17,6 +17,8 @@ export interface DiffRow { floor: string; what: string; before: number; after: n
 /** The diff's count keys of the rooms milestone (out/diff.py, R3.md section 5) and their names on the screen. */
 export const PLATE_KEY = 'plate area (m2)';
 export const COUNT_NAMES: Record<string, string> = {
+  // RR (S10): the diff's 'rooms' counts the model's room names (out/diff.py), 'rooms closed' the rooms
+  rooms: 'Room names',
   'rooms closed': 'Rooms closed',
   [PLATE_KEY]: 'Floor plate (m²)',
   'stairs you can climb': 'Stairs you can climb',
@@ -101,8 +103,8 @@ export function DiffPanel({ diff, against, onAgainst, draw, onDraw, floor }: Dif
           </p>
           {(body.roomsAdded.length > 0 || body.roomsRemoved.length > 0) && (
             <p className="text-xs" data-testid="diff-rooms">
-              {body.roomsAdded.length > 0 && <span>{`Rooms added: ${body.roomsAdded.join(', ')}. `}</span>}
-              {body.roomsRemoved.length > 0 && <span>{`Rooms removed: ${body.roomsRemoved.join(', ')}.`}</span>}
+              {body.roomsAdded.length > 0 && <span>{`Room names added: ${body.roomsAdded.join(', ')}. `}</span>}
+              {body.roomsRemoved.length > 0 && <span>{`Room names removed: ${body.roomsRemoved.join(', ')}.`}</span>}
             </p>
           )}
         </>

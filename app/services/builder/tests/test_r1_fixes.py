@@ -368,3 +368,46 @@ def test_the_proposal_writes_the_new_rules_and_carries_the_new_fixes() -> None:
     before = {'options': {'plinth': 'off'}}                                   # a recipe of before the milestone: no key
     assert {k: P.propose_settings({**spec, 'settings': before}, [dr], {'layers': {}}, [], None)['options'][k]
             for k in contracts.NEW_RULES} == contracts.NEW_RULES
+
+
+# ------------------------------------------------------------------------------------------ RR: the review's findings
+def covered(parts, x, y) -> bool:
+    return any(p['poly'].contains(Point(x, y)) for p in parts)
+
+
+def test_no_floor_and_no_ceiling_on_plate_that_is_in_no_room() -> None:
+    """RR FID-3: a detached outline of over 12 m2 drawn with lines only (the old suite's garden sala) is floored and
+    ceiled by R-2.5 / R-5.2 but is no room (its edge is no structure), so a room fix there found no room. A fix with
+    slab 'none' or ceiling 'none' now takes the plate under its point; a name alone still finds no room."""
+    sala = line('wall', [(14, 2), (18.2, 2), (18.2, 6.2), (14, 6.2)], closed=True)
+    fb = lambda: floor(walls=room(0, 0, 10, 10), spans=[DOOR], items=[sala])  # noqa: E731
+    r = run(fb())
+    assert r['plate0'].contains(Point(16, 4)) and not any(s['poly'].contains(Point(16, 4)) for s in r['net']['spaces'])
+    assert covered(slab(r)['ceilings'], 16, 4)
+    fx = {'rooms': [{'floor': 'F1', 'at': [16.0, 4.0], 'name': None, 'slab': 'none', 'ceiling': 'none'},
+                    {'floor': 'F1', 'at': [16.0, 4.0], 'name': 'Sala', 'slab': 'auto', 'ceiling': 'auto'}]}
+    r = run(fb(), context(fixes=fx))
+    assert r['net']['more']['roomFixes'] == [{'fix': 0, 'matched': True}, {'fix': 1, 'matched': False}]
+    assert not r['plate0'].contains(Point(16, 4)) and r['plate0'].contains(Point(5, 5))
+    s = slab(r)
+    assert not covered(s['parts'], 16, 4) and not covered(s['ceilings'], 16, 4) and covered(s['ceilings'], 5, 5)
+    only = run(fb(), context(fixes={'rooms': [{'floor': 'F1', 'at': [16.0, 4.0], 'name': None, 'slab': 'auto', 'ceiling': 'none'}]}))
+    s = slab(only)
+    assert only['plate0'].contains(Point(16, 4)) and not covered(s['ceilings'], 16, 4), 'no ceiling alone keeps the floor'
+
+
+def test_lines_set_aside_along_a_rooms_walls_do_not_unmake_the_room() -> None:
+    """RR FID-1: lines along three walls of a room, 6 cm inside them (a lining, wall-attached furniture). As loose lines
+    they bound the face on 72 % of its edge, so it fails the half test and is an enclosed shape with no room to join:
+    a 70 m2 area in no room, now listed for a flag (bigShapes). Once staff set those lines aside, the stretches along
+    them are out of both sides of the test and the room is a room again."""
+    lining = line('wall', [(0.26, 0.2), (0.26, 7.74), (9.74, 7.74), (9.74, 0.2)])
+    loose = run(floor(walls=room(0, 0, 10, 8), spans=[DOOR], items=[lining]))
+    assert loose['net']['spaces'] == [] and len(loose['net']['more']['bigShapes']) == 1
+    assert loose['net']['more']['bigShapes'][0].area == pytest.approx(71.0, abs=2.0)
+    aside = run(floor(walls=room(0, 0, 10, 8), spans=[DOOR]), context(aside={'F1': [lining]}))
+    assert [round(s['area']) for s in aside['net']['spaces']] == [72] and aside['net']['more']['bigShapes'] == []
+    # a shape whose whole edge is set-aside lines (a free-standing bed set aside) is still no room
+    bed = line('wall', [(3, 3), (5, 3), (5, 5), (3, 5)], closed=True)
+    r = run(floor(walls=room(0, 0, 10, 8), spans=[DOOR]), context(aside={'F1': [bed]}))
+    assert len(r['net']['spaces']) == 1 and r['net']['shapes'] == 1

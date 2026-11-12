@@ -159,13 +159,37 @@ def test_staff_keeps_a_stair_as_lines(tmp_path) -> None:
     assert b['res']['report']['fixes']['stairs'] == res['fixes']
 
 
+def test_a_stair_fix_reaches_half_a_metre_as_the_design_and_the_web(tmp_path) -> None:
+    """RR CODE-3: R-6.3: a stair fix applies to the stair whose outline holds its point or lies within 0.5 m (the reach
+    was 0.3 m, the web's 0.5): 0.4 m east of the flight matches, 0.6 m does not."""
+    b = synthetic('straight', tmp_path, fixes=[{'floor': 'ground', 'at': [2.6, 3.0], 'bottom': None, 'use': 'lines'},
+                                               {'floor': 'ground', 'at': [2.8, 3.0], 'bottom': None, 'use': 'lines'}])
+    assert [s['why'] for s in b['stairs']['left']] == ['kept by staff']
+    assert b['stairs']['fixes'] == [{'fix': 0, 'matched': True}, {'fix': 1, 'matched': False}]
+
+
+def test_the_stairways_row_carries_the_real_outline_not_the_hull(tmp_path) -> None:
+    """RR CODE-3: the report's row (which the overlay copies and the web places and judges stair fixes by) holds the
+    outside of the treads and landings joined: on an L stair the inner corner is not part of it."""
+    b = synthetic('L', tmp_path)
+    sb = b['stairs']['built'][0]
+    real = unary_union([t['poly'] for t in sb['treads'] + sb['landings']])
+    row = next(r for fl in b['res']['report']['floors'].values() for r in fl.get('stairways') or [] if r['state'] == 'climb')
+    got = Polygon(row['outline'])
+    assert got.is_valid and abs(got.area - real.area) <= 0.02 * real.area, (got.area, real.area)
+    assert real.convex_hull.area > 1.2 * real.area, 'the L leaves an inner corner the hull would cover'
+    assert got.contains(Point(row['at'])), 'the point of the row (where the web writes a new fix) lies on the stair'
+    corner = real.convex_hull.difference(real.buffer(0.5)).representative_point()
+    assert not got.buffer(0.5).contains(corner)
+
+
 def test_the_riser_check_and_climb_it_as_drawn(tmp_path) -> None:
     """16 risers for 3.70 m give 0.231 m: lines, with the storeys that would fit; staff's "climb it as drawn" builds it
     (0.25 m or less). For 4.40 m (0.275 m) not even that; for 6.00 m no floor is at the stair's top."""
     b = synthetic('straight', tmp_path / 'a', levels={'upper': 3.7})
     left = b['stairs']['left']
     assert [(s['why'], s['severity'], s['risers']) for s in left] == [('the riser does not fit', 'check', 16)]
-    assert left[0]['text'] == ('Stair at (1.6, 3.6): 16 steps for 3.70 m give 0.23 m each. The drawing may not show every step, or '
+    assert left[0]['text'] == ('Stair at (1.6, 3.6): 16 steps for 3.70 m give 0.231 m each. The drawing may not show every step, or '
                                'the levels may be off. A storey of 2.24–3.36 m would fit every stair between these floors.')
     assert b['stairs']['pairs'] == [{'from': 'ground', 'to': 'upper'}]
     climb = [{'floor': 'ground', 'at': [1.6, 3.0], 'bottom': None, 'use': 'climb'}]
@@ -174,6 +198,12 @@ def test_the_riser_check_and_climb_it_as_drawn(tmp_path) -> None:
     assert (sw['risers'], sw['riser']) == (16, 0.231) and b['stairs']['left'] == [] and b['stairs']['fixes'] == [{'fix': 0, 'matched': True}]
     b = synthetic('straight', tmp_path / 'c', levels={'upper': 4.4}, fixes=climb)
     assert b['stairs']['built'] == [] and b['stairs']['left'][0]['why'] == 'the riser does not fit'
+    # RR BRK-4: the refusal of staff's choice is said, with the riser to three decimals (0.275 is not "0.28")
+    assert b['stairs']['left'][0]['text'] == (
+        'Stair at (1.6, 3.6): "Climb it as drawn" is not possible: each step would be 0.275 m (the limit is 0.25 m). 16 steps '
+        'for 4.40 m: the drawing may not show every step, or the levels may be off. A storey of 2.24–3.36 m would fit every '
+        'stair between these floors.')
+    assert b['stairs']['left'][0]['severity'] == 'check' and b['stairs']['fixes'] == [{'fix': 0, 'matched': True}]
     b = synthetic('straight', tmp_path / 'd', levels={'upper': 6.0})
     assert [(s['why'], s['severity']) for s in b['stairs']['left']] == [('no floor at its top', 'info')]
     assert b['stairs']['left'][0]['text'] == ('Stair at (1.6, 3.6): its 16 steps would rise about 2.2–3.4 m: no floor of the model '
@@ -184,6 +214,47 @@ def test_the_lines_option_builds_no_stair(tmp_path) -> None:
     b = synthetic('straight', tmp_path, rules={'slabs': 'network', 'ceilings': 'auto', 'stairs': 'lines'})
     assert b['stairs']['built'] == [] and [s['why'] for s in b['stairs']['left']] == ['kept as lines']
     assert b['res']['model']['stairways'] == [] and len(parts(b, 'step')) == 15, "today's two-riser steps, with a word"
+
+
+def test_the_riser_text_has_three_decimals(tmp_path) -> None:
+    """RR BRK-4: 16 risers for 3.40 m are 0.2125 m: outside the 0.14 - 0.21 rule, and printed so (not as 0.21)."""
+    b = synthetic('straight', tmp_path, levels={'upper': 3.4})
+    assert [s['why'] for s in b['stairs']['left']] == ['the riser does not fit']
+    assert '16 steps for 3.40 m give 0.212 m each' in b['stairs']['left'][0]['text'] or         '16 steps for 3.40 m give 0.213 m each' in b['stairs']['left'][0]['text']
+
+
+def test_the_bottom_point_never_leaves_the_plate(straight) -> None:
+    """RR BRK-5: a stair that starts just inside a door: the floor ends 0.2 m before riser 1 (y 1.3), so no point 0.3 -
+    1.0 m before it stands on the plate. The walking line then starts 0.1 m before the riser, on the plate (it was
+    0.3 m before it, off the plate, where a walker cannot move)."""
+    plate0 = dict(straight['plate0'])
+    plate0['ground'] = plate0['ground'].intersection(box(-50, 1.3, 50, 50))
+    res = SB.build_stairs(straight['floors'], straight['found'], straight['nets'], plate0, {}, straight['X'])
+    sw = res['built'][0]['stairway']
+    assert plate0['ground'].contains(Point(sw['walk'][0])) and sw['bottom'] == sw['walk'][0]
+    assert tuple(round(c, 3) for c in sw['walk'][0]) == (1.6, 1.4)
+    # the plate ends ON the riser: the nearest plate point beside the first going, a little inside
+    plate0['ground'] = straight['plate0']['ground'].intersection(box(-50, 1.5, 50, 50))
+    res = SB.build_stairs(straight['floors'], straight['found'], straight['nets'], plate0, {}, straight['X'])
+    assert res['built'] and plate0['ground'].contains(Point(res['built'][0]['stairway']['walk'][0]))
+
+
+def test_the_lines_option_text_is_in_the_floors_own_frame(straight) -> None:
+    """RR CODE-6: with options.stairs 'lines' on a shifted (aligned) floor the text names the sheet point, as every
+    other stair text does (_where), not the build frame's."""
+    X = straight['X']
+
+    class Shifted:
+        options = {**X.options, 'stairs': 'lines'}
+        floor_info = {k: {**v, 'shift': (5.0, 2.0)} for k, v in X.floor_info.items()}
+
+    class Plain(Shifted):
+        floor_info = X.floor_info
+    args = (straight['floors'], straight['found'], straight['nets'], straight['plate0'], {})
+    plain = [r['text'] for r in SB.build_stairs(*args, Plain)['left']]
+    moved = [r['text'] for r in SB.build_stairs(*args, Shifted)['left']]
+    assert plain and plain[0] == 'Stair at (1.6, 3.6): kept as lines.'
+    assert moved[0] == 'Stair at (-3.4, 1.6): kept as lines.'
 
 
 # ------------------------------------------------------------------------------------------------------ the clash cuts

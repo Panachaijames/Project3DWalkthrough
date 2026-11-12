@@ -38,6 +38,14 @@ BANK_NEW_RULE_SHA1 = '54ef1ac240bbfa1421b0b49026ec26c16e3d1eed'     # = services
 #: PROVISIONAL (RI, 11 Nov 2026): name -> {files: sha1 per FILES, floors: {key: summary row}}. Recorded with
 #: WT_RECORD_ROOMS_GOLDEN=1 from the builder of the branch at 0209ab3 plus RI-A's changes; each model equals the one the
 #: API and the real worker saved from the DWGs in the acceptance run (%TEMP%/wt-ri/acc, `rooms-builds`).
+#: RR (12 Nov 2026, the review's builder fixes): the house's and the tower's model.json, top view and Max script moved
+#: (house c7824bca.. -> d90ccc3c.., 9fb483f7.. -> f0d77602.., 10148e23.. -> 66794ff4..; tower 3d25cdf7.. -> 9f95de8a..,
+#: d7d95040.. -> 2cfdccca.., cd5e439d.. -> 8659ebdc..). Why: the X-mark finder no longer takes the "+" that two crossing
+#: lines make for the diagonals of a diamond (RR CODE-1: an outline stretch is drawn only by lines running along it).
+#: On the tower each lift's two X lines also read as such a diamond (1.5 m2), and on the house a 3.85 m2 box inside
+#: the stair-hall void: both lay inside the real hole, so only the hole outlines' points changed (tower 11 / 10 -> 8 / 4
+#: points per lift hole; the slab and ceiling parts' counts, every floor row below and the holes' areas are the same).
+#: The bank, the two suites, every stages.json and furniture CSV did not move.
 PINS: dict = {
     'bank': {
         'files': {
@@ -54,10 +62,10 @@ PINS: dict = {
     },
     'house': {
         'files': {
-            'model.json': 'c7824bca60086c43d010eebc5c1f3aaa654fdcf5',
+            'model.json': 'd90ccc3c6e5db0eb703b648b68d9400b46de8785',
             'stages.json': 'd0108e3c80db088fa433beaec21dc97e400c67d8',
-            'topview.png': '9fb483f70903364e6e4a2038f3dbf2c925473559',
-            'maxscript': '10148e2364460d7b95403c62217adcc89772d614',
+            'topview.png': 'f0d77602836a289101824063b67db154c7c74a52',
+            'maxscript': '66794ff4df6982d8af3906c41cae717c609f0f97',
             'furniture.csv': '5ebe79e4c341c9a4f3b53b4c55fe1867259e44f8',
         },
         'floors': {
@@ -79,10 +87,10 @@ PINS: dict = {
     },
     'tower': {
         'files': {
-            'model.json': '3d25cdf722fb699a1aaa83203205834c445620ca',
+            'model.json': '9f95de8a365c6a5cf9bcd953690d241f0291c053',
             'stages.json': 'f52a370f7228755478806b2927cccb434a609d6c',
-            'topview.png': 'd7d95040ca1c05030178e18dfcca5e42078cb623',
-            'maxscript': 'cd5e439dfc7ca943e851f579b0f27b99935ef52a',
+            'topview.png': '2cfdccca0c676f1f4cd1ffad36582f6f67e8ace4',
+            'maxscript': '8659ebdcb593d8c6a5f09c98ad81404328772650',
             'furniture.csv': '8949ec63bd853622d29c453dd83ae2455a8b372b',
         },
         'floors': {

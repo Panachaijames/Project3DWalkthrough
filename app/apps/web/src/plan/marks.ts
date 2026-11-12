@@ -18,6 +18,10 @@ export interface FixMarks {
   outdoors: number[];
   /** A stair's picked bottom: an arrow at the point. */
   bottoms: { at: Vec2 }[];
+  /** RR (S13): the room (overlay space id) and the stair (overlay stair id) open in the Check step's panel: outlined in a
+   *  strong colour, so a small room picked on the plan can be found again. */
+  pickedRoom?: string | null;
+  pickedStair?: string | null;
 }
 
 export const NO_MARKS: FixMarks = { lines: [], removed: [], rooms: [], points: [], outdoors: [], bottoms: [] };
@@ -36,4 +40,5 @@ export function marksOf(overlay: OverlayFloor | null | undefined): FixMarks | nu
 }
 
 export const hasMarks = (m: FixMarks | null): boolean =>
-  !!m && (m.lines.length + m.removed.length + m.rooms.length + m.points.length + m.outdoors.length + m.bottoms.length) > 0;
+  !!m && ((m.lines.length + m.removed.length + m.rooms.length + m.points.length + m.outdoors.length + m.bottoms.length) > 0
+    || !!m.pickedRoom || !!m.pickedStair);

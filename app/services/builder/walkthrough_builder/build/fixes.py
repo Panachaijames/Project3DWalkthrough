@@ -253,11 +253,14 @@ def removed_closings(closings: list[dict], a, b) -> list[dict]:
             or (math.dist(c['a'], b) <= REMOVE_REACH and math.dist(c['b'], a) <= REMOVE_REACH)]
 
 
-def room_target(pt, spaces: list[dict], unfloored: list[dict], fenced: list, slab: str):
+def room_target(pt, spaces: list[dict], unfloored: list[dict], fenced: list, slab: str, ceiling: str = 'auto', plate=None,
+                net=None):
     """What a room fix at the point `pt` (shapely, build frame) applies to (R-6.3) -> ('room', the space) |
-    ('unfloored', the area) | ('fenced', the face) | (None, None): the room containing the point; else the unfloored
-    area containing it; else the room within 0.5 m; else, with slab 'floor', the fenced face (a face of the network
-    plus railings with no door) containing it."""
+    ('unfloored', the area) | ('fenced', the face) | ('plate', a polygon) | (None, None): the room containing the
+    point; else the unfloored area containing it; else the room within 0.5 m; else, with slab 'floor', the fenced face
+    (a face of the network plus railings with no door) containing it; else, with slab 'none' or ceiling 'none', the
+    plate that is in no room under the point (RR FID-3: a garden sala, a balcony inside the ring): the face of the
+    network holding the point, else the piece of (plate less the network and the rooms) holding it."""
     room = next((s for s in spaces if s['poly'].contains(pt)), None)
     if room is not None:
         return 'room', room
@@ -271,6 +274,19 @@ def room_target(pt, spaces: list[dict], unfloored: list[dict], fenced: list, sla
         face = next((t for t in fenced if t.contains(pt)), None)
         if face is not None:
             return 'fenced', face
+    if (slab == 'none' or ceiling == 'none') and plate is not None and not plate.is_empty and net is not None:
+        if plate.buffer(0.05).contains(pt):
+            face = next((f for f in net.get('faces') or [] if f.contains(pt)), None)
+            if face is not None:
+                return 'plate', face
+            rest = plate
+            for g in [net.get('N')] + [s['poly'] for s in spaces]:
+                if g is not None and not g.is_empty:
+                    rest = rest.difference(g)
+            ps = [rest] if rest.geom_type == 'Polygon' else [g for g in getattr(rest, 'geoms', []) if g.geom_type == 'Polygon']
+            piece = next((g for g in ps if g.contains(pt)), None)
+            if piece is not None:
+                return 'plate', piece
     return None, None
 
 

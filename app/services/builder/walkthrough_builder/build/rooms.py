@@ -25,6 +25,7 @@ ROW = 0.5                   # m: the rows the ids are numbered in (R-3.1)
 MIN_FACE = 1.0              # m2
 HALF = 0.5                  # a room's edge is at least this share structure
 ON_STRUCT = 0.03            # m: an edge within this of structure runs along it
+ASIDE_LEFT = 0.25           # a face with less than this share of its edge off the set-aside lines is no room
 NEAR_WALL = 0.3             # m: a label point this close to a wall moves to the representative point
 JOIN = 0.04                 # m: the closing that joins an enclosed shape to its room (strips of up to 6 cm between them)
 HALF_STRIP = 0.01           # m: a room reaches the drawn line, the middle of its 2 cm strip (see rooms_of_network)
@@ -79,10 +80,14 @@ def spaces_of(fb, faces, X):
              'name': '', 'names': [], 'ceiling': True} for n, (_r, _x, _y, f, at) in enumerate(rows, 1)]
 
 
-def rooms_of_network(fb, pieces, struct, outlines, staff, X):
+def rooms_of_network(fb, pieces, struct, outlines, staff, X, aside=None):
     """R-3.1 on the pieces of the closed network (network.pieces_of) -> (every face of 1 m2 or more, the rooms as
     contracts.SpaceGeo, the number of enclosed shapes left out). `struct`: the structure (built parts, spans, doorway
-    closings, outline edges, staff lines); `outlines`: the closed room outlines; `staff`: the staff lines."""
+    closings, outline edges, staff lines); `outlines`: the closed room outlines; `staff`: the staff lines; `aside`: the
+    strips of the lines staff set aside that still bound the floor (R-2.1 point 7). The stretches of a face's edge that
+    run along those lines alone are left out of BOTH sides of the half test (RR FID-1): a ring of set-aside furniture
+    lines along a room's walls neither makes nor unmakes a room (the new suite's living room failed the test once its
+    single lines were set aside); a face with under a quarter of its edge left to judge is an enclosed shape."""
     faces, rooms, shapes = [], [], []                      # rooms / shapes: indices into faces
     owner = []                                             # the piece each face is a hole of
     for pi, q in enumerate(pieces):
@@ -95,11 +100,15 @@ def rooms_of_network(fb, pieces, struct, outlines, staff, X):
     if not faces:
         return [], [], 0
     near = struct.buffer(ON_STRUCT) if not struct.is_empty else None
+    beside = aside.buffer(ON_STRUCT) if aside is not None and not aside.is_empty else None
+    if beside is not None and near is not None:
+        beside = beside.difference(near)
     free = {}
     for i, f in enumerate(faces):
         edge = f.exterior
         on = edge.intersection(near).length if near is not None else 0.0
-        if pieces[owner[i]]['object'] or on < HALF * edge.length:
+        judged = edge.length - (edge.intersection(beside).length if beside is not None else 0.0)
+        if pieces[owner[i]]['object'] or on < HALF * judged or judged < ASIDE_LEFT * edge.length:
             shapes.append(i)
             free[i] = edge.difference(near) if near is not None else edge
         else:

@@ -1,28 +1,211 @@
-# Where the application stands (9 Nov 2026)
+# Where the application stands (12 Nov 2026)
 
-The second milestone is built: **you can now upload a DWG in the staff app, check it, and build it into a 3D model that is
-saved as a new version of a project.** A final check was run on 9 Nov from a clean start, separate from the steps that
-built, reviewed and fixed it.
+The third milestone is built: **floors, rooms and stairs you can climb.** A new version of a drawing now gets a floor
+wherever its walls, glass and doors make a room, holes where the drawing marks lift shafts, voids and stair wells,
+ceilings at the heights you give, and stairs that Walk goes up and down. It was built on 11 Nov, put together and
+checked overnight, and then checked by a separate review on 12 Nov, whose fixes were checked again from a clean start.
 
-**Every test suite passed, every acceptance criterion that must pass did, and your path through the app worked from
-start to finish, for the bank and for the house.** The bank, uploaded again from its two DWGs through the screens, gives
-version 2's model byte for byte. The check found **one fault** that the tests had missed: on the Check step, giving a
-furniture family a kind did nothing for some family names. **It was fixed after the check, the same day, with tests**,
-and so was the gap found beside it: the furniture size limits now have their boxes on the Floors step (see *What
-failed*). A separate reviewer then checked the fix: the house and the bank through the screens again (the house now
-saves the acceptance run's model byte for byte, none of its 13 families grey), and every test suite again, all passing.
+**Every test suite passes, every acceptance criterion that must pass does, and your path through the screens works in
+Edge for the house and the bank**: from their DWGs to the viewer, both main stairs climbed up and down with the keys and
+the mouse, ceilings shown in Walk only. The bank built through the screens gives its pinned new model byte for byte.
 
-Nothing has been put online or deployed. Everything runs on this laptop only. Nothing was committed by the check (the last
-commit then was `6755e81`, the review's fixes of 9 Nov); the fix, its check and these notes were committed afterwards on
-the branch `milestone-upload`, which was then merged into `main` (on this laptop only; nothing is pushed anywhere).
+**Versions you have already saved do not change.** They look and walk exactly as on 9 Nov (checked probe by probe).
+Only a new version is built the new way; the fold "Earlier build rules" on the Floors step gives the old way back.
 
-## What the app does now
+The review found 22 faults, none of them serious (one medium-high, six medium, the rest low): **19 are fixed, each with
+a test**; two small ones and the second half of a third are left (*What the review found*). Two questions for you are
+under *Decisions*; neither is urgent.
 
-Everything of 4 Nov still works: the project list, the project page with the 3D viewer (Orbit, Walk, Ghost, the Camera
-and its photos, the floor buttons, the build replay, the furniture boxes), versions, saved furniture heights and the
-Downloads menu (3ds Max script, furniture list, offline viewer). New in this milestone:
+Nothing has been put online or deployed. Everything runs on this laptop only. The work is committed on the branch
+`milestone-rooms` and merged into `main` (on this laptop only; nothing is pushed anywhere).
 
-### Uploading a drawing and building it, step by step
+## What to do now
+
+1. **Restart the app**, because its server changed: in the PowerShell window where it runs, press **Ctrl+C**, then type
+   `npm run dev` again and open http://127.0.0.1:5710 as before.
+2. **Try it on the bank** (about 10 minutes): a **New project** from the bank's two DWGs in the project folder
+   (`I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg` and `I1202 - LEVEL 2 ...`). On **Layers**, check the suggested roles (the
+   stair layer must be *stair*); on **Floors**, levels 0 and 3.70 m, walls 3.70 m (the floors, ceilings and stairs are
+   built the new way by themselves); then **Build**, look over the **Check** step and **Save**. In the viewer choose
+   **Walk**, double-click on the floor at the foot of the main stair, face it and hold **W**: you climb to level 2 and
+   its floor button lights up. Look up: the ceiling is there in Walk (and in Ghost), not in Orbit; the **Ceilings** tick
+   hides it.
+3. **Your own suite, if you like** (about 25 minutes the first time): your *Presidential_suite_Layout* version 1 has
+   35 m² of floor, because this Revit export draws its interior walls on layer 0. **New version**, **Use the files of
+   v1 again** (offered until 18 Nov), set layer **0** to *wall* on **Layers**, **Build**; on **Check**, set aside the
+   items of each "single line" flag (furniture drawn on layer 0) and **Rebuild**. The floor then covers the suite (about
+   277 m²), and the living room is one room with its names.
+
+## What is new
+
+### Floors, holes, rooms and ceilings
+
+* **A floor wherever a room is.** The floor is made from the whole network of walls, glass, doors and windows, not only
+  from rooms the walls close completely. Door-sized gaps (up to 2.0 m) are closed automatically, as a doorway.
+* **Areas that are nearly closed** (a strip beside the walls with a gap, a wide opening in an outside wall) are not
+  floored by guesswork: the Check step flags each one, with buttons (**Close it here**, **Floor here**, **It is
+  outdoors**, **Draw a line**).
+* **Holes** where the drawing marks them: a rectangle with a cross (a lift shaft, a void) and the stair wells. Every cut
+  cross is listed on the Check step with **It is floor**, in case a cross was furniture or a tile grid.
+* **Rooms with their names**: the names on the drawing are placed in their rooms; a name with no room nearby, a room with
+  several names and a large closed area that is no room are flagged.
+* **Ceilings** under each floor above, at the ceiling height you type on the Floors step (or a default), shown in Walk
+  and Ghost.
+
+### Stairs
+
+* **The stair lines are read** (straight, L and U stairs with landings): treads and landings are built, and the floor
+  above is opened over the stair. **In Walk you climb them** with the keys or the mouse, up to 0.25 m a step; the floor
+  buttons follow you.
+* A stair the app cannot build safely **stays as lines and says why** (for example "16 steps for 3.90 m are 0.24 m
+  each", or "no floor at its height"). On the Check step staff can answer it: **Climb it as drawn**, **Keep as lines**,
+  or **Floor here** at its top.
+
+### The Check step
+
+* A **Rooms and stairs** tool: click a room or a stair to see it outlined, rename a room, give it or take away its floor
+  or ceiling (**No floor here**, **No ceiling**), mark a gap **Not a doorway**, and the stair answers above.
+* Stair flags have **Open this stair**; **Show** on a flag scrolls the plan into view; the plan opens fitted to the
+  floor you chose.
+* Fixes are kept as before: they apply at every rebuild and again when the same drawing is uploaded later.
+
+### The 3ds Max script
+
+Treads, landings and ceilings come across as live shapes with an Extrude, as the walls do (never Editable Poly); the
+ceilings are hidden when the script opens, with a note saying how to show them.
+
+## Drawing by drawing
+
+From the gap report `docs/rooms/GAPS.md`, which compares each drawing's new version with its 9 Nov one:
+
+| Drawing | Floor (m²), 9 Nov -> now | Stairs | What staff still answer |
+|---|---|---|---|
+| Bank | the same rooms, every one closed with no fix; the level 1 lift shaft is now cut | the main stair climbs (21 steps of 0.176 m) | nothing; the north stair stays as lines until **Floor here** is given at its top |
+| House | ground 428 -> 513 (the glass living room, 81.6 m², now has floor) | the main L stair climbs (21 steps of 0.186 m); the service stair stays as lines (0.24 m steps; **Climb it as drawn** makes it climb) | the two areas on the terrace side (**It is outdoors**) |
+| Old suite (`layout presidential test.dwg`) | 113 -> 476, with 53 m² of terrace | none drawn | the garden side inside the balustrade (161 m²): **Floor here** if it should have floor |
+| Tower L29 / L30 | 445 / 504 -> 843 / 705 (the rooms between the core and the curtain wall) | stair A climbs (20 steps of 0.200 m); stair B stays as lines | stair B, whose storey height is assumed |
+| 3D team's Revit suite | 35 -> 277 | none drawn | set layer 0 to wall and set aside its stray lines, as on 9 Nov; one door has floor on one side only |
+
+**The staff's time** to answer a drawing's rooms flags, timed through the screens by the review's staff reviewer and
+worked out for a person: about 25 minutes for the tower and 28 for the Revit suite on their first version (the target
+is 30, so the suite is close); about 2 minutes for a second version, whose answers carry over (target 15).
+
+## Test results (from a clean start, 12 Nov, after the review's fixes)
+
+Run by the main session from a clean start, one step at a time, after the review's fixes; then the parts touched by
+the one fault it caught, again. Details: `docs/rooms/contract-issues/RR.md` section 8.
+
+| What is checked | Command | Result |
+|---|---|---|
+| Library versions are exactly the frozen list | `npm run check:pins` | OK (28 npm and 28 Python packages, the builder's 19, LibreDWG's 64 files) |
+| Strict type check of all the code | `npm run typecheck` | 0 errors |
+| Unit tests: the viewer and the staff app | `npm run test:unit` | **1023 passed**, 0 failed (851 on 9 Nov) |
+| The builder's tests | `npm run test:builder` | **1067 passed**, 0 failed (15 min; 722 on 9 Nov) |
+| API and store tests | `npm run test:api` | **561 passed**, 0 failed, also with the real builder (471 on 9 Nov) |
+| API description and generated code | `npm run gen:api`, the additive check | no change; the API only grew |
+| Build | `npm run build` | OK |
+| Store rebuilt from the prototypes | seed, into a temporary folder | the same 5 stamps as on 9 Nov |
+| The acceptance runs: the five drawings, old and new rules, through the API and the real builder | RA-1 ... RA-18 | **every must met**; the old versions' stamps as on 9 Nov; the bank's new model the pinned one |
+| Browser tests in Edge, the stairs climbed and every walk check | `npm run test:e2e` and the review's layout checks | **396 passed**, 0 failed (43.5 min; 279 on 9 Nov) |
+| The prototypes' own tests, unchanged | one at a time | all pass (the view-modes test 127 of 127 when run alone, as on 9 Nov) |
+
+**What failed in this run, and what it was.** One real fault, caught by RA-18 and fixed (see *What the review found*).
+Three others came from the test set-up and passed when run again properly: a reviewer's test run had left Python
+bytecode files in the builder's folder, which one test forbids (removed); one API run's temporary folder was so deep
+that its paths passed Windows' 260-character limit, which the app refuses on purpose (run again in a short folder); and
+one timed check of the prototype view-modes test missed under load (run again alone).
+
+## What the review found
+
+Four separate reviewers looked at the milestone on 12 Nov: one compared the floors, holes, rooms and stairs with the
+drawings' plots, one read the code, one tried to break it with awkward drawings, and one went through the screens as
+staff would, without programming. They reported 34 findings: **22 faults and 8 points that needed an answer only**.
+
+**Fixed, each with a test (19):**
+
+* The Revit suite **lost its living room** once its stray lines were set aside (the room became a shape with no name):
+  fixed; the 59.7 m² living and dining room is back, with its three names.
+* **A tile grid, or furniture drawn as a rectangle with a cross, was cut as a shaft**, with no flag and no way back:
+  the cross test is stricter now, and every cut cross is flagged with **It is floor**.
+* **A gap over 3 m in an outside wall lost floor without a word**: such an open side is now flagged.
+* **Raising the eye-height slider stopped the walker on stairs** (from 1.9 m) and under low ceilings: the slider now
+  moves only the camera.
+* **A stair fix in the inside corner of an L stair** found no stair: fixed; stair fixes now reach 0.5 m round the treads.
+* On the Check step: **Show** on a flag far down the list moved a plan that was scrolled off screen; the plan opened small
+  and off-centre; a picked room was not marked; stair cards had only Show; "rooms" meant two things on the Save step.
+  All fixed.
+* Smaller ones: one wall end could be used by two doorway closings; a closing line far from any wall (a drawing that has
+  moved) now says so; texts with two decimals where three were needed; a stair's bottom point outside the floor; stair
+  treads drawn in the wall colour instead of the legend's green; Walk stuck on a floor that has no floor plate.
+
+**Caught by the re-run (1), fixed:** one of the review's own fixes (the wide-gap flag) took the place of an older flag
+in one case: with a door missing from the drawing, the flag on the room behind it lost its **Close it here** line. A
+must criterion (RA-18) caught it on the bank; it is fixed, with a test, and those checks were run again.
+
+**Left as they are (3):**
+
+* On the house, door swings drawn on the window layer leave seven slivers of floor of about 0.5 m² outside the north
+  facade. With the door finder's next round.
+* On the Revit suite, three rounded bits of floor (0.7 m² each) in the notches between the bays, outside the facade.
+* When a drawing is uploaded again **and has moved**, a room fix can land in the wrong room without a warning (closing
+  lines now warn). Warning for room fixes too needs a change to how fixes are saved: your decision, below.
+
+## Time taken
+
+The estimate was about **237 hands-on developer hours** (the plan's measure). Built by AI agents in **about 21 hours of
+working time** (17 h by the build agents, about 4 h by the main session), about 9 % of the estimate, between 11 Nov
+10:00 and 12 Nov 13:00, with pauses for the usage limit. The design (10–11 Nov) came before that and is not
+counted, as before. For comparison: the foundation took about 13 h against ~40 h, the upload about 15 h against ~205 h.
+
+## What comes next
+
+1. **A second round of fixes for the door finder** (your order of 10 Nov). Its main causes are known from the Revit
+   suite (wall lines drawn on across the doorways, furniture on the wall layer); the round also takes the door swings
+   above, the small doorway closings between armchairs on the Revit suite and a flag for a door symbol that got no
+   opening. The details are in the plan, next action 16. Until then the Check step repairs it by hand: for a doorway that got
+   no door, select the lines drawn across it, **Set aside** and **Rebuild**; for an opening that is not there, give it
+   the kind **Not an opening**. On the Revit suite these two brought 14 of its 16 doorways right (checked 11 Nov).
+2. **Box editing** after that: rename and recolour furniture kinds, move pieces between kinds, add boxes by hand; then
+   the real furniture models, finishes and lights.
+3. For you: ask the 3D team to export Revit files with the walls on their own layer.
+
+## Decisions
+
+**Two for you, neither urgent:**
+
+1. **A room name written on a terrace.** No drawing has one yet. Today such a name goes to the nearest room within
+   1.5 m, or is flagged. Proposed: keep it as that terrace's own label, not given to a room and not flagged.
+2. **Should a room fix remember its room** (its area and names), so the app warns when a re-uploaded drawing has moved
+   and the fix no longer fits? It changes the format fixes are saved in. Proposed: yes, with the door finder's round.
+
+Settled by you on 4 Nov: the DWG upload first, then the box editing; Reset in the offline file stays as built; version
+control on this laptop only. Settled on 10 Nov: the suite's furniture count (6 % over the prototype's, against a wish
+of 5 %) is accepted; rooms and slabs with climbable stairs, then the door finder's second round, then the box editing.
+
+Nothing in this milestone needs deploying. When anything goes online later, you run that deploy yourself.
+
+## How to start it (one command, unchanged)
+
+Open PowerShell in `C:\Users\DWP2\Desktop\Project walkthrough` (the project folder, or its `app` folder: since 10 Nov
+both work) and type:
+
+```
+npm run dev
+```
+
+Then open **http://127.0.0.1:5710** in Edge or Chrome (type `127.0.0.1`, not `localhost`). To stop it, press **Ctrl+C**
+in the PowerShell window. Nothing new needs installing: the converter and the builder's own Python are already set up.
+Uploads and drafts are kept in `app\data`; the converted DXFs go to a cache folder,
+`C:\Users\DWP2\AppData\Local\walkthrough\cache`.
+
+Since 10 Nov, `npm run dev` no longer restarts the app's server by itself when its code changes: on Windows that restart
+stopped the whole app in your PowerShell window (your check of 10 Nov, see *What failed*). So after an update, stop the
+app with **Ctrl+C** and start it again with `npm run dev`; if it says a port is in use, wait a few seconds and try again.
+When you press Ctrl+C, PowerShell shows two "Terminate batch job (Y/N)?" lines and its prompt comes back at once:
+nothing needs typing. A build that is running when you stop the app finishes on its own; when the app is back it shows
+as done (or, if the builder could not finish, as interrupted: then build again).
+
+## Uploading a drawing and building it, step by step (since 9 Nov)
 
 1. **New project.** On the project list, **New project**: the name, short name, project number and the office (or "New
    office..."). The office matters: the app remembers each office's layer roles. On a project's page, **New version**
@@ -65,28 +248,12 @@ A draft that is not saved yet stays on the project's page with **Continue**. Upl
 are never given to clients and never go into git. The furniture list now guards against Excel formulas (a name that
 starts with = + - or @ is written as plain text), which settles the question left open on 4 Nov.
 
-## How to start it (one command, unchanged)
+## Earlier: the upload milestone's final check (9 Nov), for the record
 
-Open PowerShell in `C:\Users\DWP2\Desktop\Project walkthrough` (the project folder, or its `app` folder: since 10 Nov
-both work) and type:
+The sections below are as written on 9 Nov. The gaps marked *Comes with rooms and slabs* or *comes with the climbable
+stairs* are now done (*Drawing by drawing*, above); the others stand.
 
-```
-npm run dev
-```
-
-Then open **http://127.0.0.1:5710** in Edge or Chrome (type `127.0.0.1`, not `localhost`). To stop it, press **Ctrl+C**
-in the PowerShell window. Nothing new needs installing: the converter and the builder's own Python are already set up.
-Uploads and drafts are kept in `app\data`; the converted DXFs go to a cache folder,
-`C:\Users\DWP2\AppData\Local\walkthrough\cache`.
-
-Since 10 Nov, `npm run dev` no longer restarts the app's server by itself when its code changes: on Windows that restart
-stopped the whole app in your PowerShell window (your check of 10 Nov, see *What failed*). So after an update, stop the
-app with **Ctrl+C** and start it again with `npm run dev`; if it says a port is in use, wait a few seconds and try again.
-When you press Ctrl+C, PowerShell shows two "Terminate batch job (Y/N)?" lines and its prompt comes back at once:
-nothing needs typing. A build that is running when you stop the app finishes on its own; when the app is back it shows
-as done (or, if the builder could not finish, as interrupted: then build again).
-
-## Your path through the app (final check, 9 Nov)
+### Your path through the app (final check, 9 Nov)
 
 Run in Edge on `npm run dev`, through the screens only (nothing typed into the API), on a copy of the store. The real
 `app\data` was never touched: it is still exactly as seeded (54 files, all identical).
@@ -140,7 +307,7 @@ any screen: 86 pieces against 79. No dialog and no page error in either path. Bo
 with its 13 words as the screens saved them the house now gets the acceptance run's furniture, and the 0.25 m limits are
 typed on the Floors step.
 
-## What each acceptance criterion showed
+### What each acceptance criterion showed
 
 | | Criterion | Result | What it showed |
 |---|---|---|---|
@@ -157,7 +324,7 @@ typed on the Floors step.
 | A-11 | Nothing else moved (must) | **Met** | The 4 Nov checks pass; the prototypes' own tests pass (the view-modes test after a re-run, see below); the seed gives the same 5 stamps; no prototype file or drawing changed and no new `__pycache__`; nothing deployed |
 | A-12 | The 3D team's new Revit export of the suite (should) | **Met, with gaps** | Converts with nothing lost, reads, builds, saves and opens both ways (as a new project, and as version 2 of the suite); its Max script and furniture list download; its walk checks run (3 of 9 doors fail: no floor, see the gaps) |
 
-## Test results (final check, 9 Nov 2026)
+### Test results (final check, 9 Nov 2026)
 
 | What is checked | Command | Result |
 |---|---|---|
@@ -219,7 +386,7 @@ Outside `app\`, the 616 files of the prototype folders and drawings are the same
 dates, and the same two `__pycache__` folders from October (none new). Two notes in `.claude\handoff` were written at
 17:15 by a daily Claude task, not by these checks.
 
-## What failed
+### What failed
 
 1. **A fault on the Check step, found in your path (the house): fixed after the check.** Giving a grey furniture
    family a kind did nothing when the family's name had a capital letter right after a digit or a small letter, such as
@@ -252,14 +419,14 @@ dates, and the same two `__pycache__` folders from October (none new). Two notes
    build or a reading that is running when you stop the app finishes by itself and shows as done after a restart
    (`docs/upload/contract-issues/UI.md`, UI-5).
 
-## Known gaps
+### Known gaps
 
-### The bank: none
+#### The bank: none
 
 Uploaded again from its two DWGs, it gives version 2's model byte for byte, with the same furniture list, top view,
 openings and 3ds Max script (apart from the script's text lines, above).
 
-### The Sukhumvit house (one DWG, two floors on one sheet)
+#### The Sukhumvit house (one DWG, two floors on one sheet)
 
 It builds from its one DWG with the two plans boxed on the sheet; the upper floor lines up with the ground floor by the
 grid lines to within a millimetre, and all 86 openings are found where the prototype has them. Against the prototype:
@@ -278,7 +445,7 @@ grid lines to within a millimetre, and all 86 openings are found where the proto
 * **Furniture:** the ground floor matches piece for piece (47); upstairs 32 against 29 (3 rug or zone outlines read as
   furniture). *Later.*
 
-### The presidential suite (`layout presidential test.dwg`)
+#### The presidential suite (`layout presidential test.dwg`)
 
 * **The converter loses part of this drawing** (8,254 of 142,182 items; in the suite, three gym machines and one other
   block, which the prototype did not have either). The Files step says so and advises a DXF exported from AutoCAD.
@@ -296,7 +463,7 @@ grid lines to within a millimetre, and all 86 openings are found where the proto
   them on the Check step.*
 * **Furniture:** 127 pieces against 120, every kind present. Room names come as drawn ("Bar 7,6m2"): *accepted.*
 
-### The tower (L29 and L30; no prototype to compare with)
+#### The tower (L29 and L30; no prototype to compare with)
 
 * It builds, saves and walks. Levels 0.00 and 4.00 m with 4.00 m walls are assumed: the drawings give none.
 * **About half of each floor has no floor.** The curtain wall does not close at its corners, so the rooms between the
@@ -307,7 +474,7 @@ grid lines to within a millimetre, and all 86 openings are found where the proto
 * **39 single lines** on the wall layers (no partner line) are built as 1 m high items: *set aside those that are not
   walls.*
 
-### The 3D team's new Revit export of the suite (9 Nov)
+#### The 3D team's new Revit export of the suite (9 Nov)
 
 * It converts with nothing lost and builds. But **its interior walls are on layer 0** among other line work, so with
   the office's roles only the facade, the columns and a few walls are built, and the floor is 35 m2. Now: set layer 0 to
@@ -320,7 +487,7 @@ grid lines to within a millimetre, and all 86 openings are found where the proto
   press **Reset** under "Model position" on the Floors step.
 * Its 25 openings (9 doors, 15 windows, 1 passage) are listed in the gap report, for a later fair scoring.
 
-### Other gaps
+#### Other gaps
 
 * **The furniture size limits are now on the Floors step** (after the final check), under *Build options*: "Leave out
   furniture shorter than" (0.08 m unless you change it) and "Leave out furniture thinner than" (empty: no limit). The
@@ -332,57 +499,3 @@ grid lines to within a millimetre, and all 86 openings are found where the proto
   (`npm run vendor:libredwg -- --add-licence <file>`), so the version check verifies it; nothing is left for you there.
 * As on 4 Nov: the phone and tablet layout is parked (PC first); the tests' software drawing runs slower than the
   laptop's graphics; the web app's code is one 1.3 MB file.
-
-## What comes next
-
-1. **Done after the final check:** the furniture-kind fault on the Check step is fixed, and the furniture size limits
-   have their boxes on the Floors step (see *What failed*).
-2. **Rooms and slabs** (your choice of 10 Nov, started that day): floors made from the wall network, so the house's
-   glass living area, the suite's centre and the tower's outer rooms get their floor (most of the failing walk probes go
-   with them). Then **stairs you can climb**. **Designed on 10 - 11 Nov** and checked by three reviewers, whose 50
-   findings are worked in: `docs/rooms/DESIGN.md` (it starts with a summary for you in plain words), `ACCEPTANCE.md`
-   (18 criteria; the house's and the bank's main stairs must climb in Walk) and `WORK_BREAKDOWN.md`. About 237 hours as
-   the plan counts them, about 160 more than the plan held for this work; the plan and the product overview say so. The
-   build is next.
-3. **A second round of fixes for the door finder** (your choice of 10 Nov: after the floors and stairs, before the box
-   editing). The 3D team's new suite drawing was tested on 10 Nov as a drawing the finder had never seen (its answer
-   key made by separate labellers who never saw the finder's output, then checked by two blind auditors): **7 of its 16
-   doorways came out right (44 %; the goal is 80 %)**, and 8 openings were reported that are not there. The main cause
-   is known: this kind of Revit export draws the wall's lines on across the doorways (all four pocket doors are hidden
-   that way) and has the furniture on the wall layer. Nothing is fixed yet. The full result, with a marked plan:
-   `detector\blind_run_suite_revit\README.md` and `result_marked.png` beside it. A drawing from another office would
-   still be the stronger test.
-
-   **Until then, the Check step repairs it by hand.** Checked on this drawing on 11 Nov through the app's own builder
-   and the Check step's own picking code (not yet by hand in the browser):
-   * **A doorway that got no door:** select the lines drawn across it, **Set aside** (Delete), **Rebuild**. With this
-     drawing's 15 such lines set aside, 14 of the 16 doorways come out right: all four pocket doors, both unit doors and
-     the hinged door that was too narrow. Each rebuild took about 10 s.
-   * **An opening that is not there:** give it the kind **Not an opening**. All 8 false ones went and nothing else
-     changed.
-   * The folding door and the wide doorless opening stay missed: the Check step cannot add a door by hand.
-
-   Three things to know when doing it: (1) nothing on the screen says a door is missing, so look for a wall filled
-   across a door symbol; (2) zoom well in before clicking a wall line (the plan opens small, and a flag's round marker
-   takes the click first; for a false opening use **Edit the opening** on its flag card); (3) pick the lines one at a
-   time with Shift, or use **A layer in a box**; a plain dragged box in **One item** mode takes the door symbol too.
-4. **Box editing** after that: rename and recolour furniture kinds, move pieces between kinds, add boxes by hand; then
-   the real furniture models, finishes and lights.
-5. For you: ask the 3D team to export Revit files with the walls on their own layer.
-
-## Decisions
-
-Settled by you on 4 Nov: the DWG upload first, then the box editing; Reset in the offline file stays as built; version
-control on this laptop only. The Excel formula question of 4 Nov is settled by the guard described above.
-
-Answered after the final check (9 Nov): the furniture size limits (smallest piece, thinnest piece) got their boxes on
-the Floors step now rather than with the box editing, because without them the house built through the screens reads 7
-thin items more than its settings; say if you would rather have them moved to the box editing.
-
-Settled by you on 10 Nov: the suite's furniture count (6 % over the prototype's, against a wish of 5 %) is accepted as
-it is; rooms and slabs with climbable stairs come next, then a second round of fixes for the door finder (after its
-44 % on the new suite drawing, the fifth drawing it had not seen), then the box editing.
-
-Open: nothing.
-
-Nothing in this milestone needs deploying. When anything goes online later, you run that deploy yourself.

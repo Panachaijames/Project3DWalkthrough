@@ -163,8 +163,20 @@ export function roomsOverlayFor(settings: C.BuildSettings, sourceFloor: (sha1: s
       keep.push(u);
     }
     of.unfloored = keep;
+    // RR (CODE-1 + BRK-2): "It is floor" on a cut X hole: a 'floor here' room fix inside an X shaft or void keeps it as
+    // floor (the hole, its ring in the plate and its flag go), as build/slabs.py cut_slab does
+    const floorFixes = (settings.fixes.rooms ?? []).filter(r => r.floor === of.key && r.slab === 'floor');
+    const keptX = (h: { what: string; o: Vec2[] }) => (h.what === 'shaft' || h.what === 'void')
+      && floorFixes.some(r => ringContains(flat(h.o), r.at[0], r.at[1]));
+    for (const h of (of.holes ?? []).filter(keptX)) {
+      const at = floorFixes.find(r => ringContains(flat(h.o), r.at[0], r.at[1]))!.at;
+      of.slabs = of.slabs.map(sl => ({ ...sl, h: sl.h.filter(ring => !ringContains(flat(ring), at[0], at[1])) }));
+      for (const g of fl) {
+        if (g.kind === 'hole-skipped' && g.severity === 'info' && g.bbox && at[0] >= g.bbox[0] && at[0] <= g.bbox[2] && at[1] >= g.bbox[1] && at[1] <= g.bbox[3]) gone.add(g.id);
+      }
+    }
     // rooms: a name, no ceiling, no floor here (a hole)
-    const holes = [...(of.holes ?? [])];
+    const holes = (of.holes ?? []).filter(h => !keptX(h));
     of.spaces = (of.spaces ?? []).map(s => {
       const r = (settings.fixes.rooms ?? []).find(x => x.floor === of.key && polyContains(flat(s.o), s.h.map(flat), x.at[0], x.at[1]));
       if (!r) return s;

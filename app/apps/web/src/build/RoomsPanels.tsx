@@ -13,7 +13,7 @@ import type { PlanShow } from '@/plan';
 import type { BuildResultInfo, BuildSettings, OverlayFloor } from '@/upload/contracts';
 import { formatNumber } from '@/lib/format';
 import { useBuildContext } from './context';
-import { fixRows, pointIn, roomApplied, roomFixFor, showPoint, stairApplied, stairFixFor, type FixRow } from './roomsFixes';
+import { fixRows, onPlate, pointIn, roomApplied, roomFixFor, showPoint, stairApplied, stairFixFor, type FixRow } from './roomsFixes';
 import { removeStairFix, setRoomFix, setStairFix } from './settingsEdit';
 import { TID } from './testids';
 
@@ -99,6 +99,8 @@ export function RoomPanel({ floor, target, settings, of, stale, editable, onClos
   const slab = fix?.slab ?? 'auto';
   const ceiling = fix?.ceiling ?? 'auto';
   const waiting = !!fix && stale && !(of && roomApplied(fix, of));
+  /** RR (FID-3 + FID-5b): a place with no room on the floor plate (a garden sala, a balcony): no floor, no ceiling. */
+  const plate = !space && onPlate(of, target.at);
   const [text, setText] = useState(name ?? '');
   const focused = useRef(false);
   useEffect(() => { if (!focused.current) setText(name ?? ''); }, [name, target.id]);
@@ -107,12 +109,13 @@ export function RoomPanel({ floor, target, settings, of, stale, editable, onClos
   const commitName = () => { const v = text.trim(); if ((v || null) !== name) write({ name: v || null }); };
   return (
     <section className="grid gap-2 rounded-lg border bg-background p-3 text-sm" data-testid={TID.roomPanel} data-id={target.id}
-      data-at={`${at[0]},${at[1]}`}>
+      data-at={`${at[0]},${at[1]}`} data-plate={plate ? '' : undefined}>
       <header className="flex items-start justify-between gap-2">
         <div className="min-w-0">
           <h4 className="font-semibold">{space ? `Room ${space.name || space.id}` : 'No room here'}</h4>
           <p className="text-xs text-muted-foreground">
-            {space ? `${(Math.round(space.area * 10) / 10).toFixed(1)} m²${space.names.length > 1 ? ` · names: ${space.names.join(', ')}` : ''}` : `At ${showPoint(target.at)}`}
+            {space ? `${(Math.round(space.area * 10) / 10).toFixed(1)} m²${space.names.length > 1 ? ` · names: ${space.names.join(', ')}` : ''}`
+              : `At ${showPoint(target.at)}${plate ? ': floor plate in no room' : ''}`}
           </p>
         </div>
         <Button size="icon" variant="ghost" className="size-7" onClick={onClose} aria-label="Close the room panel" data-testid={TID.roomPanelClose}><X aria-hidden="true" /></Button>
@@ -125,6 +128,17 @@ export function RoomPanel({ floor, target, settings, of, stale, editable, onClos
               onChange={e => setText(e.target.value)} onFocus={() => { focused.current = true; }}
               onBlur={() => { focused.current = false; commitName(); }} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); commitName(); } }} />
           </label>
+          <label className="flex items-center gap-2">
+            <Checkbox checked={slab === 'none'} disabled={!editable} onCheckedChange={v => write({ slab: v === true ? 'none' : 'auto' })} data-testid={TID.roomNoFloor} />
+            No floor here
+          </label>
+          <label className="flex items-center gap-2">
+            <Checkbox checked={ceiling === 'none'} disabled={!editable} onCheckedChange={v => write({ ceiling: v === true ? 'none' : 'auto' })} data-testid={TID.roomNoCeiling} />
+            No ceiling
+          </label>
+        </>
+      ) : plate ? (
+        <>
           <label className="flex items-center gap-2">
             <Checkbox checked={slab === 'none'} disabled={!editable} onCheckedChange={v => write({ slab: v === true ? 'none' : 'auto' })} data-testid={TID.roomNoFloor} />
             No floor here

@@ -12,14 +12,14 @@
 import { useQuery } from '@tanstack/react-query';
 import type { Vec2 } from '@walkthrough/viewer';
 import { EyeOff, Hammer, Maximize2, RotateCcw, Search, X, ZoomIn, ZoomOut } from 'lucide-react';
-import { useMemo, useRef, useState, type KeyboardEvent } from 'react';
+import { useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { runBuild } from '@/api/generated/sdk.gen';
 import { PlanCanvas, type DecodedPlan, type PickMode, type PlanShow } from '@/plan';
-import { hasMarks, withMarks } from '@/plan/marks';
+import { hasMarks, NO_MARKS, withMarks } from '@/plan/marks';
 import type { Bbox, BuildDetail, BuildDiff, BuildOverlay, Flag, FlagKind, ItemRef, OpeningFix, SetAside } from '@/upload/contracts';
 import { rawQueryOptions } from '@/upload/raw';
 import { errorReason, formatNumber } from '@/lib/format';
@@ -32,7 +32,7 @@ import { FLAG_KIND_TEXT, FlagList, type FlagRoomsActions } from './FlagList';
 import { FurnitureWords } from './FurnitureWords';
 import { OpeningEditor } from './OpeningEditor';
 import { CheckCounts, FixesList, RoomPanel, ShowTicks, StairPanel, type RoomTarget } from './RoomsPanels';
-import { closeHereFix, fixMarks, flagFix, notDoorwayFix, outdoorsFix, pointIn, sameEnds, stairFixFor } from './roomsFixes';
+import { closeHereFix, fixMarks, flagFix, notDoorwayFix, outdoorsFix, pointIn, sameEnds, stairFixFor, xHoleFloorFix } from './roomsFixes';
 import { RulesLine } from './RulesLine';
 import { RunPanel } from './RunPanel';
 import {
@@ -113,6 +113,10 @@ export function greyCount(f: Pick<Flag, 'title' | 'detail'>): number | null {
 
 /** The canvas's controls, said once above it (UR, V2-13: nothing on the screen said how the canvas works). */
 export const CANVAS_HINT = 'Wheel: zoom · drag: select a box (Shift adds, Alt takes what it touches) · middle button or the Pan tool: move · F: fit';
+
+/** RR (S1): the plan column: sticky under the app bar (h-12) on a wide screen, scrolling by itself when taller than
+ *  the window. */
+export const PLAN_COLUMN = 'grid min-w-0 content-start gap-2 xl:sticky xl:top-14 xl:z-10 xl:max-h-[calc(100svh-4.5rem)] xl:self-start xl:overflow-y-auto';
 
 /** The set-aside list: rows of this height, this many pixels shown, windowed beyond WINDOW_ASIDE rows (UR, V3-5). */
 export const ASIDE_ROW = 26;
@@ -244,7 +248,11 @@ export function CheckStep() {
   };
   // ---- the rooms milestone: the fixes of R-6.2 written from the tools, the panels and the flag cards
   const stale = !!result?.stale;
-  const marks = useMemo(() => (settings && key && ofloor ? fixMarks(settings, key, ofloor, stale) : null), [settings, key, ofloor, stale]);
+  const fixes = useMemo(() => (settings && key && ofloor ? fixMarks(settings, key, ofloor, stale) : null), [settings, key, ofloor, stale]);
+  // RR (S13): the room or stair open in a panel is outlined on the plan (a small room picked there can be found again)
+  const pickedRoom = roomTarget?.id || null;
+  const marks = useMemo(() => (ofloor && (pickedRoom || stairId) ? { ...(fixes ?? NO_MARKS), pickedRoom, pickedStair: stairId } : fixes),
+    [fixes, ofloor, pickedRoom, stairId]);
   const canvasOverlay = useMemo(() => (ofloor && marks && hasMarks(marks) ? withMarks(ofloor, marks) : ofloor), [ofloor, marks]);
   const closePanels = () => { setRoomTarget(null); setStairId(null); setStairPick(null); };
   const onLine = (a: Vec2, b: Vec2) => { if (key) change(addClosing({ floor: key, a, b, use: 'line' })); };
@@ -275,10 +283,24 @@ export function CheckStep() {
     onCloseHere: f => { const fx = closeHereFix(f); if (fx) change(addClosing(fx)); },
     onOutdoors: f => { const fx = outdoorsFix(f, ofloor); if (fx) change(setRoomFix(fx)); },
     onNotDoorway: f => { const fx = notDoorwayFix(f); if (fx) change(addClosing(fx)); },
+    onItIsFloor: f => { const fx = xHoleFloorFix(f); if (fx) change(setRoomFix(fx)); },
     earlier: !!settings && rulesOf(settings) === 'earlier',
     onUseNew: () => change(setRules('new')),
   };
   const canvasTool = stairPick ? 'pick-point' as const : tool;
+  /** RR (S1): on a screen too narrow for the sticky plan column, Show brings the plan into view (nothing moves when it
+   *  is in view already). After the render it causes: a tool's hint line above the plan moves it. */
+  const [showTick, setShowTick] = useState(0);
+  useLayoutEffect(() => { if (showTick) canvasBox.current?.scrollIntoView?.({ block: 'nearest' }); }, [showTick]);
+  const showPlan = () => setShowTick(t => t + 1);
+  const showAt = (box: Bbox | null) => { if (box) setFocus(box); showPlan(); };
+  /** RR (S2): a stair card's "Open this stair": the tool Rooms and stairs with that stair's panel open. */
+  const openStair = (f: Flag) => {
+    const id = f.ref.stair;
+    if (!id || !(ofloor?.stairs ?? []).some(s => s.id === id)) return;
+    setTool('rooms'); setRoomTarget(null); setStairPick(null); setStairId(id);
+    setActiveFlag(f.id); showAt(bboxAround(f));
+  };
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).closest('input, select, textarea')) return;
@@ -319,7 +341,9 @@ export function CheckStep() {
 
   return (
     <div className="grid gap-4 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]" data-testid="check-step" onKeyDown={onKeyDown}>
-      <section className="grid min-w-0 content-start gap-2">
+      {/* RR (S1): on a wide screen the plan column stays on screen under the app bar while the flag list scrolls; when it
+          is taller than the window it scrolls by itself */}
+      <section className={PLAN_COLUMN} data-testid="check-plan-column">
         {lock && <Alert data-testid="check-locked"><AlertDescription>{lock}</AlertDescription></Alert>}
         <RulesLine settings={settings} editable={editable} />
         <div className="flex flex-wrap items-center gap-2">
@@ -469,7 +493,7 @@ export function CheckStep() {
         </section>
         {settings && key && (
           <FixesList settings={settings} floor={key} of={ofloor} stale={stale} editable={editable}
-            onShow={at => setFocus([at[0] - 3, at[1] - 3, at[0] + 3, at[1] + 3])} />
+            onShow={at => showAt([at[0] - 3, at[1] - 3, at[0] + 3, at[1] + 3])} />
         )}
         {flags.length > 0 && (
           <div className="flex flex-wrap items-center gap-2 text-sm" data-testid="flag-filter">
@@ -489,7 +513,8 @@ export function CheckStep() {
           activeId={activeFlag}
           disabled={!editable}
           outlineOf={outlineOf}
-          onShow={f => { setActiveFlag(f.id); setFocus(bboxAround(f)); }}
+          onShow={f => { setActiveFlag(f.id); showAt(bboxAround(f)); }}
+          onOpenStair={openStair}
           onSelectKeys={keys => select(keys, 'replace')}
           onOpening={id => setOpening(id)}
           onOutline={(f, as) => { if (key && f.ref.edge) change(setOutlineEdge({ floor: key, a: f.ref.edge[0], b: f.ref.edge[1], as })); }}

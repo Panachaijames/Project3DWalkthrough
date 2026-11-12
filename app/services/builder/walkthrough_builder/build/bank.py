@@ -1107,6 +1107,22 @@ def build_floors_network(floors, X, log):
             if sp['poly'].area > NW.BIG_ROOM and not any(d.intersects(sp['poly']) for d in doors):
                 open_rows.append({'name': sp['name'], 'at': sheet(sp['at']), 'space': sp['id'], 'area': round(sp['poly'].area, 1),
                                   'why': 'no door'})
+        # RR FID-1: nothing about a lost room is silent. A closed area of 10 m2 or more that is no room (under half of
+        # its edge is structure) and part of none; a name that stands in no room and went to the nearest one (R-3.2
+        # rule 4) when that room is under 4 m2. Both rows carry `why` and no `space` (the room is in `room`).
+        for shape_g in more.get('bigShapes') or []:
+            shape_at = RM.label_point(shape_g)
+            open_rows.append({'name': '', 'at': sheet((shape_at.x, shape_at.y)), 'area': round(shape_g.area, 1), 'why': 'not a room'})
+        space_by_id = {x['id']: x for x in net['spaces']}
+        for nm in rooms:
+            room_sp = space_by_id.get(nm.get('space'))
+            if room_sp is None or room_sp['poly'].area >= NW.SMALL_ROOM:
+                continue
+            wr = RM.area_of_text(nm.get('area'))             # the area written in the drawing (areaValue may be the room's)
+            if room_sp['poly'].buffer(0.02).contains(Point(nm['x'], nm['y'])) or (wr is not None and RM.fits(room_sp['poly'].area, wr)):
+                continue
+            open_rows.append({'name': nm['name'], 'at': sheet((nm['x'], nm['y'])), 'room': room_sp['id'],
+                              'area': round(room_sp['poly'].area, 1), 'why': 'placed by distance'})
 
         lines = S.get('lines') or []
         n_below = len(stair_lines(F, 'stair'))
@@ -1122,7 +1138,11 @@ def build_floors_network(floors, X, log):
         rows = []
         for sb in mine:
             sw = sb['stairway']
-            outline = unary_union([t['poly'] for t in sb['treads'] + sb['landings']]).convex_hull
+            # the stair's real outline (the outside of its treads and landings joined), not their convex hull: the web
+            # places and judges a stair fix by this row, the builder by the stair's own outline (RR CODE-3)
+            joined = unary_union([t['poly'] for t in sb['treads'] + sb['landings']])
+            joined = joined.buffer(0.01, join_style='mitre').buffer(-0.01, join_style='mitre')
+            outline = Polygon(max(polys(joined), key=lambda q: q.area).exterior).simplify(0.001) if polys(joined) else joined.convex_hull
             at = outline.representative_point()
             rows.append({'id': sw['id'], 'state': 'climb', 'why': None, 'text': None, 'severity': None, 'at': sheet((at.x, at.y)),
                          'outline': [sheet(c) for c in _ring(outline)], 'walk': [sheet(p) for p in sw['walk']],

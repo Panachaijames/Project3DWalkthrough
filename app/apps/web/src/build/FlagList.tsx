@@ -4,12 +4,13 @@
 // The rooms milestone (docs/rooms/DESIGN.md R-6.1, R-6.4; R6): "Close it here" and "It is outdoors" on a slab-gap flag
 // (the first only with a mouth), "Not a doorway: one room" on a doorway flag, the "waiting for Rebuild" mark of a fix a
 // card wrote, and the hint under an old-rule plate-dropped flag while the draft is built the earlier way.
-import { Crosshair, MousePointerClick, PencilLine } from 'lucide-react';
+import { Crosshair, Footprints, MousePointerClick, PencilLine } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import type { Flag, FlagKind, OutlineEdgeFix } from '@/upload/contracts';
 import { cn } from '@/lib/utils';
 import { WaitingMark } from './RoomsPanels';
+import { isCutXHole } from './roomsFixes';
 import { RULES_EARLIER_TEXT, USE_NEW_TEXT } from './settingsEdit';
 import { TID } from './testids';
 
@@ -34,17 +35,24 @@ export const FLAG_KIND_TEXT: Record<FlagKind, string> = {
   'room-open': 'Room not closed',
   'room-names': 'Several names in one room',
   doorway: 'Gap closed as a doorway',
-  stair: 'Stair kept as lines',
+  stair: 'Stair',                                     // RR (S3): the builder's own title already says "Stair kept as lines"
   'stairs-none': 'No stair can be climbed',
   'stair-clash': 'Walls cut under a stair',
   'hole-skipped': 'Void mark not cut',
 };
 
+/** RR (S2): the stair card's button (testids.ts is frozen: the id lives here). */
+export const FLAG_OPEN_STAIR = 'flag-open-stair';
+/** RR (CODE-1 + BRK-2): the cut X hole card's button. */
+export const FLAG_IT_IS_FLOOR = 'flag-it-is-floor';
+
 /** The rooms milestone's buttons and marks on the flag cards (R-6.1, R-6.4). */
 export interface FlagRoomsActions {
   /** The fix a card already wrote, and whether it waits for a Rebuild. */
-  fixOf: (flag: Flag) => { what: 'line' | 'none' | 'outdoors'; waiting: boolean } | null;
+  fixOf: (flag: Flag) => { what: 'line' | 'none' | 'outdoors' | 'floor'; waiting: boolean } | null;
   onCloseHere: (flag: Flag) => void;
+  /** RR (CODE-1 + BRK-2): "It is floor" on the flag of an X mark cut as a shaft or a void. */
+  onItIsFloor?: (flag: Flag) => void;
   onOutdoors: (flag: Flag) => void;
   onNotDoorway: (flag: Flag) => void;
   /** The draft is built the earlier way: the hint under an old-rule plate-dropped flag, with its button. */
@@ -64,16 +72,19 @@ export interface FlagListProps {
   onOutline?: (flag: Flag, as: OutlineEdgeFix['as']) => void;
   onFamily?: (family: string) => void;
   rooms?: FlagRoomsActions;
+  /** RR (S2): a stair card that asks for a check: open that stair's panel (the tool Rooms and stairs). */
+  onOpenStair?: (flag: Flag) => void;
 }
 
-export function FlagList({ flags, outlineOf, disabled, activeId, onShow, onSelectKeys, onOpening, onOutline, onFamily, rooms }: FlagListProps) {
+export function FlagList({ flags, outlineOf, disabled, activeId, onShow, onSelectKeys, onOpening, onOutline, onFamily, rooms, onOpenStair }: FlagListProps) {
   if (!flags.length) return <p className="text-sm text-muted-foreground" data-testid="flag-list-empty">No flags on this floor.</p>;
   const ordered = [...flags].sort((a, b) => (a.severity === b.severity ? 0 : a.severity === 'check' ? -1 : 1));
   return (
     <ul className="grid gap-1.5" data-testid="flag-list">
       {ordered.map(f => {
         const outline = (f.kind === 'outline-wall' || f.kind === 'outline-glass') && f.ref.edge ? outlineOf?.(f) ?? null : null;
-        const fix = rooms && (f.kind === 'slab-gap' || f.kind === 'doorway') ? rooms.fixOf(f) : null;
+        const cutX = isCutXHole(f);
+        const fix = rooms && (f.kind === 'slab-gap' || f.kind === 'doorway' || cutX) ? rooms.fixOf(f) : null;
         const mouth = !!f.ref.a && !!f.ref.b;
         return (
           <li
@@ -129,6 +140,16 @@ export function FlagList({ flags, outlineOf, disabled, activeId, onShow, onSelec
               {rooms && f.kind === 'doorway' && mouth && (
                 <Button size="sm" className="h-7" variant={fix?.what === 'none' ? 'default' : 'outline'} disabled={disabled || !!fix}
                   onClick={() => rooms.onNotDoorway(f)} data-testid={TID.flagNotDoorway}>Not a doorway: one room</Button>
+              )}
+              {rooms?.onItIsFloor && cutX && (
+                <Button size="sm" className="h-7" variant={fix?.what === 'floor' ? 'default' : 'outline'} disabled={disabled || !!fix}
+                  onClick={() => rooms.onItIsFloor!(f)} data-testid={FLAG_IT_IS_FLOOR}>It is floor</Button>
+              )}
+              {f.kind === 'stair' && f.severity === 'check' && f.ref.stair && onOpenStair && (
+                <Button size="sm" variant="outline" className="h-7" onClick={() => onOpenStair(f)} data-testid={FLAG_OPEN_STAIR}>
+                  <Footprints aria-hidden="true" />
+                  Open this stair
+                </Button>
               )}
               {fix?.waiting && <WaitingMark />}
             </div>

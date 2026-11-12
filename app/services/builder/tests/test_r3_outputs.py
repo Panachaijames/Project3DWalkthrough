@@ -114,6 +114,7 @@ def test_the_overlay_has_one_flag_per_report_row(name, outputs):
         want['stair-clash'] += len({x['stair'] for x in r['stairClash']})
         want['hole-skipped'] += sum(1 for h in slab['holes'] if not h['cut'] and h.get('why') in
                                     ('the lowest floor', 'over 60 m2', 'over 30 % of the floor'))
+        want['hole-skipped'] += sum(1 for h in slab['holes'] if h['cut'] and h['what'] in ('shaft', 'void'))   # RR BRK-2
     got = {k: kinds.count(k) for k in want}
     whole = sum(1 for f in ov['flags'] if f['kind'] == 'slab-gap' and 'the walls span' in f['detail'])
     assert got == {**want, 'slab-gap': want['slab-gap'] + whole}

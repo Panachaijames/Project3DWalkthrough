@@ -184,7 +184,9 @@ def test_ra3_the_old_suites_names_belong_to_rooms(builds) -> None:
     assert len(rooms) == 16
     placed = [r for r in rooms if r.get('space')]
     opened = report(b, 'suite')['rooms']['open']
-    assert len(placed) >= 13 and len(placed) + len([o for o in opened if 'space' not in o]) == 16
+    assert len(placed) >= 13 and len(placed) + len([o for o in opened if 'space' not in o and not o.get('why')]) == 16
+    # RR FID-1 / FID-3: the garden sala (a closed outline of lines, 16.6 m2, no room) is now asked about
+    assert [(o['why'], o['area']) for o in opened if o.get('why')] == [('not a room', 16.6)]
     by = {r['name']: r for r in rooms}
     area = {s['id']: s['area'] for s in model(b)['spaces']}
     assert area[by['Steam']['space']] == pytest.approx(2.8, abs=0.15) and by['Steam']['area'] == 3.0
@@ -225,7 +227,9 @@ def test_ra3_the_gate_line_as_it_stands(builds) -> None:
     assert [report(bank, k)['rooms']['spaces'] for k in ('L1', 'L2')] == [15, 14]
     assert [report(house, k)['rooms']['spaces'] for k in ('ground', 'upper')] == [22, 24]
     assert [len(report(house, k)['slab']['unfloored']) for k in ('ground', 'upper')] == [1, 1]
-    assert [report(house, k)['rooms']['open'] for k in ('ground', 'upper')] == [[], []]
+    # RR FID-1: the upper floor's closed area of 13.9 m2 that is no room is now asked about (no name is in no room)
+    assert [report(house, k)['rooms']['open'] for k in ('ground', 'upper')] == [
+        [], [{'name': '', 'at': [125.333, 20.609], 'area': 13.9, 'why': 'not a room'}]]
 
 
 # ------------------------------------------------------------------------------------------------- RA-4: slab areas
@@ -301,9 +305,10 @@ def test_ra5_the_houses_holes(builds) -> None:
     marks = [h for h in report(b, 'upper')['slab']['holes'] if h['what'] == 'X mark']
     assert len(marks) == 4 and all(not h['cut'] and h['why'] for h in marks)
     assert any(h['area'] == pytest.approx(0.84, abs=0.02) for h in marks)
-    # the lowest floor: no hole; its three small X's are reported
+    # the lowest floor: no hole; its two slots are reported. (RR CODE-1, 12 Nov: the third row, a 0.78 m2 'under 1 m2'
+    # mark at (40.9, 21.6), is gone: its box was 'drawn' only by lines crossing its sides, none running along them.)
     ground = report(b, 'ground')['slab']['holes']
-    assert [h['cut'] for h in ground] == [False, False, False] and all(h['area'] < 0.8 for h in ground)
+    assert [h['cut'] for h in ground] == [False, False] and all(h['area'] < 0.8 for h in ground)
     assert model(b)['voids']['ground'] == [] and all(p['plinth'] for p in model(b)['parts'] if p['floor'] == 'ground' and p['kind'] == 'slab')
 
 

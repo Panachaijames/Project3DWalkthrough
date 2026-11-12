@@ -27,6 +27,10 @@ export function defaultLabel(names: readonly string[], when: Date = new Date()):
   return `${formatDate(when.toISOString())}: built from ${names.join(', ')}`.slice(0, 200);
 }
 
+/** RR (S10): counts.rooms is the model's room names (the upload milestone's count), not the rooms closed of the table
+ *  below it: '9 room names'. */
+export const roomNamesText = (n: number) => `${formatNumber(n)} room name${n === 1 ? '' : 's'}`;
+
 export function SaveStep() {
   const { detail, settings, project, projectId, buildId, change, editable, saverState } = useBuildContext();
   const navigate = useNavigate();
@@ -97,7 +101,7 @@ export function SaveStep() {
       </div>
       <section className="grid gap-1 rounded-lg border bg-background p-4 text-sm" data-testid="save-summary">
         <p className="font-semibold">What will be saved</p>
-        <p>{`${formatNumber(result.counts.floors)} floor${result.counts.floors === 1 ? '' : 's'}, ${formatNumber(result.counts.parts)} parts, ${formatNumber(result.counts.openings)} openings, ${formatNumber(result.counts.furniture)} furniture pieces, ${formatNumber(result.counts.rooms)} rooms`}</p>
+        <p data-testid="save-counts">{`${formatNumber(result.counts.floors)} floor${result.counts.floors === 1 ? '' : 's'}, ${formatNumber(result.counts.parts)} parts, ${formatNumber(result.counts.openings)} openings, ${formatNumber(result.counts.furniture)} furniture pieces, ${roomNamesText(result.counts.rooms)}`}</p>
         <p data-testid="save-flags">{result.flags.check ? `${formatNumber(result.flags.check)} flags left to check (of ${formatNumber(result.flags.total)})` : 'No flags left to check'}</p>
         <p>Model-data stamp <span className="font-mono" data-testid="save-stamp">{result.stamp}</span></p>
         <RoomCounts overlay={overlay.data} result={result} />

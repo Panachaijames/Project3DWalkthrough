@@ -16,7 +16,7 @@ import type { FloorRecord, ModesState } from '../contracts';
 import {
   BODY_SPAN, CLEARANCE_DIRECTIONS, CLEARANCE_FAR, FACE_FAR, FACE_HEADINGS, FACE_KEEP, FLOOR_HYSTERESIS, FLOOR_RAY_FAR,
   FLOOR_RAY_FROM, FREE_FAR_RINGS, FREE_MIN_ROOM, FREE_NEAR_RINGS, FREE_RING_STEP, GAP_BRIDGE, GROUND_RAY_FROM,
-  HEAD_ABOVE_EYE, HEAD_FROM, OPEN_HEIGHT, RADIUS, RAY_HEIGHTS, RAY_OFFSETS, STEP_DOWN, STEP_EPS, STEP_UP,
+  HEAD_ABOVE_EYE, HEAD_FROM, HEAD_REACH, OPEN_HEIGHT, RADIUS, RAY_HEIGHTS, RAY_OFFSETS, STEP_DOWN, STEP_EPS, STEP_UP,
 } from './state';
 
 /** What the foot-based walker needs beyond the state (modes/index.ts gives it when the model has `stairways`). */
@@ -260,7 +260,14 @@ export function createWalker(s: ModesState, climb?: ClimbDeps): Walker {
     ray.set(new Vector3(x, foot + GROUND_RAY_FROM, z), DOWN);
     ray.far = GROUND_RAY_FROM + STEP_DOWN + STEP_EPS;
     const hit = ray.intersectObjects(list, false)[0];
-    if (!hit) return null;
+    // a floor with no walkables of its own (no slab: walls that never close) is walked at its level, as the old walker
+    // walks it (its onFloor and findFree do not check it), when that level is within a step of the foot; else a teleport
+    // there succeeds and every move after it fails (rooms review RR, CODE-4 / BRK-7). Off the side of a flight it stays an
+    // edge.
+    if (!hit) {
+      const near = f.level - foot <= STEP_UP + STEP_EPS && foot - f.level <= STEP_DOWN + STEP_EPS;
+      return !f.walkables.length && near ? { y: f.level, object: null } : null;
+    }
     return hit.point.y > foot + STEP_UP + STEP_EPS ? 'high' : { y: hit.point.y, object: hit.object as Mesh };
   }
 
@@ -269,7 +276,7 @@ export function createWalker(s: ModesState, climb?: ClimbDeps): Walker {
     const list = surfaces(f);
     if (!list.length) return false;
     ray.set(new Vector3(x, foot + HEAD_FROM, z), UP);
-    ray.far = s.eye + HEAD_ABOVE_EYE - HEAD_FROM;
+    ray.far = Math.min(s.eye + HEAD_ABOVE_EYE, HEAD_REACH) - HEAD_FROM;
     return ray.intersectObjects(list, false).length > 0;
   }
 

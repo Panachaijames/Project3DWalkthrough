@@ -106,8 +106,11 @@ def drawing_rows(name: str) -> dict:
             'closingWidths': [c.get('width') for c in slab['closings'] if c.get('kind') == 'doorway'],
             'dropped': [{'area': d['area'], 'why': d.get('why')} for d in slab['dropped']],
             'rooms': fl['rooms']['spaces'], 'named': fl['rooms']['named'], 'shapes': fl['rooms'].get('shapes'),
-            'namesInNoRoom': [r.get('name') for r in fl['rooms']['open'] if r.get('name') and not r.get('space')],
+            'namesInNoRoom': [r.get('name') for r in fl['rooms']['open'] if r.get('name') and not r.get('space') and not r.get('why')],
             'closedNoDoor': [r for r in fl['rooms']['open'] if r.get('space')],
+            # RR FID-1: a closed area of 10 m2 or more that is no room; a name given by distance to a room under 4 m2
+            'notARoom': [r.get('area') for r in fl['rooms']['open'] if r.get('why') == 'not a room'],
+            'namesInSmallRooms': [(r.get('name'), r.get('area')) for r in fl['rooms']['open'] if r.get('why') == 'placed by distance'],
             'several': fl['rooms']['several'],
             'namesNew': sum(1 for r in mn['rooms'] if r['floor'] == key),
             'namesOld': sum(1 for r in (mo or {}).get('rooms', []) if r['floor'] == key),
@@ -322,6 +325,23 @@ def walk_reports() -> dict:
     return out
 
 
+def aside_names(n: str, case: str) -> dict:
+    """RR FID-1: each room name of the build without set-asides and the area of the room it names, against the build
+    with them: `namesLost` are the names whose room is gone or under half its area (the new suite's 52 m2 living room
+    became a 1.5 m2 piece on 11 Nov); the must is that there are none."""
+    def areas(v):
+        m = (v or {}).get('model') or {}
+        area = {s['id']: s.get('area') or 0.0 for s in m.get('spaces') or []}
+        return {(r['floor'], r['name']): area.get(r.get('space'), 0.0) for r in m.get('rooms') or []}
+    try:
+        base, now = areas(version(NEW[n])), areas(version(case))
+    except Exception as e:  # noqa: BLE001 - a missing version is reported, not raised
+        return {'error': f'{type(e).__name__}: {e}'}
+    lost = [{'floor': k[0], 'name': k[1], 'was': a, 'now': now.get(k, 0.0)} for k, a in sorted(base.items())
+            if a >= 4.0 and now.get(k, 0.0) < 0.5 * a]
+    return {'names': len(base), 'namesLost': lost, 'must': not lost}
+
+
 def main() -> int:
     res: dict = {'format': 'rooms-acceptance-checks/1', 'tmp': str(W)}
     res['drawings'] = {n: drawing_rows(n) for n in NEW}
@@ -333,7 +353,15 @@ def main() -> int:
             continue
         sa = load(W / 'out' / case / 'build2' / 'settings.json')['fixes']['setAside'] if (W / 'out' / case / 'build2' / 'settings.json').exists() else []
         res['aside'][n] = {'setAside': len(sa), 'stamp': v['version'].get('stamp'),
+                           # RR FID-1: the name checks of the set-aside builds: the names keep their rooms (a name
+                           # whose room shrank to under half of what it was without the set-asides is `namesLost`)
+                           'names': aside_names(n, case),
                            'floors': {k: {'plate0': f['slab']['plate'], 'rooms': f['rooms']['spaces'],
+                                          'named': f['rooms']['named'], 'shapes': f['rooms'].get('shapes'),
+                                          'several': f['rooms']['several'],
+                                          'notARoom': [r.get('area') for r in f['rooms']['open'] if r.get('why') == 'not a room'],
+                                          'namesInSmallRooms': [(r.get('name'), r.get('area')) for r in f['rooms']['open']
+                                                                if r.get('why') == 'placed by distance'],
                                           'closings': {c: sum(1 for x in f['slab']['closings'] if x.get('kind') == c) for c in ('doorway', 'bridge')},
                                           'inShould': (lambda lo: lo and lo[2] <= f['slab']['plate'] <= lo[3])(PLATE.get((n, k))),
                                           'inMust': (lambda lo: lo and lo[0] <= f['slab']['plate'] <= lo[1])(PLATE.get((n, k)))}

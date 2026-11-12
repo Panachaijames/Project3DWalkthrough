@@ -216,9 +216,9 @@ model's treads, landings, well and stairway within 1 mm (ACCEPTANCE RA-9).
 | `presentation/rooms-reference.json` | its Presentation, as U4's `out/presentation.py` writes it | `eab1b408eb323328b55bf4cb3253b1bf66daedc2` |
 | `stages/rooms-reference.stages.json` | its ReplayData | `fab0e3e55ea5dced749980d2df96307f05859f93` |
 | `rooms/settings.reference.json` | the BuildSettings it was built with (the two DXFs by sha1, the three options at their new values) | `a712632175fffb8ccb19da57d01f3c146e30c016` |
-| `rooms/build-result.reference.json` | contracts.BuildResult with every new report key: `floors[*].rooms / slab / stairways / stairClash`, `fixes.closings / rooms / stairs`, `replay.facts.rooms / climbable / ceilings` (timings zero) | `c94e2f664666e3e433aa462e5782f0f762120f9b` |
-| `rooms/overlay.reference.json` | BuildOverlay with the new floor fields (`spaces`, `holes`, `stairs`, `closings`, `unfloored`, sheet m) and the new flags `slab-gap`, `room-open`, `room-names`, `doorway`, `stair`, `stair-clash`, `hole-skipped`, written by the tool from the report with the texts of DESIGN R-6.1 (R3 wrote the real overlay code against it; since RI the tool takes `out/overlay.py`'s own, the same bytes) | `834717346f08031de12cee00b48853888b7fb66e` |
-| `rooms/flags.every-kind.json` | one Flag of each of the eight new kinds: the seven above and a hand-written `stairs-none` (a building whose stair climbs raises none) | `88bf1aa2cf3fc3133eff8d5a7037e55e63c84fc3` |
+| `rooms/build-result.reference.json` | contracts.BuildResult with every new report key: `floors[*].rooms / slab / stairways / stairClash`, `fixes.closings / rooms / stairs`, `replay.facts.rooms / climbable / ceilings` (timings zero) | `ee304f37d115c1d2b72c68f72a0c6cf5493d7889` |
+| `rooms/overlay.reference.json` | BuildOverlay with the new floor fields (`spaces`, `holes`, `stairs`, `closings`, `unfloored`, sheet m) and the new flags `slab-gap`, `room-open`, `room-names`, `doorway`, `stair`, `stair-clash`, `hole-skipped`, written by the tool from the report with the texts of DESIGN R-6.1 (R3 wrote the real overlay code against it; since RI the tool takes `out/overlay.py`'s own, the same bytes) | `b0949a81e26eb0bc118513b75154ce4177d4ea48` |
+| `rooms/flags.every-kind.json` | one Flag of each of the eight new kinds: the seven above and a hand-written `stairs-none` (a building whose stair climbs raises none) | `636a6a428bd02a7f70ab976d52c2cade70ad4355` |
 | `models/stairs-straight.model.json` | BuiltModel v2 of `make-stair-dxf.py straight`: 16 risers, 15 treads | `f9e2f8952cf5c107861b98c64f9632988192f8b1` |
 | `models/stairs-L.model.json` | BuiltModel v2 of `make-stair-dxf.py L`: 7 + 9 risers, 14 treads, 1 landing | `85d27c8623cca441fc24288d94406d56bca36a52` |
 | `models/stairs-U.model.json` | BuiltModel v2 of `make-stair-dxf.py U`: 8 + 8 risers, 14 treads, 1 half landing | `bb2e29818643e3eca938963c24b4c6012dbf38d9` |
@@ -228,13 +228,13 @@ names each output's bytes, `job.json` their sizes and sha1s; `services/builder/t
 
 | File | What | sha1 |
 |---|---|---|
-| `rooms/runs/reference-build/job.json` | run folder | `ecd256d0819cec2b0762494607dbde71d2b939b5` |
+| `rooms/runs/reference-build/job.json` | run folder | `1e9679fd81c1fc7f976b96b92e6b3771fd857846` |
 | `rooms/runs/reference-build/out/Rooms_reference.ms` | run folder | `bdc63917a3730cd09a512fe5bcb6d0ee7fe5a0bb` |
 | `rooms/runs/reference-build/out/diff.json` | run folder | `975b4b76be497b7ee8eee52fd95b32fc2140b3fd` |
 | `rooms/runs/reference-build/out/inputs.json` | run folder | `873a26603082c958c193f0c10f11941e8d7dd17e` |
 | `rooms/runs/reference-build/out/openings.json` | run folder | `07d1e3edd71125c9bfa4de17069699759d057d4a` |
 | `rooms/runs/reference-build/out/pieces.json` | run folder | `e83771137ffd8eab4056cd23198e16326bbf1fa2` |
-| `rooms/runs/reference-build/out/report.json` | run folder | `36024e0bd4a15d8f6a385cd4cbdc0645534b1a71` |
+| `rooms/runs/reference-build/out/report.json` | run folder | `4cce60d0227faf45b759b35b5bd28d8e0659f9ea` |
 | `rooms/runs/reference-build/out/topview.png` | run folder | `578948481a1ea6ce85125d60333ce9643a5a2647` |
 | `rooms/runs/reference-build/run.json` | run folder | `b5939cfdf6abf0b7a65f626c4518e32878b7ffc7` |
 
@@ -246,7 +246,11 @@ The row shapes of the new report keys are these fixtures' (the builder's `contra
 with `why` = a mark that was not cut); `slab.unfloored` `{ area, at, o, mouth, answered }`; `slab.closings`
 `{ kind, a, b, width }`; `slab.dropped` `{ area, at, why }`; `stairways` `{ id, state, why, text, severity, at, outline, walk,
 bottom, to, risers, riser }`; `stairClash` `{ stair, kind, label, area, z1, at }`; `fixes.closings / rooms / stairs`
-`{ fix, matched }`. Points are sheet metres.
+`{ fix, matched }`. Points are sheet metres. Since RR (12 Nov): `rooms.open` also holds rows with `why` and no room of
+their own, `{ name: '', at, area, why: 'not a room' }` (a closed area of 10 m2 or more in no room) and `{ name, at, room,
+area, why: 'placed by distance' }` (a name given to a room under 4 m2); a `slab.holes` row with `cut: false` may have
+`why: 'kept as floor by staff'`; the `stairways` row's `outline` is the outside of the treads and landings joined (no
+longer their convex hull). The five sha1s above that moved in RR are explained in `docs/rooms/contract-issues/RR.md`.
 
 ### Settings, the house-rooms overlay, the old-rule outputs, the keys
 

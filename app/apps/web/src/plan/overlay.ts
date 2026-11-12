@@ -26,6 +26,9 @@ export interface LocalMarks {
   points: { at: Vec2; kind: 'room' | 'floor' | 'outdoors' }[];
   outdoors: Set<number>;
   bottoms: Vec2[];
+  /** RR (S13): the room and the stair open in the Check step's panel (ids), or null. */
+  pickedRoom: string | null;
+  pickedStair: string | null;
 }
 
 export interface LocalOverlay {
@@ -130,6 +133,8 @@ function roomsFields(d: PlanData, o: OverlayFloor): Pick<LocalOverlay, 'spaces' 
     points: mk.points.filter(p => okPoint(p.at)).map(p => ({ at: local(d, p.at), kind: p.kind })),
     outdoors: new Set(mk.outdoors),
     bottoms: mk.bottoms.filter(b => okPoint(b.at)).map(b => local(d, b.at)),
+    pickedRoom: typeof mk.pickedRoom === 'string' && mk.pickedRoom ? mk.pickedRoom : null,
+    pickedStair: typeof mk.pickedStair === 'string' && mk.pickedStair ? mk.pickedStair : null,
   } : null;
   return { spaces, holes, stairs, closings, unfloored, marks };
 }

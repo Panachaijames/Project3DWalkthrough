@@ -151,7 +151,7 @@ def test_ra9_the_house_other_stairs_stay_lines(stages) -> None:
     assert st05['text'].endswith('its 7 steps would rise about 1.0–1.5 m: no floor of the model is at that height.')
     st02 = left_of(st, row_at(st['found']['ground'], 40.9, 21.4))
     assert (st02['why'], st02['severity'], st02['risers']) == ('the riser does not fit', 'check', 16)
-    assert '16 steps for 3.90 m give 0.24 m each' in st02['text'] and 'A storey of 2.94–3.36 m would fit every stair' in st02['text']
+    assert '16 steps for 3.90 m give 0.244 m each' in st02['text'] and 'A storey of 2.94–3.36 m would fit every stair' in st02['text']
     up02 = left_of(st, row_at(st['found']['upper'], 41.0, 19.5))
     assert up02['why'] == 'the riser does not fit' and abs(up02['keptVoid'].area - 3.93) <= 0.05, "today's void stays over it upstairs"
     assert all(s['why'] in ('no floor at its top', 'the riser does not fit', 'turning or curved steps') for s in st['stairs']['left'])
@@ -202,7 +202,7 @@ def test_ra9_the_tower_stairs(stages) -> None:
     check_solid(st, sb)
     b29 = next(s for s in st['stairs']['left'] if s['floor'] == 'L29')
     assert (b29['why'], b29['severity'], b29['risers']) == ('the riser does not fit', 'check', 18)
-    assert '18 steps for 4.00 m give 0.22 m each' in b29['text'] and 'A storey of 2.80–3.78 m would fit' in b29['text']
+    assert '18 steps for 4.00 m give 0.222 m each' in b29['text'] and 'A storey of 2.80–3.78 m would fit' in b29['text']
     b30 = next(s for s in st['stairs']['left'] if s['floor'] == 'L30')
     assert b30['why'] == 'the riser does not fit' and abs(b30['keptVoid'].area - 17.24) <= 0.3
     assert len(st['stairs']['left']) == 2 and len(st['stairs']['built']) == 1, "L30's drawing of stair A is the same stair"

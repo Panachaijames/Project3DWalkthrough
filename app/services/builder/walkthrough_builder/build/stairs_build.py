@@ -28,7 +28,7 @@ import math
 import statistics
 
 from shapely.geometry import Point, Polygon
-from shapely.ops import unary_union
+from shapely.ops import nearest_points, unary_union
 
 from . import stairs_read as SR
 from .bank import R3, polys
@@ -293,7 +293,18 @@ def _solid(sid, st, lo, to_fb, floors, X, plate0, direction):
                 break
             t -= 0.05
         t = max(t, CLEAR)
-        return (p0[0] + sign * d[0] * t, p0[1] + sign * d[1] * t)
+        end = (p0[0] + sign * d[0] * t, p0[1] + sign * d[1] * t)
+        if t > CLEAR + EPS or plate.is_empty or plate.contains(Point(end)):
+            return end
+        # no spot 0.3 - 1.0 m from the riser stands on the plate (a stair that starts just inside a door, RR BRK-5):
+        # never a point off the plate: the point 0.1 m from the riser (the one the ON_PLATE test looked at), or the
+        # plate's nearest point to it, a little inside
+        near = Point(p0[0] + sign * d[0] * 0.1, p0[1] + sign * d[1] * 0.1)
+        if plate.contains(near):
+            return (near.x, near.y)
+        inner = plate.buffer(-0.05)
+        q = nearest_points(inner if not inner.is_empty else plate, near)[0]
+        return (q.x, q.y)
     bottom = clear(_mid(first[0]), d1, -1, lo)
     top = clear(_mid(last[-1]), dn, 1, to_fb)
     walk = [bottom] + walk + [top]
@@ -378,8 +389,10 @@ def build_stairs(floors, found, nets, plate0, fixes, X):
     nets: {floor key: NetworkResult}; plate0: {floor key: geometry}."""
     stair_fixes = (fixes or {}).get('stairs') or []
     if X.options.get('stairs') != 'climb':
-        left = [_tracer_left(st, 'kept as lines', f'Stair at ({st["hull"].representative_point().x:.1f}, '
-                             f'{st["hull"].representative_point().y:.1f}): kept as lines.', 'info', fb, plate0)
+        def at_hull(st):                                       # in the floor's own sheet frame, as _where (RR CODE-6)
+            s, at = _shift(X, st['floor']), st['hull'].representative_point()
+            return f'Stair at ({at.x - s[0]:.1f}, {at.y - s[1]:.1f})'
+        left = [_tracer_left(st, 'kept as lines', f'{at_hull(st)}: kept as lines.', 'info', fb, plate0)
                 for fb in floors for st in found.get(fb['key']) or []]
         return {'built': [], 'left': left, 'pairs': [], 'fixes': [{'fix': k, 'matched': False} for k, _ in enumerate(stair_fixes)]}
     built, left, taken, matched_fix = [], [], {}, set()
@@ -495,8 +508,12 @@ def build_stairs(floors, found, nets, plate0, fixes, X):
             if target is None and off is None:
                 rise = up['level'] - lo['level']
                 r = rise / count
-                if RISER[1] < r <= MISCOUNT or r < RISER[0]:
-                    lines('the riser does not fit', f'{where}: {count} steps for {rise:.2f} m give {r:.2f} m each. The drawing '
+                if use == 'climb' and r > CLIMB_MAX + EPS:   # staff's choice cannot be followed: say so (RR BRK-4)
+                    lines('the riser does not fit', f'{where}: "Climb it as drawn" is not possible: each step would be '
+                          f'{r:.3f} m (the limit is {CLIMB_MAX:.2f} m). {count} steps for {rise:.2f} m: the drawing may not '
+                          'show every step, or the levels may be off.', 'check', count, (i, count))
+                elif RISER[1] < r <= MISCOUNT or r < RISER[0]:
+                    lines('the riser does not fit', f'{where}: {count} steps for {rise:.2f} m give {r:.3f} m each. The drawing '
                           'may not show every step, or the levels may be off.', 'check', count, (i, count))
                 else:
                     lines('no floor at its top', f'{where}: its {count} steps would rise about {count * RISER[0]:.1f}–'

@@ -11,6 +11,8 @@ The holes, in this order (R-4.3):
     lowest floor of a model is not always the bottom of the building;
   * `shaft` and `void`: the X marks (xmarks.py); a void on the lowest floor is not cut (`hole-skipped`, info);
   * `no floor`: the rooms staff marked "no floor here" (they are out of plate0 already: network.plate_of).
+An X hole holding the point of a staff "floor here" fix is not cut (`kept as floor by staff`); every X hole that IS cut
+gets an info flag from the overlay, which asks whether it is one (RR BRK-2).
 Holes of the lift and X family that overlap or touch are one hole, their union. Every hole except a well and a staff
 hole stops at the arrival of a climbable stair (the 1.2 m past its top riser stays floor, R-8.2). A hole under 0.5 m2
 is reported and not cut; an X hole of over 60 m2 or over 30 % of plate0 is never cut by itself (`hole-skipped`, check).
@@ -22,7 +24,7 @@ from __future__ import annotations
 
 import math
 
-from shapely.geometry import Polygon
+from shapely.geometry import Point, Polygon
 from shapely.ops import unary_union
 
 from . import xmarks as XM
@@ -138,9 +140,16 @@ def cut_slab(fb, net, plate0, stairs, fixes, X):
     if X.options['liftShafts']:
         cells = unary_union([g for g in fb['e_walls'] if g is not None and not g.is_empty] + [r['span'] for r in fb['recs']])
         family += [('lift shaft', c) for c in lift_shafts(plate0, cells, fb['recs'])]
-    for x in XM.x_marks(fb, net, X):
+    marks = XM.x_marks(fb, net, X)
+    # staff: "it is floor" (a room fix with slab 'floor' whose point lies in an X hole): that hole, and the X's drawn
+    # over it, stay floor (RR BRK-2: an X in a rectangle is not always a shaft, and nothing else could undo the cut)
+    keep_pts = [Point(p) for p in more.get('keepFloor') or []]
+    kept = [x for x in marks if x['what'] != 'mark' and any(x['poly'].contains(p) for p in keep_pts)]
+    for x in marks:
         if x['what'] == 'mark':
             row('X mark', x['poly'], False, x.get('why') or 'too small')
+        elif any(x is k or x['poly'].distance(k['poly']) <= TOUCH for k in kept):
+            row(x['what'], x['poly'], False, 'kept as floor by staff')
         elif fb['lowest'] and x['what'] == 'void':
             row('void', x['poly'], False, 'the lowest floor')
         else:

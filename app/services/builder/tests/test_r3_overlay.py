@@ -80,7 +80,9 @@ def test_the_reference_flags_carry_the_design_texts():
                                                   'found here.')
     assert by_kind(o, 'room-open')[0]['detail'] == ('GARAGE: its room is not closed (a gap in its walls). Close the gap or place '
                                                     'the name.')
-    assert by_kind(o, 'room-names')[0]['detail'].startswith('2 names in one room: an open-plan room')
+    # RR S6: the names are in the sentence
+    assert by_kind(o, 'room-names')[0]['detail'] == ('2 names in one room (LIVING, DINING): an open-plan room, or a wall between '
+                                                     'them is missing.')
     assert by_kind(o, 'stair')[0]['detail'] == 'Stair at (3.1, 8.0): kept as lines: which end is the bottom was not found.'
     assert by_kind(o, 'stair-clash')[0]['detail'] == ("1 wall piece of Ground floor under the stair was cut to the stair's "
                                                       'underside.')
@@ -122,6 +124,21 @@ def test_room_open_for_a_closed_area_with_no_door():
     assert got[1]['ref'] == {'room': 'ground-R001'} and got[1]['severity'] == 'check'
 
 
+def test_room_open_for_a_lost_room_and_a_name_given_to_a_small_room():
+    """RR FID-1: a closed area of 10 m2 or more that is no room, and a name placed by distance in a room under 4 m2."""
+    res = result()
+    res['report']['floors']['ground']['rooms']['open'] += [
+        {'name': '', 'at': [3.0, 4.0], 'area': 52.0, 'why': 'not a room'},
+        {'name': 'LIVING & DINING AREA', 'at': [6.0, 4.0], 'room': 'ground-R002', 'area': 1.5, 'why': 'placed by distance'}]
+    got = by_kind(ov.overlay(res, ctx()), 'room-open')
+    assert [(f['title'], f['severity'], f['ref']) for f in got[1:]] == [
+        ('A closed area is not a room', 'check', {}),
+        ('LIVING & DINING AREA: placed in a small room nearby', 'check', {'room': 'ground-R002'})]
+    assert got[1]['detail'].startswith('A closed area of 52 m2 is not counted as a room: less than half of its edge is wall.')
+    assert got[2]['detail'].startswith('LIVING & DINING AREA stands in no room and was given to the nearest one, of 1.5 m2')
+    assert len({f['id'] for f in got}) == 3
+
+
 def test_stair_clash_counts_each_kind_and_the_pieces_taken_out():
     res = result()
     row = res['report']['floors']['ground']['stairClash'][0]
@@ -140,8 +157,20 @@ def test_hole_skipped_only_for_the_lowest_floor_and_the_large_marks():
            {'what': 'X mark', 'area': 0.6, 'at': [2.0, 2.0], 'o': o, 'cut': False, 'why': 'narrower than 0.6 m'},
            {'what': 'void', 'area': 0.4, 'at': [3.0, 3.0], 'o': o, 'cut': False, 'why': 'under 0.5 m2'}]
     got = by_kind(ov.overlay(res, ctx()), 'hole-skipped')
-    assert [(f['floor'], f['severity']) for f in got] == [('ground', 'info'), ('upper', 'check')]
-    assert got[1]['detail'] == 'An X marks 63 m2 as a void: is it one?' and got[1]['bbox'] == [1.0, 1.0, 10.0, 8.0]
+    # RR BRK-2: the upper floor's X void that WAS cut is asked about too (info, with its box; the ref stays empty)
+    assert [(f['floor'], f['severity'], f['title']) for f in got] == [
+        ('ground', 'info', 'A void mark was not cut'), ('upper', 'info', 'An X mark was cut as a void'),
+        ('upper', 'check', 'A large void mark was not cut')]
+    assert got[1]['detail'] == 'An X marks 5.2 m2 as a void: it was cut out of the floor. If it is floor, say so.'
+    assert got[1]['at'] == [4.7, 1.8] and got[1]['bbox'] == [3.4, 0.8, 6.0, 2.8] and got[1]['ref'] == {}
+    assert got[2]['detail'] == 'An X marks 63 m2 as a void: is it one?' and got[2]['bbox'] == [1.0, 1.0, 10.0, 8.0]
+    # a hole staff kept as floor, a stair well and a lift shaft raise nothing
+    res = result()
+    res['report']['floors']['upper']['slab']['holes'] = [
+        {'what': 'shaft', 'area': 2.0, 'at': [2.0, 2.0], 'o': o, 'cut': False, 'why': 'kept as floor by staff'},
+        {'what': 'lift shaft', 'area': 3.0, 'at': [3.0, 3.0], 'o': o, 'cut': True},
+        {'what': 'stair well', 'area': 5.0, 'at': [4.0, 4.0], 'o': o, 'cut': True}]
+    assert [f['floor'] for f in by_kind(ov.overlay(res, ctx()), 'hole-skipped')] == ['ground']
 
 
 def test_stairs_none_cases():
@@ -181,11 +210,13 @@ def test_fix_unmatched_for_the_new_fixes():
     s = settings()
     s['fixes'].update(closings=[{'floor': 'ground', 'a': [7.0, 5.6], 'b': [7.0, 6.8], 'use': 'none'},
                                 {'floor': 'roof', 'a': [1.0, 1.0], 'b': [2.0, 1.0], 'use': 'line'},
-                                {'floor': 'ground', 'a': [1.0, 1.0], 'b': [2.0, 1.0], 'use': 'line'}],
+                                {'floor': 'ground', 'a': [1.0, 1.0], 'b': [2.0, 1.0], 'use': 'line'},
+                                {'floor': 'ground', 'a': [30.0, 1.0], 'b': [30.0, 4.0], 'use': 'line'}],
                       rooms=[{'floor': 'ground', 'at': [50.0, 50.0], 'name': 'X', 'slab': 'auto', 'ceiling': 'auto'},
                              {'floor': 'ground', 'at': [3.0, 3.0], 'name': 'Y', 'slab': 'auto', 'ceiling': 'auto'}],
                       stairs=[{'floor': 'ground', 'at': [40.0, 40.0], 'bottom': None, 'use': 'lines'}])
-    res['report']['fixes'].update(closings=[{'fix': 0, 'matched': False}, {'fix': 1, 'matched': False}, {'fix': 2, 'matched': True}],
+    res['report']['fixes'].update(closings=[{'fix': 0, 'matched': False}, {'fix': 1, 'matched': False}, {'fix': 2, 'matched': True},
+                                            {'fix': 3, 'matched': False}],     # RR BRK-3: on a built floor, no end on a wall
                                   rooms=[{'fix': 0, 'matched': False}, {'fix': 1, 'matched': True}],
                                   stairs=[{'fix': 0, 'matched': False}])
     o = ov.overlay(res, ctx(s))
@@ -193,12 +224,15 @@ def test_fix_unmatched_for_the_new_fixes():
     assert [(f['floor'], f['title'], f['ref']) for f in got] == [
         ('ground', 'A removed closing is no longer there', {'fix': 0, 'a': [7.0, 5.6], 'b': [7.0, 6.8]}),
         ('roof', 'A closing line finds no floor', {'fix': 1, 'a': [1.0, 1.0], 'b': [2.0, 1.0]}),
+        ('ground', 'A closing line meets no wall', {'fix': 3, 'a': [30.0, 1.0], 'b': [30.0, 4.0]}),
         ('ground', 'A room fix finds no room', {'fix': 0}),
         ('ground', 'A stair fix finds no stair', {'fix': 0})]
     assert got[0]['detail'] == ('The removed closing at (7.00, 6.20) is no longer there: the fix is kept in the settings until you '
                                 'drop it.')
-    assert got[2]['detail'] == 'The room fix at (50.00, 50.00) finds no room: it is kept in the settings until you drop it.'
-    assert got[3]['at'] == [40.0, 40.0] and all(f['severity'] == 'check' for f in got)
+    assert got[2]['detail'] == ('The closing line at (30.00, 2.50) meets no wall at either end: has the drawing moved? It is kept '
+                                'in the settings until you drop it.')
+    assert got[3]['detail'] == 'The room fix at (50.00, 50.00) finds no room: it is kept in the settings until you drop it.'
+    assert got[4]['at'] == [40.0, 40.0] and all(f['severity'] == 'check' for f in got)
     ids = [f['id'] for f in o['flags']]
     assert len(ids) == len(set(ids))
 

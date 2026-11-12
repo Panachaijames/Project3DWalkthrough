@@ -50,7 +50,7 @@
       "floor": "ground",
       "severity": "info",
       "title": "2 names in one room",
-      "detail": "2 names in one room: an open-plan room, or a wall between them is missing.",
+      "detail": "2 names in one room (LIVING, DINING): an open-plan room, or a wall between them is missing.",
       "at": [
         3.585,
         4.5

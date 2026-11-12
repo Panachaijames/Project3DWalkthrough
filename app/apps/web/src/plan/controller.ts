@@ -12,10 +12,10 @@ import type { Vec2 } from '@walkthrough/viewer';
 import type { Bbox, LayerRole } from '@/upload/contracts';
 import { coveredBox, coveredEntries, isAnchor, planData, TYPE_NAMES, type PlanData, type QBox } from './decode';
 import { drawFrame, type Ctx, type Scene } from './draw';
-import { d2Polyline, polyContains, ringContains } from './geom';
+import { d2Polyline, polyContains, ringBox, ringContains } from './geom';
 import { boxKeys, buildGrid, clickKey, dist2PointSegment, entriesInBox, nearest, type Grid, type Mode } from './hit';
 import type { PlanCanvasProps, PlanShow, PlanTestHook } from './index';
-import { areaBox, localBox, localDiff, localFlags, localOverlay, type LocalSpace } from './overlay';
+import { areaBox, localBox, localDiff, localFlags, localOverlay, type LocalOverlay, type LocalSpace } from './overlay';
 import { buildLayerPaths, pathOfEntries, textAnchors, type LayerPath, type PathSink } from './paths';
 import { boxFromScreen, clamp, fitView, panBy, sameView, scaleLimits, toLocal, toScreen, wheelFactor, zoomAt, type Size, type View } from './view';
 import { FLAG_RADIUS } from './colours';
@@ -74,6 +74,11 @@ export class PlanController {
   private raf = 0;
   private hoverRaf = 0;
   private focusSig = '';
+  /** RR (S7): the box the first view and Fit show when the canvas has an overlay: that floor's own plate and parts (or
+   *  its area) with a margin, not the whole sheet (a DWG may hold every floor and the elevations); null: the sheet. */
+  private home: QBox | null = null;
+  /** The overlay floor the view was last fitted for: another floor of the same sheet fits again. */
+  private homeKey: string | null = null;
   private wantFit = true;
   private disposed = false;
   private readonly off: (() => void)[] = [];
@@ -126,6 +131,13 @@ export class PlanController {
       sc.builtAside = path; sc.builtAsideBoxes = boxes;
       dirty = true;
     }
+    if (planChanged || prev!.overlay !== p.overlay || prev!.area !== p.area) {
+      this.home = sc.overlay ? homeBoxOf(d, sc.overlay, sc.area) : null;
+      // the first overlay, or another floor of the same sheet: fit again (a new overlay of the same floor, after a
+      // Rebuild or a fix mark, keeps the view)
+      const hk = p.overlay?.key ?? null;
+      if (hk !== this.homeKey) { this.homeKey = hk; if (hk !== null && !p.focus) this.wantFit = true; }
+    }
     if (planChanged || prev!.overlay !== p.overlay || prev!.flags !== p.flags) { sc.flags = localFlags(d, p.flags, p.overlay?.key ?? null); dirty = true; }
     if (planChanged || prev!.overlay !== p.overlay || prev!.diff !== p.diff) { sc.diff = p.diff ? localDiff(d, p.diff, p.overlay?.key ?? null) : null; dirty = true; }
     if (planChanged || prev!.selected !== p.selected) {
@@ -172,14 +184,16 @@ export class PlanController {
   private fitNow(): boolean {
     if (this.size.w <= 0 || this.size.h <= 0) return false;
     const focus = this.props.focus ? localBox(this.data, this.props.focus) : null;
-    const box = focus ?? this.data.fitBox;
+    const box = focus ?? this.home ?? this.data.fitBox;
     this.view = box ? fitView(box, this.size) : { cx: 0, cy: 0, s: 0.5 };
     this.wantFit = false;
     return true;
   }
 
+  /** F, 0, Home and the page's Fit button: the overlay's floor when there is one (RR, S7), else the sheet. */
   fit(): void {
-    this.view = this.data.fitBox ? fitView(this.data.fitBox, this.size) : this.view;
+    const box = this.home ?? this.data.fitBox;
+    this.view = box ? fitView(box, this.size) : this.view;
     this.requestDraw();
   }
 
@@ -662,3 +676,24 @@ export function roomText(r: Pick<LocalSpace, 'name' | 'area' | 'ceiling'>): stri
   return `${r.name || 'Room'} · ${area}${r.ceiling ? '' : ' · no ceiling'}`;
 }
 
+/** RR (S7): the margin round a floor's own box, in metres: this share of its longer side, at least HOME_MARGIN_M. */
+export const HOME_MARGIN_SHARE = 0.04;
+export const HOME_MARGIN_M = 0.5;
+
+/** The box (quanta) of an overlay floor's own geometry: its plate (slabs), parts and stairs; else its area box; with a
+ *  margin. null when the overlay has none of them (the caller then fits the sheet). */
+export function homeBoxOf(d: PlanData, ov: LocalOverlay, area: QBox | null): QBox | null {
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  const take = (r: ArrayLike<number>) => {
+    const b = ringBox(r);
+    if (!b || !b.every(Number.isFinite)) return;
+    if (b[0] < x0) x0 = b[0]; if (b[1] < y0) y0 = b[1]; if (b[2] > x1) x1 = b[2]; if (b[3] > y1) y1 = b[3];
+  };
+  for (const s of ov.slabs) take(s.o);
+  for (const p of ov.parts) take(p.o);
+  for (const st of ov.stairs) take(st.outline);
+  const box: QBox | null = Number.isFinite(x0) ? [x0, y0, x1, y1] : area;
+  if (!box) return null;
+  const m = Math.max(HOME_MARGIN_M / d.quantum, HOME_MARGIN_SHARE * Math.max(box[2] - box[0], box[3] - box[1]));
+  return [box[0] - m, box[1] - m, box[2] + m, box[3] + m];
+}

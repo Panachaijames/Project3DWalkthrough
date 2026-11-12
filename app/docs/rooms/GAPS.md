@@ -2,8 +2,9 @@
 
 Written by the integration step RI (part RI-B; docs/rooms/WORK_BREAKDOWN.md RI item 4) from the acceptance result
 `%TEMP%\wt-ri\acc\rooms-result.json`, which `node tools/rooms/acceptance/run.mjs --tmp %TEMP%\wt-ri\acc` writes (step
-`rooms-checks`, from the records of the other steps). **Provisional**: the review step RR runs everything again from a
-clean start and may move what is here.
+`rooms-checks`, from the records of the other steps). **Updated after the review (RR, 12 Nov)**: RR ran everything
+again from a clean start (`--tmp %TEMP%\wt-rr\acc`) after its fixes; what moved is in section 9 and marked where it
+changes a row below.
 
 **How the versions were made.** Every new-rule version below went the app's own way: the drawings' DWGs uploaded in parts
 to a served API (`node tools/run-api.mjs --port 8748`) over the acceptance store (`%TEMP%\wt-ri\acc\data`, a copy of the
@@ -36,9 +37,9 @@ what the model finally holds (the slab parts, after the holes and the 3 cm edge)
 * **What staff still have to answer** (section 5): the house's two areas with no floor (16.8 and 28.8 m²) and its service
   stair; the old suite's garden side inside the balustrade (161 m²); the tower's stair B and its assumed storey; the bank's
   north stair. None of them is a fault of the rule; each has a button.
-* **One thing to check and fix now** (section 5.6): on the house's L-shaped main stair, a stair fix put at a point inside
-  the stair's drawn outline found no stair, because the outline cuts across the inside corner of the L. The point the
-  Check step itself writes still matches, but only by about a centimetre.
+* **The one thing to check and fix now is fixed** (section 5.6, by RR): on the house's L-shaped main stair a stair fix
+  put inside the stair's drawn outline found no stair, because the outline cut across the inside corner of the L. The
+  outline now follows the treads and landings, and stair fixes reach 0.5 m from it.
 
 ## 2. Per drawing, the new rule against the old
 
@@ -213,7 +214,7 @@ Against the 9 Nov walks of the same drawings (`docs/rooms/reference/upload-walk-
 |---|---|
 | The plate is 274.2 m² against 192.6 today (35.1 of slab under the old rule) | accepted difference |
 | Six doorway closings, five of them 0.15 - 0.78 m between armchairs drawn on layer 0, and the 1.99 m doorless opening closed | check-and-fix later (R1.md D-4: the door finder's round, plan next action 16) |
-| 42 single-line flags (layer 0 built as wall); with their 59 items set aside: 3 passages instead of 8 found, 16 rooms instead of 17, the plate 274.3 m² | option now (set aside), and check-and-fix later (furniture on layer 0) |
+| 42 single-line flags (layer 0 built as wall); with their 59 items set aside: 3 passages instead of 8 found, the plate 274.3 m². **Since RR** (FID-1) 18 rooms, the living and dining room `L1-R007` (59.7 m²) among them with `LIVING & DINING AREA`, `FOYER` and `BAR`, and 8 names placed (none lost); before RR 16 rooms, the living room an unnamed shape and its names given to small rooms nearby | option now (set aside), and check-and-fix later (furniture on layer 0) |
 | `L1-004` (a 0.90 m door at (24.4, 0.9)): its south side still has no floor 0.4 - 0.9 m in front (RA-6's should for this drawing is missed for this one side). The plate stops 0.08 m south of the door's middle: the strip beyond it, at the drawing's south edge, is not enclosed, and no area is flagged there, so staff have nothing to answer | check-and-fix later (a door with floor on one side only could raise a `slab-gap` flag, or get a landing; with the door finder's round, this being a drawing it never saw) |
 | One door (`L1-019`, the door the walker stops 0.9 m short of from one side) and 8 of 29 glass probes fail the walk; on 9 Nov no probe of this drawing could start | check-and-fix later (should drawing; layer 0 built as wall puts furniture in the walker's way) |
 | `BAR`, `BOH.` are names; the bed and the sofa corner are no rooms of their own | accepted difference (RA-3, RA-7) |
@@ -223,7 +224,7 @@ Against the 9 Nov walks of the same drawings (`docs/rooms/reference/upload-walk-
 
 | Finding | Class |
 |---|---|
-| **A stair fix put at a point inside the house's main stair outline found no stair** (RA-13's first run): the outline the report and the overlay give for an L stair (`S1`: (21.64, 21.16), (19.67, 21.16), ..., (24.99, 24.25), (24.99, 23.15)) has no vertex at the L's inner corner, so its last edge cuts across the corner, and a point in that triangle, (21.96, 22.71), is inside the outline drawn on the Check step but 0.9 m from any tread, and the fix was unmatched ("A stair fix finds no stair": the builder matches a stair fix to the union of the stair's flights and landings, or within 0.3 m of it). The Check step's stair panel writes its fix at `pointIn(st.outline)` (`apps/web/src/build/CheckStep.tsx:271`); worked out by hand on this outline with the same algorithm (`plan/geom.ts` `insidePoint`), that point is (21.34, 22.71), about 0.29 m from the lower flight: inside the 0.3 m, so the staff's "Keep as lines" on this stair should match, but by about a centimetre. With the fix on riser 1's middle every stair fix matched | check-and-fix now (RR: the stair outline the report and the overlay give for an L stair should follow its treads; or the stair panel should write a point on a tread) |
+| **A stair fix put at a point inside the house's main stair outline found no stair** (RA-13's first run): the outline the report and the overlay give for an L stair (`S1`: (21.64, 21.16), (19.67, 21.16), ..., (24.99, 24.25), (24.99, 23.15)) has no vertex at the L's inner corner, so its last edge cuts across the corner, and a point in that triangle, (21.96, 22.71), is inside the outline drawn on the Check step but 0.9 m from any tread, and the fix was unmatched ("A stair fix finds no stair": the builder matches a stair fix to the union of the stair's flights and landings, or within 0.3 m of it). The Check step's stair panel writes its fix at `pointIn(st.outline)` (`apps/web/src/build/CheckStep.tsx:271`); worked out by hand on this outline with the same algorithm (`plan/geom.ts` `insidePoint`), that point is (21.34, 22.71), about 0.29 m from the lower flight: inside the 0.3 m, so the staff's "Keep as lines" on this stair should match, but by about a centimetre. With the fix on riser 1's middle every stair fix matched | **fixed by RR** (CODE-3): the stairways row carries the outline of the joined treads and landings (16 points on this stair, the L's inner corner among them), and a stair fix reaches 0.5 m from it in the builder and on the Check step; RA-13 re-run: every stair fix matched |
 
 ## 6. The rest of the acceptance run, in short
 
@@ -282,3 +283,20 @@ again**, Build, Check, Save. The opening and grey-furniture flags (the upload mi
 the first build's list: lines whose partner face was among the items set aside flag on the next build, so a person makes a
 second pass (2 or 12 more clicks and one more rebuild). The doorway closings (3 and 6) stay, as GAPS 5.4 and 5.5 class
 them. Records: `%TEMP%\wt-ri\path\{tower,suite}.json` and their screenshots.
+
+## 9. After the review (RR, 12 Nov 2026)
+
+RR's fixes (`contract-issues/RR.md`) moved these rows; everything else above stands, re-measured from a clean start.
+
+| What | Before RR | After RR |
+|---|---|---|
+| Stamps of the new-rule builds | house `c7824bca6008`, tower `3d25cdf722fb`; tower set aside `f6e6fcdf4725`, new suite set aside `6a0c916176a3` | house `d90ccc3c6e5d`, tower `9f95de8a365c` (the X-mark rule: only the holes' outline points moved; parts, floor rows and hole areas the same); tower set aside `0cb0a89452b8`, new suite set aside `ed76d1441480`. The bank `54ef1ac240bb`, the old suite `ed7774c64b9b` and the new suite `424cc8cabd45` did not move |
+| The new suite, single lines set aside (5.5) | 16 rooms; the living room an unnamed shape | 18 rooms; `L1-R007` LIVING & DINING AREA 59.7 m² with FOYER and BAR; 8 names placed, none lost |
+| New info flags | | the house: 1 "A closed area is not a room" (the upper east balcony, 13.9 m²) and 2 "An X mark was cut as a shaft / void" (its two voids); the old suite: 1 "not a room" (the garden sala, 16.6 m²); the tower: 8 cut X marks (four shafts a floor). Each cut X has **It is floor**; plate in no room has **No floor here** and **No ceiling** |
+| Small marks (5.2, 5.3) | the house's ground floor listed a 0.78 m² mark, the old suite four of 0.70 - 0.81 m² | no longer read as X marks (the stricter drawn-outline test); nothing was cut before or after |
+| The house's L stair (5.6) | a fix in the L's inner corner unmatched | fixed |
+| Riser texts | "0.24 m", "0.22 m" | "0.244 m", "0.222 m" |
+| RA-18 (section 6) | passed on all four floors | failed once in the re-run on the bank's L1-018 (RR's open-side flag took the place of the pocket and its mouth); fixed (`contract-issues/RR.md`, BRK-1); passes on all four floors, and the seven new-rule builds keep their stamps |
+| RA-17 (section 8) | estimated 22 / 23 min | the review's staff reviewer, scripted through the screens before the fixes and estimated for a person: about 24.5 min (tower) and 28.4 min (new suite), target 30; the fixes add 8 info flags on the tower and 1 room-open on the suite to look at |
+
+The eight old versions, the bank's pinned model, the old rule's stamps and the walk-parity golden did not move.

@@ -58,7 +58,7 @@ LANDING_REACH = (0.5, 3.0)  # m: a U landing's far edge is this far beyond the f
 STROKE = (0.08, 0.45)       # m: the two strokes of an arrowhead
 SNAP = 0.03                 # m: line ends this close meet
 WALK_SHARE = 0.5            # a walking line covers this share of the flights' length (R-7.4 rule 2)
-FIX_NEAR = 0.3              # m: a stair fix's point lies in the stair's outline, or this close
+FIX_NEAR = 0.5              # m: a stair fix's point lies in the stair's outline, or this close (R-6.3; the web's reach)
 
 
 # ------------------------------------------------------------------------------------------------------ small helpers
@@ -795,7 +795,7 @@ def _old_rows(fb) -> list:
 
 
 def _fix_of(fixes, key, outline, shift):
-    """The stair fix of this floor whose point lies in the outline (or 0.3 m from it) -> (index, fix) or (None, None)."""
+    """The stair fix of this floor whose point lies in the outline (or 0.5 m from it) -> (index, fix) or (None, None)."""
     zone = outline.buffer(FIX_NEAR)
     for k, fx in enumerate((fixes or {}).get('stairs') or []):
         if fx.get('floor') != key or fx.get('at') is None:

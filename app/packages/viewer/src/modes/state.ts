@@ -58,6 +58,10 @@ export const GAP_BRIDGE = 0.08;
 /** The head ray: from foot + HEAD_FROM up to foot + eye + HEAD_ABOVE_EYE, against the surfaces. */
 export const HEAD_FROM = 0.30;
 export const HEAD_ABOVE_EYE = 0.30;
+/** The head ray never reaches higher than foot + HEAD_REACH, whatever the eye slider says: the builder leaves 2.10 m of
+ *  headroom under a slab, so a reach that grew with the eye (up to 2.2 + 0.30) stopped the walker on stairs and under low
+ *  slabs (rooms review RR, CODE-2 / BRK-6). 1.90 is the reach at the default eye. */
+export const HEAD_REACH = 1.90;
 /** The body rays meet the colliders of every floor whose height range overlaps [foot, foot + BODY_SPAN]. */
 export const BODY_SPAN = 2.0;
 /** The floor named is the nearest level; it changes once the foot is this far past mid-storey. */

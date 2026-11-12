@@ -46,6 +46,14 @@ export function unflooredHolding(of: OverlayFloor | null | undefined, p: Vec2): 
   return (of?.unfloored ?? []).findIndex(u => okRing(u.o) && ringContains(flat(u.o), p[0], p[1]));
 }
 
+/** RR (FID-3 + FID-5b): the point lies inside the floor plate's outline (a hole cut there, "no floor here", counts) and
+ *  in no unfloored area: plate in no room, where "No floor here" and "No ceiling" are the answers (the builder matches
+ *  such a room fix to the plate piece holding it, build/fixes.py room_target). */
+export function onPlate(of: OverlayFloor | null | undefined, p: Vec2): boolean {
+  if (!of || unflooredHolding(of, p) >= 0) return false;
+  return (of.slabs ?? []).some(s => okRing(s.o) && ringContains(flat(s.o), p[0], p[1]));
+}
+
 const holeHolds = (of: OverlayFloor, p: Vec2) => (of.holes ?? []).some(h => okRing(h.o) && polyContains(flat(h.o), (h.h ?? []).filter(okRing).map(flat), p[0], p[1]));
 const slabHolds = (of: OverlayFloor, p: Vec2) => (of.slabs ?? []).some(s => okRing(s.o) && polyContains(flat(s.o), (s.h ?? []).filter(okRing).map(flat), p[0], p[1]));
 
@@ -203,9 +211,25 @@ export function outdoorsFix(f: Flag, of: OverlayFloor | null): RoomFix | null {
   return at ? { floor: f.floor, at: [r3(at[0]), r3(at[1])], name: null, slab: 'none', ceiling: 'auto' } : null;
 }
 
+/** RR (CODE-1 + BRK-2): the flag the builder raises for an X mark it cut as a shaft or a void: kind hole-skipped (the
+ *  kinds are frozen), severity info and a bbox (the lowest floor's uncut void has no bbox, the large uncut one is check). */
+export const isCutXHole = (f: Flag) => f.kind === 'hole-skipped' && f.severity === 'info' && !!f.bbox && !!f.at && !!f.floor;
+
+/** "It is floor" on that flag: a room fix 'floor here' at the flag's point (the builder keeps an X hole holding such a
+ *  point as floor, build/slabs.py cut_slab). */
+export function xHoleFloorFix(f: Flag): RoomFix | null {
+  return isCutXHole(f) ? { floor: f.floor!, at: [r3(f.at![0]), r3(f.at![1])], name: null, slab: 'floor', ceiling: 'auto' } : null;
+}
+
+const inBox = (b: readonly number[], p: Vec2) => p[0] >= b[0]! && p[0] <= b[2]! && p[1] >= b[1]! && p[1] <= b[3]!;
+
 /** The fix a flag card already wrote, if any, and whether it waits for a Rebuild. */
-export function flagFix(f: Flag, s: BuildSettings | null, of: OverlayFloor | null, stale: boolean): { what: 'line' | 'none' | 'outdoors'; waiting: boolean } | null {
+export function flagFix(f: Flag, s: BuildSettings | null, of: OverlayFloor | null, stale: boolean): { what: 'line' | 'none' | 'outdoors' | 'floor'; waiting: boolean } | null {
   if (!s || !f.floor) return null;
+  if (isCutXHole(f)) {
+    const fx = roomFixesOf(s).find(r => r.floor === f.floor && r.slab === 'floor' && (inBox(f.bbox!, r.at) || dist(r.at, f.at!) <= 0.5));
+    return fx ? { what: 'floor', waiting: stale && !(of && roomApplied(fx, of)) } : null;
+  }
   if ((f.kind === 'slab-gap' || f.kind === 'doorway') && f.ref.a && f.ref.b) {
     const want = f.kind === 'slab-gap' ? 'line' : 'none';
     const i = closingsOf(s).findIndex(c => c.floor === f.floor && c.use === want && sameEnds(c.a, c.b, f.ref.a!, f.ref.b!, 0.05));

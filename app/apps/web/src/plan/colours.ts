@@ -100,6 +100,12 @@ export const CLOSING_STAFF: Stroke = { colour: '#fd7e14', alpha: 1, width: 2.5 }
 /** A fix waiting for a Rebuild: dashed orange; a removed closing struck through in red. */
 export const WAITING: Stroke = { colour: '#f76707', alpha: 1, width: 2.5 };
 export const STRUCK: Stroke = { colour: '#cf222e', alpha: 1, width: 2 };
+/** RR (S13): the room or stair open in the Check step's panel: a strong outline and a light tint. */
+export const PICKED: Stroke = { colour: '#c2255c', alpha: 1, width: 3 };
+export const PICKED_ALPHA = 0.16;
+/** RR (S13): the floor plate's faint tint (under the dashed outline), so the Floor plate tick shows a change. */
+export const SLAB_FILL = '#4d7c5b';
+export const SLAB_ALPHA = 0.07;
 /** The first end of a line being drawn and the line to the pointer. */
 export const LINE_DRAFT: Stroke = { colour: '#f76707', alpha: 0.9, width: 1.5 };
 

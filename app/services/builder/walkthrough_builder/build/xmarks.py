@@ -5,7 +5,15 @@ An X mark is the two diagonals of one closed shape:
   * crossing at 30 - 150 degrees, in the middle half of both (25 - 75 % along each);
   * their four ends mark a rectangle: four ends at its corners, or three at its corners and the fourth on one of its
     sides (tolerance: 0.15 m, or 10 % of the rectangle's longer side);
-  * the rectangle's outline is drawn: at least 60 % of it runs along the network or along drawn lines within 0.15 m;
+  * the rectangle's outline is drawn: at least 60 % of it runs along the network or along drawn lines within 0.15 m
+    that run WITH that side (within 5 degrees): a line that only crosses a side draws none of it (a tile grid's "+"
+    of two lines is no X: every point of its diamond is near some grid line, but none runs along it);
+  * the two lines are not part of a pattern: no two other long lines (1.0 m or longer, crossing the rectangle's inner
+    half over 80 % of its width or more) run parallel to one of the diagonals (within 2 degrees) beside it (5 cm or
+    more away): the room's two diagonals among the lines of a tile pattern laid at 45 degrees. (Any other line may
+    cross the rectangle: the tower's lifts carry a second X of another shape, 6 degrees and 41 - 49 degrees off; the
+    house's stair-hall void has the stair's lines in it, 17 and 61 degrees off. A first form of this rule, which
+    refused every box crossed by a long line, lost the tower's four shafts and the stair-hall void, 12 Nov.)
   * the rectangle is 0.6 m wide or more, and is not 80 % covered by wall or column parts (a column symbol);
   * the lines may be on any layer except furniture and grid layers (dimension layers have no role of their own: the
     drawn-outline test is what keeps crossing dimension lines out). Layers set to `ignore` are read.
@@ -19,6 +27,7 @@ from __future__ import annotations
 
 import math
 
+from shapely import affinity
 from shapely.geometry import LineString, Polygon
 from shapely.ops import unary_union
 from shapely.strtree import STRtree
@@ -33,16 +42,26 @@ MIDDLE = (0.25, 0.75)       # they cross in the middle half of both
 TOL = (0.15, 0.10)          # m, or this share of the rectangle's longer side
 DRAWN = 0.6                 # this share of the rectangle's outline is drawn
 NEAR = 0.15                 # m: ... within this of it
+WITH = 5.0                  # degrees: ... by a line that runs with that side of the rectangle within this
+THROUGH = 0.8               # a pattern's line crosses the box's inner half over this share of the box's width ...
+PARALLEL = 2.0              # degrees: ... parallel to one of the two diagonals within this ...
+BESIDE = 0.05               # m: ... and this far from it or more; two such lines: a pattern, no mark
 MIN_WIDTH = 0.6             # m
 COLUMN = 0.8                # a rectangle covered this much by wall or column parts is a column symbol
 VOID = 4.0                  # m2 and more
 SHAFT = 1.0                 # m2 and more
 
 
-def _segments(items, min_len: float, straight_only: bool = True):
+def _turn(a, b, c, d) -> float:
+    """The angle between the lines a-b and c-d, 0 - 90 degrees."""
+    t = abs(math.degrees(math.atan2(b[1] - a[1], b[0] - a[0]) - math.atan2(d[1] - c[1], d[0] - c[0]))) % 180
+    return min(t, 180 - t)
+
+
+def _segments(items, min_len: float, straight_only: bool = True, skip=SKIP_ROLES):
     out = []
     for d in items:
-        if d['roles'] & SKIP_ROLES:
+        if d['roles'] & skip:
             continue
         p = d.get('pts')
         if not p or len(p) < 2 or (straight_only and d['t'] not in STRAIGHT):
@@ -144,11 +163,28 @@ def x_marks(fb, net, X) -> list:
         edge = poly.exterior
         zone = edge.buffer(NEAR)
         own = {segs[i], segs[j]}
-        near = [every_lines[int(k)] for k in etree.query(zone, predicate='intersects') if every[int(k)] not in own] if etree is not None else []
-        cover = [l.buffer(NEAR) for l in near]
-        if N is not None and not N.is_empty:
-            cover.append(N.intersection(zone.envelope).buffer(NEAR))
-        if not cover or edge.intersection(unary_union(cover)).length < DRAWN * edge.length:
+        near = [every[int(k)] for k in etree.query(zone, predicate='intersects') if every[int(k)] not in own] if etree is not None else []
+        by_net = N.intersection(zone.envelope).buffer(NEAR) if N is not None and not N.is_empty else None
+        cs = list(edge.coords)
+        drawn = 0.0
+        for a, b in zip(cs, cs[1:]):                         # each side: the lines that run with it, and the network
+            cover = [LineString(q).buffer(NEAR) for q in near if _turn(a, b, q[0], q[1]) <= WITH]
+            if by_net is not None:
+                cover.append(by_net)
+            if cover:
+                drawn += LineString([a, b]).intersection(unary_union(cover)).length
+        if drawn < DRAWN * edge.length:
+            continue
+        inner = affinity.scale(poly, 0.5, 0.5, origin=poly.centroid)
+        beside = 0
+        for k in tree.query(inner, predicate='intersects'):
+            k = int(k)
+            if k in (i, j) or lines[k].intersection(poly).length < THROUGH * width:
+                continue
+            mid = lines[k].interpolate(0.5, normalized=True)
+            if any(_turn(*segs[k], *segs[d]) <= PARALLEL and lines[d].distance(mid) >= BESIDE for d in (i, j)):
+                beside += 1
+        if beside >= 2:                                      # the diagonals are two lines of a pattern
             continue
         if solid_tree is not None:
             inside = sum(solid[int(k)].intersection(poly).area for k in solid_tree.query(poly, predicate='intersects'))

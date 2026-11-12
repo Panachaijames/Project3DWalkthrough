@@ -156,6 +156,26 @@ def test_what_must_not_cut() -> None:
     assert slab(r)['voids'] == []
 
 
+def test_a_tile_grid_is_no_x_mark() -> None:
+    """RR CODE-1: a 0.3 m tile grid on a layer with no role (11 x 11 lines of 3 m): every "+" of two grid lines read as
+    the diagonals of a diamond whose outline 'was drawn' (every point within 0.15 m of some line): a 4.5 m2 void. An
+    outline stretch is drawn only by lines that run with it. Nor a 45-degree pattern inside a drawn rectangle (the
+    room's two diagonals among its tile lines): other long lines run through the box's middle."""
+    grid = [line('other', [(4 + i * 0.3, 3), (4 + i * 0.3, 6)]) for i in range(11)] +            [line('other', [(4, 3 + i * 0.3), (7, 3 + i * 0.3)]) for i in range(11)]
+    got, r = marks(grid)
+    assert got == [] and slab(r)['voids'] == []
+    tiles = rect_lines(4, 3, 7, 6) + [line('other', [(4, 3), (7, 6)]), line('other', [(4, 6), (7, 3)])]
+    for k in (0.6, 1.2):                                    # the lines beside the two diagonals, both ways
+        tiles += [line('other', [(4 + k, 3), (7, 6 - k)]), line('other', [(4, 3 + k), (7 - k, 6)]),
+                  line('other', [(4, 6 - k), (7 - k, 3)]), line('other', [(4 + k, 6), (7, 3 + k)])]
+    got, r = marks(tiles)
+    assert got == [] and slab(r)['voids'] == []
+    # a plain X in its rectangle is still a void, also with stair lines running through it (a stair hall's void)
+    hall = x_lines(4, 3, 7, 6) + [line('stair', [(4, 3 + k * 0.28), (7, 3 + k * 0.28)]) for k in range(1, 10)]
+    got, _r = marks(hall)
+    assert [(m['what'], round(m['area'], 2)) for m in got] == [('void', 9.0)]
+
+
 def test_a_line_is_a_diagonal_of_one_x_only() -> None:
     """The tower's lifts carry two X's, one inside the other: they are two marks, never paired across into larger
     boxes; the slab gets one hole, their union."""
@@ -332,3 +352,21 @@ def test_ceilings_never_overlap_and_small_pieces_are_dropped() -> None:
     assert len(pieces) == 2, 'the two halves west of the slot; the two strips of 0.3 m2 east of it are dropped'
     assert all(a.intersection(b).area < 1e-9 for i, a in enumerate(pieces) for b in pieces[i + 1:])
     assert all(p.area >= 0.5 for p in pieces)
+
+
+# ------------------------------------------------------------------------------------------ RR: the review's findings
+def test_staff_keep_the_floor_in_an_x_hole() -> None:
+    """RR BRK-2: an X in a drawn rectangle is cut as a hole (R-4.3) and nothing could undo it: a room fix with slab
+    'floor' at a point in the hole keeps it as floor (the row stays, not cut, 'kept as floor by staff'); the X's drawn
+    over the same lift go with it; another hole is still cut."""
+    items = x_lines(4, 4, 5.73, 5.6) + x_lines(4.2, 3.8, 5.6, 5.4) + x_lines(8, 6, 9.4, 7.4)
+    fx = {'rooms': [{'floor': 'F2', 'at': [4.9, 4.9], 'name': None, 'slab': 'floor', 'ceiling': 'auto'}]}
+    r = run(upper(items), context(floors=UPPER, fixes=fx))
+    s = slab(r)
+    assert [(h['what'], h['cut'], h.get('why')) for h in s['holes']] == [
+        ('shaft', False, 'kept as floor by staff'), ('shaft', False, 'kept as floor by staff'), ('shaft', True, None)]
+    assert covered(s['parts'], 4.9, 4.9) and not covered(s['parts'], 8.7, 6.7)
+    assert r['net']['more']['roomFixes'] == [{'fix': 0, 'matched': True}]
+    # without the fix both are cut
+    s = slab(run(upper(items), context(floors=UPPER)))
+    assert [w for w, _v in s['voids']] == ['shaft', 'shaft'] and not covered(s['parts'], 4.9, 4.9)
