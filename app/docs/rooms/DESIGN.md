@@ -1904,5 +1904,5 @@ and ground ray are amended in place; the rest are listed here and take precedenc
 
 **Open after the review** (RR.md section 6): door and casement swings on the window layer close slivers of floor
 (FID-2); rounded plate in the V notches between the new suite's bays (FID-5(a)); a room fix that remembers its room, to
-flag fixes after a drawing moved (BRK-3 part 2: a change to the frozen `RoomFix`, for the owner); a name on a terrace
-(the owner's choice).
+flag fixes after a drawing moved (BRK-3 part 2: a change to the frozen `RoomFix`; the owner said yes on 12 Nov); a name on a terrace (the owner, 12
+Nov: it stays the terrace's own label). Both are built with plan next action 16.

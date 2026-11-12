@@ -13,8 +13,8 @@ the mouse, ceilings shown in Walk only. The bank built through the screens gives
 Only a new version is built the new way; the fold "Earlier build rules" on the Floors step gives the old way back.
 
 The review found 22 faults, none of them serious (one medium-high, six medium, the rest low): **19 are fixed, each with
-a test**; two small ones and the second half of a third are left (*What the review found*). Two questions for you are
-under *Decisions*; neither is urgent.
+a test**; two small ones and the second half of a third are left (*What the review found*). Your two decisions on it
+(12 Nov, both yes) are under *Decisions*.
 
 Nothing has been put online or deployed. Everything runs on this laptop only. The work is committed on the branch
 `milestone-rooms` and merged into `main` (on this laptop only; nothing is pushed anywhere).
@@ -148,7 +148,8 @@ must criterion (RA-18) caught it on the bank; it is fixed, with a test, and thos
   facade. With the door finder's next round.
 * On the Revit suite, three rounded bits of floor (0.7 m² each) in the notches between the bays, outside the facade.
 * When a drawing is uploaded again **and has moved**, a room fix can land in the wrong room without a warning (closing
-  lines now warn). Warning for room fixes too needs a change to how fixes are saved: your decision, below.
+  lines now warn). Warning for room fixes too needs a change to how fixes are saved: you said yes (12 Nov); it comes with
+  the door finder's round.
 
 ## Time taken
 
@@ -161,8 +162,8 @@ counted, as before. For comparison: the foundation took about 13 h against ~40 h
 
 1. **A second round of fixes for the door finder** (your order of 10 Nov). Its main causes are known from the Revit
    suite (wall lines drawn on across the doorways, furniture on the wall layer); the round also takes the door swings
-   above, the small doorway closings between armchairs on the Revit suite and a flag for a door symbol that got no
-   opening. The details are in the plan, next action 16. Until then the Check step repairs it by hand: for a doorway that got
+   above, the small doorway closings between armchairs on the Revit suite, a flag for a door symbol that got no
+   opening, and your two decisions of 12 Nov (below). The details are in the plan, next action 16. Until then the Check step repairs it by hand: for a doorway that got
    no door, select the lines drawn across it, **Set aside** and **Rebuild**; for an opening that is not there, give it
    the kind **Not an opening**. On the Revit suite these two brought 14 of its 16 doorways right (checked 11 Nov).
 2. **Box editing** after that: rename and recolour furniture kinds, move pieces between kinds, add boxes by hand; then
@@ -171,12 +172,15 @@ counted, as before. For comparison: the foundation took about 13 h against ~40 h
 
 ## Decisions
 
-**Two for you, neither urgent:**
+**Settled by you on 12 Nov** (both built with the door finder's round):
 
-1. **A room name written on a terrace.** No drawing has one yet. Today such a name goes to the nearest room within
-   1.5 m, or is flagged. Proposed: keep it as that terrace's own label, not given to a room and not flagged.
-2. **Should a room fix remember its room** (its area and names), so the app warns when a re-uploaded drawing has moved
-   and the fix no longer fits? It changes the format fixes are saved in. Proposed: yes, with the door finder's round.
+1. **A room name written on a terrace** stays that terrace's own label: not given to a room, not flagged. (No drawing
+   has one yet; until then such a name goes to the nearest room within 1.5 m, or is flagged.)
+2. **A room fix remembers its room** (its area and names), so the app flags it when a re-uploaded drawing has moved
+   and the fix no longer fits. It changes the format fixes are saved in; fixes saved before keep working, without
+   the check.
+
+Open: nothing.
 
 Settled by you on 4 Nov: the DWG upload first, then the box editing; Reset in the offline file stays as built; version
 control on this laptop only. Settled on 10 Nov: the suite's furniture count (6 % over the prototype's, against a wish
