@@ -4,12 +4,14 @@
 // address (a loader redirect would PUSH on the first load and REPLACE the list's entry on a click).
 // A project with no version yet (made in the app, its upload or build unfinished) stays reachable (docs/upload/DESIGN.md
 // U-14.1): its page lists its drafts (listBuilds: the files' names, the status, Continue, Delete) and offers Upload
-// drawings (fix step, review finding "code" 10, then U-14.1; it went on to v/0 and Not found).
+// drawings (fix step, review finding "code" 10, then U-14.1; it went on to v/0 and Not found), and a quiet Delete project
+// (12 Nov 2026, docs/contract-issues/DEL.md).
 import { useQuery, useQueryClient, type QueryClient } from '@tanstack/react-query';
 import { FileUp, Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import { Link, Navigate, useLoaderData, type LoaderFunctionArgs } from 'react-router';
+import { Link, Navigate, useLoaderData, useNavigate, type LoaderFunctionArgs } from 'react-router';
 import { AppBar } from '@/components/AppBar';
+import { confirmed, DRAFT_DELETE_TEXT, useProjectDelete } from '@/components/DeleteActions';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -43,7 +45,7 @@ export function DraftList({ projectId }: { projectId: string }) {
   const [error, setError] = useState<string | null>(null);
   const open = (builds.data?.builds ?? []).filter(b => b.status === 'open');
   const remove = async (buildId: string) => {
-    if (typeof window !== 'undefined' && typeof window.confirm === 'function' && !window.confirm('Delete this draft? Its uploaded files stay with the project.')) return;
+    if (!confirmed(DRAFT_DELETE_TEXT)) return;
     setDeleting(buildId);
     setError(null);
     try {
@@ -83,6 +85,21 @@ export function DraftList({ projectId }: { projectId: string }) {
   );
 }
 
+/** A quiet "Delete project" for a project with no version yet (12 Nov 2026, docs/contract-issues/DEL.md); then the list. */
+function DeleteEmptyProject({ name, projectId }: { name: string; projectId: string }) {
+  const navigate = useNavigate();
+  const del = useProjectDelete({ id: projectId, name, versionCount: 0 }, async () => { await navigate('/projects', { replace: true }); });
+  return (
+    <>
+      <Button variant="ghost" className="ml-auto text-muted-foreground hover:text-destructive" disabled={del.busy} onClick={() => void del.start()} data-testid="delete-project">
+        <Trash2 aria-hidden="true" />
+        Delete project
+      </Button>
+      {del.error && <Alert variant="destructive" className="basis-full" data-testid="delete-error"><AlertDescription data-testid="delete-error-reason">{del.error}</AlertDescription></Alert>}
+    </>
+  );
+}
+
 function NoVersions({ name, projectId }: { name: string; projectId: string }) {
   useDocumentTitle(`${name} · Walkthrough`);
   return (
@@ -94,7 +111,7 @@ function NoVersions({ name, projectId }: { name: string; projectId: string }) {
           <p className="mt-2 text-muted-foreground">This project has no version to open yet: continue a draft, or upload its drawings.</p>
         </div>
         <DraftList projectId={projectId} />
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Button asChild>
             <Link to={`/projects/${projectId}/builds/new`} data-testid="upload-drawings">
               <FileUp aria-hidden="true" />
@@ -104,6 +121,7 @@ function NoVersions({ name, projectId }: { name: string; projectId: string }) {
           <Button asChild variant="outline">
             <Link to="/projects">Back to projects</Link>
           </Button>
+          <DeleteEmptyProject name={name} projectId={projectId} />
         </div>
       </main>
     </div>

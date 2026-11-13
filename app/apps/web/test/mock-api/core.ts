@@ -8,6 +8,9 @@
 // Adapters: server.ts (HTTP, behind the Vite proxy: the Playwright specs) and fetch.ts (vitest's fetch).
 // The upload milestone (docs/upload/DESIGN.md U-13.1, WORK_BREAKDOWN U6) adds createProject, listOffices, the uploads and
 // the builds (builds.ts): projects made in memory (no version until a build is saved) and versions saved from builds.
+// The deletes of 12 Nov 2026 (docs/contract-issues/DEL.md): deleteProject and deleteVersion as the API answers them (204;
+// 404; 409 only_version; 409 busy while a draft of the project has a run queued or running); a deleted version's number
+// is never given again.
 import type {
   AssetInfo,
   HeightOverrides,
@@ -21,7 +24,7 @@ import type {
 import type { BuiltModel, HeightMap } from '../../../../packages/viewer/src/contracts';
 import { createUploadMock, type UploadMock } from './builds';
 import { MOCK_VERSIONS, readBytes, readJson, sha1, type MockVersionSource } from './fixtures';
-import { error, file, json, JSON_TYPE, type MockRequest, type MockResponse } from './http';
+import { error, file, json, JSON_TYPE, noContent, type MockRequest, type MockResponse } from './http';
 
 export type { MockRequest, MockResponse } from './http';
 
@@ -72,7 +75,10 @@ export function createMockApi(): MockApi {
   const stampOf = (s: MockVersionSource) => s.stamp ?? sha1(readBytes(s.model)).slice(0, 12);
   const added: MockVersionSource[] = [];
   const created = new Map<string, CreatedProject>();
-  const allVersions = () => [...MOCK_VERSIONS, ...added];
+  const deletedProjects = new Set<string>();                     // seeded (fixture) projects deleted
+  const deletedVersions = new Set<string>();                     // `${projectId}/${n}`
+  const everyVersion = () => [...MOCK_VERSIONS.filter(v => !deletedProjects.has(v.projectId)), ...added];
+  const allVersions = () => everyVersion().filter(v => !deletedVersions.has(keyOf(v.projectId, v.version)));
   const source = (id: string, n: number) => allVersions().find(v => v.projectId === id && v.version === n) ?? null;
   const versionsOf = (id: string) => allVersions().filter(v => v.projectId === id).sort((a, b) => a.version - b.version);
   const savedOf = (id: string, n: number): SavedHeights => saved.get(keyOf(id, n)) ?? { heights: {}, revision: 0, updatedAt: null };
@@ -247,6 +253,7 @@ export function createMockApi(): MockApi {
       created.set(p.id, { id: p.id, name: p.name, shortName: p.shortName, projectNo: p.projectNo, createdAt: t });
     },
     latestVersion: id => versionsOf(id).at(-1)?.version ?? 0,
+    nextVersion: id => Math.max(0, ...everyVersion().filter(v => v.projectId === id).map(v => v.version)) + 1,
     addVersion: v => {
       added.push(v);
       updated.set(v.projectId, v.createdAt);
@@ -259,6 +266,31 @@ export function createMockApi(): MockApi {
     },
   });
 
+  const BUSY = (what: string) => `Wait for the build to finish (or cancel it), then delete the ${what}.`;
+
+  function deleteProject(id: string): MockResponse {
+    const busy = uploads.busy(id);
+    if (busy.length) return error(409, 'busy', BUSY('project'), { builds: busy });
+    if (MOCK_VERSIONS.some(v => v.projectId === id)) deletedProjects.add(id);
+    for (let i = added.length - 1; i >= 0; i--) if (added[i]!.projectId === id) added.splice(i, 1);
+    for (const k of [...deletedVersions, ...saved.keys()]) if (k.startsWith(`${id}/`)) { deletedVersions.delete(k); saved.delete(k); }
+    created.delete(id);
+    updated.delete(id);
+    uploads.dropProject(id);
+    return noContent();
+  }
+
+  function deleteVersion(id: string, n: number): MockResponse {
+    if (versionsOf(id).length <= 1) return error(409, 'only_version', "This is the project's only version: delete the project instead.");
+    const busy = uploads.busy(id);
+    if (busy.length) return error(409, 'busy', BUSY('version'), { builds: busy });
+    deletedVersions.add(keyOf(id, n));
+    saved.delete(keyOf(id, n));
+    updated.set(id, new Date().toISOString().replace(/\.\d{3}Z$/, 'Z'));
+    uploads.dropSavedDraft(id, n);
+    return noContent();
+  }
+
   function handle(req: MockRequest): MockResponse {
     requests.push(req);
     const method = req.method.toUpperCase();
@@ -268,7 +300,10 @@ export function createMockApi(): MockApi {
     if (upload) return upload;
     const [, a, id, b, n, c, d] = parts;
     const heightsRoute = parts.length === 6 && b === 'versions' && c === 'furniture-heights';
-    if (method !== 'GET' && !(method === 'PUT' && heightsRoute)) return error(405, 'method_not_allowed', `${method} is not allowed here.`);
+    const deleteRoute = a === 'projects' && (parts.length === 3 || (parts.length === 5 && b === 'versions'));
+    if (method !== 'GET' && !(method === 'PUT' && heightsRoute) && !(method === 'DELETE' && deleteRoute)) {
+      return error(405, 'method_not_allowed', `${method} is not allowed here.`);
+    }
     if (a === 'health' && parts.length === 2) return json(200, { status: 'ok', apiVersion: 'mock', projects: projectIds().length });
     if (a !== 'projects') return error(404, 'not_found', `No route ${req.path}.`);
     if (parts.length === 2) { const body: ProjectList = { projects: list() }; return json(200, body); }
@@ -277,6 +312,7 @@ export function createMockApi(): MockApi {
     }
     const proj = project(id);
     if (!proj) return error(404, 'project_not_found', `There is no project ${id}.`);
+    if (parts.length === 3 && method === 'DELETE') return deleteProject(id);
     if (parts.length === 3) return json(200, proj);
     if (b === 'thumbnail' && parts.length === 4) {
       const latest = source(id, proj.latestVersion);
@@ -286,7 +322,10 @@ export function createMockApi(): MockApi {
     const ver = Number(n);
     if (!/^\d+$/.test(n) || ver < 1) return json(422, { detail: [{ loc: ['path', 'version'], msg: 'Input should be greater than or equal to 1', type: 'greater_than_equal' }] });
     const s = source(id, ver);
-    if (!s) return error(404, 'version_not_found', `Project ${id} has no version ${ver}.`);
+    if (!s) {
+      return error(404, 'version_not_found', deletedVersions.has(keyOf(id, ver)) ? `version ${ver} of '${id}' was deleted` : `Project ${id} has no version ${ver}.`);
+    }
+    if (parts.length === 5 && method === 'DELETE') return deleteVersion(id, ver);
     if (parts.length === 5) return json(200, versionDetail(s));
     if (c === 'model' && parts.length === 6) {
       const res = file(readBytes(s.model), JSON_TYPE);

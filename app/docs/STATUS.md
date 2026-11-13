@@ -56,7 +56,18 @@ Nothing has been put online or deployed. Everything runs on this laptop only. Th
   browser checks (Walk, Ghost, Orbit, the stairs, the walk checks on fifteen versions) and the viewer's own 23. The four
   pinned new-rule models with chairs moved (their chairs' "stops"), nothing else in them; versions built the old way
   stay byte for byte.
-* **Next, as you asked:** a **Delete** button for a project, a version and a draft, then for a single furniture box.
+* **Delete** (done 12 Nov; restart the app to get it). Each asks first and says what goes; nothing can be undone.
+  * **A project:** the small bin on its card in the project list, or **…** beside the version picker, then **Delete
+    project**. Its versions, drafts and uploaded drawings are removed from this computer.
+  * **A version:** **…** beside the version picker, then **Delete this version**. The project's only version cannot be
+    deleted (delete the project instead). Version numbers are never given again: delete v3, the latest, and the next
+    save is v4, not a second v3.
+  * **A draft:** **Drafts (n)**, then **Delete** beside it.
+  * While a build of the project is running, a delete waits: it says to let the build finish or cancel it first.
+  * The test projects that came with the app (bank, house, suite, hotel) can be deleted too.
+  * Checked: unit tests 1044, the API's 576 (also with the real builder), every browser check (396, the deletes
+    through the real API among them); the API only grew (`docs/contract-issues/DEL.md`).
+* **Next, as you asked:** deleting a single furniture box.
 
 ## What is new
 

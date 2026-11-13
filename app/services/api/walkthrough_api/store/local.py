@@ -13,6 +13,10 @@ every write is atomic (temp file, then os.replace). A version folder is written 
 renamed into place (create_version, and the seed through stage_version / commit_version); versions are never edited in
 place except overrides.json.
 
+Deleting (12 Nov 2026, docs/contract-issues/DEL.md): a deleted version leaves meta.json and its folder keeps only
+deleted.json (a tombstone, never listed, never read as a version), so its number is never given again; a deleted
+project's folder is renamed to projects/.del-<8 hex> (skipped: not a project id) and removed.
+
 Writers (heights saves, the seed's folder swap, create_version / create_project) take `exclusive()`: the process's
 threading lock and the store's cross-process file lock, so a save the API acknowledged can never land in a version folder
 the seed is replacing, and two saves never hand out the same revision. Readers take no lock: on Windows a read that meets
@@ -28,7 +32,7 @@ import shutil
 import threading
 import time
 import uuid
-from collections.abc import Iterable, Iterator, Mapping
+from collections.abc import Callable, Iterable, Iterator, Mapping
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Literal, TypeVar
@@ -38,10 +42,11 @@ from pydantic import BaseModel, ValidationError
 from .. import builtmodel
 from ..jsonio import (RASTER_MEDIA_TYPES, JsonError, atomic_write_bytes, dumps_pretty, iso_utc, loads_strict,
                       media_type_of, read_bytes, retry_on_sharing, sha1_hex)
-from .base import (FILE_NAME_PATTERN, OVERRIDES_FORMAT, PROJECT_FORMAT, PROJECT_ID_PATTERN, BlobRef, BlobSource,
-                   HeightOverridesFile, NewProject, NotFound, ProjectMeta, RevisionConflict, StagedRef, StoreConflict,
-                   StoreError, StoreFileName, VersionDraft, VersionMeta)
-from .drafts import DraftFiles
+from .base import (DELETED_VERSION_FILE, DELETED_VERSION_FORMAT, FILE_NAME_PATTERN, OVERRIDES_FORMAT, PROJECT_FORMAT,
+                   PROJECT_ID_PATTERN, BlobRef, BlobSource, HeightOverridesFile, NewProject, NotFound, ProjectMeta,
+                   RevisionConflict, StagedRef, StoreConflict, StoreError, StoreFileName, UploadSessionFile,
+                   VersionDraft, VersionMeta)
+from .drafts import DraftFiles, rmtree
 from .filelock import store_file_lock
 
 log = logging.getLogger('walkthrough_api.store')
@@ -49,6 +54,9 @@ log = logging.getLogger('walkthrough_api.store')
 R = TypeVar('R', bound=BaseModel)
 _ID = re.compile(PROJECT_ID_PATTERN)
 _NAME = re.compile(FILE_NAME_PATTERN)
+_VERSION_FOLDER = re.compile(r'[1-9][0-9]{0,8}')          # versions/<n>/ (not .staging-*, .old-*)
+#: a deleted project's folder while it is removed: short, so its deepest file stays within Windows' 259 characters
+_TRASH_PREFIX = '.del-'
 KEPT_ON_REBUILD = ('overrides.json', 'project-data.json')   # a rebuilt version folder keeps these (DESIGN.md 9.1, 9.2)
 
 DOWNLOAD_MEDIA_TYPES = {
@@ -216,7 +224,7 @@ class LocalStore(DraftFiles):
     def get_version(self, project_id: str, n: int) -> VersionMeta:
         meta = self.get_project(project_id)
         if n not in meta.versions:
-            raise NotFound('version_not_found', f'project {project_id!r} has no version {n}')
+            raise self._no_version(project_id, n)
         path = self.version_dir(project_id, n) / 'version.json'
         try:
             version = self._record(path, VersionMeta)
@@ -225,6 +233,29 @@ class LocalStore(DraftFiles):
         if version.project_id != project_id or version.version != n:
             raise StoreError(f'{self.rel(path)}: says {version.project_id} v{version.version}')
         return version
+
+    def _no_version(self, project_id: str, n: int) -> NotFound:
+        """version_not_found, saying so when the version was deleted (its folder holds the tombstone)."""
+        if self.is_deleted_version(project_id, n):
+            return NotFound('version_not_found', f'version {n} of {project_id!r} was deleted')
+        return NotFound('version_not_found', f'project {project_id!r} has no version {n}')
+
+    def is_deleted_version(self, project_id: str, n: int) -> bool:
+        """versions/<n>/ is a deleted version's tombstone (deleted.json)."""
+        try:
+            return (self.version_dir(project_id, n) / DELETED_VERSION_FILE).is_file()
+        except (NotFound, ValueError, OSError):
+            return False
+
+    def version_folder_numbers(self, project_id: str) -> list[int]:
+        """Every numbered folder under versions/: the versions listed, the deleted ones (their tombstones) and any other
+        left there. create_version numbers after the highest of these, so a number is never given twice."""
+        d = self.project_dir(project_id) / 'versions'
+        try:
+            names = os.listdir(d)
+        except (FileNotFoundError, NotADirectoryError):
+            return []
+        return sorted(int(name) for name in names if _VERSION_FOLDER.fullmatch(name) and (d / name).is_dir())
 
     # ------------------------------------------------------------------------------------------------ files
     def read_json_bytes(self, project_id: str, n: int, name: Literal['model.json', 'stages.json']) -> bytes:
@@ -408,7 +439,8 @@ class LocalStore(DraftFiles):
         return None
 
     def create_version(self, project_id: str, draft: VersionDraft) -> VersionMeta:
-        """DESIGN.md 9.5: validates the model (5.6) and the replay data, allocates n = latestVersion + 1, writes everything
+        """DESIGN.md 9.5: validates the model (5.6) and the replay data, allocates n = latestVersion + 1 (since the deletes
+        of 12 Nov: after the highest version folder, a deleted version's tombstone included; DEL.md), writes everything
         into versions/.staging-<uuid>/, renames it to versions/<n>/ (atomic), carries the previous saved heights for the
         kinds the new model still has (when asked), then updates meta.json last. The stamp is sha1(model.json)[:12].
         Assets are raster pictures only (PNG, JPEG, WebP, GIF by their bytes): an SVG or anything else is refused, so an
@@ -443,7 +475,9 @@ class LocalStore(DraftFiles):
         roles = asset_roles(model, draft.assets)
         with self.exclusive():
             meta = self.get_project(project_id)
-            n = meta.latest_version + 1
+            # after every number this project has ever had: a deleted version's folder (its tombstone) still counts, so a
+            # number is never given to two versions (docs/contract-issues/DEL.md)
+            n = max(meta.latest_version, *meta.versions, *self.version_folder_numbers(project_id), 0) + 1
             staging = self.new_version_staging(project_id)
             try:
                 self._place(draft.model_json, staging / 'model.json')          # a staged file is moved into place
@@ -488,6 +522,84 @@ class LocalStore(DraftFiles):
             self.write_project_meta(meta.model_copy(update={
                 'latest_version': n, 'versions': sorted({*meta.versions, n}), 'updated_at': max(now, meta.updated_at)}))
             return self.get_version(project_id, n)
+
+    # ------------------------------------------------------------------------------------------------ deleting (DEL.md)
+    def delete_version(self, project_id: str, n: int,
+                       check: Callable[[ProjectMeta], None] | None = None) -> ProjectMeta:
+        """Deletes version n (docs/contract-issues/DEL.md), under the writers' lock. `check(meta)` runs first (the API's
+        409s). meta.json is written first: the version leaves every listing at once and latestVersion becomes the highest
+        version left. Then versions/<n>/ is swapped (commit_version) for a folder holding only deleted.json, the
+        tombstone that keeps the number taken (create_version). When the swap fails (a file of the version held open
+        past the retries: PermissionError), meta.json is put back and nothing has changed. The project's only version is
+        never deleted (StoreConflict: delete the project instead). Returns the new meta."""
+        with self.exclusive():
+            meta = self.get_project(project_id)
+            if n not in meta.versions:
+                raise self._no_version(project_id, n)
+            if check is not None:
+                check(meta)
+            rest = sorted(v for v in meta.versions if v != n)
+            if not rest:
+                raise StoreConflict(f'v{n} is the only version of {project_id!r}: delete the project instead')
+            try:
+                gone: VersionMeta | None = self.get_version(project_id, n)
+            except StoreError:                             # a broken version.json: it can still be deleted
+                gone = None
+            now = iso_utc()
+            new = meta.model_copy(update={'versions': rest, 'latest_version': rest[-1],
+                                          'updated_at': max(now, meta.updated_at)})
+            self.write_project_meta(new)
+            staging: Path | None = None
+            try:
+                staging = self.new_version_staging(project_id)
+                (staging / DELETED_VERSION_FILE).write_bytes(dumps_pretty({
+                    'format': DELETED_VERSION_FORMAT, 'version': n, 'label': gone.label if gone else None,
+                    'stamp': gone.stamp if gone else None, 'deletedAt': now}))
+                self.commit_version(project_id, n, staging, keep=())
+            except BaseException:
+                if staging is not None:
+                    self.discard_staging(staging)
+                self.write_project_meta(meta)              # the version is listed again, as it was
+                raise
+            return new
+
+    def delete_project(self, project_id: str, check: Callable[[ProjectMeta], None] | None = None) -> None:
+        """Removes the project's whole folder (docs/contract-issues/DEL.md): its versions, drafts and their runs, uploaded
+        drawings, project settings. Under the writers' lock `check(meta)` runs (the API's 409s), then the folder is
+        renamed to projects/.del-<8 hex>: it leaves every listing at once (no project id starts with a dot), and a
+        project made later with the same id starts empty. A file open in it on Windows (a download being sent) blocks the
+        rename: PermissionError after the retries, nothing changed. The renamed folder is then removed (what cannot be
+        removed now stays as rubbish nobody reads; the next delete tries again), and the project's upload sessions go
+        too. Shared things stay: the offices' memory (mappings/) and the converter's cache."""
+        with self.exclusive():
+            meta = self.get_project(project_id)            # project_not_found
+            if check is not None:
+                check(meta)
+            trash = self.projects_dir / f'{_TRASH_PREFIX}{uuid.uuid4().hex[:8]}'
+            _rename_dir(self.project_dir(project_id), trash)
+        folder = self.project_dir(project_id)
+        self._cache = {k: v for k, v in self._cache.items() if folder not in k.parents}
+        self._drop_upload_sessions(project_id)
+        for leftover in [trash, *(p for p in self.projects_dir.iterdir()
+                                  if p.name.startswith(_TRASH_PREFIX) and p != trash and p.is_dir())]:
+            try:
+                rmtree(leftover)
+            except OSError as exc:
+                log.warning('the folder of a deleted project was not removed whole (%s): %s', self.rel(leftover), exc)
+
+    def _drop_upload_sessions(self, project_id: str) -> None:
+        """Removes the upload sessions (data/.uploads/<id>/) of a deleted project: a part sent later gets upload_not_found."""
+        d = self.root / '.uploads'
+        if not d.is_dir():
+            return
+        for s in d.iterdir():
+            try:
+                if self._record(s / 'session.json', UploadSessionFile).project_id == project_id:
+                    rmtree(s)
+            except (FileNotFoundError, NotADirectoryError, StoreError):
+                continue
+            except OSError as exc:
+                log.warning('upload session %s of the deleted project %s was not removed: %s', s.name, project_id, exc)
 
 
 def asset_roles(model: Mapping[str, Any], assets: Iterable[str]) -> dict[str, tuple[str, str | None, str | None]]:

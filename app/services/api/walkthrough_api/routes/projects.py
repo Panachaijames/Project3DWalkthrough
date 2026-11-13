@@ -1,5 +1,6 @@
 """Health, the project list, one project, its thumbnail (DESIGN.md 10.2), and createProject (docs/upload/DESIGN.md U-13.3;
-its decorator written by the scaffold U0, its body by U5). Bodies: builder E, U5."""
+its decorator written by the scaffold U0, its body by U5). Bodies: builder E, U5. deleteProject: the owner's request of 12
+Nov 2026 (docs/contract-issues/DEL.md; deletes.py)."""
 from __future__ import annotations
 
 import logging
@@ -7,10 +8,11 @@ import logging
 from fastapi import APIRouter, Depends
 from fastapi.responses import Response
 
-from .. import API_VERSION, views
-from ..deps import get_store
+from .. import API_VERSION, deletes, views
+from ..deps import get_jobs, get_store
 from ..drafts import projects as drafts_projects
 from ..errors import ApiError
+from ..jobs.base import JobRunner
 from ..models import Health, ProjectDetail, ProjectList
 from ..models_upload import NewProjectRequest
 from ..store.base import Store, StoreError
@@ -112,3 +114,27 @@ def get_thumbnail(project_id: ProjectId, if_none_match: IfNoneMatch = None, stor
 )
 def create_project(body: NewProjectRequest, store: Store = Depends(get_store)) -> ProjectDetail:
     return drafts_projects.create_project(store, body)
+
+
+# The owner's request of 12 Nov 2026 (docs/contract-issues/DEL.md): an additive route, authorised by the main session.
+@router.delete(
+    '/api/projects/{projectId}',
+    operation_id='deleteProject',
+    tags=['projects'],
+    status_code=204,
+    response_class=Response,
+    responses={
+        404: error('project_not_found'),
+        409: error('busy: a file reading or a build of one of its drafts is queued or running (details.builds), or a '
+                   'file of the project is in use; nothing was deleted'),
+    },
+    summary='Delete a project',
+    description='Removes the project from this computer: every version, every draft with its runs, the uploaded '
+                'drawings and the project settings. The offices\' layer memory and the converter\'s cache are shared '
+                'and stay. Refused while a run of one of its drafts is going. Cannot be undone.',
+    response_description='The project is gone.',
+)
+def delete_project(project_id: ProjectId, store: Store = Depends(get_store),
+                   jobs: JobRunner = Depends(get_jobs)) -> Response:
+    deletes.delete_project(store, jobs, project_id)
+    return Response(status_code=204)

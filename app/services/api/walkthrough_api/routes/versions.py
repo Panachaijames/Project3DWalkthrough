@@ -1,4 +1,5 @@
-"""One version: its detail, model, stages and assets (DESIGN.md 10.2). Bodies: builder E.
+"""One version: its detail, model, stages and assets (DESIGN.md 10.2). Bodies: builder E. deleteVersion: the owner's
+request of 12 Nov 2026 (docs/contract-issues/DEL.md; deletes.py).
 
 Raw files are returned as stored with `ETag: "<sha1>"`, `Cache-Control: no-cache`; If-None-Match -> 304 (DESIGN.md 10.1).
 """
@@ -7,8 +8,9 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends
 from fastapi.responses import Response
 
-from .. import views
-from ..deps import get_store
+from .. import deletes, views
+from ..deps import get_jobs, get_store
+from ..jobs.base import JobRunner
 from ..jsonio import sha1_hex
 from ..models import VersionDetail
 from ..store.base import Store
@@ -97,3 +99,29 @@ def get_stages(project_id: ProjectId, version: VersionNo, if_none_match: IfNoneM
 def get_asset(project_id: ProjectId, version: VersionNo, name: FileName, if_none_match: IfNoneMatch = None,
               store: Store = Depends(get_store)) -> Response:
     return views.raw_blob(store.asset(project_id, version, name), if_none_match)
+
+
+# The owner's request of 12 Nov 2026 (docs/contract-issues/DEL.md): an additive route, authorised by the main session.
+@router.delete(
+    '/api/projects/{projectId}/versions/{version}',
+    operation_id='deleteVersion',
+    tags=['versions'],
+    status_code=204,
+    response_class=Response,
+    responses={
+        404: error('project_not_found, version_not_found'),
+        409: error("only_version: it is the project's only version (delete the project instead); busy: a file reading "
+                   'or a build of one of its drafts is queued or running (details.builds), or a file of the version is '
+                   'in use; nothing was deleted'),
+    },
+    summary='Delete a version',
+    description="Removes one version's files from this computer; the project's latest version becomes the highest one "
+                'left. Version numbers are not reused: the next version saved gets a new number. The draft saved as '
+                'this version goes with it. Refused for the only version and while a run of a draft is going. Cannot '
+                'be undone.',
+    response_description='The version is gone.',
+)
+def delete_version(project_id: ProjectId, version: VersionNo, store: Store = Depends(get_store),
+                   jobs: JobRunner = Depends(get_jobs)) -> Response:
+    deletes.delete_version(store, jobs, project_id, version)
+    return Response(status_code=204)

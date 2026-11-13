@@ -3622,6 +3622,63 @@
       }
     },
     "/api/projects/{projectId}": {
+      "delete": {
+        "description": "Removes the project from this computer: every version, every draft with its runs, the uploaded drawings and the project settings. The offices' layer memory and the converter's cache are shared and stay. Refused while a run of one of its drafts is going. Cannot be undone.",
+        "operationId": "deleteProject",
+        "parameters": [
+          {
+            "description": "Project id (kebab-case slug).",
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "description": "Project id (kebab-case slug).",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,62}$",
+              "title": "Projectid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The project is gone."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_not_found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "busy: a file reading or a build of one of its drafts is queued or running (details.builds), or a file of the project is in use; nothing was deleted"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Delete a project",
+        "tags": [
+          "projects"
+        ]
+      },
       "get": {
         "description": "One project with every version, oldest first.",
         "operationId": "getProject",
@@ -5408,6 +5465,75 @@
       }
     },
     "/api/projects/{projectId}/versions/{version}": {
+      "delete": {
+        "description": "Removes one version's files from this computer; the project's latest version becomes the highest one left. Version numbers are not reused: the next version saved gets a new number. The draft saved as this version goes with it. Refused for the only version and while a run of a draft is going. Cannot be undone.",
+        "operationId": "deleteVersion",
+        "parameters": [
+          {
+            "description": "Project id (kebab-case slug).",
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "description": "Project id (kebab-case slug).",
+              "pattern": "^[a-z0-9][a-z0-9-]{1,62}$",
+              "title": "Projectid",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Version number, from 1.",
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "description": "Version number, from 1.",
+              "minimum": 1,
+              "title": "Version",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The version is gone."
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "project_not_found, version_not_found"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "only_version: it is the project's only version (delete the project instead); busy: a file reading or a build of one of its drafts is queued or running (details.builds), or a file of the version is in use; nothing was deleted"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Delete a version",
+        "tags": [
+          "versions"
+        ]
+      },
       "get": {
         "description": "Everything the project page needs about one version: counts, floors, URLs of its files, assets, downloads, the presentation and the saved furniture heights.",
         "operationId": "getVersion",

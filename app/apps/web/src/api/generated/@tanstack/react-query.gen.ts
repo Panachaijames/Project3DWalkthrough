@@ -3,8 +3,8 @@
 import { type DefaultError, queryOptions, type UseMutationOptions } from '@tanstack/react-query';
 
 import { client } from '../client.gen';
-import { cancelBuildRun, cancelUpload, completeUpload, createBuild, createProject, createUpload, deleteBuild, downloadBuildMaxScript, downloadFurnitureCsv, downloadMaxScript, downloadOfflineHtml, getAsset, getBuild, getBuildConversion, getBuildDiff, getBuildDrawing, getBuildModel, getBuildOverlay, getBuildPlan, getBuildStages, getBuildTopview, getFurnitureHeights, getModel, getProject, getStages, getThumbnail, getUpload, getVersion, health, listBuilds, listOffices, listProjects, type Options, putBuildSettings, putFurnitureHeights, putUploadPart, runBuild, saveBuild } from '../sdk.gen';
-import type { CancelBuildRunData, CancelBuildRunError, CancelBuildRunResponse, CancelUploadData, CancelUploadError, CancelUploadResponse, CompleteUploadData, CompleteUploadError, CompleteUploadResponse, CreateBuildData, CreateBuildError, CreateBuildResponse, CreateProjectData, CreateProjectError, CreateProjectResponse, CreateUploadData, CreateUploadError, CreateUploadResponse, DeleteBuildData, DeleteBuildError, DeleteBuildResponse, DownloadBuildMaxScriptData, DownloadBuildMaxScriptError, DownloadBuildMaxScriptResponse, DownloadFurnitureCsvData, DownloadFurnitureCsvError, DownloadFurnitureCsvResponse, DownloadMaxScriptData, DownloadMaxScriptError, DownloadMaxScriptResponse, DownloadOfflineHtmlData, DownloadOfflineHtmlError, DownloadOfflineHtmlResponse, GetAssetData, GetAssetError, GetAssetResponse, GetBuildConversionData, GetBuildConversionError, GetBuildConversionResponse, GetBuildData, GetBuildDiffData, GetBuildDiffError, GetBuildDiffResponse, GetBuildDrawingData, GetBuildDrawingError, GetBuildDrawingResponse, GetBuildError, GetBuildModelData, GetBuildModelError, GetBuildModelResponse, GetBuildOverlayData, GetBuildOverlayError, GetBuildOverlayResponse, GetBuildPlanData, GetBuildPlanError, GetBuildPlanResponse, GetBuildResponse, GetBuildStagesData, GetBuildStagesError, GetBuildStagesResponse, GetBuildTopviewData, GetBuildTopviewError, GetBuildTopviewResponse, GetFurnitureHeightsData, GetFurnitureHeightsError, GetFurnitureHeightsResponse, GetModelData, GetModelError, GetModelResponse, GetProjectData, GetProjectError, GetProjectResponse, GetStagesData, GetStagesError, GetStagesResponse, GetThumbnailData, GetThumbnailError, GetThumbnailResponse, GetUploadData, GetUploadError, GetUploadResponse, GetVersionData, GetVersionError, GetVersionResponse, HealthData, HealthResponse, ListBuildsData, ListBuildsError, ListBuildsResponse, ListOfficesData, ListOfficesResponse, ListProjectsData, ListProjectsResponse, PutBuildSettingsData, PutBuildSettingsError, PutBuildSettingsResponse, PutFurnitureHeightsData, PutFurnitureHeightsError, PutFurnitureHeightsResponse, PutUploadPartData, PutUploadPartError, PutUploadPartResponse, RunBuildData, RunBuildError, RunBuildResponse, SaveBuildData, SaveBuildError, SaveBuildResponse } from '../types.gen';
+import { cancelBuildRun, cancelUpload, completeUpload, createBuild, createProject, createUpload, deleteBuild, deleteProject, deleteVersion, downloadBuildMaxScript, downloadFurnitureCsv, downloadMaxScript, downloadOfflineHtml, getAsset, getBuild, getBuildConversion, getBuildDiff, getBuildDrawing, getBuildModel, getBuildOverlay, getBuildPlan, getBuildStages, getBuildTopview, getFurnitureHeights, getModel, getProject, getStages, getThumbnail, getUpload, getVersion, health, listBuilds, listOffices, listProjects, type Options, putBuildSettings, putFurnitureHeights, putUploadPart, runBuild, saveBuild } from '../sdk.gen';
+import type { CancelBuildRunData, CancelBuildRunError, CancelBuildRunResponse, CancelUploadData, CancelUploadError, CancelUploadResponse, CompleteUploadData, CompleteUploadError, CompleteUploadResponse, CreateBuildData, CreateBuildError, CreateBuildResponse, CreateProjectData, CreateProjectError, CreateProjectResponse, CreateUploadData, CreateUploadError, CreateUploadResponse, DeleteBuildData, DeleteBuildError, DeleteBuildResponse, DeleteProjectData, DeleteProjectError, DeleteProjectResponse, DeleteVersionData, DeleteVersionError, DeleteVersionResponse, DownloadBuildMaxScriptData, DownloadBuildMaxScriptError, DownloadBuildMaxScriptResponse, DownloadFurnitureCsvData, DownloadFurnitureCsvError, DownloadFurnitureCsvResponse, DownloadMaxScriptData, DownloadMaxScriptError, DownloadMaxScriptResponse, DownloadOfflineHtmlData, DownloadOfflineHtmlError, DownloadOfflineHtmlResponse, GetAssetData, GetAssetError, GetAssetResponse, GetBuildConversionData, GetBuildConversionError, GetBuildConversionResponse, GetBuildData, GetBuildDiffData, GetBuildDiffError, GetBuildDiffResponse, GetBuildDrawingData, GetBuildDrawingError, GetBuildDrawingResponse, GetBuildError, GetBuildModelData, GetBuildModelError, GetBuildModelResponse, GetBuildOverlayData, GetBuildOverlayError, GetBuildOverlayResponse, GetBuildPlanData, GetBuildPlanError, GetBuildPlanResponse, GetBuildResponse, GetBuildStagesData, GetBuildStagesError, GetBuildStagesResponse, GetBuildTopviewData, GetBuildTopviewError, GetBuildTopviewResponse, GetFurnitureHeightsData, GetFurnitureHeightsError, GetFurnitureHeightsResponse, GetModelData, GetModelError, GetModelResponse, GetProjectData, GetProjectError, GetProjectResponse, GetStagesData, GetStagesError, GetStagesResponse, GetThumbnailData, GetThumbnailError, GetThumbnailResponse, GetUploadData, GetUploadError, GetUploadResponse, GetVersionData, GetVersionError, GetVersionResponse, HealthData, HealthResponse, ListBuildsData, ListBuildsError, ListBuildsResponse, ListOfficesData, ListOfficesResponse, ListProjectsData, ListProjectsResponse, PutBuildSettingsData, PutBuildSettingsError, PutBuildSettingsResponse, PutFurnitureHeightsData, PutFurnitureHeightsError, PutFurnitureHeightsResponse, PutUploadPartData, PutUploadPartError, PutUploadPartResponse, RunBuildData, RunBuildError, RunBuildResponse, SaveBuildData, SaveBuildError, SaveBuildResponse } from '../types.gen';
 
 export type QueryKey<TOptions extends Options> = [
     Pick<TOptions, 'baseUrl' | 'body' | 'headers' | 'path' | 'query'> & {
@@ -108,6 +108,25 @@ export const createProjectMutation = (options?: Partial<Options<CreateProjectDat
     const mutationOptions: UseMutationOptions<CreateProjectResponse, CreateProjectError, Options<CreateProjectData>> = {
         mutationFn: async (fnOptions) => {
             const { data } = await createProject({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
+
+/**
+ * Delete a project
+ *
+ * Removes the project from this computer: every version, every draft with its runs, the uploaded drawings and the project settings. The offices' layer memory and the converter's cache are shared and stay. Refused while a run of one of its drafts is going. Cannot be undone.
+ */
+export const deleteProjectMutation = (options?: Partial<Options<DeleteProjectData>>): UseMutationOptions<DeleteProjectResponse, DeleteProjectError, Options<DeleteProjectData>> => {
+    const mutationOptions: UseMutationOptions<DeleteProjectResponse, DeleteProjectError, Options<DeleteProjectData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await deleteProject({
                 ...options,
                 ...fnOptions,
                 throwOnError: true
@@ -491,6 +510,25 @@ export const getThumbnailOptions = (options: Options<GetThumbnailData>) => query
     },
     queryKey: getThumbnailQueryKey(options)
 });
+
+/**
+ * Delete a version
+ *
+ * Removes one version's files from this computer; the project's latest version becomes the highest one left. Version numbers are not reused: the next version saved gets a new number. The draft saved as this version goes with it. Refused for the only version and while a run of a draft is going. Cannot be undone.
+ */
+export const deleteVersionMutation = (options?: Partial<Options<DeleteVersionData>>): UseMutationOptions<DeleteVersionResponse, DeleteVersionError, Options<DeleteVersionData>> => {
+    const mutationOptions: UseMutationOptions<DeleteVersionResponse, DeleteVersionError, Options<DeleteVersionData>> = {
+        mutationFn: async (fnOptions) => {
+            const { data } = await deleteVersion({
+                ...options,
+                ...fnOptions,
+                throwOnError: true
+            });
+            return data;
+        }
+    };
+    return mutationOptions;
+};
 
 export const getVersionQueryKey = (options: Options<GetVersionData>) => createQueryKey('getVersion', options);
 

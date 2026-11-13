@@ -641,6 +641,10 @@ last. Versions are never edited in place; a fix is a new version. The Max script
 pipeline (the three generators made one), so its stamp is `sha1(model.json)[:12]` from then on. The background build job
 (Cloud Run Jobs later) is what writes the draft; `create_version` is its last step, not a request handler.
 
+*Amended 12 Nov 2026 (the owner's request; `contract-issues/DEL.md`):* a version can be deleted. Its folder keeps only a
+tombstone (`deleted.json`), so `create_version` allocates after the highest version folder, tombstones included: a
+version number is never given twice. A project can be deleted whole.
+
 ---
 
 ## 10. REST API (`services/api`, FastAPI 0.150.0, owner E; the scaffold freezes the routes and models)
@@ -665,6 +669,8 @@ FastAPI's own 422 (`HTTPValidationError`). Path params: `projectId` `^[a-z0-9][a
 | GET `/api/health` | `health` | `Health { status: "ok", apiVersion, projects }` | - |
 | GET `/api/projects` | `listProjects` | `ProjectList { projects: ProjectSummary[] }` sorted by updatedAt, newest first | - |
 | GET `/api/projects/{projectId}` | `getProject` | `ProjectDetail` | 404 project_not_found |
+| DELETE `/api/projects/{projectId}` (12 Nov, DEL.md) | `deleteProject` | 204 | 404 project_not_found; 409 busy (a draft's run going, or a file held open) |
+| DELETE `/api/projects/{projectId}/versions/{version}` (12 Nov, DEL.md) | `deleteVersion` | 204 | 404 project_not_found, version_not_found; 409 only_version, busy |
 | GET `/api/projects/{projectId}/thumbnail` | `getThumbnail` | the latest version's `topview.png` (image/png) | 404 no_thumbnail |
 | GET `/api/projects/{projectId}/versions/{version}` | `getVersion` | `VersionDetail` | 404 project_not_found, version_not_found |
 | GET `.../versions/{version}/model` | `getModel` | `model.json` bytes, application/json, header `X-Model-Stamp` | 404 |

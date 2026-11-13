@@ -99,6 +99,8 @@ export interface UploadHost {
   hasProject(id: string): boolean;
   createProject(p: { id: string; name: string; shortName: string; projectNo: string | null; office: string | null }): void;
   latestVersion(id: string): number;
+  /** The number the next saved version gets: after every number the project has had, deleted ones included (DEL.md). */
+  nextVersion(id: string): number;
   addVersion(v: MockVersionSource): void;
   versionDetail(id: string, n: number): VersionDetail | null;
   projectDetail(id: string): unknown;
@@ -158,6 +160,12 @@ export interface UploadMock {
   /** Adds a build directly (tests): its sources must have been added with addSource. */
   addSource(projectId: string, src: { name: string; bytes: Buffer; kind?: 'dwg' | 'dxf' }): C.SourceFile;
   createBuildNow(projectId: string, sources: string[], opts?: { finish?: boolean; reviewed?: boolean; built?: boolean }): BuildRec;
+  /** The ids of the project's drafts with a run queued or running (deleteProject / deleteVersion answer 409 busy). */
+  busy(projectId: string): string[];
+  /** A deleted project: its drafts, uploaded files and upload sessions go. */
+  dropProject(projectId: string): void;
+  /** A deleted version: the draft saved as it goes with it (as the API's). */
+  dropSavedDraft(projectId: string, version: number): void;
 }
 
 const now = () => new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
@@ -942,7 +950,7 @@ export function createUploadMock(host: UploadHost): UploadMock {
     let req: C.SaveBuildRequest;
     try { req = JSON.parse(body ?? '') as C.SaveBuildRequest; } catch { return validation(['body'], 'JSON decode error', 'json_invalid'); }
     if (typeof req.label !== 'string' || !req.label.trim() || req.label.length > 200) return validation(['body', 'label'], 'String should have 1 - 200 characters', 'string_too_short');
-    const n = host.latestVersion(b.projectId) + 1;
+    const n = host.nextVersion(b.projectId);
     const names = host.projectName(b.projectId);
     host.addVersion({
       projectId: b.projectId, version: n, label: req.label, createdAt: now(), sourceKind: 'cad',
@@ -1096,6 +1104,15 @@ export function createUploadMock(host: UploadHost): UploadMock {
       const rec: SourceRec = { sha1, name: src.name, bytes: src.bytes.length, kind, formatVersion: kind === 'dwg' ? 'AC1032' : null, uploadedAt: now(), data: src.bytes };
       if (!sourcesOf(pid).has(sha1)) sourcesOf(pid).set(sha1, rec);
       return sourceFile(sourcesOf(pid).get(sha1)!);
+    },
+    busy: pid => [...buildsOf(pid).values()].filter(b => !!activeRun(b)).map(b => b.id),
+    dropProject(pid) {
+      builds.delete(pid);
+      sources.delete(pid);
+      for (const [id, rec] of sessions) if (rec.s.projectId === pid) sessions.delete(id);
+    },
+    dropSavedDraft(pid, n) {
+      for (const [id, b] of buildsOf(pid)) if (b.status === 'saved' && b.savedVersion === n) buildsOf(pid).delete(id);
     },
     createBuildNow(pid, list, opts = {}) {
       const b = newBuild(pid, list, { kind: 'none' }, null);

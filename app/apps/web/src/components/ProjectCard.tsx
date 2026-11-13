@@ -2,12 +2,15 @@
 // CAD / Pictures badge, floors, furniture and openings counts, the stamp, last updated, versions; links to the project.
 // A project with no version yet (made in the app, its upload or build unfinished; docs/upload/DESIGN.md U-14.1) links to
 // its newest open draft, or to its Upload screen when it has none (listBuilds, read for such cards only).
+// Each card has a small Delete over its thumbnail's corner (12 Nov 2026, docs/contract-issues/DEL.md): a sibling of the
+// card's link, never inside it.
 // Names come from drawings: React renders them as text, never as HTML.
 import { useQuery } from '@tanstack/react-query';
 import { ImageOff } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router';
 import { listBuildsOptions } from '@/api/generated/@tanstack/react-query.gen';
+import { DeleteProjectButton } from '@/components/DeleteActions';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -70,7 +73,7 @@ function NoVersionCard({ project }: { project: ProjectSummary }) {
       data-testid="project-card"
       data-project-id={project.id}
       data-no-versions=""
-      className="gap-0 overflow-hidden py-0 transition-shadow focus-within:ring-2 focus-within:ring-ring/50 hover:shadow-md"
+      className="relative gap-0 overflow-hidden py-0 transition-shadow focus-within:ring-2 focus-within:ring-ring/50 hover:shadow-md"
     >
       <Link to={to} className="flex h-full flex-col outline-none" aria-label={`Continue ${project.name}`} data-testid="card-link" data-draft={hasDraft ? '' : undefined}>
         <Thumbnail project={project} />
@@ -83,6 +86,7 @@ function NoVersionCard({ project }: { project: ProjectSummary }) {
           <p className="text-sm text-muted-foreground" data-testid="card-next">{hasDraft ? 'A draft is open: continue it' : 'Upload its drawings'}</p>
         </CardHeader>
       </Link>
+      <DeleteProjectButton project={project} />
     </Card>
   );
 }
@@ -93,7 +97,7 @@ export function ProjectCard({ project }: { project: ProjectSummary }) {
     <Card
       data-testid="project-card"
       data-project-id={project.id}
-      className="gap-0 overflow-hidden py-0 transition-shadow focus-within:ring-2 focus-within:ring-ring/50 hover:shadow-md"
+      className="relative gap-0 overflow-hidden py-0 transition-shadow focus-within:ring-2 focus-within:ring-ring/50 hover:shadow-md"
     >
       <Link
         to={`/projects/${project.id}`}
@@ -129,6 +133,7 @@ export function ProjectCard({ project }: { project: ProjectSummary }) {
           </p>
         </CardContent>
       </Link>
+      <DeleteProjectButton project={project} />
     </Card>
   );
 }

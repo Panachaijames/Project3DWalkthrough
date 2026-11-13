@@ -2,7 +2,7 @@
 
 import type { Client, ClientMeta, Options as Options2, RequestResult, TDataShape } from './client';
 import { client } from './client.gen';
-import type { CancelBuildRunData, CancelBuildRunErrors, CancelBuildRunResponses, CancelUploadData, CancelUploadErrors, CancelUploadResponses, CompleteUploadData, CompleteUploadErrors, CompleteUploadResponses, CreateBuildData, CreateBuildErrors, CreateBuildResponses, CreateProjectData, CreateProjectErrors, CreateProjectResponses, CreateUploadData, CreateUploadErrors, CreateUploadResponses, DeleteBuildData, DeleteBuildErrors, DeleteBuildResponses, DownloadBuildMaxScriptData, DownloadBuildMaxScriptErrors, DownloadBuildMaxScriptResponses, DownloadFurnitureCsvData, DownloadFurnitureCsvErrors, DownloadFurnitureCsvResponses, DownloadMaxScriptData, DownloadMaxScriptErrors, DownloadMaxScriptResponses, DownloadOfflineHtmlData, DownloadOfflineHtmlErrors, DownloadOfflineHtmlResponses, GetAssetData, GetAssetErrors, GetAssetResponses, GetBuildConversionData, GetBuildConversionErrors, GetBuildConversionResponses, GetBuildData, GetBuildDiffData, GetBuildDiffErrors, GetBuildDiffResponses, GetBuildDrawingData, GetBuildDrawingErrors, GetBuildDrawingResponses, GetBuildErrors, GetBuildModelData, GetBuildModelErrors, GetBuildModelResponses, GetBuildOverlayData, GetBuildOverlayErrors, GetBuildOverlayResponses, GetBuildPlanData, GetBuildPlanErrors, GetBuildPlanResponses, GetBuildResponses, GetBuildStagesData, GetBuildStagesErrors, GetBuildStagesResponses, GetBuildTopviewData, GetBuildTopviewErrors, GetBuildTopviewResponses, GetFurnitureHeightsData, GetFurnitureHeightsErrors, GetFurnitureHeightsResponses, GetModelData, GetModelErrors, GetModelResponses, GetProjectData, GetProjectErrors, GetProjectResponses, GetStagesData, GetStagesErrors, GetStagesResponses, GetThumbnailData, GetThumbnailErrors, GetThumbnailResponses, GetUploadData, GetUploadErrors, GetUploadResponses, GetVersionData, GetVersionErrors, GetVersionResponses, HealthData, HealthResponses, ListBuildsData, ListBuildsErrors, ListBuildsResponses, ListOfficesData, ListOfficesResponses, ListProjectsData, ListProjectsResponses, PutBuildSettingsData, PutBuildSettingsErrors, PutBuildSettingsResponses, PutFurnitureHeightsData, PutFurnitureHeightsErrors, PutFurnitureHeightsResponses, PutUploadPartData, PutUploadPartErrors, PutUploadPartResponses, RunBuildData, RunBuildErrors, RunBuildResponses, SaveBuildData, SaveBuildErrors, SaveBuildResponses } from './types.gen';
+import type { CancelBuildRunData, CancelBuildRunErrors, CancelBuildRunResponses, CancelUploadData, CancelUploadErrors, CancelUploadResponses, CompleteUploadData, CompleteUploadErrors, CompleteUploadResponses, CreateBuildData, CreateBuildErrors, CreateBuildResponses, CreateProjectData, CreateProjectErrors, CreateProjectResponses, CreateUploadData, CreateUploadErrors, CreateUploadResponses, DeleteBuildData, DeleteBuildErrors, DeleteBuildResponses, DeleteProjectData, DeleteProjectErrors, DeleteProjectResponses, DeleteVersionData, DeleteVersionErrors, DeleteVersionResponses, DownloadBuildMaxScriptData, DownloadBuildMaxScriptErrors, DownloadBuildMaxScriptResponses, DownloadFurnitureCsvData, DownloadFurnitureCsvErrors, DownloadFurnitureCsvResponses, DownloadMaxScriptData, DownloadMaxScriptErrors, DownloadMaxScriptResponses, DownloadOfflineHtmlData, DownloadOfflineHtmlErrors, DownloadOfflineHtmlResponses, GetAssetData, GetAssetErrors, GetAssetResponses, GetBuildConversionData, GetBuildConversionErrors, GetBuildConversionResponses, GetBuildData, GetBuildDiffData, GetBuildDiffErrors, GetBuildDiffResponses, GetBuildDrawingData, GetBuildDrawingErrors, GetBuildDrawingResponses, GetBuildErrors, GetBuildModelData, GetBuildModelErrors, GetBuildModelResponses, GetBuildOverlayData, GetBuildOverlayErrors, GetBuildOverlayResponses, GetBuildPlanData, GetBuildPlanErrors, GetBuildPlanResponses, GetBuildResponses, GetBuildStagesData, GetBuildStagesErrors, GetBuildStagesResponses, GetBuildTopviewData, GetBuildTopviewErrors, GetBuildTopviewResponses, GetFurnitureHeightsData, GetFurnitureHeightsErrors, GetFurnitureHeightsResponses, GetModelData, GetModelErrors, GetModelResponses, GetProjectData, GetProjectErrors, GetProjectResponses, GetStagesData, GetStagesErrors, GetStagesResponses, GetThumbnailData, GetThumbnailErrors, GetThumbnailResponses, GetUploadData, GetUploadErrors, GetUploadResponses, GetVersionData, GetVersionErrors, GetVersionResponses, HealthData, HealthResponses, ListBuildsData, ListBuildsErrors, ListBuildsResponses, ListOfficesData, ListOfficesResponses, ListProjectsData, ListProjectsResponses, PutBuildSettingsData, PutBuildSettingsErrors, PutBuildSettingsResponses, PutFurnitureHeightsData, PutFurnitureHeightsErrors, PutFurnitureHeightsResponses, PutUploadPartData, PutUploadPartErrors, PutUploadPartResponses, RunBuildData, RunBuildErrors, RunBuildResponses, SaveBuildData, SaveBuildErrors, SaveBuildResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -52,6 +52,13 @@ export const createProject = <ThrowOnError extends boolean = false>(options: Opt
         ...options.headers
     }
 });
+
+/**
+ * Delete a project
+ *
+ * Removes the project from this computer: every version, every draft with its runs, the uploaded drawings and the project settings. The offices' layer memory and the converter's cache are shared and stay. Refused while a run of one of its drafts is going. Cannot be undone.
+ */
+export const deleteProject = <ThrowOnError extends boolean = false>(options: Options<DeleteProjectData, ThrowOnError>): RequestResult<DeleteProjectResponses, DeleteProjectErrors, ThrowOnError> => (options.client ?? client).delete<DeleteProjectResponses, DeleteProjectErrors, ThrowOnError>({ url: '/api/projects/{projectId}', ...options });
 
 /**
  * Get a project
@@ -220,6 +227,13 @@ export const getBuildTopview = <ThrowOnError extends boolean = false>(options: O
  * The latest version's top view (topview.png), as stored, with an ETag.
  */
 export const getThumbnail = <ThrowOnError extends boolean = false>(options: Options<GetThumbnailData, ThrowOnError>): RequestResult<GetThumbnailResponses, GetThumbnailErrors, ThrowOnError> => (options.client ?? client).get<GetThumbnailResponses, GetThumbnailErrors, ThrowOnError>({ url: '/api/projects/{projectId}/thumbnail', ...options });
+
+/**
+ * Delete a version
+ *
+ * Removes one version's files from this computer; the project's latest version becomes the highest one left. Version numbers are not reused: the next version saved gets a new number. The draft saved as this version goes with it. Refused for the only version and while a run of a draft is going. Cannot be undone.
+ */
+export const deleteVersion = <ThrowOnError extends boolean = false>(options: Options<DeleteVersionData, ThrowOnError>): RequestResult<DeleteVersionResponses, DeleteVersionErrors, ThrowOnError> => (options.client ?? client).delete<DeleteVersionResponses, DeleteVersionErrors, ThrowOnError>({ url: '/api/projects/{projectId}/versions/{version}', ...options });
 
 /**
  * Get a version

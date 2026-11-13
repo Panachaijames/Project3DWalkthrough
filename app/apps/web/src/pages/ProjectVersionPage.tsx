@@ -1,6 +1,7 @@
 // /projects/:projectId/v/:n (DESIGN.md 15.1, 15.3): the 48 px app bar (back to the projects, the project's name, New version
-// and the Drafts menu of docs/upload/DESIGN.md U-2 screen 3, the version picker, the Downloads menu, the heights status) and
-// the viewer filling the window below it.
+// and the Drafts menu of docs/upload/DESIGN.md U-2 screen 3, the version picker, the "..." menu that deletes this version
+// or the project (12 Nov 2026, docs/contract-issues/DEL.md), the Downloads menu, the heights status) and the viewer
+// filling the window below it.
 // The loader reads the project (its versions for the picker), the version detail, then the model and (with a replay) the
 // stages. The ViewerProject is memoised on (projectId, version, stamp), the options on the address: a heights save (which
 // updates the cached version detail) never re-creates the viewer; a version change does, disposing the old one first.
@@ -10,6 +11,7 @@ import { CircleAlert, RotateCw } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLoaderData, useLocation, type LoaderFunctionArgs } from 'react-router';
 import { AppBar } from '@/components/AppBar';
+import { ProjectActionsMenu } from '@/components/DeleteActions';
 import { DownloadsMenu } from '@/components/DownloadsMenu';
 import { DraftsMenu, NewVersionButton } from '@/components/DraftsMenu';
 import { HeightsStatus } from '@/components/HeightsStatus';
@@ -162,6 +164,7 @@ export function ProjectVersionPage() {
         <NewVersionButton projectId={detail.projectId} />
         <DraftsMenu projectId={detail.projectId} />
         <VersionPicker projectId={detail.projectId} versions={project.versions} current={detail.version} />
+        <ProjectActionsMenu project={project} version={detail.version} />
         <DownloadsMenu downloads={detail.downloads} heights={detail.hasFurniture ? saver.state : null} onOpen={saver.flush} />
         {detail.hasFurniture && <HeightsStatus state={saver.state} onRetry={saver.retry} />}
       </AppBar>

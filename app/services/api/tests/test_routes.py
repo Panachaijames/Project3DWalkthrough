@@ -306,10 +306,11 @@ def test_heights_validation(client: TestClient) -> None:
 
 # ---------------------------------------------------------------------------------------------------- the seams
 def test_routes_are_plain_def_and_take_the_store_from_the_dependency() -> None:
-    # 13 of the foundation + 24 of the upload milestone over 7 modules (docs/upload/DESIGN.md U-13.1, U-15.1)
+    # 13 of the foundation + 24 of the upload milestone over 7 modules (docs/upload/DESIGN.md U-13.1, U-15.1), + the two
+    # deletes of 12 Nov 2026 (deleteProject, deleteVersion; docs/contract-issues/DEL.md)
     modules = (projects, versions, downloads, furniture, uploads, builds, offices)
     routes = [r for m in modules for r in m.router.routes if isinstance(r, APIRoute)]
-    assert len(routes) == 37 and len(modules) == 7
+    assert len(routes) == 39 and len(modules) == 7
     on_disk = {p.stem for p in Path(routes_pkg.__file__).parent.glob('*.py')} - {'__init__', 'params'}
     assert {Path(m.__file__).stem for m in modules} == on_disk
     assert {r.operation_id for r in routes} == {op['operationId'] for p in create_app().openapi()['paths'].values()

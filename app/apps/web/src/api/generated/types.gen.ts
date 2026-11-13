@@ -2256,6 +2256,46 @@ export type CreateProjectResponses = {
 
 export type CreateProjectResponse = CreateProjectResponses[keyof CreateProjectResponses];
 
+export type DeleteProjectData = {
+    body?: never;
+    path: {
+        /**
+         * Projectid
+         *
+         * Project id (kebab-case slug).
+         */
+        projectId: string;
+    };
+    query?: never;
+    url: '/api/projects/{projectId}';
+};
+
+export type DeleteProjectErrors = {
+    /**
+     * project_not_found
+     */
+    404: ErrorResponse;
+    /**
+     * busy: a file reading or a build of one of its drafts is queued or running (details.builds), or a file of the project is in use; nothing was deleted
+     */
+    409: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type DeleteProjectError = DeleteProjectErrors[keyof DeleteProjectErrors];
+
+export type DeleteProjectResponses = {
+    /**
+     * The project is gone.
+     */
+    204: void;
+};
+
+export type DeleteProjectResponse = DeleteProjectResponses[keyof DeleteProjectResponses];
+
 export type GetProjectData = {
     body?: never;
     path: {
@@ -3176,6 +3216,52 @@ export type GetThumbnailResponses = {
 };
 
 export type GetThumbnailResponse = GetThumbnailResponses[keyof GetThumbnailResponses];
+
+export type DeleteVersionData = {
+    body?: never;
+    path: {
+        /**
+         * Projectid
+         *
+         * Project id (kebab-case slug).
+         */
+        projectId: string;
+        /**
+         * Version
+         *
+         * Version number, from 1.
+         */
+        version: number;
+    };
+    query?: never;
+    url: '/api/projects/{projectId}/versions/{version}';
+};
+
+export type DeleteVersionErrors = {
+    /**
+     * project_not_found, version_not_found
+     */
+    404: ErrorResponse;
+    /**
+     * only_version: it is the project's only version (delete the project instead); busy: a file reading or a build of one of its drafts is queued or running (details.builds), or a file of the version is in use; nothing was deleted
+     */
+    409: ErrorResponse;
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type DeleteVersionError = DeleteVersionErrors[keyof DeleteVersionErrors];
+
+export type DeleteVersionResponses = {
+    /**
+     * The version is gone.
+     */
+    204: void;
+};
+
+export type DeleteVersionResponse = DeleteVersionResponses[keyof DeleteVersionResponses];
 
 export type GetVersionData = {
     body?: never;

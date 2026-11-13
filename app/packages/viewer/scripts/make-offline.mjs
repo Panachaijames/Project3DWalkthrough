@@ -155,8 +155,11 @@ export function storeVersions(data) {
     const meta = readText(metaFile, `${projectId} meta`).parsed;
     let versions = Array.isArray(meta.versions) ? meta.versions.filter(n => Number.isInteger(n) && n >= 1) : null;
     if (!versions) {
+      // a deleted version's folder holds only deleted.json (a tombstone, docs/contract-issues/DEL.md): not a version
       const vdir = path.join(projects, projectId, 'versions');
-      versions = existsSync(vdir) ? readdirSync(vdir).filter(n => /^[1-9][0-9]*$/.test(n)).map(Number) : [];
+      versions = existsSync(vdir)
+        ? readdirSync(vdir).filter(n => /^[1-9][0-9]*$/.test(n) && existsSync(path.join(vdir, n, 'version.json'))).map(Number)
+        : [];
     }
     for (const version of [...versions].sort((a, b) => a - b)) out.push({ projectId, version });
   }

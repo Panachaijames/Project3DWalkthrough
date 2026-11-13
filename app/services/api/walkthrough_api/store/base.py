@@ -20,7 +20,7 @@ are handed out as paths: the job runner and the worker meet only through a run f
 from __future__ import annotations
 
 import re
-from collections.abc import Iterable, Iterator
+from collections.abc import Callable, Iterable, Iterator
 from contextlib import AbstractContextManager
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -44,6 +44,9 @@ SOURCE_FORMAT = 'walkthrough-source/1'
 UPLOAD_FORMAT = 'walkthrough-upload/1'
 BUILD_FORMAT = 'walkthrough-build/1'
 BUILD_SETTINGS_FORMAT = 'walkthrough-build-settings/1'
+#: A deleted version's folder keeps only this file (docs/contract-issues/DEL.md): its number is never given again.
+DELETED_VERSION_FILE = 'deleted.json'
+DELETED_VERSION_FORMAT = 'walkthrough-deleted-version/1'
 
 
 class NotFound(Exception):
@@ -406,3 +409,13 @@ class Store(Protocol):
     def new_run_dir(self, project_id: str, build_id: str, kind: str) -> tuple[str, Path]: ...
     def remove_run(self, project_id: str, build_id: str, run_id: str) -> None: ...
     def iter_builds(self) -> Iterator[BuildRecord]: ...                             # every project's
+
+    # ---- deleting (12 Nov 2026, the owner's request; docs/contract-issues/DEL.md). `check(meta)` runs under the store's
+    # writers' lock before anything changes (the API's 409s are raised from it).
+    # The whole project folder (versions, drafts, uploaded drawings, settings); its upload sessions too. NotFound
+    # ('project_not_found'); PermissionError when a file in it stays open (nothing changed then).
+    def delete_project(self, project_id: str, check: Callable[[ProjectMeta], None] | None = None) -> None: ...
+    # meta.json first (the version leaves every listing; latestVersion = the highest left), then versions/<n>/ keeps only
+    # deleted.json (a tombstone: create_version numbers after every folder, so a number is never reused). NotFound
+    # ('version_not_found'); StoreConflict for the only version; PermissionError when a file in it stays open.
+    def delete_version(self, project_id: str, n: int, check: Callable[[ProjectMeta], None] | None = None) -> ProjectMeta: ...

@@ -18,6 +18,8 @@ UPLOAD_OPERATION_IDS = {'createProject', 'listOffices', 'createUpload', 'getUplo
                         'cancelBuildRun', 'getBuildConversion', 'getBuildDrawing', 'getBuildPlan', 'getBuildOverlay',
                         'getBuildDiff', 'getBuildModel', 'getBuildStages', 'getBuildTopview', 'downloadBuildMaxScript',
                         'saveBuild', 'deleteBuild'}
+# The owner's request of 12 Nov 2026: delete a project and a version (docs/contract-issues/DEL.md; additive)
+DELETE_OPERATION_IDS = {'deleteProject', 'deleteVersion'}
 
 
 def test_openapi_json_is_byte_identical() -> None:
@@ -35,7 +37,9 @@ def test_operation_ids_and_texts() -> None:
     doc = create_app().openapi()
     ops = [op for path in doc['paths'].values() for op in path.values()]
     assert len(UPLOAD_OPERATION_IDS) == 24 and not OPERATION_IDS & UPLOAD_OPERATION_IDS
-    assert {op['operationId'] for op in ops} == OPERATION_IDS | UPLOAD_OPERATION_IDS and len(ops) == 37
+    assert not DELETE_OPERATION_IDS & (OPERATION_IDS | UPLOAD_OPERATION_IDS)
+    assert {op['operationId'] for op in ops} == OPERATION_IDS | UPLOAD_OPERATION_IDS | DELETE_OPERATION_IDS
+    assert len(ops) == 39
     for op in ops:
         ok = [s for s in op['responses'] if s.startswith('2')]          # 200, or 201 / 202 / 204 (U-13.1)
         assert len(ok) == 1, op['operationId']
