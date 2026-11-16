@@ -482,9 +482,12 @@ test.describe('stairs', { tag: APP_ONLY }, () => {
       const { problems } = await open(page, file);
       const ticks = await page.locator(sel.toggle('ceilings')).count();
       const meshes = (await ceilings(page)).length;
-      const v2 = await page.evaluate(() => 'stairways' in (window as any).__host.model);
-      out.push({ version: k, file, ticks, meshes, stairways: v2 });
-      expect([k, ticks, meshes, v2]).toEqual([k, 0, 0, false]);
+      // the model as the viewer loaded it: `stairways` only where it derived one from a complete flight of old steps
+      // (16 Nov 2026, model/upgrade.ts: the hotel's F1-S1; hotel-stairs.spec.ts climbs it). The saved data has none.
+      const v2 = await page.evaluate(() => (((window as any).__host.model.stairways ?? null) as any[] | null)?.map(s => `${s.id} ${s.derived}`) ?? null);
+      const saved = await page.evaluate(() => (document.getElementById('wtv-data')?.textContent ?? '').includes('"stairways"'));
+      out.push({ version: k, file, ticks, meshes, stairways: v2, savedStairways: saved });
+      expect([k, ticks, meshes, v2, saved]).toEqual([k, 0, 0, k === 'hotel' ? ['F1-S1 steps'] : null, false]);
       expect(problems()).toEqual([]);
     }
     mkdirSync(REPORT, { recursive: true });

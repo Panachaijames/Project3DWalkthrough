@@ -1,5 +1,6 @@
 // createViewer: the assembly, in the init order of DESIGN.md 11.4 (failure path 11.2, dispose 11.8). Owner: builder A.
-//  1. parse (ModelError before the DOM is touched); the container must be connected
+//  1. parse (ModelError before the DOM is touched), then model/upgrade.ts (a v1 model's complete flights of steps become
+//     climbable stairs, in memory); the container must be connected
 //  2. createContext: root, renderer, scene, lights, camera (a fixed start), controls, resize
 //  3. buildScene -> floors and groups in the scene, the ground plane; pictures; visibility; heights; readouts
 //  4. panel (C); then the fitSlabs camera start (it needs the panel)
@@ -23,6 +24,7 @@ import { createVisibility } from './core/visibility';
 import { installFurniture } from './furniture/index';
 import { parseBuiltModel, parseReplayData } from './model/parse';
 import { parsePresentation, resolvePresentation } from './model/presentation';
+import { upgradeModel, upgradePresentation } from './model/upgrade';
 import { installModes } from './modes/index';
 import { installReplay } from './replay/index';
 import { installTestHook } from './testhook/hook';
@@ -32,8 +34,10 @@ type Step = NonNullable<ViewerOptions['testFailAt']>;
 
 export const createViewer: CreateViewer = (container, project, options) => {
   // 1. everything that can be wrong with the project, before anything is touched
-  const model = parseBuiltModel(project.model);
-  const presentation = parsePresentation(project.presentation);
+  // a v1 model's complete flights of steps become stairs you can climb, in memory only (model/upgrade.ts; the owner, 16 Nov)
+  const parsed = parseBuiltModel(project.model);
+  const model = upgradeModel(parsed);
+  const presentation = upgradePresentation(parsePresentation(project.presentation), model !== parsed);
   resolvePresentation(presentation, model);
   const stages = project.stages ? parseReplayData(project.stages, model) : null;
   if (!container || typeof container.isConnected !== 'boolean' || !container.isConnected) {

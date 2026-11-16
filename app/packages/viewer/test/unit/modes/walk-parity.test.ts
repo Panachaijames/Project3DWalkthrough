@@ -3,13 +3,29 @@
 // rooms milestone walk in this viewer exactly as they did in the viewer of commit 66b4c06, within 1e-9 m. The recipes
 // and the recorder are in test/tools/record-walk-parity.ts; the golden's own sha1 is pinned here, so nobody "fixes" a
 // difference by recording again.
+//
+// 16 Nov 2026 (the owner's request; rooms/DESIGN.md "Amended after the independent review", R-9): the hotel's F1 flight is
+// 16 `step` blocks that stopped the walk; the viewer now makes such a complete flight a stairway when it loads the model
+// (src/model/upgrade.ts), so the hotel walks on its feet and climbs to F2. The hotel's entry ALONE was recorded again
+// (recordHotelParity); the other five entries are R0's, byte for byte: ENTRY_SHA1 pins each of them as it was in the
+// golden of 11 Nov (sha1 13f96bcb5cb709e9249846a7bd712bd0e2c33d50).
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { BASE, GOLDEN, MODELS, parityDiffs, recordWalkParity, runWalkParity, sha1, type WalkParity } from '../../tools/record-walk-parity';
+import { BASE, GOLDEN, MODELS, parityDiffs, recordHotelParity, recordWalkParity, runWalkParity, sha1, type WalkParity } from '../../tools/record-walk-parity';
 
-/** sha1 of test/fixtures/walk-parity.json as R0 recorded it on 11 Nov 2026 from the unchanged viewer. */
-const GOLDEN_SHA1 = '13f96bcb5cb709e9249846a7bd712bd0e2c33d50';
+/** sha1 of test/fixtures/walk-parity.json: R0's recording of 11 Nov 2026 with the hotel's entry recorded again on 16 Nov. */
+const GOLDEN_SHA1 = 'ffac9168ecb2fa826ec8702646b3c21f715c81ec';
+/**
+ * sha1 of JSON.stringify(entry) of the five entries nobody recorded again, taken from R0's golden of 11 Nov 2026 (there
+ * the hotel's was 7cf9e4311b0db827bd53292327ee4d33cc1ca15f).
+ */
+const ENTRY_SHA1: Record<string, string> = {
+  'bank-v1': '579729b4eeaef9c613b19bab04805e8203f761a6', 'bank-v2': '7141c2ac79f92652a1281720f709c717215eaae2',
+  house: 'f52e95474d083193a2cac53ea26849eabc01409b', mini: 'e41c54915ad29e775bccd1491f4527745b4a862c',
+  suite: 'f941dc859f0d0b66bb01b63245c9995ef8ac6d87',
+};
 const RECORD = process.env.WT_RECORD_WALK_PARITY === '1';
+const RECORD_HOTEL = process.env.WT_RECORD_WALK_PARITY === 'hotel';
 const MODEL_SHA1: Record<string, string> = {
   'bank-v1': '4b02dc17f286db688a55f0784d0b2fbb5642cb79', 'bank-v2': 'c3a9408304a240b83c36f5c5c53db56b50a72c64',
   hotel: '6ab03075088689f7b694f71c422927a289a7005e', house: 'e43270cc0c9be5c00025881f09762325cfc5f92f',
@@ -28,7 +44,22 @@ describe('walk parity: old models walk as they did before the rooms milestone', 
     });
   }
 
-  it('the golden is the one R0 recorded: its sha1, the viewer tree it names, the six models', () => {
+  if (RECORD_HOTEL) {
+    it("records the hotel's entry alone (16 Nov 2026: its F1 flight climbs)", () => {
+      const g = recordHotelParity();
+      expect(Object.keys(g.models)).toEqual(MODELS.map(m => m[0]));
+    });
+  }
+
+  it("the five entries nobody recorded again are R0's, byte for byte", () => {
+    const g = golden();
+    const now = Object.fromEntries(Object.entries(g.models).filter(([k]) => k !== 'hotel').map(([k, v]) => [k, sha1(JSON.stringify(v))]));
+    expect(now).toEqual(ENTRY_SHA1);
+    // and the file is as the recorder writes it, so those entries' bytes in it are R0's too
+    expect(JSON.stringify(g, null, 1) + '\n').toBe(readFileSync(GOLDEN, 'utf8'));
+  });
+
+  it('the golden is the one R0 recorded, with the hotel recorded again: its sha1, the viewer tree it names, the six models', () => {
     expect(sha1(readFileSync(GOLDEN))).toBe(GOLDEN_SHA1);
     const g = golden();
     expect([g.format, g.base]).toEqual(['walk-parity/1', BASE]);
@@ -58,18 +89,23 @@ describe('walk parity: old models walk as they did before the rooms milestone', 
     expect(spots).toBe(25 * 11);                                     // 11 floors in the six models
   });
 
-  it("the hotel's F1 flight stops the walk about 1.3 m in, at its step parts", () => {
+  it("the hotel's F1 flight now climbs to F2 and comes down again (the owner's request, 16 Nov 2026)", () => {
     const flight = (golden().models.hotel!.results as Row).flight as Row[];
     expect(flight.length).toBe(3);
     for (const row of flight) {
       expect(row.start.onFloor).toBe(true);
-      expect(row.floor).toBe('F1');
-      expect(row.y).toBeCloseTo(1.6, 9);                             // the eye stays at the floor's level + 1.6 m: no climbing
-      expect(row.intoFlight).toBeGreaterThan(0.1);
-      expect(row.intoFlight).toBeLessThan(0.5);
-      expect(row.moved).toBeGreaterThan(1.2);
-      expect(row.moved).toBeLessThan(1.5);
-      expect(row.knee.name).toBe('F1 step:own');
+      // up: nothing stops the 6.5 m walk; the floor named is F2, the foot on its level (2.90), the eye 1.6 m above it
+      expect(row.up.moved).toBeGreaterThan(6.45);
+      expect(row.up.floor).toBe('F2');
+      expect(row.up.foot).toBeCloseTo(2.9, 5);
+      expect(row.up.y).toBeCloseTo(2.9 + 1.6, 5);
+      expect(row.up.intoFlight).toBeGreaterThan(4.33 + 1.0);         // past the 4.33 m of the flight, on F2's slab
+      // and down again to where it started, on F1
+      expect(row.down.moved).toBeGreaterThan(6.45);
+      expect(row.down.floor).toBe('F1');
+      expect(row.down.foot).toBeCloseTo(0, 5);
+      expect(row.down.y).toBeCloseTo(1.6, 5);
+      expect(row.down.z).toBeCloseTo(2.6, 5);
     }
   });
 
