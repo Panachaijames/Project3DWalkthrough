@@ -45,6 +45,7 @@ const lateLook = (ctx: TestContext) => ctx.floors.flatMap(f => f.late.flatMap(o 
 const fakeFurniture = (apply: () => void): FurnitureApi => ({
   pieces: () => [], kinds: () => [], setHeight: () => false, setVisible: () => false, setBlocks: () => false, setKeepDoorways: () => false,
   keepDoorways: () => true, reset: () => {}, csv: () => '', saveCsv: () => '', meshOf: () => null, apply, heights: () => ({}), setHeights: () => {},
+  pieceEdits: () => ({}), setPieceEdits: () => {}, removePiece: () => [], restorePiece: () => [], restoreAll: () => {},
 });
 /** A position without -0 (toEqual tells -0 from 0). */
 const at0 = (o: Object3D) => o.position.toArray().map(v => v + 0);

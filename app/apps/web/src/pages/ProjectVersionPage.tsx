@@ -5,16 +5,21 @@
 // The loader reads the project (its versions for the picker), the version detail, then the model and (with a replay) the
 // stages. The ViewerProject is memoised on (projectId, version, stamp), the options on the address: a heights save (which
 // updates the cached version detail) never re-creates the viewer; a version change does, disposing the old one first.
+// Step BX (docs/boxes/DESIGN.md 6.2): the viewer edits the furniture boxes here (options.editBoxes: delete, restore); its
+// boxeschange goes to the same saver as the heights, the deleted boxes start from this browser's unsent map or the saved
+// one, edits merged or taken over from elsewhere are shown through viewer.setPieceEdits, the app bar counts the deleted
+// boxes beside the status, and a version whose deleted boxes of the previous version did not all carry over says so in one
+// line under the app bar (VersionDetail.carriedEdits; the main session's decision 2).
 import { useQuery, type QueryClient } from '@tanstack/react-query';
-import type { Viewer, ViewerProject } from '@walkthrough/viewer';
-import { CircleAlert, RotateCw } from 'lucide-react';
+import type { PieceEditMap, Viewer, ViewerProject } from '@walkthrough/viewer';
+import { CircleAlert, Info, RotateCw, X } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLoaderData, useLocation, type LoaderFunctionArgs } from 'react-router';
 import { AppBar } from '@/components/AppBar';
 import { ProjectActionsMenu } from '@/components/DeleteActions';
 import { DownloadsMenu } from '@/components/DownloadsMenu';
 import { DraftsMenu, NewVersionButton } from '@/components/DraftsMenu';
-import { HeightsStatus } from '@/components/HeightsStatus';
+import { BoxesDeleted, HeightsStatus } from '@/components/HeightsStatus';
 import { VersionPicker } from '@/components/VersionPicker';
 import { ViewerHost } from '@/components/ViewerHost';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -27,11 +32,12 @@ import {
   getVersionOptions,
 } from '@/api/generated/@tanstack/react-query.gen';
 import type { ProjectDetail, VersionDetail } from '@/api/generated/types.gen';
-import { errorReason, versionTitle } from '@/lib/format';
+import { carriedEditsText, errorReason, versionTitle } from '@/lib/format';
 import { readUnsent } from '@/lib/heightsOutbox';
 import { checkProjectId, checkVersion, fetchOrCached, loadOr404 } from '@/lib/routeData';
 import { useDocumentTitle } from '@/lib/useDocumentTitle';
 import { useHeightsSaver } from '@/lib/useHeightsSaver';
+import { cn } from '@/lib/utils';
 import { buildViewerProject, issueLines, viewerOptions } from '@/lib/viewerProject';
 
 export interface VersionPageData {
@@ -108,13 +114,21 @@ export function ProjectVersionPage() {
   // Memoised on (projectId, version, stamp), not on the detail object: a save updates the cached detail's overrides and
   // must not re-create the viewer (it shows those heights already). A new address query re-creates it anyway (new
   // options), so the project is rebuilt with it, from the detail the loader read again: the heights saved since then.
-  // Heights typed on an earlier visit and never saved (the API did not answer) are the start, and the saver sends them.
+  // Heights typed on an earlier visit and never saved (the API did not answer) are the start, and the saver sends them;
+  // so are boxes deleted or restored then (the entry's pieceEdits, present only while they were unsaved).
   const projectKey = `${detail.projectId}\n${detail.version}\n${detail.stamp}`;
-  const built = useMemo(
-    () => buildViewerProject(detail, model, stages, readUnsent({ projectId: detail.projectId, version: detail.version })?.heights),
-    [projectKey, location.search],
-  );
-  const options = useMemo(() => viewerOptions(location.search), [location.search]);
+  const built = useMemo(() => {
+    const unsent = readUnsent({ projectId: detail.projectId, version: detail.version });
+    return buildViewerProject(detail, model, stages, unsent?.heights, unsent?.pieceEdits ?? detail.overrides.pieceEdits);
+  }, [projectKey, location.search]);
+  const options = useMemo(() => viewerOptions(location.search, undefined, true), [location.search]);
+  const viewerProject = built.ok ? built.project : null;
+
+  // The deleted boxes' count in the app bar: the viewer's own map (closed, model ids only), read when it is made, on its
+  // boxeschange and after a map set from elsewhere; kept with the project it belongs to, so a version switch never shows
+  // the last version's count.
+  const [boxes, setBoxes] = useState<{ project: ViewerProject | null; n: number }>({ project: null, n: 0 });
+  const countBoxes = (pieceEdits: PieceEditMap) => setBoxes({ project: viewerProject, n: Object.keys(pieceEdits).length });
 
   // The live viewer (set in ViewerHost's effect, never during render): heights merged with, or taken over from, heights
   // saved elsewhere are shown through it (setHeights: no heightschange, so no save loop).
@@ -122,7 +136,17 @@ export function ProjectVersionPage() {
   const saver = useHeightsSaver(detail.projectId, detail.version, {
     base: detail.overrides,
     onRemote: heights => { const v = viewerRef.current; if (v && !v.disposed) v.setHeights(heights); },
+    onRemoteEdits: pieceEdits => {
+      const v = viewerRef.current;
+      if (!v || v.disposed) return;
+      v.setPieceEdits(pieceEdits);                   // no boxeschange back: no save loop
+      countBoxes(v.getPieceEdits());
+    },
   });
+  const onPieceEditsChange = (pieceEdits: PieceEditMap) => {
+    saver.changeEdits(pieceEdits);
+    countBoxes(pieceEdits);
+  };
 
   // Heights saved elsewhere (another tab, another person) while this tab has nothing unsaved: taken over on focus, and
   // every 30 s while the page is visible (fix step, review finding "adversarial" 3).
@@ -151,12 +175,19 @@ export function ProjectVersionPage() {
   // A failed create belongs to the project it was for; Try again mounts a new host (a fresh div and a new create).
   const [attempt, setAttempt] = useState(0);
   const [failure, setFailure] = useState<{ project: ViewerProject; error: unknown } | null>(null);
-  const viewerProject = built.ok ? built.project : null;
   const onError = (error: unknown) => { if (viewerProject) setFailure({ project: viewerProject, error }); };
   const onCreated = (viewer: Viewer) => {
     viewerRef.current = viewer;
     setFailure(f => (f && f.project === viewerProject ? null : f));
+    countBoxes(viewer.getPieceEdits());
   };
+  const boxCount = viewerProject && boxes.project === viewerProject ? boxes.n : 0;
+
+  // Deleted boxes of the version this one was carried from that are back (not found one-to-one in the new drawing): one
+  // line under the app bar, until closed (for this visit of the version).
+  const carried = detail.carriedEdits && detail.carriedEdits.notCarried > 0 ? detail.carriedEdits : null;
+  const [noteClosed, setNoteClosed] = useState<string | null>(null);
+  const showNote = !!carried && noteClosed !== projectKey;
 
   return (
     <div className="h-svh overflow-hidden bg-[#eef0f2]" data-testid="project-page" data-project-id={detail.projectId} data-version={detail.version}>
@@ -167,8 +198,30 @@ export function ProjectVersionPage() {
         <ProjectActionsMenu project={project} version={detail.version} />
         <DownloadsMenu downloads={detail.downloads} heights={detail.hasFurniture ? saver.state : null} onOpen={saver.flush} />
         {detail.hasFurniture && <HeightsStatus state={saver.state} onRetry={saver.retry} />}
+        {detail.hasFurniture && <BoxesDeleted count={boxCount} />}
       </AppBar>
-      <div className="fixed inset-x-0 top-12 bottom-0" data-testid="viewer-area">
+      {showNote && carried && (
+        <div
+          role="note"
+          className="fixed inset-x-0 top-12 z-10 flex h-8 items-center gap-2 border-b border-amber-200 bg-amber-50 px-4 text-sm text-amber-950"
+          data-testid="carried-edits-note"
+        >
+          <Info className="size-4 shrink-0" aria-hidden="true" />
+          <span className="min-w-0 truncate" data-testid="carried-edits-text">{carriedEditsText(carried.notCarried, carried.from)}</span>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="ml-auto size-6 shrink-0"
+            aria-label="Close this note"
+            title="Close this note"
+            onClick={() => setNoteClosed(projectKey)}
+            data-testid="carried-edits-close"
+          >
+            <X aria-hidden="true" />
+          </Button>
+        </div>
+      )}
+      <div className={cn('fixed inset-x-0 bottom-0', showNote ? 'top-20' : 'top-12')} data-testid="viewer-area">
         {viewerProject ? (
           <>
             <ViewerHost
@@ -176,6 +229,7 @@ export function ProjectVersionPage() {
               project={viewerProject}
               options={options}
               onHeightsChange={saver.change}
+              onPieceEditsChange={onPieceEditsChange}
               onError={onError}
               onCreated={onCreated}
             />

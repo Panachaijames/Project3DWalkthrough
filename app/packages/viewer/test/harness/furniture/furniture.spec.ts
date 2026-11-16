@@ -392,3 +392,193 @@ test.describe('the same look in any host page (all: revert)', () => {
     });
   }
 });
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Step BX (docs/boxes/DESIGN.md 2.2 - 2.6, 8.2): deleting a furniture box, real WebGL, real mouse and keys (?edit=1).
+// This page has no modes and no replay: Walk, the crosshair and the replay are the browser spec's (tests/e2e).
+// ---------------------------------------------------------------------------------------------------------------------
+test.describe('deleting a furniture box (?edit=1)', () => {
+  const at = (page: Page, id: string, along = 0) => page.evaluate(({ id, along }) => {
+    const h = window.__furn as FurnHarness, c = h.ctx;
+    h.viewFromAbove();
+    const p = h.F!.pieces().find(q => q.id === id)!, r = p.rot * Math.PI / 180, fl = c.floorByKey.get(p.floor)!;
+    return h.screenAt(p.x + along * Math.cos(r), fl.modelLevel + p.z1, -(p.y + along * Math.sin(r)));
+  }, { id, along });
+  /** What the page shows of one box: the marker, the card, the mesh, the collider, a knee-height ray through its place, its pixel. */
+  const look = (page: Page, id: string, px: [number, number]) => page.evaluate(async ({ id, px }) => {
+    const h = window.__furn as FurnHarness, c = h.ctx, F = h.F!;
+    const frames = h.frames;
+    await new Promise<void>(done => { const tick = () => (h.frames > frames + 1 ? done() : requestAnimationFrame(tick)); tick(); });
+    const p = F.pieces().find(q => q.id === id)!, mesh = F.meshOf(id)!, fl = c.floorByKey.get(p.floor)!;
+    const marker = c.scene.getObjectByName('furniture-selection');
+    const card = document.querySelector<HTMLElement>('[data-wt=box-card]');
+    const hit = c.readouts.rayHit(p.floor, p.x, p.y - 1.5, 0.35, 0, 1, 3);
+    // the pixel the box is drawn at (the drawing buffer is kept: preserveDrawingBuffer)
+    const cv = c.canvas, r = cv.getBoundingClientRect(), copy = document.createElement('canvas');
+    copy.width = cv.width; copy.height = cv.height;
+    const g = copy.getContext('2d')!;
+    g.drawImage(cv, 0, 0);
+    const d = g.getImageData(Math.round((px[0] - r.left) * cv.width / r.width), Math.round((px[1] - r.top) * cv.height / r.height), 1, 1).data;
+    return {
+      marker: !!marker && marker.visible, markerInScene: !!marker && marker.parent === c.scene,
+      card: card && getComputedStyle(card).display !== 'none' ? card.innerText : null,
+      visible: mesh.visible, collider: fl.colliders.includes(mesh), late: fl.late.includes(mesh), ray: hit ? hit.name : null,
+      pixel: [d[0]!, d[1]!, d[2]!], removed: p.removed === true, edits: Object.keys(F.pieceEdits()),
+      line: document.querySelector<HTMLElement>('[data-wt=furniture-removed]')?.innerText ?? null,
+    };
+  }, { id, px });
+  const far = (a: number[], b: number[]) => Math.abs(a[0]! - b[0]!) + Math.abs(a[1]! - b[1]!) + Math.abs(a[2]! - b[2]!);
+
+  test('mini: a real click selects a box (marker, card at the top right); Delete: not drawn, no collider, a knee ray passes its place; Undo brings it back', async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 768 });
+    const errors = await open(page, 'model=mini&edit=1');
+    await page.locator('[data-wt=floors] [data-floor="L2"]').click();
+    const T = 'L2-table-001', px = await at(page, T, -0.55);
+    await page.mouse.move(1300, 700);
+    const before = await look(page, T, px);
+    expect(before).toMatchObject({ marker: false, markerInScene: true, card: null, visible: true, collider: true, late: true, ray: `furn:table:${T}`, removed: false, line: null });
+    // the hover label says a click selects, and the cursor is the pointer
+    await page.mouse.move(...px);
+    await expect(page.locator('[data-wt=furniture-tip-hint]')).toHaveText('Click to select');
+    expect(await page.evaluate(() => (window.__furn as FurnHarness).ctx.canvas.style.cursor)).toBe('pointer');
+    await page.mouse.click(...px);
+    const sel = await look(page, T, px);
+    expect(sel.marker).toBe(true);
+    expect(sel.card).toContain('Table / desk');
+    expect(sel.card).toContain('IA_J15_WORKING TABLE - 1400W 1000D 750H');
+    expect(sel.card).toContain('1.40 × 1.00 × 0.75 m · Level 2');
+    expect(sel.card).toContain(T);
+    expect(sel.card).toContain('1 piece stands on it (Computer / monitor): it is deleted with it.');
+    expect(sel.card).toContain('Delete box (Del)');
+    expect(far(sel.pixel, before.pixel)).toBeGreaterThan(40);                         // the magenta marker is drawn over the box
+    expect(await page.locator('[data-wt=furniture-tip]').evaluate(e => getComputedStyle(e).display)).toBe('none');   // no label under a card
+    // the card: at the top right of the root, above the side panel's layer, never over the box
+    const cardBox = await page.evaluate(() => {
+      const c = document.querySelector<HTMLElement>('[data-wt=box-card]')!, r = c.getBoundingClientRect(), b = document.querySelector('[data-wt=root]')!.getBoundingClientRect();
+      const mid = document.elementFromPoint(r.left + r.width / 2, r.top + 10);
+      return { top: Math.round(r.top - b.top), right: Math.round(b.right - r.right), width: Math.round(r.width), z: getComputedStyle(c).zIndex, onTop: !!mid && c.contains(mid) };
+    });
+    expect(cardBox).toEqual({ top: 12, right: 12, width: 280, z: '7', onTop: true });
+    // a drag (orbiting) keeps the selection
+    await page.mouse.move(700, 600); await page.mouse.down(); await page.mouse.move(730, 600, { steps: 3 }); await page.mouse.move(700, 600, { steps: 3 }); await page.mouse.up();
+    expect((await look(page, T, px)).marker).toBe(true);
+    await page.mouse.click(...await at(page, T, -0.55));
+    await page.keyboard.press('Delete');
+    const gone = await look(page, T, px);
+    expect(gone).toMatchObject({ marker: false, visible: false, collider: false, late: false, removed: true, edits: ['L2-computer-001', T] });
+    expect(gone.ray).not.toBe(`furn:table:${T}`);                                      // the walker can step into the place
+    expect(gone.card).toContain('Deleted: Table / desk (+1 on it)');
+    expect(gone.card).toContain('Undo');
+    expect(gone.line).toContain('2 boxes deleted');
+    expect(far(gone.pixel, before.pixel)).toBeGreaterThan(40);                        // the box is not drawn any more
+    expect(far(gone.pixel, sel.pixel)).toBeGreaterThan(40);
+    expect(await page.locator(rowSel('table', 'kind-label')).innerText()).toBe('Table / desk (2)');
+    // Ctrl+Z brings it back, selected; Delete again; then the card's Undo (a real click)
+    await page.keyboard.press('Control+z');
+    expect(await look(page, T, px)).toMatchObject({ marker: true, visible: true, collider: true, late: true, ray: `furn:table:${T}`, removed: false, edits: [], line: null });
+    await page.keyboard.press('Delete');
+    expect((await look(page, T, px)).edits).toEqual(['L2-computer-001', T]);
+    await page.locator('[data-wt=box-undo]').click();
+    const back = await look(page, T, px);
+    expect(back).toMatchObject({ marker: true, visible: true, collider: true, ray: `furn:table:${T}`, edits: [] });
+    await page.keyboard.press('Escape');
+    await page.mouse.move(1300, 700);
+    const end = await look(page, T, px);
+    expect(end).toMatchObject({ marker: false, card: null });
+    expect(far(end.pixel, before.pixel)).toBeLessThan(12);                            // drawn as before
+    // a height typed and kept with Enter, then Delete: the armed key belongs to the canvas, not to the panel
+    await page.mouse.click(...await at(page, T, -0.55));
+    await page.locator(rowSel('seat', 'kind-height')).click();
+    await page.keyboard.type('500');
+    await page.keyboard.press('Enter');
+    await page.keyboard.press('Delete');
+    expect((await look(page, T, px)).edits).toEqual([]);
+    expect(errors).toEqual([]);
+  });
+
+  test('bank v2: the Restore list near the bottom: above the hint line, at most half the root, Restore all is itself under the pointer; Restore all and its Undo', async ({ page }) => {
+    await page.setViewportSize({ width: 1366, height: 768 });
+    const errors = await open(page, 'model=bank-v2&edit=1');
+    const n = await page.evaluate(() => {
+      const F = (window.__furn as FurnHarness).F!;
+      for (const p of F.pieces().filter((_, i) => i % 3 === 0)) F.removePiece(p.id);
+      return Object.keys(F.pieceEdits()).length;
+    });
+    expect(n).toBeGreaterThan(60);
+    const opener = page.locator('[data-wt=boxes-restore-open]');
+    await opener.scrollIntoViewIfNeeded();
+    await expect(page.locator('[data-wt=furniture-removed]')).toContainText(`${n} boxes deleted`);
+    await opener.click();
+    const m = await page.evaluate(() => {
+      const root = document.querySelector('[data-wt=root]')!.getBoundingClientRect();
+      const pop = document.querySelector<HTMLElement>('[data-wt=boxes-restore]')!, r = pop.getBoundingClientRect();
+      const hint = document.querySelector('[data-wt=hint]')!.getBoundingClientRect(), panel = document.querySelector('[data-wt=panel]')!.getBoundingClientRect();
+      const list = pop.querySelector<HTMLElement>('[data-wt=boxes-restore-list]')!;
+      const all = pop.querySelector<HTMLElement>('[data-wt=boxes-restore-all]')!, a = all.getBoundingClientRect();
+      const x = pop.querySelector<HTMLElement>('[data-wt=boxes-restore-close]')!, xr = x.getBoundingClientRect();
+      const first = pop.querySelector<HTMLElement>('[data-wt=box-restore]')!, fr = first.getBoundingClientRect();
+      return {
+        parent: pop.parentElement!.getAttribute('data-wt'), z: getComputedStyle(pop).zIndex,
+        aboveHint: hint.top - r.bottom, half: r.height <= root.height / 2 + 0.5, inRoot: r.top >= root.top && r.right <= root.right,
+        besidePanel: r.left - panel.right, scrolls: list.scrollHeight > list.clientHeight + 1,
+        rows: pop.querySelectorAll('[data-wt=boxes-restore-row]').length,
+        allCentre: document.elementFromPoint(a.left + a.width / 2, a.top + a.height / 2) === all,
+        allLowQuarter: document.elementFromPoint(a.left + a.width / 2, a.top + a.height * 0.875) === all,
+        closeItself: document.elementFromPoint(xr.left + xr.width / 2, xr.top + xr.height / 2) === x,
+        restoreItself: document.elementFromPoint(fr.left + fr.width / 2, fr.top + fr.height / 2) === first,
+        allLeft: a.left - r.left < r.width / 2, closeRight: r.right - xr.right < r.width / 4, closeTop: xr.top - r.top < 40,
+      };
+    });
+    test.info().annotations.push({ type: 'restore list', description: JSON.stringify(m) });
+    expect(m).toMatchObject({ parent: 'root', z: '7', half: true, inRoot: true, scrolls: true, allCentre: true, allLowQuarter: true, closeItself: true,
+      restoreItself: true, allLeft: true, closeRight: true, closeTop: true });
+    expect(m.aboveHint).toBeGreaterThanOrEqual(4);
+    expect(m.besidePanel).toBeGreaterThanOrEqual(4);
+    expect(m.rows).toBeGreaterThan(40);
+    expect(m.rows).toBeLessThanOrEqual(n);
+    // one Restore (a real click), then Restore all, then its Undo
+    await page.locator('[data-wt=box-restore]').first().click();
+    const left = await page.evaluate(() => Object.keys((window.__furn as FurnHarness).F!.pieceEdits()).length);
+    expect(left).toBeLessThan(n);
+    await page.locator('[data-wt=boxes-restore-all]').click();
+    expect(await page.evaluate(() => Object.keys((window.__furn as FurnHarness).F!.pieceEdits()).length)).toBe(0);
+    await expect(page.locator('[data-wt=boxes-restore]')).toBeHidden();
+    await expect(page.locator('[data-wt=furniture-removed]')).toContainText(`All ${left} boxes are back`);
+    await page.locator('[data-wt=boxes-restore-undo]').click();
+    expect(await page.evaluate(() => Object.keys((window.__furn as FurnHarness).F!.pieceEdits()).length)).toBe(left);
+    await expect(page.locator('[data-wt=furniture-removed]')).toContainText(`${left} boxes deleted`);
+    expect(errors).toEqual([]);
+  });
+
+  for (const model of ['bank-v2', 'suite', 'house', 'hotel']) {
+    test(`${model}: at 1366 x 768 the panel still fits with the edit hint and the line of the deleted boxes (on screen, everything reachable, above the hint)`, async ({ page }) => {
+      await page.setViewportSize({ width: 1366, height: 768 });
+      await open(page, `model=${model}&edit=1`);
+      await page.evaluate(() => { const F = (window.__furn as FurnHarness).F!; F.removePiece(F.pieces()[0]!.id); F.removePiece(F.pieces().at(-1)!.id); });
+      await sleep(300);
+      const m = await page.evaluate(() => {
+        const p = document.querySelector<HTMLElement>('[data-wt=panel]')!, r = p.getBoundingClientRect(), cs = getComputedStyle(p);
+        const inP = (e: Element) => { const b = e.getBoundingClientRect(), q = p.getBoundingClientRect(); return b.height > 0 && b.top >= q.top - 0.5 && b.bottom <= q.bottom + 0.5 && b.left >= q.left - 0.5 && b.right <= q.right + 0.5; };
+        const one = (wt: string) => document.querySelector<HTMLElement>(`[data-wt=${wt}]`)!;
+        const out: Record<string, unknown> = { onScreen: r.top >= 0 && r.left >= 0 && r.bottom <= innerHeight && r.right <= innerWidth,
+          scrolls: p.scrollHeight > p.clientHeight + 1, overflowY: cs.overflowY, wide: p.scrollWidth > p.clientWidth + 1,
+          hintGap: Math.round((one('hint').getBoundingClientRect().top - r.bottom) * 10) / 10 };
+        p.scrollTop = 0; out.titleVisible = inP(one('heading'));
+        p.scrollTop = p.scrollHeight;
+        out.endReachable = inP(one('furniture-removed')) && inP(one('boxes-restore-open')) && inP(one('furniture-save')) && inP(one('furniture-reset'));
+        one('furniture').scrollIntoView({ block: 'start' });
+        out.hintReachable = inP(one('furniture-edit-hint'));
+        const cut = (e: HTMLElement) => { const t = document.createRange(); t.selectNodeContents(e); return t.getBoundingClientRect().width > e.getBoundingClientRect().width + 0.5; };
+        out.cut = [...document.querySelectorAll<HTMLElement>('[data-wt=kind-label]')].filter(cut).map(e => e.textContent);
+        out.lineText = one('furniture-removed').innerText;
+        p.scrollTop = 0;
+        return out;
+      });
+      test.info().annotations.push({ type: `${model} 1366x768 edit`, description: JSON.stringify(m) });
+      expect(m).toMatchObject({ onScreen: true, wide: false, titleVisible: true, endReachable: true, hintReachable: true, cut: [] });
+      expect(!m.scrolls || /auto|scroll/.test(String(m.overflowY))).toBe(true);
+      expect(m.hintGap as number).toBeGreaterThanOrEqual(4);
+      expect(m.lineText).toContain('deleted');
+    });
+  }
+});

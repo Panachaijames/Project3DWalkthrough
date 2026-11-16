@@ -7,6 +7,9 @@
 // disabled with that reason, rather than ending in the browser's own failed-download notice (fix step, review findings
 // "adversarial" 4 and 6). Closing the menu hands the keyboard back to the viewer (no focus left on the button: W A S D and
 // Space go to Walk again; fix step, finding "adversarial" 9).
+// Step BX (docs/boxes/DESIGN.md 4): the three files leave the deleted furniture boxes out. The CSV and the offline file
+// wait for any unsaved furniture change (heights or deleted boxes) as before; the 3ds Max script, which carries no saved
+// heights, waits only while deleted boxes are unsaved (the saver's editsUnsaved), each with its own tooltip.
 import { Download, FileCode, FileSpreadsheet, FileText } from 'lucide-react';
 import { useState, type ReactNode } from 'react';
 import { Button } from '@/components/ui/button';
@@ -14,7 +17,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { apiUrl, isUnreachable } from '@/api/client';
 import { health } from '@/api/generated/sdk.gen';
 import type { VersionDownloads } from '@/api/generated/types.gen';
-import { API_DOWN_TITLE, DOWNLOAD_ITEMS, HEIGHTS_PENDING_TITLE, heightsNotSavedTitle } from '@/lib/format';
+import {
+  API_DOWN_TITLE, DOWNLOAD_ITEMS, EDITS_PENDING_TITLE, editsNotSavedTitle, HEIGHTS_PENDING_TITLE, heightsNotSavedTitle,
+} from '@/lib/format';
 import type { SaverState } from '@/lib/useHeightsSaver';
 
 type DownloadKey = (typeof DOWNLOAD_ITEMS)[number]['key'];
@@ -25,8 +30,10 @@ const ICONS: Record<DownloadKey, ReactNode> = {
   offlineHtml: <FileText aria-hidden="true" />,
 };
 
-/** The downloads made with the saved furniture heights. */
+/** The downloads made with the saved furniture heights (and deleted boxes). */
 const WITH_HEIGHTS: ReadonlySet<DownloadKey> = new Set<DownloadKey>(['furnitureCsv', 'offlineHtml']);
+/** The download that carries no saved heights but leaves the saved deleted boxes out (step BX): it waits for those only. */
+const WITH_EDITS: ReadonlySet<DownloadKey> = new Set<DownloadKey>(['maxScript']);
 
 /** Does the API answer? (The health route; any answer but "none" counts.) */
 export async function apiAnswers(): Promise<boolean> {
@@ -40,7 +47,10 @@ export async function apiAnswers(): Promise<boolean> {
 
 export interface DownloadsMenuProps {
   downloads: VersionDownloads;
-  /** The heights saver's state (null: the version has no furniture). Saving or failed: the CSV and the offline file wait. */
+  /**
+   * The heights saver's state (null: the version has no furniture). Saving or failed: the CSV and the offline file wait;
+   * with editsUnsaved (deleted boxes not saved yet) the Max script waits too.
+   */
   heights?: SaverState | null;
   /** The menu opened (the page sends a debounced heights save now). */
   onOpen?: () => void;
@@ -53,6 +63,9 @@ export function DownloadsMenu({ downloads, heights = null, onOpen, probe = apiAn
   const down = apiDown || !!heights?.unreachable;
   const waitTitle = heights?.status === 'saving' ? HEIGHTS_PENDING_TITLE
     : heights?.status === 'error' ? heightsNotSavedTitle(heights.reason ?? 'unknown error') : null;
+  const editsTitle = !heights?.editsUnsaved ? null
+    : heights.status === 'error' ? editsNotSavedTitle(heights.reason ?? 'unknown error') : EDITS_PENDING_TITLE;
+  const titleOf = (key: DownloadKey) => (WITH_HEIGHTS.has(key) ? waitTitle : WITH_EDITS.has(key) ? editsTitle : null);
   return (
     <DropdownMenu
       modal={false}
@@ -77,7 +90,7 @@ export function DownloadsMenu({ downloads, heights = null, onOpen, probe = apiAn
       >
         {DOWNLOAD_ITEMS.map(({ key, text }) => {
           const info = downloads[key];
-          const waiting = !!info && !down && waitTitle !== null && WITH_HEIGHTS.has(key);
+          const waiting = !!info && !down && titleOf(key) !== null;
           if (!info || waiting || down) {
             return (
               <DropdownMenuItem
@@ -85,7 +98,7 @@ export function DownloadsMenu({ downloads, heights = null, onOpen, probe = apiAn
                 disabled
                 data-download={key}
                 data-waiting={waiting ? '' : undefined}
-                title={!info ? undefined : down ? API_DOWN_TITLE : waitTitle ?? undefined}
+                title={!info ? undefined : down ? API_DOWN_TITLE : titleOf(key) ?? undefined}
               >
                 {ICONS[key]}
                 {text}

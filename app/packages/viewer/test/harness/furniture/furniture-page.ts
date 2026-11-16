@@ -66,7 +66,8 @@ try {
   const container = document.getElementById('app')!;
   const kit = makeTestContext({
     model: pick.model as BuiltModel, presentation: pick.presentation as Presentation | undefined, renderer: 'webgl', container, stamp: pick.stamp,
-    options: { furnitureHeights: q.get('mode') === 'host' ? 'host' : 'local', noDownload: q.get('nodownload') === '1' },
+    // ?edit=1: the staff app's version page (options.editBoxes; docs/boxes/DESIGN.md 2.1): boxes can be selected and deleted
+    options: { furnitureHeights: q.get('mode') === 'host' ? 'host' : 'local', noDownload: q.get('nodownload') === '1', ...(q.get('edit') === '1' ? { editBoxes: true } : {}) },
   });
   // C's root in place of the kit's: the canvas moves over, the kit's minimal root goes
   const ui = createRoot(container, kit.presentation.accent, pick.stamp, kit.disposer);

@@ -366,10 +366,20 @@ export interface VersionMeta {
 
 export type HeightMap = Record<string, number>;
 
+/**
+ * The edit of one built furniture piece (docs/boxes/DESIGN.md 3.1; step BX, 16 Nov 2026). Today only `removed`: the box
+ * is deleted from the version's view, furniture list, 3ds Max script and offline file. Later steps add optional members.
+ */
+export interface PieceEdit { removed?: true }
+/** Furniture piece id -> its edit. Closed: a piece standing on a removed piece is removed too. */
+export type PieceEditMap = Record<string, PieceEdit>;
+
 export interface HeightOverridesFile {
   format: 'walkthrough-overrides/1';
   /** kind key -> whole mm (10 - 5000); only kinds whose height differs from the model's. */
   heights: HeightMap;
+  /** The deleted boxes (step BX); the key is absent when there are none. */
+  pieceEdits?: PieceEditMap;
   revision: number;
   updatedAt: string;
 }
@@ -434,6 +444,8 @@ export interface ViewerProject {
   pictures?: Partial<Record<FloorKey, string>>;
   /** Saved heights (overrides.json heights). */
   heights?: HeightMap | null;
+  /** Saved piece edits (overrides.json pieceEdits): the deleted boxes. Read leniently (odd values and unknown ids ignored). */
+  pieceEdits?: PieceEditMap | null;
   /** 12 hex model-data stamp. */
   stamp: string;
   /** For storage keys and messages. */
@@ -460,6 +472,11 @@ export interface ViewerOptions {
   /** Default: an <a download> click inside the root. */
   download?: (blob: Blob, fileName: string) => void;
   /**
+   * The staff app's version page only (docs/boxes/DESIGN.md 2.1): furniture boxes can be selected, deleted and restored.
+   * Default false: no control appears; saved deletions (project.pieceEdits) are applied all the same.
+   */
+  editBoxes?: boolean;
+  /**
    * Tests only, read only when testHook is true: createViewer throws Error('[viewer] testFailAt <step>') at the start of that
    * init step (DESIGN.md 11.4), after the earlier steps ran, so the leak spec can prove the failure cleanup.
    */
@@ -476,6 +493,11 @@ export interface ViewerEvents {
    * 'reset' only (never 'api' = setHeights, never 'tick' = the doorways tick). heights = kinds differing from the model.
    */
   heightschange: { heights: HeightMap; source: 'typed' | 'reset' };
+  /**
+   * A furniture box was deleted or restored in the viewer (editBoxes). Emitted by viewer.ts from bus 'pieces' for sources
+   * 'removed' and 'restored' only (never 'api' = setPieceEdits). pieceEdits = the whole map each time.
+   */
+  boxeschange: { pieceEdits: PieceEditMap; source: 'removed' | 'restored' };
   replayphase: { phase: ReplayPhase };
   photo: PhotoResult;
   error: { message: string };
@@ -502,6 +524,10 @@ export interface Viewer {
   getHeights(): HeightMap;
   /** Apply heights from outside (kinds not in the map go back to the model's); unknown kinds and bad values are ignored; no heightschange event. */
   setHeights(heights: HeightMap): void;
+  /** The deleted boxes: piece id -> {removed: true}, closed, in the furniture list's order. */
+  getPieceEdits(): PieceEditMap;
+  /** Apply piece edits from outside (the map replaces the deleted set); unknown ids are ignored, the map is closed; no boxeschange event. */
+  setPieceEdits(e: PieceEditMap): void;
   on<E extends keyof ViewerEvents>(event: E, fn: (payload: ViewerEvents[E]) => void): () => void;
   /** Leaves nothing behind: DOM, listeners, timers, GPU memory, the WebGL context, window hooks. Idempotent. */
   dispose(): void;
@@ -569,6 +595,8 @@ export interface InternalEvents {
   replayPhase: { phase: ReplayPhase };
   /** Every furniture change; viewer.ts turns only 'typed' and 'reset' into the public heightschange. */
   furniture: { heights: HeightMap; source: 'typed' | 'reset' | 'api' | 'tick' };
+  /** Every change of the deleted boxes; viewer.ts turns only 'removed' and 'restored' into the public boxeschange. */
+  pieces: { pieceEdits: PieceEditMap; source: 'removed' | 'restored' | 'api' };
   resize: { width: number; height: number };
 }
 
@@ -700,6 +728,8 @@ export interface ResolvedOptions {
   pixelRatioCap: number;
   download: (blob: Blob, fileName: string) => void;
   noDownload: boolean;
+  /** options.editBoxes === true; optional, read as `=== true` (a missing key is false). */
+  editBoxes?: boolean;
   /** options.testFailAt when testHook is true, else null. */
   testFailAt: NonNullable<ViewerOptions['testFailAt']> | null;
 }
@@ -902,8 +932,11 @@ export interface FurniturePieceView extends FurniturePiece {
   blocks: boolean;
   /** Stops Walk now (in its floor's colliders). */
   blocking: boolean;
+  /** Present only on a deleted box (its visible and blocking are then false). */
+  removed?: true;
 }
 export interface FurnitureKindView {
+  /** count: the kind's live pieces (the deleted boxes are not counted). */
   key: string; label: string; colour: string; height: number; defaultHeight: number; count: number; visible: boolean; blocks: boolean;
 }
 /** window.__host.furniture and Viewer.furniture; the prototype's API. */
@@ -927,6 +960,15 @@ export interface FurnitureApi {
   heights(): HeightMap;
   /** Apply heights from outside (bus 'furniture' source 'api'): the map replaces the typed set; missing kinds go back to the model's. */
   setHeights(h: HeightMap): void;
+  /** The deleted boxes: piece id -> {removed: true}, closed, in the furniture list's order. */
+  pieceEdits(): PieceEditMap;
+  /** Apply piece edits from outside (bus 'pieces' source 'api'): the map replaces the deleted set; unknown ids ignored; closed. */
+  setPieceEdits(e: PieceEditMap): void;
+  /** Deletes the box and every piece standing on it; the ids removed (the cascade included), [] when unknown or already removed. */
+  removePiece(id: string): string[];
+  /** Restores the box's group (its support when that is deleted, and every deleted piece on it); the ids restored. */
+  restorePiece(id: string): string[];
+  restoreAll(): void;
 }
 export type InstallFurniture = (ctx: ViewerContext) => FurnitureApi | null;
 
@@ -935,7 +977,8 @@ export type WholeMm = (v: number) => number;                                  //
 export type ParseTypedHeight = (s: string) => number | null;                  // /^\s*\d+(\.\d*)?\s*$/, whole, 10..5000
 export type FixedDecimals = (v: number, n: number) => string;                 // Python f'{v:.nf}' digits, never -0.000
 export type CsvField = (v: unknown) => string;                                // RFC 4180 quoting
-export type FurnitureCsv = (model: BuiltModel, heights: HeightMap) => string; // CSV text, CRLF, no BOM
+/** CSV text, CRLF, no BOM; the rows of the `removed` ids (the deleted boxes) are left out. */
+export type FurnitureCsv = (model: BuiltModel, heights: HeightMap, removed?: ReadonlySet<string>) => string;
 export type UndersideMm = (piece: FurniturePiece, model: BuiltModel, heights: HeightMap) => number;
 export type StopsWalk = (k: { visible: boolean; blocks: boolean }, approach: string[], keepDoorways: boolean) => boolean;
 /** Stored under `<storageKeyPrefix><photoName>:<stamp>` (DESIGN.md 11.2; the prototypes' key had no stamp: 18.31). */

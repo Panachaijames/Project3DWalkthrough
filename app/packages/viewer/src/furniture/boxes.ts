@@ -7,6 +7,8 @@
 //           box meet none of its faces and a player whose eye is inside one walks out; a little behind their outline, so the
 //           thin darker edges (colour x 0.4) are never eaten by them. No bounds tree (12 triangles).
 //   Walk    a box is in its floor's colliders only while it stops you (stopsWalk); the arrays are the very ones Walk uses.
+//   Deleted a deleted box (docs/boxes/DESIGN.md 2.4, 2.7) keeps its mesh: it is hidden, never a collider, and out of its
+//           floor's 'late' list, so the build replay's fade never shows it (setRemoved, syncKind).
 import { BoxGeometry, Color, EdgesGeometry, FrontSide, LineBasicMaterial, LineSegments, Mesh, MeshStandardMaterial } from 'three';
 import type { ViewerContext } from '../contracts';
 import type { ItemState, KindState, PieceDraft } from './types';
@@ -35,7 +37,7 @@ export function makeBoxes(ctx: ViewerContext, kinds: KindState[], pieces: readon
       m.rotation.y = p.d.rot * D2R;
       m.add(new LineSegments(outline, k.edge));
       m.userData = { id: p.d.id, kind: k.key, family: p.d.family, floor: p.d.floor, size: [] };
-      const item: ItemState = { ...p, mesh: m, z0mm: 0 };
+      const item: ItemState = { ...p, mesh: m, z0mm: 0, removed: false };
       k.items.push(item);
       made.set(p, item);
       p.fl.group.add(m);
@@ -59,12 +61,41 @@ export function placeBox(p: ItemState, z0mm: number): void {
   mesh.updateWorldMatrix(true, true);                              // Walk and the hover label may raycast before the next frame
 }
 
-/** The kind's show tick on its boxes, and each box in or out of its floor's colliders as `stops` says. */
-export function syncKind(k: KindState, stops: (p: ItemState) => boolean): void {
+/**
+ * The kind's show tick on its boxes (a deleted box is never shown), and each box in or out of its floor's colliders as
+ * `stops` says. `replay`: the build replay is running and owns the visibility of the late objects, so only a deleted box
+ * is hidden here; the replay's closing apply() shows the rest (docs/boxes/DESIGN.md 2.7).
+ */
+export function syncKind(k: KindState, stops: (p: ItemState) => boolean, replay = false): void {
   for (const p of k.items) {
     const col = p.fl.colliders, i = col.indexOf(p.mesh), want = stops(p);
-    p.mesh.visible = k.visible;
+    if (p.removed) p.mesh.visible = false;
+    else if (!replay) p.mesh.visible = k.visible;
     if (want && i < 0) col.push(p.mesh);
     else if (!want && i >= 0) col.splice(i, 1);
+  }
+}
+
+/**
+ * Marks a piece deleted or back (docs/boxes/DESIGN.md 2.7): a deleted box leaves its floor's 'late' list (the replay fades
+ * in whatever is in it), a restored one is pushed back. syncKind then hides or shows it and takes it out of the colliders.
+ */
+export function setRemoved(p: ItemState, on: boolean): void {
+  p.removed = on;
+  const late = p.fl.late, i = late.indexOf(p.mesh);
+  if (on && i >= 0) late.splice(i, 1);
+  else if (!on && i < 0) late.push(p.mesh);
+}
+
+/**
+ * A kind whose every box is deleted has no mesh left in a 'late' list, so a replay that was fading when the last one went
+ * never gives its two materials their own look back: apply() does (they are opaque, as makeBoxes made them).
+ */
+export function restoreLook(k: KindState): void {
+  if (k.items.some(p => !p.removed)) return;
+  for (const m of [k.face, k.edge]) {
+    if (!m) continue;
+    m.opacity = 1;
+    if (m.transparent) { m.transparent = false; m.needsUpdate = true; }
   }
 }

@@ -13,11 +13,21 @@
 //  * two tabs (or two people) never erase each other's heights: every PUT says which saved revision it was typed over
 //    (If-Match); when the heights were saved elsewhere since (412 revision_conflict), this tab's own changes are merged
 //    into what is saved now, shown in the viewer (onRemote) and sent again; and heights saved elsewhere while this tab has
-//    nothing unsaved are taken over (adopt), so the tab never says "Heights saved" over heights the API no longer has.
+//    nothing unsaved are taken over (adopt), so the tab never says "saved" over heights the API no longer has.
+//
+// Step BX (docs/boxes/DESIGN.md 6.1), the same core for the deleted furniture boxes (`boxeschange` -> changeEdits): one
+// PUT carries both (a delete and a typed height in the same 600 ms go together). The tab's edits map is sent ONLY while
+// it holds a change of this tab not saved yet (an explicit dirty flag, never a comparison with a copy that may be stale):
+// every other PUT is `{heights}`, which keeps the saved deletions as they are, so an old tab, an outbox replay or a
+// heights-only save can never erase deletions made elsewhere. A 412 merges the edits per id (mergeEdits: this tab's
+// deletes and restores over theirs) while they are dirty, else takes theirs; edits saved elsewhere are taken over when
+// the tab is idle (adopt); whenever the tab's map becomes something the viewer did not make (a merge, a takeover, the
+// server's closure), onRemoteEdits shows it (viewer.setPieceEdits: no event back, no save loop). The state says
+// `editsUnsaved` while they are dirty (the Downloads menu's Max script waits only for those).
 //
 // createHeightsSaver is the framework-free core (unit-tested with fake timers); useHeightsSaver wires it into React.
 import { useQueryClient, type QueryClient } from '@tanstack/react-query';
-import type { HeightMap } from '@walkthrough/viewer';
+import type { HeightMap, PieceEditMap } from '@walkthrough/viewer';
 import { useCallback, useEffect, useEffectEvent, useRef, useState } from 'react';
 import {
   getFurnitureHeightsQueryKey,
@@ -25,11 +35,12 @@ import {
   listProjectsQueryKey,
 } from '../api/generated/@tanstack/react-query.gen';
 import { putFurnitureHeights } from '../api/generated/sdk.gen';
-import type { HeightOverrides, VersionDetail } from '../api/generated/types.gen';
+import type { HeightOverrides, HeightsUpdate, VersionDetail } from '../api/generated/types.gen';
 import { conflictOf, isRetryable, isUnreachable } from '../api/client';
 import { errorReason } from './format';
 import {
-  allUnsent, baseOf, mergeChanges, readUnsent, sameHeights, writeUnsent, type SavedBase, type UnsentEntry, type VersionKey,
+  allUnsent, baseOf, copyEdits, editsOf, mergeChanges, mergeEdits, readUnsent, sameEdits, sameHeights, savedBase, writeUnsent,
+  type SavedBase, type UnsentEntry, type VersionKey,
 } from './heightsOutbox';
 
 export const SAVE_DEBOUNCE_MS = 600;
@@ -37,6 +48,11 @@ export const SAVE_DEBOUNCE_MS = 600;
 export const RETRY_DELAYS_MS = [2_000, 5_000, 10_000, 20_000, 30_000];
 /** A save that meets heights changed elsewhere this many times in a row stops and says so. */
 const MAX_CONFLICTS = 5;
+/**
+ * Browsers refuse a keepalive request once the bodies in flight pass 64 KiB (docs/boxes/DESIGN.md 3.4): a bigger body goes
+ * without keepalive (a page that closes meanwhile loses that request, and the outbox still has the change).
+ */
+export const KEEPALIVE_MAX_BYTES = 60 * 1024;
 
 export type SaverStatus = 'saved' | 'saving' | 'error';
 export interface SaverState {
@@ -45,6 +61,8 @@ export interface SaverState {
   reason: string | null;
   /** Status 'error' because the API did not answer at all (the downloads cannot work either). */
   unreachable?: boolean;
+  /** The tab's deleted boxes are not saved yet (step BX): present only then. The 3ds Max script waits for them. */
+  editsUnsaved?: true;
 }
 export const SAVED_STATE: SaverState = { status: 'saved', reason: null };
 
@@ -55,8 +73,12 @@ export interface SendInit {
   ifRevision?: number;
 }
 
+/** What a 412, a refetch or an answer says is saved now (the deleted boxes read leniently). */
+type SavedNow = Pick<HeightOverrides, 'revision' | 'heights' | 'pieceEdits'>;
+
 export interface SaverDeps {
-  put(heights: HeightMap, init: SendInit): Promise<HeightOverrides>;
+  /** One PUT: `pieceEdits` is given only while the tab's deleted boxes are unsaved (else the body is `{heights}`). */
+  put(heights: HeightMap, init: SendInit, pieceEdits?: PieceEditMap): Promise<HeightOverrides>;
   /** The saved heights the page started from (the version detail's overrides). Default: none saved (revision 0). */
   base?: SavedBase;
   /** A map typed before and never saved (the outbox): it is the tab's map from the start and goes out at once. */
@@ -67,6 +89,11 @@ export interface SaverDeps {
   onState?(state: SaverState): void;
   /** The tab's heights became these without the viewer typing them (a merge, heights saved elsewhere): show them. */
   onRemote?(heights: HeightMap): void;
+  /**
+   * The tab's deleted boxes became these without the viewer changing them (a merge, edits saved elsewhere, the server's
+   * closure of what was sent): show them (viewer.setPieceEdits). Never after close().
+   */
+  onRemoteEdits?(pieceEdits: PieceEditMap): void;
   /** The newest unsaved map and its base, or null once the API has it (the outbox). Also called after close(). */
   onUnsent?(entry: UnsentEntry | null): void;
   debounceMs?: number;
@@ -75,10 +102,12 @@ export interface SaverDeps {
 
 export interface HeightsSaverCore {
   readonly state: SaverState;
-  /** The saved revision and heights the tab's map is based on. */
+  /** The saved revision and heights (and deleted boxes, when there are some) the tab's map is based on. */
   readonly base: SavedBase;
   /** A new map from the viewer: replaces any map not yet sent and (re)starts the debounce. */
   change(heights: HeightMap): void;
+  /** A new deleted-boxes map from the viewer (boxeschange): sent with the tab's heights after the same debounce. */
+  changeEdits(pieceEdits: PieceEditMap): void;
   /** Send the newest map now (after an error; also cuts a running debounce short). */
   retry(): void;
   /** A failed save that may go again by itself goes now (the window came back online or into focus). */
@@ -89,20 +118,28 @@ export interface HeightsSaverCore {
    */
   flush(init?: SendInit): void;
   /**
-   * The saved heights as the API has them now (a refetch). Taken over (onRemote) when they were saved elsewhere and this
-   * tab has nothing unsaved; ignored otherwise (this tab's next save meets them through If-Match and merges).
+   * The saved heights as the API has them now (a refetch). Taken over (onRemote, onRemoteEdits) when they were saved
+   * elsewhere and this tab has nothing unsaved; ignored otherwise (this tab's next save meets them through If-Match and
+   * merges).
    */
-  adopt(saved: Pick<HeightOverrides, 'revision' | 'heights'>): void;
+  adopt(saved: SavedNow): void;
   /** No more state callbacks or retries; requests already started (and a newest map queued behind them) still go out. */
   close(): void;
 }
 
+const copyBase = (b: SavedBase): SavedBase => savedBase(b.revision, b.heights, b.pieceEdits);
+
 export function createHeightsSaver(deps: SaverDeps): HeightsSaverCore {
   const debounceMs = deps.debounceMs ?? SAVE_DEBOUNCE_MS;
   const retryDelays = deps.retryDelaysMs ?? RETRY_DELAYS_MS;
-  let base: SavedBase = deps.unsent ? { ...deps.unsent.base } : deps.base ? { ...deps.base } : { revision: 0, heights: {} };
+  let base: SavedBase = deps.unsent ? copyBase(deps.unsent.base) : deps.base ? copyBase(deps.base) : { revision: 0, heights: {} };
   let pending: HeightMap | null = null;  // the newest map not sent yet (or the one whose save failed)
   let unsaved: HeightMap | null = null;  // the newest map the API does not have yet (sent, waiting, or failed)
+  // The tab's deleted boxes as the viewer shows them: the outbox's unsaved map, else the saved ones the page started from
+  // (the page gives the viewer the same: ProjectVersionPage). Dirty while they hold a change of this tab not saved yet.
+  let edits: PieceEditMap = copyEdits(deps.unsent?.pieceEdits ?? deps.base?.pieceEdits ?? base.pieceEdits ?? {});
+  let editsDirty = !!deps.unsent?.pieceEdits;
+  let editsSeq = 0;                                  // + 1 per changeEdits: a save clears the dirty flag only if none came since
   let timer: ReturnType<typeof setTimeout> | null = null;
   let retryTimer: ReturnType<typeof setTimeout> | null = null;
   let retries = 0;
@@ -113,21 +150,34 @@ export function createHeightsSaver(deps: SaverDeps): HeightsSaverCore {
   let queuedInit: SendInit = {};                     // for the map queued behind a request in flight (a flush's keepalive)
   let state: SaverState = SAVED_STATE;
 
-  const compute = (): SaverState =>
-    timer !== null || inFlight ? { status: 'saving', reason: null }
+  const compute = (): SaverState => {
+    const s: SaverState = timer !== null || inFlight ? { status: 'saving', reason: null }
       : failed !== null ? { status: 'error', reason: failed.reason, ...(failed.unreachable ? { unreachable: true } : {}) }
         : SAVED_STATE;
+    return editsDirty ? { ...s, editsUnsaved: true } : s;
+  };
 
   function emit() {
     const next = compute();
-    if (next.status === state.status && next.reason === state.reason && !!next.unreachable === !!state.unreachable) return;
+    if (next.status === state.status && next.reason === state.reason && !!next.unreachable === !!state.unreachable
+      && !!next.editsUnsaved === !!state.editsUnsaved) return;
     state = next;
     if (!closed) deps.onState?.(state);
   }
 
-  /** The outbox follows `unsaved` (also after close: a keepalive that lands removes the entry). */
+  /** The outbox follows `unsaved` and the dirty edits (also after close: a keepalive that lands removes the entry). */
   function keep() {
-    deps.onUnsent?.(unsaved ? { heights: { ...unsaved }, base: { revision: base.revision, heights: { ...base.heights } }, at: new Date().toISOString() } : null);
+    deps.onUnsent?.(unsaved || editsDirty ? {
+      heights: { ...(unsaved ?? base.heights) },
+      ...(editsDirty ? { pieceEdits: copyEdits(edits) } : {}),
+      base: copyBase(base),
+      at: new Date().toISOString(),
+    } : null);
+  }
+
+  /** The viewer is told only while this saver is the page's (after close the page shows another version, or none). */
+  function showEdits(map: PieceEditMap) {
+    if (!closed) deps.onRemoteEdits?.(copyEdits(map));
   }
 
   function stopTimer() {
@@ -152,6 +202,8 @@ export function createHeightsSaver(deps: SaverDeps): HeightsSaverCore {
     }
     if (!pending) { emit(); return; }
     const heights = pending;
+    const sentEdits = editsDirty ? copyEdits(edits) : undefined;   // only a change of this tab goes out (else `{heights}`)
+    const sentSeq = editsSeq;
     pending = null;
     failed = null;
     stopRetry();
@@ -159,7 +211,8 @@ export function createHeightsSaver(deps: SaverDeps): HeightsSaverCore {
     emit();
     let request: Promise<HeightOverrides>;
     try {
-      request = deps.put(heights, { ...init, ifRevision: base.revision });
+      const init2: SendInit = { ...init, ifRevision: base.revision };
+      request = sentEdits ? deps.put(heights, init2, sentEdits) : deps.put(heights, init2);
     } catch (err) {
       request = Promise.reject(err);
     }
@@ -171,6 +224,13 @@ export function createHeightsSaver(deps: SaverDeps): HeightsSaverCore {
         retries = 0;
         conflicts = 0;
         if (unsaved === heights) unsaved = null;     // a newer map (or a merge) is still unsaved otherwise
+        if (editsSeq === sentSeq) {                  // no newer deleted boxes from the viewer while this one was out
+          const saved = base.pieceEdits ?? {};
+          const shown = edits;
+          editsDirty = false;
+          edits = copyEdits(saved);
+          if (!sameEdits(saved, shown)) showEdits(saved);   // the server closed the map, or kept deletions made elsewhere
+        }
         deps.onSaved?.(result, heights);
         keep();
         if (pending && timer === null) next();      // a newer map came while this one was in flight
@@ -183,11 +243,16 @@ export function createHeightsSaver(deps: SaverDeps): HeightsSaverCore {
           conflicts++;
           const mine = pending ?? heights;
           const merged = mergeChanges(base.heights, mine, now.heights);
-          base = { revision: now.revision, heights: { ...now.heights } };
+          // the deleted boxes: this tab's own changes over theirs while dirty (the merged map is sent), else theirs
+          const nextEdits = editsDirty ? mergeEdits(base.pieceEdits ?? {}, edits, now.pieceEdits) : now.pieceEdits;
+          const editsMoved = !sameEdits(nextEdits, edits);
+          edits = copyEdits(nextEdits);
+          base = savedBase(now.revision, now.heights, now.pieceEdits);
           pending = merged;
           unsaved = merged;
           stopTimer();
-          deps.onRemote?.({ ...merged });
+          if (!closed) deps.onRemote?.({ ...merged });
+          if (editsMoved) showEdits(edits);
           keep();
           next();
           return;
@@ -211,19 +276,32 @@ export function createHeightsSaver(deps: SaverDeps): HeightsSaverCore {
     send();
   }
 
+  /** A change from the viewer: the debounce (re)starts; after close it goes straight out. */
+  function changed() {
+    failed = null;
+    stopRetry();
+    stopTimer();
+    keep();
+    if (closed) { send(); return; }               // after close: no debounce, straight out
+    timer = setTimeout(() => { timer = null; send(); }, debounceMs);
+    emit();
+  }
+
   return {
     get state() { return state; },
-    get base() { return { revision: base.revision, heights: { ...base.heights } }; },
+    get base() { return copyBase(base); },
     change(heights) {
       pending = { ...heights };
       unsaved = pending;
-      failed = null;
-      stopRetry();
-      stopTimer();
-      keep();
-      if (closed) { send(); return; }               // after close: no debounce, straight out
-      timer = setTimeout(() => { timer = null; send(); }, debounceMs);
-      emit();
+      changed();
+    },
+    changeEdits(pieceEdits) {
+      edits = editsOf(pieceEdits);
+      editsDirty = true;
+      editsSeq++;
+      if (!pending) pending = { ...(unsaved ?? base.heights) };   // the tab's latest heights go with them
+      unsaved = pending;
+      changed();
     },
     retry() {
       stopTimer();
@@ -242,11 +320,16 @@ export function createHeightsSaver(deps: SaverDeps): HeightsSaverCore {
       // only newer heights: a refetch that started before this tab's own save can land after it with the revision before
       // (revisions only grow; a store reset by the seed's --reset-overrides meets this tab's next save as a 412 instead)
       if (saved.revision <= base.revision) return;
-      if (unsaved || pending || inFlight || timer !== null) return;
+      if (unsaved || pending || inFlight || timer !== null || editsDirty) return;
       const was = base.heights;
       base = baseOf(saved);
       failed = null;
-      if (!sameHeights(was, base.heights)) deps.onRemote?.({ ...base.heights });
+      if (!sameHeights(was, base.heights) && !closed) deps.onRemote?.({ ...base.heights });
+      const theirs = base.pieceEdits ?? {};
+      if (!sameEdits(edits, theirs)) {
+        edits = copyEdits(theirs);
+        showEdits(theirs);
+      }
       emit();
     },
     close() {
@@ -259,16 +342,32 @@ export function createHeightsSaver(deps: SaverDeps): HeightsSaverCore {
 // ------------------------------------------------------------------------------------------------------------ React hook
 
 export type VersionPath = VersionKey;
-export type PutHeights = (path: VersionPath, heights: HeightMap, init: SendInit) => Promise<HeightOverrides>;
+/** The PUT of one version: `pieceEdits` only while the tab's deleted boxes are unsaved (the body is then `{heights, pieceEdits}`). */
+export type PutHeights = (path: VersionPath, heights: HeightMap, init: SendInit, pieceEdits?: PieceEditMap) => Promise<HeightOverrides>;
 
-/** The generated client's PUT (DESIGN.md 10.2), with If-Match: "<revision>" when the core gives one. */
-export const putHeights: PutHeights = async (path, heights, init) => {
+/** The PUT's body: `{heights}`, or `{heights, pieceEdits}` when the edits go too. */
+export const heightsBody = (heights: HeightMap, pieceEdits?: PieceEditMap): HeightsUpdate =>
+  (pieceEdits ? { heights, pieceEdits } : { heights });
+
+/** Whether a body may go as a keepalive request (at most KEEPALIVE_MAX_BYTES of JSON, UTF-8). */
+export const keepaliveFits = (body: unknown): boolean => new TextEncoder().encode(JSON.stringify(body)).length <= KEEPALIVE_MAX_BYTES;
+
+/**
+ * The generated client's PUT (DESIGN.md 10.2), with If-Match: "<revision>" when the core gives one. A keepalive asked for
+ * with a body over KEEPALIVE_MAX_BYTES goes as an ordinary request (the browser would refuse it).
+ */
+export const putHeights: PutHeights = async (path, heights, init, pieceEdits) => {
   const headers = init.ifRevision !== undefined ? { 'If-Match': `"${init.ifRevision}"` } : undefined;
-  const { data } = await putFurnitureHeights({ path, body: { heights }, throwOnError: true, keepalive: init.keepalive, headers });
+  const body = heightsBody(heights, pieceEdits);
+  const keepalive = init.keepalive && !keepaliveFits(body) ? undefined : init.keepalive;
+  const { data } = await putFurnitureHeights({ path, body, throwOnError: true, keepalive, headers });
   return data;
 };
 
-/** After a save: the cached furniture heights and the version detail's overrides; the project list is now stale. */
+/**
+ * After a save: the cached furniture heights and the version detail's overrides (the API's answer: the saved heights and
+ * deleted boxes, so a viewer re-created from the cached detail starts from them); the project list is now stale.
+ */
 export function updateHeightCaches(queryClient: QueryClient, path: VersionPath, result: HeightOverrides): void {
   queryClient.setQueryData<HeightOverrides>(getFurnitureHeightsQueryKey({ path }), result);
   queryClient.setQueryData<VersionDetail>(getVersionQueryKey({ path }), old => (old ? { ...old, overrides: result } : old));
@@ -284,12 +383,14 @@ export interface HeightsSaver {
   state: SaverState;
   /** Give it the viewer's heightschange maps (stable identity). */
   change: (heights: HeightMap) => void;
+  /** Give it the viewer's boxeschange maps (stable identity). */
+  changeEdits: (pieceEdits: PieceEditMap) => void;
   /** Re-send the newest map (stable identity). */
   retry: () => void;
   /** Send a debounced map now, e.g. before a download that carries the saved heights (stable identity). */
   flush: () => void;
   /** The saved heights as the API has them now (a refetch): see HeightsSaverCore.adopt (stable identity). */
-  adopt: (saved: Pick<HeightOverrides, 'revision' | 'heights'>) => void;
+  adopt: (saved: SavedNow) => void;
 }
 
 export interface HeightsSaverOptions {
@@ -298,9 +399,11 @@ export interface HeightsSaverOptions {
   debounceMs?: number;
   retryDelaysMs?: readonly number[];
   /** The saved heights the page shows (version detail overrides), read when the version's saver starts. */
-  base?: Pick<HeightOverrides, 'revision' | 'heights'>;
+  base?: SavedNow;
   /** The tab's heights changed without the viewer typing them: the page shows them (viewer.setHeights). */
   onRemote?: (heights: HeightMap) => void;
+  /** The tab's deleted boxes changed without the viewer changing them: the page shows them (viewer.setPieceEdits). */
+  onRemoteEdits?: (pieceEdits: PieceEditMap) => void;
 }
 
 /** The heights saver of one version. */
@@ -312,6 +415,7 @@ export function useHeightsSaver(projectId: string, version: number, opts: Height
   const debounceMs = opts.debounceMs ?? SAVE_DEBOUNCE_MS;
   const retryDelaysMs = opts.retryDelaysMs ?? RETRY_DELAYS_MS;
   const remote = useEffectEvent((heights: HeightMap) => opts.onRemote?.(heights));
+  const remoteEdits = useEffectEvent((pieceEdits: PieceEditMap) => opts.onRemoteEdits?.(pieceEdits));
   const startBase = useEffectEvent((): SavedBase => (opts.base ? baseOf(opts.base) : { revision: 0, heights: {} }));
 
   useEffect(() => {
@@ -323,10 +427,11 @@ export function useHeightsSaver(projectId: string, version: number, opts: Height
       retryDelaysMs,
       base: startBase(),
       unsent: readUnsent(path),
-      put: (heights, init) => put(path, heights, init),
+      put: (heights, init, pieceEdits) => (pieceEdits ? put(path, heights, init, pieceEdits) : put(path, heights, init)),
       onSaved: result => updateHeightCaches(queryClient, path, result),
       onState: setState,
       onRemote: heights => remote(heights),
+      onRemoteEdits: pieceEdits => remoteEdits(pieceEdits),
       onUnsent: entry => writeUnsent(path, entry),
     });
     coreRef.current = core;
@@ -349,24 +454,27 @@ export function useHeightsSaver(projectId: string, version: number, opts: Height
   }, [projectId, version, queryClient, put, debounceMs, retryDelaysMs]);
 
   const change = useCallback((heights: HeightMap) => { coreRef.current?.change(heights); }, []);
+  const changeEdits = useCallback((pieceEdits: PieceEditMap) => { coreRef.current?.changeEdits(pieceEdits); }, []);
   const retry = useCallback(() => { coreRef.current?.retry(); }, []);
   const flush = useCallback(() => { coreRef.current?.flush(); }, []);
-  const adopt = useCallback((saved: Pick<HeightOverrides, 'revision' | 'heights'>) => { coreRef.current?.adopt(saved); }, []);
-  return { state, change, retry, flush, adopt };
+  const adopt = useCallback((saved: SavedNow) => { coreRef.current?.adopt(saved); }, []);
+  return { state, change, changeEdits, retry, flush, adopt };
 }
 
 // ------------------------------------------------------------------------------------------------------- other versions
 
 /**
  * Sends the unsaved map of a version that is not on screen (the outbox entry of a tab that left it, closed or reloaded
- * while the API did not answer), with If-Match and the same merge as the saver. Resolves true once the API has it (the
- * entry is then removed), false while it cannot (the entry stays for the next try).
+ * while the API did not answer), with If-Match and the same merge as the saver (the deleted boxes too, when the entry
+ * carries them). Resolves true once the API has it (the entry is then removed), false while it cannot (the entry stays
+ * for the next try).
  */
 export async function sendUnsent(path: VersionKey, entry: UnsentEntry, put: PutHeights, queryClient: QueryClient): Promise<boolean> {
-  let base = entry.base, heights = entry.heights;
+  let base = entry.base, heights = entry.heights, edits = entry.pieceEdits;
   for (let i = 0; i < MAX_CONFLICTS; i++) {
     try {
-      const result = await put(path, heights, { ifRevision: base.revision });
+      const init: SendInit = { ifRevision: base.revision };
+      const result = await (edits ? put(path, heights, init, edits) : put(path, heights, init));
       if (!isClaimed(path)) writeUnsent(path, null);      // a saver that opened meanwhile keeps its own entry
       updateHeightCaches(queryClient, path, result);
       return true;
@@ -374,8 +482,9 @@ export async function sendUnsent(path: VersionKey, entry: UnsentEntry, put: PutH
       const now = conflictOf(err);
       if (!now) return false;
       heights = mergeChanges(base.heights, heights, now.heights);
-      base = { revision: now.revision, heights: now.heights };
-      if (!isClaimed(path)) writeUnsent(path, { heights, base, at: new Date().toISOString() });
+      if (edits) edits = mergeEdits(base.pieceEdits ?? {}, edits, now.pieceEdits);
+      base = savedBase(now.revision, now.heights, now.pieceEdits);
+      if (!isClaimed(path)) writeUnsent(path, { heights, ...(edits ? { pieceEdits: edits } : {}), base, at: new Date().toISOString() });
     }
   }
   return false;

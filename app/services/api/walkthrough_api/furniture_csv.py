@@ -13,11 +13,15 @@ columns (id, level, kind, kind_label, family, block, layer, dxf_handle, on_top_o
 `-`, `@`, TAB or CR gets a leading `'` before the RFC 4180 quoting, so a spreadsheet never reads it as a formula; the
 number columns never change. The viewer's CSV (packages/viewer/src/furniture/logic.ts) applies the same rule. No text
 field of the four seeded projects starts that way: their CSVs are byte for byte as before.
+
+Deleted boxes (step BX, docs/boxes/DESIGN.md 4): `removed` (the live removed ids, piece_edits.live) leaves those rows
+out; the support lookup still sees every piece, and the removed set is closed (what stands on a removed piece is
+removed too), so every other row's base_mm and on_top_of are unchanged. None or empty: the exact old path.
 """
 from __future__ import annotations
 
 import math
-from collections.abc import Mapping
+from collections.abc import Mapping, Set
 from typing import Any
 
 BOM = b'\xef\xbb\xbf'
@@ -53,15 +57,17 @@ def whole(v: float) -> int:
 
 
 def csv_text(furniture: list[dict[str, Any]], kinds: list[dict[str, Any]], floors: list[Any], offset: list[float],
-             heights: Mapping[str, float] | None = None) -> str:
-    """furniture_kit.csv_text, line for line: `heights` = {kind: mm} replaces the kinds' heights (the saved heights)."""
+             heights: Mapping[str, float] | None = None, removed: Set[str] | None = None) -> str:
+    """furniture_kit.csv_text, line for line: `heights` = {kind: mm} replaces the kinds' heights (the saved heights);
+    `removed` (step BX) leaves the rows of those piece ids out."""
     floor_keys = [f['key'] if isinstance(f, dict) else f for f in floors]
     by = {k['key']: k for k in kinds}
     order = {k['key']: i for i, k in enumerate(kinds)}
     height = lambda kind: whole((heights or {}).get(kind, by[kind]['height']))   # noqa: E731
-    ids = {p['id']: p for p in furniture}
+    ids = {p['id']: p for p in furniture}                        # every piece, removed or not (the supports' lookup)
+    rows = [p for p in furniture if p['id'] not in removed] if removed else furniture
     lines = [','.join(CSV_COLUMNS)]
-    for p in sorted(furniture, key=lambda p: (floor_keys.index(p['floor']), order[p['kind']], p['id'])):
+    for p in sorted(rows, key=lambda p: (floor_keys.index(p['floor']), order[p['kind']], p['id'])):
         k = by[p['kind']]
         base = by[ids[p['on']]['kind']]['base'] + height(ids[p['on']]['kind']) if p['on'] else k['base']
         row = [p['id'], p['floor'], p['kind'], k['label'], p['family'], p['block'], p['layer'], p['handle'],
@@ -71,16 +77,20 @@ def csv_text(furniture: list[dict[str, Any]], kinds: list[dict[str, Any]], floor
     return '\r\n'.join(lines) + '\r\n'
 
 
-def model_csv_text(model: Mapping[str, Any], heights: Mapping[str, float] | None = None) -> str:
-    """The list of a BuiltModel v1 (no BOM). A model without furniture has none: ValueError."""
+def model_csv_text(model: Mapping[str, Any], heights: Mapping[str, float] | None = None,
+                   removed: Set[str] | None = None) -> str:
+    """The list of a BuiltModel v1 (no BOM). A model without furniture has none: ValueError. Every piece removed: the
+    header alone."""
     if not model.get('furniture'):
         raise ValueError('the model has no furniture')
-    return csv_text(model['furniture'], model['furnitureKinds'], model['floors'], model.get('offset', [0, 0]), heights)
+    return csv_text(model['furniture'], model['furnitureKinds'], model['floors'], model.get('offset', [0, 0]), heights,
+                    removed)
 
 
-def csv_bytes(model: Mapping[str, Any], heights: Mapping[str, float] | None = None) -> bytes:
+def csv_bytes(model: Mapping[str, Any], heights: Mapping[str, float] | None = None,
+              removed: Set[str] | None = None) -> bytes:
     """The download: BOM + the list as UTF-8 (CRLF kept)."""
-    return BOM + model_csv_text(model, heights).encode('utf-8')
+    return BOM + model_csv_text(model, heights, removed).encode('utf-8')
 
 
 def file_name(model: Mapping[str, Any]) -> str:

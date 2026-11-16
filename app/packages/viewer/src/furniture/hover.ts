@@ -4,50 +4,36 @@
 //   them (walls, floor plates; glass, half see-through and the invisible Walk skins hide nothing): a box gets a label with
 //   its kind, family, size in m (w x d x height, ", from <z0> m" when it does not stand on the floor) and floor, and, while
 //   the doorways are kept clear, "does not stop you: in the approach of <ids>". The label is absolute in the root, at the
-//   pointer + 14 / 18 px, kept inside the root (all screen maths root-relative).
-import { Raycaster, Vector2, type Material, type Mesh, type Object3D } from 'three';
-import type {} from 'three-mesh-bvh';
+//   pointer + 14 / 18 px, kept inside the root (all screen maths root-relative). The pick itself is pick.ts's.
+//   With editBoxes (docs/boxes/DESIGN.md 2.2, 2.3): a last line "Click to select", the pointer cursor while the pointer
+//   rests on a box that a click would select, and no label while the box card is open. Without it, exactly as before.
 import type { ViewerContext } from '../contracts';
 import { clear, el } from '../ui/dom';
-import type { FurnitureState, ItemState } from './types';
+import type { Picker } from './pick';
+import type { FurnitureState } from './types';
 
 export interface HoverApi {
   readonly tip: HTMLDivElement;
   hide(): void;
 }
 
-const showing = (obj: Object3D | null) => { for (let n = obj; n; n = n.parent) if (!n.visible) return false; return true; };
-const materialOf = (m: Mesh): Material | undefined => (Array.isArray(m.material) ? m.material[0] : m.material);
-
-export function installHover(ctx: ViewerContext, st: FurnitureState): HoverApi {
+export function installHover(ctx: ViewerContext, st: FurnitureState, pick: Picker): HoverApi {
   const tip = el('div', { wt: 'furniture-tip', style: { display: 'none' } });
   ctx.ui.root.append(tip);
-  const ray = new Raycaster(), ndc = new Vector2();
-  ray.firstHitOnly = true;
   let pending: { x: number; y: number } | null = null, timer = 0;
   const mode = () => ctx.modes.mode;
-  const pieceOf = (m: Object3D): ItemState | null => {
-    const p = st.itemOf.get(String(m.userData.id));
-    return p && p.mesh === m ? p : null;
-  };
-  const hide = () => { pending = null; tip.style.display = 'none'; };
+  const cursor = (on: boolean) => { if (st.editBoxes) ctx.canvas.style.cursor = on ? 'pointer' : ''; };
+  const hide = () => { pending = null; tip.style.display = 'none'; cursor(false); };
 
   function hover() {
     timer = 0;
     const at = pending;
     if (!at || mode() !== 'orbit') { hide(); return; }
-    const base = ctx.ui.root.getBoundingClientRect(), r = ctx.rectOf(ctx.canvas);
-    const x = at.x - base.left, y = at.y - base.top;                 // root-relative
-    if (!r.width || !r.height) { tip.style.display = 'none'; return; }
-    ctx.camera.updateMatrixWorld();                                  // as the last frame drew it (a no-op between frames)
-    ray.setFromCamera(ndc.set((x - r.left) / r.width * 2 - 1, -(y - r.top) / r.height * 2 + 1), ctx.camera);
-    // The nearest thing under the pointer among the boxes and what hides them (walls, floor plates; glass and the invisible
-    // Walk skins do not hide anything).
-    const hides = ctx.floors.filter(f => showing(f.group)).flatMap(f => f.colliders.concat(f.walkables))
-      .filter(m => { const mat = materialOf(m); return !pieceOf(m) && !!mat && mat.visible !== false && !mat.transparent && showing(m); });
-    const hit = ray.intersectObjects([...st.items.map(p => p.mesh).filter(showing), ...hides], false)[0];
-    const p = hit ? pieceOf(hit.object) : null;
-    if (!p) { tip.style.display = 'none'; return; }
+    const { x, y } = pick.rootPoint(at.x, at.y);                    // root-relative
+    const p = pick.atRoot(x, y);
+    const selectable = !!p && !!st.select?.selectable();
+    cursor(selectable);
+    if (!p || st.select?.cardOpen()) { tip.style.display = 'none'; return; }
     const d = p.d, h = p.kind.height / 1000, z0 = p.z0mm / 1000;
     const kept = st.keepDoorways() && p.kind.blocks && p.approach.length > 0;   // it would stop you, but the doorway it stands in front of is kept clear
     clear(tip);
@@ -56,6 +42,7 @@ export function installHover(ctx: ViewerContext, st: FurnitureState): HoverApi {
       el('span', { text: `${d.w.toFixed(2)} × ${d.d.toFixed(2)} × ${h.toFixed(2)} m${z0 > 0 ? ', from ' + z0.toFixed(2) + ' m' : ''} · ${p.fl.name || d.floor}` }),
     );
     if (kept) tip.append(el('br'), el('span', { text: `does not stop you: in the approach of ${p.approach.join(', ')}` }));
+    if (selectable) tip.append(el('br'), el('span', { wt: 'furniture-tip-hint', text: 'Click to select' }));
     tip.style.display = 'block';
     const size = ctx.size();
     tip.style.left = Math.max(4, Math.min(x + 14, size.width - tip.offsetWidth - 8)) + 'px';

@@ -12,7 +12,11 @@
 // the camera (seen in web-leak.spec.ts; contract-issues/F.md F-5). A layout-effect cleanup runs while the DOM is still in
 // place: on unmount it disposes the live viewer there, and the effect's cleanup then finds it disposed (dispose() is
 // idempotent). The ref is written only inside effects.
-import { createViewer, type CreateViewer, type HeightMap, type Viewer, type ViewerOptions, type ViewerProject } from '@walkthrough/viewer';
+// Step BX (docs/boxes/DESIGN.md 6.2): the viewer's boxeschange (a furniture box deleted or restored in it) goes to
+// onPieceEditsChange, from a second listener of the same effect, the same way.
+import {
+  createViewer, type CreateViewer, type HeightMap, type PieceEditMap, type Viewer, type ViewerOptions, type ViewerProject,
+} from '@walkthrough/viewer';
 import { useEffect, useEffectEvent, useLayoutEffect, useRef } from 'react';
 
 export interface ViewerHostProps {
@@ -22,6 +26,8 @@ export interface ViewerHostProps {
   options?: ViewerOptions;
   /** The viewer's heightschange (typed or reset in the legend): the kinds whose height differs from the model's. */
   onHeightsChange?: (heights: HeightMap) => void;
+  /** The viewer's boxeschange (a box deleted or restored in it): the whole map of deleted boxes. */
+  onPieceEditsChange?: (pieceEdits: PieceEditMap) => void;
   /** createViewer threw (the viewer has already cleaned up after itself). */
   onError?: (err: unknown) => void;
   /** A viewer was made (also after a failed attempt, e.g. StrictMode's second mount): the page clears its error. */
@@ -30,11 +36,12 @@ export interface ViewerHostProps {
   create?: CreateViewer;
 }
 
-export function ViewerHost({ project, options, onHeightsChange, onError, onCreated, create = createViewer }: ViewerHostProps) {
+export function ViewerHost({ project, options, onHeightsChange, onPieceEditsChange, onError, onCreated, create = createViewer }: ViewerHostProps) {
   const ref = useRef<HTMLDivElement>(null);
   /** The viewer the effect made and has not disposed yet (written only in effects). */
   const live = useRef<Viewer | null>(null);
   const heightsChanged = useEffectEvent((heights: HeightMap) => onHeightsChange?.(heights));
+  const piecesChanged = useEffectEvent((pieceEdits: PieceEditMap) => onPieceEditsChange?.(pieceEdits));
   const failed = useEffectEvent((err: unknown) => onError?.(err));
   const created = useEffectEvent((viewer: Viewer) => onCreated?.(viewer));
   useEffect(() => {
@@ -47,9 +54,11 @@ export function ViewerHost({ project, options, onHeightsChange, onError, onCreat
     }
     live.current = viewer;
     const off = viewer.on('heightschange', e => heightsChanged(e.heights));
+    const offBoxes = viewer.on('boxeschange', e => piecesChanged(e.pieceEdits));
     created(viewer);
     return () => {
       off();
+      offBoxes();
       viewer.dispose();
       if (live.current === viewer) live.current = null;
     };

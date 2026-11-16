@@ -142,7 +142,8 @@ def test_version_detail(client: TestClient, data_copy: Path, key) -> None:
                                 'mediaType': 'text/plain; charset=utf-8'} if ms else None)
     assert dl['furnitureCsv'] == ({'url': f'{url}/downloads/furniture-csv', 'fileName': f"{m['photoName']}_furniture_list.csv",
                                    'mediaType': 'text/csv; charset=utf-8'} if m.get('furniture') else None)
-    assert d['overrides'] == {'heights': {}, 'revision': 0, 'updatedAt': None}
+    # pieceEdits: the deleted furniture boxes (step BX, docs/contract-issues/BX.md), always present ({} when none)
+    assert d['overrides'] == {'heights': {}, 'pieceEdits': {}, 'revision': 0, 'updatedAt': None}
     assert (d['hasStages'], d['hasMaxScript'], d['hasFurniture']) == \
            (v['hasStages'], v['downloads']['maxScript'] is not None, bool(m.get('furniture')))
 
@@ -271,7 +272,7 @@ def test_offline_html_without_a_template(data_copy: Path, tmp_path: Path) -> Non
 # ---------------------------------------------------------------------------------------------------- saved heights
 def test_heights_get_put(client: TestClient, data_copy: Path, template_file: Path) -> None:
     url = f'{API}/presidential-suite/versions/1/furniture-heights'
-    assert client.get(url).json() == {'heights': {}, 'revision': 0, 'updatedAt': None}
+    assert client.get(url).json() == {'heights': {}, 'pieceEdits': {}, 'revision': 0, 'updatedAt': None}   # BX: pieceEdits
     model = read_json(FIXTURES / 'models' / 'suite.model.json')
     table = next(k for k in model['furnitureKinds'] if k['key'] == 'table')['height']
     r = client.put(url, json={'heights': {'seat': 300, 'table': table, 'tv': 650}})        # the model's value is dropped

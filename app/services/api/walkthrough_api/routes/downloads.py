@@ -1,17 +1,23 @@
 """Downloads: the 3ds Max script, the furniture list CSV, the offline single HTML (DESIGN.md 10.2, 16). Bodies: builder E.
 
 Attachment headers: `Content-Disposition: attachment; filename="<ascii>"; filename*=UTF-8''<encoded>`.
+
+Deleted furniture boxes (step BX, docs/boxes/DESIGN.md 4): the CSV leaves out the rows of the live removed pieces; the 3ds
+Max script, when any piece is removed, is the stored script without their furnBox lines and with one comment naming
+their Max objects as line 3 (piece_edits.filter_max_script; the prefix is the version's model.maxPrefix), sent from
+bytes; with nothing removed both are exactly as before (the script the same FileResponse). The offline file needs no
+change: it embeds overrides.json as stored. The frozen route texts ("byte for byte as seeded") under-describe this.
 """
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends
 from fastapi.responses import Response
 
-from .. import furniture_csv, offline, views
+from .. import furniture_csv, offline, piece_edits, views
 from ..deps import get_settings, get_store
 from ..errors import ApiError
 from ..settings import Settings
-from ..store.base import Store
+from ..store.base import Store, StoreError
 from .params import ATTACHMENT_HEADERS, ProjectId, VersionNo, error
 
 router = APIRouter()
@@ -38,8 +44,18 @@ def download_max_script(project_id: ProjectId, version: VersionNo, store: Store 
     attachment = views.max_script_file_name(v)
     if not name or not attachment:
         raise ApiError(404, 'no_max_script', f'{project_id} v{version} has no 3ds Max script')
-    # the stored file, byte for byte; its attachment name carries the version (Bangkok_Bank_Sampeng_v2.ms)
-    return views.attachment_blob(store.download(project_id, version, name), attachment, views.MAX_SCRIPT_MEDIA)
+    saved = store.read_overrides(project_id, version)
+    model = views.model_of(store, v) if saved is not None and saved.piece_edits else None
+    removed = views.live_edits(saved, model)
+    if model is None or not removed:
+        # the stored file, byte for byte; its attachment name carries the version (Bangkok_Bank_Sampeng_v2.ms)
+        return views.attachment_blob(store.download(project_id, version, name), attachment, views.MAX_SCRIPT_MEDIA)
+    # deleted boxes (step BX): filtered, never regenerated; the prefix is the model's (never project-settings.json's)
+    prefix = model.get('maxPrefix')
+    if not isinstance(prefix, str) or not prefix:
+        raise StoreError(f'the 3ds Max script does not match its model: {project_id} v{version} has no maxPrefix')
+    data = piece_edits.filter_max_script(store.download_bytes(project_id, version, name), prefix, removed)
+    return views.attachment_bytes(data, attachment, views.MAX_SCRIPT_MEDIA)
 
 
 @router.get(
@@ -62,7 +78,8 @@ def download_furniture_csv(project_id: ProjectId, version: VersionNo, store: Sto
         raise views.no_furniture(v)
     model = views.model_of(store, v)
     saved = store.read_overrides(project_id, version)
-    data = furniture_csv.csv_bytes(model, saved.heights if saved else None)
+    removed = views.live_edits(saved, model)                     # step BX: the deleted boxes' rows are left out
+    data = furniture_csv.csv_bytes(model, saved.heights if saved else None, removed=set(removed) or None)
     return views.attachment_bytes(data, furniture_csv.file_name(model), views.CSV_MEDIA)
 
 

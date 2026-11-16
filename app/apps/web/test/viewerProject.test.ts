@@ -83,4 +83,27 @@ describe('viewerOptions', () => {
   it('the test hook follows VITE_WTV_TEST_HOOK by default', () => {
     expect(viewerOptions('').testHook).toBe(import.meta.env.VITE_WTV_TEST_HOOK === '1');
   });
+  it('step BX: editBoxes only when the version page asks for it (the key is absent otherwise)', () => {
+    expect(viewerOptions('', false, true)).toEqual({ address: {}, build: 'skip', furnitureHeights: 'host', testHook: false, editBoxes: true });
+    expect(viewerOptions('', false, false)).not.toHaveProperty('editBoxes');
+    expect(viewerOptions('?mode=walk', true)).not.toHaveProperty('editBoxes');
+  });
+});
+
+describe('step BX: the deleted boxes in the project', () => {
+  const R = { removed: true } as const;
+  it('the saved deleted boxes (read leniently); none: no pieceEdits key; an unsent map (even {}) wins', () => {
+    const m = createMockApi();
+    const src = m.source('bank-sampeng', 2)!;
+    const model = readJson(src.model);
+    expect(toViewerProject(m.version('bank-sampeng', 2)!, model, null)).not.toHaveProperty('pieceEdits');
+    m.setSaved('bank-sampeng', 2, {}, { 'L1-table-005': R });
+    const detail = m.version('bank-sampeng', 2)!;
+    expect(detail.overrides.pieceEdits).toEqual({ 'L1-computer-001': R, 'L1-table-005': R });   // closed by the mock, as the API does
+    expect(toViewerProject(detail, model, null).pieceEdits).toEqual({ 'L1-computer-001': R, 'L1-table-005': R });
+    expect(toViewerProject(detail, model, null, null, { 'L1-seat-001': R }).pieceEdits).toEqual({ 'L1-seat-001': R });
+    expect(toViewerProject(detail, model, null, null, {})).not.toHaveProperty('pieceEdits');   // every box restored, unsent
+    const odd = { ...detail, overrides: { ...detail.overrides, pieceEdits: { a: { removed: false }, b: { removed: null }, c: R } } };
+    expect(toViewerProject(odd, model, null).pieceEdits).toEqual({ c: R });
+  });
 });

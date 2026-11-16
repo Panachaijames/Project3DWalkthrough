@@ -1,0 +1,105 @@
+{
+  "about": "The closure rule of deleted furniture boxes (docs/boxes/DESIGN.md 2.5; step BX, 16 Nov 2026): `ids` and every piece standing on one of them, transitively. One rule in TypeScript (packages/viewer/src/furniture/logic.ts closeRemoved) and one in Python (services/api/walkthrough_api/piece_edits.py close_removed); both read this file (test/unit/furniture/logic.test.ts, services/api/tests/test_bx_piece_edits.py). `closed` is compared as a set. The ids given are kept as they are, also one that names no piece.",
+  "cases": [
+    {
+      "name": "nothing deleted",
+      "pieces": [{ "id": "L1-table-001", "on": null }, { "id": "L1-computer-001", "on": "L1-table-001" }],
+      "ids": [],
+      "closed": []
+    },
+    {
+      "name": "a piece nothing stands on",
+      "pieces": [{ "id": "L1-table-001", "on": null }, { "id": "L1-computer-001", "on": "L1-table-001" }, { "id": "L1-seat-001", "on": null }],
+      "ids": ["L1-seat-001"],
+      "closed": ["L1-seat-001"]
+    },
+    {
+      "name": "a table takes the computer and the printer on it (the mini fixture)",
+      "pieces": [
+        { "id": "L1-computer-001", "on": "L1-table-001" }, { "id": "L1-printer-001", "on": "L1-table-001" },
+        { "id": "L1-seat-001", "on": null }, { "id": "L1-table-001", "on": null }, { "id": "L1-table-002", "on": null },
+        { "id": "L2-computer-001", "on": "L2-table-001" }, { "id": "L2-table-001", "on": null }
+      ],
+      "ids": ["L1-table-001"],
+      "closed": ["L1-table-001", "L1-computer-001", "L1-printer-001"]
+    },
+    {
+      "name": "a piece standing on a table does not take the table",
+      "pieces": [{ "id": "L1-computer-001", "on": "L1-table-001" }, { "id": "L1-printer-001", "on": "L1-table-001" }, { "id": "L1-table-001", "on": null }],
+      "ids": ["L1-computer-001"],
+      "closed": ["L1-computer-001"]
+    },
+    {
+      "name": "two supports, one deleted: only its own pieces go",
+      "pieces": [
+        { "id": "L1-computer-001", "on": "L1-table-001" }, { "id": "L2-computer-001", "on": "L2-table-001" },
+        { "id": "L1-table-001", "on": null }, { "id": "L2-table-001", "on": null }
+      ],
+      "ids": ["L2-table-001"],
+      "closed": ["L2-table-001", "L2-computer-001"]
+    },
+    {
+      "name": "transitive: a vase on a tray on a table",
+      "pieces": [{ "id": "vase", "on": "tray" }, { "id": "tray", "on": "table" }, { "id": "table", "on": null }, { "id": "chair", "on": null }],
+      "ids": ["table"],
+      "closed": ["table", "tray", "vase"]
+    },
+    {
+      "name": "transitive from the middle: the table stays",
+      "pieces": [{ "id": "vase", "on": "tray" }, { "id": "tray", "on": "table" }, { "id": "table", "on": null }],
+      "ids": ["tray"],
+      "closed": ["tray", "vase"]
+    },
+    {
+      "name": "a list that is already closed stays as it is",
+      "pieces": [{ "id": "L1-computer-001", "on": "L1-table-001" }, { "id": "L1-printer-001", "on": "L1-table-001" }, { "id": "L1-table-001", "on": null }],
+      "ids": ["L1-printer-001", "L1-table-001", "L1-computer-001"],
+      "closed": ["L1-table-001", "L1-computer-001", "L1-printer-001"]
+    },
+    {
+      "name": "an open list (an old tab, a merge): the missing piece is added, a separately deleted one kept",
+      "pieces": [
+        { "id": "L1-computer-001", "on": "L1-table-001" }, { "id": "L1-printer-001", "on": "L1-table-001" },
+        { "id": "L1-table-001", "on": null }, { "id": "L1-seat-001", "on": null }
+      ],
+      "ids": ["L1-table-001", "L1-seat-001", "L1-printer-001"],
+      "closed": ["L1-table-001", "L1-seat-001", "L1-printer-001", "L1-computer-001"]
+    },
+    {
+      "name": "an id given twice counts once",
+      "pieces": [{ "id": "L1-computer-001", "on": "L1-table-001" }, { "id": "L1-table-001", "on": null }],
+      "ids": ["L1-table-001", "L1-table-001"],
+      "closed": ["L1-table-001", "L1-computer-001"]
+    },
+    {
+      "name": "an id that names no piece is kept as given (callers pass model ids only)",
+      "pieces": [{ "id": "L1-table-001", "on": null }],
+      "ids": ["L9-nothing-001"],
+      "closed": ["L9-nothing-001"]
+    },
+    {
+      "name": "a piece standing on a support the model lacks goes when that id is given",
+      "pieces": [{ "id": "L1-computer-001", "on": "L1-no-such-table" }, { "id": "L1-table-001", "on": null }],
+      "ids": ["L1-no-such-table"],
+      "closed": ["L1-no-such-table", "L1-computer-001"]
+    },
+    {
+      "name": "a missing or empty `on` stands on nothing",
+      "pieces": [{ "id": "a" }, { "id": "b", "on": null }, { "id": "c", "on": "" }, { "id": "d", "on": "a" }],
+      "ids": ["a"],
+      "closed": ["a", "d"]
+    },
+    {
+      "name": "two pieces standing on each other (a broken file): the loop ends",
+      "pieces": [{ "id": "a", "on": "b" }, { "id": "b", "on": "a" }, { "id": "c", "on": null }],
+      "ids": ["a"],
+      "closed": ["a", "b"]
+    },
+    {
+      "name": "everything deleted",
+      "pieces": [{ "id": "L1-computer-001", "on": "L1-table-001" }, { "id": "L1-table-001", "on": null }, { "id": "L1-seat-001", "on": null }],
+      "ids": ["L1-seat-001", "L1-table-001"],
+      "closed": ["L1-seat-001", "L1-table-001", "L1-computer-001"]
+    }
+  ]
+}

@@ -26,8 +26,12 @@ export function readPayload(text: string | null | undefined): OfflinePayload {
   return data as unknown as OfflinePayload;
 }
 
-/** The ViewerProject of a payload (DESIGN.md 16 "Entry"). */
+/**
+ * The ViewerProject of a payload (DESIGN.md 16 "Entry"). The deleted boxes (overrides.json pieceEdits; docs/boxes/DESIGN.md
+ * 4) are passed only when the file carries them: a file without them makes the project it always made, key for key.
+ */
 export function projectOf(p: OfflinePayload): ViewerProject {
+  const pieceEdits = p.overrides?.pieceEdits;
   return {
     model: p.model,
     presentation: p.version.presentation,
@@ -36,6 +40,7 @@ export function projectOf(p: OfflinePayload): ViewerProject {
     heights: p.overrides?.heights ?? null,
     stamp: p.version.stamp,
     ids: { projectId: p.project.id, version: p.version.version },
+    ...(pieceEdits !== undefined && pieceEdits !== null ? { pieceEdits } : {}),
   };
 }
 

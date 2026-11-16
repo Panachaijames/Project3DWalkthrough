@@ -55,16 +55,40 @@ export const versionTitle = (name: string, version: number) => `${name} · v${ve
 export const notFoundTitle = () => `Not found · ${APP_NAME}`;
 export const errorTitle = () => `Error · ${APP_NAME}`;
 
-/** The heights status line (DESIGN.md 15.3). */
-export const HEIGHTS_SAVED = 'Heights saved';
+/**
+ * The furniture status line (DESIGN.md 15.3). Step BX (docs/boxes/DESIGN.md 6.2): 'Heights saved' became
+ * 'Furniture saved', the status covering the deleted boxes too (the constant keeps its name).
+ */
+export const HEIGHTS_SAVED = 'Furniture saved';
 export const HEIGHTS_SAVING = 'Saving…';
 export const heightsNotSaved = (reason: string) => `Not saved: ${reason}`;
 
-/** The tooltip of the CSV and offline downloads while a heights save is going (they carry the saved heights). */
-export const HEIGHTS_PENDING_TITLE = 'Waiting for the furniture heights to be saved';
-/** ... and while the heights on screen are not saved: the file would carry other heights than the viewer shows. */
+/** The app bar's count of the deleted furniture boxes (step BX), beside the status: '· 3 boxes deleted'. */
+export const boxesDeletedText = (n: number) => `· ${plural(n, 'box deleted', 'boxes deleted')}`;
+/** Its tooltip. */
+export const boxesDeletedTitle = (n: number) =>
+  `${plural(n, 'furniture box is', 'furniture boxes are')} deleted in this version: the furniture legend's Restore… brings them back`;
+
+/**
+ * The new version's note when deleted boxes of the version it was carried from did not carry over (step BX, the main
+ * session's decision 2; VersionDetail.carriedEdits): '2 deleted boxes of v2 are back: not found in the new drawing'.
+ */
+export const carriedEditsText = (notCarried: number, from: number) =>
+  `${plural(notCarried, 'deleted box', 'deleted boxes')} of v${from} ${notCarried === 1 ? 'is' : 'are'} back: not found in the new drawing`;
+
+/**
+ * The tooltip of the CSV and offline downloads while a save is going (they carry the saved heights and deleted boxes).
+ * Step BX: the furniture changes, heights and deleted boxes alike (the constants keep their names).
+ */
+export const HEIGHTS_PENDING_TITLE = 'Waiting for the furniture changes (heights, deleted boxes) to be saved';
+/** ... and while the changes on screen are not saved: the file would carry other furniture than the viewer shows. */
 export const heightsNotSavedTitle = (reason: string) =>
-  `The furniture heights on screen are not saved (${reason}): the file would not carry them`;
+  `The furniture changes on screen are not saved (${reason}): the file would not carry them`;
+/** The 3ds Max script's tooltip while deleted boxes are being saved (it carries no saved heights: only these wait). */
+export const EDITS_PENDING_TITLE = 'Waiting for the deleted boxes to be saved';
+/** ... and while the deleted boxes on screen are not saved: the script would still build them. */
+export const editsNotSavedTitle = (reason: string) =>
+  `The deleted boxes on screen are not saved (${reason}): the script would still build them`;
 /** The tooltip of every download while the API does not answer. */
 export const API_DOWN_TITLE = 'The API is not answering (is it running?): nothing can be downloaded now';
 

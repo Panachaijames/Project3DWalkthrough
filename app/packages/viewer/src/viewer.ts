@@ -9,8 +9,8 @@
 // Any throw after step 1 tears down whatever exists (root, context, listeners, timers, stylesheet, window hooks) and is
 // rethrown; testFailAt (with testHook) throws at the start of a named step for the leak checks.
 import type {
-  CreateViewer, EventBus, FloorKey, FurnitureApi, HeightMap, InternalEvents, ToggleName, Viewer, ViewerEvents, ViewerOptions,
-  ViewMode,
+  CreateViewer, EventBus, FloorKey, FurnitureApi, HeightMap, InternalEvents, PieceEditMap, ToggleName, Viewer, ViewerEvents,
+  ViewerOptions, ViewMode,
 } from './contracts';
 import { applyCameraStart, createContext, type CoreContext } from './core/context';
 import { buildScene } from './core/build';
@@ -108,7 +108,8 @@ export const createViewer: CreateViewer = (container, project, options) => {
  * The public events made by viewer.ts from the bus, each with one emitter (DESIGN.md 11.5): modechange only when the mode or
  * the floor differs from the last one emitted (the modes emit bus 'mode' from every HUD update, as the prototype's onChange,
  * so also on each lens change); heightschange only for what the legend did (typed, reset), never for setHeights (api) or
- * the doorways tick (tick).
+ * the doorways tick (tick); boxeschange only for what was deleted or restored in the viewer (removed, restored), never for
+ * setPieceEdits (api), so a host that saves on the event and sets what was saved cannot loop (docs/boxes/DESIGN.md 2.8).
  */
 export function bridgeEvents(bus: EventBus<InternalEvents>, events: EventBus<ViewerEvents>): void {
   let lastMode: { mode: ViewMode; floor: FloorKey } | null = null;
@@ -120,13 +121,20 @@ export function bridgeEvents(bus: EventBus<InternalEvents>, events: EventBus<Vie
   bus.on('furniture', ({ heights, source }) => {
     if (source === 'typed' || source === 'reset') events.emit('heightschange', { heights: { ...heights }, source });
   });
+  bus.on('pieces', ({ pieceEdits, source }) => {
+    if (source === 'removed' || source === 'restored') events.emit('boxeschange', { pieceEdits: copyEdits(pieceEdits), source });
+  });
 }
+
+/** A copy of an edits map, one level down (the host may keep it). */
+const copyEdits = (e: PieceEditMap): PieceEditMap => Object.fromEntries(Object.entries(e).map(([id, edit]) => [id, { ...edit }]));
 
 /**
  * Viewer.furniture: the furniture module's API, inert once the viewer is disposed, like every other handle method (fix
  * step, review finding "code" 12: a host holding a disposed handle, a StrictMode remount or a version switch, could still
  * type heights and write them to the version's localStorage key). After dispose the writes do nothing and say so (false),
- * meshOf is null; the reads answer the last state.
+ * meshOf is null; the reads answer the last state. The same for the deleted boxes (docs/boxes/DESIGN.md 8.2): removePiece
+ * and restorePiece answer [], restoreAll and setPieceEdits do nothing, pieceEdits answers the last state.
  */
 export function guardFurniture(api: FurnitureApi | null, isDisposed: () => boolean): FurnitureApi | null {
   if (!api) return null;
@@ -146,6 +154,11 @@ export function guardFurniture(api: FurnitureApi | null, isDisposed: () => boole
     apply: () => { if (live()) api.apply(); },
     heights: () => api.heights(),
     setHeights: h => { if (live()) api.setHeights(h); },
+    pieceEdits: () => api.pieceEdits(),
+    setPieceEdits: e => { if (live()) api.setPieceEdits(e); },
+    removePiece: id => (live() ? api.removePiece(id) : []),
+    restorePiece: id => (live() ? api.restorePiece(id) : []),
+    restoreAll: () => { if (live()) api.restoreAll(); },
   };
 }
 
@@ -178,6 +191,8 @@ function makeViewer(c: CoreContext): Viewer {
     furniture: guardFurniture(c.furniture, () => disposed),
     getHeights(): HeightMap { return c.furniture ? { ...c.furniture.heights() } : {}; },
     setHeights(heights: HeightMap) { if (!disposed && c.furniture) c.furniture.setHeights(heights ?? {}); },
+    getPieceEdits(): PieceEditMap { return c.furniture ? copyEdits(c.furniture.pieceEdits()) : {}; },
+    setPieceEdits(e: PieceEditMap) { if (!disposed && c.furniture) c.furniture.setPieceEdits(e ?? {}); },
     on<E extends keyof ViewerEvents>(event: E, fn: (payload: ViewerEvents[E]) => void) {
       return disposed ? () => {} : c.events.on(event, fn);
     },

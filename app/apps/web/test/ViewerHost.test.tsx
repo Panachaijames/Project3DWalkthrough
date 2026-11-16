@@ -1,7 +1,7 @@
 // ViewerHost with a fake `create` (DESIGN.md 15.4, 17.2 web): one viewer after StrictMode's double mount, disposed on
 // unmount and on a project change (the old one before the new one, on the same div), a `create` that throws reported
 // through onError with nothing to dispose, the latest callbacks used without re-creating the viewer.
-import type { CreateViewer, HeightMap, Viewer, ViewerEvents, ViewerOptions, ViewerProject } from '@walkthrough/viewer';
+import type { CreateViewer, HeightMap, PieceEditMap, Viewer, ViewerEvents, ViewerOptions, ViewerProject } from '@walkthrough/viewer';
 import { describe, expect, it, vi } from 'vitest';
 import { ViewerHost } from '@/components/ViewerHost';
 import { render } from './helpers';
@@ -18,6 +18,9 @@ interface Made {
   disposed: boolean;
   handlers: Set<(e: ViewerEvents['heightschange']) => void>;
   emit(heights: HeightMap): void;
+  /** step BX: the boxeschange listeners, and a deleted-boxes map sent to them. */
+  boxHandlers: Set<(e: ViewerEvents['boxeschange']) => void>;
+  emitBoxes(pieceEdits: PieceEditMap): void;
   viewer: Viewer;
 }
 
@@ -36,13 +39,16 @@ function fakeCreate(opts: { throwFor?: (n: number) => boolean } = {}) {
     node.dataset.n = String(n);
     container.append(node);
     const handlers = new Set<(e: ViewerEvents['heightschange']) => void>();
+    const boxHandlers = new Set<(e: ViewerEvents['boxeschange']) => void>();
     const m: Made = {
-      n, container, project, options, disposed: false, handlers, connectedAtDispose: null,
+      n, container, project, options, disposed: false, handlers, connectedAtDispose: null, boxHandlers,
       emit: heights => { for (const fn of [...handlers]) fn({ heights, source: 'typed' }); },
+      emitBoxes: pieceEdits => { for (const fn of [...boxHandlers]) fn({ pieceEdits, source: 'removed' }); },
       viewer: {
-        on: ((event: keyof ViewerEvents, fn: (e: ViewerEvents['heightschange']) => void) => {
+        on: ((event: keyof ViewerEvents, fn: (e: never) => void) => {
           if (event === 'heightschange') handlers.add(fn);
-          return () => { handlers.delete(fn); };
+          if (event === 'boxeschange') boxHandlers.add(fn);
+          return () => { handlers.delete(fn); boxHandlers.delete(fn); };
         }) as Viewer['on'],
         dispose: () => {
           if (m.disposed) return;
@@ -144,6 +150,25 @@ describe('ViewerHost', () => {
     expect(second).toHaveBeenCalledWith({ seat: 300 });
     expect(first).toHaveBeenCalledTimes(1);
     await v.unmount();
+  });
+
+  it('step BX: sends boxeschange to the latest onPieceEditsChange without re-creating the viewer; the listener goes on dispose', async () => {
+    const f = fakeCreate();
+    const p = project('c0c0c0c0c0c0');
+    const first = vi.fn();
+    const second = vi.fn();
+    const v = await render(<ViewerHost project={p} options={OPTIONS} create={f.create} onPieceEditsChange={first} />);
+    expect(f.made[0]!.boxHandlers.size).toBe(0);   // StrictMode's first viewer: its listener was taken off
+    f.live()[0]!.emitBoxes({ 'L1-seat-001': { removed: true } });
+    expect(first).toHaveBeenCalledWith({ 'L1-seat-001': { removed: true } });
+    await v.rerender(<ViewerHost project={p} options={OPTIONS} create={f.create} onPieceEditsChange={second} />);
+    expect(f.create).toHaveBeenCalledTimes(2);
+    f.live()[0]!.emitBoxes({});
+    expect(second).toHaveBeenCalledWith({});
+    expect(first).toHaveBeenCalledTimes(1);
+    const last = f.live()[0]!;
+    await v.unmount();
+    expect(last.boxHandlers.size).toBe(0);
   });
 
   it('reports a create that throws through onError, with nothing to dispose', async () => {

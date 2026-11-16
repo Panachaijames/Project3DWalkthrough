@@ -11,6 +11,13 @@
 // The deletes of 12 Nov 2026 (docs/contract-issues/DEL.md): deleteProject and deleteVersion as the API answers them (204;
 // 404; 409 only_version; 409 busy while a draft of the project has a run queued or running); a deleted version's number
 // is never given again.
+// Step BX (docs/boxes/DESIGN.md 3.2, 4, 6.2; docs/contract-issues/BX.md 1): the deleted furniture boxes are kept with the
+// heights, as the API keeps them: a PUT's `pieceEdits` replaces them (left out or null: kept), refused as the API refuses
+// (FastAPI's 422 for a malformed edit, 422 invalid_piece_edits for an id that is not a piece of the model), `removed:
+// false` and `{}` dropped, closed (what stands on a deleted piece goes with it) and in the CSV order; every answer carries
+// `pieceEdits` ({} when none). The downloads leave them out: the CSV is its golden without their rows, the Max script the
+// stored file without their furnBox lines and with the API's line-3 comment (piece_edits.filter_max_script), the offline
+// stand-in's overrides carry them (absent when none, as the store's file).
 import type {
   AssetInfo,
   HeightOverrides,
@@ -21,23 +28,82 @@ import type {
   VersionDetail,
   VersionSummary,
 } from '../../src/api/generated/types.gen';
-import type { BuiltModel, HeightMap } from '../../../../packages/viewer/src/contracts';
+import type { BuiltModel, HeightMap, PieceEditMap } from '../../../../packages/viewer/src/contracts';
 import { createUploadMock, type UploadMock } from './builds';
 import { MOCK_VERSIONS, readBytes, readJson, sha1, type MockVersionSource } from './fixtures';
 import { error, file, json, JSON_TYPE, noContent, type MockRequest, type MockResponse } from './http';
 
 export type { MockRequest, MockResponse } from './http';
 
-interface SavedHeights { heights: HeightMap; revision: number; updatedAt: string | null }
+interface SavedHeights { heights: HeightMap; pieceEdits: PieceEditMap; revision: number; updatedAt: string | null }
+
+const isObj = (v: unknown): v is Record<string, unknown> => typeof v === 'object' && v !== null && !Array.isArray(v);
+
+/** The ids `ids` delete in `m`, closed (a piece whose `on` names a deleted one goes too) and in the CSV order (step BX). */
+export function closedEdits(m: BuiltModel, ids: Iterable<string>): PieceEditMap {
+  const pieces = m.furniture ?? [];
+  const standing = new Map<string, string[]>();
+  for (const p of pieces) if (p.on) standing.set(p.on, [...(standing.get(p.on) ?? []), p.id]);
+  const out = new Set(ids);
+  const todo = [...out];
+  while (todo.length) for (const c of standing.get(todo.pop()!) ?? []) if (!out.has(c)) { out.add(c); todo.push(c); }
+  const floor = new Map(m.floors.map((f, i) => [f.key, i]));
+  const kind = new Map((m.furnitureKinds ?? []).map((k, i) => [k.key, i]));
+  const rank = (id: string): [number, number, string] => {
+    const p = pieces.find(q => q.id === id);
+    return p ? [floor.get(p.floor) ?? floor.size, kind.get(p.kind) ?? kind.size, id] : [floor.size + 1, kind.size + 1, id];
+  };
+  const sorted = [...out].sort((a, b) => {
+    const [fa, ka, ia] = rank(a), [fb, kb, ib] = rank(b);
+    return fa - fb || ka - kb || (ia < ib ? -1 : ia > ib ? 1 : 0);
+  });
+  return Object.fromEntries(sorted.map(id => [id, { removed: true as const }]));
+}
+
+/**
+ * The stored 3ds Max script without the furnBox lines of the removed ids, and the comment naming their Max objects as the
+ * new line 3 (the API's piece_edits.filter_max_script, byte for byte); null when an id has not exactly one line.
+ */
+export function filterMaxScript(script: Buffer, prefix: string, removed: readonly string[]): Buffer | null {
+  const want = new Set(removed);
+  if (!want.size) return script;
+  const esc = prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const line = new RegExp(`^    ${esc}_furnBox "[^"]*" "([^"]*)" \\d+ "([^"]*)" `);
+  const lines = script.toString('latin1').split('\n');
+  const kept: string[] = [], names: string[] = [], seen = new Map<string, number>();
+  for (const text of lines) {
+    const m = line.exec(text);
+    if (m && want.has(m[2]!)) {
+      seen.set(m[2]!, (seen.get(m[2]!) ?? 0) + 1);
+      names.push(m[1]!);
+      continue;
+    }
+    kept.push(text);
+  }
+  if ([...want].some(id => seen.get(id) !== 1)) return null;
+  const n = names.length;
+  const listed = names.slice(0, 30).join(', ') + (n > 30 ? `, and ${n - 30} more` : '');
+  const comment = `-- ${n} furniture box${n !== 1 ? 'es' : ''} deleted in the walkthrough app ${n !== 1 ? 'are' : 'is'} left out: ${listed}`;
+  kept.splice(Math.min(2, kept.length), 0, comment + (lines[0]?.endsWith('\r') ? '\r' : ''));
+  return Buffer.from(kept.join('\n'), 'latin1');
+}
+
+/** The CSV without the rows of the removed ids (the golden minus rows: the other rows do not change, BX 4). */
+export function csvWithout(csv: Buffer, removed: readonly string[]): Buffer {
+  if (!removed.length) return csv;
+  const ids = new Set(removed);
+  const rows = csv.toString('utf8').split('\r\n');
+  return Buffer.from(rows.filter((row, i) => i === 0 || !ids.has(row.slice(0, row.indexOf(',')))).join('\r\n'), 'utf8');
+}
 
 export interface MockApi {
   handle(req: MockRequest): MockResponse;
   /** Every request handled, in order. */
   readonly requests: MockRequest[];
-  /** The saved heights of a version (a copy). */
+  /** The saved heights (and deleted boxes) of a version (a copy). */
   saved(projectId: string, version: number): HeightOverrides;
-  /** Sets the saved heights directly (as if saved earlier). */
-  setSaved(projectId: string, version: number, heights: HeightMap): void;
+  /** Sets the saved heights directly (as if saved earlier); with `pieceEdits`, the deleted boxes too (closed, ordered). */
+  setSaved(projectId: string, version: number, heights: HeightMap, pieceEdits?: PieceEditMap): void;
   /** Projects as the list returns them (newest first). */
   list(): ProjectSummary[];
   project(projectId: string): ProjectDetail | null;
@@ -81,10 +147,10 @@ export function createMockApi(): MockApi {
   const allVersions = () => everyVersion().filter(v => !deletedVersions.has(keyOf(v.projectId, v.version)));
   const source = (id: string, n: number) => allVersions().find(v => v.projectId === id && v.version === n) ?? null;
   const versionsOf = (id: string) => allVersions().filter(v => v.projectId === id).sort((a, b) => a.version - b.version);
-  const savedOf = (id: string, n: number): SavedHeights => saved.get(keyOf(id, n)) ?? { heights: {}, revision: 0, updatedAt: null };
+  const savedOf = (id: string, n: number): SavedHeights => saved.get(keyOf(id, n)) ?? { heights: {}, pieceEdits: {}, revision: 0, updatedAt: null };
   const overridesOf = (id: string, n: number): HeightOverrides => {
     const s = savedOf(id, n);
-    return { heights: { ...s.heights }, revision: s.revision, updatedAt: s.updatedAt };
+    return { heights: { ...s.heights }, pieceEdits: JSON.parse(JSON.stringify(s.pieceEdits)) as PieceEditMap, revision: s.revision, updatedAt: s.updatedAt };
   };
 
   function versionSummary(s: MockVersionSource): VersionSummary {
@@ -187,6 +253,19 @@ export function createMockApi(): MockApi {
     if (!heights || typeof heights !== 'object' || Array.isArray(heights)) {
       return json(422, { detail: [{ loc: ['body', 'heights'], msg: 'Field required', type: 'missing' }] });
     }
+    // step BX: the deleted boxes, as the request model reads them (left out or null: the saved ones stay)
+    const rawEdits = (parsed as { pieceEdits?: unknown }).pieceEdits;
+    if (rawEdits !== undefined && rawEdits !== null) {
+      if (!isObj(rawEdits)) return json(422, { detail: [{ loc: ['body', 'pieceEdits'], msg: 'Input should be a valid dictionary', type: 'dict_type' }] });
+      for (const [id, e] of Object.entries(rawEdits)) {
+        if (!isObj(e)) return json(422, { detail: [{ loc: ['body', 'pieceEdits', id], msg: 'Input should be a valid dictionary or instance of PieceEdit', type: 'model_type' }] });
+        const extra = Object.keys(e).find(k => k !== 'removed');
+        if (extra) return json(422, { detail: [{ loc: ['body', 'pieceEdits', id, extra], msg: 'Extra inputs are not permitted', type: 'extra_forbidden' }] });
+        if (e.removed !== undefined && e.removed !== null && typeof e.removed !== 'boolean') {
+          return json(422, { detail: [{ loc: ['body', 'pieceEdits', id, 'removed'], msg: 'Input should be a valid boolean', type: 'bool_type' }] });
+        }
+      }
+    }
     const kinds = new Map((m.furnitureKinds ?? []).map(k => [k.key, Math.floor(k.height + 0.5)]));
     const unknownKinds: string[] = [];
     const outOfRange: string[] = [];
@@ -201,8 +280,19 @@ export function createMockApi(): MockApi {
         { unknownKinds, outOfRange });
     }
     const prev = savedOf(s.projectId, s.version);
+    let pieceEdits = prev.pieceEdits;
+    if (isObj(rawEdits)) {
+      const ids = new Set((m.furniture ?? []).map(p => p.id));
+      const unknown = Object.keys(rawEdits).filter(id => !ids.has(id)).sort();
+      if (unknown.length) {
+        const shown = unknown.slice(0, 20);
+        return error(422, 'invalid_piece_edits', `not a furniture piece of the model: ${shown.join(', ')}${unknown.length > 20 ? ` and ${unknown.length - 20} more` : ''}`,
+          { unknownIds: shown, count: unknown.length });
+      }
+      pieceEdits = closedEdits(m, Object.entries(rawEdits).filter(([, e]) => isObj(e) && e.removed === true).map(([id]) => id));
+    }
     const now = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
-    saved.set(keyOf(s.projectId, s.version), { heights: out, revision: prev.revision + 1, updatedAt: now });
+    saved.set(keyOf(s.projectId, s.version), { heights: out, pieceEdits, revision: prev.revision + 1, updatedAt: now });
     updated.set(s.projectId, now);
     return json(200, overridesOf(s.projectId, s.version));
   }
@@ -210,12 +300,22 @@ export function createMockApi(): MockApi {
   function csv(s: MockVersionSource): MockResponse {
     const m = modelOf(s);
     if (!s.csv || !(m.furniture ?? []).length) return error(404, 'no_furniture', 'This version has no furniture.');
-    const h = savedOf(s.projectId, s.version).heights;
+    const sv = savedOf(s.projectId, s.version), h = sv.heights, removed = Object.keys(sv.pieceEdits);
     const name = `${m.photoName}_furniture_list.csv`;
     const same = (a: HeightMap, b: HeightMap) => Object.keys(a).length === Object.keys(b).length && Object.entries(a).every(([k, v]) => b[k] === v);
-    if (!Object.keys(h).length) return file(readBytes(s.csv.plain), 'text/csv; charset=utf-8', name);
-    if (same(h, s.csv.typedHeights)) return file(readBytes(s.csv.typed), 'text/csv; charset=utf-8', name);
+    if (!Object.keys(h).length) return file(csvWithout(readBytes(s.csv.plain), removed), 'text/csv; charset=utf-8', name);
+    if (same(h, s.csv.typedHeights)) return file(csvWithout(readBytes(s.csv.typed), removed), 'text/csv; charset=utf-8', name);
     return error(500, 'mock_no_golden', `The mock API has no CSV golden for the heights ${JSON.stringify(h)}.`);
+  }
+
+  function maxScript(s: MockVersionSource): MockResponse {
+    if (!s.maxScript) return error(404, 'no_max_script', `Version ${s.version} has no 3ds Max script.`);
+    const name = maxScriptName(s.maxScript.name, s.version);
+    const removed = Object.keys(savedOf(s.projectId, s.version).pieceEdits);
+    if (!removed.length) return file(readBytes(s.maxScript.file), 'text/plain; charset=utf-8', name);
+    const filtered = filterMaxScript(readBytes(s.maxScript.file), modelOf(s).maxPrefix, removed);
+    if (!filtered) return error(500, 'store_error', 'the 3ds Max script does not match its model');
+    return file(filtered, 'text/plain; charset=utf-8', name);
   }
 
   function offlineHtml(s: MockVersionSource): MockResponse {
@@ -233,7 +333,9 @@ export function createMockApi(): MockApi {
       downloads: { maxScript: s.maxScript?.name ?? null, furnitureCsv: detail.hasFurniture }, presentation: detail.presentation,
     };
     const sv = savedOf(s.projectId, s.version);
-    const overrides = sv.revision ? { format: 'walkthrough-overrides/1', heights: sv.heights, revision: sv.revision, updatedAt: sv.updatedAt } : null;
+    const overrides = sv.revision
+      ? { format: 'walkthrough-overrides/1', heights: sv.heights, ...(Object.keys(sv.pieceEdits).length ? { pieceEdits: sv.pieceEdits } : {}), revision: sv.revision, updatedAt: sv.updatedAt }
+      : null;
     const pictures = Object.fromEntries(s.pictures.map(pic => [pic.floor, `data:image/png;base64,${readBytes(pic.file).toString('base64')}`]));
     const payload = `{"format":"walkthrough-offline/1","project":${JSON.stringify(meta)},"version":${JSON.stringify(version)},"model":${readBytes(s.model).toString('utf8')},`
       + `"stages":${s.stages ? readBytes(s.stages).toString('utf8') : 'null'},"pictures":${JSON.stringify(pictures)},"overrides":${JSON.stringify(overrides)}}`;
@@ -340,7 +442,7 @@ export function createMockApi(): MockApi {
       return error(404, 'asset_not_found', `Version ${ver} has no asset ${d}.`);
     }
     if (c === 'downloads' && parts.length === 7) {
-      if (d === 'max-script') return s.maxScript ? file(readBytes(s.maxScript.file), 'text/plain; charset=utf-8', maxScriptName(s.maxScript.name, s.version)) : error(404, 'no_max_script', `Version ${ver} has no 3ds Max script.`);
+      if (d === 'max-script') return maxScript(s);
       if (d === 'furniture-csv') return csv(s);
       if (d === 'offline-html') return offlineHtml(s);
     }
@@ -355,9 +457,11 @@ export function createMockApi(): MockApi {
     handle,
     requests,
     saved: (id, n) => overridesOf(id, n),
-    setSaved: (id, n, heights) => {
+    setSaved: (id, n, heights, pieceEdits) => {
       const prev = savedOf(id, n);
-      saved.set(keyOf(id, n), { heights: { ...heights }, revision: prev.revision + 1, updatedAt: new Date().toISOString() });
+      const s = source(id, n);
+      const edits = pieceEdits && s ? closedEdits(modelOf(s), Object.keys(pieceEdits).filter(k => pieceEdits[k]?.removed === true)) : prev.pieceEdits;
+      saved.set(keyOf(id, n), { heights: { ...heights }, pieceEdits: edits, revision: prev.revision + 1, updatedAt: new Date().toISOString() });
     },
     list,
     project,

@@ -1,7 +1,11 @@
 // Card, picker and status texts (DESIGN.md 15.2, 15.3, 17.2 "card formatting"), and the client's error mapping.
 import { describe, expect, it } from 'vitest';
-import { ApiError, apiUrl, isUnreachable, toApiError } from '@/api/client';
+import { ApiError, apiUrl, conflictOf, isUnreachable, toApiError } from '@/api/client';
 import {
+  boxesDeletedText,
+  carriedEditsText,
+  EDITS_PENDING_TITLE,
+  editsNotSavedTitle,
   errorReason,
   formatDate,
   formatFloors,
@@ -10,6 +14,8 @@ import {
   formatOpenings,
   formatVersions,
   heightsNotSaved,
+  heightsNotSavedTitle,
+  HEIGHTS_PENDING_TITLE,
   HEIGHTS_SAVED,
   HEIGHTS_SAVING,
   NO_PROJECTS,
@@ -72,10 +78,24 @@ describe('the version picker, titles and statuses', () => {
     expect(versionTitle('Bangkok Bank, Sampeng Branch', 2)).toBe('Bangkok Bank, Sampeng Branch · v2 · Walkthrough');
   });
   it('status and empty texts word for word', () => {
-    expect(HEIGHTS_SAVED).toBe('Heights saved');
+    expect(HEIGHTS_SAVED).toBe('Furniture saved');   // was 'Heights saved' (step BX: the status covers the deleted boxes too)
     expect(HEIGHTS_SAVING).toBe('Saving…');
     expect(heightsNotSaved('the API did not answer')).toBe('Not saved: the API did not answer');
     expect(NO_PROJECTS).toBe('No projects yet: make one with New project');   // changed on purpose (docs/upload/DESIGN.md U-14.1)
+  });
+});
+
+describe('step BX: the deleted boxes', () => {
+  it('the app bar count, the carried-over note and the download tooltips, word for word', () => {
+    expect(boxesDeletedText(3)).toBe('· 3 boxes deleted');
+    expect(boxesDeletedText(1)).toBe('· 1 box deleted');
+    expect(boxesDeletedText(1234)).toBe('· 1,234 boxes deleted');
+    expect(carriedEditsText(2, 2)).toBe('2 deleted boxes of v2 are back: not found in the new drawing');
+    expect(carriedEditsText(1, 4)).toBe('1 deleted box of v4 is back: not found in the new drawing');
+    expect(HEIGHTS_PENDING_TITLE).toBe('Waiting for the furniture changes (heights, deleted boxes) to be saved');
+    expect(heightsNotSavedTitle('x')).toBe('The furniture changes on screen are not saved (x): the file would not carry them');
+    expect(EDITS_PENDING_TITLE).toBe('Waiting for the deleted boxes to be saved');
+    expect(editsNotSavedTitle('x')).toBe('The deleted boxes on screen are not saved (x): the script would still build them');
   });
 });
 
@@ -105,6 +125,13 @@ describe('errors', () => {
     expect([n.status, n.code, n.message]).toEqual([0, 'network_error', 'the API did not answer (is it running?)']);
     const same = new ApiError(418, 'teapot', 'short and stout');
     expect(toApiError(same, res(500))).toBe(same);
+  });
+  it('step BX: conflictOf reads the deleted boxes of a 412 leniently (missing: none); other errors are no conflict', () => {
+    const c = (details: Record<string, unknown>) => new ApiError(412, 'revision_conflict', 'changed elsewhere', details);
+    expect(conflictOf(c({ revision: 3, heights: { table: 600 }, updatedAt: null }))).toEqual({ revision: 3, heights: { table: 600 }, pieceEdits: {} });
+    expect(conflictOf(c({ revision: 4, heights: {}, updatedAt: null, pieceEdits: { a: { removed: true }, b: { removed: 'yes' }, c: 1 } })))
+      .toEqual({ revision: 4, heights: {}, pieceEdits: { a: { removed: true } } });
+    expect(conflictOf(new ApiError(422, 'invalid_piece_edits', 'not a furniture piece of the model: q', { unknownIds: ['q'], count: 1 }))).toBeNull();
   });
   it('a reason for any error', () => {
     expect(errorReason(new ApiError(422, 'invalid_heights', 'bad kinds'))).toBe('bad kinds');

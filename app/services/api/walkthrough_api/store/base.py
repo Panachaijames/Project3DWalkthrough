@@ -16,11 +16,14 @@ The upload milestone (docs/upload/DESIGN.md U-4.1, U-13.4; step U5) adds the sto
 models_upload's, since the worker's JobSpec carries it), `VersionDraft.project_data`, and the methods for uploads,
 sources, builds and their runs, settings files, offices and project settings (LocalStore: store/drafts.py). Run folders
 are handed out as paths: the job runner and the worker meet only through a run folder's files (U-3.2).
+
+Step BX (deleting one furniture box, 16 Nov 2026; docs/contract-issues/BX.md), authorised and additive: the record field
+HeightOverridesFile.piece_edits, write_overrides' `piece_edits` and `download_bytes`.
 """
 from __future__ import annotations
 
 import re
-from collections.abc import Callable, Iterable, Iterator
+from collections.abc import Callable, Iterable, Iterator, Mapping
 from contextlib import AbstractContextManager
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -209,10 +212,19 @@ class VersionMeta(Record):
 
 
 class HeightOverridesFile(Record):
-    """projects/<id>/versions/<n>/overrides.json: kind -> whole mm, only kinds whose height differs from the model's."""
+    """projects/<id>/versions/<n>/overrides.json: kind -> whole mm, only kinds whose height differs from the model's.
 
+    Step BX (16 Nov 2026, docs/boxes/DESIGN.md 3.1; an authorised, additive record change): `pieceEdits`, piece id -> its
+    edit (today exactly {"removed": true}), in the same file, revision and lock as the heights. An empty map is no key at
+    all, so a heights-only file is byte for byte as before (the format stays walkthrough-overrides/1). The file level takes
+    any JSON value as an edit: readers keep only what piece_edits.live accepts (a model id, `removed` exactly true), so an
+    odd, hand-edited or newer step's file never makes this record fail. Code from before the step cannot read a file
+    holding the key (extra='forbid'): see docs/contract-issues/BX.md."""
+
+    OPTIONAL: ClassVar[tuple[str, ...]] = ('pieceEdits',)
     format: Literal['walkthrough-overrides/1'] = OVERRIDES_FORMAT
     heights: dict[str, int]
+    piece_edits: dict[str, Any] | None = None
     revision: int
     updated_at: str
 
@@ -356,10 +368,14 @@ class Store(Protocol):
     def read_json_bytes(self, project_id: str, n: int, name: Literal['model.json', 'stages.json']) -> bytes: ...  # NotFound('no_stages')
     def asset(self, project_id: str, n: int, name: str) -> BlobRef: ...              # NotFound('asset_not_found')
     def download(self, project_id: str, n: int, name: str) -> BlobRef: ...           # NotFound('download_not_found')
+    # a download's bytes (step BX: the 3ds Max script filtered for deleted boxes); a URL-backed store reads its object
+    def download_bytes(self, project_id: str, n: int, name: str) -> bytes: ...       # NotFound('download_not_found')
     def read_overrides(self, project_id: str, n: int) -> HeightOverridesFile | None: ...
-    # revision + 1, atomic; with if_revision, RevisionConflict unless the saved heights are at that revision now (If-Match)
+    # revision + 1, atomic; with if_revision, RevisionConflict unless the saved heights are at that revision now (If-Match).
+    # piece_edits (step BX): None keeps the saved edits; a map replaces them (empty: none, the key absent)
     def write_overrides(self, project_id: str, n: int, heights: dict[str, int],
-                        if_revision: int | None = None) -> HeightOverridesFile: ...
+                        if_revision: int | None = None,
+                        piece_edits: Mapping[str, Any] | None = None) -> HeightOverridesFile: ...
     # the raw text of a store file (meta.json when n is None), for the offline payload; None when missing_ok and absent
     def read_file_bytes(self, project_id: str, n: int | None, name: StoreFileName, missing_ok: bool = False) -> bytes | None: ...
     # an asset's bytes (the offline payload's plan pictures): a URL-backed store reads its object, so offline.py needs no

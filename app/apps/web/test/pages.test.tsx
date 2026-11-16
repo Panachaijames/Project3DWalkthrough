@@ -230,7 +230,7 @@ describe('the project page', () => {
     expect(app.body.querySelector('[data-testid=back-to-projects]')?.getAttribute('href')).toBe('/projects');
     expect(text(app.body.querySelector('[data-testid=version-picker]'))).toContain(`v2 · ${formatDate('2026-10-29T03:24:53Z')} · c3a9408304a2`);
     expect(text(app.body.querySelector('[data-testid=downloads-menu]'))).toBe('Downloads');
-    expect(text(app.body.querySelector('[data-testid=heights-status-text]'))).toBe('Heights saved');
+    expect(text(app.body.querySelector('[data-testid=heights-status-text]'))).toBe('Furniture saved');
     expect(fakeViewerLog.map(r => r.event)).toEqual(['create', 'dispose', 'create']);
     expect(live()).toBe(1);
     const rec = fakeViewerLog.at(-1)!;
@@ -289,7 +289,7 @@ describe('the project page', () => {
     expect(app.mock.requests.some(r => r.path.endsWith('/stages'))).toBe(false);
   });
 
-  it('heights typed in the viewer are saved: Saving…, PUT with the map, Heights saved', async () => {
+  it('heights typed in the viewer are saved: Saving…, PUT with the map, Furniture saved', async () => {
     let release!: () => void;
     const gate = new Promise<void>(r => { release = r; });
     const app = await openApp('/projects/bank-sampeng/v/2', { fetch: { intercept: async m => { if (m === 'PUT') await gate; return undefined; } } });
@@ -302,7 +302,7 @@ describe('the project page', () => {
     });
     expect(text(app.body.querySelector('[data-testid=heights-status-text]'))).toBe('Saving…');   // debouncing, then held at the gate
     release();
-    await waitFor(() => text(app.body.querySelector('[data-testid=heights-status-text]')) === 'Heights saved');
+    await waitFor(() => text(app.body.querySelector('[data-testid=heights-status-text]')) === 'Furniture saved');
     const puts = app.mock.requests.filter(r => r.method === 'PUT');
     expect(puts.map(r => [r.path, JSON.parse(r.body ?? '')])).toEqual([['/api/projects/bank-sampeng/versions/2/furniture-heights', { heights: { table: 600 } }]]);
     expect(app.mock.saved('bank-sampeng', 2).heights).toEqual({ table: 600 });
@@ -326,7 +326,7 @@ describe('the project page', () => {
     expect(text(app.body.querySelector('[data-testid=heights-status-text]'))).toBe('Not saved: the store is read-only');
     fail = false;
     await click(app.body.querySelector('[data-testid=heights-retry]'));
-    await waitFor(() => text(app.body.querySelector('[data-testid=heights-status-text]')) === 'Heights saved');
+    await waitFor(() => text(app.body.querySelector('[data-testid=heights-status-text]')) === 'Furniture saved');
     expect(app.mock.saved('bank-sampeng', 2).heights).toEqual({ seat: 300 });
   });
 
@@ -358,7 +358,7 @@ describe('the project page', () => {
     }
     expect(item('maxScript')?.getAttribute('href')).toBe('/api/projects/bank-sampeng/versions/2/downloads/max-script');
     release();
-    await waitFor(() => text(app.body.querySelector('[data-testid=heights-status-text]')) === 'Heights saved');
+    await waitFor(() => text(app.body.querySelector('[data-testid=heights-status-text]')) === 'Furniture saved');
     await waitFor(() => item('furnitureCsv')?.getAttribute('href') === '/api/projects/bank-sampeng/versions/2/downloads/furniture-csv');
     expect(item('offlineHtml')?.getAttribute('href')).toBe('/api/projects/bank-sampeng/versions/2/downloads/offline-html');
     expect(app.mock.saved('bank-sampeng', 2).heights).toEqual({ table: 600 });
@@ -370,7 +370,7 @@ describe('the project page', () => {
     await waitFor(() => fakeViewerLog.filter(r => r.event === 'create').length === 2);
     await act(async () => { window.__fakeViewer!.viewers.at(-1)!.emit('heightschange', { heights: { table: 600 }, source: 'typed' }); });
     await waitFor(() => app.mock.saved('bank-sampeng', 2).revision === 1
-      && text(app.body.querySelector('[data-testid=heights-status-text]')) === 'Heights saved');
+      && text(app.body.querySelector('[data-testid=heights-status-text]')) === 'Furniture saved');
     fakeViewerLog.length = 0;
     await act(async () => { await app.router.navigate('/projects/bank-sampeng/v/2?mode=walk'); });
     await waitFor(() => fakeViewerLog.some(r => r.event === 'create'));
@@ -485,7 +485,7 @@ describe('fix step: the page keeps what it has, says what it cannot do', () => {
     expect(leave()).toBe(true);
     fail = false;
     await click(app.body.querySelector('[data-testid=heights-retry]'));
-    await waitFor(() => text(app.body.querySelector('[data-testid=heights-status-text]')) === 'Heights saved');
+    await waitFor(() => text(app.body.querySelector('[data-testid=heights-status-text]')) === 'Furniture saved');
     expect(leave()).toBe(false);
     expect(app.mock.saved('bank-sampeng', 2).heights).toEqual({ seat: 300 });
   });

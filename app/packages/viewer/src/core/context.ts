@@ -125,6 +125,9 @@ export function resolveOptions(project: ViewerProject, options: ViewerOptions | 
     pixelRatioCap: options?.pixelRatioCap ?? 2,
     download: options?.download ?? download,
     noDownload: address.nodownload === true,
+    // the key is there only when the staff app's version page asks for it (docs/boxes/DESIGN.md 2.1, 3.3: optional, read as
+    // `=== true`); the storage key above does not change with it
+    ...(options?.editBoxes === true ? { editBoxes: true } : {}),
     testFailAt: testHook ? options?.testFailAt ?? null : null,
   };
 }

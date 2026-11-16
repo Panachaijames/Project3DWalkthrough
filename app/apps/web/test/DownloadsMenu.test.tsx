@@ -5,7 +5,7 @@ import { act } from 'react';
 import { MemoryRouter } from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
 import { DownloadsMenu, type DownloadsMenuProps } from '@/components/DownloadsMenu';
-import { API_DOWN_TITLE, HEIGHTS_PENDING_TITLE, heightsNotSavedTitle } from '@/lib/format';
+import { API_DOWN_TITLE, EDITS_PENDING_TITLE, editsNotSavedTitle, HEIGHTS_PENDING_TITLE, heightsNotSavedTitle } from '@/lib/format';
 import { render, text, waitFor } from './helpers';
 import { createMockApi } from './mock-api/core';
 
@@ -103,6 +103,28 @@ describe('DownloadsMenu', () => {
       expect(e.getAttribute('title'), key).toBe(heightsNotSavedTitle('the store is busy'));
     }
     expect(item('maxScript')!.getAttribute('href')).toBe(detail.downloads.maxScript!.url);
+    await m.v.unmount();
+  });
+
+  it('step BX: while deleted boxes are unsaved the Max script waits too, with its own tooltip; the CSV and offline texts name both changes', async () => {
+    const detail = mock.version('bank-sampeng', 2)!;
+    const m = await openMenu({ downloads: detail.downloads, heights: { status: 'saving', reason: null, editsUnsaved: true } });
+    for (const key of ['maxScript', 'furnitureCsv', 'offlineHtml']) {
+      expect(item(key)!.getAttribute('href'), key).toBeNull();
+      expect(item(key)!.hasAttribute('data-waiting'), key).toBe(true);
+    }
+    expect(item('maxScript')!.getAttribute('title')).toBe(EDITS_PENDING_TITLE);
+    expect(EDITS_PENDING_TITLE).toBe('Waiting for the deleted boxes to be saved');
+    expect(item('furnitureCsv')!.getAttribute('title')).toBe('Waiting for the furniture changes (heights, deleted boxes) to be saved');
+    // a failed save of deleted boxes
+    await m.rerender({ downloads: detail.downloads, heights: { status: 'error', reason: 'the store is busy', editsUnsaved: true } });
+    expect(item('maxScript')!.getAttribute('title')).toBe(editsNotSavedTitle('the store is busy'));
+    expect(item('maxScript')!.getAttribute('title')).toBe('The deleted boxes on screen are not saved (the store is busy): the script would still build them');
+    expect(item('offlineHtml')!.getAttribute('title')).toBe('The furniture changes on screen are not saved (the store is busy): the file would not carry them');
+    // saved: all three are links again while the menu stays open
+    await m.rerender({ downloads: detail.downloads, heights: { status: 'saved', reason: null } });
+    expect(item('maxScript')!.getAttribute('href')).toBe(detail.downloads.maxScript!.url);
+    expect(item('maxScript')!.hasAttribute('data-waiting')).toBe(false);
     await m.v.unmount();
   });
 

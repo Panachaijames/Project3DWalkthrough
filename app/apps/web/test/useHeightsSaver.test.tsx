@@ -1,14 +1,17 @@
 // The heights saver (DESIGN.md 15.5, 17.2 web): debounce 600 ms, one request in flight, the newest map wins, Retry
 // re-sends the newest map, a pending save is flushed on unmount / version change / pagehide, and the caches updated.
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import type { HeightMap } from '@walkthrough/viewer';
+import type { HeightMap, PieceEditMap } from '@walkthrough/viewer';
 import { act } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { getFurnitureHeightsQueryKey, getVersionQueryKey, listProjectsQueryKey } from '@/api/generated/@tanstack/react-query.gen';
 import type { HeightOverrides, VersionDetail } from '@/api/generated/types.gen';
-import { ApiError } from '@/api/client';
+import { ApiError, client } from '@/api/client';
 import {
   createHeightsSaver,
+  heightsBody,
+  keepaliveFits,
+  putHeights,
   useHeightsSaver,
   type HeightsSaver,
   type PutHeights,
@@ -320,5 +323,87 @@ describe('useHeightsSaver', () => {
     expect(new Set(removed)).toEqual(new Set(added));   // StrictMode's two mounts, both taken off
     add.mockRestore();
     remove.mockRestore();
+  });
+});
+
+// ------------------------------------------------------------------------------------------- step BX: the deleted boxes
+describe('useHeightsSaver and putHeights: the deleted boxes (step BX)', () => {
+  const R = { removed: true } as const;
+  const calls: { path: VersionPath; heights: HeightMap; init: SendInit; edits?: PieceEditMap }[] = [];
+  const put: PutHeights = async (path, heights, init, pieceEdits) => {
+    calls.push({ path, heights, init, ...(pieceEdits ? { edits: pieceEdits } : {}) });
+    return { heights, pieceEdits: pieceEdits ?? {}, revision: 3, updatedAt: '2026-11-16T05:00:00Z' };
+  };
+  beforeEach(() => { calls.length = 0; localStorage.clear(); });
+  afterEach(() => { localStorage.clear(); vi.unstubAllGlobals(); });
+
+  function Probe({ projectId, version, onSaver, onRemoteEdits }: { projectId: string; version: number; onSaver: (s: HeightsSaver) => void; onRemoteEdits?: (e: PieceEditMap) => void }) {
+    const saver = useHeightsSaver(projectId, version, { put, debounceMs: 60_000, onRemoteEdits });
+    onSaver(saver);
+    return <span data-status={saver.state.status} data-edits={saver.state.editsUnsaved ? '' : undefined} />;
+  }
+
+  it('a version switch sends the deleted boxes at once, to the version they were deleted in', async () => {
+    const qc = new QueryClient();
+    let saver!: HeightsSaver;
+    const ui = (n: number) => <QueryClientProvider client={qc}><Probe projectId="bank-sampeng" version={n} onSaver={s => { saver = s; }} /></QueryClientProvider>;
+    const v = await render(ui(2));
+    await act(async () => { saver.changeEdits({ 'L1-seat-001': R }); });
+    expect(v.host.querySelector('span')!.hasAttribute('data-edits')).toBe(true);
+    await v.rerender(ui(1));
+    expect(calls).toEqual([{ path: { projectId: 'bank-sampeng', version: 2 }, heights: {}, init: { keepalive: true, ifRevision: 0 }, edits: { 'L1-seat-001': R } }]);
+    expect(v.host.querySelector('span')!.hasAttribute('data-edits')).toBe(false);   // v1 starts clean
+    await v.unmount();
+  });
+
+  it('the answer goes into the cached heights and the version detail (pieceEdits included); the closure reaches onRemoteEdits', async () => {
+    const qc = new QueryClient();
+    const path = { projectId: 'bank-sampeng', version: 2 };
+    qc.setQueryData<VersionDetail>(getVersionQueryKey({ path }), { overrides: { heights: {}, pieceEdits: {}, revision: 0, updatedAt: null } } as VersionDetail);
+    const remoteEdits = vi.fn();
+    let saver!: HeightsSaver;
+    const closing: PutHeights = async (p, heights, init, pieceEdits) => {
+      calls.push({ path: p, heights, init, ...(pieceEdits ? { edits: pieceEdits } : {}) });
+      return { heights, pieceEdits: { 'L1-computer-001': R, 'L1-table-005': R }, revision: 1, updatedAt: null };   // the API closed it
+    };
+    function Closing() {
+      const s = useHeightsSaver('bank-sampeng', 2, { put: closing, debounceMs: 10, onRemoteEdits: remoteEdits });
+      saver = s;
+      return <span data-status={s.state.status} />;
+    }
+    const v = await render(<QueryClientProvider client={qc}><Closing /></QueryClientProvider>);
+    await act(async () => { saver.changeEdits({ 'L1-table-005': R }); });
+    await waitFor(() => v.host.querySelector('span')!.getAttribute('data-status') === 'saved' && calls.length === 1);
+    expect(calls[0]!.edits).toEqual({ 'L1-table-005': R });
+    expect(remoteEdits).toHaveBeenCalledWith({ 'L1-computer-001': R, 'L1-table-005': R });
+    const want = { heights: {}, pieceEdits: { 'L1-computer-001': R, 'L1-table-005': R }, revision: 1, updatedAt: null };
+    expect(qc.getQueryData(getFurnitureHeightsQueryKey({ path }))).toEqual(want);
+    expect(qc.getQueryData<VersionDetail>(getVersionQueryKey({ path }))?.overrides).toEqual(want);
+    await v.unmount();
+  });
+
+  it('putHeights: the body is {heights}, or {heights, pieceEdits}; a keepalive body over 60 KiB goes without keepalive', async () => {
+    const seen: { body: unknown; keepalive: unknown; ifMatch: string | null }[] = [];
+    const id = client.interceptors.request.use((req, opts) => { seen.push({ body: null, keepalive: (opts as { keepalive?: unknown }).keepalive, ifMatch: req.headers.get('if-match') }); return req; });
+    vi.stubGlobal('fetch', async (req: Request) => {
+      seen.at(-1)!.body = JSON.parse(await req.text());
+      return new Response(JSON.stringify({ heights: {}, pieceEdits: {}, revision: 1, updatedAt: null }), { headers: { 'content-type': 'application/json' } });
+    });
+    try {
+      const path = { projectId: 'bank-sampeng', version: 2 };
+      await putHeights(path, { table: 600 }, { ifRevision: 4, keepalive: true });
+      await putHeights(path, { table: 600 }, { ifRevision: 5, keepalive: true }, { 'L1-seat-001': R });
+      const many: PieceEditMap = {};
+      for (let i = 0; i < 2500; i++) many[`L1-seat-${String(i).padStart(4, '0')}-a-long-test-id`] = R;   // about 115 KB of JSON
+      expect(keepaliveFits(heightsBody({}, many))).toBe(false);
+      expect(keepaliveFits(heightsBody({ table: 600 }, { 'L1-seat-001': R }))).toBe(true);
+      await putHeights(path, {}, { ifRevision: 6, keepalive: true }, many);
+      expect(seen.map(x => [x.keepalive, x.ifMatch])).toEqual([[true, '"4"'], [true, '"5"'], [undefined, '"6"']]);
+      expect(seen[0]!.body).toEqual({ heights: { table: 600 } });
+      expect(seen[1]!.body).toEqual({ heights: { table: 600 }, pieceEdits: { 'L1-seat-001': R } });
+      expect(Object.keys((seen[2]!.body as { pieceEdits: PieceEditMap }).pieceEdits)).toHaveLength(2500);
+    } finally {
+      client.interceptors.request.eject(id);
+    }
   });
 });

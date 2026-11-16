@@ -321,6 +321,16 @@ class LocalStore(DraftFiles):
             raise NotFound('download_not_found', f'{project_id} v{n} has no download {name!r}') from None
         return BlobRef(media_type=download_media_type(name), size=size, sha1=sha1, path=path)
 
+    def download_bytes(self, project_id: str, n: int, name: str) -> bytes:
+        """downloads/<name> as stored (step BX: the 3ds Max script is filtered for deleted boxes before it is sent)."""
+        if not safe_name(name):
+            raise NotFound('download_not_found', f'no download {name!r}')
+        self.get_version(project_id, n)
+        try:
+            return self._read(self.version_dir(project_id, n) / 'downloads' / name)
+        except FileNotFoundError:
+            raise NotFound('download_not_found', f'{project_id} v{n} has no download {name!r}') from None
+
     # ------------------------------------------------------------------------------------------------ saved heights
     def read_overrides(self, project_id: str, n: int) -> HeightOverridesFile | None:
         self.get_version(project_id, n)
@@ -331,15 +341,26 @@ class LocalStore(DraftFiles):
             return None
 
     def write_overrides(self, project_id: str, n: int, heights: dict[str, int],
-                        if_revision: int | None = None) -> HeightOverridesFile:
+                        if_revision: int | None = None,
+                        piece_edits: Mapping[str, Any] | None = None) -> HeightOverridesFile:
         """Replaces the saved map (revision + 1, atomic); the project's updatedAt follows a later save. With `if_revision`
-        (the request's If-Match), RevisionConflict unless the saved heights are at that revision now (0: none saved)."""
+        (the request's If-Match), RevisionConflict unless the saved heights are at that revision now (0: none saved).
+
+        `piece_edits` (step BX, docs/boxes/DESIGN.md 3.1): None keeps the saved edits as they are; a map replaces them,
+        each entry that removes its piece written by hand as {"removed": true} (so a later optional field is never written
+        as null) and any other dropped. An empty map is no `pieceEdits` key at all. The caller (the PUT) has already
+        checked, closed and ordered the map against the model; the store does not know the model."""
         with self.exclusive():
             old = self.read_overrides(project_id, n)
             if if_revision is not None and (old.revision if old else 0) != if_revision:
                 raise RevisionConflict(if_revision, old)
+            if piece_edits is None:
+                edits = dict(old.piece_edits) if old is not None and old.piece_edits else None
+            else:
+                edits = {str(pid): {'removed': True} for pid, edit in piece_edits.items() if _removes(edit)} or None
             record = HeightOverridesFile(format=OVERRIDES_FORMAT, heights={k: int(v) for k, v in heights.items()},
-                                         revision=(old.revision if old else 0) + 1, updated_at=iso_utc())
+                                         piece_edits=edits, revision=(old.revision if old else 0) + 1,
+                                         updated_at=iso_utc())
             path = self.version_dir(project_id, n) / 'overrides.json'
             atomic_write_bytes(path, dumps_pretty(record.to_json()))
             meta = self.get_project(project_id)
@@ -452,7 +473,13 @@ class LocalStore(DraftFiles):
 
         The rooms milestone (docs/rooms/DESIGN.md R-12.2): version.json's `modelFormat` is 'built-model/2' when the
         model has the `stairways` key, else 'built-model/1' (builtmodel.model_format, through seed.build.version_record).
-        The version's counts are unchanged: `rooms` still counts the drawn names (model.rooms)."""
+        The version's counts are unchanged: `rooms` still counts the drawn names (model.rooms).
+
+        Step BX (docs/boxes/DESIGN.md 5.1): with `carry_overrides_from`, the old version's deleted boxes carry too, by
+        fingerprint and one-to-one, never by bare id (piece_edits.carry); overrides.json (revision 1) is written when the
+        carried heights or the carried edits are not empty, and source/carried-edits.json whenever the old version had
+        edits (the name is reserved: a draft's own source file of that name is refused)."""
+        from .. import piece_edits                                    # noqa: PLC0415 (it imports the API's errors)
         from ..checks import validate_presentation, validate_replay   # noqa: PLC0415 (checks imports the seed's helpers)
         from ..seed.build import ms_stamp, version_record             # noqa: PLC0415
 
@@ -466,6 +493,8 @@ class LocalStore(DraftFiles):
             for name in group:
                 if not safe_name(name):
                     raise ValueError(f'file name {name!r} does not match {FILE_NAME_PATTERN} (or is only dots / ends in a dot)')
+        if piece_edits.CARRIED_FILE in draft.source:
+            raise ValueError(f'source/{piece_edits.CARRIED_FILE} is the carried-edits record the store writes itself')
         stamp = sha1_hex(model_raw)[:12]
         for name, src in draft.downloads.items():
             if name.lower().endswith('.ms'):
@@ -512,9 +541,16 @@ class LocalStore(DraftFiles):
                 if draft.carry_overrides_from is not None:
                     old = self.read_overrides(project_id, draft.carry_overrides_from)
                     carried = carry_heights(old.heights if old else {}, model)
-                    if carried:
+                    edits: dict[str, Any] = {}
+                    if old is not None and old.piece_edits:
+                        found = self.carry_piece_edits(project_id, draft.carry_overrides_from, old.piece_edits, model)
+                        if found is not None:
+                            edits, record_of_carry = found
+                            self._place(dumps_pretty(record_of_carry), staging / 'source' / piece_edits.CARRIED_FILE)
+                    if carried or edits:
                         (staging / 'overrides.json').write_bytes(dumps_pretty(HeightOverridesFile(
-                            format=OVERRIDES_FORMAT, heights=carried, revision=1, updated_at=now).to_json()))
+                            format=OVERRIDES_FORMAT, heights=carried, piece_edits=edits or None, revision=1,
+                            updated_at=now).to_json()))
                 self.commit_version(project_id, n, staging, keep=())
             except BaseException:
                 self.discard_staging(staging)
@@ -522,6 +558,24 @@ class LocalStore(DraftFiles):
             self.write_project_meta(meta.model_copy(update={
                 'latest_version': n, 'versions': sorted({*meta.versions, n}), 'updated_at': max(now, meta.updated_at)}))
             return self.get_version(project_id, n)
+
+    def carry_piece_edits(self, project_id: str, n: int, saved: Any,
+                          new_model: Mapping[str, Any]) -> tuple[dict[str, Any], dict[str, Any]] | None:
+        """Version n's saved piece edits carried into `new_model` (step BX, docs/boxes/DESIGN.md 5.1): (the new pieceEdits,
+        the carried-edits.json record), or None when version n has no live edits. Version n's model is read as stored and
+        checked against its modelSha1, as every route checks it (a model changed on disk: StoreError)."""
+        from .. import piece_edits                                    # noqa: PLC0415 (it imports the API's errors)
+
+        version = self.get_version(project_id, n)
+        path = self.version_dir(project_id, n) / 'model.json'
+        raw = self.read_json_bytes(project_id, n, 'model.json')
+        if sha1_hex(raw) != version.model_sha1:
+            raise StoreError(f'{self.rel(path)} does not match the modelSha1 of its version.json (changed on disk?)')
+        try:
+            old_model = loads_strict(raw)
+        except JsonError as exc:
+            raise StoreError(f'{self.rel(path)} is not strict JSON: {exc}') from exc
+        return piece_edits.carry_into(old_model, saved, new_model, n)
 
     # ------------------------------------------------------------------------------------------------ deleting (DEL.md)
     def delete_version(self, project_id: str, n: int,
@@ -622,3 +676,10 @@ def carry_heights(heights: Mapping[str, int], model: Mapping[str, Any]) -> dict[
     """The saved heights a new version keeps: kinds the model still has, values that still differ from its heights."""
     kinds = {k['key']: k for k in model.get('furnitureKinds') or []}
     return {key: int(heights[key]) for key in kinds if key in heights and heights[key] != kinds[key]['height']}
+
+
+def _removes(edit: Any) -> bool:
+    """A piece edit that removes its piece: `removed` exactly true (a JSON object, or the API's PieceEdit)."""
+    if isinstance(edit, Mapping):
+        return edit.get('removed') is True
+    return getattr(edit, 'removed', None) is True

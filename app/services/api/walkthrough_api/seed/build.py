@@ -10,19 +10,30 @@ latestVersion, versions.
 
 Every model is validated (5.6, strict), every replay file and presentation checked, and each Max script's line 2 must carry
 the version's stamp: anything wrong stops the seed before it changes the store (nothing is committed).
+
+Deleted furniture boxes (step BX, docs/boxes/DESIGN.md 5.1): a rebuilt version keeps its overrides.json, deleted boxes
+included. Piece ids are ranks, so when a version's model changed (its modelSha1: even the suite's stamp does not follow its
+model), the kept `pieceEdits` are re-mapped by piece_edits.carry (fingerprint, one-to-one, tops only) into the new model
+(revision + 1) and source/carried-edits.json is written, in the commit phase under the store's lock, before any folder is
+swapped; one log line per version. With the model unchanged the file is kept as it is (and an earlier carried-edits.json
+with it). --reset-overrides drops the edits with the heights.
 """
 from __future__ import annotations
 
 import re
+import shutil
 from collections.abc import Callable, Iterable, Mapping
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-from .. import builtmodel
+from pydantic import ValidationError
+
+from .. import builtmodel, piece_edits
 from ..checks import validate_presentation, validate_replay
-from ..jsonio import dumps_compact, dumps_pretty, iso_utc, loads_strict, media_type_of, sha1_hex
-from ..store.base import PROJECT_FORMAT, VERSION_FORMAT, HeightOverridesFile, ProjectMeta, VersionMeta
+from ..jsonio import JsonError, dumps_compact, dumps_pretty, iso_utc, loads_strict, media_type_of, sha1_hex
+from ..store.base import (OVERRIDES_FORMAT, PROJECT_FORMAT, VERSION_FORMAT, HeightOverridesFile, ProjectMeta,
+                          VersionMeta)
 from ..store.local import KEPT_ON_REBUILD, LocalStore
 from . import convert_house, convert_suite, presentation, stages
 from .sources import PROJECT_SOURCE_KIND, SEED_TABLE, VersionSource, reads
@@ -254,12 +265,61 @@ class SeedResult:
     built: list[Built]
     left_alone: list[VersionSource]
     reset: list[VersionSource]
+    #: rebuilt versions whose model changed and whose kept deleted boxes were re-mapped (step BX)
+    remapped: list[VersionSource] = field(default_factory=list)
+
+
+def remap_piece_edits(store: LocalStore, b: Built) -> str | None:
+    """Step BX (docs/boxes/DESIGN.md 5.1): before version b's folder is swapped (under the store's lock), its kept
+    deleted boxes are re-mapped when the model changed. Piece ids are ranks (<floor>-<kind>-<nnn>), so a changed model can
+    give a kept id to another box: the old live edits are carried into the new model by piece_edits.carry (fingerprint,
+    one-to-one, tops only), written into the staging folder as overrides.json (the heights as they were, revision + 1)
+    and source/carried-edits.json. Returns the log line, or None when nothing was re-mapped. With the model unchanged
+    the kept overrides.json goes across as it is (commit_version) and an earlier carried-edits.json is kept too. An
+    overrides.json that does not parse is left to commit_version as before; an old model that cannot be read while
+    deleted boxes need it stops the seed (SeedError, nothing changed)."""
+    name = f'{b.source.project_id} v{b.source.version}'
+    target = store.version_dir(b.source.project_id, b.source.version)
+    kept, record_file = target / 'overrides.json', target / 'source' / piece_edits.CARRIED_FILE
+    try:
+        old_sha1 = loads_strict((target / 'version.json').read_bytes()).get('modelSha1')
+    except (OSError, ValueError, AttributeError):
+        return None                                            # a new version, or one the seed cannot read: nothing kept
+    if old_sha1 == b.record['modelSha1']:
+        if record_file.is_file() and not (b.staging / 'source' / piece_edits.CARRIED_FILE).exists():
+            (b.staging / 'source').mkdir(exist_ok=True)
+            shutil.copy2(record_file, b.staging / 'source' / piece_edits.CARRIED_FILE)
+        return None
+    try:
+        old = HeightOverridesFile.model_validate(loads_strict(kept.read_bytes()))
+    except (OSError, ValueError, ValidationError):
+        return None                                            # none saved, or a broken file: kept as it is (as before)
+    if not old.piece_edits:
+        return None
+    try:
+        old_model = loads_strict((target / 'model.json').read_bytes())
+    except (OSError, JsonError) as exc:
+        raise SeedError(f'{name}: its model changed and it has deleted furniture boxes, but its old model.json cannot be '
+                        f'read to re-map them ({exc}); nothing was changed (--reset-overrides drops them)') from exc
+    found = piece_edits.carry_into(old_model, old.piece_edits, b.model, b.source.version)
+    edits, record = found if found is not None else ({}, None)
+    (b.staging / 'overrides.json').write_bytes(dumps_pretty(HeightOverridesFile(
+        format=OVERRIDES_FORMAT, heights=dict(old.heights), piece_edits=edits or None, revision=old.revision + 1,
+        updated_at=iso_utc()).to_json()))
+    if record is None:
+        return f'{name}: the model changed; its saved piece edits named no deleted box of the old model: dropped'
+    (b.staging / 'source').mkdir(exist_ok=True)
+    (b.staging / 'source' / piece_edits.CARRIED_FILE).write_bytes(dumps_pretty(record))
+    tops, cascaded, missed = len(record['carried']), len(record['cascaded']), len(record['notCarried'])
+    return (f'{name}: the model changed: deleted furniture boxes re-mapped, {tops} carried, {cascaded} with them, '
+            f'{missed} not carried (source/{piece_edits.CARRIED_FILE})')
 
 
 def seed(protos: Path, data: Path, *, force: bool = False, reset_overrides: bool = False,
          table: Iterable[VersionSource] = SEED_TABLE, log: Callable[[str], None] = print) -> SeedResult:
     """Rebuilds the store's seed-table versions (with `force`; else only the missing ones), keeping each overrides.json
-    unless `reset_overrides`; writes nothing at all when any version fails its checks."""
+    unless `reset_overrides` (its deleted boxes re-mapped when the version's model changed: remap_piece_edits); writes
+    nothing at all when any version fails its checks."""
     protos, data = Path(protos), Path(data)
     if not protos.is_dir():
         raise SeedError(f'--prototypes {protos} is not a folder')
@@ -286,10 +346,25 @@ def seed(protos: Path, data: Path, *, force: bool = False, reset_overrides: bool
         raise
     keep = tuple(k for k in KEPT_ON_REBUILD if not (reset_overrides and k == 'overrides.json'))
     reset: list[VersionSource] = []
+    remapped: list[VersionSource] = []
+    remap_lines: list[str] = []
     # The commit phase holds the store's cross-process lock (the API may be serving and saving heights meanwhile): each
     # kept overrides.json is copied and its folder swapped with no save in between, and meta.json is computed from the
     # saved heights as they are (fix step, review finding "code" 2).
     with store.exclusive():
+        if not reset_overrides:
+            # step BX: the kept deleted boxes of a changed model are re-mapped into the staging folders first, so a seed
+            # that cannot re-map one stops before any folder is swapped
+            try:
+                for b in built:
+                    line = remap_piece_edits(store, b)
+                    if line is not None:
+                        remapped.append(b.source)
+                        remap_lines.append(line)
+            except BaseException:
+                for b in built:
+                    store.discard_staging(b.staging)
+                raise
         for i, b in enumerate(built):
             try:
                 store.commit_version(b.source.project_id, b.source.version, b.staging, keep=keep)
@@ -317,7 +392,9 @@ def seed(protos: Path, data: Path, *, force: bool = False, reset_overrides: bool
             f"probes {len(b.model['probes'])}, rooms {c['rooms']}, furniture {c['furniture']} ({c['furnitureKinds']} kinds), "
             f"stamp {r['stamp']} ({r['stampSource']}), replay {'yes' if r['hasStages'] else 'no'}, "
             f"assets {len(r['assets'])}, downloads {len(b.source.downloads)}")
+    for line in remap_lines:
+        log(line)
     for v in left_alone:
         log(f'{v.project_id} v{v.version}: left alone (exists; --force rebuilds it)'
             + (' - saved heights reset' if v in reset else ''))
-    return SeedResult(built, left_alone, reset)
+    return SeedResult(built, left_alone, reset, remapped)

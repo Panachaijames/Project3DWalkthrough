@@ -3,8 +3,8 @@
 import { describe, expect, it } from 'vitest';
 import type { BuiltModel, FurniturePiece } from '../../../src/contracts';
 import {
-  CSV_COLUMNS, csvField, csvFileName, fixedDecimals, furnitureCsv, furnitureData, heightFromData, parseTypedHeight, stopsWalk,
-  undersideMm, wholeMm,
+  CSV_COLUMNS, closeRemoved, csvField, csvFileName, fixedDecimals, furnitureCsv, furnitureData, groupsOf, heightFromData,
+  parseTypedHeight, removedIdsOf, stopsWalk, undersideMm, wholeMm,
 } from '../../../src/furniture/logic';
 import { BOM, FURNISHED, csvFile, golden, loadModel, loadVariant, readText, typedHeights, FURN } from './util';
 import path from 'node:path';
@@ -196,5 +196,99 @@ describe('furnitureData and the file name', () => {
     expect(csvFileName('BangkokBank-Sampeng')).toBe('BangkokBank-Sampeng_furniture_list.csv');
     expect(csvFileName('Fixture')).toBe('Fixture_furniture_list.csv');
     expect(csvFileName('a b/c')).toBe('a-b-c_furniture_list.csv');
+  });
+});
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Deleted boxes (docs/boxes/DESIGN.md 2.5, 2.6, 4; step BX)
+// ---------------------------------------------------------------------------------------------------------------------
+
+describe('furnitureCsv with deleted boxes', () => {
+  /** The golden without the rows of the given ids (the id is the first column; no id of the fixtures needs quoting). */
+  const without = (text: string, ids: readonly string[]) => text.split('\r\n').filter(l => !ids.some(id => l.startsWith(id + ','))).join('\r\n');
+
+  it('no third argument, undefined and an empty set give the text of before, byte for byte (the four projects and the Python goldens)', () => {
+    for (const f of FURNISHED) {
+      const m = loadModel(f.model), file = csvFile(`${f.csv}.csv`).subarray(BOM.length).toString('utf8');
+      expect(furnitureCsv(m, {}), f.model).toBe(file);
+      expect(furnitureCsv(m, {}, undefined), f.model).toBe(file);
+      expect(furnitureCsv(m, {}, new Set()), f.model).toBe(file);
+      const typed = csvFile(`${f.csv}-typed.csv`).subarray(BOM.length).toString('utf8');
+      expect(furnitureCsv(m, typedHeights(m), new Set()), f.model).toBe(typed);
+    }
+    expect(furnitureCsv(loadVariant('mini-original.json'), {}, new Set())).toBe(golden('mini.csv'));
+  });
+
+  it('with deleted ids: the golden minus those rows, every other row unchanged (the closure keeps base_mm and on_top_of right)', () => {
+    const mini = loadVariant('mini-original.json');
+    const gone = [...closeRemoved(['L1-table-001', 'L2-seat-001'], mini.furniture!)];
+    expect(gone.sort()).toEqual(['L1-computer-001', 'L1-printer-001', 'L1-table-001', 'L2-seat-001']);
+    expect(furnitureCsv(mini, {}, new Set(gone))).toBe(without(golden('mini.csv'), gone));
+    const typed = JSON.parse(readText(path.join(FURN, 'mini-typed-heights.json'))) as Record<string, number>;
+    expect(furnitureCsv(mini, typed, new Set(gone))).toBe(without(golden('mini-typed.csv'), gone));
+    // the bank: a table with what stands on it, and a chair
+    const bank = loadModel('bank-v2'), file = csvFile('bank-v2.csv').subarray(BOM.length).toString('utf8');
+    const support = bank.furniture!.find(p => bank.furniture!.some(q => q.on === p.id))!;
+    const ids = [...closeRemoved([support.id, bank.furniture!.find(p => p.kind === 'seat')!.id], bank.furniture!)];
+    expect(ids.length).toBeGreaterThan(2);
+    const text = furnitureCsv(bank, {}, new Set(ids));
+    expect(text).toBe(without(file, ids));
+    expect(text.split('\r\n').length).toBe(file.split('\r\n').length - ids.length);
+    // a deleted piece that only stood on a table: the table's row and every other row stay as they were
+    const computer = bank.furniture!.find(p => p.on)!;
+    expect(furnitureCsv(bank, {}, new Set([computer.id]))).toBe(without(file, [computer.id]));
+  });
+
+  it('every box deleted: the header only; an id the model lacks changes nothing', () => {
+    const mini = loadVariant('mini-original.json');
+    expect(furnitureCsv(mini, {}, new Set(mini.furniture!.map(p => p.id)))).toBe(CSV_COLUMNS.join(',') + '\r\n');
+    expect(furnitureCsv(mini, {}, new Set(['L9-nothing-001']))).toBe(golden('mini.csv'));
+  });
+});
+
+describe('closeRemoved (the closure rule, shared with the API)', () => {
+  interface Case { name: string; pieces: { id: string; on?: string | null }[]; ids: string[]; closed: string[] }
+  const cases = (JSON.parse(readText(path.join(FURN, 'close-removed.cases.json'))) as { cases: Case[] }).cases;
+
+  it('every case of close-removed.cases.json (the file the API\'s Python test reads too)', () => {
+    expect(cases.length).toBeGreaterThanOrEqual(12);
+    for (const c of cases) {
+      const got = closeRemoved(c.ids, c.pieces);
+      expect([...got].sort(), c.name).toEqual([...new Set(c.closed)].sort());
+      expect([...closeRemoved(got, c.pieces)].sort(), `${c.name}: closing twice changes nothing`).toEqual([...got].sort());
+    }
+  });
+  it('takes any iterable and never changes what it was given', () => {
+    const pieces = [{ id: 'c', on: 't' }, { id: 't', on: null }];
+    const ids = new Set(['t']);
+    expect([...closeRemoved(ids, pieces)].sort()).toEqual(['c', 't']);
+    expect([...ids]).toEqual(['t']);
+    expect([...closeRemoved((function* () { yield 't'; })(), pieces)].sort()).toEqual(['c', 't']);
+  });
+});
+
+describe('groupsOf and removedIdsOf', () => {
+  const pieces = [
+    { id: 'L1-computer-001', on: 'L1-table-001' }, { id: 'L1-printer-001', on: 'L1-table-001' }, { id: 'L1-seat-001', on: null },
+    { id: 'L1-table-001', on: null }, { id: 'L2-computer-001', on: 'L2-table-001' }, { id: 'L2-table-001', on: null },
+  ];
+  it('one group per deleted piece whose support is not deleted, the deleted pieces on it folded in, in the order given', () => {
+    expect(groupsOf(new Set(), pieces)).toEqual([]);
+    expect(groupsOf(new Set(['L1-table-001', 'L1-computer-001', 'L1-printer-001', 'L1-seat-001']), pieces)).toEqual([
+      { top: 'L1-seat-001', on: [] }, { top: 'L1-table-001', on: ['L1-computer-001', 'L1-printer-001'] },
+    ]);
+    // a computer deleted on its own (its table stays) is its own group
+    expect(groupsOf(new Set(['L2-computer-001', 'L1-printer-001']), pieces)).toEqual([{ top: 'L1-printer-001', on: [] }, { top: 'L2-computer-001', on: [] }]);
+    // an id that names no piece is in no group
+    expect(groupsOf(new Set(['nothing']), pieces)).toEqual([]);
+    // a chain: all under the lowest deleted support
+    const chain = [{ id: 'vase', on: 'tray' }, { id: 'tray', on: 'table' }, { id: 'table', on: null }];
+    expect(groupsOf(new Set(['vase', 'tray', 'table']), chain)).toEqual([{ top: 'table', on: ['vase', 'tray'] }]);
+    expect(groupsOf(new Set(['vase', 'tray']), chain)).toEqual([{ top: 'tray', on: ['vase'] }]);
+  });
+  it('removedIdsOf reads a map leniently: only an object with removed exactly true counts', () => {
+    expect(removedIdsOf({ a: { removed: true }, b: { removed: false }, c: {}, d: 'yes', e: null, f: 7, g: [true], h: { removed: 1 }, i: { removed: true, kind: 'x' } }))
+      .toEqual(['a', 'i']);
+    for (const odd of [null, undefined, 'x', 7, [], [{ removed: true }], true]) expect(removedIdsOf(odd)).toEqual([]);
   });
 });

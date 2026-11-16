@@ -1,5 +1,6 @@
 // Step "Save" (docs/upload/DESIGN.md U-2 5f, U-11.1, U-8.4): the label (default `<d Mon yyyy>: built from <file names>`),
-// what will be saved (counts, flags left, the stamp), "carry the furniture heights of v<n>" (ticked), "remember these
+// what will be saved (counts, flags left, the stamp), "carry the furniture heights of v<n>" (ticked; step BX: "..., and its
+// deleted boxes where the new drawing has the same box in the same place", docs/boxes/DESIGN.md 5.1), "remember these
 // layer roles for <office>" (ticked; hidden with no office, and an office select offered). Save (saveBuild) is disabled
 // while the request is in flight (a double click makes one version; the API answers 409 build_saved to a second) and
 // leads to the new version's page.
@@ -109,7 +110,7 @@ export function SaveStep() {
       {latest >= 1 && (
         <label className="flex items-center gap-2 text-sm">
           <Checkbox checked={carry} onCheckedChange={v => setCarry(v === true)} data-testid="carry-heights" />
-          {`Carry the furniture heights of v${latest}`}
+          {`Carry the furniture heights of v${latest}, and its deleted boxes where the new drawing has the same box in the same place`}
         </label>
       )}
       {office ? (

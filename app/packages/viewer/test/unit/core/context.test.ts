@@ -47,6 +47,17 @@ describe('resolveOptions (11.3, contracts ResolvedOptions)', () => {
     expect(savedHeightsTag({ table: 600 })).toBe(a.slice(plain.length + 1));
     expect(savedHeightsTag({ table: Number.NaN })).toBe('');
   });
+  it('editBoxes (step BX): the key is there only when the option is exactly true; the storage key does not change with it', () => {
+    expect('editBoxes' in resolveOptions(project(false), undefined, dl)).toBe(false);
+    expect('editBoxes' in resolveOptions(project(false), { editBoxes: false }, dl)).toBe(false);
+    expect('editBoxes' in resolveOptions(project(false), { editBoxes: 1 as unknown as boolean }, dl)).toBe(false);
+    const on = resolveOptions(project(false), { editBoxes: true, furnitureHeights: 'host' }, dl);
+    expect(on.editBoxes).toBe(true);
+    expect(on.storageKey).toBe(resolveOptions(project(false), { furnitureHeights: 'host' }, dl).storageKey);
+    // saved deleted boxes do not change the offline file's key either (docs/boxes/DESIGN.md 3.5)
+    const withEdits = { ...project(false), heights: { table: 600 }, pieceEdits: { 'L1-table-001': { removed: true as const } } };
+    expect(resolveOptions(withEdits, undefined, dl).storageKey).toBe(resolveOptions({ ...project(false), heights: { table: 600 } }, undefined, dl).storageKey);
+  });
   it('testFailAt only together with testHook', () => {
     expect(resolveOptions(project(false), { testFailAt: 'modes' }, dl).testFailAt).toBeNull();
     expect(resolveOptions(project(false), { testFailAt: 'modes', testHook: true }, dl)).toMatchObject({ testFailAt: 'modes', testHook: true });

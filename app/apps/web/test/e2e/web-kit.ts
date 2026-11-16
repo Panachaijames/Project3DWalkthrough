@@ -10,7 +10,7 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { expect, test, type APIRequestContext, type Page, type TestInfo } from '@playwright/test';
-import type { HeightMap } from '../../../../packages/viewer/src/contracts';
+import type { HeightMap, PieceEditMap } from '../../../../packages/viewer/src/contracts';
 import type { ProjectSummary, VersionDetail } from '../../src/api/generated/types.gen';
 import { APP_DIR } from '../mock-api/fixtures';
 import { startMockServer, type MockServer } from '../mock-api/server';
@@ -41,6 +41,9 @@ export interface Backend {
   list(): Promise<ProjectSummary[]>;
   version(projectId: string, n: number): Promise<VersionDetail>;
   saved(projectId: string, n: number): Promise<HeightMap>;
+  /** The saved deleted boxes of a version (step BX): piece id -> {removed: true}. */
+  savedEdits(projectId: string, n: number): Promise<PieceEditMap>;
+  /** The saved heights back to the model's and every deleted box back (step BX: `{heights: {}, pieceEdits: {}}`). */
   resetHeights(projectId: string, n: number): Promise<void>;
   /** The seeded copy of a version's download (real store), or the file the mock serves. */
   maxScriptFile(projectId: string, n: number, name: string): string;
@@ -57,8 +60,10 @@ export function backend(request: APIRequestContext): Backend {
     list: async () => (await getJson<{ projects: ProjectSummary[] }>('/api/projects')).projects,
     version: (id, n) => getJson<VersionDetail>(`/api/projects/${id}/versions/${n}`),
     saved: async (id, n) => (await getJson<{ heights: HeightMap }>(`/api/projects/${id}/versions/${n}/furniture-heights`)).heights,
+    savedEdits: async (id, n) => (await getJson<{ pieceEdits?: PieceEditMap }>(`/api/projects/${id}/versions/${n}/furniture-heights`)).pieceEdits ?? {},
     resetHeights: async (id, n) => {
-      const r = await request.put(`/api/projects/${id}/versions/${n}/furniture-heights`, { data: { heights: {} } });
+      // step BX: the deleted boxes too, so no spec leaves deletions behind for the byte-equal Max and CSV checks
+      const r = await request.put(`/api/projects/${id}/versions/${n}/furniture-heights`, { data: { heights: {}, pieceEdits: {} } });
       expect(r.status(), `reset the heights of ${id} v${n}`).toBe(200);
     },
     maxScriptFile: (id, n, name) => {
@@ -118,7 +123,7 @@ export async function download(page: Page, key: 'maxScript' | 'furnitureCsv' | '
 export interface OfflinePayloadLike {
   format: string;
   version: { stamp: string; projectId: string; version: number };
-  overrides: { heights: HeightMap } | null;
+  overrides: { heights: HeightMap; pieceEdits?: PieceEditMap; revision?: number; updatedAt?: string } | null;
 }
 /** The offline file's #wtv-data payload (DESIGN.md 16). */
 export function offlinePayload(html: string): OfflinePayloadLike {

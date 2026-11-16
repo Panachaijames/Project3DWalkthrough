@@ -1099,6 +1099,27 @@
         "title": "CancelBuildRequest",
         "type": "object"
       },
+      "CarriedEdits": {
+        "description": "How the deleted furniture boxes of an earlier version fared when this version was saved with the carry tick (from\nversions/<n>/source/carried-edits.json).",
+        "properties": {
+          "from": {
+            "description": "The version whose deleted boxes were carried into this one.",
+            "title": "From",
+            "type": "integer"
+          },
+          "notCarried": {
+            "description": "How many of its deleted boxes did not carry over (not found one-to-one in the same place in this drawing): they show again in this version.",
+            "title": "Notcarried",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "from",
+          "notCarried"
+        ],
+        "title": "CarriedEdits",
+        "type": "object"
+      },
       "ClosingFix": {
         "additionalProperties": false,
         "description": "Rooms milestone (R-6.2), sheet m. 'line': a closing line staff drew; 'none': leave out the app's bridge or\ndoorway closing whose two ends lie within 0.3 m of a and b.",
@@ -1758,6 +1779,14 @@
             "title": "Heights",
             "type": "object"
           },
+          "pieceEdits": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/PieceEdit"
+            },
+            "description": "Furniture piece id -> its edit; today only {removed: true}. Empty when none.",
+            "title": "Pieceedits",
+            "type": "object"
+          },
           "revision": {
             "description": "+1 per save; 0 when nothing was ever saved.",
             "title": "Revision",
@@ -1793,6 +1822,21 @@
             "description": "Furniture kind -> whole mm (10 - 5000); replaces the saved map.",
             "title": "Heights",
             "type": "object"
+          },
+          "pieceEdits": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/PieceEdit"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Piece id -> edit; replaces the saved edits when sent; left out, the saved edits stay.",
+            "title": "Pieceedits"
           }
         },
         "required": [
@@ -2193,6 +2237,26 @@
           "as"
         ],
         "title": "OutlineEdgeFix",
+        "type": "object"
+      },
+      "PieceEdit": {
+        "additionalProperties": false,
+        "description": "One furniture piece's edit. Later steps add optional fields (re-kind, name, place); a field this server does not\nknow is refused (422), never silently dropped.",
+        "properties": {
+          "removed": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "true: the box is deleted from this version's view, furniture list, 3ds Max script and offline file",
+            "title": "Removed"
+          }
+        },
+        "title": "PieceEdit",
         "type": "object"
       },
       "ProjectDetail": {
@@ -3218,6 +3282,17 @@
             },
             "title": "Assets",
             "type": "array"
+          },
+          "carriedEdits": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CarriedEdits"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Present only when this version was saved with the carry tick and some deleted boxes of that version did not carry over (they show again here)."
           },
           "counts": {
             "$ref": "#/components/schemas/VersionCounts"

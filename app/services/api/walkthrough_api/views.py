@@ -4,19 +4,19 @@ All URLs are root-relative (/api/...); the web app never builds API paths itself
 """
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Callable, Mapping
 from pathlib import Path
 from typing import Any
 from urllib.parse import quote
 
 from fastapi.responses import FileResponse, RedirectResponse, Response
 
-from . import furniture_csv, offline
+from . import furniture_csv, offline, piece_edits
 from .errors import ApiError
-from .jsonio import JsonError, loads_strict, sha1_hex
-from .models import (AssetInfo, DownloadInfo, FloorInfo, HeightOverrides, ProjectDetail, ProjectSummary, VersionCounts,
-                     VersionDetail, VersionDownloads, VersionSummary, VersionUrls)
-from .store.base import BlobRef, HeightOverridesFile, ProjectMeta, Store, StoreError, VersionMeta
+from .jsonio import JsonError, loads_strict, read_bytes, sha1_hex
+from .models import (AssetInfo, CarriedEdits, DownloadInfo, FloorInfo, HeightOverrides, PieceEdit, ProjectDetail,
+                     ProjectSummary, VersionCounts, VersionDetail, VersionDownloads, VersionSummary, VersionUrls)
+from .store.base import BlobRef, HeightOverridesFile, NotFound, ProjectMeta, Store, StoreError, VersionMeta
 
 MIN_MM, MAX_MM = 10, 5000          # a furniture height: whole mm, 10 - 5000 (DESIGN.md 13)
 MAX_SCRIPT_MEDIA = 'text/plain; charset=utf-8'
@@ -82,10 +82,52 @@ def version_summary(v: VersionMeta) -> VersionSummary:
     return VersionSummary(**version_summary_fields(v))
 
 
-def overrides_of(o: HeightOverridesFile | None) -> HeightOverrides:
+ModelSource = Mapping[str, Any] | Callable[[], Mapping[str, Any]]
+
+
+def live_edits(o: HeightOverridesFile | None, model: ModelSource | None) -> dict[str, dict[str, bool]]:
+    """The saved piece edits as every reader sees them (step BX, piece_edits.live): model ids only, entries exactly
+    {removed: true}, closed, in the CSV order. The model (or a function giving it: it is read only when something is
+    saved) is needed only when the file has edits."""
+    if o is None or not o.piece_edits:
+        return {}
+    m = model() if callable(model) else model
+    if m is None:
+        raise ValueError('live_edits: saved piece edits are read against the model, and none was given')
+    return piece_edits.live(m, o.piece_edits)
+
+
+def overrides_of(o: HeightOverridesFile | None, model: ModelSource | None = None) -> HeightOverrides:
+    """The saved heights and (step BX) the live piece edits: `pieceEdits` is {} when none, never an id the model lacks
+    (a 412 merge in the staff app would copy it into its next PUT, which would then fail every retry)."""
     if o is None:
-        return HeightOverrides(heights={}, revision=0, updated_at=None)
-    return HeightOverrides(heights=dict(o.heights), revision=o.revision, updated_at=o.updated_at)
+        return HeightOverrides(heights={}, piece_edits={}, revision=0, updated_at=None)
+    edits = {pid: PieceEdit(removed=True) for pid in live_edits(o, model)}
+    return HeightOverrides(heights=dict(o.heights), piece_edits=edits, revision=o.revision, updated_at=o.updated_at)
+
+
+def conflict_details(o: HeightOverridesFile | None, model: ModelSource) -> dict[str, Any]:
+    """412 revision_conflict's details: what is saved now, {revision, heights, updatedAt}, plus `pieceEdits` (the live
+    map) only when it is not empty (step BX; a store without edits answers exactly as before)."""
+    now = overrides_of(o, model)
+    details: dict[str, Any] = {'revision': now.revision, 'heights': now.heights, 'updatedAt': now.updated_at}
+    if now.piece_edits:
+        details['pieceEdits'] = {pid: {'removed': True} for pid in now.piece_edits}
+    return details
+
+
+def carried_edits_of(store: Store, v: VersionMeta) -> CarriedEdits | None:
+    """The version detail's `carriedEdits` (step BX; the main session's decision of 16 Nov, point 2): from
+    versions/<n>/source/carried-edits.json, only when some deleted boxes did not carry over. Read leniently: a missing or
+    odd record only leaves the note out."""
+    try:
+        path = store.version_file_path(v.project_id, v.version, f'source/{piece_edits.CARRIED_FILE}')
+        note = piece_edits.carried_note(loads_strict(read_bytes(path)))
+    except (OSError, JsonError, NotFound):
+        return None
+    if note is None:
+        return None
+    return CarriedEdits(from_=note[0], not_carried=note[1])
 
 
 def max_script_file_name(v: VersionMeta) -> str | None:
@@ -124,7 +166,8 @@ def version_detail(store: Store, v: VersionMeta) -> VersionDetail:
                           url=f'{url}/assets/{a.name}') for a in v.assets],
         downloads=downloads_of(v, model['photoName']),
         presentation=v.presentation,
-        overrides=overrides_of(store.read_overrides(v.project_id, v.version)),
+        overrides=overrides_of(store.read_overrides(v.project_id, v.version), model),
+        carried_edits=carried_edits_of(store, v),
     )
 
 

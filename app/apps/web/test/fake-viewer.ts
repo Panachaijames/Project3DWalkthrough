@@ -12,6 +12,11 @@
 //   parseAddressOptions  DESIGN.md 11.3's rules
 //   ModelError, VIEWER_VERSION
 // Drawing text goes into the DOM with textContent only, as in the real viewer.
+// Step BX (docs/boxes/DESIGN.md 6.2): the deleted furniture boxes as the real viewer keeps them, without any 3D: the
+// starting map from project.pieceEdits (read leniently), the closure (a piece standing on a deleted one goes with it),
+// getPieceEdits / setPieceEdits (no event), the FurnitureApi's pieceEdits / setPieceEdits / removePiece / restorePiece /
+// restoreAll (`boxeschange` for the last three, sources 'removed' / 'restored'), and a control for mock runs:
+// [data-wt=fake-remove-box] deletes the first box not deleted yet (and what stands on it), as a click and Delete would.
 import type {
   AddressOptions,
   BuiltModel,
@@ -28,6 +33,7 @@ import type {
   ParsePresentation,
   ParseReplayData,
   PhotoFrame,
+  PieceEditMap,
   Presentation,
   ReplayData,
   ReplayPhase,
@@ -128,6 +134,8 @@ export interface FakeViewerRecord {
   stamp: string;
   options: ViewerOptions | null;
   heights: HeightMap | null;
+  /** project.pieceEdits as given (step BX), or null. */
+  pieceEdits: PieceEditMap | null;
   pictures: Partial<Record<FloorKey, string>>;
   hasStages: boolean;
   error?: string;
@@ -214,7 +222,8 @@ export const createViewer: CreateViewer = (container, project, options = {}) => 
 
   const record = (event: FakeViewerRecord['event'], n: number, error?: string): FakeViewerRecord => ({
     event, n, projectId: project.ids?.projectId ?? null, version: project.ids?.version ?? null, stamp: project.stamp,
-    options: options ?? null, heights: project.heights ? { ...project.heights } : null, pictures: { ...(project.pictures ?? {}) },
+    options: options ?? null, heights: project.heights ? { ...project.heights } : null,
+    pieceEdits: project.pieceEdits ? JSON.parse(JSON.stringify(project.pieceEdits)) as PieceEditMap : null, pictures: { ...(project.pictures ?? {}) },
     hasStages: !!stages, ...(error ? { error } : {}),
   });
 
@@ -248,6 +257,26 @@ export const createViewer: CreateViewer = (container, project, options = {}) => 
     for (const [k, v] of height) if (v !== modelHeight.get(k)) out[k] = v;
     return out;
   };
+
+  // The deleted boxes (step BX): ids of the pieces the legend lists, closed over the model's `on` links.
+  const listed = (model.furniture ?? []).filter(p => modelHeight.has(p.kind));
+  const listedIds = new Set(listed.map(p => p.id));
+  const supportOf = new Map(listed.map(p => [p.id, p.on ?? null]));
+  const standing = new Map<string, string[]>();
+  for (const p of listed) if (p.on) standing.set(p.on, [...(standing.get(p.on) ?? []), p.id]);
+  const closeIds = (ids: Iterable<string>): Set<string> => {
+    const out = new Set<string>(), todo = [...ids].filter(id => listedIds.has(id));
+    for (const id of todo) out.add(id);
+    while (todo.length) for (const child of standing.get(todo.pop()!) ?? []) if (!out.has(child)) { out.add(child); todo.push(child); }
+    return out;
+  };
+  /** The ids an edits map deletes, read leniently (an object with removed exactly true, a piece of the model). */
+  const removedIdsOf = (e: unknown): string[] => (isObject(e)
+    ? Object.entries(e).filter(([id, x]) => listedIds.has(id) && isObject(x) && x.removed === true).map(([id]) => id) : []);
+  const removed = closeIds(removedIdsOf(project.pieceEdits));
+  const pieceEdits = (): PieceEditMap => Object.fromEntries(listed.filter(p => removed.has(p.id)).map(p => [p.id, { removed: true as const }]));
+  const inOrder = (ids: Set<string>) => listed.filter(p => ids.has(p.id)).map(p => p.id);
+  let showRemoved = () => undefined as void;          // the legend's line, once it exists
   const inputs = new Map<string, HTMLInputElement>();
   const showRow = (key: string, keepText = false) => {
     const input = inputs.get(key);
@@ -350,9 +379,18 @@ export const createViewer: CreateViewer = (container, project, options = {}) => 
         for (const key of inputs.keys()) showRow(key);
         emit('heightschange', { heights: differences(), source: 'reset' });
       });
+      // step BX: the mock runs' stand-in for "click a box, press Delete" (the first box not deleted yet)
+      const removeBox = el('button', { type: 'button', 'data-wt': 'fake-remove-box' }, 'Delete a box (fake)');
+      removeBox.addEventListener('click', () => {
+        const first = listed.find(p => !removed.has(p.id));
+        if (first) removePieces(first.id);
+      });
       const buttons = el('div', { 'data-wt': 'furniture-buttons' });
-      buttons.append(reset);
-      block.append(buttons);
+      buttons.append(reset, removeBox);
+      const line = el('div', { class: 'fake-note', 'data-wt': 'fake-removed' });
+      showRemoved = () => { line.textContent = removed.size ? `${removed.size} deleted (fake)` : ''; };
+      showRemoved();
+      block.append(buttons, line);
       panel.append(block);
     }
     root.append(panel);
@@ -367,6 +405,39 @@ export const createViewer: CreateViewer = (container, project, options = {}) => 
     height.set(key, mm);
     showRow(key, keepText);
     emit('heightschange', { heights: differences(), source: 'typed' });
+  }
+  // step BX: deletes and restores, each with its boxeschange (the whole map), as the real viewer's do
+  function removePieces(id: string): string[] {
+    if (disposed || !listedIds.has(id) || removed.has(id)) return [];
+    const ids = inOrder(new Set([...closeIds([id])].filter(x => !removed.has(x))));
+    for (const x of ids) removed.add(x);
+    showRemoved();
+    emit('boxeschange', { pieceEdits: pieceEdits(), source: 'removed' });
+    return ids;
+  }
+  function restoreGroup(id: string): string[] {
+    if (disposed || !removed.has(id)) return [];
+    const support = supportOf.get(id) ?? null;
+    const top = support && removed.has(support) ? support : id;
+    const ids = inOrder(new Set([...closeIds([top])].filter(x => removed.has(x))));
+    for (const x of ids) removed.delete(x);
+    showRemoved();
+    emit('boxeschange', { pieceEdits: pieceEdits(), source: 'restored' });
+    return ids;
+  }
+  function restoreEvery(): void {
+    if (disposed || !removed.size) return;
+    removed.clear();
+    showRemoved();
+    emit('boxeschange', { pieceEdits: pieceEdits(), source: 'restored' });
+  }
+  /** From outside (the host): the map replaces the deleted set, closed; no event. */
+  function setEdits(e: PieceEditMap): void {
+    if (disposed) return;
+    const next = closeIds(removedIdsOf(e));
+    removed.clear();
+    for (const x of next) removed.add(x);
+    showRemoved();
   }
   function setMode(m: ViewMode) {
     if (m === mode) return;
@@ -384,12 +455,16 @@ export const createViewer: CreateViewer = (container, project, options = {}) => 
   }
 
   const furniture: FurnitureApi | null = kindsWithPieces.length ? {
-    pieces: () => (model.furniture ?? []).filter(p => modelHeight.has(p.kind)).map(p => {
+    pieces: () => listed.map(p => {
       const h = height.get(p.kind)! / 1000;
-      return { ...p, approach: [...p.approach], z0: 0, z1: h, visible: true, blocks: true, blocking: true } satisfies FurniturePieceView;
+      const gone = removed.has(p.id);
+      return {
+        ...p, approach: [...p.approach], z0: 0, z1: h, visible: !gone, blocks: true, blocking: !gone, ...(gone ? { removed: true as const } : {}),
+      } satisfies FurniturePieceView;
     }),
     kinds: () => kindsWithPieces.map(({ k, count }) => ({
-      key: k.key, label: k.label, colour: k.colour, height: height.get(k.key)!, defaultHeight: modelHeight.get(k.key)!, count,
+      key: k.key, label: k.label, colour: k.colour, height: height.get(k.key)!, defaultHeight: modelHeight.get(k.key)!,
+      count: count - listed.filter(p => p.kind === k.key && removed.has(p.id)).length,   // live, as the real viewer's
       visible: true, blocks: k.blocks,
     }) satisfies FurnitureKindView),
     setHeight: (key, mm) => {
@@ -416,6 +491,12 @@ export const createViewer: CreateViewer = (container, project, options = {}) => 
       applyMap(map, true);
       for (const key of inputs.keys()) showRow(key);
     },
+    // step BX (docs/boxes/DESIGN.md 3.3, 6.2): the deleted boxes
+    pieceEdits: () => pieceEdits(),
+    setPieceEdits: e => setEdits(e),
+    removePiece: id => removePieces(id),
+    restorePiece: id => restoreGroup(id),
+    restoreAll: () => restoreEvery(),
   } : null;
 
   let resolveReady!: () => void;
@@ -450,6 +531,8 @@ export const createViewer: CreateViewer = (container, project, options = {}) => 
       applyMap(map, true);
       for (const key of inputs.keys()) showRow(key);
     },
+    getPieceEdits: () => pieceEdits(),                              // step BX: the deleted boxes (see the furniture literal)
+    setPieceEdits: e => setEdits(e ?? {}),
     on: (event, fn) => {
       let set = listeners.get(event);
       if (!set) { set = new Set(); listeners.set(event, set); }

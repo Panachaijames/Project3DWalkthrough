@@ -8,6 +8,8 @@
 //   * any other answer:                                   status, code 'http_<status>', its text (or statusText)
 //   * no answer at all (fetch threw: the API is down):    status 0, code 'network_error'
 // An aborted request (a query cancelled, a loader interrupted) is passed through as it is.
+import type { PieceEditMap } from '@walkthrough/viewer';
+import { editsOf } from '../lib/heightsOutbox';
 import { client } from './generated/client.gen';
 
 client.setConfig({ baseUrl: import.meta.env.VITE_API_BASE ?? '' });
@@ -77,15 +79,16 @@ export function isRetryable(err: unknown): boolean {
 
 /**
  * The saved heights a 412 revision_conflict carries (PUT furniture-heights with If-Match: they were changed elsewhere since
- * this tab's revision), or null for any other error.
+ * this tab's revision), or null for any other error. Step BX (docs/boxes/DESIGN.md 6.1): also the saved deleted boxes,
+ * which the API puts in the details only when there are some: a missing `pieceEdits` is read as none ({}).
  */
-export function conflictOf(err: unknown): { revision: number; heights: Record<string, number> } | null {
+export function conflictOf(err: unknown): { revision: number; heights: Record<string, number>; pieceEdits: PieceEditMap } | null {
   if (!(err instanceof ApiError) || err.status !== 412 || err.code !== 'revision_conflict' || !err.details) return null;
-  const { revision, heights } = err.details as { revision?: unknown; heights?: unknown };
+  const { revision, heights, pieceEdits } = err.details as { revision?: unknown; heights?: unknown; pieceEdits?: unknown };
   if (typeof revision !== 'number' || !isRecord(heights)) return null;
   const out: Record<string, number> = {};
   for (const [k, v] of Object.entries(heights)) if (typeof v === 'number') out[k] = v;
-  return { revision, heights: out };
+  return { revision, heights: out, pieceEdits: editsOf(pieceEdits) };
 }
 
 /**

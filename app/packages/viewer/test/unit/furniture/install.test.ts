@@ -582,3 +582,33 @@ describe('the hover label', () => {
     expect(row(ctx, 'table').querySelector('[data-wt=kind-label]')!.textContent).toBe('<b>Table</b> (3)');
   });
 });
+
+describe('step BX (docs/boxes/DESIGN.md 2.1, 8.2): without editBoxes and without deleted boxes nothing changed', () => {
+  it('the legend, the root and the scene are the same with editBoxes false, with it left out, and with an empty or missing pieceEdits', () => {
+    const look = (options: Partial<ResolvedOptions> | undefined, edits?: unknown) => {
+      const ctx = makeTestContext({ model: mini(), stamp: 'abcdef123456', options });
+      if (edits !== undefined) ctx.project.pieceEdits = edits as never;
+      live.push(ctx);
+      const F = installFurniture(ctx)!;
+      return {
+        legend: ctx.panel.slot('furniture').innerHTML,
+        rootKids: [...ctx.ui.root.children].map(c => c.getAttribute('data-wt') ?? c.tagName),
+        css: ctx.ui.root.querySelector('style')!.textContent,
+        sceneKids: ctx.scene.children.map(c => c.name),
+        late: ctx.floors.map(f => f.late.length), colliders: furnColliders(ctx), kinds: F.kinds(), pieces: F.pieces(), csv: F.csv(),
+        cursor: ctx.canvas.style.cursor,
+      };
+    };
+    const plain = look(undefined);
+    expect(look({ editBoxes: false })).toEqual(plain);
+    expect(look({}, {})).toEqual(plain);
+    expect(look({ editBoxes: false }, null)).toEqual(plain);
+    expect(plain.legend).not.toMatch(/furniture-edit-hint|furniture-removed|data-empty/);
+    expect(plain.rootKids.filter(k => /^box|^boxes/.test(k))).toEqual([]);
+    expect(plain.sceneKids).not.toContain('furniture-selection');
+    // the staff app's version page (editBoxes) with nothing deleted: only the edit hint is added to the legend
+    const staff = look({ editBoxes: true });
+    expect(staff.legend.replace(/<div data-wt="furniture-edit-hint">[^<]*<\/div>/, '')).toBe(plain.legend);
+    expect([staff.kinds, staff.pieces, staff.csv, staff.late, staff.colliders]).toEqual([plain.kinds, plain.pieces, plain.csv, plain.late, plain.colliders]);
+  });
+});

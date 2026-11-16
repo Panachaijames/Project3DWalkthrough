@@ -2,12 +2,17 @@
 
 Frozen at the scaffold: a change here changes `apps/web/openapi.json` and the generated client (DESIGN.md 10.1, 18.0).
 All URLs in responses are root-relative (`/api/...`); the web app never builds API paths itself.
+
+Step BX (deleting one furniture box, 16 Nov 2026; docs/boxes/DESIGN.md 3.2, docs/contract-issues/BX.md), additive and
+authorised by the main session: `PieceEdit`, `HeightOverrides.piece_edits`, `HeightsUpdate.piece_edits`, and
+`VersionDetail.carried_edits` (`CarriedEdits`, present only when deleted boxes of the previous version did not carry
+over).
 """
 from __future__ import annotations
 
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt
 from pydantic.alias_generators import to_camel
 
 SourceKind = Literal['cad', 'pictures']
@@ -100,10 +105,30 @@ class VersionDownloads(ApiModel):
     offline_html: DownloadInfo
 
 
+class PieceEdit(ApiModel):
+    """One furniture piece's edit. Later steps add optional fields (re-kind, name, place); a field this server does not
+    know is refused (422), never silently dropped."""
+
+    model_config = ConfigDict(extra='forbid')
+    removed: StrictBool | None = Field(default=None, description="true: the box is deleted from this version's view, "
+                                                                 'furniture list, 3ds Max script and offline file')
+
+
 class HeightOverrides(ApiModel):
     heights: dict[str, int] = Field(description="Furniture kind -> whole mm (10 - 5000), only kinds whose height differs from the model's.")
+    piece_edits: dict[str, PieceEdit] = Field(default_factory=dict, description='Furniture piece id -> its edit; today '
+                                                                                'only {removed: true}. Empty when none.')
     revision: int = Field(description='+1 per save; 0 when nothing was ever saved.')
     updated_at: str | None = Field(description='ISO 8601 UTC of the last save, or null.')
+
+
+class CarriedEdits(ApiModel):
+    """How the deleted furniture boxes of an earlier version fared when this version was saved with the carry tick (from
+    versions/<n>/source/carried-edits.json)."""
+
+    from_: int = Field(alias='from', description='The version whose deleted boxes were carried into this one.')
+    not_carried: int = Field(description='How many of its deleted boxes did not carry over (not found one-to-one in the '
+                                         'same place in this drawing): they show again in this version.')
 
 
 class VersionDetail(VersionSummary):
@@ -116,6 +141,11 @@ class VersionDetail(VersionSummary):
     downloads: VersionDownloads
     presentation: dict[str, Any] = Field(description='Presentation v1 (contracts.ts section 3); the viewer owns its type and parsePresentation checks it.')
     overrides: HeightOverrides
+    # Left out of the answer when None (exclude_if): absent unless some deleted boxes did not carry over.
+    carried_edits: CarriedEdits | None = Field(
+        default=None, exclude_if=lambda v: v is None,
+        description='Present only when this version was saved with the carry tick and some deleted boxes of that version '
+                    'did not carry over (they show again here).')
 
 
 class ProjectList(ApiModel):
@@ -126,6 +156,8 @@ class HeightsUpdate(ApiModel):
     # StrictInt (integration, E-2b): a JSON string "600", true or 600.0 is refused (422), not taken as 600; the JSON
     # schema, and so openapi.json and the generated client, are the same as with int.
     heights: dict[str, StrictInt] = Field(description='Furniture kind -> whole mm (10 - 5000); replaces the saved map.')
+    piece_edits: dict[str, PieceEdit] | None = Field(default=None, description='Piece id -> edit; replaces the saved edits '
+                                                                              'when sent; left out, the saved edits stay.')
 
 
 class ErrorBody(ApiModel):

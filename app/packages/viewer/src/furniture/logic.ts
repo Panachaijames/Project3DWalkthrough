@@ -123,12 +123,14 @@ const csvText = (v: unknown): unknown => {
  * The family list (furniture/README.md): CSV_COLUMNS, CRLF after every row (the last too), no byte-order mark (the download
  * adds it). `heights` = {kind: mm} replaces the kinds' heights (what the legend has typed in). The text columns (id, level,
  * kind, kind_label, family, block, layer, dxf_handle, on_top_of, note) pass the formula guard (csvText); the number
- * columns never change.
+ * columns never change. `removed` (docs/boxes/DESIGN.md 4): the rows of those ids, the deleted boxes, are left out; the
+ * supports' lookup stays the whole list, and the closure (closeRemoved) means no other row changes. None or an empty set:
+ * the text is byte for byte as without it.
  */
-export const furnitureCsv: FurnitureCsv = (model, heights) => {
+export const furnitureCsv: FurnitureCsv = (model, heights, removed) => {
   const data = furnitureData(model), off = model.offset ?? [0, 0];
   const height = heightFn(data, heights), base = baseFn(data);
-  const lines = csvOrder(model, data).map(d => {
+  const lines = csvOrder(model, data).filter(d => !removed?.has(d.id)).map(d => {
     const k = data.kindOf.get(d.kind)!;
     const z0 = undersideOf(d, data.byId, height, base);
     return [csvText(d.id), csvText(d.floor), csvText(d.kind), csvText(k.label), csvText(d.family), csvText(d.block),
@@ -142,4 +144,66 @@ export const furnitureCsv: FurnitureCsv = (model, heights) => {
 /** The CSV file name: `<photoName>_furniture_list.csv`, anything but word characters, '.' and '-' as '-'. */
 export function csvFileName(photoName: string): string {
   return `${photoName}_furniture_list.csv`.replace(/[^\w.-]+/g, '-');
+}
+
+// ------------------------------------------------------------------------------------------------------------------
+// Deleted boxes (docs/boxes/DESIGN.md 2.5, 2.6; step BX)
+// ------------------------------------------------------------------------------------------------------------------
+
+/** What the closure rule reads of a piece. */
+export interface StandsOn { id: string; on?: string | null }
+
+/**
+ * The closure rule (docs/boxes/DESIGN.md 2.5): `ids` and every piece standing on one of them, transitively (a piece whose
+ * `on` names a removed piece is removed too). The ids given are kept as they are. The same rule as the API's
+ * piece_edits.close_removed; both are tested against test/fixtures/furniture/close-removed.cases.json.
+ */
+export function closeRemoved(ids: Iterable<string>, pieces: Iterable<StandsOn>): Set<string> {
+  const standing = new Map<string, string[]>();
+  for (const p of pieces) {
+    if (typeof p.on !== 'string' || typeof p.id !== 'string') continue;
+    const list = standing.get(p.on);
+    if (list) list.push(p.id); else standing.set(p.on, [p.id]);
+  }
+  const removed = new Set(ids), todo = [...removed];
+  while (todo.length) {
+    for (const child of standing.get(todo.pop()!) ?? []) {
+      if (!removed.has(child)) { removed.add(child); todo.push(child); }
+    }
+  }
+  return removed;
+}
+
+/** One line of the Restore list: a deleted piece whose support is not deleted, with the deleted pieces standing on it. */
+export interface RemovedGroup { top: string; on: string[] }
+
+/**
+ * The deleted boxes as groups (docs/boxes/DESIGN.md 2.6), in the order of `pieces`: each deleted piece whose support is
+ * not deleted is a top; the deleted pieces standing on it are folded in (`on`, in the order of `pieces`).
+ */
+export function groupsOf(removed: ReadonlySet<string>, pieces: Iterable<StandsOn>): RemovedGroup[] {
+  const groups = new Map<string, RemovedGroup>(), list = [...pieces].filter(p => removed.has(p.id));
+  const isTop = (p: StandsOn) => typeof p.on !== 'string' || !removed.has(p.on);
+  for (const p of list) if (isTop(p)) groups.set(p.id, { top: p.id, on: [] });
+  for (const p of list) if (!isTop(p)) groups.get(topOf(p, list, removed))?.on.push(p.id);
+  return [...groups.values()];
+}
+
+/** The top of a deleted piece's group: its support while that is deleted too (at most 3 steps, as undersideOf), else itself. */
+function topOf(p: StandsOn, list: readonly StandsOn[], removed: ReadonlySet<string>): string {
+  let at = p;
+  for (let i = 0; i < 3 && typeof at.on === 'string' && removed.has(at.on); i++) {
+    const s = list.find(x => x.id === at.on);
+    if (!s) break;
+    at = s;
+  }
+  return at.id;
+}
+
+/** A saved or given edits map read leniently: the ids whose edit is an object with `removed` exactly true (anything else ignored). */
+export function removedIdsOf(edits: unknown): string[] {
+  if (edits === null || typeof edits !== 'object' || Array.isArray(edits)) return [];
+  return Object.entries(edits as Record<string, unknown>)
+    .filter(([, v]) => v !== null && typeof v === 'object' && !Array.isArray(v) && (v as { removed?: unknown }).removed === true)
+    .map(([id]) => id);
 }

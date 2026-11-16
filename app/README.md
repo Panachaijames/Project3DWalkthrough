@@ -31,7 +31,7 @@ npm run check:pins                            (every installed version equals th
 ## Run the app (one command)
 
 ```
-npm run seed                    (first time, and whenever the prototypes change: rebuilds data/; saved heights are kept)
+npm run seed                    (first time, and whenever the prototypes change: rebuilds data/; saved heights and deleted boxes are kept)
 npm run build:offline:template  (first time, and after a viewer change: the template the Downloads menu's offline file uses)
 npm run dev                     (API on http://127.0.0.1:8710, web app on http://127.0.0.1:5710; Ctrl+C stops both)
 ```

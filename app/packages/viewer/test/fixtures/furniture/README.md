@@ -21,6 +21,7 @@ These models are not BuiltModel v1 (DESIGN.md 17.1): the unit tests pass them st
 | `mini-typed.csv`, `mini-typed.kit.csv` | the same with `mini-typed-heights.json` |
 | `awkward.csv`, `awkward.kit.csv` | the family list of `awkward.json`, model heights |
 | `goldens.json` | the manifest: sha1 and bytes per file, python / kit agreement |
+| `close-removed.cases.json` | step BX (16 Nov 2026), written by hand, not by `make-goldens.mjs`: the cases of the closure rule of deleted boxes (`docs/boxes/DESIGN.md` 2.5), `{cases: [{name, pieces: [{id, on}], ids, closed}]}`. Read by `test/unit/furniture/logic.test.ts` (`closeRemoved`) and by the API's `services/api/tests/test_bx_piece_edits.py` (`piece_edits.close_removed`) by its app path: change it in one place, both rules follow |
 
 The CSV files hold the text the writers print: UTF-8, CRLF, **no byte-order mark** (`csv()` and `furnitureCsv()` give the
 bytes after it; the download adds `EF BB BF`). The four projects' prototype CSVs and their typed goldens are the scaffold's

@@ -8,6 +8,13 @@ If-Match (fix step, review finding "adversarial" 3: two tabs erased each other's
 412 revision_conflict, `details: {revision, heights}` = what is saved now, so the staff app merges its own changes into
 them and sends again. Without the header a PUT still replaces whatever is saved (last write wins). The header is read
 from the request, not declared as a parameter: the frozen OpenAPI document and the generated client do not move.
+
+Deleted furniture boxes (step BX, 16 Nov 2026; docs/boxes/DESIGN.md 3.2, docs/contract-issues/BX.md): the same file,
+revision and If-Match carry `pieceEdits` (piece id -> {removed: true}). A PUT that sends `pieceEdits` replaces the saved
+edits (after the heights' checks: every key a piece of the model, else 422 invalid_piece_edits with details.unknownIds
+(the first 20) and details.count; `removed: false` / {} dropped; closed: what stands on a removed piece goes with it;
+in the CSV order); a PUT without it keeps them. Every answer, and the 412's details when there are any, carries the
+LIVE map (piece_edits.live), never an id the model lacks. The route texts are frozen and still speak of heights only.
 """
 from __future__ import annotations
 
@@ -15,7 +22,7 @@ import re
 
 from fastapi import APIRouter, Depends, Request
 
-from .. import views
+from .. import piece_edits, views
 from ..deps import get_store
 from ..errors import ApiError
 from ..models import HeightOverrides, HeightsUpdate
@@ -53,7 +60,8 @@ def get_furniture_heights(project_id: ProjectId, version: VersionNo, store: Stor
     v = store.get_version(project_id, version)
     if not views.has_furniture(v):
         raise views.no_furniture(v)
-    return views.overrides_of(store.read_overrides(project_id, version))
+    # the model is read only when piece edits are saved (their live map is taken against it)
+    return views.overrides_of(store.read_overrides(project_id, version), lambda: views.model_of(store, v))
 
 
 @router.put(
@@ -82,12 +90,13 @@ def put_furniture_heights(project_id: ProjectId, version: VersionNo, body: Heigh
     v = store.get_version(project_id, version)
     if not views.has_furniture(v):
         raise views.no_furniture(v)
-    heights = views.canonical_heights(views.model_of(store, v), body.heights)     # 422 invalid_heights
+    model = views.model_of(store, v)
+    heights = views.canonical_heights(model, body.heights)                          # 422 invalid_heights
+    # sent: checked, closed and ordered (422 invalid_piece_edits); left out (None): the saved edits stay
+    edits = piece_edits.canonical(model, body.piece_edits) if body.piece_edits is not None else None
     expected = if_match_revision(request)
     try:
-        saved = store.write_overrides(project_id, version, heights, if_revision=expected)
+        saved = store.write_overrides(project_id, version, heights, if_revision=expected, piece_edits=edits)
     except RevisionConflict as exc:
-        now = views.overrides_of(exc.current)
-        raise ApiError(412, 'revision_conflict', str(exc),
-                       {'revision': now.revision, 'heights': now.heights, 'updatedAt': now.updated_at}) from exc
-    return views.overrides_of(saved)
+        raise ApiError(412, 'revision_conflict', str(exc), views.conflict_details(exc.current, model)) from exc
+    return views.overrides_of(saved, model)

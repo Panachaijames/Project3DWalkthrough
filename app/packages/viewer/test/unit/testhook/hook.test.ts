@@ -123,6 +123,19 @@ describe('the offline entry: reading the payload', async () => {
       heights: { table: 600 }, stamp: 'c3a9408304a2', ids: { projectId: 'bank-sampeng', version: 2 } });
     expect(projectOf({ ...p, overrides: null }).heights).toBeNull();
   });
+  it('passes the deleted boxes only when the file carries them: no pieceEdits key otherwise (step BX)', () => {
+    expect('pieceEdits' in projectOf(payload)).toBe(false);
+    expect('pieceEdits' in projectOf({ ...payload, overrides: null })).toBe(false);
+    const edits = { 'L1-table-001': { removed: true as const }, 'L1-computer-001': { removed: true as const } };
+    const withEdits: OfflinePayload = { ...payload, overrides: { ...payload.overrides!, pieceEdits: edits } };
+    const p = projectOf(readPayload(JSON.stringify(withEdits)));
+    expect(p.pieceEdits).toEqual(edits);
+    expect(p.heights).toEqual({ table: 600 });
+    expect(Object.keys(p).sort()).toEqual([...Object.keys(projectOf(payload)), 'pieceEdits'].sort());
+    // whatever the file holds there is passed as it is: the viewer reads it leniently (furniture/logic.ts removedIdsOf)
+    const odd = { ...payload, overrides: { ...payload.overrides!, pieceEdits: { x: 'yes' } } } as unknown as OfflinePayload;
+    expect(projectOf(odd).pieceEdits).toEqual({ x: 'yes' });
+  });
   it('says plainly what is wrong with a missing or broken payload', () => {
     expect(() => readPayload(null)).toThrow('could not be read');
     expect(() => readPayload('not json')).toThrow('could not be read');

@@ -1,5 +1,6 @@
 // Builder A: the public events viewer.ts makes from the bus (DESIGN.md 11.5): modechange only on a change of mode or floor;
-// heightschange only for the sources typed and reset (never api = setHeights, never tick = the doorways tick).
+// heightschange only for the sources typed and reset (never api = setHeights, never tick = the doorways tick); boxeschange
+// only for the sources removed and restored (never api = setPieceEdits; docs/boxes/DESIGN.md 2.8, step BX).
 import { describe, expect, it, vi } from 'vitest';
 import type { FurnitureApi, InternalEvents, ViewerEvents } from '../../../src/contracts';
 import { createEventBus } from '../../../src/core/events';
@@ -8,10 +9,11 @@ import { bridgeEvents, guardFurniture } from '../../../src/viewer';
 const setup = () => {
   const bus = createEventBus<InternalEvents>(), events = createEventBus<ViewerEvents>();
   bridgeEvents(bus, events);
-  const mode = vi.fn(), heights = vi.fn();
+  const mode = vi.fn(), heights = vi.fn(), boxes = vi.fn();
   events.on('modechange', mode);
   events.on('heightschange', heights);
-  return { bus, mode, heights };
+  events.on('boxeschange', boxes);
+  return { bus, mode, heights, boxes };
 };
 
 describe('bridgeEvents', () => {
@@ -37,6 +39,20 @@ describe('bridgeEvents', () => {
     expect(heights.mock.calls.map(c => c[0])).toEqual([{ heights: { table: 600 }, source: 'typed' }, { heights: {}, source: 'reset' }]);
     expect(heights.mock.calls[0]![0].heights).not.toBe(map);
   });
+  it('boxeschange: removed and restored only (never api), with a copy of the whole map; no other public event with it', () => {
+    const { bus, boxes, heights, mode } = setup();
+    const map = { 'L1-table-001': { removed: true as const }, 'L1-computer-001': { removed: true as const } };
+    bus.emit('pieces', { pieceEdits: map, source: 'api' });
+    expect(boxes).not.toHaveBeenCalled();
+    bus.emit('pieces', { pieceEdits: map, source: 'removed' });
+    bus.emit('pieces', { pieceEdits: {}, source: 'restored' });
+    expect(boxes.mock.calls.map(c => c[0])).toEqual([{ pieceEdits: map, source: 'removed' }, { pieceEdits: {}, source: 'restored' }]);
+    const sent = boxes.mock.calls[0]![0].pieceEdits;
+    expect(sent).not.toBe(map);
+    expect(sent['L1-table-001']).not.toBe(map['L1-table-001']);
+    expect(heights).not.toHaveBeenCalled();
+    expect(mode).not.toHaveBeenCalled();
+  });
 });
 
 describe('Viewer.furniture after dispose (fix step, review finding "code" 12)', () => {
@@ -49,6 +65,9 @@ describe('Viewer.furniture after dispose (fix step, review finding "code" 12)', 
       reset: () => { calls.push('reset'); }, csv: () => 'csv', saveCsv: () => { calls.push('saveCsv'); return 'csv'; },
       meshOf: () => ({}) as never, apply: () => { calls.push('apply'); }, heights: () => ({ table: 600 }),
       setHeights: () => { calls.push('setHeights'); },
+      pieceEdits: () => ({ 'L1-table-001': { removed: true } }), setPieceEdits: () => { calls.push('setPieceEdits'); },
+      removePiece: id => { calls.push('removePiece'); return [id]; }, restorePiece: id => { calls.push('restorePiece'); return [id]; },
+      restoreAll: () => { calls.push('restoreAll'); },
     };
     return { api, calls };
   };
@@ -59,12 +78,20 @@ describe('Viewer.furniture after dispose (fix step, review finding "code" 12)', 
     expect(F.setHeight('table', 640)).toBe(true);
     F.reset();
     expect(calls).toEqual(['setHeight', 'reset']);
+    expect([F.removePiece('a'), F.restorePiece('b')]).toEqual([['a'], ['b']]);
+    F.restoreAll(); F.setPieceEdits({});
+    expect(calls.splice(2)).toEqual(['removePiece', 'restorePiece', 'restoreAll', 'setPieceEdits']);
     disposed = true;
     expect([F.setHeight('table', 640), F.setVisible('table', false), F.setBlocks('table', false), F.setKeepDoorways(false)]).toEqual([false, false, false, false]);
     F.reset(); F.apply(); F.setHeights({ table: 640 });
     expect(F.saveCsv()).toBe('csv');                            // the text, no download
     expect(F.meshOf('x')).toBeNull();
     expect(calls).toEqual(['setHeight', 'reset']);              // nothing more reached the module
+    // the deleted boxes too: the writes answer [] or do nothing, the read answers the last state
+    expect([F.removePiece('a'), F.restorePiece('b')]).toEqual([[], []]);
+    F.restoreAll(); F.setPieceEdits({ a: { removed: true } });
+    expect(calls).toEqual(['setHeight', 'reset']);
+    expect(F.pieceEdits()).toEqual({ 'L1-table-001': { removed: true } });
     expect(F.heights()).toEqual({ table: 600 });               // the reads answer the last state
     expect(guardFurniture(null, () => false)).toBeNull();
   });

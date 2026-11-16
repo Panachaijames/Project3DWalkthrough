@@ -9,14 +9,27 @@
 // turns only 'typed' and 'reset' into the public heightschange.
 // Leniency (DESIGN.md 5.6): a piece whose kind or floor is unknown is left out with a warning; a piece whose `on` names no
 // piece stands on its kind's base; approach ids are kept as they are; a kind's count is ignored (the legend counts pieces).
-import type { FurnitureApi, FurnitureKindView, FurniturePieceView, HeightMap, InstallFurniture } from '../contracts';
-import { makeBoxes, placeBox, syncKind } from './boxes';
+// Deleted boxes (docs/boxes/DESIGN.md 2.4 - 2.8; step BX). A deleted box keeps its mesh and its item: it is hidden, never a
+// collider, out of its floor's 'late' list, out of the CSV and out of its kind's count. The deleted set starts from
+// project.pieceEdits (read leniently, closed) and is always closed: what stands on a deleted box is deleted with it
+// (logic.ts closeRemoved). Every change goes out on bus 'pieces' with its source ('removed', 'restored', 'api' =
+// setPieceEdits); viewer.ts turns only 'removed' and 'restored' into the public boxeschange. Deletes, restores and Restore
+// all of this visit can be undone (a stack of the ids each changed; setPieceEdits clears it). With options.editBoxes (the
+// staff app's version page) boxes can be selected and deleted (select.ts) and restored (restore.ts); without it there is
+// no control, and the legend is built from the live pieces only.
+import type { FurnitureApi, FurnitureKindView, FurniturePieceView, HeightMap, InstallFurniture, PieceEditMap } from '../contracts';
+import { makeBoxes, placeBox, restoreLook, setRemoved, syncKind } from './boxes';
 import { FURNITURE_CSS } from './css';
 import { installHover } from './hover';
 import { makeLegend } from './legend';
-import { MAX_H, MIN_H, csvFileName, furnitureCsv, heightFromData, stopsWalk, undersideOf, wholeMm } from './logic';
+import {
+  MAX_H, MIN_H, closeRemoved, csvFileName, csvOrder, furnitureCsv, furnitureData, groupsOf, heightFromData, removedIdsOf, stopsWalk,
+  undersideOf, wholeMm,
+} from './logic';
+import { makePicker } from './pick';
+import { installSelect } from './select';
 import { loadStored, readStoredState, saveStored, writeStoredState } from './storage';
-import type { FurnitureState, ItemState, KindState, LegendActions, PieceDraft } from './types';
+import type { EditEvent, FurnitureState, ItemState, KindState, LegendActions, PieceDraft, UndoEntry } from './types';
 
 const hasOwn = (o: object, key: string) => Object.prototype.hasOwnProperty.call(o, key);
 
@@ -44,6 +57,20 @@ export const installFurniture: InstallFurniture = ctx => {
   const inApproach = items.filter(p => p.approach.length);            // the pieces that stand where a door or a passage is walked through
   let keepDoorways = true;                                            // 'Keep doorways clear': those pieces do not stop Walk
 
+  // ---------------------------------------------------------------- the deleted boxes the project carries
+  const editBoxes = ctx.options.editBoxes === true;
+  const standing = items.map(p => p.d);                               // what the closure rule reads (id, on)
+  const rank = new Map(csvOrder(model, furnitureData(model)).map((d, i) => [d.id, i]));
+  // the furniture list's order (floor, kind, id): the order of the edits map and of the Restore list
+  const listed = [...items].sort((a, b) => (rank.get(a.d.id) ?? 0) - (rank.get(b.d.id) ?? 0));
+  const closed = (ids: Iterable<string>) => closeRemoved([...ids].filter(id => itemOf.has(id)), standing);   // unknown ids are ignored
+  for (const id of closed(removedIdsOf(ctx.project.pieceEdits))) setRemoved(itemOf.get(id)!, true);
+  const liveCount = (k: KindState) => k.items.reduce((n, p) => n + (p.removed ? 0 : 1), 0);
+  const removedIds = () => new Set(items.filter(p => p.removed).map(p => p.d.id));
+  const pieceEdits = (): PieceEditMap => Object.fromEntries(listed.filter(p => p.removed).map(p => [p.d.id, { removed: true as const }]));
+  // the client's file (no editBoxes): the deletions are fixed when the file loads, so a kind without a live piece gets no row
+  const legendKinds = editBoxes ? kinds : kinds.filter(k => liveCount(k) > 0);
+
   // ---------------------------------------------------------------- the starting heights, and what this browser kept
   const saved = ctx.project.heights ?? {};
   for (const k of kinds) {
@@ -64,14 +91,60 @@ export const installFurniture: InstallFurniture = ctx => {
   const pieceById = new Map(items.map(p => [p.d.id, p.d]));
   const under = (p: ItemState) => undersideOf(p.d, pieceById, kind => kindOf.get(kind)!.height, kind => kindOf.get(kind)!.base);
   const placeAll = () => { for (const p of items) placeBox(p, under(p)); };
-  const stops = (p: ItemState) => stopsWalk(p.kind, p.approach, keepDoorways);
+  const stops = (p: ItemState) => !p.removed && stopsWalk(p.kind, p.approach, keepDoorways);
   const sync = (k: KindState) => syncKind(k, stops);
 
   // ---------------------------------------------------------------- what changed goes out on the bus
   const heights = (): HeightMap => Object.fromEntries(kinds.filter(k => k.height !== k.defaultHeight).map(k => [k.key, k.height]));
   const changed = (source: 'typed' | 'reset' | 'api' | 'tick') => ctx.bus.emit('furniture', { heights: heights(), source });
 
-  const state: FurnitureState = { kinds, kindOf, items, itemOf, inApproach, keepDoorways: () => keepDoorways, stops };
+  // ---------------------------------------------------------------- deleting and restoring
+  let undoStack: UndoEntry[] = [], restoredAll = 0;
+  const editListeners: ((e: EditEvent) => void)[] = [];
+  // the build replay owns the late objects' visibility while it runs; its closing apply() shows what is back
+  const replayRunning = () => { const phase = ctx.replay?.phase; return phase === 'settings' || phase === 'play'; };
+  /**
+   * The deleted set becomes `want`, closed. Returns the ids whose state changed (`first` first, then the list's order);
+   * nothing changed and not 'api': nothing happens. `push`: the change is an undo step.
+   */
+  function setRemovedIds(want: Iterable<string>, source: EditEvent['source'], o: { push?: boolean; all?: boolean; first?: string } = {}): string[] {
+    const to = closed(want), ids: string[] = [];
+    for (const p of listed) if (p.removed !== to.has(p.d.id)) { setRemoved(p, !p.removed); ids.push(p.d.id); }
+    if (!ids.length && source !== 'api') return ids;
+    if (o.first !== undefined && ids.includes(o.first)) { ids.splice(ids.indexOf(o.first), 1); ids.unshift(o.first); }
+    const running = replayRunning();
+    for (const k of kinds) syncKind(k, stops, running);
+    let entry: UndoEntry | null = null;
+    if (source === 'api') undoStack = [];                             // remote changes make the inverses ambiguous
+    else if (o.push) undoStack.push(entry = { ids: ids.slice(), dir: source, all: o.all === true });
+    restoredAll = source === 'restored' && o.push && o.all ? ids.length : 0;
+    for (const k of legendKinds) legend.showRow(k, true);
+    legend.showKeep(); legend.showRemoved();
+    ctx.bus.emit('pieces', { pieceEdits: pieceEdits(), source });
+    const event: EditEvent = { source, ids, entry, all: o.all === true };
+    for (const fn of editListeners.slice()) fn(event);
+    return ids;
+  }
+  /** The top of a deleted piece's group: its support while that is deleted too (supports never stand on anything: 3 steps at most). */
+  const topOf = (p: ItemState): ItemState => {
+    let at = p;
+    for (let i = 0; i < 3; i++) {
+      const s = at.d.on ? itemOf.get(at.d.on) : undefined;
+      if (!s || !s.removed) break;
+      at = s;
+    }
+    return at;
+  };
+
+  const state: FurnitureState = {
+    kinds, kindOf, items, itemOf, inApproach, keepDoorways: () => keepDoorways, stops,
+    editBoxes, legendKinds, liveCount, removedIds,
+    groups: () => groupsOf(removedIds(), listed.map(p => p.d)),
+    undoTop: () => undoStack.at(-1) ?? null,
+    restoredAll: () => restoredAll,
+    onEdit: fn => { editListeners.push(fn); },
+    select: null,
+  };
   const actions: LegendActions = {
     setHeight(key, mm, keepText) {
       const k = kindOf.get(key), v = wholeMm(Number(mm));
@@ -115,24 +188,47 @@ export const installFurniture: InstallFurniture = ctx => {
       ctx.options.download(blob, csvFileName(model.photoName));
       return text;
     },
+    removePiece(id) {                                               // the box and what stands on it
+      const p = itemOf.get(id);
+      if (!p || p.removed) return [];
+      return setRemovedIds([...removedIds(), id], 'removed', { push: true, first: id });
+    },
+    restorePiece(id) {                                              // the box's group: its top and every deleted piece on it
+      const p = itemOf.get(id);
+      if (!p || !p.removed) return [];
+      const top = topOf(p), group = closeRemoved([top.d.id], standing), now = removedIds();
+      return setRemovedIds([...now].filter(x => !group.has(x)), 'restored', { push: true, first: top.d.id });
+    },
+    restoreAll() { setRemovedIds([], 'restored', { push: true, all: true }); },
+    undo() {                                                        // the inverse of the last step, then the map closed again
+      const step = undoStack.pop();
+      if (!step) return false;
+      const now = removedIds();
+      if (step.dir === 'removed') for (const id of step.ids) now.delete(id); else for (const id of step.ids) now.add(id);
+      setRemovedIds(now, step.dir === 'removed' ? 'restored' : 'removed', { all: step.all, first: step.ids[0] });
+      return true;
+    },
   };
-  const csv = () => furnitureCsv(model, Object.fromEntries(kinds.map(k => [k.key, k.height])));
+  const csv = () => furnitureCsv(model, Object.fromEntries(kinds.map(k => [k.key, k.height])), removedIds());
 
   ctx.ui.addStyle(FURNITURE_CSS);
   const legend = makeLegend(ctx, state, actions);
   ctx.panel.slot('furniture').append(legend.el);
-  installHover(ctx, state);
+  const picker = makePicker(ctx, state);
+  const hover = installHover(ctx, state, picker);
+  if (editBoxes) installSelect(ctx, state, actions, picker, hover);
 
-  placeAll(); kinds.forEach(sync); for (const k of kinds) legend.showRow(k); legend.showKeep();
+  placeAll(); kinds.forEach(sync); for (const k of kinds) legend.showRow(k); legend.showKeep(); legend.showRemoved();
 
   const api: FurnitureApi = {
     // visible / blocks are the kind's ticks; blocking is what Walk does now (the box is in its floor's colliders)
     pieces: () => items.map((p): FurniturePieceView => ({
-      ...p.d, approach: p.approach.slice(), z0: p.z0mm / 1000, z1: (p.z0mm + p.kind.height) / 1000, visible: p.kind.visible,
-      blocks: p.kind.blocks, blocking: stops(p),
+      ...p.d, approach: p.approach.slice(), z0: p.z0mm / 1000, z1: (p.z0mm + p.kind.height) / 1000,
+      visible: p.kind.visible && !p.removed, blocks: p.kind.blocks, blocking: stops(p),
+      ...(p.removed ? { removed: true as const } : {}),              // only on a deleted box
     })),
     kinds: () => kinds.map((k): FurnitureKindView => ({
-      key: k.key, label: k.label, colour: k.colour, height: k.height, defaultHeight: k.defaultHeight, count: k.items.length,
+      key: k.key, label: k.label, colour: k.colour, height: k.height, defaultHeight: k.defaultHeight, count: liveCount(k),
       visible: k.visible, blocks: k.blocks,
     })),
     setHeight: (key, mm) => actions.setHeight(key, Number(mm)),
@@ -144,7 +240,7 @@ export const installFurniture: InstallFurniture = ctx => {
     csv,
     saveCsv: () => actions.saveCsv(),
     meshOf: id => itemOf.get(id)?.mesh ?? null,
-    apply: () => { kinds.forEach(sync); },
+    apply: () => { kinds.forEach(sync); kinds.forEach(restoreLook); },
     heights,
     setHeights(h) {                                                 // the map replaces the typed set; missing kinds go back to the model's
       const given = h ?? {};
@@ -154,6 +250,11 @@ export const installFurniture: InstallFurniture = ctx => {
       }
       placeAll(); persist(); for (const k of kinds) legend.showRow(k); changed('api');
     },
+    pieceEdits,
+    setPieceEdits(e) { setRemovedIds(removedIdsOf(e), 'api'); },    // the map replaces the deleted set; odd values and unknown ids ignored
+    removePiece: id => actions.removePiece(id),
+    restorePiece: id => actions.restorePiece(id),
+    restoreAll: () => actions.restoreAll(),
   };
   return api;
 };

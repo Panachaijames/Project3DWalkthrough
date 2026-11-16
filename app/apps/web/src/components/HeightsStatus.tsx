@@ -1,8 +1,10 @@
-// The heights status in the app bar (DESIGN.md 15.3, 15.5): `Heights saved`, `Saving…`, or `Not saved: <reason>` with
-// Retry. The page hides it when the model has no furniture.
+// The heights status in the app bar (DESIGN.md 15.3, 15.5): `Furniture saved` (step BX: it was `Heights saved`; the save
+// carries the deleted boxes too), `Saving…`, or `Not saved: <reason>` with Retry. The page hides it when the model has no
+// furniture. Beside it, its own element (step BX, docs/boxes/DESIGN.md 6.2): the count of the deleted furniture boxes,
+// '· 3 boxes deleted', nothing at 0, so a colleague opening the version sees that boxes were taken out.
 import { Check, LoaderCircle, TriangleAlert } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { HEIGHTS_SAVED, HEIGHTS_SAVING, heightsNotSaved } from '@/lib/format';
+import { boxesDeletedText, boxesDeletedTitle, HEIGHTS_SAVED, HEIGHTS_SAVING, heightsNotSaved } from '@/lib/format';
 import type { SaverState } from '@/lib/useHeightsSaver';
 
 export function HeightsStatus({ state, onRetry }: { state: SaverState; onRetry: () => void }) {
@@ -33,5 +35,15 @@ export function HeightsStatus({ state, onRetry }: { state: SaverState; onRetry: 
         </Button>
       )}
     </div>
+  );
+}
+
+/** The count of the deleted furniture boxes of the version on screen (step BX): '· 3 boxes deleted'; nothing at 0. */
+export function BoxesDeleted({ count }: { count: number }) {
+  if (count <= 0) return null;
+  return (
+    <span data-testid="boxes-deleted" title={boxesDeletedTitle(count)} className="shrink-0 whitespace-nowrap text-sm text-muted-foreground">
+      {boxesDeletedText(count)}
+    </span>
   );
 }

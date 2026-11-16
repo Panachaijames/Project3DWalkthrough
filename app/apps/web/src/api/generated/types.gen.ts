@@ -659,6 +659,27 @@ export type CancelBuildRequest = {
 };
 
 /**
+ * CarriedEdits
+ *
+ * How the deleted furniture boxes of an earlier version fared when this version was saved with the carry tick (from
+ * versions/<n>/source/carried-edits.json).
+ */
+export type CarriedEdits = {
+    /**
+     * From
+     *
+     * The version whose deleted boxes were carried into this one.
+     */
+    from: number;
+    /**
+     * Notcarried
+     *
+     * How many of its deleted boxes did not carry over (not found one-to-one in the same place in this drawing): they show again in this version.
+     */
+    notCarried: number;
+};
+
+/**
  * ClosingFix
  *
  * Rooms milestone (R-6.2), sheet m. 'line': a closing line staff drew; 'none': leave out the app's bridge or
@@ -1068,6 +1089,14 @@ export type HeightOverrides = {
         [key: string]: number;
     };
     /**
+     * Pieceedits
+     *
+     * Furniture piece id -> its edit; today only {removed: true}. Empty when none.
+     */
+    pieceEdits?: {
+        [key: string]: PieceEdit;
+    };
+    /**
      * Revision
      *
      * +1 per save; 0 when nothing was ever saved.
@@ -1093,6 +1122,14 @@ export type HeightsUpdate = {
     heights: {
         [key: string]: number;
     };
+    /**
+     * Pieceedits
+     *
+     * Piece id -> edit; replaces the saved edits when sent; left out, the saved edits stay.
+     */
+    pieceEdits?: {
+        [key: string]: PieceEdit;
+    } | null;
 };
 
 /**
@@ -1295,6 +1332,21 @@ export type OutlineEdgeFix = {
      * Floor key, ^[A-Za-z0-9_]{1,32}$.
      */
     floor: string;
+};
+
+/**
+ * PieceEdit
+ *
+ * One furniture piece's edit. Later steps add optional fields (re-kind, name, place); a field this server does not
+ * know is refused (422), never silently dropped.
+ */
+export type PieceEdit = {
+    /**
+     * Removed
+     *
+     * true: the box is deleted from this version's view, furniture list, 3ds Max script and offline file
+     */
+    removed?: boolean | null;
 };
 
 /**
@@ -1986,6 +2038,10 @@ export type VersionDetail = {
      * Assets
      */
     assets: Array<AssetInfo>;
+    /**
+     * Present only when this version was saved with the carry tick and some deleted boxes of that version did not carry over (they show again here).
+     */
+    carriedEdits?: CarriedEdits | null;
     counts: VersionCounts;
     /**
      * Createdat
