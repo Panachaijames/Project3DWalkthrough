@@ -11,7 +11,10 @@
 //     faceOpen);
 //   * per model: Walk from the button, then W / Shift+W / W+D through tick(now) with a made-up clock (the frame path);
 //     PgUp and PgDn; double-clicks on the canvas; Ghost -> Walk landings; one eye-height change;
-//   * the hotel: the walk north into its F1 flight, which the old `step` parts must still stop.
+//   * the hotel: the walk north into its F1 flight. The old `step` parts stopped it until 16 Nov 2026; since the owner's
+//     request of that day the viewer makes the flight a stairway when it loads the model (src/model/upgrade.ts), the walk
+//     climbs to F2, and the hotel's entry ALONE was recorded again (recordHotelParity). The other five models have no
+//     complete flight: they load as before and their entries are the ones R0 recorded, byte for byte.
 //
 //   runWalkParity()      -> the results of the viewer as it is now (walk-parity.test.ts compares them with the golden
 //                           within 1e-9 m)
@@ -37,6 +40,7 @@ import { createReadouts } from '../../src/core/readouts';
 import { createVisibility } from '../../src/core/visibility';
 import { parseBuiltModel } from '../../src/model/parse';
 import { parsePresentation, resolvePresentation } from '../../src/model/presentation';
+import { upgradeModel, upgradePresentation } from '../../src/model/upgrade';
 import { installModes } from '../../src/modes/index';
 
 export const APP = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../..');
@@ -68,8 +72,12 @@ export const sha1 = (b: Buffer | string) => createHash('sha1').update(b).digest(
 interface Rig { ctx: ViewerContext; model: BuiltModel; modes: ModesApi; s: ModesState; canvas: HTMLCanvasElement; dispose(): void }
 
 function mount(name: string, pres: string | null): Rig {
-  const model = parseBuiltModel(json(`fixtures/models/${name}.model.json`));
-  const presentation = resolvePresentation(parsePresentation(pres ? json(`fixtures/presentation/${pres}.json`) : PLAIN), model);
+  // as createViewer loads a model: parsed, then model/upgrade.ts (a complete flight of steps becomes a stair; of the six
+  // models only the hotel has one, the other five come back as the very object parsed)
+  const parsed = parseBuiltModel(json(`fixtures/models/${name}.model.json`));
+  const model = upgradeModel(parsed);
+  const presentation = resolvePresentation(
+    upgradePresentation(parsePresentation(pres ? json(`fixtures/presentation/${pres}.json`) : PLAIN), model !== parsed), model);
   const built = buildScene(model, presentation);
   const scene = new Scene();
   for (const f of built.floors) scene.add(f.group);
@@ -385,7 +393,11 @@ function eyeRecipe(r: Rig): Json {
   return { before, typed, after, back: { eye: s.eye, y: s.pos.y } };
 }
 
-/** The hotel: the walk north into its F1 flight (x -4.67 ... -2.17, steps from y -1.53): the old steps stop it. */
+/**
+ * The hotel: the walk north into its F1 flight (x -4.67 ... -2.17, 16 steps from y -1.53 to 2.80) and back. Until 16 Nov
+ * 2026 the old `step` parts stopped it about 1.3 m in; since the owner's request of that day the flight is a derived
+ * stairway (src/model/upgrade.ts) and the walk climbs to F2 (level 2.90) and comes down again.
+ */
 function hotelFlight(r: Rig): Json {
   const { s } = r, v = r.modes, f = r.ctx.floorByKey.get('F1')!, out: Json[] = [];
   for (const x of [-3.42, -4.2, -2.6]) {
@@ -393,9 +405,10 @@ function hotelFlight(r: Rig): Json {
     v.setMode('walk', { floor: f, point: { x, z: 2.6 } });
     s.pos.x = x; s.pos.z = 2.6;                                        // plan (x, -2.6): 1.07 m before the first step
     const start = { onFloor: v.probe.onFloor(), clearance: n(v.probe.clearance()) };
-    const moved = v.probe.walk(0, 5);                                   // 0 degrees = north (three.js -z)
-    const knee = r.ctx.readouts.rayHit('F1', s.pos.x, -s.pos.z, 0.35, 0, 1, 1.0), chest = r.ctx.readouts.rayHit('F1', s.pos.x, -s.pos.z, 1.2, 0, 1, 1.0);
-    out.push({ x, start, moved, ...(where(s) as { [k: string]: Json }), intoFlight: -s.pos.z - -1.53, knee: knee ? { name: knee.name, d: knee.d } : null, chest: chest ? { name: chest.name, d: chest.d } : null });
+    const moved = v.probe.walk(0, 6.5);                                 // 0 degrees = north (three.js -z): to plan y 3.9, 1.1 m past the last step
+    const up = { moved, ...(where(s) as { [k: string]: Json }), foot: v.probe.foot(), intoFlight: -s.pos.z - -1.53 };
+    const back = v.probe.walk(180, 6.5);
+    out.push({ x, start, up, down: { moved: back, ...(where(s) as { [k: string]: Json }), foot: v.probe.foot() } });
   }
   return out;
 }
@@ -447,6 +460,19 @@ export function recordWalkParity(): WalkParity {
   if (untracked) throw new Error(`record-walk-parity: ${VIEWER_SRC} has changed or untracked files:\n${untracked}`);
   const viewerTree = git('rev-parse', `${BASE}:app/${VIEWER_SRC}`);
   const golden: WalkParity = { format: 'walk-parity/1', base: BASE, viewerTree, models: runWalkParity() };
+  writeFileSync(GOLDEN, JSON.stringify(golden, null, 1) + '\n');
+  return golden;
+}
+
+/**
+ * Records the hotel's entry alone (the owner's request of 16 Nov 2026: its F1 flight climbs), from the viewer as it is
+ * now; every other entry stays byte for byte as it is in the file (walk-parity.test.ts pins each one's sha1). Run with
+ *   WT_RECORD_WALK_PARITY=hotel npx vitest run --project viewer test/unit/modes/walk-parity.test.ts
+ */
+export function recordHotelParity(): WalkParity {
+  const text = readFileSync(GOLDEN, 'utf8'), golden = JSON.parse(text) as WalkParity;
+  if (JSON.stringify(golden, null, 1) + '\n' !== text) throw new Error('record-walk-parity: the golden is not as the recorder writes it; the other entries would not stay byte for byte');
+  golden.models.hotel = runWalkParity('hotel').hotel!;
   writeFileSync(GOLDEN, JSON.stringify(golden, null, 1) + '\n');
   return golden;
 }

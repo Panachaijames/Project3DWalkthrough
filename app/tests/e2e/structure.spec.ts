@@ -647,8 +647,18 @@ test('hotel: Floor 2 is floor where its plate is and open over its voids; the st
   const steps = await page.evaluate(() => {
     const h = (window as any).__host, M = h.model, out: any[] = [];
     const centre = (p: any) => { let x = 0, y = 0; p.o.forEach((q: number[]) => { x += q[0]!; y += q[1]!; }); return [x / p.o.length, y / p.o.length]; };
-    for (const p of M.parts.filter((q: any) => q.kind === 'step')) {
-      const [x, y] = centre(p), top = h.downHit(p.floor, x, y, 3.2);
+    // 16 Nov 2026: the app's viewer loads the hotel's complete F1 flight as the treads of a derived stairway
+    // (packages/viewer/src/model/upgrade.ts). A tread is walked on, not a collider: its top is the first surface of its
+    // floor (FL.surfaces: the plates and the tread mesh) under a ray from 3.2 m above the level, as downHit reads a step.
+    const treadTop = (floor: string, x: number, y: number): number | null => {
+      const T = (window as any).__walkthrough.THREE, ray = new T.Raycaster();
+      const level = h.floors.find((g: any) => g.key === floor).level as number;
+      ray.set(new T.Vector3(x, level + 3.2, -y), new T.Vector3(0, -1, 0)); ray.near = 0; ray.far = 8;
+      const hit = ray.intersectObjects(h.FL[floor].surfaces, false)[0];
+      return hit ? 3.2 - hit.distance : null;
+    };
+    for (const p of M.parts.filter((q: any) => q.kind === 'step' || q.kind === 'tread')) {
+      const [x, y] = centre(p), top = p.kind === 'tread' ? treadTop(p.floor, x!, y!) : h.downHit(p.floor, x, y, 3.2);
       out.push({ stair: p.label.split(' ')[0], floor: p.floor, y, z0: p.z0, top: top === null ? null : Math.round(top * 1000) / 1000, label: p.label });
     }
     const fl = h.floors, H = fl[1].level - fl[0].level;

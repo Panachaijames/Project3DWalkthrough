@@ -46,10 +46,16 @@ export const VERSIONS: Record<VersionKey, VersionRef> = {
   hotel: { key: 'hotel', projectId: 'hotel-lobby', version: 1, prototype: 'hotel_test/hotel_3d_preview.html', floors: ['F1', 'F2'], stamp: '6ab030750886', hasReplay: false, hasFurniture: true },
 };
 
-/** The file of a version on this target. */
+/**
+ * The file of a version on this target. App target: dist/offline, or WT_OFFLINE_DIR when it is set (offline files made
+ * outside dist/ from the viewer as it is now, as structure.spec.ts and oldPagePath() read them; 16 Nov 2026, so that
+ * modes.spec.ts can run on a builder's own files while nobody writes dist/).
+ */
 export function pagePath(v: VersionKey): string {
   const ref = VERSIONS[v];
-  return isApp ? path.join(APP, 'dist', 'offline', `${ref.projectId}-v${ref.version}.html`) : path.join(PROTOTYPES, ref.prototype);
+  if (!isApp) return path.join(PROTOTYPES, ref.prototype);
+  const dir = process.env.WT_OFFLINE_DIR ? path.resolve(process.env.WT_OFFLINE_DIR) : path.join(APP, 'dist', 'offline');
+  return path.join(dir, `${ref.projectId}-v${ref.version}.html`);
 }
 
 /** The file URL of a version on this target, with an address query (e.g. '?build=0&nodownload=1&test=1'). */
