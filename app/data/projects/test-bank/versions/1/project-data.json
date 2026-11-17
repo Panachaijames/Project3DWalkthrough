@@ -1,0 +1,144 @@
+{
+  "format": "build-settings/1",
+  "office": null,
+  "project": {
+    "photoName": "TEST-BANK",
+    "maxPrefix": "TB",
+    "maxFileName": "TEST_BANK.ms",
+    "name": "TEST_BANK",
+    "shortName": "TEST_BANK",
+    "projectNo": null,
+    "exportedFrom": "Revit"
+  },
+  "sources": [
+    {
+      "sha1": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "name": "I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg",
+      "kind": "dwg",
+      "units": "mm",
+      "unitsConfirmed": true
+    },
+    {
+      "sha1": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "name": "I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg",
+      "kind": "dwg",
+      "units": "mm",
+      "unitsConfirmed": true
+    }
+  ],
+  "layers": {
+    "0": "other",
+    "A-ANNO-DIMS": "ignore",
+    "A-ANNO-DIMS-100": "ignore",
+    "A-ANNO-NOTE": "ignore",
+    "A-AREA-IDEN": "room-name",
+    "A-DETL": "other",
+    "A-DETL-GENF": "other",
+    "A-DOOR": "door",
+    "A-DOOR-FRAM": "door",
+    "A-DOOR-GLAZ": "door",
+    "A-DOOR-HDLN": "door",
+    "A-FLOR": "other",
+    "A-FLOR-HRAL": "railing",
+    "A-FLOR-HRAL-MBND": "railing",
+    "A-GENM": "other",
+    "A-GLAZ-CURT": "glass",
+    "A-GLAZ-CWMG": "glass",
+    "A-WALL": "wall",
+    "A-WALL-PATT": "wall",
+    "Defpoints": "other",
+    "E-COMM": "other",
+    "E-ELEC-FIXT": "other",
+    "G-ANNO-NPLT": "ignore",
+    "G-ANNO-TEXT": "ignore",
+    "G-ANNO-TTLB": "ignore",
+    "I-FURN": "furniture",
+    "L-PLNT": "furniture",
+    "P-SANR-FIXT": "furniture",
+    "Q-CASE": "furniture",
+    "Q-CASE-HDLN": "furniture",
+    "Q-SPCQ": "furniture",
+    "S-COLS": "column",
+    "S-GRID": "grid",
+    "S-GRID-IDEN": "grid",
+    "S-STRS": "stair",
+    "S-STRS-MBND": "stair-above"
+  },
+  "floors": [
+    {
+      "key": "L1",
+      "name": "Level 1",
+      "source": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "area": {
+        "kind": "wholeFile"
+      },
+      "level": 0.0,
+      "wallHeight": 3.0,
+      "slabThickness": null,
+      "doorHead": null,
+      "windowSill": null,
+      "windowHead": null,
+      "align": {
+        "method": "auto"
+      },
+      "ceilingHeight": null
+    },
+    {
+      "key": "L2",
+      "name": "Level 2",
+      "source": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "area": {
+        "kind": "wholeFile"
+      },
+      "level": 3.0,
+      "wallHeight": 3.0,
+      "slabThickness": null,
+      "doorHead": null,
+      "windowSill": null,
+      "windowHead": null,
+      "align": {
+        "method": "auto"
+      },
+      "ceilingHeight": null
+    }
+  ],
+  "defaults": {
+    "doorHead": 2.1,
+    "windowSill": 0.9,
+    "windowHead": 2.1,
+    "railingHeight": 1.1,
+    "slabThickness": 0.25,
+    "singleLineHeight": 1.0
+  },
+  "furniture": {
+    "heights": {},
+    "bases": {},
+    "words": {},
+    "skip": [],
+    "minSize": 0.08,
+    "minDepth": null,
+    "looseLayers": [],
+    "pieceLayer": "insert"
+  },
+  "vocabulary": {},
+  "options": {
+    "revitWallTypes": "auto",
+    "parapets": "auto",
+    "objectClosures": true,
+    "liftShafts": true,
+    "plinth": "auto",
+    "outlineWalls": "off",
+    "offset": "auto",
+    "slabs": "network",
+    "ceilings": "auto",
+    "stairs": "climb"
+  },
+  "fixes": {
+    "setAside": [],
+    "openings": [],
+    "outlineEdges": [],
+    "closings": [],
+    "rooms": [],
+    "stairs": []
+  }
+}

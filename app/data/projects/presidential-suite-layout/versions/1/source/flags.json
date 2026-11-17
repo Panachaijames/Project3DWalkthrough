@@ -1,0 +1,574 @@
+{
+  "format": "build-flags/1",
+  "flags": [
+    {
+      "id": "opening:L1:1ef5b66cb34a",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-001: passage to check",
+      "detail": "Check this opening: a passage, confidence 0.5.",
+      "at": [
+        14.287,
+        1.109
+      ],
+      "bbox": [
+        13.887,
+        1.109,
+        14.687,
+        1.109
+      ],
+      "ref": {
+        "openingId": "L1-001"
+      }
+    },
+    {
+      "id": "opening:L1:a2c4e5ab12f8",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-005: door to check",
+      "detail": "Check this opening: confidence 0.5, host none, ends from the swing.",
+      "at": [
+        13.754,
+        3.305
+      ],
+      "bbox": [
+        13.322,
+        3.301,
+        14.187,
+        3.309
+      ],
+      "ref": {
+        "openingId": "L1-005"
+      }
+    },
+    {
+      "id": "opening:L1:894052fa7a61",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-007: door to check",
+      "detail": "Check this opening: confidence 0.5, host none, ends from the swing.",
+      "at": [
+        12.062,
+        3.232
+      ],
+      "bbox": [
+        11.712,
+        3.229,
+        12.412,
+        3.235
+      ],
+      "ref": {
+        "openingId": "L1-007"
+      }
+    },
+    {
+      "id": "opening:L1:1ad0fdbcbb9b",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-008: door to check",
+      "detail": "Check this opening: confidence 0.5, host none, ends from the swing.",
+      "at": [
+        20.564,
+        4.809
+      ],
+      "bbox": [
+        20.561,
+        4.459,
+        20.567,
+        5.159
+      ],
+      "ref": {
+        "openingId": "L1-008"
+      }
+    },
+    {
+      "id": "opening:L1:b13889f343ac",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-009: door to check",
+      "detail": "Check this opening: confidence 0.5, host none, ends from the swing.",
+      "at": [
+        21.112,
+        3.386
+      ],
+      "bbox": [
+        20.762,
+        3.383,
+        21.462,
+        3.389
+      ],
+      "ref": {
+        "openingId": "L1-009"
+      }
+    },
+    {
+      "id": "opening:L1:8cbac4b23bbc",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-010: door to check",
+      "detail": "Check this opening: confidence 0.5, host none, ends from the swing.",
+      "at": [
+        11.511,
+        4.197
+      ],
+      "bbox": [
+        11.507,
+        3.747,
+        11.514,
+        4.647
+      ],
+      "ref": {
+        "openingId": "L1-010"
+      }
+    },
+    {
+      "id": "opening:L1:dbec9261aa51",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-011: window to check",
+      "detail": "Check this opening: confidence 0.4, a door or a window.",
+      "at": [
+        4.683,
+        12.678
+      ],
+      "bbox": [
+        4.069,
+        12.324,
+        5.296,
+        13.033
+      ],
+      "ref": {
+        "openingId": "L1-011"
+      }
+    },
+    {
+      "id": "opening:L1:696f66c5f562",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-012: window to check",
+      "detail": "Check this opening: confidence 0.4, a door or a window.",
+      "at": [
+        5.742,
+        12.944
+      ],
+      "bbox": [
+        5.352,
+        12.839,
+        6.132,
+        13.048
+      ],
+      "ref": {
+        "openingId": "L1-012"
+      }
+    },
+    {
+      "id": "opening:L1:4eba3a9a0dd9",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-013: window to check",
+      "detail": "Check this opening: confidence 0.4, a door or a window.",
+      "at": [
+        3.862,
+        11.91
+      ],
+      "bbox": [
+        3.757,
+        11.52,
+        3.966,
+        12.3
+      ],
+      "ref": {
+        "openingId": "L1-013"
+      }
+    },
+    {
+      "id": "opening:L1:411b9987e6a9",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-014: window to check",
+      "detail": "Check this opening: confidence 0.4, a door or a window.",
+      "at": [
+        9.058,
+        12.678
+      ],
+      "bbox": [
+        8.444,
+        12.324,
+        9.671,
+        13.033
+      ],
+      "ref": {
+        "openingId": "L1-014"
+      }
+    },
+    {
+      "id": "opening:L1:8eb24307a448",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-015: window to check",
+      "detail": "Check this opening: confidence 0.4, a door or a window.",
+      "at": [
+        10.117,
+        12.944
+      ],
+      "bbox": [
+        9.727,
+        12.839,
+        10.507,
+        13.048
+      ],
+      "ref": {
+        "openingId": "L1-015"
+      }
+    },
+    {
+      "id": "opening:L1:945068aefabc",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-016: window to check",
+      "detail": "Check this opening: confidence 0.4, a door or a window.",
+      "at": [
+        8.237,
+        11.91
+      ],
+      "bbox": [
+        8.132,
+        11.52,
+        8.341,
+        12.3
+      ],
+      "ref": {
+        "openingId": "L1-016"
+      }
+    },
+    {
+      "id": "opening:L1:f5605f9ef712",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-017: window to check",
+      "detail": "Check this opening: confidence 0.4, a door or a window.",
+      "at": [
+        13.433,
+        12.678
+      ],
+      "bbox": [
+        12.819,
+        12.324,
+        14.046,
+        13.033
+      ],
+      "ref": {
+        "openingId": "L1-017"
+      }
+    },
+    {
+      "id": "opening:L1:852e9dfb93b9",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-018: window to check",
+      "detail": "Check this opening: confidence 0.4, a door or a window.",
+      "at": [
+        14.492,
+        12.944
+      ],
+      "bbox": [
+        14.102,
+        12.839,
+        14.882,
+        13.048
+      ],
+      "ref": {
+        "openingId": "L1-018"
+      }
+    },
+    {
+      "id": "opening:L1:5c76db3bf7b3",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-019: window to check",
+      "detail": "Check this opening: confidence 0.55.",
+      "at": [
+        12.612,
+        11.91
+      ],
+      "bbox": [
+        12.507,
+        11.52,
+        12.716,
+        12.3
+      ],
+      "ref": {
+        "openingId": "L1-019"
+      }
+    },
+    {
+      "id": "opening:L1:752cd4490d06",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-020: window to check",
+      "detail": "Check this opening: confidence 0.4, a door or a window.",
+      "at": [
+        17.808,
+        12.678
+      ],
+      "bbox": [
+        17.194,
+        12.324,
+        18.422,
+        13.033
+      ],
+      "ref": {
+        "openingId": "L1-020"
+      }
+    },
+    {
+      "id": "opening:L1:56700c274d83",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-021: window to check",
+      "detail": "Check this opening: confidence 0.4, a door or a window.",
+      "at": [
+        18.867,
+        12.944
+      ],
+      "bbox": [
+        18.477,
+        12.839,
+        19.257,
+        13.048
+      ],
+      "ref": {
+        "openingId": "L1-021"
+      }
+    },
+    {
+      "id": "opening:L1:59b1b59676ab",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-022: window to check",
+      "detail": "Check this opening: confidence 0.4, a door or a window.",
+      "at": [
+        16.987,
+        11.91
+      ],
+      "bbox": [
+        16.882,
+        11.52,
+        17.091,
+        12.3
+      ],
+      "ref": {
+        "openingId": "L1-022"
+      }
+    },
+    {
+      "id": "opening:L1:21451f91809f",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-023: window to check",
+      "detail": "Check this opening: confidence 0.4, a door or a window.",
+      "at": [
+        22.183,
+        12.678
+      ],
+      "bbox": [
+        21.569,
+        12.324,
+        22.797,
+        13.033
+      ],
+      "ref": {
+        "openingId": "L1-023"
+      }
+    },
+    {
+      "id": "opening:L1:16a320a4b221",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-024: window to check",
+      "detail": "Check this opening: confidence 0.4, a door or a window.",
+      "at": [
+        23.242,
+        12.944
+      ],
+      "bbox": [
+        22.852,
+        12.839,
+        23.632,
+        13.048
+      ],
+      "ref": {
+        "openingId": "L1-024"
+      }
+    },
+    {
+      "id": "opening:L1:c0623512a708",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-025: window to check",
+      "detail": "Check this opening: confidence 0.55.",
+      "at": [
+        21.362,
+        11.91
+      ],
+      "bbox": [
+        21.257,
+        11.52,
+        21.466,
+        12.3
+      ],
+      "ref": {
+        "openingId": "L1-025"
+      }
+    },
+    {
+      "id": "room-label:L1:29f6586a256e",
+      "kind": "room-label",
+      "floor": "L1",
+      "severity": "info",
+      "title": "\"BAR\" is not a room name",
+      "detail": "A text on a room-name layer that names no room (a tag or a code): left out of the rooms.",
+      "at": [
+        17.768,
+        4.904
+      ],
+      "bbox": null,
+      "ref": {}
+    },
+    {
+      "id": "room-label:L1:6e120b26b715",
+      "kind": "room-label",
+      "floor": "L1",
+      "severity": "info",
+      "title": "\"BOH.\" is not a room name",
+      "detail": "A text on a room-name layer that names no room (a tag or a code): left out of the rooms.",
+      "at": [
+        21.075,
+        4.573
+      ],
+      "bbox": null,
+      "ref": {}
+    },
+    {
+      "id": "plate-dropped:L1:152b3e0cd575",
+      "kind": "plate-dropped",
+      "floor": "L1",
+      "severity": "info",
+      "title": "A floor area was left out",
+      "detail": "An area of 0.78 m2 next to the walls, outside the rooms they close, was left out of the floor plate (no standing room).",
+      "at": [
+        20.761,
+        11.915
+      ],
+      "bbox": null,
+      "ref": {}
+    },
+    {
+      "id": "plate-dropped:L1:ee11a29f46ba",
+      "kind": "plate-dropped",
+      "floor": "L1",
+      "severity": "info",
+      "title": "A floor area was left out",
+      "detail": "An area of 0.78 m2 next to the walls, outside the rooms they close, was left out of the floor plate (no standing room).",
+      "at": [
+        16.386,
+        11.915
+      ],
+      "bbox": null,
+      "ref": {}
+    },
+    {
+      "id": "plate-dropped:L1:dec11ff90b83",
+      "kind": "plate-dropped",
+      "floor": "L1",
+      "severity": "info",
+      "title": "A floor area was left out",
+      "detail": "An area of 0.81 m2 next to the walls, outside the rooms they close, was left out of the floor plate (no door or passage opens onto it).",
+      "at": [
+        15.387,
+        0.607
+      ],
+      "bbox": null,
+      "ref": {}
+    },
+    {
+      "id": "plate-dropped:L1:ac6054fe7cb2",
+      "kind": "plate-dropped",
+      "floor": "L1",
+      "severity": "info",
+      "title": "A floor area was left out",
+      "detail": "An area of 0.78 m2 next to the walls, outside the rooms they close, was left out of the floor plate (no standing room).",
+      "at": [
+        12.011,
+        11.915
+      ],
+      "bbox": null,
+      "ref": {}
+    },
+    {
+      "id": "plate-dropped:L1:0120ab3b2821",
+      "kind": "plate-dropped",
+      "floor": "L1",
+      "severity": "info",
+      "title": "A floor area was left out",
+      "detail": "An area of 0.78 m2 next to the walls, outside the rooms they close, was left out of the floor plate (no standing room).",
+      "at": [
+        7.636,
+        11.915
+      ],
+      "bbox": null,
+      "ref": {}
+    },
+    {
+      "id": "plate-dropped:L1:5a64954fdf77",
+      "kind": "plate-dropped",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1: the floor plate is 35 m2 of the about 296 m2 the walls span",
+      "detail": "The walls do not close round the floor, so most of it has no floor plate. The floor plate is made of the rooms the walls close (the bank's rule): where the walls or the facade do not close (gaps at corners, glass that is not built, or walls on a layer that is not built), the rooms between them get no floor and cannot be walked. Check the wall and glass layers on the Layers step; plates from the wall network are a later option.",
+      "at": [
+        13.324,
+        5.859
+      ],
+      "bbox": [
+        1.569,
+        0.009,
+        25.079,
+        13.084
+      ],
+      "ref": {}
+    },
+    {
+      "id": "units:-:9e7a115bfbab",
+      "kind": "units",
+      "floor": null,
+      "severity": "check",
+      "title": "presidential suite_layout.dwg: read in millimetres, not the inches its header declares",
+      "detail": "The door symbols measure right in millimetres (door votes: mm 7). the file says inches, its doors say millimetres (7 doors measure right in millimetres, 0 in inches): read in millimetres Check the units on the Files step.",
+      "at": null,
+      "bbox": null,
+      "ref": {}
+    }
+  ]
+}

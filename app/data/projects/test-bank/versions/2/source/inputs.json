@@ -1,0 +1,64 @@
+{
+  "format": "version-inputs/1",
+  "buildId": "20261117T033818-270280",
+  "runId": "0002-build",
+  "settingsRevision": 1,
+  "builtAt": "2026-11-17T03:38:35Z",
+  "sources": [
+    {
+      "sha1": "459d40fc230607ffe35e2ee9d443cd2b0105dc36",
+      "name": "I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg",
+      "bytes": 500287,
+      "kind": "dwg",
+      "units": "mm",
+      "verdict": "ok",
+      "dxfSha1": "9167d084f7e311b59e7c2cdb2bae8506d96a4cfa"
+    },
+    {
+      "sha1": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+      "name": "I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg",
+      "bytes": 1212280,
+      "kind": "dwg",
+      "units": "mm",
+      "verdict": "ok",
+      "dxfSha1": "c88491df71a0b77835ce3557731e0ed7bfc2e1fe"
+    }
+  ],
+  "converter": {
+    "name": "libredwg",
+    "version": "0.14",
+    "exeSha1": "07f9c8d95dc0209675c6d8dece4beaab8494d2c1"
+  },
+  "builder": {
+    "version": "1",
+    "python": "3.14.3",
+    "packages": {
+      "ezdxf": "1.4.4",
+      "shapely": "2.1.2",
+      "numpy": "2.4.4",
+      "matplotlib": "3.11.2",
+      "pillow": "12.2.0"
+    },
+    "vendor": {
+      "openings.py": "14a570251f6d0af4e92037db2db69322b31cc065",
+      "geomkit.py": "6d4f8178794ea90821632b945c36d2b4cc25625e",
+      "tools/prims.py": "0e5566a0cf5bf0767cf7c76845aae47316fcbc7a",
+      "merge_cad.py": "9bc684cc0efd48a18b87d404c6c4ae3faee2768f",
+      "geom.py": "e0cc10922e169695daf5970f04ee5b2bcc177d65",
+      "furniture_kit.py": "8b28cc66f05b4b5fb559e960f8b3b936b5fbb252",
+      "furniture_max.py": "53481725317480cf545d62e94379c4dfd358ddbd"
+    }
+  },
+  "seconds": {
+    "read": 0.28,
+    "align": 0.0,
+    "detect:L1": 1.05,
+    "detect:L2": 0.66,
+    "walls": 0.31,
+    "openings": 2.81,
+    "furniture": 2.02,
+    "build": 5.14,
+    "total": 8.03,
+    "outputs": 2.13
+  }
+}

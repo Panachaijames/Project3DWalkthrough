@@ -1,0 +1,62 @@
+{
+  "format": "conversion-report/1",
+  "source": {
+    "sha1": "9e84e27fef67773b73ec8ef42bc25f65a5f1c52c",
+    "name": "presidential suite_layout.dwg",
+    "bytes": 2280952,
+    "kind": "dwg",
+    "formatVersion": "AC1032"
+  },
+  "converter": {
+    "name": "libredwg",
+    "version": "0.14",
+    "exeSha1": "07f9c8d95dc0209675c6d8dece4beaab8494d2c1"
+  },
+  "dxf": {
+    "sha1": "47faf6f7c281d1d092eb3dbf6f0581ab04be4221",
+    "bytes": 15445233,
+    "acadVersion": "AC1032",
+    "insUnits": 1,
+    "auditErrors": 0,
+    "auditFixes": 13
+  },
+  "seconds": 0.9,
+  "peakMemoryMB": 91.5,
+  "exitCode": 0,
+  "messages": [
+    {
+      "class": "hatch-short-handles",
+      "count": 264,
+      "example": "Warning: Skip HATCH common handles due to short handle stream"
+    },
+    {
+      "class": "handle-not-found",
+      "count": 145,
+      "example": "Warning: Object handle not found 18715/0x491B in 41396 objects of max 0xD97B handles"
+    },
+    {
+      "class": "unstable-class",
+      "count": 11,
+      "example": "Warning: Unstable Class object 504 TABLESTYLE (0xfff) 42/0"
+    },
+    {
+      "class": "unhandled-class",
+      "count": 5,
+      "example": "Warning: TODO TABLESTYLE r2010+ missing fields"
+    }
+  ],
+  "totals": {
+    "dwgEntities": 40683,
+    "dxfEntities": 40683,
+    "missing": 0,
+    "extra": 0,
+    "layerChanged": 0,
+    "emptyLayer": 0
+  },
+  "byLayer": [],
+  "lostBlocks": [],
+  "renamedBlocks": [],
+  "unknownObjects": 0,
+  "verdict": "ok",
+  "notes": []
+}

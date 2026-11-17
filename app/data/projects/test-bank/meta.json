@@ -1,0 +1,15 @@
+{
+  "format": "walkthrough-project/1",
+  "id": "test-bank",
+  "name": "TEST_BANK",
+  "shortName": "TEST_BANK",
+  "projectNo": null,
+  "sourceKind": "cad",
+  "createdAt": "2026-11-12T06:39:10Z",
+  "updatedAt": "2026-11-17T03:38:45Z",
+  "latestVersion": 2,
+  "versions": [
+    1,
+    2
+  ]
+}

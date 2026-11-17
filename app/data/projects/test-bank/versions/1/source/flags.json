@@ -1,0 +1,399 @@
+{
+  "format": "build-flags/1",
+  "flags": [
+    {
+      "id": "opening:L1:1ef5b66cb34a",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-001: window to check",
+      "detail": "Check this opening: confidence 0.55, a door or a window.",
+      "at": [
+        2.225,
+        -9.132
+      ],
+      "bbox": [
+        1.466,
+        -9.134,
+        2.985,
+        -9.13
+      ],
+      "ref": {
+        "openingId": "L1-001"
+      }
+    },
+    {
+      "id": "opening:L1:2f17094c48a8",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-003: passage to check",
+      "detail": "Check this opening: a passage, confidence 0.5.",
+      "at": [
+        -2.483,
+        -5.04
+      ],
+      "bbox": [
+        -3.085,
+        -5.04,
+        -1.88,
+        -5.04
+      ],
+      "ref": {
+        "openingId": "L1-003"
+      }
+    },
+    {
+      "id": "opening:L1:b13889f343ac",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-009: window to check",
+      "detail": "Check this opening: confidence 0.55, a door or a window.",
+      "at": [
+        6.276,
+        -1.732
+      ],
+      "bbox": [
+        6.25,
+        -3.013,
+        6.301,
+        -0.451
+      ],
+      "ref": {
+        "openingId": "L1-009"
+      }
+    },
+    {
+      "id": "opening:L1:8cbac4b23bbc",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-010: window to check",
+      "detail": "Check this opening: confidence 0.55, a door or a window.",
+      "at": [
+        6.207,
+        1.624
+      ],
+      "bbox": [
+        6.182,
+        0.349,
+        6.233,
+        2.899
+      ],
+      "ref": {
+        "openingId": "L1-010"
+      }
+    },
+    {
+      "id": "opening:L1:696f66c5f562",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-012: window to check",
+      "detail": "Check this opening: confidence 0.55, a door or a window.",
+      "at": [
+        -0.027,
+        -9.13
+      ],
+      "bbox": [
+        -0.627,
+        -9.13,
+        0.573,
+        -9.13
+      ],
+      "ref": {
+        "openingId": "L1-012"
+      }
+    },
+    {
+      "id": "opening:L1:752cd4490d06",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-020: window to check",
+      "detail": "Check this opening: confidence 0.55, a door or a window.",
+      "at": [
+        6.236,
+        -4.78
+      ],
+      "bbox": [
+        6.22,
+        -5.613,
+        6.253,
+        -3.948
+      ],
+      "ref": {
+        "openingId": "L1-020"
+      }
+    },
+    {
+      "id": "opening:L1:21451f91809f",
+      "kind": "opening",
+      "floor": "L1",
+      "severity": "check",
+      "title": "L1-023: passage to check",
+      "detail": "Check this opening: a passage, confidence 0.5.",
+      "at": [
+        -3.505,
+        -5.83
+      ],
+      "bbox": [
+        -3.505,
+        -6.557,
+        -3.505,
+        -5.104
+      ],
+      "ref": {
+        "openingId": "L1-023"
+      }
+    },
+    {
+      "id": "room-label:L1:5e9cbfad82c5",
+      "kind": "room-label",
+      "floor": "L1",
+      "severity": "check",
+      "title": "5 texts on G-ANNO-TEXT look like room names",
+      "detail": "G-ANNO-TEXT is set to Ignore, so these texts name no room: BA, BE, ATM, MO 4 PAX. If they name rooms, set the layer to Room names on the Layers step and build again.",
+      "at": [
+        -0.499,
+        -1.462
+      ],
+      "bbox": [
+        -0.499,
+        -5.016,
+        4.582,
+        1.317
+      ],
+      "ref": {}
+    },
+    {
+      "id": "opening:L2:54f9bed26ef8",
+      "kind": "opening",
+      "floor": "L2",
+      "severity": "check",
+      "title": "L2-017: passage to check",
+      "detail": "Check this opening: a passage, confidence 0.5.",
+      "at": [
+        -1.893,
+        9.655
+      ],
+      "bbox": [
+        -2.508,
+        9.655,
+        -1.278,
+        9.655
+      ],
+      "ref": {
+        "openingId": "L2-017"
+      }
+    },
+    {
+      "id": "rail-left-out:L2:cd1145190187",
+      "kind": "rail-left-out",
+      "floor": "L2",
+      "severity": "info",
+      "title": "A railing was left out",
+      "detail": "A line on a railing layer was left out (off the floor, or on a stair).",
+      "at": [
+        2.564,
+        8.461
+      ],
+      "bbox": null,
+      "ref": {
+        "keys": [
+          "BA/973/68B",
+          "BA/973/68D",
+          "BA/973/68E",
+          "BA/973/68F",
+          "BA/973/690",
+          "BA/973/691",
+          "BA/973/692",
+          "BA/973/693",
+          "BA/973/694",
+          "BA/973/695",
+          "BA/973/696",
+          "BA/973/697",
+          "BA/973/69F",
+          "BA/973/6A0",
+          "BA/973/6A6",
+          "BA/973/6A7/685",
+          "BA/973/6A7/686",
+          "BA/973/6A7/687",
+          "BA/975/72A",
+          "BA/975/72B",
+          "BA/975/72C",
+          "BA/975/72D",
+          "BA/975/72E/685",
+          "BA/975/72E/686",
+          "BA/975/72E/687",
+          "BA/975/72F/724",
+          "BA/975/72F/725",
+          "BA/975/72F/726"
+        ]
+      }
+    },
+    {
+      "id": "rail-left-out:L2:6fb57ecee558",
+      "kind": "rail-left-out",
+      "floor": "L2",
+      "severity": "info",
+      "title": "A railing was left out",
+      "detail": "A line on a railing layer was left out (off the floor, or on a stair).",
+      "at": [
+        0.345,
+        12.164
+      ],
+      "bbox": null,
+      "ref": {
+        "keys": [
+          "BA/970/625",
+          "BA/970/626",
+          "BA/970/627",
+          "BA/970/628",
+          "BA/970/629",
+          "BA/970/62A",
+          "BA/970/62B",
+          "BA/970/62C",
+          "BA/970/62D/61F",
+          "BA/970/62D/620",
+          "BA/970/62D/621"
+        ]
+      }
+    },
+    {
+      "id": "room-label:L2:31622fb03985",
+      "kind": "room-label",
+      "floor": "L2",
+      "severity": "check",
+      "title": "6 texts on G-ANNO-TEXT look like room names",
+      "detail": "G-ANNO-TEXT is set to Ignore, so these texts name no room: UP, DOWN, CSO 5PAX, FOR 1 PAX .... If they name rooms, set the layer to Room names on the Layers step and build again.",
+      "at": [
+        3.196,
+        1.479
+      ],
+      "bbox": [
+        -0.263,
+        -4.566,
+        4.679,
+        9.521
+      ],
+      "ref": {}
+    },
+    {
+      "id": "grey-furniture:L2:0cc093d1527e",
+      "kind": "grey-furniture",
+      "floor": "L2",
+      "severity": "info",
+      "title": "Fritz-Hansen_SH200 - Default: 8 grey boxes",
+      "detail": "The furniture kit does not know what Fritz-Hansen_SH200 - Default is, so its 8 pieces are grey. Pick a kind for the family.",
+      "at": [
+        1.723,
+        -4.565
+      ],
+      "bbox": [
+        1.723,
+        -7.696,
+        5.303,
+        2.288
+      ],
+      "ref": {
+        "family": "Fritz-Hansen_SH200 - Default"
+      }
+    },
+    {
+      "id": "stair:L1:c1ad8af8a125",
+      "kind": "stair",
+      "floor": "L1",
+      "severity": "check",
+      "title": "Stair kept as lines",
+      "detail": "Stair at (-2.3, 12.2): its top does not stand on a floor plate.",
+      "at": [
+        -2.283,
+        12.18
+      ],
+      "bbox": null,
+      "ref": {
+        "stair": "L1-ST1"
+      }
+    },
+    {
+      "id": "stair:L1:14c66db4a1fc",
+      "kind": "stair",
+      "floor": "L1",
+      "severity": "check",
+      "title": "Stair kept as lines",
+      "detail": "Stair at (2.8, 9.1): kept as lines: which end is the bottom was not found.",
+      "at": [
+        2.793,
+        9.102
+      ],
+      "bbox": null,
+      "ref": {
+        "stair": "L1-ST2"
+      }
+    },
+    {
+      "id": "stair:L2:f86cb55bca51",
+      "kind": "stair",
+      "floor": "L2",
+      "severity": "check",
+      "title": "Stair kept as lines",
+      "detail": "Stair at (-2.3, 12.2): its top does not stand on a floor plate.",
+      "at": [
+        -2.283,
+        12.18
+      ],
+      "bbox": null,
+      "ref": {
+        "stair": "L2-ST1"
+      }
+    },
+    {
+      "id": "stair:L2:994a02763ec7",
+      "kind": "stair",
+      "floor": "L2",
+      "severity": "check",
+      "title": "Stair kept as lines",
+      "detail": "Stair at (3.5, 7.6): kept as lines: which end is the bottom was not found.",
+      "at": [
+        3.537,
+        7.589
+      ],
+      "bbox": null,
+      "ref": {
+        "stair": "L2-ST2"
+      }
+    },
+    {
+      "id": "stair:L2:81208125681f",
+      "kind": "stair",
+      "floor": "L2",
+      "severity": "check",
+      "title": "Stair kept as lines",
+      "detail": "Stair at (3.5, 9.5): kept as lines: which end is the bottom was not found.",
+      "at": [
+        3.535,
+        9.46
+      ],
+      "bbox": null,
+      "ref": {
+        "stair": "L2-ST3"
+      }
+    },
+    {
+      "id": "stairs-none:L1:f75bc20774fb",
+      "kind": "stairs-none",
+      "floor": "L1",
+      "severity": "check",
+      "title": "No stair can be climbed",
+      "detail": "No stair between Level 1 and Level 2 can be climbed. Stair at (-2.3, 12.2): its top does not stand on a floor plate. Stair at (2.8, 9.1): kept as lines: which end is the bottom was not found.",
+      "at": [
+        -2.283,
+        12.18
+      ],
+      "bbox": null,
+      "ref": {}
+    }
+  ]
+}

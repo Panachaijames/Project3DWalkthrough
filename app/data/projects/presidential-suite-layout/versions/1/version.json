@@ -1,0 +1,83 @@
+{
+  "format": "walkthrough-version/1",
+  "projectId": "presidential-suite-layout",
+  "version": 1,
+  "label": "11 Nov 2026: built from presidential suite_layout.dwg",
+  "createdAt": "2026-11-11T03:30:02Z",
+  "sourceKind": "cad",
+  "sourceFiles": [
+    "presidential suite_layout.dwg"
+  ],
+  "modelFormat": "built-model/1",
+  "modelSha1": "9041e84fa2bbb7d9c43808ec842e1d509d0bcdad",
+  "stamp": "9041e84fa2bb",
+  "stampSource": "model.json",
+  "counts": {
+    "floors": 1,
+    "parts": 35,
+    "openings": 25,
+    "furniture": 74,
+    "furnitureKinds": 8,
+    "rooms": 6
+  },
+  "floors": [
+    {
+      "key": "L1",
+      "name": "Level 1",
+      "level": 0.0
+    }
+  ],
+  "hasStages": true,
+  "assets": [
+    {
+      "name": "topview.png",
+      "role": "thumbnail",
+      "mediaType": "image/png",
+      "bytes": 71042,
+      "sha1": "61c39e5eeddbfbdde86f3d084fb179f081b050a0"
+    }
+  ],
+  "downloads": {
+    "maxScript": "Presidential_suite_Layout.ms",
+    "furnitureCsv": true
+  },
+  "presentation": {
+    "documentTitle": "Presidential_suite_Layout",
+    "heading": "Presidential_suite_Layout",
+    "intro": [
+      {
+        "text": "Built from 1 drawing (presidential suite_layout.dwg): walls from the wall layers, glass from the glass layers, and 9 doors, 15 windows and 1 passage from the openings detector. 74 furniture boxes in 8 kinds. Levels +0.00 m. No AI used."
+      }
+    ],
+    "accent": "#2f6f8f",
+    "legend": {
+      "layout": "inline",
+      "items": [
+        {
+          "colour": "#e3ddd3",
+          "text": "Walls and lintels"
+        },
+        {
+          "colour": "#9cc3d5",
+          "text": "Glass"
+        },
+        {
+          "colour": "#d4d8d2",
+          "text": "Floor plates"
+        }
+      ]
+    },
+    "camera": {
+      "kind": "fitSlabs",
+      "away": [
+        18.956,
+        19.321,
+        22.966
+      ],
+      "targetY": 2.5,
+      "panForPanel": true,
+      "far": 600.0
+    },
+    "groundPlane": null
+  }
+}

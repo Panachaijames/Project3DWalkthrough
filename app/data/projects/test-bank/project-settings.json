@@ -1,0 +1,14 @@
+{
+  "format": "walkthrough-project-settings/1",
+  "office": null,
+  "naming": {
+    "photoName": "TEST-BANK",
+    "maxPrefix": "TB",
+    "maxFileName": "TEST_BANK.ms"
+  },
+  "offset": [
+    1.212,
+    0.352
+  ],
+  "updatedAt": "2026-11-17T03:38:45Z"
+}

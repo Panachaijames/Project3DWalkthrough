@@ -1,0 +1,104 @@
+{
+  "format": "walkthrough-version/1",
+  "projectId": "test-bank",
+  "version": 2,
+  "label": "17 Nov 2026: built from I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg, I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg",
+  "createdAt": "2026-11-17T03:38:45Z",
+  "sourceKind": "cad",
+  "sourceFiles": [
+    "I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg",
+    "I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg"
+  ],
+  "modelFormat": "built-model/2",
+  "modelSha1": "0b36911854fa0dd6a50676f69e2df0d215bd6f49",
+  "stamp": "0b36911854fa",
+  "stampSource": "model.json",
+  "counts": {
+    "floors": 2,
+    "parts": 154,
+    "openings": 49,
+    "furniture": 173,
+    "furnitureKinds": 13,
+    "rooms": 13
+  },
+  "floors": [
+    {
+      "key": "L1",
+      "name": "Level 1",
+      "level": 0.0
+    },
+    {
+      "key": "L2",
+      "name": "Level 2",
+      "level": 3.0
+    }
+  ],
+  "hasStages": true,
+  "assets": [
+    {
+      "name": "topview.png",
+      "role": "thumbnail",
+      "mediaType": "image/png",
+      "bytes": 168187,
+      "sha1": "14dc8cee237b11a27e99ae88dc1b323b947e803e"
+    }
+  ],
+  "downloads": {
+    "maxScript": "TEST_BANK.ms",
+    "furnitureCsv": true
+  },
+  "presentation": {
+    "documentTitle": "TEST_BANK",
+    "heading": "TEST_BANK",
+    "intro": [
+      {
+        "text": "Built from 2 drawings (I1201 - LEVEL 1 GENERAL ARRANGEMENT.dwg and I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg): walls from the wall layers, glass from the glass layers, and 39 doors, 7 windows and 3 passages from the openings detector. 173 furniture boxes in 13 kinds. Levels +0.00 / +3.00 m. No AI used."
+      }
+    ],
+    "accent": "#2f6f8f",
+    "legend": {
+      "layout": "inline",
+      "items": [
+        {
+          "colour": "#e3ddd3",
+          "text": "Walls and lintels"
+        },
+        {
+          "colour": "#9cc3d5",
+          "text": "Glass"
+        },
+        {
+          "colour": "#5d6b74",
+          "text": "Glass frames"
+        },
+        {
+          "colour": "#6f6a75",
+          "text": "Railings"
+        },
+        {
+          "colour": "#b9c7b4",
+          "text": "Stairs"
+        },
+        {
+          "colour": "#d4d8d2",
+          "text": "Floor plates"
+        }
+      ]
+    },
+    "floorButtons": {
+      "all": "Both floors"
+    },
+    "camera": {
+      "kind": "fitSlabs",
+      "away": [
+        17.975,
+        18.32,
+        21.777
+      ],
+      "targetY": 2.5,
+      "panForPanel": true,
+      "far": 600.0
+    },
+    "groundPlane": null
+  }
+}

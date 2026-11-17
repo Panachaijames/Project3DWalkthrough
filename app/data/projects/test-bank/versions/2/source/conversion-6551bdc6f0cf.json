@@ -1,0 +1,74 @@
+{
+  "format": "conversion-report/1",
+  "source": {
+    "sha1": "6551bdc6f0cff4e31e83b68a55d22cf42703029a",
+    "name": "I1202 - LEVEL 2 GENERAL ARRANGEMENT.dwg",
+    "bytes": 1212280,
+    "kind": "dwg",
+    "formatVersion": "AC1024"
+  },
+  "converter": {
+    "name": "libredwg",
+    "version": "0.14",
+    "exeSha1": "07f9c8d95dc0209675c6d8dece4beaab8494d2c1"
+  },
+  "dxf": {
+    "sha1": "c88491df71a0b77835ce3557731e0ed7bfc2e1fe",
+    "bytes": 7923920,
+    "acadVersion": "AC1024",
+    "insUnits": 4,
+    "auditErrors": 0,
+    "auditFixes": 24
+  },
+  "seconds": 0.63,
+  "peakMemoryMB": 49.5,
+  "exitCode": 0,
+  "messages": [
+    {
+      "class": "hatch-short-handles",
+      "count": 143,
+      "example": "Warning: Skip HATCH common handles due to short handle stream"
+    },
+    {
+      "class": "handle-not-found",
+      "count": 20,
+      "example": "Warning: Object handle not found 26274/0x66A2 in 22461 objects of max 0x685B handles"
+    },
+    {
+      "class": "unstable-class",
+      "count": 9,
+      "example": "Warning: Unstable Class object 501 MATERIAL (0x481) 14/0"
+    },
+    {
+      "class": "error:Invalid CMC",
+      "count": 4,
+      "example": "ERROR: Invalid CMC flag 0x43 ignored"
+    },
+    {
+      "class": "error:bit_read_*",
+      "count": 4,
+      "example": "ERROR: bit_read_BL: unexpected 2-bit code: '11'"
+    },
+    {
+      "class": "unhandled-class",
+      "count": 2,
+      "example": "Warning: TODO TABLESTYLE r2010+ missing fields"
+    }
+  ],
+  "totals": {
+    "dwgEntities": 21581,
+    "dxfEntities": 21581,
+    "missing": 0,
+    "extra": 0,
+    "layerChanged": 0,
+    "emptyLayer": 0
+  },
+  "byLayer": [],
+  "lostBlocks": [],
+  "renamedBlocks": [],
+  "unknownObjects": 0,
+  "verdict": "ok",
+  "notes": [
+    "The converter reported 8 errors of 2 kinds; nothing is missing."
+  ]
+}
