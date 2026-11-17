@@ -6,7 +6,7 @@ All URLs in responses are root-relative (`/api/...`); the web app never builds A
 Step BX (deleting one furniture box, 16 Nov 2026; docs/boxes/DESIGN.md 3.2, docs/contract-issues/BX.md), additive and
 authorised by the main session: `PieceEdit`, `HeightOverrides.piece_edits`, `HeightsUpdate.piece_edits`, and
 `VersionDetail.carried_edits` (`CarriedEdits`, present only when deleted boxes of the previous version did not carry
-over).
+over). Fixes after the review (17 Nov 2026), additive: `CarriedEdits.boxes` (`NotCarriedBox`: which boxes, and why).
 """
 from __future__ import annotations
 
@@ -122,6 +122,18 @@ class HeightOverrides(ApiModel):
     updated_at: str | None = Field(description='ISO 8601 UTC of the last save, or null.')
 
 
+class NotCarriedBox(ApiModel):
+    """One deleted furniture box of the earlier version that did not carry over (fix of 17 Nov 2026, additive)."""
+
+    kind: str = Field(description="The kind's label as that version named it, e.g. 'Chair / stool'.")
+    family: str = Field(description='The furniture family (drawing text).')
+    floor: str = Field(description="The floor's name as that version named it, e.g. 'Level 2'.")
+    reason: str = Field(description="Why it did not carry over, e.g. 'not found in the new drawing', 'its floor changed'.")
+    new_id: str | None = Field(default=None, exclude_if=lambda v: v is None,
+                               description="The box's id in this version when exactly one box of this version stands "
+                                           'where it stood (it shows again there); absent otherwise.')
+
+
 class CarriedEdits(ApiModel):
     """How the deleted furniture boxes of an earlier version fared when this version was saved with the carry tick (from
     versions/<n>/source/carried-edits.json)."""
@@ -129,6 +141,8 @@ class CarriedEdits(ApiModel):
     from_: int = Field(alias='from', description='The version whose deleted boxes were carried into this one.')
     not_carried: int = Field(description='How many of its deleted boxes did not carry over (not found one-to-one in the '
                                          'same place in this drawing): they show again in this version.')
+    boxes: list[NotCarriedBox] = Field(default_factory=list, description='The boxes that did not carry over, one each '
+                                                                         "in the furniture list's order (17 Nov 2026).")
 
 
 class VersionDetail(VersionSummary):

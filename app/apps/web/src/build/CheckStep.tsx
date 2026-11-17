@@ -183,7 +183,8 @@ export function CheckStep() {
   const [focus, setFocus] = useState<Bbox | null>(null);
   const [activeFlag, setActiveFlag] = useState<string | null>(null);
   const [opening, setOpening] = useState<string | null>(null);
-  const [family, setFamily] = useState<string | null>(null);
+  /** The grey family a flag's "Give it a kind" named, and how many clicks so far (each brings its select into view). */
+  const [family, setFamily] = useState<{ name: string; seq: number } | null>(null);
   const [find, setFind] = useState('');
   const [against, setAgainst] = useState(0);
   const [drawDiff, setDrawDiff] = useState(false);
@@ -518,11 +519,11 @@ export function CheckStep() {
           onSelectKeys={keys => select(keys, 'replace')}
           onOpening={id => setOpening(id)}
           onOutline={(f, as) => { if (key && f.ref.edge) change(setOutlineEdge({ floor: key, a: f.ref.edge[0], b: f.ref.edge[1], as })); }}
-          onFamily={setFamily}
+          onFamily={name => setFamily(f => ({ name, seq: (f?.seq ?? 0) + 1 }))}
           rooms={flagActions}
         />
         {settings && (
-          <FurnitureWords families={greyFamilies} settings={settings} disabled={!editable} focus={family}
+          <FurnitureWords families={greyFamilies} settings={settings} disabled={!editable} focus={family?.name ?? null} focusSeq={family?.seq}
             onKind={(fam, kind) => change(setFurnitureWord(fam, kind))} />
         )}
         {settings && setting && floorIndex >= 0 && (

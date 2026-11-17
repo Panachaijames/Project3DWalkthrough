@@ -67,7 +67,40 @@ Nothing has been put online or deployed. Everything runs on this laptop only. Th
   * The test projects that came with the app (bank, house, suite, hotel) can be deleted too.
   * Checked: unit tests 1044, the API's 576 (also with the real builder), every browser check (396, the deletes
     through the real API among them); the API only grew (`docs/contract-issues/DEL.md`).
-* **Next, as you asked:** deleting a single furniture box.
+
+## Added on 16-17 Nov (your requests)
+
+Restart the app to get these (Ctrl+C, then `npm run dev`), then reload the page.
+
+* **The hotel's stair climbs.** The hotel was made from two pictures on 2 Nov, before stairs could climb. The viewer now
+  recognises an older model's complete stair of step blocks (every step the same height, the top one step below the
+  next floor) and makes it climbable: in Walk, double-click at the foot, face the stair and hold **W** to reach Floor 2.
+  Only the hotel's main stair is such a stair among every saved model; the 7 steps on its Floor 2, which lead to a floor
+  not in the model, stay as they were. Nothing in the saved files changed.
+* **The bank's narrow north stair climbs** (in a version built from now on). It stands outside the north facade, between
+  the wall and its own railing; that strip had no floor, so the stair kept to lines. Such a strip now gets its floor
+  where it is closed off; where it is not, the Check step flags it with **Floor here** / **It is outdoors** instead of
+  leaving it out silently. Your TEST_BANK's v1 is as it was: make a new version (**New version**, **Use the files of v1
+  again**, **Build**, **Save**) and both its stairs climb. The north stair is reached by double-clicking its steps: its
+  top on Level 2 is a small closed pocket with no door (probably a door the door finder missed; its next round).
+* **Delete one furniture box.**
+  * **Orbit:** click a box: a magenta marker and a card (kind, family, size, floor); **Delete box** or the Delete key.
+    Pieces standing on it (a computer on a table) go with it, and the card says so first.
+  * **Walk / Ghost:** aim the crosshair at a box (within 6 m) and press **Delete**; a line at the bottom says what went.
+  * **Undo:** **Ctrl+Z** (or the card's **Undo**). Every deleted box is listed under the furniture legend
+    ("3 boxes deleted · Restore…"), with **Restore** for each and **Restore all**.
+  * Saved with the version like the heights; the top bar says "Furniture saved · 3 boxes deleted". The furniture list,
+    the 3ds Max script (its line 3 names the boxes left out, by their Max names) and the offline file leave them out.
+  * **A new version** keeps a deletion where the same box stands in the same place (same floor by its level, family,
+    place and size); any deleted box that comes back is named on the new version's page.
+  * The client's offline file shows the deletions but has no Delete button.
+  * For the 3D team: a Max scene built before boxes were deleted keeps them; delete those objects by the names in the
+    script's line 3. The filtered script has not yet been run in real 3ds Max: please try the bank's with a few boxes
+    deleted.
+* Checked once for the whole batch (16-17 Nov): unit 1190, API 611 (also with the real builder), the builder suite,
+  every acceptance step for the rooms, the eight old versions walk as on 9 Nov, the whole browser suite (404) and the
+  viewer harness; then two reviewers, one reading the code and one using the app as you would; their findings fixed
+  and the affected tests run again (`docs/contract-issues/BX.md`).
 
 ## What is new
 

@@ -539,3 +539,132 @@ offline files (this run's template): 57 passed. The full suite sets `WT_OFFLINE_
 section 9 row tells the move); the north stair's open points 1 and 2 (the acceptance settings do not climb it; the
 no-mouth strip is floored automatically); `rooms-walks` needs `WT_OFFLINE_DIR` (or a fresh `dist/`) while `dist/` is older
 than the viewer.
+
+---
+
+## Viewer fixes after the review, 17 Nov
+
+Three review findings fixed in `packages/viewer/src/furniture/` (`select.ts`, `pick.ts`), each with a unit test that fails
+without its fix (checked by taking each fix out alone). Not committed; nothing deployed.
+
+1. **Walk / Ghost: two quick Deletes took two boxes.** The aim re-picked at once after a delete, so a second Delete about
+   0.1 s later (meant for the same box) took the box behind it, and the line at the bottom named only that one. Now, after
+   a Walk / Ghost delete, nothing new is aimed at (no marker, Delete does nothing) until the view moves (the eye 2 cm or
+   its direction 1°: `HOLD_MOVE`, `HOLD_TURN`; anything smaller is not a move) or `AIM_HOLD_MS`
+   (500 ms) has passed. Ctrl+Z (a restore) and leaving Walk / Ghost end the hold at once. Test: `select.test.ts` "two quick
+   Deletes take one box ..." (two chairs on one line of sight on the mini model's Level 1, fake timers).
+2. **"(Del)" while the key was disarmed.** The card's button now reads "Delete box (Del)" only while Delete is armed (the
+   last pointerdown on the canvas or the card) and "Delete box" otherwise; it follows every pointerdown, and a card drawn
+   again (a typed height) keeps the right text. The button itself always works. Test: `select.test.ts` "the card offers
+   "(Del)" only while the Delete key is armed ..." (the panel, the page, the card, the Restore list).
+3. **Both floors: a restored Level 1 box drew its marker through Level 2's floor.** New `Picker.coverOf(p)` (`pick.ts`): a
+   ray straight down onto the middle of the box's top, against what the pick counts as hiding (walls, floor plates; not
+   glass, not the Walk skins) on the shown floors above it in its stack; the nearest such floor, or null. A box restored in
+   Orbit (the Restore list's Restore, the card's Undo, Ctrl+Z) that is under one counts as not shown: no marker, and the
+   card reads "Back on Level 1 (under Level 2: press Level 1 to see it)", with the floors' real names (as text). It is a
+   footprint test, not "any floor above": a box beyond the upper plate's edge is still selected (mini: the TV at x 7, the
+   plate ends at 6.2; the hotel: 23 of 159 boxes are under floor 2, the bank 87 of 185, the house 42 of 76, the mini 12 of
+   17). Tests: `remove.test.ts` "Orbit, Both floors, a Level 1 box under Level 2's plate ..." and "the floor above is named
+   by its real name (as text), the house's too".
+
+**Not changed (on purpose):** a click still selects what it hits (the user sees the box; a low view through a gap may show
+a Level 1 box under Level 2), and a box selected on Level 1 alone keeps its marker when Both floors is pressed afterwards
+(the floor switch drops a selection only when its floor is hidden, as before). Say if the floor switch should drop it too.
+
+**Tests changed because they pinned the old Both-floors behaviour:** `remove.test.ts` "the floor showing ..." and the
+kind-hidden half of "the floor not showing ..." now show Level 1 alone; `select.test.ts` "what stands on it ..." and "the
+builder note ..." select their Level 1 boxes on Level 1 alone. Harness `box-delete.spec.ts`: the Walk test's end now
+restores the chair in Both floors (no marker, the "under Level 2" card), then again on Level 1 alone (selected, the button
+"Delete box": the press in the list disarmed the key); the bank part shows the seat's floor alone before its restores.
+Harness `furniture.spec.ts`: after a typed height and Enter the button reads "Delete box".
+
+**For the main session (not this fixer's file):** `tests/e2e/leak.spec.ts` (A's) lines 219 - 229 delete and restore
+bank-v2's first free piece (`L1-atm-001`, under Level 2's plate) in Both floors and expect the marker and the card's
+Delete button. With fix 3 that restore shows the "under Level 2" card, so the check fails. Change: show that piece's floor
+first, e.g. `window.__walkthrough!.viewer.showFloors(p.floor);` before `F.removePiece(p.id);` (the leak counts are
+unaffected: `showFloors` adds no listener). `tests/e2e/box-delete.spec.ts` is not affected (it selects on the table's
+floor alone and restores only with Restore all and Undo).
+
+**Checks (17 Nov; `WT_TMP=%TEMP%\wt-fb`, web 5757):** `npm run typecheck` clean; `npm run test:unit` 95 files, 1185 tests
+passed (furniture 159); harness `box-delete.spec.ts` 3 passed and `furniture.spec.ts` "mini: a real click selects ..." 1
+passed (headless Edge, the e2e lock). The e2e specs were not run.
+
+---
+
+## Fixes after the review, 17 Nov (server and staff app)
+
+Six review findings fixed in `services/api` and `apps/web`, each with a test that fails without its fix (checked by running
+the new tests against the sources of `700d809`). Ports web 5756, API 8756, `WT_TMP=%TEMP%\wt-fa`. Not committed; nothing
+deployed; `app/data`, 5710 / 8710, `dist/` and `packages/viewer` not touched.
+
+1. **The carry-over trusted floor keys (major).** A new draft takes the latest model's floor keys by list position
+   (`propose._from_model`, `drafts/adopt.py`), so after a floor was added in front or the floors were reordered a deletion
+   could land on the identical box of another floor. New `piece_edits.floor_map(old, new)`: an old floor matches the new
+   floor of the same stack (default `main`) whose level is within 10 mm, one-to-one (two candidates on either side: no
+   match). `carry()` compares pieces only on the matched floor, never by key. A piece whose floor has no match is not
+   carried, `why` `floor changed` (shown as "its floor changed"); a dependent on such a floor gets the same `why`. The
+   reviewer's script (`%TEMP%\wt-rv1\carry-floor-shift.py`, the tower): before `L30-sanitary-007 -> L30-sanitary-009`
+   (Level 29's basin), now `-> L1-sanitary-007` (Level 30's own basin under its new key). Tests (`test_bx_piece_edits.py`):
+   `test_floors_are_matched_by_level_and_stack_never_by_key` (keys swapped, a twin chair on the other floor; a floor added
+   in front, the closure included), `test_floor_map` (10 mm yes, 11 mm no, stacks, two floors on one level),
+   `test_a_box_whose_floor_changed_is_not_carried` (store, record and the version detail's note).
+   **Limit, not fixed here:** the match trusts the levels. `propose._from_model` also hands out the latest model's levels
+   and wall heights by position (while they rise; `adopt.py` copies keys and names only), so a floor added in front whose
+   levels nobody corrects on the Floors step still maps by those levels; the model holds nothing else that tells floors
+   apart (no source per floor). The Floors step is where that is set right.
+2. **The note names the boxes.** Additive: `CarriedEdits.boxes: NotCarriedBox[]` (`models.py`, authorised by the main
+   session's brief), each `{kind, family, floor, reason, newId?}`: the kind's label and the floor's name as the old
+   version named them, the reason in words, `newId` only when exactly one box of the new version stands where it stood
+   (`matches <k> old pieces`, `was on a deleted support`). The record's rows gain `floorName`, `kindLabel` and, then,
+   `newId`; `why` keeps its words (plus `floor changed`), and `piece_edits.reason_text` turns them into the staff app's:
+   `no match` "not found in the new drawing", `floor changed` "its floor changed", `<k> matches` "<k> boxes in the new
+   drawing stand in its place", `matches <k> old pieces` "its box in the new drawing matches <k> old boxes", `was on a
+   deleted support` "it went with the box it stood on"; an unknown `why` is shown as it is. A record written on 16 Nov
+   (no labels) names its floor and kind by key; an odd row loses only its line. `carried_note` returns `Note(from, count,
+   boxes)`. Staff app (`lib/format.ts`): `carriedEditsLines`, `notCarriedBoxText`, `MAX_NOTE_BOXES` = 5; `carriedEditsText`
+   is now the head only ("2 deleted boxes of v1 are back"). One box: one line ("1 deleted box of v2 is back: Chair / stool
+   (Fritz-Hansen_SH200) on Level 2: not found in the new drawing"); several: the head with a colon, one short line each
+   (at most 5), then "and N more"; no list (an older answer): the head alone. The note (`ProjectVersionPage.tsx`) is 8 px
+   + 24 px per line high, each line `[data-testid=carried-edits-line]`, truncated, its full text as the tooltip (drawing
+   text as text); the viewer area starts below it (inline `top`). Tests: `test_bx_piece_edits.py` (rows, `carriedEdits`
+   with `boxes` in the three API pins, `reason_text`, an old record), `format.test.ts` (+1), `pages.test.tsx` (the note's
+   lines, `<b>` in a family stays text, 80 px, the viewer at 128 px).
+3. **A kind change alone stopped the carry.** The kind is no longer compared: floor (by level), family, place (10 mm),
+   size (10 mm) and turn, one-to-one as before, so a grey family given a kind on the Check step carries to its new id. No
+   kind condition is kept, so no reason about the kind exists. Test: `test_a_kind_change_alone_still_carries` (seat ->
+   sofa: carried to `L2-sofa-901`; before: "no match" and no `overrides.json`).
+4. **The draft's preview.** `BuildStep.tsx` `useCarriedBoxes` reads the project's latest version (the one the Save step's
+   tick carries from) while the preview is open and the draft is not saved; `DraftPreview` then shows one plain line under
+   its bar, `[data-testid=preview-deleted-boxes]`: "v2's 2 deleted boxes are applied when you save, where the same box is
+   in the same place." (`previewDeletedBoxesText`; "1 deleted box is" for one). Tests: `steps-build.test.tsx` +1, and the
+   old preview case checks there is no line when v2 has none.
+5. **"Give it a kind".** `FurnitureWords` scrolls the family's row into view (`block: 'center'`) and focuses its kind
+   select (`preventScroll`), again on every click (`CheckStep` keeps `{name, seq}`); the row is found by its
+   `data-family` value, never by a selector built from drawing text. Test: `furniture-fixes.test.tsx` +1 (the same family
+   twice, a family with a `$`).
+6. **A viewer re-created on the same version.** The saver core's `settled()` gives the heights and deleted boxes the tab
+   shows when nothing is pending, debouncing, in flight, failed or dirty (else null); `useHeightsSaver` exposes it.
+   `ProjectVersionPage`'s `onCreated` then calls `setHeights` / `setPieceEdits` where the new viewer differs. Tests:
+   `pages.test.tsx` +1 (a takeover, then an address change within the cache: the viewer is made without the other tab's
+   table, then shows it and its height; the next delete's PUT carries both), `heightsSync.test.tsx` +1 (`settled()`).
+
+**Files:** `services/api/walkthrough_api/{piece_edits, models, views}.py`, `services/api/tests/test_bx_piece_edits.py`
+(+4 tests, pins of the rows and of `carriedEdits`); `apps/web/openapi.json`, `apps/web/src/api/generated/{index,
+types.gen}.ts` (generated); `apps/web/src/{lib/format.ts, lib/useHeightsSaver.ts, pages/ProjectVersionPage.tsx,
+build/BuildStep.tsx, build/CheckStep.tsx, build/FurnitureWords.tsx}`; `apps/web/test/{format.test.ts, pages.test.tsx,
+heightsSync.test.tsx, build/steps-build.test.tsx, build/furniture-fixes.test.tsx}`.
+
+**Checks (17 Nov; `WT_TMP=%TEMP%\wt-fa`):**
+
+| Command | Result |
+|---|---|
+| `test_bx_piece_edits.py` alone | **35 passed** (31 + 4 new) |
+| the new tests against `700d809`'s sources | fail, each: the floor swap carried onto Level 1's twin, `floor_map` missing, the changed floor carried, the re-kinded box "no match", the note without its list; in the web, the five new cases, and the old preview case (it now waits for the read of v2) |
+| `npm run test:api` (alone) | **611 passed** (3 min 38 s; 607 + 4) |
+| `npm run gen:api`, then again | the first changed `openapi.json`, `index.ts`, `types.gen.ts` (`NotCarriedBox`, `CarriedEdits.boxes?`); the second no byte (sha1 of the 18 files) |
+| `node tools/check-openapi-additive.mjs` / `--base 9eb2d58` | ok / ok (`CarriedEdits` is newer than both bases; it gained one optional property) |
+| `npm run typecheck` | 0 errors |
+| `npm run test:unit` | **1190 passed**, 95 files (both projects, with the viewer fixer's changes in the tree) |
+
+Not run (quick checks only, as asked): the browser specs, `npm run test:builder`, the acceptance scripts. The design's 5.1
+text (key, kind and family; the `why` list) is older than this section: this section is the rule now.

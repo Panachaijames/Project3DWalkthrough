@@ -219,6 +219,8 @@ test('a viewer that edits the boxes: a box selected, deleted from its card and t
     const selected = await page.evaluate(async () => {
       const h = window.__host!, F = h.furniture!, all = F.pieces();
       const p = all.find(q => !q.on && !all.some(r => r.on === q.id) && q.visible)!;
+      // its floor alone, as staff would: in Both floors a box under the upper floor's plate is restored without a marker
+      window.__walkthrough!.viewer.showFloors(p.floor);
       F.removePiece(p.id);
       F.restorePiece(p.id);                                          // back, and the selection in Orbit
       await new Promise<void>(r => requestAnimationFrame(() => requestAnimationFrame(() => r())));

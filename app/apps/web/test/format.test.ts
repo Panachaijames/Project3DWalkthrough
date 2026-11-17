@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { ApiError, apiUrl, conflictOf, isUnreachable, toApiError } from '@/api/client';
 import {
   boxesDeletedText,
+  carriedEditsLines,
   carriedEditsText,
   EDITS_PENDING_TITLE,
   editsNotSavedTitle,
@@ -18,6 +19,7 @@ import {
   HEIGHTS_PENDING_TITLE,
   HEIGHTS_SAVED,
   HEIGHTS_SAVING,
+  previewDeletedBoxesText,
   NO_PROJECTS,
   projectsTitle,
   sourceKindLabel,
@@ -90,12 +92,33 @@ describe('step BX: the deleted boxes', () => {
     expect(boxesDeletedText(3)).toBe('· 3 boxes deleted');
     expect(boxesDeletedText(1)).toBe('· 1 box deleted');
     expect(boxesDeletedText(1234)).toBe('· 1,234 boxes deleted');
-    expect(carriedEditsText(2, 2)).toBe('2 deleted boxes of v2 are back: not found in the new drawing');
-    expect(carriedEditsText(1, 4)).toBe('1 deleted box of v4 is back: not found in the new drawing');
+    expect(carriedEditsText(2, 2)).toBe('2 deleted boxes of v2 are back');
+    expect(carriedEditsText(1, 4)).toBe('1 deleted box of v4 is back');
     expect(HEIGHTS_PENDING_TITLE).toBe('Waiting for the furniture changes (heights, deleted boxes) to be saved');
     expect(heightsNotSavedTitle('x')).toBe('The furniture changes on screen are not saved (x): the file would not carry them');
     expect(EDITS_PENDING_TITLE).toBe('Waiting for the deleted boxes to be saved');
     expect(editsNotSavedTitle('x')).toBe('The deleted boxes on screen are not saved (x): the script would still build them');
+  });
+
+  // fixes after the review (17 Nov 2026): the note names the boxes and why; the draft's preview says what a save applies
+  it('the carried-over note names each box (kind, family, floor, reason): one line, or at most 5 then "and N more"', () => {
+    const box = (i: number, reason = 'not found in the new drawing') =>
+      ({ kind: 'Other furniture', family: `Fritz-Hansen_SH20${i}`, floor: 'Level 2', reason });
+    expect(carriedEditsLines({ from: 2, notCarried: 1, boxes: [box(0)] })).toEqual([
+      '1 deleted box of v2 is back: Other furniture (Fritz-Hansen_SH200) on Level 2: not found in the new drawing']);
+    expect(carriedEditsLines({ from: 2, notCarried: 2, boxes: [box(0), box(1, 'its floor changed')] })).toEqual([
+      '2 deleted boxes of v2 are back:',
+      'Other furniture (Fritz-Hansen_SH200) on Level 2: not found in the new drawing',
+      'Other furniture (Fritz-Hansen_SH201) on Level 2: its floor changed']);
+    const seven = Array.from({ length: 7 }, (_, i) => box(i));
+    expect(carriedEditsLines({ from: 3, notCarried: 7, boxes: seven })).toEqual([
+      '7 deleted boxes of v3 are back:', ...seven.slice(0, 5).map(b => `Other furniture (${b.family}) on Level 2: not found in the new drawing`),
+      'and 2 more']);
+    expect(carriedEditsLines({ from: 3, notCarried: 2 })).toEqual(['2 deleted boxes of v3 are back']);   // no list
+    expect(carriedEditsLines({ from: 3, notCarried: 1, boxes: [{ ...box(0), family: '' }] })).toEqual([
+      '1 deleted box of v3 is back: Other furniture on Level 2: not found in the new drawing']);
+    expect(previewDeletedBoxesText(3, 2)).toBe("v2's 3 deleted boxes are applied when you save, where the same box is in the same place.");
+    expect(previewDeletedBoxesText(1, 4)).toBe("v4's 1 deleted box is applied when you save, where the same box is in the same place.");
   });
 });
 

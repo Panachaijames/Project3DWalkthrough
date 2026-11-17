@@ -4,20 +4,24 @@
 //              running, the Camera panel closed) selects it; a click on anything else, a second click (detail >= 2: the
 //              double-click to walk follows) and Esc clear the selection.
 //   Walk,      the box under the crosshair, at most 6 m from the eye, is aimed at (looked for 10 times a second and again
-//   Ghost      on the key press itself); Delete removes it, a line at the bottom says so.
+//   Ghost      on the key press itself); Delete removes it, a line at the bottom says so. After such a delete nothing new is
+//              aimed at until the view moves (the eye 2 cm, its direction 1°) or AIM_HOLD_MS has passed: a quick second
+//              Delete, meant for the same box, never takes the box behind it (review of 17 Nov).
 //   Marker     one Group 'furniture-selection' in the scene, never in a floor group or a 'late' list (the replay's fade
 //              never reaches it): the unit box 2 cm larger on each side than the selected box, a translucent magenta fill
 //              and an outline drawn over everything. It copies the selected mesh's world matrix on select, on every
 //              change that moves or resizes the box, and before each frame it is drawn in (onBeforeRender: modules
 //              register no frame hooks of their own). It is the viewer's, not the model's: no photo shows it (below).
 //   Card       [data-wt=box-card] at the top right (the Camera panel's place; never both): the box's kind, family, size,
-//              floor, builder note and id, what stands on it, Delete box (Del) and ×; after a delete "Deleted: ..." with
-//              Undo; after a restore of a box that is not showing, where it is.
+//              floor, builder note and id, what stands on it, Delete box (Del) and × ("(Del)" only while the key is armed:
+//              below); after a delete "Deleted: ..." with Undo; after a restore of a box that is not showing, where it is.
+//              A restored box under a shown floor above it in its stack (pick.ts coverOf: a Level 1 box in Both floors) counts
+//              as not showing: no marker drawn through that floor's plate, the card says which floor hides it.
 //   Keys       Delete (armed only while the last pointerdown was on the canvas or the card), Ctrl+Z (undo), Esc; never
 //              while typing or for another part of the page (modes/input.ts typing(), ours()).
 // Every drawing text goes in with textContent (ui/dom.ts el()).
-import { BoxGeometry, EdgesGeometry, Group, LineBasicMaterial, LineSegments, Matrix4, Mesh, MeshBasicMaterial } from 'three';
-import type { ViewerContext } from '../contracts';
+import { BoxGeometry, EdgesGeometry, Group, LineBasicMaterial, LineSegments, Matrix4, Mesh, MeshBasicMaterial, Vector3 } from 'three';
+import type { FloorRecord, ViewerContext } from '../contracts';
 import { ours, typing } from '../modes/input';
 import { clear, el } from '../ui/dom';
 import type { HoverApi } from './hover';
@@ -34,6 +38,12 @@ export const CLICK_SLOP = 4;
 export const AIM_REACH = 6;
 /** Walk / Ghost: the aim is looked for this often (ms). */
 export const AIM_MS = 100;
+/** Walk / Ghost: after a delete nothing new is aimed at for this long (ms), unless the view moves first. */
+export const AIM_HOLD_MS = 500;
+/** ... the view has moved: the eye by this much (m), or its direction by this angle (rad). */
+export const HOLD_MOVE = 0.02, HOLD_TURN = Math.PI / 180;
+/** The card's Delete button: "(Del)" only while the Delete key is armed. */
+export const DELETE_ARMED = 'Delete box (Del)', DELETE_DISARMED = 'Delete box';
 /** The line at the bottom stays this long (ms), or until the next delete, restore or undo. */
 export const TOAST_MS = 6000;
 
@@ -111,6 +121,13 @@ export function installSelect(ctx: ViewerContext, st: FurnitureState, act: Legen
   ctx.disposer.add(() => { card.remove(); toast.remove(); });
   /** What the card shows: a selected box, a delete just made (with its undo step), or where a restored box is. */
   let shown: 'piece' | 'deleted' | 'back' | null = null, shownEntry: UndoEntry | null = null;
+  // Delete is armed only while the last pointerdown was on the canvas or the card (the listener below)
+  let armed = false;
+  /** The card's Delete button says "(Del)" only while the key would act; the button itself always works. */
+  function showArmed(): void {
+    const b = card.querySelector<HTMLElement>('[data-wt=box-delete]');
+    if (b) b.textContent = armed ? DELETE_ARMED : DELETE_DISARMED;
+  }
   const closeBtn = () => el('button', { wt: 'box-close', attrs: { type: 'button', 'aria-label': 'Close' }, text: '×' });
   const floorName = (p: ItemState) => p.fl.name || p.d.floor;
   function showCard(what: typeof shown, lines: (Node | null)[]): void {
@@ -138,7 +155,7 @@ export function installSelect(ctx: ViewerContext, st: FurnitureState, act: Legen
         wt: 'box-cascade',
         text: `${on.length === 1 ? '1 piece stands' : `${on.length} pieces stand`} on it (${kinds.join(', ')}): ${on.length === 1 ? 'it is' : 'they are'} deleted with it.`,
       }) : null,
-      el('div', { wt: 'box-buttons' }, [el('button', { wt: 'box-delete', attrs: { type: 'button' }, text: 'Delete box (Del)' })]),
+      el('div', { wt: 'box-buttons' }, [el('button', { wt: 'box-delete', attrs: { type: 'button' }, text: armed ? DELETE_ARMED : DELETE_DISARMED })]),
       closeBtn(),
     ]);
   }
@@ -156,11 +173,13 @@ export function installSelect(ctx: ViewerContext, st: FurnitureState, act: Legen
     const b = card.querySelector<HTMLElement>('[data-wt=box-undo]');
     if (b) b.style.display = shownEntry && st.undoTop() === shownEntry ? '' : 'none';
   }
-  function backCard(p: ItemState): void {
+  /** `under`: the shown floor above that hides the box (pick.ts coverOf), or null. */
+  function backCard(p: ItemState, under: FloorRecord | null): void {
     const floor = floorName(p);
+    const where = !showing(p.fl.group) ? ` (not shown: press ${floor})` : under ? ` (under ${under.name || under.key}: press ${floor} to see it)` : '';
     showCard('back', [
       el('div', { wt: 'box-kind', text: p.kind.label }),
-      el('div', { wt: 'box-back', text: `Back on ${floor}${showing(p.fl.group) ? '' : ` (not shown: press ${floor})`}` }),
+      el('div', { wt: 'box-back', text: `Back on ${floor}${where}` }),
       p.kind.visible ? null : el('div', { wt: 'box-back-kind', text: `(${p.kind.label} is hidden: tick it to see it)` }),
       closeBtn(),
     ]);
@@ -210,9 +229,28 @@ export function installSelect(ctx: ViewerContext, st: FurnitureState, act: Legen
 
   // ---------------------------------------------------------------- Walk and Ghost: the box at the crosshair
   let aimTimer = 0, aimed = false;
+  // After a delete here the aim re-picked at once, so a second Delete 0.1 s later took the box behind the deleted one too
+  // (and the line named only that one). Now nothing new is aimed at until the view moves or AIM_HOLD_MS has passed.
+  let hold: { eye: Vector3; dir: Vector3 } | null = null, holdTimer = 0;
+  const eyeNow = new Vector3(), dirNow = new Vector3();
+  function endHold(): void {
+    if (holdTimer) { ctx.disposer.clearTimeout(holdTimer); holdTimer = 0; }
+    hold = null;
+  }
+  function startHold(): void {
+    endHold();
+    hold = { eye: ctx.camera.getWorldPosition(new Vector3()), dir: ctx.camera.getWorldDirection(new Vector3()) };
+    holdTimer = ctx.disposer.timeout(() => { holdTimer = 0; hold = null; }, AIM_HOLD_MS);
+  }
+  /** Still holding: no time-out yet and the view has not moved (a move ends the hold). */
+  function held(): boolean {
+    if (hold && (ctx.camera.getWorldPosition(eyeNow).distanceTo(hold.eye) >= HOLD_MOVE
+      || ctx.camera.getWorldDirection(dirNow).angleTo(hold.dir) >= HOLD_TURN)) endHold();
+    return hold !== null;
+  }
   function aim(): void {
     aimed = true;
-    mark(pick.atCentre(AIM_REACH));
+    mark(held() ? null : pick.atCentre(AIM_REACH));
   }
   function aimLoop(): void {
     aimTimer = 0;
@@ -226,11 +264,11 @@ export function installSelect(ctx: ViewerContext, st: FurnitureState, act: Legen
     if (p) act.removePiece(p.d.id);                                  // what is shown next: onEdit below
   }
   // Delete is armed only while the last pointerdown was on the canvas or the card: a press in the side panel (a height box
-  // just typed in, whose Enter blurs to the body) or anywhere else on the page disarms it.
-  let armed = false;
+  // just typed in, whose Enter blurs to the body) or anywhere else on the page disarms it. The card's button follows.
   ctx.disposer.listen(window, 'pointerdown', e => {
     const t = (typeof e.composedPath === 'function' ? e.composedPath()[0] : null) ?? e.target;
     armed = t === canvas || (t instanceof Node && card.contains(t));
+    showArmed();
   }, true);
   ctx.disposer.listen(window, 'keydown', e => {
     if (typing(e) || !ours(e, root)) return;
@@ -238,7 +276,7 @@ export function installSelect(ctx: ViewerContext, st: FurnitureState, act: Legen
     if (e.code === 'Delete' && !mod && !e.altKey) {
       if (!armed || e.repeat) return;
       if (orbiting()) { if (sel) { e.preventDefault(); remove(sel); } }
-      else if (aiming()) { aim(); if (sel) { e.preventDefault(); remove(sel); } }
+      else if (aiming()) { aim(); if (sel) { e.preventDefault(); remove(sel); startHold(); } }
     } else if (e.code === 'KeyZ' && mod && !e.shiftKey && !e.altKey) {
       if (!modes().state.locked && act.undo()) e.preventDefault();
     } else if (e.code === 'Escape' && !mod) {
@@ -256,6 +294,7 @@ export function installSelect(ctx: ViewerContext, st: FurnitureState, act: Legen
   st.onEdit((e: EditEvent) => {
     hideToast();
     if (e.source === 'api') { showUndo(); return; }                  // the stack is gone: a card's Undo with it
+    if (e.source === 'restored') endHold();                          // Ctrl+Z in Walk: the box is back, aimed at again at once
     const first = st.itemOf.get(e.ids[0] ?? '');
     if (!first) return;
     const more = e.ids.length - 1;
@@ -264,7 +303,11 @@ export function installSelect(ctx: ViewerContext, st: FurnitureState, act: Legen
       if (orbiting()) { mark(null); deletedCard(text, e.entry); }
       else showToast(e.entry ? `${text} · Ctrl+Z to undo` : text);
     } else if (e.all) clearAll();                                    // Restore all: the legend line says it
-    else if (orbiting()) { if (showing(first.mesh)) select(first); else { mark(null); backCard(first); } }
+    else if (orbiting()) {
+      // under a shown floor above it (Both floors): not shown, or the marker would draw through that floor's plate
+      const under = showing(first.fl.group) ? pick.coverOf(first) : null;
+      if (showing(first.mesh) && !under) select(first); else { mark(null); backCard(first, under); }
+    }
     else showToast(`Back: ${first.kind.label} on ${floorName(first)}`);
   });
 
@@ -272,7 +315,7 @@ export function installSelect(ctx: ViewerContext, st: FurnitureState, act: Legen
   ctx.disposer.add(ctx.bus.on('mode', () => {
     if (!orbiting() && (shown || (sel && !aimed))) clearAll();       // Walk, Ghost, the Camera panel: no selection, no card
     if (aiming()) { if (!aimTimer) aimTimer = ctx.disposer.timeout(aimLoop, 0); }
-    else if (aimed) { aimed = false; mark(null); }
+    else { endHold(); if (aimed) { aimed = false; mark(null); } }
   }));
   const stillShowing = () => { if (sel && !showing(sel.mesh)) dropSelection(); };
   ctx.disposer.add(ctx.bus.on('floorMode', stillShowing));

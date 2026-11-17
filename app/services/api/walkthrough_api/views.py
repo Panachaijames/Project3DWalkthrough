@@ -14,8 +14,9 @@ from fastapi.responses import FileResponse, RedirectResponse, Response
 from . import furniture_csv, offline, piece_edits
 from .errors import ApiError
 from .jsonio import JsonError, loads_strict, read_bytes, sha1_hex
-from .models import (AssetInfo, CarriedEdits, DownloadInfo, FloorInfo, HeightOverrides, PieceEdit, ProjectDetail,
-                     ProjectSummary, VersionCounts, VersionDetail, VersionDownloads, VersionSummary, VersionUrls)
+from .models import (AssetInfo, CarriedEdits, DownloadInfo, FloorInfo, HeightOverrides, NotCarriedBox, PieceEdit,
+                     ProjectDetail, ProjectSummary, VersionCounts, VersionDetail, VersionDownloads, VersionSummary,
+                     VersionUrls)
 from .store.base import BlobRef, HeightOverridesFile, NotFound, ProjectMeta, Store, StoreError, VersionMeta
 
 MIN_MM, MAX_MM = 10, 5000          # a furniture height: whole mm, 10 - 5000 (DESIGN.md 13)
@@ -127,7 +128,9 @@ def carried_edits_of(store: Store, v: VersionMeta) -> CarriedEdits | None:
         return None
     if note is None:
         return None
-    return CarriedEdits(from_=note[0], not_carried=note[1])
+    return CarriedEdits(from_=note.from_version, not_carried=note.count,
+                        boxes=[NotCarriedBox(kind=b['kind'], family=b['family'], floor=b['floor'], reason=b['reason'],
+                                             new_id=b.get('newId')) for b in note.boxes])
 
 
 def max_script_file_name(v: VersionMeta) -> str | None:

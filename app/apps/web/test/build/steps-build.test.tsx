@@ -113,9 +113,23 @@ describe('Build', () => {
     expect(made.options).toMatchObject({ build: 'skip', furnitureHeights: 'host' });
     expect([made.projectId, made.version, made.stamp]).toEqual(['bank-sampeng', 0, 'c3a9408304a2']);
     expect([made.heights, made.pictures, made.hasStages]).toEqual([{}, {}, true]);
+    await waitFor(() => mock.requests.some(r => r.method === 'GET' && r.path === '/api/projects/bank-sampeng/versions/2'));
+    await act(async () => { await new Promise(r => setTimeout(r, 20)); });
+    expect(q('[data-testid=preview-deleted-boxes]')).toBeNull();      // v2 has no deleted boxes: no line
     await click(q('[data-testid=close-preview]'));
     await waitFor(() => window.__fakeViewer!.live() === 0);
     expect(q('[data-testid=draft-preview]')).toBeNull();
+  });
+
+  it("the 3D preview shows every box of the draft: one line says v2's deleted boxes are applied when it is saved", async () => {
+    const mock = createMockApi();
+    mock.setSaved('bank-sampeng', 2, {}, { 'L1-table-005': { removed: true } });     // closed: the table and its computer
+    const { build } = draftOf(mock, 'bank-sampeng', ['I1201.dwg', 'I1202.dwg'], { built: true });
+    await openStep(mock, build.id, 'build');
+    await click(await waitFor(() => q('[data-testid=open-preview]')));
+    const line = await waitFor(() => q('[data-testid=preview-deleted-boxes]'));
+    expect(text(line)).toBe("v2's 2 deleted boxes are applied when you save, where the same box is in the same place.");
+    expect(line.closest('[data-testid=draft-preview]')).not.toBeNull();
   });
 });
 

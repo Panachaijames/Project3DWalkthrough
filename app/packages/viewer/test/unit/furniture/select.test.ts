@@ -6,7 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { Color, Vector3, type Group, type LineSegments, type Material, type Mesh } from 'three';
 import type { BuiltModel, FurnitureApi, ResolvedOptions } from '../../../src/contracts';
 import { installFurniture } from '../../../src/furniture/index';
-import { AIM_REACH, CLICK_SLOP, MARKER_COLOUR, MARKER_GROW } from '../../../src/furniture/select';
+import { AIM_HOLD_MS, AIM_REACH, CLICK_SLOP, HOLD_MOVE, MARKER_COLOUR, MARKER_GROW } from '../../../src/furniture/select';
 import { createPhotos } from '../../../src/modes/photo';
 import { fadeLate, recordLate, restoreLate, type LateLook } from '../../../src/replay/apply';
 import type { ReplayFloorRt } from '../../../src/replay/objects';
@@ -228,7 +228,9 @@ describe('the card', () => {
     expect(text(a.ctx, 'box-note')).toBe('merged 4 cupboard-door fronts');
     expect(a.ctx.model.furniture!.find(p => p.id === 'L2-cabinet-001')!.n).toBe(4);
     expect(card(a.ctx).textContent).not.toContain('side by side');
+    a.ctx.visibility.setFloorMode('L1');
     cardOf(a.F, 'L1-seat-001');
+    expect(text(a.ctx, 'box-kind')).toBe('Chair / stool');
     expect(text(a.ctx, 'box-note')).toBeNull();
     const b = mount(loadModel('suite'));
     cardOf(b.F, 'suite-other-001');
@@ -238,8 +240,10 @@ describe('the card', () => {
 
   it('what stands on it is said before the delete: "2 pieces stand on it (...): they are deleted with it."', () => {
     const { ctx, F } = mount(mini());
+    ctx.visibility.setFloorMode('L1');                                // in Both floors Level 2's plate hides it: no card of it
     cardOf(F, 'L1-table-001');
     expect(text(ctx, 'box-cascade')).toBe('2 pieces stand on it (Computer / monitor, Printer / copier): they are deleted with it.');
+    ctx.visibility.setFloorMode('all');
     click(ctx, top(ctx, F, T2, EDGE));
     expect(text(ctx, 'box-cascade')).toBe('1 piece stands on it (Computer / monitor): it is deleted with it.');
     click(ctx, top(ctx, F, 'L2-computer-001'));
@@ -342,6 +346,35 @@ describe('the keys', () => {
     expect(F.pieceEdits()).toEqual({});
   });
 
+  it('the card offers "(Del)" only while the Delete key is armed; the button itself always works (review of 17 Nov)', () => {
+    const { ctx, F } = mount(mini());
+    click(ctx, top(ctx, F, T2, EDGE));                                // the pointerdown on the canvas arms it
+    expect(text(ctx, 'box-delete')).toBe('Delete box (Del)');
+    const box = q<HTMLInputElement>(ctx, '[data-wt=furniture-row][data-kind="seat"] [data-wt=kind-height]');
+    press(box);                                                       // a height typed in the panel, kept with Enter
+    expect(text(ctx, 'box-delete')).toBe('Delete box');
+    key('Delete');
+    expect(F.pieceEdits()).toEqual({});
+    F.setHeight('table', 800);                                        // the card is drawn again: still disarmed
+    expect(text(ctx, 'box-delete')).toBe('Delete box');
+    press(card(ctx).querySelector('[data-wt=box-family]')!);          // a press on the card arms it again
+    expect(text(ctx, 'box-delete')).toBe('Delete box (Del)');
+    press(document.body);                                             // elsewhere on the page
+    expect(text(ctx, 'box-delete')).toBe('Delete box');
+    card(ctx).querySelector<HTMLButtonElement>('[data-wt=box-delete]')!.click();
+    expect(Object.keys(F.pieceEdits())).toEqual(['L2-computer-001', T2]);
+    // restored from the Restore list: the press there disarmed the key
+    const open = q<HTMLButtonElement>(ctx, '[data-wt=boxes-restore-open]');
+    press(open); open.click();
+    const restore = q<HTMLButtonElement>(ctx, '[data-wt=box-restore]');
+    press(restore); restore.click();
+    expect(F.pieceEdits()).toEqual({});
+    expect(marked(ctx, F)).toBe(T2);
+    expect(text(ctx, 'box-delete')).toBe('Delete box');
+    click(ctx, top(ctx, F, T2, EDGE));
+    expect(text(ctx, 'box-delete')).toBe('Delete box (Del)');
+  });
+
   it('a key while typing in a height box, or for another part of the page, is not the viewer\'s', () => {
     const { ctx, F } = mount(mini());
     click(ctx, top(ctx, F, T2, EDGE));
@@ -426,6 +459,65 @@ describe('Walk and Ghost: the box at the crosshair', () => {
     key('Delete');
     expect(Object.keys(F.pieceEdits())).toEqual(['L2-seat-001']);
     expect(toast(ctx).textContent).toBe('Deleted: Chair / stool · Ctrl+Z to undo');
+  });
+
+  it(`two quick Deletes take one box: after a delete nothing new is aimed at until the view moves or ${AIM_HOLD_MS} ms have passed (review of 17 Nov)`, () => {
+    vi.useFakeTimers();
+    try {
+      const { ctx, F } = mount(mini());
+      const S1 = 'L1-seat-001', S2 = 'L1-seat-002';                    // S2 stands 1 m behind S1 on the line of sight
+      const seat = F.pieces().find(p => p.id === S1)!, y = (seat.z0 + seat.z1) / 2;
+      const lookFrom = (x: number, ahead = 0) => {                    // level with the chairs, looking along plan y = 1 (three z = -1)
+        ctx.camera.position.set(x, y, -1);
+        ctx.camera.lookAt(x + 10, y + ahead, -1);
+        ctx.camera.updateMatrixWorld();
+      };
+      press(ctx.canvas);
+      lookFrom(-0.5);
+      setMode(ctx, 'walk');
+      vi.advanceTimersByTime(0);
+      expect(marked(ctx, F)).toBe(S1);
+      key('Delete');
+      expect(Object.keys(F.pieceEdits())).toEqual([S1]);
+      expect(toast(ctx).textContent).toBe('Deleted: Chair / stool · Ctrl+Z to undo');
+      vi.advanceTimersByTime(100);                                     // the aim is looked for again: nothing new
+      expect(marked(ctx, F)).toBeNull();
+      key('Delete');                                                   // 0.1 s later, meant for the same box: nothing
+      expect(Object.keys(F.pieceEdits())).toEqual([S1]);
+      lookFrom(-0.5 + HOLD_MOVE / 2);                                  // a sway under 2 cm is not a move
+      vi.advanceTimersByTime(AIM_HOLD_MS - 200);
+      key('Delete');
+      expect(Object.keys(F.pieceEdits())).toEqual([S1]);
+      expect(marked(ctx, F)).toBeNull();
+      vi.advanceTimersByTime(200);                                     // the time is up: the box behind is aimed at
+      expect(marked(ctx, F)).toBe(S2);
+      // Ghost; Ctrl+Z ends the hold at once (the box is back and aimed at again)
+      setMode(ctx, 'ghost');
+      key('Delete');
+      expect(Object.keys(F.pieceEdits())).toEqual([S1, S2]);
+      key('KeyZ', { ctrlKey: true });
+      key('Delete');
+      expect(Object.keys(F.pieceEdits())).toEqual([S1, S2]);           // deleted again at once
+      key('KeyZ', { ctrlKey: true });
+      key('KeyZ', { ctrlKey: true });
+      expect(F.pieceEdits()).toEqual({});
+      // a move of the view ends the hold at once: a step forward, or a turn
+      key('Delete');
+      expect(Object.keys(F.pieceEdits())).toEqual([S1]);
+      key('Delete');
+      expect(Object.keys(F.pieceEdits())).toEqual([S1]);
+      lookFrom(-0.5 + 2 * HOLD_MOVE);
+      key('Delete');
+      expect(Object.keys(F.pieceEdits())).toEqual([S1, S2]);
+      key('KeyZ', { ctrlKey: true });
+      key('KeyZ', { ctrlKey: true });
+      lookFrom(-0.5);
+      key('Delete');
+      expect(Object.keys(F.pieceEdits())).toEqual([S1]);
+      lookFrom(-0.5, 0.35);                                            // 2° up: S2 is still under the crosshair
+      key('Delete');
+      expect(Object.keys(F.pieceEdits())).toEqual([S1, S2]);
+    } finally { vi.useRealTimers(); }
   });
 
   it('no aim with the Camera panel open or while the replay runs; back in Orbit the aim marker goes', async () => {

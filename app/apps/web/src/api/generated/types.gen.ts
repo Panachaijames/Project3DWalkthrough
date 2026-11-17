@@ -666,6 +666,12 @@ export type CancelBuildRequest = {
  */
 export type CarriedEdits = {
     /**
+     * Boxes
+     *
+     * The boxes that did not carry over, one each in the furniture list's order (17 Nov 2026).
+     */
+    boxes?: Array<NotCarriedBox>;
+    /**
      * From
      *
      * The version whose deleted boxes were carried into this one.
@@ -1212,6 +1218,44 @@ export type NewProjectRequest = {
      * Shortname
      */
     shortName?: string | null;
+};
+
+/**
+ * NotCarriedBox
+ *
+ * One deleted furniture box of the earlier version that did not carry over (fix of 17 Nov 2026, additive).
+ */
+export type NotCarriedBox = {
+    /**
+     * Family
+     *
+     * The furniture family (drawing text).
+     */
+    family: string;
+    /**
+     * Floor
+     *
+     * The floor's name as that version named it, e.g. 'Level 2'.
+     */
+    floor: string;
+    /**
+     * Kind
+     *
+     * The kind's label as that version named it, e.g. 'Chair / stool'.
+     */
+    kind: string;
+    /**
+     * Newid
+     *
+     * The box's id in this version when exactly one box of this version stands where it stood (it shows again there); absent otherwise.
+     */
+    newId?: string | null;
+    /**
+     * Reason
+     *
+     * Why it did not carry over, e.g. 'not found in the new drawing', 'its floor changed'.
+     */
+    reason: string;
 };
 
 /**

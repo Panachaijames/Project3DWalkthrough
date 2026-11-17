@@ -289,6 +289,23 @@ describe('createHeightsSaver: the deleted boxes (step BX)', () => {
     expect(s.base).toEqual({ revision: 1, heights: { table: 600 }, pieceEdits: { 'L1-seat-001': R } });
   });
 
+  it('settled(): what the tab shows when nothing is unsaved (a takeover included); null while anything is (fix of 17 Nov)', async () => {
+    const { put, calls } = editsPut(2);
+    const s = createHeightsSaver({ put, base: { revision: 1, heights: { seat: 300 } } });
+    expect(s.settled()).toEqual({ heights: { seat: 300 }, pieceEdits: {} });
+    s.adopt({ revision: 2, heights: { seat: 310 }, pieceEdits: { 'L1-table-005': R } });   // another tab's
+    expect(s.settled()).toEqual({ heights: { seat: 310 }, pieceEdits: { 'L1-table-005': R } });
+    s.changeEdits({ 'L1-table-005': R, 'L1-atm-001': R });
+    expect(s.settled()).toBeNull();                                    // debouncing, dirty
+    vi.advanceTimersByTime(600);
+    expect(s.settled()).toBeNull();                                    // in flight
+    calls[0]!.resolve({ pieceEdits: { 'L1-atm-001': R, 'L1-table-005': R } });
+    await flush();
+    expect(s.settled()).toEqual({ heights: { seat: 310 }, pieceEdits: { 'L1-atm-001': R, 'L1-table-005': R } });
+    s.change({ seat: 320 });
+    expect(s.settled()).toBeNull();                                    // a height typed, not sent yet
+  });
+
   it("B takes over A's deletion when idle, then types a height: the body is {heights}, the deletion stays", async () => {
     const { put, calls } = editsPut(2);
     const remoteEdits = vi.fn();

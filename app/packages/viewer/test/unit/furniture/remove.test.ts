@@ -514,6 +514,7 @@ describe('what a restore shows (docs/boxes/DESIGN.md 2.6)', () => {
 
   it('Orbit, the floor showing and the kind ticked: the restored box is the selection (marker and card)', () => {
     const { ctx, F } = staff();
+    ctx.visibility.setFloorMode('L1');                                 // its floor alone (Both floors: the next test)
     F.removePiece('L1-table-001');
     const cam = ctx.camera.position.clone();
     F.restorePiece('L1-table-001');
@@ -534,7 +535,7 @@ describe('what a restore shows (docs/boxes/DESIGN.md 2.6)', () => {
     expect(card(ctx).querySelector('[data-wt=box-back]')!.textContent).toBe('Back on Level 1 (not shown: press Level 1)');
     expect(card(ctx).querySelector('[data-wt=box-back-kind]')).toBeNull();
     expect(card(ctx).querySelector('[data-wt=box-delete]')).toBeNull();
-    ctx.visibility.setFloorMode('all');
+    ctx.visibility.setFloorMode('L1');
     F.removePiece('L1-seat-001');
     F.setVisible('seat', false);
     F.restorePiece('L1-seat-001');
@@ -543,6 +544,46 @@ describe('what a restore shows (docs/boxes/DESIGN.md 2.6)', () => {
     expect(card(ctx).querySelector('[data-wt=box-back-kind]')!.textContent).toBe('(Chair / stool is hidden: tick it to see it)');
     key('Escape');
     expect(shown(card(ctx))).toBe(false);
+  });
+
+  it('Orbit, Both floors, a Level 1 box under Level 2\'s plate: not shown (no marker through the plate), "Back on Level 1 (under Level 2: press Level 1 to see it)"; beyond the plate\'s edge it is selected (review of 17 Nov)', () => {
+    const { ctx, F } = staff();
+    expect(ctx.visibility.floorMode).toBe('all');
+    F.removePiece('L1-table-001');
+    F.restorePiece('L1-table-001');
+    expect(marker(ctx).visible).toBe(false);
+    expect(shown(card(ctx))).toBe(true);
+    expect(card(ctx).querySelector('[data-wt=box-kind]')!.textContent).toBe('Table / desk');
+    expect(card(ctx).querySelector('[data-wt=box-back]')!.textContent).toBe('Back on Level 1 (under Level 2: press Level 1 to see it)');
+    expect(card(ctx).querySelector('[data-wt=box-delete]')).toBeNull();
+    // the TV stands beyond Level 2's plate (x 7; the plate ends at 6.2): seen from above, so it is the selection
+    F.removePiece('L1-tv-001');
+    F.restorePiece('L1-tv-001');
+    expect(marker(ctx).visible).toBe(true);
+    expect(card(ctx).querySelector('[data-wt=box-id]')!.textContent).toBe('L1-tv-001');
+    // Level 1 alone: no floor shown above it, so it is the selection
+    ctx.visibility.setFloorMode('L1');
+    F.removePiece('L1-table-001'); F.restorePiece('L1-table-001');
+    expect([marker(ctx).visible, card(ctx).querySelector('[data-wt=box-id]')?.textContent]).toEqual([true, 'L1-table-001']);
+    // Ctrl+Z of a delete made on Level 1 alone, undone in Both floors: the same rule
+    F.removePiece('L1-seat-001');
+    ctx.visibility.setFloorMode('all');
+    undo();
+    expect(marker(ctx).visible).toBe(false);
+    expect(card(ctx).querySelector('[data-wt=box-back]')!.textContent).toBe('Back on Level 1 (under Level 2: press Level 1 to see it)');
+  });
+
+  it('the floor above is named by its real name (as text), the house\'s too', () => {
+    const m = mini();
+    m.floors[1]!.name = '<i>Mezzanine</i>';
+    const a = staff(m);
+    a.F.removePiece('L1-seat-001'); a.F.restorePiece('L1-seat-001');
+    expect(card(a.ctx).querySelector('[data-wt=box-back]')!.textContent).toBe('Back on Level 1 (under <i>Mezzanine</i>: press Level 1 to see it)');
+    expect(card(a.ctx).querySelectorAll('i').length).toBe(0);
+    const b = staff(loadModel('house'));
+    b.F.removePiece('ground-seat-001'); b.F.restorePiece('ground-seat-001');
+    expect(marker(b.ctx).visible).toBe(false);
+    expect(card(b.ctx).querySelector('[data-wt=box-back]')!.textContent).toBe('Back on Ground floor (under Upper floor: press Ground floor to see it)');
   });
 
   it('Walk or Ghost: no selection, no card; the line at the bottom reads "Back: Table / desk on Level 1"', () => {

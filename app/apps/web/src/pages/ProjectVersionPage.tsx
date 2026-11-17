@@ -32,13 +32,21 @@ import {
   getVersionOptions,
 } from '@/api/generated/@tanstack/react-query.gen';
 import type { ProjectDetail, VersionDetail } from '@/api/generated/types.gen';
-import { carriedEditsText, errorReason, versionTitle } from '@/lib/format';
-import { readUnsent } from '@/lib/heightsOutbox';
+import { carriedEditsLines, errorReason, versionTitle } from '@/lib/format';
+import { readUnsent, sameEdits, sameHeights } from '@/lib/heightsOutbox';
 import { checkProjectId, checkVersion, fetchOrCached, loadOr404 } from '@/lib/routeData';
 import { useDocumentTitle } from '@/lib/useDocumentTitle';
 import { useHeightsSaver } from '@/lib/useHeightsSaver';
 import { cn } from '@/lib/utils';
 import { buildViewerProject, issueLines, viewerOptions } from '@/lib/viewerProject';
+
+/**
+ * The app bar's height (h-12) and the carried-over note's: 4 px above, 3 px and the 1 px border below, 24 px per line
+ * (one line: 32 px, as before).
+ */
+const APP_BAR_PX = 48;
+const NOTE_PAD_PX = 8;
+const NOTE_LINE_PX = 24;
 
 export interface VersionPageData {
   project: ProjectDetail;
@@ -179,15 +187,27 @@ export function ProjectVersionPage() {
   const onCreated = (viewer: Viewer) => {
     viewerRef.current = viewer;
     setFailure(f => (f && f.project === viewerProject ? null : f));
+    // A viewer re-created on this version (Try again, an address change within the cache's 30 s) starts from the memoised
+    // detail, which can be older than the saver's state (heights or deleted boxes taken over from another tab since): with
+    // nothing unsaved, it is brought to what the saver has, so its next change never undoes the other tab's (fix of 17
+    // Nov 2026). With something unsaved the project already started from this tab's unsent map.
+    const now = saver.settled();
+    if (now) {
+      if (!sameHeights(viewer.getHeights(), now.heights)) viewer.setHeights(now.heights);
+      if (!sameEdits(viewer.getPieceEdits(), now.pieceEdits)) viewer.setPieceEdits(now.pieceEdits);
+    }
     countBoxes(viewer.getPieceEdits());
   };
   const boxCount = viewerProject && boxes.project === viewerProject ? boxes.n : 0;
 
-  // Deleted boxes of the version this one was carried from that are back (not found one-to-one in the new drawing): one
-  // line under the app bar, until closed (for this visit of the version).
+  // Deleted boxes of the version this one was carried from that are back (not found one-to-one in the new drawing): a
+  // note under the app bar naming each box and why (one line, or the head and one short line per box, at most five, then
+  // "and N more"; fix of 17 Nov 2026), until closed (for this visit of the version). The viewer starts below it.
   const carried = detail.carriedEdits && detail.carriedEdits.notCarried > 0 ? detail.carriedEdits : null;
   const [noteClosed, setNoteClosed] = useState<string | null>(null);
   const showNote = !!carried && noteClosed !== projectKey;
+  const noteLines = carried ? carriedEditsLines(carried) : [];
+  const noteHeight = NOTE_PAD_PX + NOTE_LINE_PX * noteLines.length;
 
   return (
     <div className="h-svh overflow-hidden bg-[#eef0f2]" data-testid="project-page" data-project-id={detail.projectId} data-version={detail.version}>
@@ -203,11 +223,16 @@ export function ProjectVersionPage() {
       {showNote && carried && (
         <div
           role="note"
-          className="fixed inset-x-0 top-12 z-10 flex h-8 items-center gap-2 border-b border-amber-200 bg-amber-50 px-4 text-sm text-amber-950"
+          className="fixed inset-x-0 top-12 z-10 flex items-start gap-2 border-b border-amber-200 bg-amber-50 px-4 pt-1 pb-[3px] text-sm leading-6 text-amber-950"
+          style={{ height: noteHeight }}
           data-testid="carried-edits-note"
         >
-          <Info className="size-4 shrink-0" aria-hidden="true" />
-          <span className="min-w-0 truncate" data-testid="carried-edits-text">{carriedEditsText(carried.notCarried, carried.from)}</span>
+          <Info className="mt-1 size-4 shrink-0" aria-hidden="true" />
+          <div className="min-w-0 flex-1" data-testid="carried-edits-text">
+            {noteLines.map((line, i) => (
+              <p key={i} className={cn('truncate', i > 0 && 'pl-3')} title={line} data-testid="carried-edits-line">{line}</p>
+            ))}
+          </div>
           <Button
             variant="ghost"
             size="icon"
@@ -221,7 +246,11 @@ export function ProjectVersionPage() {
           </Button>
         </div>
       )}
-      <div className={cn('fixed inset-x-0 bottom-0', showNote ? 'top-20' : 'top-12')} data-testid="viewer-area">
+      <div
+        className={cn('fixed inset-x-0 bottom-0', !showNote && 'top-12')}
+        style={showNote ? { top: APP_BAR_PX + noteHeight } : undefined}
+        data-testid="viewer-area"
+      >
         {viewerProject ? (
           <>
             <ViewerHost

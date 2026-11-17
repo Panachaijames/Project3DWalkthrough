@@ -205,15 +205,26 @@ test('Walk and Ghost: the box at the crosshair carries the marker; Delete remove
   expect(await state(page)).toMatchObject({ marker: seat, mode: 'ghost' });
   await page.keyboard.press('Delete');
   expect(await state(page)).toMatchObject({ edits: [seat], toast: 'Deleted: Chair / stool · Ctrl+Z to undo' });
-  // back in Orbit: no aim marker; the restore list's Restore selects the box there
+  // back in Orbit: no aim marker. In Both floors the chair stands under Level 2's floor plate: the Restore list's Restore
+  // brings it back without a marker (none drawn through the plate) and the card says where it is (review of 17 Nov)
   await page.keyboard.press('1');
   expect(await state(page)).toMatchObject({ marker: null, mode: 'orbit' });
   await page.evaluate(() => window.__walkthrough!.viewer.showFloors('all'));
   await page.locator('[data-wt=boxes-restore-open]').click();
   await page.locator('[data-wt=box-restore]').click();
+  const under = await state(page);
+  expect(under).toMatchObject({ marker: null, edits: [], line: null });
+  expect(under.card).toContain('Back on Level 1 (under Level 2: press Level 1 to see it)');
+  // Level 1 alone: the Restore list's Restore selects it; the card's button has no "(Del)": the press in the list disarmed the key
+  await page.keyboard.press('Control+z');
+  expect((await state(page)).edits).toEqual([seat]);
+  await page.evaluate(() => window.__walkthrough!.viewer.showFloors('L1'));
+  await page.locator('[data-wt=boxes-restore-open]').click();
+  await page.locator('[data-wt=box-restore]').click();
   const restored = await state(page);
   expect(restored).toMatchObject({ marker: seat, edits: [], line: null });
   expect(restored.card).toContain('Chair / stool');
+  expect(await page.locator('[data-wt=box-delete]').innerText()).toBe('Delete box');
   expect(errors).toEqual([]);
 });
 
@@ -264,6 +275,7 @@ test('the build replay never shows a deleted box (saved in the project, or delet
     const card = () => { const c = document.querySelector<HTMLElement>('[data-wt=box-card]')!; return getComputedStyle(c).display !== 'none' && getComputedStyle(c).visibility !== 'hidden'; };
     const seat = F.pieces().find(p => p.kind === 'seat')!.id, plant = F.pieces().find(p => p.kind === 'plant')?.id ?? F.pieces().find(p => p.kind !== 'seat' && p.kind !== 'table' && !p.on)!.id;
     const out: Record<string, unknown> = { before: Object.keys(v.getPieceEdits()) };
+    v.showFloors(F.pieces().find(p => p.id === seat)!.floor);         // its floor alone: in Both floors Level 2's plate hides it
     F.removePiece(seat); F.restorePiece(seat);                        // the restored box is the selection
     await frame();
     out.selected = [marker.visible, card()];

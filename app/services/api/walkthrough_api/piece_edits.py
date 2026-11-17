@@ -14,12 +14,16 @@ the edits are an overlay. Pure functions over a BuiltModel (plain dicts) and pla
                                     odd file never answers 500.
     canonical(model, edits)         the PUT: 422 invalid_piece_edits for an id that is not a model piece; `removed: false`
                                     and an empty edit dropped; closed; in the CSV order.
+    floor_map(old_model, new_model) the old floor key -> the new floor key of the same floor: the same stack and level
+                                    (within 10 mm), one-to-one; never by key (a new draft hands keys out by position).
     carry(old_model, old_edits, new_model)
-                                    a new version's carry-over (DESIGN 5.1): only the old live map's tops, matched by what
-                                    the box is and where it stands (never by bare id: ids are ranks), one-to-one.
+                                    a new version's carry-over (DESIGN 5.1): only the old live map's tops, matched by
+                                    where the box stands (its floor by level, family, place, size, turn; never by bare id:
+                                    ids are ranks; never by kind: a family given a kind is the same box), one-to-one.
     carried_record(...)             versions/<n>/source/carried-edits.json, the record of a carry; carry_into(...) both
                                     the new version's pieceEdits and that record (create_version, the seed's re-map).
-    carried_note(record)            (from, how many did not carry) for the version detail's `carriedEdits`, or None.
+    carried_note(record)            (from, how many did not carry, one line per box: kind label, family, floor name,
+                                    reason, new id) for the version detail's `carriedEdits`, or None.
     filter_max_script(script, prefix, removed)
                                     the 3ds Max download without the removed pieces' furnBox lines, a comment naming their
                                     Max objects as the new line 3 (DESIGN 4); max_script_ids(script, prefix) its ids.
@@ -43,18 +47,27 @@ CARRIED_FILE = 'carried-edits.json'
 MAX_UNKNOWN_IDS = 20                 # 422 invalid_piece_edits: details.unknownIds lists at most this many
 MAX_NAMES = 30                       # the Max script's comment names at most this many objects, then ", and N more"
 
-# The carry-over's fingerprint (DESIGN 5.1): the same floor key, kind and family; drawing-frame centres within 10 mm on each
-# axis; w and d within 10 mm; turns within 0.5 degrees, modulo 180 (modulo 90 when both boxes are square: w - d under 1 mm,
-# as vendor/furniture_kit.py finish() normalises them). Handle, block and layer are not compared (a Revit re-export
-# renumbers handles and can rename blocks); the one-to-one rule covers the duplicates this lets in.
+# The carry-over's fingerprint (DESIGN 5.1, revised after the review of 17 Nov): the same floor (matched by stack and level
+# within 10 mm, one-to-one: floor_map; never by key, which a new draft hands out by list position) and family;
+# drawing-frame centres within 10 mm on each axis; w and d within 10 mm; turns within 0.5 degrees, modulo 180 (modulo 90
+# when both boxes are square: w - d under 1 mm, as vendor/furniture_kit.py finish() normalises them). The kind is not
+# compared (a grey family given a kind on the Check step is the same box: its id changes, its family and place do not).
+# Handle, block and layer are not compared (a Revit re-export renumbers handles and can rename blocks); the one-to-one rule
+# covers the duplicates this lets in.
 PLACE_TOL_M = 0.010
 SIZE_TOL_M = 0.010
+LEVEL_TOL_M = 0.010
 TURN_TOL_DEG = 0.5
 SQUARE_M = 0.001
 _EPS = 1e-9                          # model numbers are rounded to the mm: a difference of exactly 10 mm still matches
+DEFAULT_STACK = 'main'               # the schema's default stack of a floor without one
 
+# `why` in carried-edits.json (machine words; k = 2 or more) and the reason the staff app shows for each (reason_text)
 WHY_NO_MATCH = 'no match'
+WHY_FLOOR_CHANGED = 'floor changed'
 WHY_ON_A_DELETED_SUPPORT = 'was on a deleted support'
+_WHY_MATCHES = re.compile(r'(\d+) matches')
+_WHY_OLD_MATCHES = re.compile(r'matches (\d+) old pieces')
 
 
 # ---------------------------------------------------------------------------------------------------- the model's pieces
@@ -149,8 +162,9 @@ def canonical(model: Mapping[str, Any], edits: Mapping[str, Any]) -> dict[str, d
 # ---------------------------------------------------------------------------------------------------- carry-over (5.1)
 class Carried(NamedTuple):
     """A carry's result: `carried` old top id -> new id; `cascaded` the new ids the closure added (CSV order);
-    `not_carried` one row {id, floor, kind, family, why} per old removed piece whose deletion did not carry (old ids,
-    in the old model's CSV order)."""
+    `not_carried` one row {id, floor, kind, family, why, floorName, kindLabel[, newId]} per old removed piece whose
+    deletion did not carry (old ids, in the old model's CSV order; floorName and kindLabel as the old model names them;
+    newId when exactly one new piece stands where it stood)."""
 
     carried: dict[str, str]
     cascaded: list[str]
@@ -172,14 +186,39 @@ def _offset(model: Mapping[str, Any]) -> tuple[float, float]:
     return 0.0, 0.0
 
 
-def _what(p: Mapping[str, Any]) -> tuple[Any, Any, Any]:
-    return p.get('floor'), p.get('kind'), p.get('family')
+def _floors(model: Mapping[str, Any]) -> list[tuple[str, str, float]]:
+    """(key, stack, level) of each floor with a string key and a finite level."""
+    out = []
+    for f in model.get('floors') or []:
+        if isinstance(f, Mapping) and isinstance(f.get('key'), str) and _number(f.get('level')):
+            stack = f.get('stack')
+            out.append((f['key'], stack if isinstance(stack, str) and stack else DEFAULT_STACK, float(f['level'])))
+    return out
+
+
+def floor_map(old_model: Mapping[str, Any], new_model: Mapping[str, Any]) -> dict[str, str]:
+    """Old floor key -> new floor key of the same floor: the same stack and levels within 10 mm, one-to-one (the new
+    floor is the old one's only match and the old one the new floor's only match). Never by key: a new draft takes the
+    latest model's keys by list position (propose._from_model, drafts/adopt.py), so after a floor is added in front or
+    the floors are reordered, a key names another floor. An old floor without such a match is left out (its pieces'
+    deletions do not carry: 'floor changed')."""
+    old, new = _floors(old_model), _floors(new_model)
+
+    def same(a: tuple[str, str, float], b: tuple[str, str, float]) -> bool:
+        return a[1] == b[1] and abs(a[2] - b[2]) <= LEVEL_TOL_M + _EPS
+
+    out: dict[str, str] = {}
+    for f in old:
+        hits = [g for g in new if same(f, g)]
+        if len(hits) == 1 and sum(1 for f2 in old if same(f2, hits[0])) == 1:
+            out[f[0]] = hits[0][0]
+    return out
 
 
 def _same_place(p: Mapping[str, Any], p_off: tuple[float, float], q: Mapping[str, Any], q_off: tuple[float, float]) -> bool:
-    """Old piece p and new piece q stand in the same place with the same size and turn (both already of the same floor,
-    kind and family): drawing-frame centres within 10 mm on each axis, w and d within 10 mm, turns within 0.5 degrees
-    modulo 180 (modulo 90 when both are square)."""
+    """Old piece p and new piece q stand in the same place with the same size and turn (both already of the same floor
+    and family): drawing-frame centres within 10 mm on each axis, w and d within 10 mm, turns within 0.5 degrees modulo
+    180 (modulo 90 when both are square)."""
     if not all(_number(p.get(k)) and _number(q.get(k)) for k in ('x', 'y', 'w', 'd', 'rot')):
         return False
     if abs((p['x'] + p_off[0]) - (q['x'] + q_off[0])) > PLACE_TOL_M + _EPS:
@@ -194,37 +233,40 @@ def _same_place(p: Mapping[str, Any], p_off: tuple[float, float], q: Mapping[str
     return min(turn, period - turn) <= TURN_TOL_DEG + _EPS
 
 
-def _row(p: Mapping[str, Any], why: str) -> dict[str, Any]:
-    return {'id': p['id'], 'floor': p.get('floor'), 'kind': p.get('kind'), 'family': p.get('family'), 'why': why}
-
-
 def carry(old_model: Mapping[str, Any], old_edits: Any, new_model: Mapping[str, Any]) -> Carried:
     """The deletions a new version keeps (DESIGN 5.1). Only the TOPS of the old live map are carried (a removed piece
-    whose support is not removed); a piece that went only with its support is not a deletion in its own right. A top P is
-    carried to the new piece Q when Q is P's only match in the new model, P is the only old piece (removed or kept) that
-    matches Q, and no other carried edit has claimed Q; otherwise P is not carried (its box shows again: never the wrong
-    box deleted, the U-10.6 principle). The carried tops are closed in the new model; what the closure adds is
-    `cascaded`. An old dependent that the new closure did not add back (no new piece in its place is removed) is listed
-    as 'was on a deleted support'."""
+    whose support is not removed); a piece that went only with its support is not a deletion in its own right. A top P
+    matches a new piece Q when Q stands on P's floor (floor_map: stack and level, never the key) with P's family, in P's
+    place, size and turn (the kind is not compared); P is carried to Q when Q is P's only match in the new model, P is
+    the only old piece (removed or kept) that matches Q, and no other carried edit has claimed Q; otherwise P is not
+    carried (its box shows again: never the wrong box deleted, the U-10.6 principle). A piece whose floor has no match
+    is not carried ('floor changed'). The carried tops are closed in the new model; what the closure adds is `cascaded`.
+    An old dependent that the new closure did not add back (no new piece in its place is removed) is listed as 'was on a
+    deleted support'."""
     old_live = live(old_model, old_edits)
     if not old_live:
         return Carried({}, [], [])
     old_pieces, new_pieces = pieces_of(old_model), pieces_of(new_model)
     by_old = {p['id']: p for p in old_pieces}
     old_off, new_off = _offset(old_model), _offset(new_model)
-    old_by_what: dict[tuple[Any, Any, Any], list[Mapping[str, Any]]] = defaultdict(list)
-    new_by_what: dict[tuple[Any, Any, Any], list[Mapping[str, Any]]] = defaultdict(list)
+    floors = floor_map(old_model, new_model)
+    floors_back = {g: f for f, g in floors.items()}
+    old_by: dict[tuple[Any, Any], list[Mapping[str, Any]]] = defaultdict(list)
+    new_by: dict[tuple[Any, Any], list[Mapping[str, Any]]] = defaultdict(list)
     for p in old_pieces:
-        old_by_what[_what(p)].append(p)
+        old_by[p.get('floor'), p.get('family')].append(p)
     for q in new_pieces:
-        new_by_what[_what(q)].append(q)
+        new_by[q.get('floor'), q.get('family')].append(q)
 
     def new_matches(p: Mapping[str, Any]) -> list[Mapping[str, Any]]:
-        return [q for q in new_by_what.get(_what(p), []) if _same_place(p, old_off, q, new_off)]
+        g = floors.get(p.get('floor'))
+        return [q for q in new_by.get((g, p.get('family')), []) if _same_place(p, old_off, q, new_off)] if g else []
 
     def old_matches(q: Mapping[str, Any]) -> list[Mapping[str, Any]]:
-        return [p for p in old_by_what.get(_what(q), []) if _same_place(p, old_off, q, new_off)]
+        f = floors_back.get(q.get('floor'))
+        return [p for p in old_by.get((f, q.get('family')), []) if _same_place(p, old_off, q, new_off)] if f else []
 
+    labels = _labels(old_model)
     removed = set(old_live)
     carried: dict[str, str] = {}
     claimed: set[str] = set()
@@ -233,6 +275,9 @@ def carry(old_model: Mapping[str, Any], old_edits: Any, new_model: Mapping[str, 
         p = by_old[pid]
         if p.get('on') in removed:
             continue                                           # a dependent: below
+        if p.get('floor') not in floors:
+            not_carried.append(_row(p, WHY_FLOOR_CHANGED, labels))
+            continue
         found = new_matches(p)
         if not found:
             why = WHY_NO_MATCH
@@ -249,16 +294,43 @@ def carry(old_model: Mapping[str, Any], old_edits: Any, new_model: Mapping[str, 
                 carried[pid] = q['id']
                 claimed.add(q['id'])
                 continue
-        not_carried.append(_row(p, why))
+        not_carried.append(_row(p, why, labels, found))
     new_removed = close_removed(carried.values(), new_pieces)
     cascaded = [qid for qid in order(new_model, new_removed) if qid not in claimed]
     for pid in old_live:
         p = by_old[pid]
-        if p.get('on') in removed and not any(q['id'] in new_removed for q in new_matches(p)):
-            not_carried.append(_row(p, WHY_ON_A_DELETED_SUPPORT))
+        if p.get('on') not in removed:
+            continue
+        if p.get('floor') not in floors:
+            not_carried.append(_row(p, WHY_FLOOR_CHANGED, labels))
+            continue
+        found = new_matches(p)
+        if not any(q['id'] in new_removed for q in found):
+            not_carried.append(_row(p, WHY_ON_A_DELETED_SUPPORT, labels, found))
     rank = {pid: i for i, pid in enumerate(old_live)}
     not_carried.sort(key=lambda r: rank[r['id']])
     return Carried(carried, cascaded, not_carried)
+
+
+def _labels(model: Mapping[str, Any]) -> tuple[dict[str, str], dict[str, str]]:
+    """(floor key -> name, kind key -> label) of a model, for the not-carried rows (the staff app names the boxes)."""
+    floors = {f['key']: f['name'] for f in model.get('floors') or []
+              if isinstance(f, Mapping) and isinstance(f.get('key'), str) and isinstance(f.get('name'), str)}
+    kinds = {k['key']: k['label'] for k in model.get('furnitureKinds') or []
+             if isinstance(k, Mapping) and isinstance(k.get('key'), str) and isinstance(k.get('label'), str)}
+    return floors, kinds
+
+
+def _row(p: Mapping[str, Any], why: str, labels: tuple[dict[str, str], dict[str, str]],
+         found: list[Mapping[str, Any]] | None = None) -> dict[str, Any]:
+    """A not-carried row: the old piece as the old model names it, and `newId` when exactly one new piece stands where it
+    stood (the box is still in the new version: a duplicate in the old drawing, or a dependent that stays)."""
+    row = {'id': p['id'], 'floor': p.get('floor'), 'kind': p.get('kind'), 'family': p.get('family'), 'why': why,
+           'floorName': labels[0].get(p.get('floor'), p.get('floor')),
+           'kindLabel': labels[1].get(p.get('kind'), p.get('kind'))}
+    if found is not None and len(found) == 1:
+        row['newId'] = found[0]['id']
+    return row
 
 
 def carried_record(from_version: int, result: Carried) -> dict[str, Any]:
@@ -277,15 +349,54 @@ def carry_into(old_model: Mapping[str, Any], old_edits: Any, new_model: Mapping[
     return result.edits(new_model), carried_record(from_version, result)
 
 
-def carried_note(record: Any) -> tuple[int, int] | None:
-    """(from, how many deleted boxes did not carry) of a carried-edits.json, or None when nothing failed to carry or the
-    file is not one (read leniently: an odd file only loses the note)."""
+def reason_text(why: Any) -> str:
+    """The staff app's words for a not-carried row's `why` ('not found in the new drawing', 'its floor changed', ...);
+    an unknown `why` (a later step's) is shown as it is, a missing one as 'not found in the new drawing'."""
+    if why == WHY_NO_MATCH or not isinstance(why, str) or not why:
+        return 'not found in the new drawing'
+    if why == WHY_FLOOR_CHANGED:
+        return 'its floor changed'
+    if why == WHY_ON_A_DELETED_SUPPORT:
+        return 'it went with the box it stood on'
+    if m := _WHY_MATCHES.fullmatch(why):
+        return f'{m.group(1)} boxes in the new drawing stand in its place'
+    if m := _WHY_OLD_MATCHES.fullmatch(why):
+        return f'its box in the new drawing matches {m.group(1)} old boxes'
+    return why
+
+
+class Note(NamedTuple):
+    """The version detail's `carriedEdits`: `boxes` one {kind, family, floor, reason[, newId]} per row (the record's
+    order: the old CSV order)."""
+
+    from_version: int
+    count: int
+    boxes: list[dict[str, str]]
+
+
+def _text(v: Any, fallback: str = '?') -> str:
+    return v if isinstance(v, str) and v else fallback
+
+
+def carried_note(record: Any) -> Note | None:
+    """(from, how many deleted boxes did not carry, one line per box) of a carried-edits.json, or None when nothing failed
+    to carry or the file is not one (read leniently: an odd file only loses the note, an odd row only its line; a row of
+    a record written before the labels, 17 Nov, names its floor and kind by key)."""
     if not isinstance(record, Mapping) or record.get('format') != CARRIED_FORMAT:
         return None
     src, rows = record.get('from'), record.get('notCarried')
     if not isinstance(src, int) or isinstance(src, bool) or src < 1 or not isinstance(rows, list) or not rows:
         return None
-    return src, len(rows)
+    boxes: list[dict[str, str]] = []
+    for r in rows:
+        if not isinstance(r, Mapping):
+            continue
+        box = {'kind': _text(r.get('kindLabel'), _text(r.get('kind'))), 'family': _text(r.get('family'), ''),
+               'floor': _text(r.get('floorName'), _text(r.get('floor'))), 'reason': reason_text(r.get('why'))}
+        if isinstance(r.get('newId'), str) and r['newId']:
+            box['newId'] = r['newId']
+        boxes.append(box)
+    return Note(src, len(rows), boxes)
 
 
 # ---------------------------------------------------------------------------------------------------- the 3ds Max script (4)

@@ -123,6 +123,13 @@ export interface HeightsSaverCore {
    * merges).
    */
   adopt(saved: SavedNow): void;
+  /**
+   * The saved heights and deleted boxes this tab shows, when it has nothing unsaved (nothing pending, debouncing, in
+   * flight or failed, the deleted boxes not dirty); else null. A viewer re-created on the same version (Try again, an
+   * address change) starts from the page's memoised detail, which can be older (a takeover from another tab since): the
+   * page brings it to this (fix of 17 Nov 2026).
+   */
+  settled(): { heights: HeightMap; pieceEdits: PieceEditMap } | null;
   /** No more state callbacks or retries; requests already started (and a newest map queued behind them) still go out. */
   close(): void;
 }
@@ -332,6 +339,10 @@ export function createHeightsSaver(deps: SaverDeps): HeightsSaverCore {
       }
       emit();
     },
+    settled() {
+      if (unsaved || pending || inFlight || timer !== null || failed !== null || editsDirty) return null;
+      return { heights: { ...base.heights }, pieceEdits: copyEdits(edits) };
+    },
     close() {
       closed = true;
       stopRetry();
@@ -391,6 +402,8 @@ export interface HeightsSaver {
   flush: () => void;
   /** The saved heights as the API has them now (a refetch): see HeightsSaverCore.adopt (stable identity). */
   adopt: (saved: SavedNow) => void;
+  /** What the tab shows when nothing is unsaved, else null: see HeightsSaverCore.settled (stable identity). */
+  settled: () => { heights: HeightMap; pieceEdits: PieceEditMap } | null;
 }
 
 export interface HeightsSaverOptions {
@@ -458,7 +471,8 @@ export function useHeightsSaver(projectId: string, version: number, opts: Height
   const retry = useCallback(() => { coreRef.current?.retry(); }, []);
   const flush = useCallback(() => { coreRef.current?.flush(); }, []);
   const adopt = useCallback((saved: SavedNow) => { coreRef.current?.adopt(saved); }, []);
-  return { state, change, changeEdits, retry, flush, adopt };
+  const settled = useCallback(() => coreRef.current?.settled() ?? null, []);
+  return { state, change, changeEdits, retry, flush, adopt, settled };
 }
 
 // ------------------------------------------------------------------------------------------------------- other versions

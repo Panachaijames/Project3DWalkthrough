@@ -71,10 +71,39 @@ export const boxesDeletedTitle = (n: number) =>
 
 /**
  * The new version's note when deleted boxes of the version it was carried from did not carry over (step BX, the main
- * session's decision 2; VersionDetail.carriedEdits): '2 deleted boxes of v2 are back: not found in the new drawing'.
+ * session's decision 2; VersionDetail.carriedEdits): its head, '2 deleted boxes of v2 are back'.
  */
 export const carriedEditsText = (notCarried: number, from: number) =>
-  `${plural(notCarried, 'deleted box', 'deleted boxes')} of v${from} ${notCarried === 1 ? 'is' : 'are'} back: not found in the new drawing`;
+  `${plural(notCarried, 'deleted box', 'deleted boxes')} of v${from} ${notCarried === 1 ? 'is' : 'are'} back`;
+
+/** The note names at most this many boxes, then 'and N more'. */
+export const MAX_NOTE_BOXES = 5;
+
+/** One box that did not carry over (CarriedEdits.boxes; drawing text): 'Chair / stool (Fritz-Hansen_SH200) on Level 2: its floor changed'. */
+export const notCarriedBoxText = (b: { kind: string; family: string; floor: string; reason: string }) =>
+  `${b.kind}${b.family ? ` (${b.family})` : ''} on ${b.floor}: ${b.reason}`;
+
+/**
+ * The note's lines (fix of 17 Nov 2026: which boxes, and why). One box: one line, '1 deleted box of v2 is back: Other
+ * furniture (Fritz-Hansen_SH200) on Level 2: not found in the new drawing'. Several: the head ('3 deleted boxes of v2 are
+ * back:'), then one short line per box, at most MAX_NOTE_BOXES, then 'and N more'. No list (an older answer): the head.
+ */
+export function carriedEditsLines(c: { from: number; notCarried: number; boxes?: readonly { kind: string; family: string; floor: string; reason: string }[] }): string[] {
+  const head = carriedEditsText(c.notCarried, c.from);
+  const boxes = c.boxes ?? [];
+  if (!boxes.length) return [head];
+  if (c.notCarried === 1 && boxes.length === 1) return [`${head}: ${notCarriedBoxText(boxes[0]!)}`];
+  const shown = boxes.slice(0, MAX_NOTE_BOXES).map(notCarriedBoxText);
+  const more = Math.max(0, c.notCarried - shown.length);
+  return [`${head}:`, ...shown, ...(more ? [`and ${more} more`] : [])];
+}
+
+/**
+ * The draft's 3D preview, when the version its save carries from has deleted boxes (the preview shows every box of the
+ * draft): "v2's 3 deleted boxes are applied when you save, where the same box is in the same place."
+ */
+export const previewDeletedBoxesText = (n: number, from: number) =>
+  `v${from}'s ${plural(n, 'deleted box is', 'deleted boxes are')} applied when you save, where the same box is in the same place.`;
 
 /**
  * The tooltip of the CSV and offline downloads while a save is going (they carry the saved heights and deleted boxes).

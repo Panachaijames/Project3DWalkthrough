@@ -1102,6 +1102,14 @@
       "CarriedEdits": {
         "description": "How the deleted furniture boxes of an earlier version fared when this version was saved with the carry tick (from\nversions/<n>/source/carried-edits.json).",
         "properties": {
+          "boxes": {
+            "description": "The boxes that did not carry over, one each in the furniture list's order (17 Nov 2026).",
+            "items": {
+              "$ref": "#/components/schemas/NotCarriedBox"
+            },
+            "title": "Boxes",
+            "type": "array"
+          },
           "from": {
             "description": "The version whose deleted boxes were carried into this one.",
             "title": "From",
@@ -2027,6 +2035,51 @@
           "name"
         ],
         "title": "NewProjectRequest",
+        "type": "object"
+      },
+      "NotCarriedBox": {
+        "description": "One deleted furniture box of the earlier version that did not carry over (fix of 17 Nov 2026, additive).",
+        "properties": {
+          "family": {
+            "description": "The furniture family (drawing text).",
+            "title": "Family",
+            "type": "string"
+          },
+          "floor": {
+            "description": "The floor's name as that version named it, e.g. 'Level 2'.",
+            "title": "Floor",
+            "type": "string"
+          },
+          "kind": {
+            "description": "The kind's label as that version named it, e.g. 'Chair / stool'.",
+            "title": "Kind",
+            "type": "string"
+          },
+          "newId": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The box's id in this version when exactly one box of this version stands where it stood (it shows again there); absent otherwise.",
+            "title": "Newid"
+          },
+          "reason": {
+            "description": "Why it did not carry over, e.g. 'not found in the new drawing', 'its floor changed'.",
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "family",
+          "floor",
+          "reason"
+        ],
+        "title": "NotCarriedBox",
         "type": "object"
       },
       "OfficeInfo": {

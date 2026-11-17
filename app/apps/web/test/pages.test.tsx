@@ -575,6 +575,29 @@ describe('step BX: the deleted furniture boxes on the version page', () => {
     expect(statusText()).toBe('Furniture saved');
   });
 
+  it('a viewer re-created on the version after a takeover starts from what the saver has, so its next delete keeps the other tab\'s', async () => {
+    // fix of 17 Nov 2026: the address changes within the 30 s cache, so the loader hands back the detail read before the
+    // takeover and the new viewer starts from no deleted boxes; with nothing unsaved the page brings it to the saver's map
+    const app = await openApp('/projects/bank-sampeng/v/2');
+    await waitFor(() => fakeViewerLog.filter(r => r.event === 'create').length === 2);
+    await waitFor(() => app.mock.requests.some(r => r.method === 'GET' && r.path.endsWith('/versions/2/furniture-heights')));
+    app.mock.setSaved('bank-sampeng', 2, { seat: 300 }, { 'L1-table-005': R }); // another tab: a height and the table
+    await act(async () => {
+      await app.queryClient.invalidateQueries({ queryKey: getFurnitureHeightsQueryKey({ path: { projectId: 'bank-sampeng', version: 2 } }) });
+    });
+    await waitFor(() => Object.keys(viewer().getPieceEdits()).length === 2);
+    await act(async () => { await app.router.navigate('/projects/bank-sampeng/v/2?floor=L1'); });
+    await waitFor(() => fakeViewerLog.filter(r => r.event === 'create').length === 3);
+    expect(fakeViewerLog.at(-1)!.pieceEdits).toBeNull();               // made from the detail as it was read at first
+    expect(viewer().getPieceEdits()).toEqual(TABLE);                   // ... then brought to the saver's
+    expect(viewer().getHeights()).toEqual({ seat: 300 });
+    await waitFor(() => text(count()) === '· 2 boxes deleted');
+    await act(async () => { viewer().furniture!.removePiece('L1-atm-001'); });
+    await waitFor(() => puts(app.mock).length === 1 && statusText() === 'Furniture saved');
+    expect(puts(app.mock)).toEqual([{ heights: { seat: 300 }, pieceEdits: { 'L1-atm-001': R, ...TABLE } }]);
+    expect(app.mock.saved('bank-sampeng', 2).pieceEdits).toEqual({ 'L1-atm-001': R, ...TABLE });
+  });
+
   it('while a delete is not saved the 3ds Max script waits too, with its own reason; saved, it is a link again', async () => {
     let refuse = true, putsMade = 0;
     const app = await openApp('/projects/bank-sampeng/v/2', {
@@ -607,7 +630,15 @@ describe('step BX: the deleted furniture boxes on the version page', () => {
 
   it("a version whose previous version's deleted boxes did not all carry over says so under the app bar, until closed", async () => {
     const mock = createMockApi();
-    const detail = { ...mock.version('bank-sampeng', 2)!, carriedEdits: { from: 1, notCarried: 2 } };
+    const detail = {
+      ...mock.version('bank-sampeng', 2)!,
+      carriedEdits: {
+        from: 1, notCarried: 2, boxes: [
+          { kind: 'Chair / stool', family: 'Fritz-Hansen_SH200', floor: 'Level 2', reason: 'not found in the new drawing' },
+          { kind: 'Table / desk', family: '<b>Desk</b>', floor: 'Level 1', reason: 'its floor changed', newId: 'L1-table-009' },
+        ],
+      },
+    };
     const app = await openApp('/projects/bank-sampeng/v/2', {
       mock,
       fetch: {
@@ -618,13 +649,22 @@ describe('step BX: the deleted furniture boxes on the version page', () => {
     });
     const note = await waitFor(() => app.body.querySelector('[data-testid=carried-edits-note]'));
     expect(note.getAttribute('role')).toBe('note');
-    expect(text(note.querySelector('[data-testid=carried-edits-text]'))).toBe('2 deleted boxes of v1 are back: not found in the new drawing');
-    const area = () => app.body.querySelector('[data-testid=viewer-area]')!;
-    expect(area().classList.contains('top-20')).toBe(true);           // the viewer starts below the note
+    // which boxes and why (fix of 17 Nov 2026): the head, then one line each
+    expect([...note.querySelectorAll('[data-testid=carried-edits-line]')].map(l => text(l))).toEqual([
+      '2 deleted boxes of v1 are back:',
+      'Chair / stool (Fritz-Hansen_SH200) on Level 2: not found in the new drawing',
+      'Table / desk (<b>Desk</b>) on Level 1: its floor changed',
+    ]);
+    expect(note.querySelector('b')).toBeNull();                        // drawing text stays text
+    const area = () => app.body.querySelector<HTMLElement>('[data-testid=viewer-area]')!;
+    expect((note as HTMLElement).style.height).toBe('80px');           // 3 lines of 24 px and 8 px
+    expect(area().style.top).toBe('128px');                            // the viewer starts below the note
+    expect(area().classList.contains('top-12')).toBe(false);
     await waitFor(() => fakeViewerLog.filter(r => r.event === 'create').length === 2);
     await click(note.querySelector('[data-testid=carried-edits-close]'));
     expect(app.body.querySelector('[data-testid=carried-edits-note]')).toBeNull();
     expect(area().classList.contains('top-12')).toBe(true);
+    expect(area().style.top).toBe('');
     expect(fakeViewerLog.filter(r => r.event === 'create').length).toBe(2);   // closing the note re-creates nothing
   });
 });

@@ -418,6 +418,28 @@ def why(record: dict) -> dict[str, str]:
     return {r['id']: r['why'] for r in record['notCarried']}
 
 
+def floor_name(model: dict, key: str) -> str:
+    return next(f['name'] for f in model['floors'] if f['key'] == key)
+
+
+def kind_label(model: dict, key: str) -> str:
+    return next(k['label'] for k in model['furnitureKinds'] if k['key'] == key)
+
+
+def row_of(model: dict, pid: str, why_: str, **more: str) -> dict:
+    """A not-carried row of carried-edits.json for the old piece `pid`, its floor and kind named as `model` names them."""
+    p = piece(model, pid)
+    return {'id': pid, 'floor': p['floor'], 'kind': p['kind'], 'family': p['family'], 'why': why_,
+            'floorName': floor_name(model, p['floor']), 'kindLabel': kind_label(model, p['kind']), **more}
+
+
+def box_of(model: dict, pid: str, reason: str, **more: str) -> dict:
+    """The version detail's line for the old piece `pid` (carriedEdits.boxes)."""
+    p = piece(model, pid)
+    return {'kind': kind_label(model, p['kind']), 'family': p['family'], 'floor': floor_name(model, p['floor']),
+            'reason': reason, **more}
+
+
 def test_the_same_drawing_carries_every_deletion(tmp_path: Path, bank: dict, template_file: Path) -> None:
     alone = standing_on(bank, 'L1-table-002')[0]                    # deleted on its own: a top although it stands on one
     store, record, o = carry_case(tmp_path, bank, ['L1-table-001', 'L2-seat-003', alone], bank, {'table': 600})
@@ -452,10 +474,13 @@ def test_a_moved_resized_or_turned_box_is_not_carried(tmp_path: Path, bank: dict
     assert why(record) == {i: 'no match' for i in ('L2-seat-001', 'L2-seat-003', 'L2-seat-004', 'L1-atm-003', 'L1-tv-002')}
     assert [r['id'] for r in record['notCarried']] == csv_order(bank, why(record))
     assert record['notCarried'][0] == {'id': 'L1-atm-003', 'floor': 'L1', 'kind': 'atm',
-                                       'family': piece(bank, 'L1-atm-003')['family'], 'why': 'no match'}
+                                       'family': piece(bank, 'L1-atm-003')['family'], 'why': 'no match',
+                                       'floorName': 'Level 1', 'kindLabel': 'ATM / kiosk'}
     assert list(o['pieceEdits']) == list(record['carried'].values())
     with make_client(store.root, template_file) as c:                # the main session's decision of 16 Nov, point 2
-        assert c.get(f'{P}/carry/versions/2').json()['carriedEdits'] == {'from': 1, 'notCarried': 5}
+        assert c.get(f'{P}/carry/versions/2').json()['carriedEdits'] == {
+            'from': 1, 'notCarried': 5,                              # and which boxes (fix of 17 Nov)
+            'boxes': [box_of(bank, r['id'], 'not found in the new drawing') for r in record['notCarried']]}
 
 
 def test_duplicates_are_never_carried(tmp_path: Path, bank: dict) -> None:
@@ -470,6 +495,7 @@ def test_duplicates_are_never_carried(tmp_path: Path, bank: dict) -> None:
     for gone in ('L2-seat-006', 'L2-seat-902'):
         _, record, o = carry_case(tmp_path / gone, old, [gone], bank)
         assert record is not None and record['carried'] == {} and why(record) == {gone: 'matches 2 old pieces'}
+        assert record['notCarried'][0]['newId'] == 'L2-seat-006'     # the one box of the new drawing in its place
         assert o is None                                             # nothing carried, no heights: no overrides.json
 
 
@@ -484,6 +510,76 @@ def test_a_renumbered_box_maps_to_its_new_id(tmp_path: Path, bank: dict) -> None
     assert o['pieceEdits'] == edits('L2-seat-015', 'L2-seat-903')   # never the bare id: L2-seat-014 is another chair now
 
 
+# Fixes after the review (17 Nov 2026): floors by level and stack, never by key; the kind is not compared.
+def _rekeyed(model: dict, rekey: dict[str, str]) -> dict:
+    """A copy of `model` whose floors have other keys (levels as they were) and whose pieces follow them (ids and `on`
+    start with the floor key, as the builder makes them): what a new draft gives the same building after a floor was
+    added in front or the floors were reordered, since it takes the latest model's keys by list position
+    (propose._from_model, drafts/adopt.py)."""
+    new = copy.deepcopy(model)
+    new['floors'] = [{**f, 'key': rekey[f['key']]} for f in model['floors']]
+    for p in new['furniture']:
+        for k in ('id', 'on'):
+            if p.get(k):
+                p[k] = rekey[p['floor']] + p[k][len(p['floor']):]
+        p['floor'] = rekey[p['floor']]
+    return new
+
+
+def test_floors_are_matched_by_level_and_stack_never_by_key(bank: dict) -> None:
+    old = copy.deepcopy(bank)
+    add_piece(old, 'L2-seat-003', 'L1-seat-901', floor='L1')          # the same chair in the same place on Level 1
+    # the floors' keys swapped (levels as before): Level 2 is 'L1' now, Level 1 'L2'
+    new = _rekeyed(old, {'L1': 'L2', 'L2': 'L1'})
+    r = piece_edits.carry(old, edits('L2-seat-003'), new)
+    assert r.carried == {'L2-seat-003': 'L1-seat-003'} and r.not_carried == []    # Level 2's chair, not 'L2-seat-901'
+    assert piece(new, 'L1-seat-003')['x'] == piece(old, 'L2-seat-003')['x'] and floor_name(new, 'L1') == 'Level 2'
+    # a floor added in front (a basement): the old keys move up one by position
+    new = _rekeyed(old, {'L1': 'L2', 'L2': 'L3'})
+    new['floors'].insert(0, {**new['floors'][0], 'key': 'L1', 'name': 'Basement', 'level': -3.7})
+    r = piece_edits.carry(old, edits('L2-seat-003', 'L1-table-001'), new)
+    assert r.carried == {'L1-table-001': 'L2-table-001', 'L2-seat-003': 'L3-seat-003'} and r.not_carried == []
+    assert r.cascaded == [f'L2{pid[2:]}' for pid in standing_on(old, 'L1-table-001')]
+
+
+def test_floor_map() -> None:
+    def f(key: str, level: float, stack: str | None = None) -> dict:
+        return {'key': key, 'level': level, **({'stack': stack} if stack else {})}
+    old = {'floors': [f('A', 0), f('B', 3.7), f('C', 3.7, 'annex'), f('D', 7.4)]}
+    new = {'floors': [f('X', 0.010), f('Y', 3.7, 'main'), f('Z', 3.7, 'annex'), f('W', 7.411)]}
+    assert piece_edits.floor_map(old, new) == {'A': 'X', 'B': 'Y', 'C': 'Z'}       # 10 mm is the same level, 11 mm not
+    assert piece_edits.floor_map({'floors': [f('A', 0)]}, {'floors': [f('X', 0), f('Y', 0.005)]}) == {}   # two: neither
+    assert piece_edits.floor_map({'floors': [f('A', 0), f('B', 0.005)]}, {'floors': [f('X', 0)]}) == {}
+    assert piece_edits.floor_map({'floors': [f('A', 0, 'annex')]}, {'floors': [f('A', 0)]}) == {}         # another stack
+
+
+def test_a_box_whose_floor_changed_is_not_carried(tmp_path: Path, bank: dict, template_file: Path) -> None:
+    new = copy.deepcopy(bank)
+    next(f for f in new['floors'] if f['key'] == 'L2')['level'] = 3.75            # Level 2 is 50 mm higher now
+    store, record, o = carry_case(tmp_path, bank, ['L1-table-001', 'L2-seat-003'], new)
+    assert record is not None and o is not None
+    assert record['carried'] == {'L1-table-001': 'L1-table-001'}
+    assert record['notCarried'] == [row_of(bank, 'L2-seat-003', 'floor changed')]
+    assert 'L2-seat-003' not in o['pieceEdits']
+    with make_client(store.root, template_file) as c:
+        assert c.get(f'{P}/carry/versions/2').json()['carriedEdits'] == {
+            'from': 1, 'notCarried': 1, 'boxes': [box_of(bank, 'L2-seat-003', 'its floor changed')]}
+
+
+def test_a_kind_change_alone_still_carries(tmp_path: Path, bank: dict) -> None:
+    """A family given a kind on the Check step (the reviewer's case: other -> seat): same floor, family, place and size,
+    a new kind and so a new id. The deletion carries to the new id; the kind is not compared."""
+    new = copy.deepcopy(bank)
+    p = piece(new, 'L2-seat-003')
+    p['kind'], p['id'] = 'sofa', 'L2-sofa-901'
+    for k in new['furnitureKinds']:
+        k['count'] += {'seat': -1, 'sofa': 1}.get(k['key'], 0)
+    _, record, o = carry_case(tmp_path, bank, ['L2-seat-003'], new)
+    assert record is not None and o is not None
+    assert record['carried'] == {'L2-seat-003': 'L2-sofa-901'} and record['notCarried'] == []
+    assert o['pieceEdits'] == edits('L2-sofa-901')
+
+
 def test_only_tops_are_carried_and_the_new_closure_cascades(tmp_path: Path, bank: dict, template_file: Path) -> None:
     new = copy.deepcopy(bank)
     piece(new, 'L1-computer-002')['on'] = 'L1-table-002'             # the new drawing puts it on a kept table
@@ -494,10 +590,13 @@ def test_only_tops_are_carried_and_the_new_closure_cascades(tmp_path: Path, bank
     assert record['cascaded'] == ['L1-phone-001', 'L1-phone-901']
     assert record['notCarried'] == [{'id': 'L1-computer-002', 'floor': 'L1', 'kind': 'computer',
                                      'family': piece(bank, 'L1-computer-002')['family'],
-                                     'why': 'was on a deleted support'}]
+                                     'why': 'was on a deleted support', 'floorName': 'Level 1',
+                                     'kindLabel': 'Computer / monitor', 'newId': 'L1-computer-002'}]
     assert o['pieceEdits'] == edits('L1-phone-001', 'L1-phone-901', 'L1-table-001')          # the computer stays
     with make_client(store.root, template_file) as c:
-        assert c.get(f'{P}/carry/versions/2').json()['carriedEdits'] == {'from': 1, 'notCarried': 1}
+        assert c.get(f'{P}/carry/versions/2').json()['carriedEdits'] == {
+            'from': 1, 'notCarried': 1,
+            'boxes': [box_of(bank, 'L1-computer-002', 'it went with the box it stood on', newId='L1-computer-002')]}
 
 
 def test_heights_only_carry_and_no_carry(tmp_path: Path, bank: dict) -> None:
@@ -593,15 +692,15 @@ def test_the_seed_remaps_the_edits_of_a_changed_model(tmp_path: Path, seeded: Pa
     old = read_json(vdir(seeded, 'sukhumvit-house', 1) / 'model.json')
     assert read_json(d / 'source' / 'carried-edits.json') == {
         'format': 'walkthrough-carried-edits/1', 'from': 1, 'carried': {stays: stays}, 'cascaded': [],
-        'notCarried': [{'id': moves, 'floor': piece(old, moves)['floor'], 'kind': piece(old, moves)['kind'],
-                        'family': piece(old, moves)['family'], 'why': 'no match'}]}
+        'notCarried': [row_of(old, moves, 'no match')]}
     assert [x for x in lines if 'the model changed' in x] == [
         'sukhumvit-house v1: the model changed: deleted furniture boxes re-mapped, 1 carried, 0 with them, 1 not carried '
         '(source/carried-edits.json)']
     for other in ('bank-sampeng', 'hotel-lobby'):                    # the other versions' models did not change
         assert not (vdir(data, other, 1) / 'source' / 'carried-edits.json').exists()
     with make_client(data, template_file) as c:
-        assert c.get(f'{P}/sukhumvit-house/versions/1').json()['carriedEdits'] == {'from': 1, 'notCarried': 1}
+        assert c.get(f'{P}/sukhumvit-house/versions/1').json()['carriedEdits'] == {
+            'from': 1, 'notCarried': 1, 'boxes': [box_of(old, moves, 'not found in the new drawing')]}
     # the next --force (the model as it is now): both files kept as they are
     kept = (d / 'overrides.json').read_bytes(), (d / 'source' / 'carried-edits.json').read_bytes()
     assert not seed(protos, data, force=True, **quiet).remapped
@@ -685,7 +784,18 @@ def test_order_and_live() -> None:
     assert list(piece_edits.live(m, {'B-desk-001': REMOVED, 'zz': REMOVED})) == ['B-seat-001', 'B-desk-001']
     for odd in (None, [], 'x', {}, {'A-desk-001': 'removed'}, {'A-desk-001': {'removed': 1}}):
         assert piece_edits.live(m, odd) == {}
-    assert piece_edits.carried_note({'format': 'walkthrough-carried-edits/1', 'from': 2, 'notCarried': [{}, {}]}) == (2, 2)
+    unknown = {'kind': '?', 'family': '', 'floor': '?', 'reason': 'not found in the new drawing'}
+    assert piece_edits.carried_note({'format': 'walkthrough-carried-edits/1', 'from': 2, 'notCarried': [{}, {}]}) == \
+        (2, 2, [unknown, unknown])
+    # a row of a record written before the labels (16 Nov) names its floor and kind by key; an odd row loses its line only
+    old_row = {'id': 'L2-seat-001', 'floor': 'L2', 'kind': 'seat', 'family': 'F', 'why': '2 matches'}
+    assert piece_edits.carried_note({'format': 'walkthrough-carried-edits/1', 'from': 3, 'notCarried': [old_row, 7]}) == \
+        (3, 2, [{'kind': 'seat', 'family': 'F', 'floor': 'L2', 'reason': '2 boxes in the new drawing stand in its place'}])
+    assert [piece_edits.reason_text(w) for w in ('no match', 'floor changed', 'was on a deleted support', '3 matches',
+                                                  'matches 2 old pieces', 'a later reason', None)] == [
+        'not found in the new drawing', 'its floor changed', 'it went with the box it stood on',
+        '3 boxes in the new drawing stand in its place', 'its box in the new drawing matches 2 old boxes', 'a later reason',
+        'not found in the new drawing']
     for odd in (None, 'x', {'format': 'walkthrough-carried-edits/1', 'from': 2, 'notCarried': []},
                 {'format': 'other', 'from': 2, 'notCarried': [{}]}, {'format': 'walkthrough-carried-edits/1', 'from': True,
                                                                      'notCarried': [{}]}):

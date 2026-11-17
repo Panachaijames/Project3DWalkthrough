@@ -11,7 +11,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { MIN_DEPTH_HELP, MIN_SIZE_HELP } from '@/build/FloorsStep';
 import type { BuildOverlay, BuildSettings } from '@/upload/contracts';
 import { resetFakeViewer } from '../fake-viewer';
-import { choose, enter, stubWebGL, text, waitFor } from '../helpers';
+import { choose, click, enter, stubWebGL, text, waitFor } from '../helpers';
 import { createMockApi, type MockApi } from '../mock-api/core';
 import { closeAll, draftOf, fastClocks, openApp, q, settingsPuts, waitForPut } from './app';
 import { fakePlan } from './fake-plan';
@@ -87,6 +87,30 @@ describe('the Check step: a grey family given a kind', () => {
     await waitForPut(mock, s => s.furniture.words.bed === undefined);
     await waitFor(() => status() === 'saved');
     expect(select('A$C238E5230')?.value).toBe('');
+  });
+
+  it('"Give it a kind" brings the family\'s row into view and focuses its kind select, on every click (fix of 17 Nov)', async () => {
+    const scrolled: Element[] = [];
+    const own = Object.getOwnPropertyDescriptor(Element.prototype, 'scrollIntoView');
+    Element.prototype.scrollIntoView = function (this: Element) { scrolled.push(this); };
+    try {
+      await openCheck();
+      const give = (family: string) => [...document.querySelectorAll('[data-testid=flag][data-kind=grey-furniture]')]
+        .find(f => text(f.querySelector('[data-testid=flag-title]')).startsWith(`${family}:`))
+        ?.querySelector('[data-testid=flag-family]');
+      await click(give(HERMAN));
+      expect(scrolled.at(-1)).toBe(row(HERMAN));
+      expect(document.activeElement).toBe(select(HERMAN));
+      (document.activeElement as HTMLElement).blur();
+      await click(give(HERMAN));                                      // the same family again: again
+      expect(scrolled.length).toBe(2);
+      expect(document.activeElement).toBe(select(HERMAN));
+      await click(give('A$C238E5230'));                               // another family (a '$' in its name)
+      expect(scrolled.at(-1)).toBe(row('A$C238E5230'));
+      expect(document.activeElement).toBe(select('A$C238E5230'));
+    } finally {
+      if (own) Object.defineProperty(Element.prototype, 'scrollIntoView', own);
+    }
   });
 
   it('a word saved before in the acceptance settings\' way shows its kind and is replaced, not doubled', async () => {

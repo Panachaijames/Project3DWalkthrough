@@ -326,6 +326,12 @@ All three leave deleted boxes out, and each is byte-identical to today when noth
 
 ### 5.1 Carry-over: yes, by fingerprint, one-to-one, never by bare id
 
+*Amended after the review (17 Nov, `contract-issues/BX.md`):* floors are paired between the two models by stack and
+level (within 10 mm, one to one), never by key, because a new draft hands out floor keys by position; a piece whose
+floor has no pair is not carried ("its floor changed"). The kind is no longer part of the match, so giving a grey
+family a kind keeps its deleted boxes deleted. The note on the new version's page names each box that came back (kind,
+family, floor, reason).
+
 Ids are ranks (`<floor>-<kind>-<nnn>`, sorted by x then y: `vendor/furniture_kit.py` `finish()` 364-393). One piece added or removed on that floor and kind renumbers every later piece, so v2's `L1-seat-017` can be a different chair in v3. Copying ids blindly would delete the wrong box.
 
 Requiring "same id" (the brief's example) would also drop every correct carry after an unrelated piece shifted the numbering. So the rule matches by what the box is and where it stands, then maps to the new id.

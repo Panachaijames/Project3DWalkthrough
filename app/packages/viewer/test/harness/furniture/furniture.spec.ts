@@ -493,6 +493,7 @@ test.describe('deleting a furniture box (?edit=1)', () => {
     await page.keyboard.press('Enter');
     await page.keyboard.press('Delete');
     expect((await look(page, T, px)).edits).toEqual([]);
+    await expect(page.locator('[data-wt=box-delete]')).toHaveText('Delete box');      // disarmed: the card does not offer "(Del)" (review of 17 Nov)
     expect(errors).toEqual([]);
   });
 

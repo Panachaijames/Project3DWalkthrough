@@ -10,11 +10,12 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { ViewerHost } from '@/components/ViewerHost';
 import { ApiError, apiUrl } from '@/api/client';
+import { getVersionOptions } from '@/api/generated/@tanstack/react-query.gen';
 import { cancelBuildRun, runBuild } from '@/api/generated/sdk.gen';
 import type { BuildDetail, BuildOverlay, BuildResultInfo, DrawingRead } from '@/upload/contracts';
 import { draftViewerOptions, toDraftViewerProject } from '@/upload/draftViewerProject';
 import { rawQueryOptions } from '@/upload/raw';
-import { errorReason, formatNumber } from '@/lib/format';
+import { errorReason, formatNumber, previewDeletedBoxesText } from '@/lib/format';
 import { sourceToken, useBuildContext } from './context';
 import { PreBuildChecklist } from './PreBuildChecklist';
 import { RoomCounts } from './RoomsPanels';
@@ -47,8 +48,24 @@ export function ResultTable({ result }: { result: BuildResultInfo }) {
   );
 }
 
-/** The 3D preview of the draft (U-12.5): the viewer on the draft's model, stages and presentation; heights not saved. */
-export function DraftPreview({ detail, onClose }: { detail: BuildDetail; onClose: () => void }) {
+/**
+ * The deleted boxes of the version a save of this draft carries from (the project's latest; DESIGN BX 5.1), while the
+ * preview is open: { from, count }, or null when there are none (or no version yet, or it cannot be read).
+ */
+export function useCarriedBoxes(projectId: string, latest: number, enabled: boolean): { from: number; count: number } | null {
+  const v = useQuery({ ...getVersionOptions({ path: { projectId, version: Math.max(latest, 1) } }), enabled: enabled && latest >= 1, retry: false });
+  const count = v.data ? Object.keys(v.data.overrides.pieceEdits ?? {}).length : 0;
+  return latest >= 1 && count > 0 ? { from: latest, count } : null;
+}
+
+/**
+ * The 3D preview of the draft (U-12.5): the viewer on the draft's model, stages and presentation; heights not saved.
+ * It shows every box of the draft: when the version a save carries from has deleted boxes, one plain line says that they
+ * are applied on save (fix of 17 Nov 2026).
+ */
+export function DraftPreview({ detail, onClose, carriedBoxes = null }: {
+  detail: BuildDetail; onClose: () => void; carriedBoxes?: { from: number; count: number } | null;
+}) {
   const result = detail.result!;
   const model = useQuery(rawQueryOptions<unknown>(result.urls.model, result.runId));
   const stages = useQuery(rawQueryOptions<unknown>(result.urls.stages, result.runId));
@@ -73,6 +90,11 @@ export function DraftPreview({ detail, onClose }: { detail: BuildDetail; onClose
           Close
         </Button>
       </div>
+      {carriedBoxes && (
+        <p className="absolute top-12 left-2 z-40 rounded-md bg-background/90 px-2 py-1 text-xs shadow" data-testid="preview-deleted-boxes">
+          {previewDeletedBoxesText(carriedBoxes.count, carriedBoxes.from)}
+        </p>
+      )}
       {built?.ok && !failure && (
         <ViewerHost project={built.project} options={options} onError={setFailure} onCreated={(_v: Viewer) => setFailure(null)} />
       )}
@@ -98,12 +120,13 @@ export function isRunInProgress(err: unknown): boolean {
 }
 
 export function BuildStep() {
-  const { detail, settings, saverState, setDetail, refresh, goto, projectId, buildId, editable } = useBuildContext();
+  const { detail, settings, saverState, setDetail, refresh, goto, projectId, buildId, editable, project } = useBuildContext();
   // rooms milestone: the three counts per floor come from the overlay the API serves (R5.md D-3)
   const overlay = useQuery(rawQueryOptions<BuildOverlay>(detail.result?.urls.overlay, detail.result?.runId ?? ''));
   const [busy, setBusy] = useState<'run' | 'cancel' | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [preview, setPreview] = useState(false);
+  const carriedBoxes = useCarriedBoxes(projectId, project?.latestVersion ?? 0, preview && detail.status !== 'saved');
   const drawings = useQueries({ queries: detail.sources.map(s => rawQueryOptions<DrawingRead>(s.urls?.drawing, sourceToken(s))) });
   const votes = Object.fromEntries(detail.sources.map((s, i) => [s.sha1, drawings[i]?.data?.units.votes]));
   const items = checklist(detail, settings, { reviewPending: saverState?.reviewPending, votes });
@@ -198,7 +221,7 @@ export function BuildStep() {
           <p className="text-sm text-muted-foreground">Nothing built yet.</p>
         )}
       </section>
-      {preview && result && <DraftPreview detail={detail} onClose={() => setPreview(false)} />}
+      {preview && result && <DraftPreview detail={detail} onClose={() => setPreview(false)} carriedBoxes={saved ? null : carriedBoxes} />}
     </div>
   );
 }
