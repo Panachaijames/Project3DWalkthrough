@@ -181,3 +181,64 @@ test('dispose after the host detached the container leaves nothing behind', asyn
   }
   expect(warnings).toEqual([]);
 });
+
+// Step BX (docs/boxes/DESIGN.md 8.5 "Leak"): a viewer that edits the furniture boxes (options.editBoxes, as the staff app's
+// version page makes it) goes with nothing left behind either, also with a box selected (the marker and the card), one
+// deleted from the card and the Restore list open when it goes: the marker's geometries and materials, the card, the line
+// at the bottom, the list and their listeners (the window pointerdown and keydown of select.ts among them). The box is
+// selected the way the viewer selects a restored box (a restore in Orbit selects it when it is showing), so the check does
+// not depend on where the camera looks; the delete and the list are real clicks.
+test('a viewer that edits the boxes: a box selected, deleted from its card and the Restore list open, then unmounted, leaves nothing behind', async ({ page }) => {
+  test.setTimeout(300_000);
+  const containerId = onHarness ? 'app' : 'wtv-app';
+  const warnings: string[] = [];
+  const errors: string[] = [];
+  page.on('console', m => {
+    if (m.type() === 'warning' && /\[viewer\] dispose left/.test(m.text())) warnings.push(m.text());
+    if (m.type() === 'error' && !/WebGL|favicon/.test(m.text()) && !/favicon\.ico$/.test(m.location().url)) errors.push(m.text());
+  });
+  page.on('pageerror', e => errors.push(`[exception] ${e.message}`));
+  await page.addInitScript(installProbe, containerId);
+  if (onHarness) {
+    await page.goto('/core/viewer.html?project=bank-v2&build=0&nodownload=1&nomount=1');
+    await page.waitForFunction(() => window.__core?.status === 'loaded' || window.__core?.status === 'error');
+    expect(await page.evaluate(() => window.__core!.error ?? null)).toBeNull();
+  } else {
+    await page.goto(bankV2('?test=1&build=0&nodownload=1'));
+    await page.waitForFunction(() => !!window.__wtvMount?.viewer);
+    await page.evaluate(() => window.__wtvMount!.viewer!.ready);
+    await page.evaluate(() => window.__wtvMount!.unmount());
+  }
+  const baseline = await state(page, containerId);
+  for (let i = 0; i < 2; i++) {
+    expect(await page.evaluate(async () => {
+      const failed = window.__wtvMount!.mount({ editBoxes: true });
+      if (failed === null) await window.__wtvMount!.viewer!.ready;
+      return failed;
+    }), `mount ${i + 1}`).toBeNull();
+    const selected = await page.evaluate(async () => {
+      const h = window.__host!, F = h.furniture!, all = F.pieces();
+      const p = all.find(q => !q.on && !all.some(r => r.on === q.id) && q.visible)!;
+      F.removePiece(p.id);
+      F.restorePiece(p.id);                                          // back, and the selection in Orbit
+      await new Promise<void>(r => requestAnimationFrame(() => requestAnimationFrame(() => r())));
+      return { id: p.id, marker: !!h.floors[0]!.group.parent!.getObjectByName('furniture-selection')?.visible };
+    });
+    expect(selected.marker, `the marker on ${selected.id}`).toBe(true);
+    await expect(page.locator('[data-wt=box-card]')).toBeVisible();
+    await page.locator('[data-wt=box-delete]').click();
+    await expect(page.locator('[data-wt=box-card] [data-wt=box-kind]')).toContainText('Deleted:');
+    await page.locator('[data-wt=boxes-restore-open]').click();
+    await expect(page.locator('[data-wt=boxes-restore]')).toBeVisible();
+    expect(await page.evaluate(() => Object.keys(window.__walkthrough!.viewer.getPieceEdits()).length)).toBe(1);
+    const gone = await page.evaluate(() => {
+      const w = window.__walkthrough!;
+      window.__wtvMount!.unmount();
+      return { gpu: w.gpu(), live: w.live() };
+    });
+    expect(gone, `unmount ${i + 1}`).toMatchObject({ gpu: { geometries: 0, textures: 0 }, live: 0 });
+    expect(await state(page, containerId), `after unmount ${i + 1}`).toEqual(baseline);
+  }
+  expect(warnings).toEqual([]);
+  expect(errors).toEqual([]);
+});

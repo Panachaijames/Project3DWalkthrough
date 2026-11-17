@@ -1,13 +1,14 @@
 // The routes and screens (DESIGN.md 15.1 - 15.5) in a memory router over the mock API (test/mock-api), with the fake
 // viewer in place of @walkthrough/viewer: the list's states and cards, the redirects, Not found, the project page's app bar
-// and viewer, version changes (the old viewer disposed first), saving heights, and the error paths.
+// and viewer, version changes (the old viewer disposed first), saving heights, the error paths, and (step BX) the deleted
+// furniture boxes on the version page.
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act } from 'react';
 import { createMemoryRouter } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import '@/api/client';
-import { listProjectsQueryKey } from '@/api/generated/@tanstack/react-query.gen';
+import { getFurnitureHeightsQueryKey, listProjectsQueryKey } from '@/api/generated/@tanstack/react-query.gen';
 import { createQueryClient } from '@/lib/queryClient';
 import { formatDate } from '@/lib/format';
 import { createRoutes } from '@/router';
@@ -488,5 +489,142 @@ describe('fix step: the page keeps what it has, says what it cannot do', () => {
     await waitFor(() => text(app.body.querySelector('[data-testid=heights-status-text]')) === 'Furniture saved');
     expect(leave()).toBe(false);
     expect(app.mock.saved('bank-sampeng', 2).heights).toEqual({ seat: 300 });
+  });
+});
+
+// ------------------------------------------------------------------------------------------- step BX: the deleted boxes
+// docs/boxes/DESIGN.md 6.2: the version page lets the viewer edit the boxes (options.editBoxes) and starts it from the saved
+// (or unsent) deleted boxes; its boxeschange goes to the heights saver (one PUT, Furniture saved); deleted boxes taken over
+// from elsewhere reach the viewer through setPieceEdits (no event back, nothing sent); the app bar counts the deleted boxes
+// beside the status; the 3ds Max script waits while deleted boxes are not saved; a version whose previous version's deleted
+// boxes did not all carry over says so in one line under the app bar (VersionDetail.carriedEdits).
+describe('step BX: the deleted furniture boxes on the version page', () => {
+  const R = { removed: true } as const;
+  /** The bank v2's table L1-table-005 and the computer standing on it (the closure: deleting the table deletes both). */
+  const TABLE = { 'L1-computer-001': R, 'L1-table-005': R };
+  const statusText = () => text(document.body.querySelector('[data-testid=heights-status-text]'));
+  const count = () => document.body.querySelector('[data-testid=boxes-deleted]');
+  const puts = (mock: MockApi) => mock.requests.filter(r => r.method === 'PUT').map(r => JSON.parse(r.body ?? '') as unknown);
+  const viewer = () => window.__fakeViewer!.viewers.at(-1)!;
+  beforeEach(() => { localStorage.clear(); });                        // no unsaved entry of another test is the start
+  afterEach(() => { localStorage.clear(); });
+
+  it('a box deleted in the viewer goes to the heights saver: one PUT {heights, pieceEdits}, Furniture saved, the count in the app bar', async () => {
+    const app = await openApp('/projects/bank-sampeng/v/2');
+    await waitFor(() => fakeViewerLog.filter(r => r.event === 'create').length === 2);
+    const rec = fakeViewerLog.at(-1)!;
+    expect(rec.options?.editBoxes).toBe(true);                        // only the version page lets the viewer edit the boxes
+    expect(rec.pieceEdits).toBeNull();                                // nothing deleted: the project has no pieceEdits key
+    expect(count()).toBeNull();
+    expect(app.body.querySelector('[data-testid=carried-edits-note]')).toBeNull();
+    await act(async () => { viewer().furniture!.removePiece('L1-table-005'); });
+    expect(text(count())).toBe('· 2 boxes deleted');
+    expect(statusText()).toBe('Saving…');
+    await waitFor(() => statusText() === 'Furniture saved');
+    expect(puts(app.mock)).toEqual([{ heights: {}, pieceEdits: TABLE }]);
+    expect(app.mock.saved('bank-sampeng', 2).pieceEdits).toEqual(TABLE);
+    // a height typed next goes as {heights}: the saved deletions stay as they are
+    await act(async () => { viewer().emit('heightschange', { heights: { seat: 300 }, source: 'typed' }); });
+    await waitFor(() => puts(app.mock).length === 2 && statusText() === 'Furniture saved');
+    expect(puts(app.mock)[1]).toEqual({ heights: { seat: 300 } });
+    expect(app.mock.saved('bank-sampeng', 2)).toMatchObject({ heights: { seat: 300 }, pieceEdits: TABLE });
+    // the mock runs' control deletes the first box not deleted yet (an ATM, nothing on it); the tab's heights go with it
+    await click(app.body.querySelector('[data-wt=fake-remove-box]'));
+    expect(text(count())).toBe('· 3 boxes deleted');
+    await waitFor(() => puts(app.mock).length === 3 && statusText() === 'Furniture saved');
+    expect(puts(app.mock)[2]).toEqual({ heights: { seat: 300 }, pieceEdits: { 'L1-atm-001': R, ...TABLE } });
+    expect(fakeViewerLog.filter(r => r.event === 'create').length).toBe(2);   // a save never re-creates the viewer
+  });
+
+  it('the saved deleted boxes are where the viewer starts, counted at once; Restore all saves {} and the count goes', async () => {
+    const mock = createMockApi();
+    mock.setSaved('bank-sampeng', 2, {}, { 'L1-table-005': R });      // closed by the mock, as the API does
+    const app = await openApp('/projects/bank-sampeng/v/2', { mock });
+    await waitFor(() => fakeViewerLog.filter(r => r.event === 'create').length === 2);
+    expect(fakeViewerLog.at(-1)!.pieceEdits).toEqual(TABLE);
+    await waitFor(() => text(count()) === '· 2 boxes deleted');
+    expect(count()!.getAttribute('title')).toBe("2 furniture boxes are deleted in this version: the furniture legend's Restore… brings them back");
+    expect(viewer().getPieceEdits()).toEqual(TABLE);
+    await act(async () => { viewer().furniture!.restoreAll(); });
+    expect(count()).toBeNull();
+    await waitFor(() => puts(mock).length === 1 && statusText() === 'Furniture saved');
+    expect(puts(mock)).toEqual([{ heights: {}, pieceEdits: {} }]);   // {} = every box back (a change of this tab: sent)
+    expect(mock.saved('bank-sampeng', 2).pieceEdits).toEqual({});
+    await act(async () => { viewer().furniture!.removePiece('L1-table-005'); });
+    expect(text(count())).toBe('· 2 boxes deleted');
+    // another project's page never shows the bank's count
+    await act(async () => { await app.router.navigate('/projects/hotel-lobby/v/1'); });
+    await waitFor(() => fakeViewerLog.at(-1)?.projectId === 'hotel-lobby' && fakeViewerLog.at(-1)?.event === 'create');
+    expect(app.body.querySelector('[data-testid=heights-status]')).not.toBeNull();
+    expect(count()).toBeNull();
+  });
+
+  it('deleted boxes saved elsewhere are taken over while the tab is idle: shown with setPieceEdits and counted, nothing sent back', async () => {
+    const app = await openApp('/projects/bank-sampeng/v/2');
+    await waitFor(() => fakeViewerLog.filter(r => r.event === 'create').length === 2);
+    await waitFor(() => app.mock.requests.some(r => r.method === 'GET' && r.path.endsWith('/versions/2/furniture-heights')));
+    app.mock.setSaved('bank-sampeng', 2, {}, { 'L1-table-005': R }); // another tab deleted the table
+    await act(async () => {
+      await app.queryClient.invalidateQueries({ queryKey: getFurnitureHeightsQueryKey({ path: { projectId: 'bank-sampeng', version: 2 } }) });
+    });
+    await waitFor(() => Object.keys(viewer().getPieceEdits()).length === 2);
+    expect(viewer().getPieceEdits()).toEqual(TABLE);
+    await waitFor(() => text(count()) === '· 2 boxes deleted');
+    await settle(700);                                                // past the debounce: setPieceEdits sends no boxeschange
+    expect(puts(app.mock)).toEqual([]);
+    expect(statusText()).toBe('Furniture saved');
+  });
+
+  it('while a delete is not saved the 3ds Max script waits too, with its own reason; saved, it is a link again', async () => {
+    let refuse = true, putsMade = 0;
+    const app = await openApp('/projects/bank-sampeng/v/2', {
+      fetch: {
+        onRequest: m => { if (m === 'PUT') putsMade++; },
+        intercept: m => (refuse && m === 'PUT'
+          ? new Response(JSON.stringify({ error: { code: 'store_error', message: 'busy (test)' } }), { status: 500, headers: { 'content-type': 'application/json' } })
+          : undefined),
+      },
+    });
+    const failedNow = () => app.body.querySelector('[data-testid=heights-status]')?.getAttribute('data-state') === 'error';
+    await waitFor(() => fakeViewerLog.filter(r => r.event === 'create').length === 2);
+    await click(app.body.querySelector('[data-wt=fake-remove-box]'));
+    await waitFor(() => putsMade === 1 && failedNow());
+    expect(statusText()).toBe('Not saved: busy (test)');
+    const item = (key: string) => document.body.querySelector(`[data-testid=downloads-list] [data-download=${key}]`);
+    const trigger = app.body.querySelector('[data-testid=downloads-menu]')!;
+    await act(async () => { trigger.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true })); });
+    // opening the menu sends the failed save again (refused again): then the Max script says why it waits
+    await waitFor(() => putsMade >= 2 && failedNow()
+      && item('maxScript')?.getAttribute('title') === 'The deleted boxes on screen are not saved (busy (test)): the script would still build them');
+    expect(item('maxScript')?.getAttribute('href')).toBeNull();
+    expect(item('maxScript')?.hasAttribute('data-waiting')).toBe(true);
+    expect(item('furnitureCsv')?.getAttribute('title')).toBe('The furniture changes on screen are not saved (busy (test)): the file would not carry them');
+    refuse = false;
+    await click(app.body.querySelector('[data-testid=heights-retry]'));
+    await waitFor(() => item('maxScript')?.getAttribute('href') === '/api/projects/bank-sampeng/versions/2/downloads/max-script');
+    expect(app.mock.saved('bank-sampeng', 2).pieceEdits).toEqual({ 'L1-atm-001': R });
+  });
+
+  it("a version whose previous version's deleted boxes did not all carry over says so under the app bar, until closed", async () => {
+    const mock = createMockApi();
+    const detail = { ...mock.version('bank-sampeng', 2)!, carriedEdits: { from: 1, notCarried: 2 } };
+    const app = await openApp('/projects/bank-sampeng/v/2', {
+      mock,
+      fetch: {
+        intercept: (m, p) => (m === 'GET' && p === '/api/projects/bank-sampeng/versions/2'
+          ? new Response(JSON.stringify(detail), { status: 200, headers: { 'content-type': 'application/json' } })
+          : undefined),
+      },
+    });
+    const note = await waitFor(() => app.body.querySelector('[data-testid=carried-edits-note]'));
+    expect(note.getAttribute('role')).toBe('note');
+    expect(text(note.querySelector('[data-testid=carried-edits-text]'))).toBe('2 deleted boxes of v1 are back: not found in the new drawing');
+    const area = () => app.body.querySelector('[data-testid=viewer-area]')!;
+    expect(area().classList.contains('top-20')).toBe(true);           // the viewer starts below the note
+    await waitFor(() => fakeViewerLog.filter(r => r.event === 'create').length === 2);
+    await click(note.querySelector('[data-testid=carried-edits-close]'));
+    expect(app.body.querySelector('[data-testid=carried-edits-note]')).toBeNull();
+    expect(area().classList.contains('top-12')).toBe(true);
+    expect(fakeViewerLog.filter(r => r.event === 'create').length).toBe(2);   // closing the note re-creates nothing
   });
 });

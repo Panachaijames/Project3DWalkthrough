@@ -46,9 +46,10 @@ function fakeCreate(opts: { throwFor?: (n: number) => boolean } = {}) {
       emitBoxes: pieceEdits => { for (const fn of [...boxHandlers]) fn({ pieceEdits, source: 'removed' }); },
       viewer: {
         on: ((event: keyof ViewerEvents, fn: (e: never) => void) => {
-          if (event === 'heightschange') handlers.add(fn);
-          if (event === 'boxeschange') boxHandlers.add(fn);
-          return () => { handlers.delete(fn); boxHandlers.delete(fn); };
+          const onHeights = fn as (e: ViewerEvents['heightschange']) => void, onBoxes = fn as (e: ViewerEvents['boxeschange']) => void;
+          if (event === 'heightschange') handlers.add(onHeights);
+          if (event === 'boxeschange') boxHandlers.add(onBoxes);
+          return () => { handlers.delete(onHeights); boxHandlers.delete(onBoxes); };
         }) as Viewer['on'],
         dispose: () => {
           if (m.disposed) return;

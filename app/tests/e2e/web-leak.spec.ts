@@ -219,9 +219,20 @@ test('10 version switches on one page keep one viewer and one context, and leave
   // the registrations of one live viewer (window, document by type; the container by count): the same after every switch
   const kinds = (regs: string[]) => regs.map(r => r.replace(/ #\d+$/, '')).sort();
   const one = await page.evaluate(() => ({ container: window.__webLeak!.containerRegistrations(), registrations: window.__webLeak!.registrations() }));
+  // Step BX: the version page edits the furniture boxes (options.editBoxes), and the box selection (viewer
+  // furniture/select.ts) adds two window listeners where a version has boxes (keydown: Delete, Ctrl+Z, Escape;
+  // pointerdown, capture: arms Delete). The bank's version 2 has 185 boxes, version 1 none (no furniture module there):
+  // version 1 is expected with exactly those two fewer, version 2 as opened.
+  const BOX_SELECT = ['window keydown', 'window pointerdown capture'];
+  const without = (regs: string[], drop: string[]) => {
+    const out = [...regs];
+    for (const d of drop) { const at = out.indexOf(d); if (at >= 0) out.splice(at, 1); }
+    return out;
+  };
   for (let i = 0; i < 10; i++) {
     const created = await page.evaluate(() => window.__walkthrough!.created());
-    await pickVersion(page, i % 2 ? 2 : 1);
+    const v = i % 2 ? 2 : 1;
+    await pickVersion(page, v);
     await viewerReady(page, created + 1);
     await expect.poll(() => page.evaluate(() => document.querySelectorAll('[data-slot=select-content]').length)).toBe(0);
     const now = await page.evaluate(() => ({
@@ -232,9 +243,10 @@ test('10 version switches on one page keep one viewer and one context, and leave
       container: window.__webLeak!.containerRegistrations(),
       registrations: window.__webLeak!.registrations(),
     }));
-    const label = `switch ${i + 1}`;
+    const label = `switch ${i + 1} (version ${v})`;
+    const want = v === 2 ? kinds(one.registrations) : without(kinds(one.registrations), BOX_SELECT);
     expect({ ...now, registrations: kinds(now.registrations) }, label)
-      .toEqual({ live: 1, canvases: 1, contexts: 1, roots: 1, container: one.container, registrations: kinds(one.registrations) });
+      .toEqual({ live: 1, canvases: 1, contexts: 1, roots: 1, container: one.container, registrations: want });
     await page.evaluate(() => window.__webLeak!.instrument());
   }
   await backToList(page);

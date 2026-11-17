@@ -347,3 +347,56 @@ def test_a_mouth_is_a_chord_of_3_m_and_a_stretch_of_5_m() -> None:
     assert NW._mouth(area, solid) is not None, 'a 2.8 m mouth'
     wide = unary_union([box(-0.2, -0.2, 0, 4.2), box(0, -0.2, 4.2, 0), box(0, 4, 4.2, 4.2), box(4, 0, 4.2, 0.3), box(4, 3.7, 4.2, 4)])
     assert NW._mouth(area, wide) is None, 'a 3.4 m mouth is none'
+
+
+# ------------------------------------------------------------------------ a stair's room is floor (16 Nov 2026, the owner)
+def stair(x0, y0, x1, y1) -> dict:
+    """Today's stair reading of a floor, as far as plate_of reads it: the hull of the stair's lines."""
+    return {'hull': box(x0, y0, x1, y1), 'flights': [], 'lines': []}
+
+
+def test_a_stairs_room_with_an_opening_is_floored_across_its_mouth() -> None:
+    """R-2.5 / R-7 as amended 16 Nov: a side room whose doorway is left open (a pocket, with its mouth) and that is
+    mostly stair is the stair's own room. It is floor, closed across its mouth, so the stair's foot and its arrival
+    stand on the plate; before, it was "no floor by its nature": listed as "mostly stair", never floored, never flagged."""
+    W, H, side, gap, t = 12.0, 8.0, 4.0, 2.4, 0.7
+    ga, gb = H / 2 - gap / 2, H / 2 + gap / 2
+    walls = room(0, 0, W, H, t=t, gaps={'E': [(ga, gb)]}) + [box(W - side - 0.2, 0.2, W - side, H - 0.2)]
+    inside, outside = Point(W - side / 2, H / 2), Point(W + 0.3, H / 2)
+    bare = run(floor(walls=walls))
+    assert [u['kind'] for u in bare['unfloored']] == ['pocket'] and not bare['plate0'].contains(inside), 'no stair: asked about'
+    r = run(floor(walls=walls, stairs=[stair(W - side + 0.3, t + 0.3, W - t - 0.3, H - t - 0.3)]))
+    assert r['plate0'].contains(inside) and r['unfloored'] == [] and r['report']['unfloored'] == []
+    assert not r['plate0'].contains(outside), "the floor ends on the line across the mouth: no bulge through the doorway"
+    assert [d['why'] for d in r['report']['dropped']] == [NW.STAIR_ROOM_WHY] == ["floored: a stair's room"]
+    assert r['report']['plate'] == pytest.approx(bare['report']['plate'] + r['report']['dropped'][0]['area'], abs=0.3)
+    # the rest of the plate keeps its points: the room is joined along its seam only
+    assert r['plate0'].symmetric_difference(bare['plate0']).difference(box(W - side - 0.3, 0, W + 0.1, H)).area < 1e-9
+    # a stair that takes under half of the place leaves it as it was: asked about
+    small = run(floor(walls=walls, stairs=[stair(W - side + 0.3, t + 0.3, W - side + 1.3, t + 2.3)]))
+    assert [u['kind'] for u in small['unfloored']] == ['pocket'] and small['report']['dropped'] == []
+
+
+def test_an_outside_stairs_strip_with_no_mouth_is_floored_as_found() -> None:
+    """The bank's north stair (16 Nov): an outside stair along a facade, behind its railing, open at both ends. The
+    place is the beside-a-gap rule's (the 1.5 m round closing of the walls and the railing), it has no mouth, and the
+    rule closes it by itself: it is floor as found, so the stair's two ends stand on the plate."""
+    walls = room(0, 0, 10, 8)
+    rail = [LineString([(2.0, 8.95), (8.0, 8.95)]).buffer(0.025, cap_style='flat')]
+    door = [span((4.0, 0.1), (5.0, 0.1))]
+    bare = run(floor(walls=walls, spans=door, rails=rail))
+    assert [(u['kind'], u['mouth']) for u in bare['unfloored']] == [('gap', None)] and not bare['plate0'].contains(Point(5, 8.5))
+    r = run(floor(walls=walls, spans=door, rails=rail, stairs=[stair(3.0, 8.0, 7.0, 8.9)]))
+    assert r['unfloored'] == [] and [d['why'] for d in r['report']['dropped']] == [NW.STAIR_ROOM_WHY]
+    for x in (2.9, 5.0, 7.1):                               # the foot, the flight, the arrival
+        assert r['plate0'].contains(Point(x, 8.45)), x
+    assert r['plate0'].geom_type == 'Polygon' and r['plate0'].is_valid, 'one plate with the floor inside the walls'
+
+
+def test_an_open_side_that_is_mostly_stair_is_still_asked_about() -> None:
+    """A room with a 5 m gap in its outside wall (an open side: no single opening to close it across) is flagged with
+    its "Floor here" button also when it is mostly stair; before 16 Nov it was dropped silently as "mostly stair"."""
+    walls = room(0, 0, 10, 8, gaps={'E': [(1.5, 6.5)]})
+    r = run(floor(walls=walls, stairs=[stair(0.5, 0.5, 9.5, 7.5)]))
+    assert [(u['kind'], u['mouth']) for u in r['unfloored']] == [('open', None)] and not r['plate0'].contains(Point(5, 4))
+    assert r['report']['dropped'] == []

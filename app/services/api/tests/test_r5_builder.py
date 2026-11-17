@@ -47,7 +47,8 @@ LIVING_ROOM = (26.2, 11.1)
 #: test_r_rooms_golden.py (RA-15). Pinned by RI (11 Nov, provisional with the references; contract-issues/R5.md D-2):
 #: the bank built through this API and the real worker with the defaults (= bank-rooms.json), stamp 54ef1ac240bb, the
 #: same as R7's build of 11 Nov through the API on 8747. A move during the review is explained in contract-issues/RR.md.
-BANK_NEW_RULE_SHA1: str | None = '77468e44ecd1661e4e121b9f3a9354de7773e91a'
+#: 16 Nov 2026: 77468e44.. -> a36e1535.. with the north stair's floored strip (test_r_rooms_golden.py's PINS note).
+BANK_NEW_RULE_SHA1: str | None = 'a36e15351068532b33409240275d0d57a1d799fc'
 
 
 def rules(settings: dict) -> dict:

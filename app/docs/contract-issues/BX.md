@@ -363,3 +363,179 @@ its row in that folder's README), `test/harness/furniture/furniture.spec.ts` (+6
 * `npm run test:api` in full, `npm run test:builder`, `npm run build`, the e2e specs and the reference checks of BX 8.7
   were not run by this part (it changed nothing they read but the viewer bundle; the offline template was built into
   the temp folder only).
+
+---
+
+## 3. The staff app (`apps/web`) and the browser specs
+
+Built: BX 6.1 and 6.2 (one saver for heights and deleted boxes, page and host wiring), 4's Downloads menu rule, the main
+session's decision 2 on screen (the note), the test doubles, the web tests of 8.4, the browser spec of 8.5 (both arms),
+the leak case and the moved `web.spec.ts` pins. Two builders, one after the other: the first was paused for the hotel's
+stairs on 16 Nov (its work is in `fb0ca8e`: the sources, the doubles and most web tests), the second finished the page
+tests, the browser specs and this section. Ports web 5750, API 8750, `WT_TMP=%TEMP%\wt-bx`; `app/data`, `dist/`,
+`packages/viewer/src` and `services/**` not touched. On the owner's way of working (16 Nov) only the typecheck and the
+unit tests were run here: the browser specs are written, not run (the batch's final check runs them).
+
+### 3.1 What was built (files)
+
+| File | What |
+|---|---|
+| `src/lib/useHeightsSaver.ts` | the core keeps the tab's `edits` and an explicit `editsDirty` (never a comparison with a copy that may be stale); `changeEdits` (the same 600 ms debounce: a delete and a typed height go in one PUT; an edits-only change sends the tab's latest heights); the PUT carries `pieceEdits` only while dirty (else `{heights}`, so an old tab, an outbox replay or a heights-only save never erases deletions); success clears the flag only when no newer change came meanwhile and calls `onRemoteEdits` when the answer differs (the closure); 412: heights by `mergeChanges`, edits by `mergeEdits` while dirty, else theirs; `adopt` takes edits only when idle and clean; `SaverState.editsUnsaved`; `putHeights(path, heights, init, pieceEdits?)`, `heightsBody`, `keepaliveFits` (over 60 KiB: no keepalive, BX 3.4); `updateHeightCaches` writes the answer (edits included) into the furniture-heights and version-detail caches; `sendUnsent` with the same merge |
+| `src/lib/heightsOutbox.ts` | an entry's `pieceEdits` only while dirty (`{}` = every box back) and `base.pieceEdits` only when not empty; `editsOf` (the lenient read), `mergeEdits` (per id, three-way), `sameEdits`, `copyEdits`, `savedBase`, `baseOf`; old entries parse as before |
+| `src/api/client.ts` | `conflictOf` reads `details.pieceEdits` leniently (missing: `{}`) |
+| `src/lib/viewerProject.ts` | `toViewerProject` / `buildViewerProject(..., pieceEdits?)`: the project's `pieceEdits` only when a box is deleted; `viewerOptions(search, testHook, editBoxes = false)`: the key only when true |
+| `src/components/ViewerHost.tsx` | `onPieceEditsChange` from a second `viewer.on('boxeschange')` in the same effect (Effect Event) |
+| `src/components/HeightsStatus.tsx` | `BoxesDeleted`: `[data-testid=boxes-deleted]` beside the status, "· 3 boxes deleted" ("· 1 box deleted"), nothing at 0, a tooltip naming the legend's Restore… |
+| `src/pages/ProjectVersionPage.tsx` | the project from the outbox's unsent map, else the saved one (memo key unchanged); `editBoxes` on; `onRemoteEdits` -> `setPieceEdits`; `boxeschange` -> `saver.changeEdits`; the count (from `getPieceEdits()` at create, `boxeschange`, after `onRemoteEdits`; kept with the project it belongs to); the note strip `[data-testid=carried-edits-note]` |
+| `src/lib/format.ts` | `HEIGHTS_SAVED` = 'Furniture saved'; the four download tooltips of BX 4; `boxesDeletedText`, `boxesDeletedTitle`, `carriedEditsText`, `EDITS_PENDING_TITLE`, `editsNotSavedTitle` |
+| `src/components/DownloadsMenu.tsx` | the 3ds Max script waits only while `editsUnsaved`, with its own tooltip; the CSV and the offline file as before |
+| `src/build/SaveStep.tsx` | the carry tick's label (BX 5.1) |
+| `test/fake-viewer.ts` | complete: the starting map (lenient), the closure, `getPieceEdits` / `setPieceEdits` (no event), the five `FurnitureApi` members with `boxeschange`, live kind counts, `pieces().removed`, the record's `pieceEdits`, the control `[data-wt=fake-remove-box]` |
+| `test/mock-api/core.ts` | PUT `pieceEdits` refused as the API refuses (FastAPI's 422s, 422 `invalid_piece_edits`), closed and in the CSV order, kept when left out; every answer carries `pieceEdits`; the CSV is its golden without the rows (`csvWithout`), the Max script the stored one filtered as `piece_edits.filter_max_script` (`filterMaxScript`), the offline stand-in carries the edits; `setSaved(..., pieceEdits?)` |
+| `test/e2e/web-kit.ts` | `resetHeights` sends `{heights: {}, pieceEdits: {}}`; `savedEdits` |
+| `tests/e2e/box-delete.spec.ts` (new) | BX 8.5, both arms (3.2) |
+| `tests/e2e/leak.spec.ts` | the leak case (+1) |
+| `tests/e2e/web.spec.ts` | the eleven status pins (`Furniture saved`) and the `:467` tooltip regex (`The furniture changes on screen are not saved ...`); `:447-475`'s Max behaviour unchanged |
+| `tests/e2e/furniture.spec.ts` | the header only: it opens the files through `lib/target.ts` `pagePath`, which reads `WT_OFFLINE_DIR` since the hotel stairs' commit (`7190417`), so it runs on offline files made in a temp folder with no change of its own |
+
+Web tests (vitest, `web` project), **30 new**: `heightsSync.test.tsx` +16 (the core: coalescing, `{heights}` when clean,
+the takeover then a height, the heights-only outbox replay, the per-id 412 merge, the clean 412, the closure answer, a
+delete while a save is out, a failed delete, the outbox with edits, adopt only when idle and clean, after close; the
+outbox parse, `mergeEdits` / `sameEdits` / `editsOf`, `sendUnsent`), `useHeightsSaver.test.tsx` +3 (a version switch
+sends the edits to their version, the caches and `onRemoteEdits`, `putHeights`' bodies and the 60 KiB keepalive cap),
+`DownloadsMenu.test.tsx` +1, `ViewerHost.test.tsx` +1, `format.test.ts` +2, `viewerProject.test.ts` +2, `pages.test.tsx`
++5 (a delete in the viewer saved with the heights and counted, a height next as `{heights}`; the saved edits as the
+start and Restore all; a takeover shown through `setPieceEdits` with nothing sent back; the Max script waiting while a
+delete is refused; the carried-edits note); pins moved: `format.test.ts:75`, seven in `pages.test.tsx`.
+
+### 3.2 The browser spec (`tests/e2e/box-delete.spec.ts`)
+
+The real arm (the real API over Playwright's freshly seeded store, the real viewer; skipped with the mock API or the fake
+viewer), at 1366 x 768, on the bank v2 (as `web.spec.ts`), with the shared reset before and after every test:
+
+1. Orbit: the table `L1-table-005` clicked where the camera sees it, the card (kind, id, "1 piece stands on it (Computer
+   / monitor): it is deleted with it."), Delete: the table and the computer gone (hidden, out of the colliders, a
+   knee-high `rayHit` from beside the table passes its place), one PUT `{heights: {}, pieceEdits: {computer, table}}`,
+   "Furniture saved", `boxes-deleted` "· 2 boxes deleted" inside the window, on top and with nothing scrolled; a reload
+   starts from them; the CSV = the one before without the two rows; the Max script = the stored one through the mock's
+   copy of the API's filter (so the two filters are compared byte for byte), line 2 unchanged, line 3 the comment with
+   both Max object names; the offline file: `pieceEdits` in its payload, the two meshes never visible at ten
+   `__build.seek(T)` values up to 1 under `?build=play`, marked removed after `skip`, no card, Delete, line, hint or list,
+   no marker object, and a click on another table selects nothing; Restore all ("All 2 boxes are back"), its Undo (the
+   map back), Restore all again: one PUT each, then the CSV and the Max script byte for byte as before, the offline file
+   without `pieceEdits` (revision moved) and every box drawn.
+2. Walk: the nearest box within 5 m of the Walk start on L1 that nothing hides (nothing on it, a collider) is found in
+   the page; the page is opened again at `?mode=walk&floor=L1&x=&z=&yaw=&pitch=` aimed at it; the marker is on it; the
+   click that starts walking (it arms Delete: decision 5 of 2.3); Delete: "Deleted: <kind> · Ctrl+Z to undo", no
+   collider, saved, "· 1 box deleted"; Ctrl+Z: "Back: <kind> on Level 1", a collider again, `{}` saved.
+3. The replay in the staff app: the table selected, Build settings (selection cleared), Generate, Skip, selected again:
+   the marker is on it at its own look (fill 0.35 transparent, outline 1 opaque), as before the replay.
+4. Two tabs: a delete in A (the public `viewer.furniture.removePiece`), a height typed in B opened before it: both
+   saved, B shows A's deletion and counts it; A's next delete keeps B's height (412 merge or takeover) and A shows it.
+
+The mock arm (the fake viewer, `VITE_FAKE_VIEWER=1`, over the mock API or the real one): 5. the fake remove control:
+the PUT body `{heights: {}, pieceEdits: {L1-atm-001}}`, the count, then a height as `{heights}`; 6. the Max item stays a
+link while a height alone is refused, waits (disabled, its own tooltip) while a delete is refused, and is a link again
+once saved.
+
+The leak case (`leak.spec.ts`, on the offline file or the core harness page as its other cases): mounted with
+`{ editBoxes: true }` twice; a box selected (a restore in Orbit selects it: the check does not depend on the camera), the
+marker shown, deleted from its card (a real click), the Restore list opened (a real click), unmounted: gpu 0 / 0, no
+registration, no `.wtv`, no stylesheet, no hook, no warning, no error.
+
+### 3.3 Decisions made here
+
+1. **The note** (decision 2 on screen): a 32 px amber strip under the app bar (`role=note`), the viewer area below it
+   while it shows; × closes it for the visit of that version. Only when `carriedEdits.notCarried` is 1 or more.
+2. **The count** is read from the viewer, never from the saver: the viewer's map is closed and holds model ids only, and
+   a count that belongs to another version's viewer is never shown (it is kept with its project).
+3. **The project's `pieceEdits`** is set only when a box is deleted (an unsent `{}`, every box restored, gives no key), so
+   the `toEqual` pins on the project and the fake viewer's record stay as they were.
+4. **The browser spec picks its click** the way the viewer's pick looks (the boxes drawn and the opaque colliders and
+   plates of the floors shown, `furniture/pick.ts`): the Orbit camera above the box with its floor alone, a spot on the
+   box's top whose ray meets that box first and where the canvas is the element under the point. The Walk test finds its
+   address in the page from the Walk start, so it needs no coordinates of the bank written in the spec.
+5. **The real arm runs on `bank-sampeng` v2**, not a copy: the shared reset before and after each test (the design's
+   clean-up) leaves the store as `web.spec.ts` expects; a copy would add an `e2e-` project to `web.spec.ts`'s list.
+6. **`ViewerHost.test.tsx`**: the fake `on` cast its listener per event (the paused part's version did not typecheck).
+
+### 3.4 Checks (16 Nov 2026; `WT_TMP=%TEMP%\wt-bx`)
+
+| Command | Result |
+|---|---|
+| `npx vitest run --project web apps/web/test/pages.test.tsx` | 30 passed (25 + 5 new) |
+| `npm run typecheck` | 0 errors after the `ViewerHost.test.tsx` fix (the five tsconfigs; `tests/e2e` typechecks the new spec and the leak case) |
+| `npm run test:unit` | **1181 passed** in 95 files (both projects, 27 s; the tree as it stood, with the hotel stairs' commit) |
+
+Not run here (the batch's final check): every browser spec. For `box-delete.spec.ts`'s real arm the API must be given
+the offline template of the viewer as it is now (`WALKTHROUGH_OFFLINE_TEMPLATE`, built into the temp folder: the
+commands are in the spec's header); with an older template the offline checks of test 1 fail. Then `web.spec.ts`,
+`web-leak.spec.ts`, `leak.spec.ts`, `furniture.spec.ts`, `offline.spec.ts`, `deletes.spec.ts` and the mock arm, as BX 8.7
+lists them.
+
+### 3.5 Not done here
+
+* The browser specs were written without a run: the first run may need small fixes (a selector, a timing).
+* DESIGN 15.3's status text and the product doc's instruction line (BX 8.8: the main session's housekeeping).
+
+## 4. Checks of the batch (16 Nov 2026, 15:28 - 17:10)
+
+The batch on `box-delete`: step BX (server, viewer, staff app), the hotel's stair (`model/upgrade.ts`) and the bank's north
+stair (`build/network.py`). Each check ran once from a clean start (no `__pycache__` in the source tree), one at a time,
+on ports 5752 / 8752 with `WT_TMP` under `%TEMP%\wt-bc` (scripts, logs and `PROGRESS.md` there); `WALKTHROUGH_DATA_DIR` /
+`WALKTHROUGH_CACHE_DIR` in the temp folder. The web app and the offline template were built into `%TEMP%\wt-bc\build`
+(`dist/` untouched: no file newer than the run); every offline file the browser runs read was made with that template.
+Nothing committed, pushed or deployed; `app/data` and 5710 / 8710 untouched.
+
+| Check | Result |
+|---|---|
+| `npm run check:pins` | ok |
+| `npm run typecheck` | 0 errors (again for `tests/e2e` after the `web-leak.spec.ts` fix below: 0) |
+| `npm run test:unit` | **1181 passed** (95 files; the hotel's re-recorded walk-parity entry included) |
+| `npm run test:builder` | 1069 passed, **2 failed: the bank's two new-rule pins** (expected, below), 9 deselected (`acceptance`); 9 min 41 s. Re-pinned from the recorder; the whole golden file then passed in `rooms-golden` |
+| `npm run test:api` | **607 passed** (the BX closure-case test no longer skips: the viewer's case file exists) |
+| `WT_INTEGRATION=1 npm run test:api` | **607 passed**: the API and the real worker build the bank with the defaults to the new pin `a36e1535..` |
+| `npm run gen:api` twice | no byte change on either run (`openapi.json` and the generated client) |
+| `check-openapi-additive.mjs` | ok against 66b4c06 and against 9eb2d58 |
+| builds (temp folder) | the web app (`vite build`, 1.2 s) and the offline template (`viewer-template.html`, 816 KB) |
+| acceptance `rooms-builds` | 7 cases ok, RA-13 ok. Stamps: bank `a36e15351068` (= the new pin), house `8d6e1e32ad6a`, old suite `61be67c32cf0`, tower `2bddcd47e988`, new suite `424cc8cabd45` (all = the pins), tower set aside `3ae9ae50f4bd` (against RR's `0cb0a89452b8` only `furnitureKinds[2].blocks` true -> false: the chairs change of 12 Nov), new suite set aside `ed76d1441480` (as RR) |
+| `rooms-offline` | the seven files, with this run's template |
+| `rooms-walks` | upload-walk 49 passed; stairs.spec **1 failed** on the first run, then 57 passed (below) |
+| `rooms-node` | 9 passed (the real climbs, RA-10 / RA-14 times) |
+| `rooms-golden` | **21 passed** (the five pins with the bank's new ones, each build in two processes, RA-18 every door undone) |
+| `rooms-checks` | ok: bank L1 plate0 235.8, L2 300.4 (RA-4 must and should met; L2 holes stair well 7.13, stair 3.30, stair 2.28, lift shaft 3.13) |
+| `reference-checks` | `versions.sha1` 49 unchanged (25 new files: the owner's own projects), `outside.txt` 0 differences, `__pycache__` 2 (2 at the start), the 9 Nov store 148 unchanged, this run's copy 148 unchanged |
+| upload-walk, the eight old versions | **48 passed**; R7's comparison with `docs/rooms/reference/upload-walk-9nov/`: 8 compared, **every report equal value for value** |
+| `npm run test:e2e` (RR's set-up, this run's ports, seed and template; `WALKTHROUGH_OFFLINE_TEMPLATE` for the API) | 410 tests: **404 passed, 1 failed** (`web-leak.spec.ts`, below), 5 skipped (3 `rr-web` layout checks and the 2 BX fake-viewer tests: mock arm only); 42.4 min, no retry of a timed check. BX real arm 4 / 4, `leak.spec.ts` 3 (the editBoxes case included), `hotel-stairs.spec.ts` 4, `deletes.spec.ts` 2, `web.spec.ts` 19 ("Furniture saved") |
+| `web-leak.spec.ts` alone after the fix | **3 passed** |
+| harness project | **76 passed** |
+| BX mock arm (`WT_SERVE=web`, `VITE_FAKE_VIEWER=1`) | **2 passed** (4 real-arm tests skipped there) |
+| `rr-web.spec.ts` under the mock API | 3 passed |
+
+**What moved, and why (expected):** only the bank's new-rule outputs, from the north-stair change. With the acceptance
+settings (`A-FLOR-HRAL-MBND` = `other`) the north stair stays lines, but the strip at Level 2's north facade is now floored
+around the stair's kept opening: L2 plate 295.7 -> 300.4 m², holes 3 -> 4, 12.54 -> 15.84 m² (+ "stair 3.30"); L1 and the
+CSV did not move. The plate now reaches 0.9 m further north, so the model's `offset` moved (y 0.352 -> 0.81) and with it
+every model coordinate (-0.458 m in y; the sheet positions are the same) and one part more (138 -> 139): model.json
+`77468e44..` -> `a36e1535..`, stages.json `40c12469..` -> `df479ab5..`, topview.png `fe813a4b..` -> `ac2960be..`,
+maxscript `e560b613..` -> `dea40236..`. Recorded with `WT_RECORD_ROOMS_GOLDEN=1` (`%TEMP%\wt-bc\b\rooms-golden.json`) and
+copied into `test_r_rooms_golden.py` PINS (with a dated note) and `BANK_NEW_RULE_SHA1` there and in
+`services/api/tests/test_r5_builder.py`. The house, both suites and the tower did not move.
+
+**Fixed here (slips of the batch):**
+
+* `tests/e2e/web-leak.spec.ts`, "10 version switches ...": deterministic failure at switch 1. With BX the version page
+  edits boxes, and the viewer's box selection (`furniture/select.ts`) adds two window listeners (keydown; pointerdown,
+  capture) where a version has boxes; the bank's version 1 has none (the furniture module is not installed), version 2
+  has 185, and the test expected the same registrations for both. Now version 1 is expected with exactly those two fewer
+  and version 2 as opened (still exact, still checked after every switch). Not a leak: the listeners go with the viewer.
+
+**Not a code fault, run again:** `rooms-walks`' stairs.spec "the old versions show no Ceilings tick ..." read the old
+versions from `dist/offline` (made 12 Nov, before the hotel-stairs viewer change), because `walks.sh` does not set
+`WT_OFFLINE_DIR`; the check now expects the hotel's flight to climb. Run again with `WT_OFFLINE_DIR` = this run's seed's
+offline files (this run's template): 57 passed. The full suite sets `WT_OFFLINE_DIR` and passed it.
+
+**Left for the main session:** `docs/rooms/GAPS.md` section 2.1's bank L2 row still gives RI's 295.7 and three holes (its
+section 9 row tells the move); the north stair's open points 1 and 2 (the acceptance settings do not climb it; the
+no-mouth strip is floored automatically); `rooms-walks` needs `WT_OFFLINE_DIR` (or a fresh `dist/`) while `dist/` is older
+than the viewer.

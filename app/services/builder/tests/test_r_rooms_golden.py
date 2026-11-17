@@ -33,7 +33,7 @@ from walkthrough_builder import oslock
 
 NAMES = ('bank', 'house', 'suite', 'tower', 'suite-revit')
 FILES = ('model.json', 'stages.json', 'topview.png', 'maxscript', 'furniture.csv')
-BANK_NEW_RULE_SHA1 = '77468e44ecd1661e4e121b9f3a9354de7773e91a'     # = services/api/tests/test_r5_builder.py's
+BANK_NEW_RULE_SHA1 = 'a36e15351068532b33409240275d0d57a1d799fc'     # = services/api/tests/test_r5_builder.py's
 
 #: PROVISIONAL (RI, 11 Nov 2026): name -> {files: sha1 per FILES, floors: {key: summary row}}. Recorded with
 #: WT_RECORD_ROOMS_GOLDEN=1 from the builder of the branch at 0209ab3 plus RI-A's changes; each model equals the one the
@@ -50,18 +50,26 @@ BANK_NEW_RULE_SHA1 = '77468e44ecd1661e4e121b9f3a9354de7773e91a'     # = services
 #: the model.json and Max script of the four drawings with chairs moved (bank model.json 54ef1ac2.. -> 77468e44..; bank maxscript 934a1d26.. -> e560b613..; house model.json d90ccc3c.. -> 8d6e1e32..; house maxscript 66794ff4.. -> 24677869..; suite model.json ed7774c6.. -> 61be67c3..; suite maxscript 03d548b3.. -> 0dee5ffc..; tower model.json 9f95de8a.. -> 2bddcd47..; tower maxscript 8659ebdc.. -> 411ff667..).
 #: The stair words read on any layer (build/stairs_read.py) moved nothing here; the top views, stages, CSVs and every
 #: floor row are the same; the new suite has no chair and did not move.
+#: 16 Nov 2026 (the owner's north stair, build/network.py plate_of: an unfloored area that is mostly stair is the
+#: stair's room and becomes floor; docs/rooms/DESIGN.md "R-2.5 / R-7 a stair's room"): only the bank moved. With these
+#: settings (A-FLOR-HRAL-MBND 'other') its north stair stays lines, but the strip at L2's north facade is now floored
+#: around the kept opening of that stair: L2 plate 295.7 -> 300.4, holes 3 -> 4, 12.54 -> 15.84 m2 (+ stair 3.30). The
+#: plate now reaches 0.9 m further north, so the model's offset moved (y 0.352 -> 0.81) and every model coordinate with
+#: it: model.json 77468e44.. -> a36e1535..; stages.json 40c12469.. -> df479ab5..; topview.png fe813a4b.. -> ac2960be..;
+#: maxscript e560b613.. -> dea40236.. (recorded with WT_RECORD_ROOMS_GOLDEN=1 in the batch's check, %TEMP%/wt-bc/b).
+#: The bank's CSV and L1 row, and the house, the two suites and the tower did not move.
 PINS: dict = {
     'bank': {
         'files': {
-            'model.json': '77468e44ecd1661e4e121b9f3a9354de7773e91a',
-            'stages.json': '40c12469a7f27866bf71e566a5163eed05be93e9',
-            'topview.png': 'fe813a4b4074a037689eb2762e02544703177d97',
-            'maxscript': 'e560b61383e7a5ae8e3f0251e140d983e8632bb0',
+            'model.json': 'a36e15351068532b33409240275d0d57a1d799fc',
+            'stages.json': 'df479ab5cdf47b67b3e32a070513dc212d1a24cf',
+            'topview.png': 'ac2960be115ede22b9790e793a7a61b9fb0b8e5d',
+            'maxscript': 'dea40236177958bda9f8c43cf4c754f357c01886',
             'furniture.csv': '66f53fb2636e7f465a91c0708de22bc45a9fe6c6',
         },
         'floors': {
             'L1': {'rooms': 15, 'named': 9, 'plate': 235.8, 'holes': 1, 'holesArea': 3.17, 'climb': 1},
-            'L2': {'rooms': 14, 'named': 9, 'plate': 295.7, 'holes': 3, 'holesArea': 12.54, 'climb': 0},
+            'L2': {'rooms': 14, 'named': 9, 'plate': 300.4, 'holes': 4, 'holesArea': 15.84, 'climb': 0},
         },
     },
     'house': {

@@ -1,7 +1,8 @@
 // The staff web app in headless Edge (DESIGN.md 15, 17.4 "web"; WORK_BREAKDOWN F), on the Vite dev server (StrictMode on):
 // the project list (4 cards, fields, thumbnails, the house's placeholder); the project page (one viewer under StrictMode:
 // created 2, live 1, one canvas; the version picker switching the bank between v1 and v2 and disposing the old viewer);
-// heights typed in the viewer saved (PUT seen, `Heights saved`), kept over a reload, in the CSV and the offline downloads;
+// heights typed in the viewer saved (PUT seen, `Furniture saved`: step BX, it was `Heights saved`), kept over a reload, in
+// the CSV and the offline downloads;
 // the Max script byte-equal to the seeded file; the offline download opening from disk; failures and Not found; and
 // (@app-only) the viewer's computed styles under the app's Tailwind.
 //
@@ -106,7 +107,7 @@ test('the project page: the latest version, one viewer under StrictMode (created
   await expect(page).toHaveTitle('Bangkok Bank, Sampeng Branch · v2 · Walkthrough');
   await expect(page.getByTestId('app-bar-title')).toHaveText('Bangkok Bank, Sampeng Branch');
   await expect(page.getByTestId('version-picker')).toContainText(versionLabel(v2));
-  await expect(page.getByTestId('heights-status-text')).toHaveText('Heights saved');
+  await expect(page.getByTestId('heights-status-text')).toHaveText('Furniture saved');
   await expect(page.locator('[data-wt=root]')).toHaveAttribute('data-model-stamp', v2.stamp);
   // the viewer fills the window below the 48 px bar
   expect(await page.getByTestId('app-bar').boundingBox()).toMatchObject({ x: 0, y: 0, width: 1400, height: 48 });
@@ -191,7 +192,7 @@ test('heights typed in the viewer are saved, survive a reload, and come in the C
   await viewerReady(page, 2);
   await expect(heightBox(page, 'table')).toHaveValue('750');
   for (const [kind, mm] of Object.entries(TYPED)) await typeHeight(page, kind, mm);
-  await expect(page.getByTestId('heights-status-text')).toHaveText('Heights saved');
+  await expect(page.getByTestId('heights-status-text')).toHaveText('Furniture saved');
   await expect.poll(() => puts.at(-1)).toEqual({ heights: TYPED });
   expect(await be.saved('bank-sampeng', 2)).toEqual(TYPED);
   expect(await page.evaluate(() => Object.keys(localStorage).filter(k => k.startsWith('walkthrough-furniture-heights:')))).toEqual([]);
@@ -233,7 +234,7 @@ test('heights typed in the viewer are saved, survive a reload, and come in the C
   // Reset in the viewer: the model's heights again, saved
   await page.locator('[data-wt=furniture-reset]').click();
   await expect.poll(() => puts.at(-1)).toEqual({ heights: {} });
-  await expect(page.getByTestId('heights-status-text')).toHaveText('Heights saved');
+  await expect(page.getByTestId('heights-status-text')).toHaveText('Furniture saved');
   expect(await be.saved('bank-sampeng', 2)).toEqual({});
   await expect(heightBox(page, 'table')).toHaveValue('750');
 });
@@ -259,7 +260,7 @@ test('a failed save shows Not saved: <reason>, and Retry sends the newest map', 
   await expect(page.getByTestId('heights-status-text')).toHaveText('Not saved: the store is busy (test)');
   failing = false;
   await page.getByTestId('heights-retry').click();
-  await expect(page.getByTestId('heights-status-text')).toHaveText('Heights saved');
+  await expect(page.getByTestId('heights-status-text')).toHaveText('Furniture saved');
   expect(await be.saved('bank-sampeng', 2)).toEqual({ seat: 320 });
   await be.resetHeights('bank-sampeng', 2);
 });
@@ -413,7 +414,7 @@ test('a height typed while saves fail is kept: leaving the version and coming ba
   await pickVersion(page, 2);                                  // back: the typed height, not the old saved one
   await viewerReady(page, 4);
   await expect(heightBox(page, 'seat')).toHaveValue('300');
-  await expect(statusText(page)).toHaveText('Heights saved');
+  await expect(statusText(page)).toHaveText('Furniture saved');
   await expect.poll(() => be.saved('bank-sampeng', 2)).toEqual({ seat: 300 });
   await be.resetHeights('bank-sampeng', 2);
 });
@@ -439,7 +440,7 @@ test('an API that does not answer (the proxy\'s empty 502): said so, downloads o
   }
   await page.keyboard.press('Escape');
   down = false;                                                // the API is back: no Retry click
-  await expect(statusText(page)).toHaveText('Heights saved', { timeout: 20_000 });
+  await expect(statusText(page)).toHaveText('Furniture saved', { timeout: 20_000 });
   expect(await be.saved('bank-sampeng', 2)).toEqual({ cabinet: 1000 });
   await be.resetHeights('bank-sampeng', 2);
 });
@@ -463,13 +464,13 @@ test('while a save was refused, the CSV and the offline file wait (they would ca
   const list = page.getByTestId('downloads-list');
   for (const key of ['furnitureCsv', 'offlineHtml']) {
     await expect(list.locator(`[data-download=${key}]`)).toHaveAttribute('data-disabled', '');
-    await expect(list.locator(`[data-download=${key}]`)).toHaveAttribute('title', /The furniture heights on screen are not saved \(overrides\.json could not be written \(test\)\)/);
+    await expect(list.locator(`[data-download=${key}]`)).toHaveAttribute('title', /The furniture changes on screen are not saved \(overrides\.json could not be written \(test\)\)/);
   }
   await expect(list.locator('[data-download=maxScript]')).not.toHaveAttribute('data-disabled', '');
   await page.keyboard.press('Escape');
   refusing = false;
   await page.getByTestId('heights-retry').click();
-  await expect(statusText(page)).toHaveText('Heights saved');
+  await expect(statusText(page)).toHaveText('Furniture saved');
   expect(await be.saved('bank-sampeng', 2)).toEqual({ table: 600 });
   await be.resetHeights('bank-sampeng', 2);
 });
@@ -503,17 +504,17 @@ test(`two tabs on one version: a save in one never erases the other's heights, a
   await b.goto('/projects/bank-sampeng/v/2');
   await viewerReady(b, 2);
   await typeHeight(a, 'table', 600);
-  await expect(statusText(a)).toHaveText('Heights saved');
+  await expect(statusText(a)).toHaveText('Furniture saved');
   expect(await be.saved('bank-sampeng', 2)).toEqual({ table: 600 });
   await typeHeight(b, 'seat', 300);                            // B was opened before A's save: its PUT meets it, merges
-  await expect(statusText(b)).toHaveText('Heights saved');
+  await expect(statusText(b)).toHaveText('Furniture saved');
   await expect.poll(() => be.saved('bank-sampeng', 2)).toEqual({ table: 600, seat: 300 });
   await expect(heightBox(b, 'table')).toHaveValue('600');      // B shows A's height too
   await a.evaluate(() => window.dispatchEvent(new Event('visibilitychange')));   // A looks again (focus; also every 30 s)
   await expect(heightBox(a, 'seat')).toHaveValue('300');
-  await expect(statusText(a)).toHaveText('Heights saved');
+  await expect(statusText(a)).toHaveText('Furniture saved');
   await typeHeight(a, 'cabinet', 1000);                        // and A's next save keeps B's
-  await expect(statusText(a)).toHaveText('Heights saved');
+  await expect(statusText(a)).toHaveText('Furniture saved');
   await expect.poll(() => be.saved('bank-sampeng', 2)).toEqual({ table: 600, seat: 300, cabinet: 1000 });
   await b.close();
   await be.resetHeights('bank-sampeng', 2);

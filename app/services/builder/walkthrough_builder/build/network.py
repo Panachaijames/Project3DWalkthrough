@@ -70,6 +70,8 @@ MOUTH_STRETCH = 5.0         # m: ... and the free stretch itself this or less (i
 FRAME = 5.0                 # m: the frame round the floor for the pockets
 OPEN_SIDE_MIN = 10.0        # m2: an area with no floor inside the walls' hull is reported from this ...
 OPEN_SIDE_EDGE = 0.8        # ... when this share of its edge runs along the network or the plate (see _unfloored)
+STAIR_ROOM = 0.5            # an unfloored area with this share of it inside the floor's stair lines is the stair's room: floor
+STAIR_ROOM_WHY = "floored: a stair's room"                 # its row in the report's slab.dropped (listed, never flagged)
 BIG_ROOM = 150.0            # m2: a room over this with no opening on its edge is asked about (R-4.1)
 BIG_SHAPE = 10.0            # m2: a face of this or more that is left an enclosed shape, in no room, is asked about
 SMALL_ROOM = 4.0            # m2: a name given by distance (R-3.2 rule 4) to a room under this is asked about
@@ -727,10 +729,18 @@ def _plate(parts):
     return close_mitre(union(parts), 0.02)
 
 
+def _with_rooms(plate, rooms):
+    """A plate with rooms added to it: only the seam between each room and the plate is closed (2 cm), so the rest of
+    the plate keeps its points to the last digit (closing the whole plate a second time moves points by 1e-10, and
+    the lift-shaft rule's cells, bank.lift_shafts, hang on such a point on the bank's Level 1)."""
+    add = union(rooms)
+    return union([plate, close_mitre(union([add, plate.intersection(add.buffer(0.1))]), 0.02)])
+
+
 def plate_of(fb, net, fixes, X):
     """-> (plate0, [contracts.Unfloored], contracts.FloorSlabReport) of one floor (pass 1): the plate before its holes
-    (R-4.1): (ring | terraces | today's plate | "floor here") less "no floor here". The room fixes are matched here
-    (R-6.3), since they name rooms and unfloored areas."""
+    (R-4.1): (ring | terraces | today's plate | a stair's room | "floor here") less "no floor here". The room fixes
+    are matched here (R-6.3), since they name rooms and unfloored areas."""
     key = fb['key']
     more = more_of(net)
     shift = more['shift'] if more['key'] is not None else floor_info(X, key)['shift']
@@ -747,10 +757,33 @@ def plate_of(fb, net, fixes, X):
     plate_a = _plate([ring, old] + terraces)
     found = _unfloored(net, plate_a, with_rails, fenced_open)
     solid = union([net['N'], plate_a])
-    # a place that is mostly stair has no floor by its nature (today's rule drops such strips too): listed, not flagged
+    # a place that is mostly stair is the stair's own room: it is floor (R-2.5 / R-7 as amended 16 Nov 2026), so a
+    # stair standing in it has its foot and its arrival on the plate; the stair module cuts the well over a climbing
+    # flight on the floor above (R-4.3). It ends on the line across its mouth when it has one; with no mouth it is
+    # floored as the rule found it when that rule closes it by itself (beside a gap, a pocket, a fenced area), and an
+    # open side with no single opening is flagged like any other unfloored area (its "Floor here" button). Until
+    # 16 Nov such a place had no floor "by its nature" and was listed as "mostly stair", never flagged (R1.md N-5).
     stair_area = union([st['hull'] for st in fb['old_stairs'].get('stairs') or []])
-    on_stairs = [g for g, _kind in found if not stair_area.is_empty and g.intersection(stair_area).area >= 0.5 * g.area]
-    found = [(g, kind) for g, kind in found if not any(g is h for h in on_stairs)]
+    stair_rooms = []
+    if not stair_area.is_empty:
+        rest = []
+        for g, kind in found:
+            if g.intersection(stair_area).area < STAIR_ROOM * g.area:
+                rest.append((g, kind))
+                continue
+            mouth = _mouth(g, solid)
+            if mouth is None and kind == 'open':
+                rest.append((g, kind))                     # no single opening to close it across: staff decide
+                continue
+            closed = _closed_across(g, mouth)
+            if mouth is None or closed.geom_type != 'Polygon' or closed.is_empty:
+                closed = g
+            stair_rooms.append(closed)
+        found = rest
+    if stair_rooms:
+        plate_a = _with_rooms(plate_a, stair_rooms)
+        solid = union([net['N'], plate_a])
+        fenced_open = [t for t in fenced_open if not any(h.intersection(t).area > 0.5 * t.area for h in stair_rooms)]
     unfloored = []
     for g, kind in found:
         mouth = _mouth(g, solid)
@@ -821,7 +854,7 @@ def plate_of(fb, net, fixes, X):
     more['unfloored'] = unfloored
     dropped = [{'area': round(t.area, 2), 'at': to_sheet(RM.label_point(t).coords[0], shift), 'why': 'no door or passage opens onto it'}
                for t in fenced_open if not any(h['poly'].intersection(t).area > 0.5 * t.area for h in floor_here)]
-    dropped += [{'area': round(g.area, 2), 'at': to_sheet(RM.label_point(g).coords[0], shift), 'why': 'mostly stair'} for g in on_stairs]
+    dropped += [{'area': round(g.area, 2), 'at': to_sheet(RM.label_point(g).coords[0], shift), 'why': STAIR_ROOM_WHY} for g in stair_rooms]
     more['dropped'] = dropped
     out = [{k: u[k] for k in ('poly', 'area', 'at', 'mouth', 'answered', 'kind')} for u in unfloored]
     report = {'ring': round(ring.area, 1), 'terraces': round(union(terraces).area, 1), 'old': round(old.area, 1),

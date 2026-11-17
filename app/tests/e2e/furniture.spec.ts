@@ -2,9 +2,14 @@
 // presidential_test/test_presidential.mjs, cad_test/test_house_furniture.mjs and hotel_test/test_hotel.mjs, ported once for
 // the four furnished versions (bank v2, suite, house, hotel) and both targets (lib/target.ts):
 //   E2E_TARGET=prototype  the prototype pages (their selectors, the shim; @app-only skipped)
-//   E2E_TARGET=app        the offline files dist/offline/<project>-v<n>.html (?build=0&nodownload=1&test=1)
+//   E2E_TARGET=app        the offline files dist/offline/<project>-v<n>.html (?build=0&nodownload=1&test=1), or the same
+//                         names in WT_OFFLINE_DIR when it is set (lib/target.ts pagePath: offline files made in a temp
+//                         folder from the viewer as it is now, while nobody writes dist/; step BX, 16 Nov 2026)
 // Run (builder C's row of DESIGN.md 3, Git Bash):
 //   WT_WEB_PORT=5723 WT_TMP="$TEMP/wt-c" E2E_TARGET=prototype npx playwright test -c tests/e2e/playwright.config.ts --project=e2e tests/e2e/furniture.spec.ts
+// On a builder's own offline files (the template built into its temp folder, make-offline.mjs over a seeded temp store):
+//   WT_SERVE= WT_WEB_PORT=5750 WT_TMP="$TEMP/wt-bx" WT_SKIP_STORE_CHECK=1 WT_OFFLINE_DIR="$TEMP/wt-bx/offline" \
+//     npx playwright test -c tests/e2e/playwright.config.ts --project=e2e tests/e2e/furniture.spec.ts
 // Per version, on one page: the legend; one box per piece in its floor's group; the page's own ticks and floor buttons
 // leave the boxes alone; the side panel at 1366 x 768 and 1920 x 1080 and above the hint line from 640 to 1080 px; typing
 // a height with real keys (the tops follow, what stands on them follows); Walk starts clear of the boxes; Walk stops at real
